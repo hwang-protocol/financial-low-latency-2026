@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">OUCH 三个身份字段：UserRefNum、ClOrdID、Match Number</title>
+  <desc id="desc">UserRefNum 和 ClOrdID 由 client 在 Enter Order 里自己写。Accepted 原样带回这两个号，并另发 Order Reference Number。Executed 只带回 UserRefNum，再由 Exchange 发一个 Match Number 标识这一次成交。</desc>
+  <rect x="18" y="18" width="1164" height="664" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="64" y="64" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#475569">IDENTITY · WHO ASSIGNS WHAT</text>
+  <text x="64" y="104" font-family="Arial,'Noto Sans SC',sans-serif" font-size="28" font-weight="800" fill="#0f172a">三个号各管一层：请求、客户单号、这一次成交</text>
+
+  <rect x="64" y="132" width="520" height="268" rx="20" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+  <text x="324" y="168" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#065f46">.2 client 自己写</text>
+  <rect x="88" y="188" width="472" height="90" rx="14" fill="#fff" stroke="#059669" stroke-width="2"/>
+  <text x="324" y="222" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="800" fill="#14532d">UserRefNum</text>
+  <text x="324" y="252" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" fill="#334155">当日这笔请求的交易号 · O / A / E 都带它</text>
+  <rect x="88" y="290" width="472" height="90" rx="14" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+  <text x="324" y="324" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="800" fill="#155e75">ClOrdID</text>
+  <text x="324" y="354" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" fill="#334155">14 个 ASCII 客户单号 · 只在 O / A 里，E 不带</text>
+
+  <rect x="616" y="132" width="520" height="268" rx="20" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+  <text x="876" y="168" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#9a3412">.1 Exchange 自己发</text>
+  <rect x="640" y="188" width="472" height="90" rx="14" fill="#fff" stroke="#ea580c" stroke-width="2"/>
+  <text x="876" y="222" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="800" fill="#9a3412">Match Number</text>
+  <text x="876" y="252" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" fill="#334155">这一次成交的编号 · 只出现在 E</text>
+  <rect x="640" y="290" width="472" height="90" rx="14" fill="#fff" stroke="#c2410c" stroke-width="2"/>
+  <text x="876" y="324" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="800" fill="#7c2d12">Order Reference Number</text>
+  <text x="876" y="354" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" fill="#334155">服务端给这笔挂单另发的号 · 出现在 A</text>
+
+  <text x="64" y="440" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="700" fill="#0f172a">同一笔单走完 O → A → E 时，三个号怎样接力</text>
+  <rect x="64" y="456" width="344" height="132" rx="16" fill="#f5f3ff" stroke="#7e22ce" stroke-width="2"/>
+  <text x="236" y="490" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="800" fill="#6b21a8">O · Enter Order</text>
+  <text x="236" y="522" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#334155">UserRefNum</text>
+  <text x="236" y="550" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#334155">ClOrdID</text>
+  <rect x="428" y="456" width="344" height="132" rx="16" fill="#ecfeff" stroke="#0d9488" stroke-width="2"/>
+  <text x="600" y="490" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="800" fill="#0f766e">A · Order Accepted</text>
+  <text x="600" y="522" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#334155">原样带回上面两个</text>
+  <text x="600" y="550" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#334155">+ Order Reference Number</text>
+  <rect x="792" y="456" width="344" height="132" rx="16" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="964" y="490" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="800" fill="#14532d">E · Order Executed</text>
+  <text x="964" y="522" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#334155">只带回 UserRefNum</text>
+  <text x="964" y="550" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#334155">+ Match Number</text>
+
+  <rect x="64" y="608" width="1072" height="50" rx="12" fill="#e2e8f0"/>
+  <text x="600" y="640" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" font-weight="700" fill="#334155">本卡用 UserRefNum 把 O / A / E 收成一笔；ClOrdID 用来认出 MANUAL；Match Number 只证明这一次成交</text>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc"><title id="title">一笔订单，三个记录点</title><desc id="desc">依据课程现役代码与章节顺序整理；图示为机制说明，不含新增实测结果。</desc>
+<defs><style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#475569} .label{fill:#35688c;font-weight:600}</style><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto"><path d="M0 -6 L12 0 L0 6 Z" fill="#7694ab"/></marker><symbol id="clock" viewBox="0 0 48 48"><circle cx="24" cy="26" r="17"/><path d="M24 15v12l9 5M24 9V3m-7 0h14"/></symbol><symbol id="queue" viewBox="0 0 48 48"><rect x="3" y="15" width="10" height="20" rx="2"/><rect x="18" y="15" width="10" height="20" rx="2"/><rect x="33" y="15" width="10" height="20" rx="2"/><path d="M3 42h40"/></symbol><symbol id="packet" viewBox="0 0 48 48"><rect x="3" y="9" width="42" height="30" rx="4"/><path d="m4 10 20 16 20-16"/></symbol><symbol id="server" viewBox="0 0 48 48"><rect x="9" y="3" width="30" height="42" rx="4"/><path d="M10 17h28M10 31h28M17 10h2m5 0h9M17 24h2m5 0h9M17 38h2m5 0h9"/></symbol></defs>
+<rect width="1200" height="720" rx="18" fill="#f8fafc"/>
+<text x="40" y="53" font-size="32" class="label">一笔订单，三个记录点</text>
+<text x="40" y="94" font-size="23">同一 Trader 内记录单调时钟；沿着第三章的 O → A → E/J 找到发送和回报。</text>
+<rect x="40" y="135" width="320" height="190" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<use href="#queue" x="58" y="151" width="46" height="46" fill="none" stroke="#6486a0" stroke-width="2.5"/>
+<text x="118" y="180" font-size="22" class="label">t0 · 放入队列前</text>
+<text x="62" y="246" font-size="24">管理线程提交订单</text>
+<text x="62" y="289" font-size="23">开始记录交接等待</text>
+<rect x="440" y="135" width="320" height="190" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<use href="#packet" x="458" y="151" width="46" height="46" fill="none" stroke="#6486a0" stroke-width="2.5"/>
+<text x="518" y="180" font-size="22" class="label">t1 · 调用发送函数前</text>
+<text x="462" y="246" font-size="24">下单线程发送 O</text>
+<text x="462" y="289" font-size="23">开始记录订单往返</text>
+<rect x="840" y="135" width="320" height="190" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<use href="#clock" x="858" y="151" width="46" height="46" fill="none" stroke="#6486a0" stroke-width="2.5"/>
+<text x="918" y="180" font-size="22" class="label">t2 · 解码最终回报后</text>
+<text x="862" y="246" font-size="24">收到 E 成交或 J 拒绝</text>
+<text x="862" y="289" font-size="23">A 受理时仍继续计时</text>
+<path d="M372 230 L416 230" fill="none" stroke="#7694ab" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<path d="M772 230 L816 230" fill="none" stroke="#7694ab" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<rect x="40" y="362" width="540" height="130" rx="14" fill="#edf5fb" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="60" y="402" font-size="26" class="label">交接段 · t1 − t0</text>
+<text x="60" y="446" font-size="24">队列操作、等待唤醒与调度</text>
+<text x="60" y="477" font-size="22">queue_to_send_ns</text>
+<rect x="620" y="362" width="540" height="130" rx="14" fill="#eff7f4" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="642" y="402" font-size="26" class="label">订单往返 · t2 − t1</text>
+<text x="642" y="446" font-size="24">客户端收发、网络与 Exchange 处理</text>
+<text x="642" y="477" font-size="22">order_rtt_ns</text>
+<rect x="40" y="525" width="1120" height="90" rx="14" fill="#f2f0f8" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="60" y="562" font-size="26" class="label">客户端全段 · t2 − t0 = 交接段 + 订单往返</text>
+<text x="60" y="596" font-size="23">submit_to_final_ns：检查局部优化是否也缩短了整段耗时。</text>
+<text x="40" y="663" font-size="23">相加的是同一笔订单的耗时；不同区间的 P99 通常不能直接相加。</text>
+<text x="40" y="699" font-size="22">本图从订单入队前开始，未包含此前的行情处理与策略决策。</text>
+</svg>

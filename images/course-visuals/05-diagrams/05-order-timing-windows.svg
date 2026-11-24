@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560" role="img" aria-labelledby="title desc">
+  <title id="title">一笔订单的三项耗时</title>
+  <desc id="desc">进队到开始发送是 queue_to_send_ns，开始发送到收到结果是 order_rtt_ns，两段相加是 submit_to_final_ns。三个时刻都在客户端。</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-30%" width="120%" height="170%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="purple-arrow" markerWidth="18" markerHeight="18" refX="0" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 18 9 L 0 18 Z" fill="#7c3aed"/>
+    </marker>
+    <marker id="green-arrow" markerWidth="18" markerHeight="18" refX="0" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 18 9 L 0 18 Z" fill="#059669"/>
+    </marker>
+  </defs>
+
+  <rect width="1400" height="560" rx="28" fill="#f8fafc"/>
+  <text x="700" y="57" text-anchor="middle" fill="#0f2742" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="32" font-weight="800">一笔订单的三项耗时</text>
+  <text x="700" y="92" text-anchor="middle" fill="#475569" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18">总时间 = 进队到开始发送 + 开始发送到收到结果</text>
+
+  <g id="queue-to-send" filter="url(#shadow)">
+    <rect x="190" y="128" width="470" height="84" rx="16" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+    <text x="425" y="163" text-anchor="middle" fill="#5b21b6" font-family="Consolas, Menlo, monospace" font-size="23" font-weight="800">queue_to_send_ns</text>
+    <text x="425" y="193" text-anchor="middle" fill="#4c1d95" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18">进队 → 开始发送</text>
+  </g>
+
+  <g id="order-rtt" filter="url(#shadow)">
+    <rect x="740" y="128" width="470" height="84" rx="16" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+    <text x="975" y="163" text-anchor="middle" fill="#065f46" font-family="Consolas, Menlo, monospace" font-size="23" font-weight="800">order_rtt_ns</text>
+    <text x="975" y="193" text-anchor="middle" fill="#065f46" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18">开始发送 → 收到结果</text>
+  </g>
+
+  <path d="M 207 275 L 645 275" stroke="#7c3aed" stroke-width="4" stroke-linecap="butt" fill="none" marker-end="url(#purple-arrow)"/>
+  <path d="M 737 275 L 1175 275" stroke="#059669" stroke-width="4" stroke-linecap="butt" fill="none" marker-end="url(#green-arrow)"/>
+
+  <g id="timestamps">
+    <circle cx="170" cy="275" r="22" fill="#2563eb" stroke="#ffffff" stroke-width="6"/>
+    <circle cx="700" cy="275" r="22" fill="#0f2742" stroke="#ffffff" stroke-width="6"/>
+    <circle cx="1230" cy="275" r="22" fill="#ea580c" stroke="#ffffff" stroke-width="6"/>
+
+    <text x="170" y="322" text-anchor="middle" fill="#1e3a8a" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="19" font-weight="800">进队</text>
+    <text x="170" y="347" text-anchor="middle" fill="#64748b" font-family="Consolas, Menlo, monospace" font-size="15">queued_ns</text>
+
+    <text x="700" y="322" text-anchor="middle" fill="#0f2742" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="19" font-weight="800">开始发送</text>
+    <text x="700" y="347" text-anchor="middle" fill="#64748b" font-family="Consolas, Menlo, monospace" font-size="15">send_ns</text>
+
+    <text x="1230" y="322" text-anchor="middle" fill="#9a3412" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="19" font-weight="800">收到结果</text>
+    <text x="1230" y="347" text-anchor="middle" fill="#64748b" font-family="Consolas, Menlo, monospace" font-size="15">completed_ns</text>
+  </g>
+
+  <path d="M 170 382 L 170 405 L 1230 405 L 1230 382" stroke="#0f2742" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <rect x="350" y="431" width="700" height="76" rx="16" fill="#e0f2fe" stroke="#0891b2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="700" y="460" text-anchor="middle" fill="#155e75" font-family="Consolas, Menlo, monospace" font-size="22" font-weight="800">submit_to_final_ns</text>
+  <text x="700" y="491" text-anchor="middle" fill="#164e63" font-family="Consolas, Menlo, monospace" font-size="20" font-weight="700">= queue_to_send_ns + order_rtt_ns</text>
+
+  <text x="700" y="540" text-anchor="middle" fill="#64748b" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="16">同一笔订单 · 同一条时间轴 · 两段相加</text>
+</svg>

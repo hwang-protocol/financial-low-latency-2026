@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title description">
+<title id="title">运行④：比较单独使用与共用 CPU</title>
+<desc id="description">左右对照同一实验的两种线程绑定。左侧MANUAL下单线程单独使用CPU2，其他应用线程在CPU0。右侧MANUAL下单线程也在CPU0，与其他应用线程竞争执行时间，CPU2不安排这条下单线程。两组AUTO下单线程固定CPU3陪跑，MANUAL交棒规则均为SPSC忙轮询。底部色带只示意应用线程的执行先后，不表示测量时长；图中CPU是虚拟机内的逻辑CPU，不保证物理核独占。</desc>
+<defs>
+<style>
+text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#50697e}
+.title{font-size:30px;font-weight:650;fill:#3d617c}
+.heading{font-size:25px;font-weight:600}
+.body{font-size:20px}
+.small{font-size:18px}
+.label{font-size:21px;font-weight:550}
+.icon{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+<g id="cpu" class="icon"><rect x="6" y="6" width="24" height="24" rx="5"/><rect x="12" y="12" width="12" height="12" rx="2"/><path d="M12 1v5M24 1v5M12 30v5M24 30v5M1 12h5M1 24h5M30 12h5M30 24h5"/></g>
+<g id="order" class="icon"><path d="M5 2h15l8 8v22H5zM20 2v9h8M10 17h13M10 23h10"/></g>
+<g id="threads" class="icon"><rect x="2" y="2" width="24" height="19" rx="4"/><path d="M9 26h24V9M7 8h14M7 14h9"/></g>
+<g id="eye" class="icon"><path d="M1 18Q18-2 35 18Q18 38 1 18Z"/><circle cx="18" cy="18" r="6"/></g>
+<g id="runner" class="icon"><circle cx="21" cy="5" r="4" fill="currentColor" stroke="none"/><path d="m17 13-6 10 11 5-4 10M17 13l8 8h9M15 17 7 18 3 12M11 23 6 32H0" stroke-width="3"/></g>
+</defs>
+<rect x="12" y="12" width="1176" height="796" rx="24" fill="#fbfcfe" stroke="#d4dfe9" stroke-width="1.5"/>
+<text class="title" x="36" y="58">运行④：比较单独使用与共用 CPU</text>
+<text class="body" x="36" y="93">MANUAL 两组都用 SPSC 忙轮询，只改变下单线程绑定的 CPU。</text>
+
+<rect x="36" y="118" width="552" height="568" rx="20" fill="#f5f9fc" stroke="#cbdde9" stroke-width="1.5"/>
+<text class="heading" x="60" y="157" style="fill:#567d9d">单独使用 CPU 2</text>
+<text class="body" x="60" y="187">下单线程与其他应用线程分开运行</text>
+
+<rect x="60" y="212" width="240" height="238" rx="16" fill="#fff" stroke="#d9cdbb" stroke-width="1.5"/>
+<use href="#cpu" x="78" y="225" color="#b69569"/>
+<text class="heading" x="132" y="253">CPU 0</text>
+<rect x="78" y="287" width="204" height="94" rx="12" fill="#fbefdd"/>
+<use href="#threads" x="92" y="305" color="#b79566"/>
+<text class="label" x="143" y="321">其他应用</text><text class="label" x="143" y="353">线程</text>
+<text class="small" x="180" y="421" text-anchor="middle">管理、行情接收等</text>
+
+<rect x="324" y="212" width="240" height="238" rx="16" fill="#fff" stroke="#abc8de" stroke-width="1.5"/>
+<use href="#cpu" x="342" y="225" color="#6998bb"/>
+<text class="heading" x="396" y="253">CPU 2</text>
+<rect x="342" y="287" width="204" height="94" rx="12" fill="#dfedf7"/>
+<use href="#order" x="356" y="305" color="#6998bb"/>
+<text class="label" x="407" y="321">MANUAL</text><text class="label" x="407" y="353">下单线程</text>
+<use href="#eye" x="365" y="397" color="#6998bb"/>
+<text class="small" x="414" y="421">忙轮询</text>
+
+<rect x="60" y="471" width="504" height="58" rx="12" fill="#eaf4ee" stroke="#d1e3d8"/>
+<use href="#cpu" x="77" y="482" color="#70a28e"/>
+<text class="label" x="128" y="508" style="fill:#507d68">CPU 3</text>
+<use href="#runner" x="249" y="481" color="#70a28e"/>
+<text class="body" x="299" y="508" style="fill:#507d68">AUTO 下单线程 · 陪跑</text>
+<text class="small" x="60" y="564">CPU 2 的执行示意</text>
+<rect x="60" y="581" width="504" height="40" rx="10" fill="#dfedf7" stroke="#c0d7e8"/>
+<text class="body" x="312" y="608" text-anchor="middle">MANUAL 下单线程</text>
+<text class="body" x="60" y="657">没有其他应用线程与它竞争 CPU 2</text>
+
+<rect x="612" y="118" width="552" height="568" rx="20" fill="#fff9f1" stroke="#e5d5bd" stroke-width="1.5"/>
+<text class="heading" x="636" y="157" style="fill:#a57842">与其他线程共用 CPU 0</text>
+<text class="body" x="636" y="187">下单线程也放到 CPU 0，轮流执行</text>
+
+<rect x="636" y="212" width="240" height="238" rx="16" fill="#fff" stroke="#d6b889" stroke-width="1.5"/>
+<use href="#cpu" x="654" y="225" color="#b69569"/>
+<text class="heading" x="708" y="253">CPU 0</text>
+<rect x="654" y="278" width="204" height="64" rx="11" fill="#dfedf7"/>
+<use href="#order" x="664" y="291" color="#6998bb"/>
+<text class="label" x="710" y="304">MANUAL</text><text class="body" x="710" y="329">下单线程</text>
+<use href="#eye" x="818" y="294" color="#6998bb"/>
+<rect x="654" y="354" width="204" height="64" rx="11" fill="#fbefdd"/>
+<use href="#threads" x="664" y="370" color="#b79566"/>
+<text class="small" x="710" y="393">其他应用线程</text>
+
+<rect x="900" y="212" width="240" height="238" rx="16" fill="#f8fafb" stroke="#d1dce5" stroke-width="1.5" stroke-dasharray="6 5"/>
+<use href="#cpu" x="918" y="225" color="#9eafbd"/>
+<text class="heading" x="972" y="253" style="fill:#879dad">CPU 2</text>
+<use href="#order" x="1003" y="298" color="#b8c6d0"/>
+<text class="body" x="1020" y="373" text-anchor="middle">不安排这条</text><text class="body" x="1020" y="405" text-anchor="middle">下单线程</text>
+
+<rect x="636" y="471" width="504" height="58" rx="12" fill="#eaf4ee" stroke="#d1e3d8"/>
+<use href="#cpu" x="653" y="482" color="#70a28e"/>
+<text class="label" x="704" y="508" style="fill:#507d68">CPU 3</text>
+<use href="#runner" x="825" y="481" color="#70a28e"/>
+<text class="body" x="875" y="508" style="fill:#507d68">AUTO 下单线程 · 陪跑</text>
+<text class="small" x="636" y="564">CPU 0 的执行示意</text>
+<rect x="636" y="581" width="118" height="40" rx="8" fill="#dfedf7" stroke="#c0d7e8"/>
+<rect x="758" y="581" width="130" height="40" rx="8" fill="#fbefdd" stroke="#e7d7bf"/>
+<rect x="892" y="581" width="118" height="40" rx="8" fill="#dfedf7" stroke="#c0d7e8"/>
+<rect x="1014" y="581" width="126" height="40" rx="8" fill="#fbefdd" stroke="#e7d7bf"/>
+<text class="small" x="695" y="608" text-anchor="middle">MANUAL</text>
+<text class="small" x="823" y="608" text-anchor="middle">其他线程</text>
+<text class="small" x="951" y="608" text-anchor="middle">MANUAL</text>
+<text class="small" x="1077" y="608" text-anchor="middle">其他线程</text>
+<text class="body" x="636" y="657">其他线程执行时，MANUAL 要等待</text>
+
+<text class="small" x="36" y="726">执行色带只说明应用线程怎样竞争，不代表实测顺序或时长；CPU 1 未画出。</text>
+<text class="small" x="36" y="760">“单独使用”指避开其他应用线程，系统仍可抢占；这里的 CPU 是虚拟机内的逻辑 CPU。</text>
+</svg>

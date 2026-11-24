@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
+  <title id="title">Feed A/B 的 first-valid-wins 判定顺序</title>
+  <desc id="desc">两路 Feed 汇入同一个 Handler。Handler 先判断 wire-v1 结构是否合法，不合法即拒收并停止解析；合法后读出 session 与 sequence，再检查二者组成的 key 是否已经在 accepted 登记表里。已登记的记一次 duplicate，登记表保持不变；未登记的把本副本的来源写入 accepted。本图不含向下游发布的动作。</desc>
+  <defs>
+    <style>
+      .title{font:700 30px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0f172a}
+      .sub{font:600 20px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .step{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+      .num{font:700 20px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#7e22ce}
+      .feed{font:700 22px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0e7490}
+      .edge{font:700 17px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .bad{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#b91c1c}
+      .dup{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .ok{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#166534}
+      .foot{font:700 18px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+      .mono{font:700 18px ui-monospace,SFMono-Regular,Consolas,monospace}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" overflow="visible">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" overflow="visible">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" overflow="visible">
+      <path d="M0,0 L10,5 L0,10 z" fill="#166534"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="660" rx="18" fill="#fff"/>
+  <text x="600" y="44" text-anchor="middle" class="title">first-valid-wins：先校验，再按 (session, sequence) 去重</text>
+  <text x="600" y="76" text-anchor="middle" class="sub">Feed 身份不能盖过结构合法性与消息 key 的登记状态</text>
+
+  <rect x="36" y="150" width="132" height="84" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="3"/>
+  <text x="102" y="199" text-anchor="middle" class="feed">Feed A</text>
+  <rect x="36" y="286" width="132" height="84" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="3"/>
+  <text x="102" y="335" text-anchor="middle" class="feed">Feed B</text>
+  <path d="M168,192 H196 V256 H214" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M168,328 H196 V256" fill="none" stroke="#475569" stroke-width="3"/>
+
+  <g fill="#faf5ff" stroke="#7e22ce" stroke-width="3">
+    <rect x="220" y="196" width="146" height="120" rx="12"/>
+    <rect x="404" y="196" width="146" height="120" rx="12"/>
+    <rect x="588" y="196" width="146" height="120" rx="12"/>
+  </g>
+  <text x="240" y="228" class="num">1</text>
+  <text x="293" y="262" text-anchor="middle" class="step">收到一份</text>
+  <text x="293" y="290" text-anchor="middle" class="step">datagram</text>
+  <text x="424" y="228" class="num">2</text>
+  <text x="477" y="262" text-anchor="middle" class="step">wire-v1</text>
+  <text x="477" y="290" text-anchor="middle" class="step">结构合法？</text>
+  <text x="608" y="228" class="num">3</text>
+  <text x="661" y="262" text-anchor="middle" class="step">读 session</text>
+  <text x="661" y="290" text-anchor="middle" class="step">与 sequence</text>
+
+  <rect x="764" y="196" width="176" height="120" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="3"/>
+  <text x="784" y="228" class="num">4</text>
+  <text x="852" y="262" text-anchor="middle" class="step">消息 key 已在</text>
+  <text x="852" y="290" text-anchor="middle" class="step">accepted 里？</text>
+
+  <path d="M366,256 H404" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M550,256 H588" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+  <text x="569" y="243" text-anchor="middle" class="edge">是</text>
+  <path d="M734,256 H764" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+
+  <path d="M477,316 V404" fill="none" stroke="#b91c1c" stroke-width="3" marker-end="url(#ar)"/>
+  <text x="497" y="362" class="edge">否</text>
+  <rect x="352" y="410" width="250" height="86" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="3"/>
+  <text x="477" y="444" text-anchor="middle" class="bad">拒收并停止解析</text>
+  <text x="477" y="474" text-anchor="middle" class="bad">不写入 accepted</text>
+
+  <path d="M940,232 H986" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+  <text x="959" y="219" text-anchor="middle" class="edge">是</text>
+  <rect x="990" y="182" width="180" height="100" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="3"/>
+  <text x="1080" y="220" text-anchor="middle" class="dup">记一次</text>
+  <text x="1080" y="250" text-anchor="middle" class="dup">duplicate</text>
+  <text x="1080" y="273" text-anchor="middle" class="edge">accepted 不变</text>
+
+  <path d="M852,316 V352 H1080 V404" fill="none" stroke="#166534" stroke-width="3" marker-end="url(#ag)"/>
+  <text x="872" y="342" class="edge">否</text>
+  <rect x="960" y="410" width="210" height="112" rx="12" fill="#f0fdf4" stroke="#15803d" stroke-width="3"/>
+  <text x="1065" y="444" text-anchor="middle" class="ok">登记首份合法来源</text>
+  <text x="1065" y="478" text-anchor="middle" class="ok mono">accepted[key]</text>
+  <text x="1065" y="504" text-anchor="middle" class="ok mono">= A / B</text>
+
+  <rect x="36" y="556" width="1134" height="76" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="603" y="590" text-anchor="middle" class="foot">首份合法副本决定该消息 key 的来源 · 同 key 后到的合法副本只记 duplicate · A 与 B 地位对等</text>
+  <text x="603" y="618" text-anchor="middle" class="edge">本图到「登记」为止：这一层不含按序交付，也不含向下游发布</text>
+</svg>

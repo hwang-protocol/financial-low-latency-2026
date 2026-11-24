@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">MoldUDP64 包结构：20 字节头与四种读法</title>
+  <desc id="desc">所有下游包共用 Session 10 字节、Sequence Number 8 字节、Message Count 2 字节。Count 为 1 到 65534 时后面跟若干条 length 加 ITCH；Count 为 0 是心跳，为 65535 是收市，两者都没有 ITCH。补包请求方向相反，最后 2 字节表示请补几条。</desc>
+  <rect x="18" y="18" width="1164" height="864" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="64" y="68" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#475569">MOLDUDP64 · UDP PAYLOAD</text>
+  <text x="64" y="110" font-family="Arial,'Noto Sans SC',sans-serif" font-size="32" font-weight="800" fill="#0f172a">同一套 20 字节头，后面有没有 ITCH 看 Count</text>
+
+  <text x="64" y="158" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#0f172a">1. 所有下游包都先读这 20 字节</text>
+  <rect x="64" y="176" width="520" height="88" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="584" y="176" width="416" height="88" rx="12" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="1000" y="176" width="136" height="88" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="324" y="212" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#1e3a8a">Session</text>
+  <text x="324" y="244" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" fill="#334155">10B · offset 0–9 · 哪一轮</text>
+  <text x="792" y="212" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#155e75">Sequence Number</text>
+  <text x="792" y="244" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" fill="#334155">8B · offset 10–17 · 流水号</text>
+  <text x="1068" y="212" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#92400e">Count</text>
+  <text x="1068" y="244" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" fill="#334155">2B · 18–19</text>
+
+  <text x="64" y="308" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#0f172a">2. Count 的三个特殊读法，加上反向补包请求</text>
+
+  <text x="64" y="348" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#047857">数据包 · Exchange → 接收者 · Count = 1～65534</text>
+  <rect x="64" y="362" width="360" height="72" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="424" y="362" width="288" height="72" rx="10" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="712" y="362" width="96" height="72" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <rect x="820" y="362" width="72" height="72" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <rect x="892" y="362" width="116" height="72" rx="10" fill="#bbf7d0" stroke="#15803d" stroke-width="2"/>
+  <rect x="1020" y="362" width="56" height="72" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <rect x="1076" y="362" width="60" height="72" rx="10" fill="#bbf7d0" stroke="#15803d" stroke-width="2"/>
+  <text x="244" y="406" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">Session 10B</text>
+  <text x="568" y="406" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#155e75">Sequence 8B</text>
+  <text x="760" y="400" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#92400e">1…</text>
+  <text x="760" y="420" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" fill="#78350f">条数</text>
+  <text x="856" y="400" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" font-weight="800" fill="#14532d">Len</text>
+  <text x="856" y="420" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" fill="#166534">2B</text>
+  <text x="950" y="400" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#14532d">ITCH</text>
+  <text x="950" y="420" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" fill="#166534">变长</text>
+  <text x="1048" y="400" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" font-weight="800" fill="#14532d">Len</text>
+  <text x="1048" y="420" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="12" fill="#166534">2B</text>
+  <text x="1106" y="406" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" font-weight="800" fill="#14532d">…</text>
+  <text x="64" y="454" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" fill="#475569">绿色块可以有 1 到 65534 条。本课运行 ① 抓到的全是 1 条。</text>
+
+  <text x="64" y="498" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#6b21a8">心跳 · Exchange → 接收者 · Count = 0</text>
+  <rect x="64" y="512" width="360" height="64" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="424" y="512" width="288" height="64" rx="10" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="712" y="512" width="96" height="64" rx="10" fill="#f3e8ff" stroke="#7e22ce" stroke-width="2"/>
+  <rect x="820" y="512" width="316" height="64" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="244" y="550" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">Session 10B</text>
+  <text x="568" y="550" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#155e75">下一条该来的序号</text>
+  <text x="760" y="550" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#6b21a8">0</text>
+  <text x="978" y="550" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#64748b">没有 ITCH · 证明这路还活着</text>
+
+  <text x="64" y="616" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#9a3412">收市 · Exchange → 接收者 · Count = 65535（0xFFFF）</text>
+  <rect x="64" y="630" width="360" height="64" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="424" y="630" width="288" height="64" rx="10" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="712" y="630" width="96" height="64" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+  <rect x="820" y="630" width="316" height="64" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="244" y="668" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">Session 10B</text>
+  <text x="568" y="668" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#155e75">下一条该来的序号</text>
+  <text x="760" y="668" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#9a3412">FFFF</text>
+  <text x="978" y="668" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#64748b">没有 ITCH · 这一轮结束</text>
+
+  <text x="64" y="734" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#1d4ed8">补包请求 · 接收者 → Re-request Server · 不是第四种 Count</text>
+  <rect x="64" y="748" width="360" height="64" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="424" y="748" width="288" height="64" rx="10" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="712" y="748" width="424" height="64" rx="10" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="244" y="786" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">Session 10B</text>
+  <text x="568" y="786" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#155e75">从哪个序号开始补</text>
+  <text x="924" y="786" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="800" fill="#3730a3">请补几条 · 2B</text>
+
+  <rect x="64" y="828" width="1072" height="40" rx="12" fill="#e2e8f0"/>
+  <text x="600" y="854" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#334155">合法补包回复仍是上面的数据包，只是改成单播。本课没有这台 Re-request Server。</text>
+</svg>

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Feed B 补上 Feed A 的单路缺口后 accepted keys 覆盖 0 到 5</title>
+  <desc id="desc">Feed A 提供 sequence 0、1、2、3、5，缺少 4；Feed B 只提供 sequence 4。Handler 验证结构、抑制 duplicate、按 sequence 建索引并登记首份合法来源，合并后 accepted 的键集合覆盖 0 到 5，其中 4 的来源记为 B。集合补齐不等于已按序交付，按序交付还需要 next_expected 游标与 pending buffer。</desc>
+  <defs>
+    <style>
+      .title{font:700 30px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0f172a}
+      .sub{font:600 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .head{font:700 21px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#fff}
+      .tag{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#fff}
+      .cell{font:700 24px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#0f172a}
+      .cellg{font:700 24px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#166534}
+      .miss{font:700 15px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#b91c1c}
+      .row{font:700 18px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+      .lab{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#166534}
+      .note{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#166534}
+      .small{font:600 17px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .foot{font:700 18px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" overflow="visible">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" overflow="visible">
+      <path d="M0,0 L10,5 L0,10 z" fill="#166534"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="620" rx="18" fill="#fff"/>
+  <text x="600" y="44" text-anchor="middle" class="title">Feed B 补上单路缺口：accepted keys 覆盖 0～5</text>
+  <text x="600" y="76" text-anchor="middle" class="sub">A 缺 4 只是单路缺包；两路合起来仍能为每个 sequence 登记一份合法来源</text>
+
+  <rect x="36" y="126" width="428" height="104" rx="12" fill="#f0fdff" stroke="#0891b2" stroke-width="3"/>
+  <rect x="52" y="112" width="104" height="30" rx="8" fill="#0891b2"/>
+  <text x="104" y="134" text-anchor="middle" class="tag">Feed A</text>
+  <g fill="#fff" stroke="#0891b2" stroke-width="2">
+    <rect x="56" y="152" width="52" height="56" rx="8"/>
+    <rect x="120" y="152" width="52" height="56" rx="8"/>
+    <rect x="184" y="152" width="52" height="56" rx="8"/>
+    <rect x="248" y="152" width="52" height="56" rx="8"/>
+    <rect x="376" y="152" width="52" height="56" rx="8"/>
+  </g>
+  <rect x="312" y="152" width="52" height="56" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 4"/>
+  <g class="cell" text-anchor="middle">
+    <text x="82" y="189">0</text><text x="146" y="189">1</text><text x="210" y="189">2</text>
+    <text x="274" y="189">3</text><text x="402" y="189">5</text>
+  </g>
+  <text x="338" y="185" text-anchor="middle" class="miss">缺</text>
+  <text x="338" y="203" text-anchor="middle" class="miss">4</text>
+
+  <rect x="36" y="272" width="428" height="104" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="3"/>
+  <rect x="52" y="258" width="104" height="30" rx="8" fill="#7e22ce"/>
+  <text x="104" y="280" text-anchor="middle" class="tag">Feed B</text>
+  <rect x="312" y="298" width="52" height="56" rx="8" fill="#fff" stroke="#7e22ce" stroke-width="2"/>
+  <text x="338" y="335" text-anchor="middle" class="cell">4</text>
+  <text x="200" y="335" text-anchor="middle" class="small">本轮 B 只提供 sequence 4</text>
+
+  <path d="M464,178 H508" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M464,324 H508" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+
+  <rect x="512" y="126" width="230" height="250" rx="14" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+  <rect x="512" y="126" width="230" height="48" rx="14" fill="#334155"/>
+  <text x="627" y="159" text-anchor="middle" class="head">Feed Handler</text>
+  <text x="534" y="207" class="row">验证 wire-v1 结构</text>
+  <text x="534" y="247" class="row">抑制同序号 duplicate</text>
+  <text x="534" y="287" class="row">按 sequence 建索引</text>
+  <text x="534" y="327" class="row">登记首份合法来源</text>
+
+  <path d="M742,251 H786" fill="none" stroke="#166534" stroke-width="3" marker-end="url(#ag)"/>
+
+  <text x="800" y="146" class="lab">合并后的 accepted keys</text>
+  <g fill="#f0fdf4" stroke="#15803d" stroke-width="2">
+    <rect x="800" y="164" width="52" height="56" rx="8"/>
+    <rect x="864" y="164" width="52" height="56" rx="8"/>
+    <rect x="928" y="164" width="52" height="56" rx="8"/>
+    <rect x="992" y="164" width="52" height="56" rx="8"/>
+    <rect x="1056" y="164" width="52" height="56" rx="8"/>
+    <rect x="1120" y="164" width="52" height="56" rx="8"/>
+  </g>
+  <g class="cellg" text-anchor="middle">
+    <text x="826" y="201">0</text><text x="890" y="201">1</text><text x="954" y="201">2</text>
+    <text x="1018" y="201">3</text><text x="1082" y="201">4</text><text x="1146" y="201">5</text>
+  </g>
+  <path d="M1082,220 V244" fill="none" stroke="#7e22ce" stroke-width="2"/>
+  <text x="1082" y="264" text-anchor="middle" class="small">source = B</text>
+
+  <rect x="790" y="286" width="382" height="90" rx="12" fill="#f0fdf4" stroke="#15803d" stroke-width="3"/>
+  <text x="981" y="320" text-anchor="middle" class="note">accepted keys 覆盖 0～5</text>
+  <text x="981" y="352" text-anchor="middle" class="small">每个 sequence 只登记一份，不上报逻辑真 gap</text>
+
+  <rect x="36" y="440" width="1136" height="140" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="604" y="480" text-anchor="middle" class="foot">A 缺 4 · B 提供 4 · accepted keys 补齐</text>
+  <text x="604" y="516" text-anchor="middle" class="sub">本图证明的是「集合补齐」与「首份来源」这两件事</text>
+  <text x="604" y="552" text-anchor="middle" class="sub">按序交付是另一层：还需要 next_expected 游标与 pending buffer，本章不实现</text>
+</svg>

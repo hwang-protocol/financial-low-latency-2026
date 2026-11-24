@@ -1,0 +1,315 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1350" viewBox="0 0 1200 1350" role="img" aria-labelledby="title desc" data-layout="one-message-per-strip">
+<title id="title">ITCH 六种消息：每种类型一条，字段从左向右排列</title>
+<desc id="desc">A、F、E、D、U、P 六条完整消息紧邻排列，每条内部按线上顺序分格。每格上方为相对 ITCH 起点的偏移与宽度，单位字节。格宽为文字阅读而分配，不按字节比例。黄色为类型与证券身份，灰色为辅助或固定值，绿色为业务字段，蓝色为附加或新标识。例值只用于说明。</desc>
+<style>text{font-family:"Noto Sans CJK SC",Arial,sans-serif;fill:#475569;letter-spacing:0}.title{font-size:32px;font-weight:700}.row-title{font-size:24px;font-weight:700}.body{font-size:22px}.label{font-size:22px;font-weight:700}.meta{font-size:18px;fill:#526571}.value{font-size:20px;fill:#425a65}.note{font-size:20px;fill:#526571}.type{font-size:28px;font-weight:700}</style>
+<rect width="1200" height="1350" fill="white"/>
+<text x="40" y="50" class="title" >ITCH 消息类型对照</text>
+<text x="40" y="91" class="body" >每条是一种类型；格内上方为偏移 / 宽度（字节）。格宽为阅读而调整，不表示字节比例。</text>
+<g data-itch-type="A" data-message-bytes="36" data-message-strip="true">
+<text x="40" y="132" class="row-title" >A · 新增展示订单 · 36 字节</text>
+<text x="1160" y="132" class="note" text-anchor="end">建立引用号与股票、方向、股数、价格的对应关系</text>
+<g data-field="Message Type" data-offset="0" data-width="1"><rect x="40" y="144" width="70" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="75" y="168" class="meta" text-anchor="middle">0 / 1</text>
+<text x="75" y="204" class="label" text-anchor="middle">类型</text>
+<text x="75" y="274" class="type" text-anchor="middle">A</text>
+</g>
+<g data-field="Stock Locate" data-offset="1" data-width="2"><rect x="110" y="144" width="110" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="165" y="168" class="meta" text-anchor="middle">1 / 2</text>
+<text x="165" y="204" class="label" text-anchor="middle">证券</text>
+<text x="165" y="238" class="label" text-anchor="middle">索引</text>
+<text x="165" y="274" class="value" text-anchor="middle">8095</text>
+</g>
+<g data-field="Tracking Number" data-offset="3" data-width="2"><rect x="220" y="144" width="100" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="270" y="168" class="meta" text-anchor="middle">3 / 2</text>
+<text x="270" y="204" class="label" text-anchor="middle">内部</text>
+<text x="270" y="238" class="label" text-anchor="middle">跟踪号</text>
+<text x="270" y="274" class="value" text-anchor="middle">0</text>
+</g>
+<g data-field="Timestamp" data-offset="5" data-width="6"><rect x="320" y="144" width="120" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="380" y="168" class="meta" text-anchor="middle">5 / 6</text>
+<text x="380" y="204" class="label" text-anchor="middle">事件</text>
+<text x="380" y="238" class="label" text-anchor="middle">时间</text>
+<text x="380" y="274" class="value" text-anchor="middle">午夜起纳秒</text>
+</g>
+<g data-field="Order Reference Number" data-offset="11" data-width="8"><rect x="440" y="144" width="140" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="510" y="168" class="meta" text-anchor="middle">11 / 8</text>
+<text x="510" y="204" class="label" text-anchor="middle">挂单</text>
+<text x="510" y="238" class="label" text-anchor="middle">引用号</text>
+<text x="510" y="274" class="value" text-anchor="middle">1001</text>
+</g>
+<g data-field="Buy/Sell Indicator" data-offset="19" data-width="1"><rect x="580" y="144" width="70" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="615" y="168" class="meta" text-anchor="middle">19 / 1</text>
+<text x="615" y="204" class="label" text-anchor="middle">方向</text>
+<text x="615" y="274" class="value" text-anchor="middle">B/S</text>
+</g>
+<g data-field="Shares" data-offset="20" data-width="4"><rect x="650" y="144" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="705" y="168" class="meta" text-anchor="middle">20 / 4</text>
+<text x="705" y="204" class="label" text-anchor="middle">挂单</text>
+<text x="705" y="238" class="label" text-anchor="middle">股数</text>
+<text x="705" y="274" class="value" text-anchor="middle">200 股</text>
+</g>
+<g data-field="Stock" data-offset="24" data-width="8"><rect x="760" y="144" width="150" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="835" y="168" class="meta" text-anchor="middle">24 / 8</text>
+<text x="835" y="204" class="label" text-anchor="middle">股票</text>
+<text x="835" y="238" class="label" text-anchor="middle">代码</text>
+<text x="835" y="274" class="value" text-anchor="middle">NVDA</text>
+</g>
+<g data-field="Price" data-offset="32" data-width="4"><rect x="910" y="144" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="965" y="168" class="meta" text-anchor="middle">32 / 4</text>
+<text x="965" y="204" class="label" text-anchor="middle">价格</text>
+<text x="965" y="274" class="value" text-anchor="middle">2044800</text>
+</g>
+</g>
+<g data-itch-type="F" data-message-bytes="40" data-message-strip="true">
+<text x="40" y="322" class="row-title" >F · 带参与者标识的新增订单 · 40 字节</text>
+<text x="1160" y="322" class="note" text-anchor="end">与 A 相同，末尾增加参与者标识</text>
+<g data-field="Message Type" data-offset="0" data-width="1"><rect x="40" y="334" width="70" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="75" y="358" class="meta" text-anchor="middle">0 / 1</text>
+<text x="75" y="394" class="label" text-anchor="middle">类型</text>
+<text x="75" y="464" class="type" text-anchor="middle">F</text>
+</g>
+<g data-field="Stock Locate" data-offset="1" data-width="2"><rect x="110" y="334" width="110" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="165" y="358" class="meta" text-anchor="middle">1 / 2</text>
+<text x="165" y="394" class="label" text-anchor="middle">证券</text>
+<text x="165" y="428" class="label" text-anchor="middle">索引</text>
+<text x="165" y="464" class="value" text-anchor="middle">8095</text>
+</g>
+<g data-field="Tracking Number" data-offset="3" data-width="2"><rect x="220" y="334" width="100" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="270" y="358" class="meta" text-anchor="middle">3 / 2</text>
+<text x="270" y="394" class="label" text-anchor="middle">内部</text>
+<text x="270" y="428" class="label" text-anchor="middle">跟踪号</text>
+<text x="270" y="464" class="value" text-anchor="middle">0</text>
+</g>
+<g data-field="Timestamp" data-offset="5" data-width="6"><rect x="320" y="334" width="120" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="380" y="358" class="meta" text-anchor="middle">5 / 6</text>
+<text x="380" y="394" class="label" text-anchor="middle">事件</text>
+<text x="380" y="428" class="label" text-anchor="middle">时间</text>
+<text x="380" y="464" class="value" text-anchor="middle">午夜起纳秒</text>
+</g>
+<g data-field="Order Reference Number" data-offset="11" data-width="8"><rect x="440" y="334" width="140" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="510" y="358" class="meta" text-anchor="middle">11 / 8</text>
+<text x="510" y="394" class="label" text-anchor="middle">挂单</text>
+<text x="510" y="428" class="label" text-anchor="middle">引用号</text>
+<text x="510" y="464" class="value" text-anchor="middle">1001</text>
+</g>
+<g data-field="Buy/Sell Indicator" data-offset="19" data-width="1"><rect x="580" y="334" width="70" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="615" y="358" class="meta" text-anchor="middle">19 / 1</text>
+<text x="615" y="394" class="label" text-anchor="middle">方向</text>
+<text x="615" y="464" class="value" text-anchor="middle">B/S</text>
+</g>
+<g data-field="Shares" data-offset="20" data-width="4"><rect x="650" y="334" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="705" y="358" class="meta" text-anchor="middle">20 / 4</text>
+<text x="705" y="394" class="label" text-anchor="middle">挂单</text>
+<text x="705" y="428" class="label" text-anchor="middle">股数</text>
+<text x="705" y="464" class="value" text-anchor="middle">200 股</text>
+</g>
+<g data-field="Stock" data-offset="24" data-width="8"><rect x="760" y="334" width="150" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="835" y="358" class="meta" text-anchor="middle">24 / 8</text>
+<text x="835" y="394" class="label" text-anchor="middle">股票</text>
+<text x="835" y="428" class="label" text-anchor="middle">代码</text>
+<text x="835" y="464" class="value" text-anchor="middle">NVDA</text>
+</g>
+<g data-field="Price" data-offset="32" data-width="4"><rect x="910" y="334" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="965" y="358" class="meta" text-anchor="middle">32 / 4</text>
+<text x="965" y="394" class="label" text-anchor="middle">价格</text>
+<text x="965" y="464" class="value" text-anchor="middle">2044800</text>
+</g>
+<g data-field="Attribution" data-offset="36" data-width="4"><rect x="1020" y="334" width="140" height="148" fill="#e5effb" stroke="white" stroke-width="2"/>
+<text x="1090" y="358" class="meta" text-anchor="middle">36 / 4</text>
+<text x="1090" y="394" class="label" text-anchor="middle">参与者</text>
+<text x="1090" y="428" class="label" text-anchor="middle">标识</text>
+<text x="1090" y="464" class="value" text-anchor="middle">4 个字符</text>
+</g>
+</g>
+<g data-itch-type="E" data-message-bytes="31" data-message-strip="true">
+<text x="40" y="512" class="row-title" >E · 已有挂单成交 · 31 字节</text>
+<text x="1160" y="512" class="note" text-anchor="end">按原引用号扣减成交股数</text>
+<g data-field="Message Type" data-offset="0" data-width="1"><rect x="40" y="524" width="70" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="75" y="548" class="meta" text-anchor="middle">0 / 1</text>
+<text x="75" y="584" class="label" text-anchor="middle">类型</text>
+<text x="75" y="654" class="type" text-anchor="middle">E</text>
+</g>
+<g data-field="Stock Locate" data-offset="1" data-width="2"><rect x="110" y="524" width="110" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="165" y="548" class="meta" text-anchor="middle">1 / 2</text>
+<text x="165" y="584" class="label" text-anchor="middle">证券</text>
+<text x="165" y="618" class="label" text-anchor="middle">索引</text>
+<text x="165" y="654" class="value" text-anchor="middle">8095</text>
+</g>
+<g data-field="Tracking Number" data-offset="3" data-width="2"><rect x="220" y="524" width="100" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="270" y="548" class="meta" text-anchor="middle">3 / 2</text>
+<text x="270" y="584" class="label" text-anchor="middle">内部</text>
+<text x="270" y="618" class="label" text-anchor="middle">跟踪号</text>
+<text x="270" y="654" class="value" text-anchor="middle">0</text>
+</g>
+<g data-field="Timestamp" data-offset="5" data-width="6"><rect x="320" y="524" width="120" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="380" y="548" class="meta" text-anchor="middle">5 / 6</text>
+<text x="380" y="584" class="label" text-anchor="middle">事件</text>
+<text x="380" y="618" class="label" text-anchor="middle">时间</text>
+<text x="380" y="654" class="value" text-anchor="middle">午夜起纳秒</text>
+</g>
+<g data-field="Order Reference Number" data-offset="11" data-width="8"><rect x="440" y="524" width="140" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="510" y="548" class="meta" text-anchor="middle">11 / 8</text>
+<text x="510" y="584" class="label" text-anchor="middle">挂单</text>
+<text x="510" y="618" class="label" text-anchor="middle">引用号</text>
+<text x="510" y="654" class="value" text-anchor="middle">1001</text>
+</g>
+<g data-field="Executed Shares" data-offset="19" data-width="4"><rect x="580" y="524" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="635" y="548" class="meta" text-anchor="middle">19 / 4</text>
+<text x="635" y="584" class="label" text-anchor="middle">成交</text>
+<text x="635" y="618" class="label" text-anchor="middle">股数</text>
+<text x="635" y="654" class="value" text-anchor="middle">扣减 50 股</text>
+</g>
+<g data-field="Match Number" data-offset="23" data-width="8"><rect x="690" y="524" width="140" height="148" fill="#e5effb" stroke="white" stroke-width="2"/>
+<text x="760" y="548" class="meta" text-anchor="middle">23 / 8</text>
+<text x="760" y="584" class="label" text-anchor="middle">成交</text>
+<text x="760" y="618" class="label" text-anchor="middle">编号</text>
+<text x="760" y="654" class="value" text-anchor="middle">9001</text>
+</g>
+</g>
+<g data-itch-type="D" data-message-bytes="19" data-message-strip="true">
+<text x="40" y="702" class="row-title" >D · 删除已有挂单 · 19 字节</text>
+<text x="1160" y="702" class="note" text-anchor="end">按原引用号删除全部剩余股数</text>
+<g data-field="Message Type" data-offset="0" data-width="1"><rect x="40" y="714" width="70" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="75" y="738" class="meta" text-anchor="middle">0 / 1</text>
+<text x="75" y="774" class="label" text-anchor="middle">类型</text>
+<text x="75" y="844" class="type" text-anchor="middle">D</text>
+</g>
+<g data-field="Stock Locate" data-offset="1" data-width="2"><rect x="110" y="714" width="110" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="165" y="738" class="meta" text-anchor="middle">1 / 2</text>
+<text x="165" y="774" class="label" text-anchor="middle">证券</text>
+<text x="165" y="808" class="label" text-anchor="middle">索引</text>
+<text x="165" y="844" class="value" text-anchor="middle">8095</text>
+</g>
+<g data-field="Tracking Number" data-offset="3" data-width="2"><rect x="220" y="714" width="100" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="270" y="738" class="meta" text-anchor="middle">3 / 2</text>
+<text x="270" y="774" class="label" text-anchor="middle">内部</text>
+<text x="270" y="808" class="label" text-anchor="middle">跟踪号</text>
+<text x="270" y="844" class="value" text-anchor="middle">0</text>
+</g>
+<g data-field="Timestamp" data-offset="5" data-width="6"><rect x="320" y="714" width="120" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="380" y="738" class="meta" text-anchor="middle">5 / 6</text>
+<text x="380" y="774" class="label" text-anchor="middle">事件</text>
+<text x="380" y="808" class="label" text-anchor="middle">时间</text>
+<text x="380" y="844" class="value" text-anchor="middle">午夜起纳秒</text>
+</g>
+<g data-field="Order Reference Number" data-offset="11" data-width="8"><rect x="440" y="714" width="140" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="510" y="738" class="meta" text-anchor="middle">11 / 8</text>
+<text x="510" y="774" class="label" text-anchor="middle">挂单</text>
+<text x="510" y="808" class="label" text-anchor="middle">引用号</text>
+<text x="510" y="844" class="value" text-anchor="middle">1001</text>
+</g>
+</g>
+<g data-itch-type="U" data-message-bytes="35" data-message-strip="true">
+<text x="40" y="892" class="row-title" >U · 替换已有挂单 · 35 字节</text>
+<text x="1160" y="892" class="note" text-anchor="end">旧单换新单，股票与方向继承原单</text>
+<g data-field="Message Type" data-offset="0" data-width="1"><rect x="40" y="904" width="70" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="75" y="928" class="meta" text-anchor="middle">0 / 1</text>
+<text x="75" y="964" class="label" text-anchor="middle">类型</text>
+<text x="75" y="1034" class="type" text-anchor="middle">U</text>
+</g>
+<g data-field="Stock Locate" data-offset="1" data-width="2"><rect x="110" y="904" width="110" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="165" y="928" class="meta" text-anchor="middle">1 / 2</text>
+<text x="165" y="964" class="label" text-anchor="middle">证券</text>
+<text x="165" y="998" class="label" text-anchor="middle">索引</text>
+<text x="165" y="1034" class="value" text-anchor="middle">8095</text>
+</g>
+<g data-field="Tracking Number" data-offset="3" data-width="2"><rect x="220" y="904" width="100" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="270" y="928" class="meta" text-anchor="middle">3 / 2</text>
+<text x="270" y="964" class="label" text-anchor="middle">内部</text>
+<text x="270" y="998" class="label" text-anchor="middle">跟踪号</text>
+<text x="270" y="1034" class="value" text-anchor="middle">0</text>
+</g>
+<g data-field="Timestamp" data-offset="5" data-width="6"><rect x="320" y="904" width="120" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="380" y="928" class="meta" text-anchor="middle">5 / 6</text>
+<text x="380" y="964" class="label" text-anchor="middle">事件</text>
+<text x="380" y="998" class="label" text-anchor="middle">时间</text>
+<text x="380" y="1034" class="value" text-anchor="middle">午夜起纳秒</text>
+</g>
+<g data-field="Original Order Reference Number" data-offset="11" data-width="8"><rect x="440" y="904" width="140" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="510" y="928" class="meta" text-anchor="middle">11 / 8</text>
+<text x="510" y="964" class="label" text-anchor="middle">旧挂单</text>
+<text x="510" y="998" class="label" text-anchor="middle">引用号</text>
+<text x="510" y="1034" class="value" text-anchor="middle">1001</text>
+</g>
+<g data-field="New Order Reference Number" data-offset="19" data-width="8"><rect x="580" y="904" width="140" height="148" fill="#e5effb" stroke="white" stroke-width="2"/>
+<text x="650" y="928" class="meta" text-anchor="middle">19 / 8</text>
+<text x="650" y="964" class="label" text-anchor="middle">新挂单</text>
+<text x="650" y="998" class="label" text-anchor="middle">引用号</text>
+<text x="650" y="1034" class="value" text-anchor="middle">1002</text>
+</g>
+<g data-field="Shares" data-offset="27" data-width="4"><rect x="720" y="904" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="775" y="928" class="meta" text-anchor="middle">27 / 4</text>
+<text x="775" y="964" class="label" text-anchor="middle">新挂单</text>
+<text x="775" y="998" class="label" text-anchor="middle">股数</text>
+<text x="775" y="1034" class="value" text-anchor="middle">新 150 股</text>
+</g>
+<g data-field="Price" data-offset="31" data-width="4"><rect x="830" y="904" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="885" y="928" class="meta" text-anchor="middle">31 / 4</text>
+<text x="885" y="964" class="label" text-anchor="middle">价格</text>
+<text x="885" y="1034" class="value" text-anchor="middle">2044800</text>
+</g>
+</g>
+<g data-itch-type="P" data-message-bytes="44" data-message-strip="true">
+<text x="40" y="1082" class="row-title" >P · 非展示订单成交 · 44 字节</text>
+<text x="1160" y="1082" class="note" text-anchor="end">只记成交，不增减展示订单簿</text>
+<g data-field="Message Type" data-offset="0" data-width="1"><rect x="40" y="1094" width="70" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="75" y="1118" class="meta" text-anchor="middle">0 / 1</text>
+<text x="75" y="1154" class="label" text-anchor="middle">类型</text>
+<text x="75" y="1224" class="type" text-anchor="middle">P</text>
+</g>
+<g data-field="Stock Locate" data-offset="1" data-width="2"><rect x="110" y="1094" width="110" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="165" y="1118" class="meta" text-anchor="middle">1 / 2</text>
+<text x="165" y="1154" class="label" text-anchor="middle">证券</text>
+<text x="165" y="1188" class="label" text-anchor="middle">索引</text>
+<text x="165" y="1224" class="value" text-anchor="middle">8095</text>
+</g>
+<g data-field="Tracking Number" data-offset="3" data-width="2"><rect x="220" y="1094" width="100" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="270" y="1118" class="meta" text-anchor="middle">3 / 2</text>
+<text x="270" y="1154" class="label" text-anchor="middle">内部</text>
+<text x="270" y="1188" class="label" text-anchor="middle">跟踪号</text>
+<text x="270" y="1224" class="value" text-anchor="middle">0</text>
+</g>
+<g data-field="Timestamp" data-offset="5" data-width="6"><rect x="320" y="1094" width="120" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="380" y="1118" class="meta" text-anchor="middle">5 / 6</text>
+<text x="380" y="1154" class="label" text-anchor="middle">事件</text>
+<text x="380" y="1188" class="label" text-anchor="middle">时间</text>
+<text x="380" y="1224" class="value" text-anchor="middle">午夜起纳秒</text>
+</g>
+<g data-field="Order Reference Number" data-offset="11" data-width="8"><rect x="440" y="1094" width="140" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="510" y="1118" class="meta" text-anchor="middle">11 / 8</text>
+<text x="510" y="1154" class="label" text-anchor="middle">挂单</text>
+<text x="510" y="1188" class="label" text-anchor="middle">引用号</text>
+<text x="510" y="1224" class="value" text-anchor="middle">固定 0</text>
+</g>
+<g data-field="Buy/Sell Indicator" data-offset="19" data-width="1"><rect x="580" y="1094" width="70" height="148" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="615" y="1118" class="meta" text-anchor="middle">19 / 1</text>
+<text x="615" y="1154" class="label" text-anchor="middle">方向</text>
+<text x="615" y="1224" class="value" text-anchor="middle">固定B</text>
+</g>
+<g data-field="Shares" data-offset="20" data-width="4"><rect x="650" y="1094" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="705" y="1118" class="meta" text-anchor="middle">20 / 4</text>
+<text x="705" y="1154" class="label" text-anchor="middle">成交</text>
+<text x="705" y="1188" class="label" text-anchor="middle">股数</text>
+<text x="705" y="1224" class="value" text-anchor="middle">成交 50</text>
+</g>
+<g data-field="Stock" data-offset="24" data-width="8"><rect x="760" y="1094" width="150" height="148" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="835" y="1118" class="meta" text-anchor="middle">24 / 8</text>
+<text x="835" y="1154" class="label" text-anchor="middle">股票</text>
+<text x="835" y="1188" class="label" text-anchor="middle">代码</text>
+<text x="835" y="1224" class="value" text-anchor="middle">NVDA</text>
+</g>
+<g data-field="Price" data-offset="32" data-width="4"><rect x="910" y="1094" width="110" height="148" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="965" y="1118" class="meta" text-anchor="middle">32 / 4</text>
+<text x="965" y="1154" class="label" text-anchor="middle">价格</text>
+<text x="965" y="1224" class="value" text-anchor="middle">2044800</text>
+</g>
+<g data-field="Match Number" data-offset="36" data-width="8"><rect x="1020" y="1094" width="140" height="148" fill="#e5effb" stroke="white" stroke-width="2"/>
+<text x="1090" y="1118" class="meta" text-anchor="middle">36 / 8</text>
+<text x="1090" y="1154" class="label" text-anchor="middle">成交</text>
+<text x="1090" y="1188" class="label" text-anchor="middle">编号</text>
+<text x="1090" y="1224" class="value" text-anchor="middle">9002</text>
+</g>
+</g>
+<text x="40" y="1282" class="body" >黄色：类型与股票身份    灰色：辅助或固定值    绿色：业务字段    蓝色：附加或新标识</text>
+<text x="40" y="1320" class="body" >数值按大端读取；类型、方向、股票及参与者标识按 ASCII 读取。例值仅供说明。</text>
+</svg>

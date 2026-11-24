@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="940" viewBox="0 0 1200 940" role="img" aria-labelledby="title desc">
+  <title id="title">Soup 外层套 OUCH 里层：U 装 O，S 装 A，S 装 E</title>
+  <desc id="desc">Soup Packet Type 和 OUCH Type 是两套字母。本卡 client 的 Unsequenced Data U 里面是 Enter Order O；Exchange 的 Sequenced Data S 里面分别是 Order Accepted A 与 Order Executed E。先按 Packet Length 切开外层，再读 Message 里的 OUCH。</desc>
+  <rect x="18" y="18" width="1164" height="904" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="64" y="68" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#475569">LAYER · SOUP THEN OUCH</text>
+  <text x="64" y="108" font-family="Arial,'Noto Sans SC',sans-serif" font-size="28" font-weight="800" fill="#0f172a">O 装在 U 的 Message 里，不是 U 装在 O 里</text>
+
+  <text x="64" y="150" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="700" fill="#0f172a">1. 先认两套字母：青色是信封，绿色是信</text>
+
+  <rect x="64" y="164" width="344" height="168" rx="18" fill="#f5f3ff" stroke="#7e22ce" stroke-width="3"/>
+  <text x="236" y="196" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="800" fill="#6b21a8">Soup Packet Type · U</text>
+  <text x="236" y="220" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" fill="#6b21a8">Unsequenced Data · client → Exchange</text>
+  <rect x="84" y="236" width="304" height="76" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="236" y="268" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#14532d">里面是 OUCH Type · O</text>
+  <text x="236" y="294" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" fill="#166534">Enter Order</text>
+
+  <rect x="428" y="164" width="344" height="168" rx="18" fill="#ecfeff" stroke="#0d9488" stroke-width="3"/>
+  <text x="600" y="196" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="800" fill="#0f766e">Soup Packet Type · S</text>
+  <text x="600" y="220" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" fill="#0f766e">Sequenced Data · Exchange → client</text>
+  <rect x="448" y="236" width="304" height="76" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="600" y="268" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#14532d">里面是 OUCH Type · A</text>
+  <text x="600" y="294" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" fill="#166534">Order Accepted</text>
+
+  <rect x="792" y="164" width="344" height="168" rx="18" fill="#ecfeff" stroke="#0d9488" stroke-width="3"/>
+  <text x="964" y="196" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="800" fill="#0f766e">Soup Packet Type · S</text>
+  <text x="964" y="220" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" fill="#0f766e">Sequenced Data · Exchange → client</text>
+  <rect x="812" y="236" width="304" height="76" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="964" y="268" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#14532d">里面是 OUCH Type · E</text>
+  <text x="964" y="294" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" fill="#166534">Order Executed</text>
+
+  <text x="64" y="372" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="700" fill="#0f172a">2. 每个逻辑包都先切外层这三块，再打开 Message</text>
+  <rect x="64" y="388" width="220" height="72" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="284" y="388" width="220" height="72" rx="12" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <rect x="504" y="388" width="632" height="72" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="174" y="420" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="800" fill="#1e3a8a">Packet Length</text>
+  <text x="174" y="444" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" fill="#334155">2B · 后面还有几字节</text>
+  <text x="394" y="420" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="800" fill="#155e75">Packet Type</text>
+  <text x="394" y="444" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" fill="#334155">1B · 外层 U 或 S</text>
+  <text x="820" y="420" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="800" fill="#14532d">Message</text>
+  <text x="820" y="444" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" fill="#334155">变长 · 整封才是一条 OUCH</text>
+
+  <text x="64" y="500" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="700" fill="#0f172a">3. 本卡三条业务包：左边是信封，绿框里才是订单内容</text>
+
+  <text x="64" y="532" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#6b21a8">U 里的 O · Packet Length = 48 · Enter Order 47B</text>
+  <rect x="64" y="542" width="100" height="70" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="164" y="542" width="56" height="70" rx="10" fill="#f3e8ff" stroke="#7e22ce" stroke-width="2"/>
+  <rect x="228" y="542" width="908" height="70" rx="10" fill="#ecfdf5" stroke="#15803d" stroke-width="2"/>
+  <text x="114" y="584" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" font-weight="800" fill="#1e3a8a">Length</text>
+  <text x="192" y="584" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#6b21a8">U</text>
+  <rect x="244" y="556" width="70" height="42" rx="6" fill="#bbf7d0" stroke="#15803d"/>
+  <rect x="318" y="556" width="150" height="42" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="472" y="556" width="70" height="42" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="546" y="556" width="110" height="42" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="660" y="556" width="100" height="42" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="764" y="556" width="80" height="42" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="848" y="556" width="48" height="42" rx="6" fill="#bbf7d0" stroke="#15803d"/>
+  <rect x="900" y="556" width="220" height="42" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <text x="279" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" font-weight="800" fill="#14532d">Type O</text>
+  <text x="393" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">UserRefNum 4</text>
+  <text x="507" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" font-weight="800" fill="#14532d">Side 1</text>
+  <text x="601" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Quantity 4</text>
+  <text x="710" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Symbol 8</text>
+  <text x="804" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Price 8</text>
+  <text x="872" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#14532d">…</text>
+  <text x="1010" y="583" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">ClOrdID 14</text>
+
+  <text x="64" y="648" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#0f766e">S 里的 A · Packet Length = 65 · Order Accepted 64B</text>
+  <rect x="64" y="658" width="100" height="64" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="164" y="658" width="56" height="64" rx="10" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+  <rect x="228" y="658" width="908" height="64" rx="10" fill="#ecfdf5" stroke="#15803d" stroke-width="2"/>
+  <text x="114" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" font-weight="800" fill="#1e3a8a">Length</text>
+  <text x="192" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#0f766e">S</text>
+  <rect x="244" y="670" width="70" height="40" rx="6" fill="#bbf7d0" stroke="#15803d"/>
+  <rect x="318" y="670" width="150" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="472" y="670" width="48" height="40" rx="6" fill="#bbf7d0" stroke="#15803d"/>
+  <rect x="524" y="670" width="220" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="748" y="670" width="140" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="892" y="670" width="228" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <text x="279" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" font-weight="800" fill="#14532d">Type A</text>
+  <text x="393" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">UserRefNum 4</text>
+  <text x="496" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#14532d">…</text>
+  <text x="634" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Order Reference Number 8</text>
+  <text x="818" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Order State 1</text>
+  <text x="1006" y="696" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">ClOrdID 14</text>
+
+  <text x="64" y="756" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" font-weight="800" fill="#0f766e">S 里的 E · Packet Length = 37 · Order Executed 36B</text>
+  <rect x="64" y="766" width="100" height="64" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <rect x="164" y="766" width="56" height="64" rx="10" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+  <rect x="228" y="766" width="908" height="64" rx="10" fill="#ecfdf5" stroke="#15803d" stroke-width="2"/>
+  <text x="114" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" font-weight="800" fill="#1e3a8a">Length</text>
+  <text x="192" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#0f766e">S</text>
+  <rect x="244" y="778" width="70" height="40" rx="6" fill="#bbf7d0" stroke="#15803d"/>
+  <rect x="318" y="778" width="150" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="472" y="778" width="110" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="586" y="778" width="90" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="680" y="778" width="150" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <rect x="834" y="778" width="286" height="40" rx="6" fill="#dcfce7" stroke="#15803d"/>
+  <text x="279" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="14" font-weight="800" fill="#14532d">Type E</text>
+  <text x="393" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">UserRefNum 4</text>
+  <text x="527" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Quantity 4</text>
+  <text x="631" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Price 8</text>
+  <text x="755" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Liquidity Flag 1</text>
+  <text x="977" y="804" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="13" font-weight="800" fill="#14532d">Match Number 8</text>
+
+  <rect x="64" y="850" width="1072" height="52" rx="12" fill="#e2e8f0"/>
+  <text x="600" y="884" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" font-weight="700" fill="#334155">Soup 也有 A / J / O，OUCH 也有 A / J / O。先读外层 Packet Type，再读绿框里的 Type，不要把两套字母合成一种消息。</text>
+</svg>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="816" viewBox="0 0 1200 816" role="img" aria-labelledby="title desc">
+<title id="title">PMD 的收发分工</title><desc id="desc">发送从左到右，接收从右到左；箭头表示处理先后。PMD 在主机 CPU 上操作描述符并检查完成事件，网卡 DMA 直接读写主机缓冲区。</desc>
+<defs>
+<marker id="tx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#1769c2"/></marker>
+<marker id="rx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#078576"/></marker>
+<marker id="muted" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#8193a6"/></marker>
+</defs>
+<rect width="1200" height="816" rx="22" fill="#f4f7fb"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif">
+<rect x="28" y="24" width="1144" height="100" rx="16" fill="#ffffff" stroke="#e2e9f0" stroke-width="2"/>
+<g class="flat-icon" transform="translate(49 48)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="6"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M16 0v8m16-8v8M16 40v8m16-8v8M0 16h8m-8 16h8m32-16h8m-8 16h8"/></g>
+<text x="110" y="66" font-size="32" fill="#163047" font-weight="700" text-anchor="start">PMD · 谁来操作网卡队列？</text>
+<text x="110" y="101" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">F-Stack 处理 TCP，PMD 管理队列，网卡通过 DMA 搬运报文。</text>
+<rect x="995" y="43" width="153" height="45" rx="22" fill="#b56a12" stroke="#b56a12" stroke-width="2"/>
+<text x="1071" y="73" font-size="18" fill="#ffffff" font-weight="700" text-anchor="middle">收发分工</text>
+<g class="flat-icon" transform="translate(56 157)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 4 22 11-22 11L2 15zm-22 22 22 11 22-11M2 36l22 11 22-11"/></g>
+<text x="122" y="181" font-size="26" fill="#1769c2" font-weight="700" text-anchor="start">F-Stack</text>
+<text x="122" y="215" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">用户态 TCP/IP 栈</text>
+<g class="flat-icon" transform="translate(446 157)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M39 14A18 18 0 0 0 8 15m31-9v10H29M9 34a18 18 0 0 0 31-1M9 42V32h10"/></g>
+<text x="512" y="181" font-size="26" fill="#b56a12" font-weight="700" text-anchor="start">DPDK PMD</text>
+<text x="512" y="215" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">用户态网卡驱动</text>
+<g class="flat-icon" transform="translate(836 157)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="42" height="30" rx="5"/><rect x="8" y="15" width="15" height="13" rx="2"/><path d="M29 16h9m-9 8h9M9 37v7m7-7v7m7-7v7m7-7v7m7-7v7"/></g>
+<text x="902" y="181" font-size="26" fill="#078576" font-weight="700" text-anchor="start">X2522 网卡</text>
+<text x="902" y="215" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">执行报文收发</text>
+<text x="40" y="260" font-size="24" fill="#1769c2" font-weight="700" text-anchor="start">发送 → 先准备报文，再通知网卡取包</text>
+<rect x="40" y="282" width="340" height="194" rx="16" fill="#fff" stroke="#cbdff3" stroke-width="2"/>
+<rect x="430" y="282" width="340" height="194" rx="16" fill="#fff" stroke="#cbdff3" stroke-width="2"/>
+<rect x="820" y="282" width="340" height="194" rx="16" fill="#fff" stroke="#cbdff3" stroke-width="2"/>
+<text x="60" y="321" font-size="24" fill="#163047" font-weight="700" text-anchor="start">① 组成 TCP/IP 报文</text>
+<g class="flat-icon" transform="translate(60 348)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="40" height="17" rx="4"/><rect x="4" y="27" width="40" height="17" rx="4"/><path d="M12 12h3m8 0h13M12 35h3m8 0h13"/></g>
+<text x="126" y="371" font-size="22" fill="#1769c2" font-weight="700" text-anchor="start">主机发送缓冲区</text>
+<text x="60" y="443" font-size="21" fill="#52677c" font-weight="400" text-anchor="start">报文字节保存在这里</text>
+<text x="450" y="321" font-size="24" fill="#163047" font-weight="700" text-anchor="start">② 写 TX 描述符</text>
+<rect x="450" y="345" width="36" height="36" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="498" y="345" width="36" height="36" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="546" y="345" width="36" height="36" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="594" y="345" width="36" height="36" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="642" y="345" width="36" height="36" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="690" y="345" width="36" height="36" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<text x="450" y="411" font-size="22" fill="#163047" font-weight="700" text-anchor="start">记录缓冲地址与长度</text>
+<text x="450" y="445" font-size="21" fill="#52677c" font-weight="400" text-anchor="start">通知网卡有报文待发</text>
+<text x="840" y="321" font-size="24" fill="#163047" font-weight="700" text-anchor="start">③ DMA 读取报文</text>
+<g class="flat-icon" transform="translate(840 351)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="42" height="30" rx="5"/><rect x="8" y="15" width="15" height="13" rx="2"/><path d="M29 16h9m-9 8h9M9 37v7m7-7v7m7-7v7m7-7v7m7-7v7"/></g>
+<text x="906" y="374" font-size="21" fill="#1769c2" font-weight="700" text-anchor="start">从主机缓冲区取包</text>
+<text x="840" y="443" font-size="21" fill="#52677c" font-weight="400" text-anchor="start">网卡随后发到网络</text>
+<path class="flow" d="M386 370 L406.0 370.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M776 370 L796.0 370.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<text x="40" y="525" font-size="24" fill="#078576" font-weight="700" text-anchor="start">接收 ← 网卡先写入缓冲区，再交给协议栈</text>
+<rect x="40" y="548" width="340" height="194" rx="16" fill="#fff" stroke="#bce0d4" stroke-width="2"/>
+<rect x="430" y="548" width="340" height="194" rx="16" fill="#fff" stroke="#bce0d4" stroke-width="2"/>
+<rect x="820" y="548" width="340" height="194" rx="16" fill="#fff" stroke="#bce0d4" stroke-width="2"/>
+<text x="840" y="587" font-size="24" fill="#163047" font-weight="700" text-anchor="start">① DMA 写入报文</text>
+<g class="flat-icon" transform="translate(840 613)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="40" height="17" rx="4"/><rect x="4" y="27" width="40" height="17" rx="4"/><path d="M12 12h3m8 0h13M12 35h3m8 0h13"/></g>
+<text x="906" y="637" font-size="22" fill="#078576" font-weight="700" text-anchor="start">主机接收缓冲区</text>
+<text x="840" y="709" font-size="21" fill="#52677c" font-weight="400" text-anchor="start">使用提前备好的缓冲区</text>
+<text x="450" y="587" font-size="24" fill="#163047" font-weight="700" text-anchor="start">② 轮询完成事件</text>
+<rect x="450" y="610" width="36" height="36" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="498" y="610" width="36" height="36" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="546" y="610" width="36" height="36" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="594" y="610" width="36" height="36" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="642" y="610" width="36" height="36" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="690" y="610" width="36" height="36" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<text x="450" y="676" font-size="22" fill="#163047" font-weight="700" text-anchor="start">找到已收到的报文</text>
+<text x="450" y="710" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">交给 F-Stack，并补 RX 缓冲</text>
+<text x="60" y="587" font-size="24" fill="#163047" font-weight="700" text-anchor="start">③ 处理 TCP 回报</text>
+<g class="flat-icon" transform="translate(60 616)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 4 22 11-22 11L2 15zm-22 22 22 11 22-11M2 36l22 11 22-11"/></g>
+<text x="126" y="637" font-size="22" fill="#078576" font-weight="700" text-anchor="start">恢复 TCP 字节流</text>
+<text x="60" y="709" font-size="21" fill="#52677c" font-weight="400" text-anchor="start">应用用 ff_recv 取回数据</text>
+<path class="flow" d="M814 636 L794.0 636.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<path class="flow" d="M424 636 L404.0 636.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<text x="40" y="783" font-size="22" fill="#52677c" font-weight="400" text-anchor="start">箭头表示处理先后；描述符记录缓冲区信息，报文字节由网卡 DMA 直接读写。</text>
+</g></svg>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="880" viewBox="0 0 1600 880" role="img" aria-labelledby="title desc">
+  <title id="title">DPDK 加 F-Stack 接管 X2522、分配 CPU 并安全交还</title>
+  <desc id="desc">图从左到右展示 SFC 状态、所有权切换和 DPDK 状态。DPDK 状态中，CPU 3 的 management 线程接收命令并查询状态，正式测量关闭周期心跳；它在 send 到最终响应的网络计时段之外。DEQUE_CV 订单由同在 CPU 3 的 bridge 交给 CPU 2 的 F-Stack reactor，再经 net_sfc_efx PMD 和 VFIO 操作 X2522。底部单独展示 EXIT 与独立 systemd deadman 的串行恢复路径：恢复器先取得 BDF 锁，再绑定回 sfc、恢复地址、清零大页并完成三次 ping。</desc>
+  <defs>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .mono{font-family:"DejaVu Sans Mono","Noto Sans Mono CJK SC",monospace;fill:#0f172a}
+      .h{font-size:30px;font-weight:900}.sub{font-size:16px;fill:#475569}
+      .k{font-size:20px;font-weight:900}.b{font-size:16px;font-weight:800}
+      .s{font-size:14px;fill:#475569}.badge{font-size:16px;font-weight:900;fill:#fff}
+      .line{fill:none;stroke-width:4;stroke-linecap:round}
+    </style>
+    <marker id="blue" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0,0 L16,6 L0,12 Z" fill="#2563eb"/></marker>
+    <marker id="orange" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0,0 L16,6 L0,12 Z" fill="#d97706"/></marker>
+    <marker id="green" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0,0 L16,6 L0,12 Z" fill="#15803d"/></marker>
+    <marker id="slate" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0,0 L16,6 L0,12 Z" fill="#64748b"/></marker>
+  </defs>
+
+  <rect x="12" y="12" width="1576" height="856" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text class="t h" x="52" y="58">同一块 X2522：先交闸，再分座位，最后必须交还</text>
+  <text class="t sub" x="52" y="88">只有 vfio-pci；没有 UIO。蓝色实线是接管 / 数据主线，灰色虚线是计时外管理入口，绿色是独立恢复；SSH 始终走 10.1.1.2。</text>
+
+  <g id="sfc-state">
+    <rect x="50" y="126" width="420" height="540" rx="22" fill="#f0fdf4" stroke="#22c55e" stroke-width="2.5"/>
+    <circle cx="88" cy="164" r="20" fill="#15803d"/><text class="t badge" x="88" y="170" text-anchor="middle">1</text>
+    <text class="t k" x="126" y="171">SFC_ACTIVE</text>
+    <text class="mono s" x="80" y="212">owner = sfc</text>
+    <text class="mono s" x="80" y="238">ens64np1 = 20.1.1.2/24</text>
+
+    <rect x="82" y="278" width="356" height="82" rx="14" fill="#fff" stroke="#86efac" stroke-width="2"/>
+    <text class="t b" x="260" y="311" text-anchor="middle">三条客户端同时 ONLINE</text>
+    <text class="t s" x="260" y="340" text-anchor="middle">Socket · OpenOnload · TCPDirect</text>
+
+    <rect x="82" y="392" width="356" height="92" rx="14" fill="#fff" stroke="#86efac" stroke-width="2"/>
+    <text class="t b" x="260" y="425" text-anchor="middle">Linux 普通网口仍在</text>
+    <text class="t s" x="260" y="454" text-anchor="middle">Kernel / 回退流量走 sfc netdev</text>
+
+    <text class="t s" x="80" y="540">进入 DPDK 前：</text>
+    <text class="t s" x="100" y="570">停三条客户端 · 保存驱动与地址</text>
+    <text class="t s" x="100" y="598">确认 group 7 只有 0000:03:00.0</text>
+  </g>
+
+  <path class="line" d="M470 382H575" stroke="#2563eb" marker-end="url(#blue)"/>
+
+  <g id="ownership-switch">
+    <rect x="590" y="126" width="420" height="540" rx="22" fill="#fff7ed" stroke="#fb923c" stroke-width="2.5"/>
+    <circle cx="628" cy="164" r="20" fill="#ea580c"/><text class="t badge" x="628" y="170" text-anchor="middle">2</text>
+    <text class="t k" x="666" y="171">安全切换所有权</text>
+
+    <rect x="622" y="214" width="356" height="70" rx="14" fill="#fff" stroke="#fdba74" stroke-width="2"/>
+    <text class="t b" x="800" y="244" text-anchor="middle">sfc → vfio-pci</text>
+    <text class="t s" x="800" y="268" text-anchor="middle">数据口暂时消失；管理网不变</text>
+
+    <rect x="622" y="312" width="356" height="90" rx="14" fill="#fff" stroke="#fdba74" stroke-width="2"/>
+    <text class="t b" x="800" y="345" text-anchor="middle">IOMMU type 1 · group 7</text>
+    <text class="t s" x="800" y="374" text-anchor="middle">VFIO 限制 X2522 的 DMA 地址空间</text>
+
+    <rect x="622" y="430" width="356" height="104" rx="14" fill="#fff" stroke="#fdba74" stroke-width="2"/>
+    <text class="t b" x="800" y="463" text-anchor="middle">临时资源与保险</text>
+    <text class="t s" x="800" y="491" text-anchor="middle">256 × 2 MB hugepages</text>
+    <text class="t s" x="800" y="516" text-anchor="middle">30 分钟 systemd deadman + EXIT 恢复</text>
+
+    <text class="t s" x="800" y="590" text-anchor="middle">同一 PCI function 同时只有一个 owner</text>
+  </g>
+
+  <path class="line" d="M1010 382H1115" stroke="#2563eb" marker-end="url(#blue)"/>
+
+  <g id="dpdk-state">
+    <rect x="1130" y="126" width="420" height="540" rx="22" fill="#eff6ff" stroke="#60a5fa" stroke-width="2.5"/>
+    <circle cx="1168" cy="164" r="20" fill="#2563eb"/><text class="t badge" x="1168" y="170" text-anchor="middle">3</text>
+    <text class="t k" x="1206" y="171">DPDK_ACTIVE</text>
+    <text class="mono s" x="1160" y="205">owner = vfio-pci</text>
+
+    <rect x="1162" y="218" width="356" height="64" rx="13" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 5"/>
+    <text class="t b" x="1340" y="244" text-anchor="middle">management · CPU 3</text>
+    <text class="t s" x="1340" y="268" text-anchor="middle">命令 / 状态；正式测量关闭周期心跳</text>
+    <path d="M1340 282V299" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#slate)"/>
+
+    <rect x="1162" y="314" width="356" height="64" rx="13" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+    <text class="t b" x="1340" y="340" text-anchor="middle">DEQUE_CV → bridge · CPU 3</text>
+    <text class="t s" x="1340" y="364" text-anchor="middle">条件变量 → mailbox；queue→final 包含这次交棒</text>
+    <path class="line" d="M1340 378V395" stroke="#2563eb" marker-end="url(#blue)"/>
+
+    <rect x="1162" y="410" width="356" height="70" rx="13" fill="#f3e8ff" stroke="#a78bfa" stroke-width="2"/>
+    <text class="t b" x="1340" y="438" text-anchor="middle">F-Stack TCP + reactor · CPU 2</text>
+    <text class="t s" x="1340" y="463" text-anchor="middle">TCP_NODELAY=true · idle_sleep=0 · pkt_tx_delay=0</text>
+    <path class="line" d="M1340 480V497" stroke="#2563eb" marker-end="url(#blue)"/>
+
+    <rect x="1162" y="512" width="356" height="60" rx="13" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+    <text class="mono b" x="1340" y="537" text-anchor="middle">DPDK net_sfc_efx PMD</text>
+    <text class="t s" x="1340" y="559" text-anchor="middle">用户态 RX / TX descriptor</text>
+    <path class="line" d="M1340 572V589" stroke="#2563eb" marker-end="url(#blue)"/>
+
+    <rect x="1228" y="604" width="224" height="50" rx="13" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+    <text class="t b" x="1340" y="627" text-anchor="middle">X2522 · ULL firmware</text>
+    <text class="t s" x="1340" y="647" text-anchor="middle">物理端口收发</text>
+  </g>
+
+  <g id="restore-path">
+    <rect x="170" y="706" width="1260" height="145" rx="20" fill="#ecfdf5" stroke="#22c55e" stroke-width="2.5"/>
+    <circle cx="216" cy="746" r="20" fill="#15803d"/><text class="t badge" x="216" y="752" text-anchor="middle">4</text>
+    <text class="t k" x="254" y="753">EXIT / 独立 systemd deadman 交还</text>
+    <path class="line" d="M1375 782H302" stroke="#15803d" marker-end="url(#green)"/>
+    <text class="t b" x="830" y="813" text-anchor="middle">停 DPDK → vfio-pci 解绑 → sfc 绑定 → 恢复 20.1.1.2 → 大页 0 → ping 3/3</text>
+    <text class="t s" x="830" y="839" text-anchor="middle">恢复器先取得同一 BDF 锁；再用 sysfs、IP、大页和真实 ping 独立验收</text>
+  </g>
+</svg>

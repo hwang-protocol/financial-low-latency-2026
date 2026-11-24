@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+  <defs>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#142033}.h{font-size:28px;font-weight:900}.sh{font-size:17px;font-weight:850}.b{font-size:15px;font-weight:800}.s{font-size:13px;fill:#516175}.tiny{font-size:12px;fill:#64748b}.mono{font-family:"JetBrains Mono","SFMono-Regular",monospace}.line{fill:none;stroke-width:4;stroke-linecap:round}.thin{fill:none;stroke-width:2.5;stroke-linecap:round}.buttonTitle{fill:#fff}.buttonSub{fill:#d6e8f3}
+    </style>
+    <marker id="arrowBlue" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0,0 L16,6 L0,12 Z" fill="#2474d8"/></marker>
+    <marker id="arrowGreen" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0,0 L16,6 L0,12 Z" fill="#15966a"/></marker>
+  </defs>
+  <rect x="12" y="12" width="1376" height="796" rx="26" fill="#f8fafc" stroke="#a9bacb" stroke-width="2"/>
+  <text class="t h" x="48" y="56">同一笔真实订单，四种客户端 Transport</text>
+  <text class="t s" x="48" y="84">同一 Exchange · 同一 SoupBinTCP / OUCH · 同一 1 股 IOC · 同一入口队列 DEQUE_CV；蓝色为订单请求，绿色为最终响应。</text>
+
+  <rect x="50" y="108" width="1300" height="92" rx="16" fill="#ffffff" stroke="#b9c8d6" stroke-width="2"/>
+  <rect x="72" y="126" width="220" height="54" rx="12" fill="#173f5f"/>
+  <text class="t sh buttonTitle" x="182" y="151" text-anchor="middle">交易终端四个按钮</text>
+  <text class="t tiny buttonSub" x="182" y="171" text-anchor="middle">选择本地 Transport</text>
+  <path class="line" d="M292 153 H375" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+  <rect x="390" y="126" width="250" height="54" rx="12" fill="#e9f3ff" stroke="#4b91e8" stroke-width="2"/>
+  <text class="t sh" x="515" y="151" text-anchor="middle">同一订单语义</text>
+  <text class="t tiny" x="515" y="171" text-anchor="middle">AAPL · BUY/SELL · 1 股 IOC</text>
+  <path class="line" d="M640 153 H723" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+  <rect x="738" y="126" width="260" height="54" rx="12" fill="#ecfbf5" stroke="#2eaf7f" stroke-width="2"/>
+  <text class="t sh" x="868" y="151" text-anchor="middle">同一入口队列</text>
+  <text class="t tiny mono" x="868" y="171" text-anchor="middle">DEQUE_CV · empty queue sleeps</text>
+  <rect x="1020" y="112" width="312" height="76" rx="12" fill="#fff8e7" stroke="#e59b22" stroke-width="2"/>
+  <text class="t b" x="1176" y="137" text-anchor="middle">订单 / 网络热路径 CPU 2</text>
+  <text class="t tiny" x="1176" y="158" text-anchor="middle">管理与 DPDK bridge CPU 3</text>
+  <text class="t tiny" x="1176" y="177" text-anchor="middle">ZF / F-Stack reactor 可轮询</text>
+
+  <g id="path-socket">
+    <rect x="50" y="232" width="302" height="344" rx="16" fill="#fff" stroke="#7e90a2" stroke-width="2"/>
+    <rect x="50" y="232" width="302" height="50" rx="16" fill="#e8edf2"/><path d="M50 265h302v17H50z" fill="#e8edf2"/>
+    <text class="t sh" x="201" y="263" text-anchor="middle">K · Kernel Socket</text>
+    <rect x="78" y="306" width="246" height="58" rx="10" fill="#f4f7f9" stroke="#9aabb9"/>
+    <text class="t b mono" x="201" y="332" text-anchor="middle">socket / send / recv</text><text class="t tiny" x="201" y="352" text-anchor="middle">BSD socket API</text>
+    <path class="line" d="M190 364 V401" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M212 416 V379" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="78" y="416" width="246" height="62" rx="10" fill="#f4f7f9" stroke="#9aabb9"/>
+    <text class="t b" x="201" y="442" text-anchor="middle">Linux 内核 TCP/IP</text><text class="t tiny" x="201" y="464" text-anchor="middle">系统调用 · 上下文切换</text>
+    <path class="line" d="M190 478 V491" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M212 506 V493" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="78" y="506" width="246" height="58" rx="10" fill="#f4f7f9" stroke="#9aabb9"/>
+    <text class="t b mono" x="201" y="531" text-anchor="middle">X2522 · sfc netdev</text>
+    <text class="t tiny" x="201" y="553" text-anchor="middle">PCI owner = sfc</text>
+  </g>
+
+  <g id="path-onload">
+    <rect x="378" y="232" width="302" height="344" rx="16" fill="#fff" stroke="#22966e" stroke-width="2"/>
+    <rect x="378" y="232" width="302" height="50" rx="16" fill="#dff7ed"/><path d="M378 265h302v17H378z" fill="#dff7ed"/>
+    <text class="t sh" x="529" y="263" text-anchor="middle">O · OpenOnload</text>
+    <rect x="406" y="306" width="246" height="58" rx="10" fill="#f2fcf8" stroke="#39aa82"/>
+    <text class="t b mono" x="529" y="332" text-anchor="middle">同一 BSD socket API</text><text class="t tiny" x="529" y="352" text-anchor="middle">同一 binary · --profile=latency</text>
+    <path class="line" d="M518 364 V401" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M540 416 V379" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="406" y="416" width="246" height="62" rx="10" fill="#e8f9f2" stroke="#39aa82"/>
+    <text class="t b" x="529" y="442" text-anchor="middle">Onload 用户态 TCP</text><text class="t tiny" x="529" y="464" text-anchor="middle">libonload.so 拦截受支持 socket</text>
+    <path class="line" d="M518 478 V491" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M540 506 V493" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="406" y="506" width="246" height="58" rx="10" fill="#e8f9f2" stroke="#39aa82"/>
+    <text class="t b" x="529" y="531" text-anchor="middle">X2522 用户态收发队列</text>
+    <text class="t tiny" x="529" y="553" text-anchor="middle">本 RUN：小报文直送计数 &gt; 0</text>
+  </g>
+
+  <g id="path-tcpdirect">
+    <rect x="706" y="232" width="302" height="344" rx="16" fill="#fff" stroke="#7652c7" stroke-width="2"/>
+    <rect x="706" y="232" width="302" height="50" rx="16" fill="#eee8ff"/><path d="M706 265h302v17H706z" fill="#eee8ff"/>
+    <text class="t sh" x="857" y="263" text-anchor="middle">T · TCPDirect</text>
+    <rect x="734" y="306" width="246" height="58" rx="10" fill="#f8f5ff" stroke="#8d6dda"/>
+    <text class="t b mono" x="857" y="332" text-anchor="middle">ZF API / zocket</text><text class="t tiny" x="857" y="352" text-anchor="middle">只重写本地 Transport</text>
+    <path class="line" d="M846 364 V401" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M868 416 V379" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="734" y="416" width="246" height="62" rx="10" fill="#f4efff" stroke="#8d6dda"/>
+    <text class="t b" x="857" y="442" text-anchor="middle">ZF 用户态 TCP</text><text class="t tiny" x="857" y="464" text-anchor="middle">zc 接收 API · 适配器仍复制到解析缓冲</text>
+    <path class="line" d="M846 478 V491" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M868 506 V493" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="734" y="506" width="246" height="58" rx="10" fill="#f4efff" stroke="#8d6dda"/>
+    <text class="t b" x="857" y="531" text-anchor="middle">X2522 用户态收发队列</text>
+    <text class="t tiny" x="857" y="553" text-anchor="middle">小报文直送能力是启动硬门</text>
+  </g>
+
+  <g id="path-dpdk">
+    <rect x="1034" y="232" width="316" height="344" rx="16" fill="#fff" stroke="#d48316" stroke-width="2"/>
+    <rect x="1034" y="232" width="316" height="50" rx="16" fill="#fff0da"/><path d="M1034 265h316v17h-316z" fill="#fff0da"/>
+    <text class="t sh" x="1192" y="263" text-anchor="middle">D · DPDK + F-Stack</text>
+    <rect x="1062" y="306" width="260" height="58" rx="10" fill="#fff9ef" stroke="#df9b3c"/>
+    <text class="t b mono" x="1192" y="328" text-anchor="middle">ff_socket / ff_connect</text><text class="t b mono" x="1192" y="350" text-anchor="middle">ff_send / ff_recv</text>
+    <path class="line" d="M1181 364 V401" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M1203 416 V379" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="1062" y="416" width="260" height="62" rx="10" fill="#fff5e6" stroke="#df9b3c"/>
+    <text class="t b" x="1192" y="442" text-anchor="middle">F-Stack 用户态 TCP</text><text class="t tiny" x="1192" y="464" text-anchor="middle">bridge(CPU 3) → reactor(CPU 2)</text>
+    <path class="line" d="M1181 478 V491" stroke="#2474d8" marker-end="url(#arrowBlue)"/>
+    <path class="line" d="M1203 506 V493" stroke="#15966a" marker-end="url(#arrowGreen)"/>
+    <rect x="1062" y="506" width="260" height="58" rx="10" fill="#fff5e6" stroke="#df9b3c"/>
+    <text class="t b" x="1192" y="531" text-anchor="middle">X2522 · DPDK 用户态驱动</text>
+    <text class="t tiny" x="1192" y="553" text-anchor="middle">安全 DMA · 低延迟固件</text>
+  </g>
+
+  <rect x="50" y="606" width="1300" height="76" rx="15" fill="#eaf3fb" stroke="#5090c2" stroke-width="2"/>
+  <text class="t sh" x="700" y="634" text-anchor="middle">线上不变：X2522 → DAC → `.1` 的 X2522 / sfc → Exchange</text>
+  <text class="t s" x="700" y="660" text-anchor="middle">对端 TCP / 业务协议实现无需改造；是否允许自研客户端，仍按券商或交易所的准入规则验收。</text>
+
+  <rect x="50" y="710" width="620" height="66" rx="13" fill="#edf7f2" stroke="#50a27f" stroke-width="2"/>
+  <text class="t b" x="360" y="737" text-anchor="middle">SFC_ACTIVE</text><text class="t s" x="360" y="759" text-anchor="middle">PCI owner = sfc；Socket / Onload / TCPDirect 可用</text>
+  <rect x="730" y="710" width="620" height="66" rx="13" fill="#fff5e7" stroke="#d79536" stroke-width="2"/>
+  <text class="t b" x="1040" y="737" text-anchor="middle">DPDK_ACTIVE</text><text class="t s" x="1040" y="759" text-anchor="middle">PCI owner = vfio-pci；只有 DPDK 可用；完成后必须交还 sfc</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img"><title>一个接收器，两组 UDP 行情</title><defs><style>text{font-family:"Noto Sans CJK SC",Arial,sans-serif}</style><marker id="udp" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto"><path d="M0 -6 L12 0 L0 6 Z" fill="#b66a0b"/></marker></defs><rect width="1200" height="700" fill="#f8fafc"/>
+<text x="40" y="45" font-size="22" fill="#6366a0" font-weight="700">MARKET DELIVERY · UDP</text>
+<text x="40" y="93" font-size="30" fill="#475569" font-weight="800">A、B 都是 UDP 组播；双路携带相同的消息与序号</text>
+<rect x="40" y="130" width="340" height="413" rx="16" fill="#eff4fa" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="62" y="175" font-size="28" fill="#475569" font-weight="700">仅 A 路</text>
+<rect x="62" y="198" width="296" height="64" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="82" y="239" font-size="23" fill="#334155" font-weight="600">Exchange · 20.1.1.1</text>
+<path d="M205 274 V318" fill="none" stroke="#b66a0b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#udp)"/>
+<text x="226" y="307" font-size="22" fill="#b66a0b" font-weight="600">1 份</text>
+<rect x="62" y="342" width="296" height="72" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="82" y="372" font-size="23" fill="#0e6976" font-weight="600">.2 普通 Socket 接收器</text>
+<text x="75" y="400" font-size="20" fill="#334155" font-weight="400">233.74.125.32:31032</text>
+<text x="62" y="466" font-size="21" fill="#334155" font-weight="400">A 组收到行情</text>
+<text x="62" y="502" font-size="21" fill="#334155" font-weight="400">B 组已订阅，此时不发送</text>
+<rect x="430" y="130" width="340" height="413" rx="16" fill="#eff4fa" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="452" y="175" font-size="28" fill="#475569" font-weight="700">仅 B 路</text>
+<rect x="452" y="198" width="296" height="64" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="472" y="239" font-size="23" fill="#334155" font-weight="600">Exchange · 20.1.1.1</text>
+<path d="M595 274 V318" fill="none" stroke="#b66a0b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#udp)"/>
+<text x="616" y="307" font-size="22" fill="#b66a0b" font-weight="600">1 份</text>
+<rect x="452" y="342" width="296" height="72" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="472" y="372" font-size="23" fill="#0e6976" font-weight="600">.2 普通 Socket 接收器</text>
+<text x="465" y="400" font-size="20" fill="#334155" font-weight="400">233.74.125.33:31033</text>
+<text x="452" y="466" font-size="21" fill="#334155" font-weight="400">B 组收到行情</text>
+<text x="452" y="502" font-size="21" fill="#334155" font-weight="400">A 组已订阅，此时不发送</text>
+<rect x="820" y="130" width="340" height="413" rx="16" fill="#eff4fa" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="842" y="175" font-size="28" fill="#475569" font-weight="700">A/B 双路</text>
+<rect x="842" y="198" width="296" height="64" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="862" y="239" font-size="23" fill="#334155" font-weight="600">Exchange · 20.1.1.1</text>
+<path d="M985 274 V318" fill="none" stroke="#b66a0b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#udp)"/>
+<text x="1006" y="307" font-size="22" fill="#b66a0b" font-weight="600">2 份</text>
+<rect x="842" y="342" width="296" height="72" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="862" y="372" font-size="23" fill="#0e6976" font-weight="600">.2 普通 Socket 接收器</text>
+<text x="855" y="400" font-size="20" fill="#334155" font-weight="400">A 组 31032 + B 组 31033</text>
+<text x="842" y="466" font-size="21" fill="#334155" font-weight="400">同一 sequence 到达两次</text>
+<text x="842" y="502" font-size="21" fill="#334155" font-weight="400">使用者先到交付、后到去重</text>
+<rect x="40" y="565" width="1120" height="100" rx="16" fill="#eef2ff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="65" y="605" font-size="24" fill="#434e8f" font-weight="600">同一个接收进程 → Unix Socket 本机分发 → AUTO / MANUAL 各自处理完整行情</text>
+<text x="65" y="644" font-size="21" fill="#334155" font-weight="400">本机通信没有 IP/端口；下单仍统一连接 20.1.1.1:43120/TCP。三种模式不构成延迟排名。</text>
+</svg>

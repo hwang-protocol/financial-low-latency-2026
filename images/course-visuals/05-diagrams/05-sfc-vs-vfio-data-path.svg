@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">前三条 SFC 路线与 DPDK VFIO 专用路线对比</title>
+  <desc id="desc">同一笔 SoupBinTCP 和 OUCH 订单在 Trader 端分成两类设备所有权路线。Kernel Socket、OpenOnload、TCPDirect 都保持 X2522 由 sfc 驱动持有，其中三者的 TCP 栈和队列访问方式不同；DPDK 则先停止前三个客户端，把 PCI function 从 sfc 交给 vfio-pci，再由 F-Stack、DPDK net_sfc_efx PMD 和 IOMMU type 1 操作 X2522。两种所有权模式互斥，但物理网线、远端 Exchange 和业务协议不变。</desc>
+  <defs>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .m{font-family:"DejaVu Sans Mono","Noto Sans Mono CJK SC",monospace;fill:#0f172a}
+      .h{font-size:29px;font-weight:900}.sub{font-size:15px;fill:#475569}
+      .k{font-size:20px;font-weight:900}.b{font-size:15px;font-weight:800}
+      .s{font-size:13px;fill:#475569}.tiny{font-size:12px;fill:#64748b}
+      .badge{font-size:14px;font-weight:900;fill:#fff}
+      .line{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+      .thin{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+    <marker id="blue" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0 0L16 6L0 12Z" fill="#2563eb"/></marker>
+    <marker id="green" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0 0L16 6L0 12Z" fill="#15803d"/></marker>
+    <marker id="purple" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0 0L16 6L0 12Z" fill="#7c3aed"/></marker>
+    <marker id="orange" markerUnits="userSpaceOnUse" viewBox="0 0 18 12" markerWidth="18" markerHeight="12" refX="1" refY="6" orient="auto" overflow="visible"><path d="M0 0L16 6L0 12Z" fill="#d97706"/></marker>
+  </defs>
+
+  <rect x="12" y="12" width="1376" height="876" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text class="t h" x="48" y="56">不是四条平行线：前三路共享 sfc，DPDK 单独接管 PCI</text>
+  <text class="t sub" x="48" y="86">业务任务、SoupBinTCP / OUCH、X2522 物理端口、DAC 和远端 Exchange 都不变；真正不同的是本机 TCP 实现、队列访问方式和 PCI owner。</text>
+
+  <g id="common-contract">
+    <rect x="48" y="108" width="1304" height="82" rx="17" fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+    <rect x="68" y="128" width="210" height="42" rx="11" fill="#173f5f"/>
+    <text class="t b" x="173" y="154" text-anchor="middle" fill="#fff" style="fill:#fff">同一笔 1 股 IOC 订单</text>
+    <path class="line" d="M278 149H360" stroke="#2563eb" marker-end="url(#blue)"/>
+    <rect x="376" y="125" width="278" height="48" rx="11" fill="#fff" stroke="#93c5fd"/>
+    <text class="t b" x="515" y="146" text-anchor="middle">同一 SoupBinTCP / OUCH</text>
+    <text class="t tiny" x="515" y="164" text-anchor="middle">Enter → Accepted → Executed</text>
+    <path class="line" d="M654 149H736" stroke="#2563eb" marker-end="url(#blue)"/>
+    <rect x="752" y="125" width="244" height="48" rx="11" fill="#fff" stroke="#93c5fd"/>
+    <text class="t b" x="874" y="146" text-anchor="middle">同一个 X2522 端口</text>
+    <text class="t tiny" x="874" y="164" text-anchor="middle">0000:03:00.0</text>
+    <path class="line" d="M996 149H1078" stroke="#2563eb" marker-end="url(#blue)"/>
+    <rect x="1094" y="125" width="230" height="48" rx="11" fill="#fff" stroke="#93c5fd"/>
+    <text class="t b" x="1209" y="146" text-anchor="middle">同一 DAC 与 Exchange</text>
+    <text class="t tiny" x="1209" y="164" text-anchor="middle">对端仍是标准 TCP</text>
+  </g>
+
+  <g id="sfc-family">
+    <rect x="42" y="214" width="820" height="500" rx="22" fill="#f0fdf4" stroke="#4ade80" stroke-width="2.5"/>
+    <rect x="62" y="232" width="200" height="32" rx="16" fill="#15803d"/>
+    <text class="t badge" x="162" y="254" text-anchor="middle">A · 前三路共享 SFC owner</text>
+    <text class="t k" x="790" y="255" text-anchor="end">PCI owner = sfc</text>
+    <text class="t s" x="72" y="286">三者并不是同一条软件热路径，但 X2522 都没有交给 VFIO；Onload / TCPDirect 也不等于逐包穿过普通 netdev。</text>
+
+    <g id="kernel-lane">
+      <rect x="68" y="310" width="768" height="96" rx="15" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+      <rect x="82" y="325" width="104" height="66" rx="11" fill="#e2e8f0"/>
+      <text class="t b" x="134" y="351" text-anchor="middle">Kernel</text>
+      <text class="t tiny" x="134" y="373" text-anchor="middle">基线路线</text>
+      <rect x="210" y="325" width="152" height="66" rx="11" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text class="m b" x="286" y="351" text-anchor="middle">send / recv</text>
+      <text class="t tiny" x="286" y="373" text-anchor="middle">POSIX socket</text>
+      <path class="thin" d="M362 358H402" stroke="#2563eb" marker-end="url(#blue)"/>
+      <rect x="418" y="325" width="174" height="66" rx="11" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text class="t b" x="505" y="351" text-anchor="middle">Linux 内核 TCP/IP</text>
+      <text class="t tiny" x="505" y="373" text-anchor="middle">syscall / 内核协议栈</text>
+      <path class="thin" d="M592 358H632" stroke="#2563eb" marker-end="url(#blue)"/>
+      <rect x="648" y="325" width="166" height="66" rx="11" fill="#ecfdf5" stroke="#86efac"/>
+      <text class="m b" x="731" y="351" text-anchor="middle">sfc netdev</text>
+      <text class="t tiny" x="731" y="373" text-anchor="middle">→ X2522 RX/TX</text>
+    </g>
+
+    <g id="onload-lane">
+      <rect x="68" y="426" width="768" height="96" rx="15" fill="#fff" stroke="#34d399" stroke-width="2"/>
+      <rect x="82" y="441" width="104" height="66" rx="11" fill="#d1fae5"/>
+      <text class="t b" x="134" y="467" text-anchor="middle">Onload</text>
+      <text class="t tiny" x="134" y="489" text-anchor="middle">透明加速</text>
+      <rect x="210" y="441" width="152" height="66" rx="11" fill="#f0fdf4" stroke="#86efac"/>
+      <text class="m b" x="286" y="467" text-anchor="middle">send / recv</text>
+      <text class="t tiny" x="286" y="489" text-anchor="middle">同一 POSIX API</text>
+      <path class="thin" d="M362 474H402" stroke="#15803d" marker-end="url(#green)"/>
+      <rect x="418" y="441" width="174" height="66" rx="11" fill="#ecfdf5" stroke="#86efac"/>
+      <text class="t b" x="505" y="467" text-anchor="middle">Onload 用户态 TCP</text>
+      <text class="t tiny" x="505" y="489" text-anchor="middle">libonload 拦截 socket</text>
+      <path class="thin" d="M592 474H632" stroke="#15803d" marker-end="url(#green)"/>
+      <rect x="648" y="441" width="166" height="66" rx="11" fill="#ecfdf5" stroke="#86efac"/>
+      <text class="t b" x="731" y="467" text-anchor="middle">VI + CTPIO / DMA</text>
+      <text class="t tiny" x="731" y="489" text-anchor="middle">→ X2522 用户态队列</text>
+    </g>
+
+    <g id="tcpdirect-lane">
+      <rect x="68" y="542" width="768" height="96" rx="15" fill="#fff" stroke="#8b5cf6" stroke-width="2"/>
+      <rect x="82" y="557" width="104" height="66" rx="11" fill="#ede9fe"/>
+      <text class="t b" x="134" y="583" text-anchor="middle">TCPDirect</text>
+      <text class="t tiny" x="134" y="605" text-anchor="middle">专用 API</text>
+      <rect x="210" y="557" width="152" height="66" rx="11" fill="#f5f3ff" stroke="#c4b5fd"/>
+      <text class="m b" x="286" y="583" text-anchor="middle">ZF API / zocket</text>
+      <text class="t tiny" x="286" y="605" text-anchor="middle">重写本地 Transport</text>
+      <path class="thin" d="M362 590H402" stroke="#7c3aed" marker-end="url(#purple)"/>
+      <rect x="418" y="557" width="174" height="66" rx="11" fill="#f5f3ff" stroke="#c4b5fd"/>
+      <text class="t b" x="505" y="583" text-anchor="middle">ZF 用户态 TCP</text>
+      <text class="t tiny" x="505" y="605" text-anchor="middle">reactor / zocket</text>
+      <path class="thin" d="M592 590H632" stroke="#7c3aed" marker-end="url(#purple)"/>
+      <rect x="648" y="557" width="166" height="66" rx="11" fill="#f5f3ff" stroke="#c4b5fd"/>
+      <text class="t b" x="731" y="583" text-anchor="middle">VI + CTPIO</text>
+      <text class="t tiny" x="731" y="605" text-anchor="middle">→ X2522 用户态队列</text>
+    </g>
+
+    <rect x="68" y="658" width="768" height="38" rx="11" fill="#dcfce7" stroke="#86efac"/>
+    <text class="t b" x="452" y="682" text-anchor="middle">SFC_ACTIVE：Linux netdev 与数据 IP 存在；Socket / Onload / TCPDirect 可用</text>
+  </g>
+
+  <g id="dpdk-family">
+    <rect x="884" y="214" width="474" height="500" rx="22" fill="#fff7ed" stroke="#fb923c" stroke-width="2.5"/>
+    <rect x="904" y="232" width="214" height="32" rx="16" fill="#d97706"/>
+    <text class="t badge" x="1011" y="254" text-anchor="middle">B · DPDK 专用 VFIO 路线</text>
+    <text class="t k" x="1332" y="255" text-anchor="end">owner = vfio-pci</text>
+    <text class="t s" x="910" y="286">先交接同一个 PCI function，再启动用户态 TCP 与 PMD。</text>
+
+    <rect x="930" y="310" width="382" height="58" rx="12" fill="#fff" stroke="#fdba74"/>
+    <text class="m b" x="1121" y="334" text-anchor="middle">ff_socket / ff_send / ff_recv</text>
+    <text class="t tiny" x="1121" y="354" text-anchor="middle">应用仍发送同一 OUCH 订单</text>
+    <path class="line" d="M1121 368V390" stroke="#d97706" marker-end="url(#orange)"/>
+
+    <rect x="930" y="406" width="382" height="58" rx="12" fill="#fff" stroke="#fdba74"/>
+    <text class="t b" x="1121" y="430" text-anchor="middle">F-Stack 用户态 TCP/IP</text>
+    <text class="t tiny" x="1121" y="450" text-anchor="middle">连接、窗口、重传、有序字节流</text>
+    <path class="line" d="M1121 464V486" stroke="#d97706" marker-end="url(#orange)"/>
+
+    <rect x="930" y="502" width="382" height="58" rx="12" fill="#fff" stroke="#fdba74"/>
+    <text class="m b" x="1121" y="526" text-anchor="middle">DPDK PMD · net_sfc_efx</text>
+    <text class="t tiny" x="1121" y="546" text-anchor="middle">用户态轮询并操作 RX/TX descriptor</text>
+    <path class="line" d="M1121 560V582" stroke="#d97706" marker-end="url(#orange)"/>
+
+    <rect x="930" y="590" width="382" height="54" rx="12" fill="#f5f3ff" stroke="#a78bfa" stroke-width="2"/>
+    <text class="t b" x="1121" y="613" text-anchor="middle">vfio-pci + IOMMU type 1</text>
+    <text class="t tiny" x="1121" y="633" text-anchor="middle">只允许 DMA 到已登记的大页</text>
+    <path class="line" d="M1121 644V656" stroke="#d97706" marker-end="url(#orange)"/>
+
+    <rect x="930" y="672" width="382" height="24" rx="10" fill="#ffedd5" stroke="#fdba74"/>
+    <text class="t b" x="1121" y="690" text-anchor="middle">X2522 RX/TX 队列 · ULL firmware</text>
+  </g>
+
+  <g id="ownership-switch">
+    <rect x="42" y="738" width="1316" height="112" rx="20" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="66" y="758" width="250" height="70" rx="13" fill="#dcfce7" stroke="#4ade80" stroke-width="2"/>
+    <text class="t b" x="191" y="785" text-anchor="middle">SFC_ACTIVE</text>
+    <text class="t s" x="191" y="808" text-anchor="middle">owner=sfc · 前三路可用</text>
+
+    <path class="line" d="M316 793H398" stroke="#d97706" marker-end="url(#orange)"/>
+    <rect x="414" y="752" width="570" height="82" rx="14" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+    <text class="t b" x="699" y="777" text-anchor="middle">模式切换做的是一串管理动作，不是单笔订单的热路径延迟</text>
+    <text class="t s" x="699" y="800" text-anchor="middle">停前三个客户端 → 清理大页与旧进程 → sfc 交出 PCI → vfio-pci 接管</text>
+    <text class="t s" x="699" y="821" text-anchor="middle">启动 F-Stack / DPDK → 等待监听、owner、IOMMU、数据面状态全部 READY</text>
+    <path class="line" d="M984 793H1066" stroke="#d97706" marker-end="url(#orange)"/>
+
+    <rect x="1082" y="758" width="250" height="70" rx="13" fill="#ffedd5" stroke="#fb923c" stroke-width="2"/>
+    <text class="t b" x="1207" y="785" text-anchor="middle">DPDK_ACTIVE</text>
+    <text class="t s" x="1207" y="808" text-anchor="middle">owner=vfio-pci · DPDK 独占</text>
+  </g>
+
+  <text class="t b" x="700" y="878" text-anchor="middle">一句话记忆：前三路“换软件栈、不换网卡主人”；DPDK“软件栈和网卡主人一起换”。</text>
+</svg>

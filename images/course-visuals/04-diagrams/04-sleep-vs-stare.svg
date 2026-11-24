@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="864" viewBox="0 0 1200 864" role="img" aria-labelledby="title description">
+<title id="title">运行③：固定队列不变，比较两种交棒规则</title>
+<desc id="description">上方FIXED_CV：管理线程持锁入队并通知，下单线程在空队列上等待，恢复调度并拿锁后取单。下方SPSC_SPIN：管理线程写好订单后用原子操作发布位置，下单线程持续轮询并读取。两边都用固定存储、MANUAL下单线程CPU2及固定AUTO陪跑CPU3。SPSC要求单生产者与单消费者；忙轮询消耗CPU，仍可被操作系统抢占。</desc>
+<defs>
+<style>
+text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#50697e}
+.title{font-size:30px;font-weight:650;fill:#3d617c}
+.body{font-size:20px}
+.small{font-size:18px}
+.profile{font-size:23px;font-weight:600}
+.node{font-size:23px;font-weight:550;fill:#446782}
+.wire{fill:none;stroke:#7b9bb5;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:round;marker-end:url(#arrow)}
+.icon{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+<marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 0 12 12" refX="0" refY="6" markerWidth="12" markerHeight="12" orient="auto" overflow="visible"><path d="M0 1 L12 6 L0 11 Z" fill="#7b9bb5"/></marker>
+<g id="document" class="icon"><path d="M5 2h15l8 8v22H5zM20 2v9h8M10 17h13M10 23h10"/></g>
+<g id="memory" class="icon"><rect x="2" y="6" width="32" height="22" rx="4"/><path d="M8 12v9M15 12v9M22 12v9M29 12v9M8 28v5M16 28v5M24 28v5"/></g>
+<g id="cpu" class="icon"><rect x="6" y="6" width="24" height="24" rx="5"/><rect x="12" y="12" width="12" height="12" rx="2"/><path d="M12 1v5M24 1v5M12 30v5M24 30v5M1 12h5M1 24h5M30 12h5M30 24h5"/></g>
+<g id="lock" class="icon"><path d="M8 15V9a9 9 0 0 1 18 0v6"/><rect x="4" y="15" width="26" height="20" rx="5"/><circle cx="17" cy="23" r="2"/><path d="M17 25v5"/></g>
+<g id="bell" class="icon"><path d="M7 24h21l-3-5V12a8 8 0 0 0-16 0v7zM14 29a4 4 0 0 0 7 0M17 2V0"/></g>
+<g id="pause" class="icon"><circle cx="18" cy="18" r="16"/><path d="M13 11v14M23 11v14" stroke-width="4"/></g>
+<g id="eye" class="icon"><path d="M1 18Q18-2 35 18Q18 38 1 18Z"/><circle cx="18" cy="18" r="6"/></g>
+<g id="runner" class="icon"><circle cx="21" cy="5" r="4" fill="currentColor" stroke="none"/><path d="m17 13-6 10 11 5-4 10M17 13l8 8h9M15 17 7 18 3 12M11 23 6 32H0" stroke-width="3"/></g>
+<g id="slots"><rect x="0" y="0" width="34" height="25" rx="5" fill="#dce9f4" stroke="#a8bfd3"/><rect x="42" y="0" width="34" height="25" rx="5" fill="#dce9f4" stroke="#a8bfd3"/><rect x="84" y="0" width="34" height="25" rx="5" fill="#dce9f4" stroke="#a8bfd3"/><rect x="126" y="0" width="34" height="25" rx="5" fill="#edf3f8" stroke="#b8cbdc"/><rect x="168" y="0" width="34" height="25" rx="5" fill="#edf3f8" stroke="#b8cbdc"/></g>
+</defs>
+<rect x="12" y="12" width="1176" height="840" rx="24" fill="#fbfcfe" stroke="#d4dfe9" stroke-width="1.5"/>
+<text class="title" x="48" y="57">运行③：固定队列不变，比较两种交棒规则</text>
+<text class="body" x="48" y="91">同一条订单路径，改变同步与等待方式。</text>
+
+<rect x="48" y="113" width="1104" height="58" rx="14" fill="#edf4f9"/>
+<use href="#memory" x="68" y="124" color="#6990ad"/>
+<text class="body" x="117" y="150">两边都用固定队列</text>
+<path d="M388 128v28M770 128v28" stroke="#d1deea" stroke-width="1.5"/>
+<use href="#cpu" x="420" y="124" color="#6990ad"/>
+<text class="body" x="470" y="150">MANUAL 下单线程：CPU 2</text>
+<use href="#runner" x="800" y="123" color="#599481"/>
+<text class="body" x="850" y="150" style="fill:#4f8473">AUTO：CPU 3，固定陪跑</text>
+
+<rect x="48" y="194" width="1104" height="270" rx="18" fill="#f6f9fc" stroke="#ccdce9" stroke-width="1.5"/>
+<use href="#lock" x="72" y="209" color="#6990ad"/>
+<text class="profile" x="124" y="235" style="fill:#567d9d">原配置 · FIXED_CV</text>
+<text class="body" x="600" y="235">互斥锁 + 条件变量：没有订单时等待</text>
+
+<path class="wire" d="M191 274V258H986V262" stroke-dasharray="6 5"/>
+<rect x="493" y="242" width="199" height="30" rx="10" fill="#f6f9fc"/>
+<use href="#bell" x="508" y="234" color="#7594ad"/>
+<text class="small" x="550" y="262">条件变量通知</text>
+
+<rect x="76" y="286" width="230" height="100" rx="14" fill="#fff" stroke="#b8ccdd" stroke-width="1.5"/>
+<use href="#document" x="94" y="306" color="#7099b8"/>
+<text class="node" x="144" y="321">管理线程</text>
+<text class="body" x="191" y="363" text-anchor="middle">先持锁放单，再通知</text>
+<rect x="440" y="286" width="260" height="100" rx="14" fill="#fff" stroke="#b8ccdd" stroke-width="1.5"/>
+<text class="node" x="570" y="319" text-anchor="middle">固定队列</text>
+<use href="#slots" x="469" y="340"/>
+<rect x="850" y="286" width="272" height="100" rx="14" fill="#fff" stroke="#b8ccdd" stroke-width="1.5"/>
+<use href="#pause" x="870" y="303" color="#7396b3"/>
+<text class="node" x="923" y="321">下单线程</text>
+<text class="body" x="986" y="363" text-anchor="middle">无单时：暂停等待</text>
+<path class="wire" d="M318 344H416"/><text class="small" x="373" y="323" text-anchor="middle">入队</text>
+<path class="wire" d="M712 344H826"/><text class="small" x="775" y="323" text-anchor="middle">拿锁取单</text>
+<use href="#pause" x="76" y="411" color="#8aa4b9"/>
+<text class="body" x="127" y="436">空队列时不忙等；收到通知后，还要等 CPU 调度和互斥锁。</text>
+
+<rect x="48" y="488" width="1104" height="260" rx="18" fill="#fff9f1" stroke="#e8d7bd" stroke-width="1.5"/>
+<use href="#eye" x="72" y="500" color="#bb8a50"/>
+<text class="profile" x="124" y="529" style="fill:#a57842">新配置 · SPSC_SPIN</text>
+<text class="body" x="600" y="529">原子操作 + 忙轮询：持续检查队列</text>
+
+<rect x="76" y="558" width="230" height="100" rx="14" fill="#fff" stroke="#ddc8a9" stroke-width="1.5"/>
+<use href="#document" x="94" y="578" color="#ba935e"/>
+<text class="node" x="144" y="593">管理线程</text>
+<text class="body" x="191" y="635" text-anchor="middle">写好订单，发布位置</text>
+<rect x="440" y="558" width="260" height="100" rx="14" fill="#fff" stroke="#ddc8a9" stroke-width="1.5"/>
+<text class="node" x="570" y="591" text-anchor="middle">固定队列</text>
+<use href="#slots" x="469" y="612"/>
+<rect x="850" y="558" width="272" height="100" rx="14" fill="#fff" stroke="#ddc8a9" stroke-width="1.5"/>
+<use href="#eye" x="870" y="575" color="#ba935e"/>
+<text class="node" x="923" y="593">下单线程</text>
+<text class="body" x="986" y="635" text-anchor="middle">无单时：持续检查</text>
+<path class="wire" d="M318 616H416"/><text class="small" x="373" y="595" text-anchor="middle">入队</text>
+<path class="wire" d="M712 616H826"/><text class="small" x="775" y="595" text-anchor="middle">轮询取单</text>
+<use href="#cpu" x="76" y="690" color="#bb965f"/>
+<text class="body" x="127" y="715">省去睡眠与唤醒等待，但会持续消耗 CPU；操作系统仍可抢占。</text>
+
+<rect x="48" y="777" width="1104" height="52" rx="14" fill="#eaf3ee" stroke="#d2e3d9"/>
+<text class="body" x="73" y="810" style="fill:#507d68">SPSC 前提：一条线程写、一条线程读；先写好订单，再用原子操作发布位置。</text>
+</svg>

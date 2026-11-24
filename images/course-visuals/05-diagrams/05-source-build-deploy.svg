@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1140" viewBox="0 0 1200 1140" role="img" aria-labelledby="title desc">
+<title id="title">源码与编译后的程序在哪里</title><desc id="desc">同一项目的交易客户端，普通客户端部署时编译，四路径客户端课前已编译并打包。区分第02章首次部署时在监测VM编译的普通客户端，以及课前封存、第02章解包的四路径客户端；第02章同步备好Socket/Onload打标客户端，第05章只切换测试配置。Kernel与Onload共用trader.cpp和posix_order_transport.cpp编译的flle-trader；TCPDirect用trader.cpp和tcpdirect_order_transport.cpp；DPDK用dpdk_trader.cpp。RUN_ID来自第02章部署记录。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 12 12"><path d="M 0 0 L 12 6 L 0 12 Z" fill="#475569"/></marker></defs>
+<rect width="1200" height="1140" rx="20" fill="#fff"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,Arial,sans-serif" fill="#172338">
+<text x="36" y="54" font-size="34" fill="#172338" font-weight="700">源码与编译后的程序，分别在哪里？</text>
+<text x="36" y="94" font-size="24" fill="#64748b" font-weight="400">同一项目的交易客户端：左边部署时编译，右边课前已编好。</text>
+<rect x="36" y="125" width="1128" height="205" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60" y="162" font-size="26" fill="#1d4ed8" font-weight="700">.111 项目源码 · 在这里阅读和修改客户端代码</text>
+<text x="60" y="200" font-size="25" fill="#172338" font-weight="400">/financial-low-latency/apps/flle-trading-lab/src/</text>
+<text x="60" y="239" font-size="22" fill="#475569" font-weight="400">Kernel / Onload：trader.cpp + posix_order_transport.cpp → flle-trader</text>
+<text x="60" y="274" font-size="22" fill="#475569" font-weight="400">TCPDirect：trader.cpp + tcpdirect_order_transport.cpp → flle-trader-tcpdirect</text>
+<text x="60" y="309" font-size="22" fill="#475569" font-weight="400">DPDK + F-Stack：dpdk_trader.cpp → flle-trader-dpdk</text>
+<g transform="translate(0 80)">
+<path d="M 308 263 V 290" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<path d="M 892 263 V 290" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<rect x="36" y="315" width="544" height="235" rx="14" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+<text x="58" y="353" font-size="25" fill="#172338" font-weight="700">第 02 章运行①：编译普通客户端</text>
+<text x="58" y="393" font-size="23" fill="#172338" font-weight="400">.101 · 编译第 02 章部署时的源码</text>
+<text x="58" y="431" font-size="20" fill="#172338" font-weight="400">/var/tmp/flle-trading-lab-&lt;RUN_ID&gt;/</text>
+<text x="58" y="461" font-size="23" fill="#172338" font-weight="400">build/flle-trader</text>
+<text x="58" y="523" font-size="22" fill="#64748b" font-weight="400">已有平台核验通过时，跳过重编译。</text>
+<rect x="620" y="315" width="544" height="235" rx="14" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="642" y="353" font-size="25" fill="#7e22ce" font-weight="700">课前：.101 编译并打包</text>
+<text x="642" y="393" font-size="22" fill="#172338" font-weight="400">.111 项目内的运行包（路径分行显示）：</text>
+<text x="642" y="426" font-size="20" fill="#172338" font-weight="400">/financial-low-latency/</text>
+<text x="642" y="454" font-size="20" fill="#172338" font-weight="400">artifacts/blobs/x2522/ch05-four-path/v13/</text>
+<text x="642" y="489" font-size="20" fill="#172338" font-weight="400">flle-ch05-four-path-v13-</text>
+<text x="642" y="517" font-size="20" fill="#172338" font-weight="400">x86_64-jammy-runtime.tgz</text>
+<path d="M 308 563 V 595" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<path d="M 892 563 V 595" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<text x="340" y="592" font-size="21" fill="#475569" font-weight="400">复制</text>
+<text x="924" y="592" font-size="21" fill="#475569" font-weight="400">解压 .tgz</text>
+<rect x="36" y="620" width="544" height="260" rx="14" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+<text x="58" y="660" font-size="25" fill="#172338" font-weight="700">部署到 Trader .2：普通交易</text>
+<text x="58" y="708" font-size="20" fill="#172338" font-weight="400">/var/tmp/flle-trading-lab-&lt;RUN_ID&gt;/</text>
+<text x="58" y="743" font-size="24" fill="#172338" font-weight="400">flle-trader</text>
+<text x="58" y="799" font-size="22" fill="#172338" font-weight="400">用于普通 AUTO / MANUAL 交易。</text>
+<text x="58" y="840" font-size="22" fill="#64748b" font-weight="400">与右侧文件同名，部署目录不同。</text>
+<rect x="620" y="620" width="544" height="260" rx="14" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+<text x="642" y="660" font-size="24" fill="#15803d" font-weight="700">第 02 章运行①：解包到 Trader .2</text>
+<text x="642" y="702" font-size="20" fill="#172338" font-weight="400">/var/tmp/flle-trading-lab-&lt;RUN_ID&gt;/</text>
+<text x="642" y="732" font-size="20" fill="#172338" font-weight="400">transport-runtime/flle-ch05-four-path/bin/</text>
+<text x="642" y="779" font-size="23" fill="#172338" font-weight="400">原 flle-trader（留存）</text>
+<text x="642" y="811" font-size="23" fill="#172338" font-weight="400">flle-trader-tcpdirect</text>
+<text x="642" y="843" font-size="23" fill="#172338" font-weight="400">flle-trader-dpdk</text>
+<rect x="36" y="923" width="1128" height="105" rx="14" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+<text x="60" y="965" font-size="25" fill="#155e75" font-weight="700">第 02 章同步备好 Kernel / Onload 打标客户端；第 05 章启用。</text>
+<text x="60" y="1005" font-size="23" fill="#475569" font-weight="400">位于 RUN 目录的 posix-runtime/flle-posix-qos-v1/bin/flle-trader</text>
+</g>
+</g></svg>

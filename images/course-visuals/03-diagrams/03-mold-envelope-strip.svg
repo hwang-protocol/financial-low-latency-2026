@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc" data-layout="ip-udp-mold-strips" data-example-payload-bytes="58">
+<title id="title">组播行情帧：IPv4 与 UDP 头后面才是 MoldUDP64 载荷</title>
+<desc id="desc">自上而下三层。IPv4 目的地址 233.74.125.32 为组播组，UDP 目的端口 31032 是该组上的行情端口。UDP 四字段完整画出；IPv4 只标本课要看的字段，完整头仍为无选项的 20 字节。最下一行是 58 字节 UDP 载荷：20 字节 Mold 头、2 字节长度、36 字节 ITCH A。格宽为阅读而调整。示意一包一条 A，不是某次实抓回执。</desc>
+<style>text{font-family:"Noto Sans CJK SC",Arial,sans-serif;fill:#475569;letter-spacing:0}.title{font-size:32px;font-weight:700}.layer{font-size:24px;font-weight:700}.body{font-size:22px}.label{font-size:22px;font-weight:700}.meta{font-size:20px;fill:#526571}.note{font-size:20px;fill:#526571}</style>
+<rect width="1200" height="860" fill="white"/>
+<text x="40" y="44" class="title">组播行情包 · 从 IP / UDP 读到一条 A</text>
+<text x="40" y="80" class="body">自上而下是 IPv4、UDP、Mold 载荷。各层偏移从该层起点计算；格宽不按字节比例。</text>
+
+<g data-layer="ipv4">
+<text x="40" y="112" class="layer">IPv4 · 无选项的 20 字节头</text>
+<g data-field="Version and IHL" data-offset="0" data-width="1"><rect x="40" y="122" width="170" height="168" fill="#ffedd5" stroke="white" stroke-width="2"/>
+<text x="125" y="148" class="meta" text-anchor="middle">0 / 1</text>
+<text x="125" y="178" class="label" text-anchor="middle">版本与头长</text>
+<text x="125" y="210" class="body" text-anchor="middle">Version</text>
+<text x="125" y="236" class="body" text-anchor="middle">IHL</text>
+<text x="125" y="268" class="body" text-anchor="middle">4 / 5</text>
+</g>
+<g data-field="Total Length" data-offset="2" data-width="2"><rect x="210" y="122" width="190" height="168" fill="#ffedd5" stroke="white" stroke-width="2"/>
+<text x="305" y="148" class="meta" text-anchor="middle">2 / 2</text>
+<text x="305" y="178" class="label" text-anchor="middle">总长度</text>
+<text x="305" y="210" class="body" text-anchor="middle">Total</text>
+<text x="305" y="236" class="body" text-anchor="middle">Length</text>
+<text x="305" y="268" class="body" text-anchor="middle">本例：86</text>
+</g>
+<g data-field="Protocol" data-offset="9" data-width="1"><rect x="400" y="122" width="180" height="168" fill="#ffedd5" stroke="white" stroke-width="2"/>
+<text x="490" y="148" class="meta" text-anchor="middle">9 / 1</text>
+<text x="490" y="178" class="label" text-anchor="middle">上层协议</text>
+<text x="490" y="210" class="body" text-anchor="middle">Protocol</text>
+<text x="490" y="250" class="body" text-anchor="middle">17 = UDP</text>
+</g>
+<g data-field="Source Address" data-offset="12" data-width="4"><rect x="580" y="122" width="250" height="168" fill="#ffedd5" stroke="white" stroke-width="2"/>
+<text x="705" y="148" class="meta" text-anchor="middle">12 / 4</text>
+<text x="705" y="178" class="label" text-anchor="middle">源地址</text>
+<text x="705" y="210" class="body" text-anchor="middle">Source Address</text>
+<text x="705" y="250" class="body" text-anchor="middle">20.1.1.1</text>
+</g>
+<g data-field="Destination Address" data-offset="16" data-width="4"><rect x="830" y="122" width="330" height="168" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="995" y="148" class="meta" text-anchor="middle">16 / 4</text>
+<text x="995" y="178" class="label" text-anchor="middle">目的地址</text>
+<text x="995" y="210" class="body" text-anchor="middle">Destination Address</text>
+<text x="995" y="246" class="label" text-anchor="middle">233.74.125.32</text>
+<text x="995" y="274" class="body" text-anchor="middle">组播</text>
+</g>
+<rect x="40" y="122" width="1120" height="168" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+</g>
+
+<g data-layer="udp">
+<text x="40" y="314" class="layer">UDP · 8 字节头，四个字段都在这里</text>
+<g data-field="Source Port" data-offset="0" data-width="2"><rect x="40" y="324" width="280" height="168" fill="#ede9fe" stroke="white" stroke-width="2"/>
+<text x="180" y="350" class="meta" text-anchor="middle">0 / 2</text>
+<text x="180" y="380" class="label" text-anchor="middle">源端口</text>
+<text x="180" y="412" class="body" text-anchor="middle">Source Port</text>
+<text x="180" y="452" class="body" text-anchor="middle">示意：50424</text>
+</g>
+<g data-field="Destination Port" data-offset="2" data-width="2"><rect x="320" y="324" width="300" height="168" fill="#fff0c6" stroke="white" stroke-width="2"/>
+<text x="470" y="350" class="meta" text-anchor="middle">2 / 2</text>
+<text x="470" y="380" class="label" text-anchor="middle">目的端口</text>
+<text x="470" y="412" class="body" text-anchor="middle">Destination Port</text>
+<text x="470" y="448" class="label" text-anchor="middle">31032</text>
+<text x="470" y="476" class="body" text-anchor="middle">组播端口</text>
+</g>
+<g data-field="Length" data-offset="4" data-width="2"><rect x="620" y="324" width="270" height="168" fill="#ede9fe" stroke="white" stroke-width="2"/>
+<text x="755" y="350" class="meta" text-anchor="middle">4 / 2</text>
+<text x="755" y="380" class="label" text-anchor="middle">UDP 长度</text>
+<text x="755" y="412" class="body" text-anchor="middle">Length</text>
+<text x="755" y="452" class="body" text-anchor="middle">8 + 58 = 66</text>
+</g>
+<g data-field="Checksum" data-offset="6" data-width="2"><rect x="890" y="324" width="270" height="168" fill="#ede9fe" stroke="white" stroke-width="2"/>
+<text x="1025" y="350" class="meta" text-anchor="middle">6 / 2</text>
+<text x="1025" y="380" class="label" text-anchor="middle">校验和</text>
+<text x="1025" y="412" class="body" text-anchor="middle">Checksum</text>
+<text x="1025" y="452" class="body" text-anchor="middle">UDP 校验值</text>
+</g>
+<rect x="40" y="324" width="1120" height="168" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+</g>
+
+<g data-layer="mold">
+<text x="40" y="516" class="layer">MoldUDP64 · 58 字节 UDP 载荷，本例一条 A</text>
+<g data-field="Session" data-offset="0" data-width="10"><rect x="40" y="526" width="220" height="186" fill="#e5effb" stroke="white" stroke-width="2"/>
+<text x="150" y="552" class="meta" text-anchor="middle">0 / 10</text>
+<text x="150" y="586" class="label" text-anchor="middle">会话标识</text>
+<text x="150" y="620" class="body" text-anchor="middle">Session</text>
+<text x="150" y="676" class="body" text-anchor="middle">0612260001</text>
+</g>
+<g data-field="Sequence Number" data-offset="10" data-width="8"><rect x="260" y="526" width="260" height="186" fill="#e5effb" stroke="white" stroke-width="2"/>
+<text x="390" y="552" class="meta" text-anchor="middle">10 / 8</text>
+<text x="390" y="586" class="label" text-anchor="middle">首条消息序号</text>
+<text x="390" y="620" class="body" text-anchor="middle">Sequence</text>
+<text x="390" y="646" class="body" text-anchor="middle">Number</text>
+<text x="390" y="686" class="body" text-anchor="middle">示意：100</text>
+</g>
+<g data-field="Message Count" data-offset="18" data-width="2"><rect x="520" y="526" width="190" height="186" fill="#e5effb" stroke="white" stroke-width="2"/>
+<text x="615" y="552" class="meta" text-anchor="middle">18 / 2</text>
+<text x="615" y="586" class="label" text-anchor="middle">消息条数</text>
+<text x="615" y="620" class="body" text-anchor="middle">Message</text>
+<text x="615" y="646" class="body" text-anchor="middle">Count</text>
+<text x="615" y="686" class="body" text-anchor="middle">本例：1</text>
+</g>
+<g data-field="Message Length" data-offset="20" data-width="2"><rect x="710" y="526" width="180" height="186" fill="#edf1f4" stroke="white" stroke-width="2"/>
+<text x="800" y="552" class="meta" text-anchor="middle">20 / 2</text>
+<text x="800" y="586" class="label" text-anchor="middle">消息长度</text>
+<text x="800" y="620" class="body" text-anchor="middle">Message</text>
+<text x="800" y="646" class="body" text-anchor="middle">Length</text>
+<text x="800" y="686" class="body" text-anchor="middle">本例：36</text>
+</g>
+<g data-field="Message Data" data-offset="22" data-width="36"><rect x="890" y="526" width="270" height="186" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+<text x="1025" y="552" class="meta" text-anchor="middle">22 / 36</text>
+<text x="1025" y="586" class="label" text-anchor="middle">ITCH 消息</text>
+<text x="1025" y="620" class="body" text-anchor="middle">Message Data</text>
+<text x="1025" y="658" class="body" text-anchor="middle">Type A · NVDA</text>
+<text x="1025" y="688" class="body" text-anchor="middle">36 字节</text>
+</g>
+<rect x="40" y="526" width="1120" height="186" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+</g>
+
+<text x="40" y="740" class="note">黄色格：IP 目的 233.74.125.32（组播），UDP 目的端口 31032。</text>
+<text x="40" y="772" class="note">蓝色三格是 20 字节 Mold 包头。本例载荷 20+2+36=58。</text>
+<text x="40" y="804" class="note">UDP Length=66，IP Total Length=86。整帧 100 字节，不含 FCS。</text>
+</svg>

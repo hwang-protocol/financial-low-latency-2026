@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1330" viewBox="0 0 1200 1330" role="img" aria-labelledby="title desc" data-example-payload-bytes="95">
+  <title id="title">MoldUDP64：一份包头，后接若干组长度与消息</title>
+  <desc id="desc">按 UDP 载荷起点计算偏移的两消息演示：20 字节包头；2 字节长度加 36 字节 ITCH A；2 字节长度加 35 字节 ITCH U。总计 95 字节。这是协议允许的示意，不是当前每包一条的课程抓包。</desc>
+  <style>text{font-family:"Noto Sans CJK SC",Arial,sans-serif;fill:#243340;font-size:24px;letter-spacing:0}.title{font-size:34px;font-weight:700}.heading{font-size:26px;font-weight:700}.field{font-size:23px;font-weight:700}.small{font-size:22px}.ruler{font-size:20px}.muted{fill:#546671}.white{fill:white}</style>
+  <rect width="1200" height="1330" fill="#ffffff"/>
+  <text x="40" y="52" class="title" >MoldUDP64 · 一份包头，后接若干条消息</text>
+  <text x="40" y="91" class="small muted" >本图演示协议允许的两条消息；本课发布程序实际每包只发一条。</text>
+  <text x="40" y="132" class="small muted" >偏移从 UDP 载荷起点 0 计算；字节条按宽度比例绘制。</text>
+<rect data-byte-start="0" data-byte-width="10" x="40" y="180" width="117.89473684210526" height="54" fill="#e5effb" stroke="white" stroke-width="2"/>
+  <text x="40" y="170" class="ruler" >0</text>
+<rect data-byte-start="10" data-byte-width="8" x="157.89473684210526" y="180" width="94.3157894736842" height="54" fill="#e5effb" stroke="white" stroke-width="2"/>
+  <text x="157.89473684210526" y="170" class="ruler" >10</text>
+<rect data-byte-start="18" data-byte-width="2" x="252.21052631578948" y="180" width="23.57894736842105" height="54" fill="#e5effb" stroke="white" stroke-width="2"/>
+  <text x="252.21052631578948" y="170" class="ruler" >18</text>
+<rect data-byte-start="20" data-byte-width="2" x="275.7894736842105" y="180" width="23.57894736842105" height="54" fill="#edf1f4" stroke="white" stroke-width="2"/>
+  <text x="275.7894736842105" y="264" class="ruler" >20</text>
+<rect data-byte-start="22" data-byte-width="36" x="299.36842105263156" y="180" width="424.42105263157896" height="54" fill="#e2f3ea" stroke="white" stroke-width="2"/>
+  <text x="299.36842105263156" y="170" class="ruler" >22</text>
+<rect data-byte-start="58" data-byte-width="2" x="723.7894736842105" y="180" width="23.57894736842105" height="54" fill="#edf1f4" stroke="white" stroke-width="2"/>
+  <text x="723.7894736842105" y="170" class="ruler" >58</text>
+<rect data-byte-start="60" data-byte-width="35" x="747.3684210526316" y="180" width="412.63157894736844" height="54" fill="#fff0c6" stroke="white" stroke-width="2"/>
+  <text x="747.3684210526316" y="264" class="ruler" >60</text>
+  <text x="1160" y="170" class="ruler" text-anchor="end">95</text>
+  <text x="56" y="214" class="small" >批次</text>
+  <text x="430" y="214" class="small" >ITCH A · 序号 100</text>
+  <text x="830" y="214" class="small" >ITCH U · 序号 101</text>
+  <path d="M275.789 234V241M747.368 234V241" fill="none" stroke="#647781" stroke-width="1.3"/>
+  <text x="40" y="314" class="small muted" >蓝色：20 字节包头    灰色：长度字段    绿色 / 黄色：两条独立 ITCH 消息</text>
+  <g data-field="Session" data-offset="0" data-width="10"><rect data-field-strip="true" x="40" y="340" width="1120" height="96" fill="#e5effb"/>
+<text x="58" y="378" class="small muted">偏移 0-9</text>
+<text x="58" y="414" class="small muted">10 字节</text>
+<text x="250" y="378" class="field">Session</text>
+<text x="660" y="378" class="small">行情批次标识，不是 TCP 连接号</text>
+<text x="660" y="414" class="small">本课按市场日期与回放轮次生成</text>
+</g>
+<g data-field="Sequence Number" data-offset="10" data-width="8"><rect data-field-strip="true" x="40" y="442" width="1120" height="96" fill="#e5effb"/>
+<text x="58" y="480" class="small muted">偏移 10-17</text>
+<text x="58" y="516" class="small muted">8 字节</text>
+<text x="250" y="480" class="field">Sequence Number</text>
+<text x="660" y="480" class="small">首条消息的序号；图例为 100</text>
+<text x="660" y="516" class="small">第二条顺次为 101</text>
+</g>
+<g data-field="Message Count" data-offset="18" data-width="2"><rect data-field-strip="true" x="40" y="544" width="1120" height="96" fill="#e5effb"/>
+<text x="58" y="582" class="small muted">偏移 18-19</text>
+<text x="58" y="618" class="small muted">2 字节</text>
+<text x="250" y="582" class="field">Message Count</text>
+<text x="660" y="582" class="small">消息条数，不是字节数</text>
+<text x="660" y="618" class="small">本图为 2；本课实际为 1</text>
+</g>
+<g data-field="Message Length 1" data-offset="20" data-width="2"><rect data-field-strip="true" x="40" y="646" width="1120" height="96" fill="#edf1f4"/>
+<text x="58" y="684" class="small muted">偏移 20-21</text>
+<text x="58" y="720" class="small muted">2 字节</text>
+<text x="250" y="684" class="field">Message Length 1</text>
+<text x="660" y="684" class="small">第一条消息的长度：36</text>
+<text x="660" y="720" class="small">不含这个长度字段自身的 2 字节</text>
+</g>
+<g data-field="Message Data 1" data-offset="22" data-width="36"><rect data-field-strip="true" x="40" y="748" width="1120" height="96" fill="#e2f3ea"/>
+<text x="58" y="786" class="small muted">偏移 22-57</text>
+<text x="58" y="822" class="small muted">36 字节</text>
+<text x="250" y="786" class="field">Message Data 1</text>
+<text x="660" y="786" class="small">第一条 ITCH 的原始字节</text>
+<text x="660" y="822" class="small">图例用 Type A，占 36 字节</text>
+</g>
+<g data-field="Message Length 2" data-offset="58" data-width="2"><rect data-field-strip="true" x="40" y="850" width="1120" height="96" fill="#edf1f4"/>
+<text x="58" y="888" class="small muted">偏移 58-59</text>
+<text x="58" y="924" class="small muted">2 字节</text>
+<text x="250" y="888" class="field">Message Length 2</text>
+<text x="660" y="888" class="small">第二条消息的长度：35</text>
+<text x="660" y="924" class="small">跟在第一条消息后面</text>
+</g>
+<g data-field="Message Data 2" data-offset="60" data-width="35"><rect data-field-strip="true" x="40" y="952" width="1120" height="96" fill="#fff0c6"/>
+<text x="58" y="990" class="small muted">偏移 60-94</text>
+<text x="58" y="1026" class="small muted">35 字节</text>
+<text x="250" y="990" class="field">Message Data 2</text>
+<text x="660" y="990" class="small">第二条 ITCH 的原始字节</text>
+<text x="660" y="1026" class="small">图例用 Type U，占 35 字节</text>
+</g>
+<text x="40" y="1090" class="heading">按条数拆包，不按包数给消息编号</text>
+<text x="40" y="1134" class="small">第 k 条序号 = first_sequence + k - 1；k 从 1 起算。</text>
+<text x="40" y="1172" class="small">消息长度可随 ITCH 类型变化，不能把第一条的长度用于所有消息。</text>
+<text x="40" y="1222" class="heading">总长度 = 包头 20 + (长度 2 + A 消息 36) + (长度 2 + U 消息 35)</text>
+<text x="40" y="1264" class="small">因此本图为 95 字节 UDP 载荷；数值字段按大端读取。</text>
+<text x="40" y="1304" class="small muted">心跳和会话结束没有消息块，不能把它们当作一种 ITCH 消息。</text>
+</svg>

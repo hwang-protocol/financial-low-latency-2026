@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1400" viewBox="0 0 1200 1400" role="img" aria-labelledby="title desc">
+<title id="title">Kernel Socket · 代码怎样进入内核</title><desc id="desc">对照基线：Socket 进入 Linux 内核；后面三图沿同一位置比较。。蓝色为发送，绿色为接收；编号对应完整源码阅读页。</desc>
+<defs>
+<marker id="tx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#1769c2"/></marker>
+<marker id="rx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#078576"/></marker>
+<marker id="muted" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#8193a6"/></marker>
+</defs>
+<rect width="1200" height="1400" rx="22" fill="#f4f7fb"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif">
+<rect x="28" y="24" width="1144" height="100" rx="16" fill="#ffffff" stroke="#e2e9f0" stroke-width="2"/>
+<g class="flat-icon" transform="translate(49 48)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="6"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M16 0v8m16-8v8M16 40v8m16-8v8M0 16h8m-8 16h8m32-16h8m-8 16h8"/></g>
+<text x="110" y="66" font-size="32" fill="#163047" font-weight="700" text-anchor="start">Kernel Socket · 代码怎样进入内核</text>
+<text x="110" y="101" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">对照基线：Socket 进入 Linux 内核；后面三图沿同一位置比较。</text>
+<rect x="995" y="43" width="153" height="45" rx="22" fill="#1769c2" stroke="#1769c2" stroke-width="2"/>
+<text x="1071" y="73" font-size="18" fill="#ffffff" font-weight="700" text-anchor="middle">sfc 管理网卡</text>
+<text x="40" y="161" font-size="23" fill="#1769c2" font-weight="700" text-anchor="start">K1 · 首笔取单后按需建连，后续复用</text>
+<rect x="40" y="181" width="348" height="178" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(54 197)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M39 14A18 18 0 0 0 8 15m31-9v10H29M9 34a18 18 0 0 0 31-1M9 42V32h10"/></g>
+<text x="116" y="223" font-size="23" fill="#163047" font-weight="700" text-anchor="start">等待并取出订单</text>
+<rect x="52" y="260" width="324" height="53" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="66" y="289" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">order_queue_.front(...)</text>
+<text x="54" y="344" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">条件变量唤醒订单线程</text>
+<path class="flow" d="M392 286 L400.0 286.0" fill="none" stroke="#8193a6" stroke-width="3" stroke-linecap="butt" marker-end="url(#muted)"/>
+<rect x="426" y="181" width="348" height="178" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(440 197)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="44" height="36" rx="6"/><path d="m17 16-7 7 7 7m14-14 7 7-7 7m-9-17-5 21"/></g>
+<text x="502" y="223" font-size="23" fill="#163047" font-weight="700" text-anchor="start">按需创建连接对象</text>
+<rect x="438" y="260" width="324" height="53" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="452" y="289" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">::socket(...)</text>
+<text x="440" y="344" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">已有连接时复用</text>
+<path class="flow" d="M778 286 L786.0 286.0" fill="none" stroke="#8193a6" stroke-width="3" stroke-linecap="butt" marker-end="url(#muted)"/>
+<rect x="812" y="181" width="348" height="178" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(826 197)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v12m16-12v12M10 15h28v7a14 14 0 0 1-28 0zm14 21v10"/></g>
+<text x="888" y="223" font-size="23" fill="#163047" font-weight="700" text-anchor="start">建立 TCP 连接</text>
+<rect x="824" y="260" width="324" height="53" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="838" y="289" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">::connect(...)</text>
+<text x="826" y="344" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">只完成 TCP 握手</text>
+<g transform="translate(0 30)">
+<rect x="40" y="355" width="498" height="637" rx="16" fill="#edf4fc" stroke="#d7e5f4" stroke-width="2"/>
+<rect x="582" y="355" width="270" height="637" rx="16" fill="#edf0f5" stroke="#d7e5e3" stroke-width="2"/>
+<rect x="896" y="355" width="264" height="637" rx="16" fill="#fff" stroke="#d7e5f4" stroke-width="2"/>
+<text x="58" y="391" font-size="23" fill="#163047" font-weight="700" text-anchor="start">订单线程 · 应用代码</text>
+<text x="600" y="390" font-size="19" fill="#163047" font-weight="700" text-anchor="start">Linux 内核</text>
+<g class="flat-icon" transform="translate(911 372)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="42" height="30" rx="5"/><rect x="8" y="15" width="15" height="13" rx="2"/><path d="M29 16h9m-9 8h9M9 37v7m7-7v7m7-7v7m7-7v7m7-7v7"/></g>
+<text x="975" y="404" font-size="26" fill="#163047" font-weight="700" text-anchor="start">X2522</text>
+<text x="60" y="440" font-size="25" fill="#1769c2" font-weight="700" text-anchor="start">K2 · 发出本笔订单</text>
+<rect x="60" y="460" width="456" height="111" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="74" y="489" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">send_soup(...)</text>
+<text x="74" y="518" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → send_all(...)</text>
+<text x="74" y="547" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → ::send(...)</text>
+<text x="75" y="606" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">send 调用：用户态 → 内核态</text>
+<g class="flat-icon" transform="translate(600 407)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 4 22 11-22 11L2 15zm-22 22 22 11 22-11M2 36l22 11 22-11"/></g>
+<text x="600" y="493" font-size="24" fill="#1769c2" font-weight="700" text-anchor="start">内核 TCP/IP</text>
+<text x="600" y="530" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">组装 TCP/IP 报文</text>
+<text x="600" y="563" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">发送缓冲与重传状态</text>
+<text x="600" y="611" font-size="21" fill="#1769c2" font-weight="700" text-anchor="start">sfc 驱动</text>
+<text x="927" y="487" font-size="22" fill="#1769c2" font-weight="700" text-anchor="start">TX · 发送资源</text>
+<rect x="927" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="963" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="999" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="1035" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="1071" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<text x="927" y="573" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">描述符指向报文缓冲区</text>
+<text x="927" y="605" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">排队后从端口发送</text>
+<path class="flow" d="M524 550 L556.0 550.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M860 550 L870.0 550.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<text x="60" y="720" font-size="25" fill="#078576" font-weight="700" text-anchor="start">K3 · 取回成交回报</text>
+<rect x="60" y="741" width="456" height="111" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="74" y="770" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">recv_soup(...)</text>
+<text x="74" y="799" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → recv_all(...)</text>
+<text x="74" y="828" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → ::recv(...)</text>
+<text x="75" y="884" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">字节齐全后，解析 Soup / OUCH</text>
+<g class="flat-icon" transform="translate(600 710)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 4 22 11-22 11L2 15zm-22 22 22 11 22-11M2 36l22 11 22-11"/></g>
+<text x="600" y="788" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">校验、排序、确认</text>
+<text x="600" y="821" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">交付 Socket 接收缓冲</text>
+<text x="600" y="883" font-size="21" fill="#078576" font-weight="700" text-anchor="start">sfc 驱动</text>
+<text x="927" y="768" font-size="22" fill="#078576" font-weight="700" text-anchor="start">RX · 接收队列</text>
+<rect x="927" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="963" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="999" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="1035" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="1071" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<text x="927" y="854" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">描述符指向报文缓冲区</text>
+<text x="927" y="886" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">网卡 DMA 写入缓冲区</text>
+<path class="flow" d="M888 829 L878.0 829.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<path class="flow" d="M574 829 L564.0 829.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<text x="924" y="652" font-size="18" fill="#1769c2" font-weight="400" text-anchor="start">sfc 管理描述符</text>
+<text x="924" y="680" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">中断 / NAPI 处理接收</text>
+<rect x="40" y="1012" width="812" height="236" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(58 1038)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M39 14A18 18 0 0 0 8 15m31-9v10H29M9 34a18 18 0 0 0 31-1M9 42V32h10"/></g>
+<text x="123" y="1052" font-size="23" fill="#163047" font-weight="700" text-anchor="start">K4 · 没有完整回报时怎么办？</text>
+<rect x="64" y="1100" width="250" height="60" rx="10" fill="#eef5fb" stroke="#bed3e5" stroke-width="2"/>
+<rect x="444" y="1100" width="380" height="60" rx="10" fill="#eff6f4" stroke="#b8d9ce" stroke-width="2"/>
+<text x="189" y="1137" font-size="22" fill="#163047" font-weight="600" text-anchor="middle">::recv(...)</text>
+<text x="634" y="1137" font-size="21" fill="#163047" font-weight="600" text-anchor="middle">内核等待 / 唤醒</text>
+<path class="flow" d="M322 1130 L418.0 1130.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<text x="376" y="1092" font-size="19" fill="#52677c" font-weight="400" text-anchor="middle">暂无数据</text>
+<path class="flow" d="M634 1168 V1216 H189 V1186" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<text x="402" y="1200" font-size="19" fill="#52677c" font-weight="400" text-anchor="middle">数据可读，调用返回后继续解析</text>
+<rect x="896" y="1054" width="264" height="94" rx="16" fill="#e6edf6" stroke="#bdcddd" stroke-width="2"/>
+<g class="flat-icon" transform="translate(912 1070)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="40" height="17" rx="4"/><rect x="4" y="27" width="40" height="17" rx="4"/><path d="M12 12h3m8 0h13M12 35h3m8 0h13"/></g>
+<text x="974" y="1090" font-size="23" fill="#163047" font-weight="700" text-anchor="start">Exchange</text>
+<text x="974" y="1125" font-size="17" fill="#52677c" font-weight="400" text-anchor="start">TCP 订单 / 回报</text>
+<path class="flow" d="M996 997 L996.0 1028.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M1080 1046 L1080.0 1018.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<text x="40" y="1289" font-size="23" fill="#163047" font-weight="700" text-anchor="start">标准接口、成熟工具；每次收发需要进入内核网络栈。</text>
+<g class="flat-icon" transform="translate(40 1303)" fill="none" stroke="#6a8295" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 2 19 8v13c0 12-11 20-19 23C16 43 5 35 5 23V10zm-9 22 6 6 12-13"/></g>
+<text x="103" y="1335" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">连接和字节流由 Linux 管理；send 返回表示数据被接受，不表示对端已成交。</text>
+</g>
+</g></svg>

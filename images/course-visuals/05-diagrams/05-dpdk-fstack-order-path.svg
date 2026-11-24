@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1400" viewBox="0 0 1200 1400" role="img" aria-labelledby="title desc">
+<title id="title">DPDK + F-Stack · 由轮询循环驱动</title><desc id="desc">对照前三路：改用 ff_* 与 PMD，vfio-pci 接管网卡。。蓝色为发送，绿色为接收；编号对应完整源码阅读页。</desc>
+<defs>
+<marker id="tx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#1769c2"/></marker>
+<marker id="rx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#078576"/></marker>
+<marker id="muted" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#8193a6"/></marker>
+</defs>
+<rect width="1200" height="1400" rx="22" fill="#f4f7fb"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif">
+<rect x="28" y="24" width="1144" height="100" rx="16" fill="#ffffff" stroke="#e2e9f0" stroke-width="2"/>
+<g class="flat-icon" transform="translate(49 48)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="6"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M16 0v8m16-8v8M16 40v8m16-8v8M0 16h8m-8 16h8m32-16h8m-8 16h8"/></g>
+<text x="110" y="66" font-size="32" fill="#163047" font-weight="700" text-anchor="start">DPDK + F-Stack · 由轮询循环驱动</text>
+<text x="110" y="101" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">对照前三路：改用 ff_* 与 PMD，vfio-pci 接管网卡。</text>
+<rect x="995" y="43" width="153" height="45" rx="22" fill="#b56a12" stroke="#b56a12" stroke-width="2"/>
+<text x="1071" y="73" font-size="18" fill="#ffffff" font-weight="700" text-anchor="middle">vfio-pci 接管</text>
+<text x="40" y="161" font-size="23" fill="#b56a12" font-weight="700" text-anchor="start">D1 · 连接准备与启动</text>
+<rect x="40" y="181" width="348" height="178" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(54 197)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="44" height="36" rx="6"/><path d="m17 16-7 7 7 7m14-14 7 7-7 7m-9-17-5 21"/></g>
+<text x="116" y="223" font-size="23" fill="#163047" font-weight="700" text-anchor="start">初始化网络栈</text>
+<rect x="52" y="260" width="324" height="53" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="66" y="289" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">ff_init(...)</text>
+<text x="54" y="344" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">初始化 F-Stack 与 DPDK</text>
+<path class="flow" d="M392 286 L400.0 286.0" fill="none" stroke="#8193a6" stroke-width="3" stroke-linecap="butt" marker-end="url(#muted)"/>
+<rect x="426" y="181" width="348" height="178" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(440 197)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v12m16-12v12M10 15h28v7a14 14 0 0 1-28 0zm14 21v10"/></g>
+<text x="502" y="223" font-size="23" fill="#163047" font-weight="700" text-anchor="start">发起 TCP 连接</text>
+<rect x="438" y="260" width="324" height="53" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="452" y="289" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">ff_socket / ff_connect</text>
+<text x="440" y="344" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">连接进度由事件循环推进</text>
+<path class="flow" d="M778 286 L786.0 286.0" fill="none" stroke="#8193a6" stroke-width="3" stroke-linecap="butt" marker-end="url(#muted)"/>
+<rect x="812" y="181" width="348" height="178" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(826 197)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M39 14A18 18 0 0 0 8 15m31-9v10H29M9 34a18 18 0 0 0 31-1M9 42V32h10"/></g>
+<text x="888" y="223" font-size="23" fill="#163047" font-weight="700" text-anchor="start">运行轮询循环</text>
+<rect x="824" y="260" width="324" height="53" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="838" y="289" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">ff_run(drive_entry, this)</text>
+<text x="826" y="344" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">回调处理业务与网络事件</text>
+<g transform="translate(0 30)">
+<rect x="40" y="355" width="498" height="637" rx="16" fill="#edf4fc" stroke="#d7e5f4" stroke-width="2"/>
+<rect x="582" y="355" width="270" height="637" rx="16" fill="#eaf5f1" stroke="#d7e5e3" stroke-width="2"/>
+<rect x="896" y="355" width="264" height="637" rx="16" fill="#fff" stroke="#d7e5f4" stroke-width="2"/>
+<text x="58" y="391" font-size="23" fill="#163047" font-weight="700" text-anchor="start">轮询线程 · drive() 回调</text>
+<text x="600" y="390" font-size="19" fill="#163047" font-weight="700" text-anchor="start">F-Stack + DPDK</text>
+<g class="flat-icon" transform="translate(911 372)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="42" height="30" rx="5"/><rect x="8" y="15" width="15" height="13" rx="2"/><path d="M29 16h9m-9 8h9M9 37v7m7-7v7m7-7v7m7-7v7m7-7v7"/></g>
+<text x="975" y="404" font-size="26" fill="#163047" font-weight="700" text-anchor="start">X2522</text>
+<text x="60" y="440" font-size="25" fill="#1769c2" font-weight="700" text-anchor="start">D2 · 发出本笔订单</text>
+<rect x="60" y="460" width="456" height="111" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="74" y="489" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">maybe_start_order()</text>
+<text x="74" y="518" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → flush_tx()</text>
+<text x="74" y="547" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → ff_send(...)</text>
+<text x="75" y="606" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">ff_send 把字节交给 F-Stack TCP</text>
+<g class="flat-icon" transform="translate(600 407)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 4 22 11-22 11L2 15zm-22 22 22 11 22-11M2 36l22 11 22-11"/></g>
+<text x="600" y="493" font-size="24" fill="#1769c2" font-weight="700" text-anchor="start">用户态 TCP/IP</text>
+<text x="600" y="530" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">F-Stack 处理 TCP</text>
+<text x="600" y="563" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">net_sfc_efx PMD 发包</text>
+<text x="600" y="611" font-size="21" fill="#1769c2" font-weight="700" text-anchor="start">DPDK PMD</text>
+<text x="927" y="487" font-size="22" fill="#1769c2" font-weight="700" text-anchor="start">TX · 发送资源</text>
+<rect x="927" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="963" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="999" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="1035" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<rect x="1071" y="504" width="29" height="38" rx="4" fill="#e3eff9" stroke="#1769c2" stroke-width="2"/>
+<text x="927" y="573" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">描述符指向报文缓冲区</text>
+<text x="927" y="605" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">排队后从端口发送</text>
+<path class="flow" d="M524 550 L556.0 550.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M860 550 L870.0 550.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<text x="60" y="720" font-size="25" fill="#078576" font-weight="700" text-anchor="start">D3 · 取回成交回报</text>
+<rect x="60" y="741" width="456" height="111" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="74" y="770" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">drain_rx()</text>
+<text x="74" y="799" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → ff_recv(...)</text>
+<text x="74" y="828" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">  → process_soup(...)</text>
+<text x="75" y="884" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">字节齐全后，解析 Soup / OUCH</text>
+<g class="flat-icon" transform="translate(600 710)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 4 22 11-22 11L2 15zm-22 22 22 11 22-11M2 36l22 11 22-11"/></g>
+<text x="600" y="788" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">PMD 轮询收包</text>
+<text x="600" y="821" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">F-Stack 还原 TCP 字节流</text>
+<text x="600" y="883" font-size="21" fill="#078576" font-weight="700" text-anchor="start">DPDK PMD</text>
+<text x="927" y="768" font-size="22" fill="#078576" font-weight="700" text-anchor="start">RX · 接收队列</text>
+<rect x="927" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="963" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="999" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="1035" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<rect x="1071" y="785" width="29" height="38" rx="4" fill="#dff4ee" stroke="#078576" stroke-width="2"/>
+<text x="927" y="854" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">描述符指向报文缓冲区</text>
+<text x="927" y="886" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">网卡 DMA 写入缓冲区</text>
+<path class="flow" d="M888 829 L878.0 829.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<path class="flow" d="M574 829 L564.0 829.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<text x="924" y="652" font-size="18" fill="#b56a12" font-weight="400" text-anchor="start">PMD 管理描述符</text>
+<text x="924" y="680" font-size="18" fill="#52677c" font-weight="400" text-anchor="start">轮询完成状态</text>
+<rect x="40" y="1012" width="812" height="236" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(58 1038)" fill="none" stroke="#b56a12" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M39 14A18 18 0 0 0 8 15m31-9v10H29M9 34a18 18 0 0 0 31-1M9 42V32h10"/></g>
+<text x="123" y="1052" font-size="23" fill="#163047" font-weight="700" text-anchor="start">D4 · 本课如何交接订单？</text>
+<rect x="64" y="1096" width="154" height="60" rx="10" fill="#fff8e9" stroke="#dfc497" stroke-width="2"/>
+<text x="141" y="1133" font-size="21" fill="#163047" font-weight="600" text-anchor="middle">DEQUE_CV</text>
+<path class="flow" d="M222 1126 L234.0 1126.0" fill="none" stroke="#8193a6" stroke-width="3" stroke-linecap="butt" marker-end="url(#muted)"/>
+<rect x="260" y="1096" width="154" height="60" rx="10" fill="#fff8e9" stroke="#dfc497" stroke-width="2"/>
+<text x="337" y="1133" font-size="21" fill="#163047" font-weight="600" text-anchor="middle">桥接线程</text>
+<path class="flow" d="M418 1126 L430.0 1126.0" fill="none" stroke="#8193a6" stroke-width="3" stroke-linecap="butt" marker-end="url(#muted)"/>
+<rect x="456" y="1096" width="154" height="60" rx="10" fill="#fff8e9" stroke="#dfc497" stroke-width="2"/>
+<text x="533" y="1133" font-size="21" fill="#163047" font-weight="600" text-anchor="middle">交接区</text>
+<path class="flow" d="M614 1126 L626.0 1126.0" fill="none" stroke="#8193a6" stroke-width="3" stroke-linecap="butt" marker-end="url(#muted)"/>
+<rect x="652" y="1096" width="154" height="60" rx="10" fill="#fff8e9" stroke="#dfc497" stroke-width="2"/>
+<text x="729" y="1133" font-size="21" fill="#163047" font-weight="600" text-anchor="middle">轮询线程</text>
+<text x="66" y="1194" font-size="22" fill="#52677c" font-weight="400" text-anchor="start">ff_run 反复调用 drive()，继续未完成的发送和接收。</text>
+<text x="66" y="1226" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">交接结构属于本课客户端；不是所有 DPDK 程序的固定写法。</text>
+<rect x="896" y="1054" width="264" height="94" rx="16" fill="#e6edf6" stroke="#bdcddd" stroke-width="2"/>
+<g class="flat-icon" transform="translate(912 1070)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="40" height="17" rx="4"/><rect x="4" y="27" width="40" height="17" rx="4"/><path d="M12 12h3m8 0h13M12 35h3m8 0h13"/></g>
+<text x="974" y="1090" font-size="23" fill="#163047" font-weight="700" text-anchor="start">Exchange</text>
+<text x="974" y="1125" font-size="17" fill="#52677c" font-weight="400" text-anchor="start">TCP 订单 / 回报</text>
+<path class="flow" d="M996 997 L996.0 1028.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M1080 1046 L1080.0 1018.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<text x="40" y="1289" font-size="23" fill="#163047" font-weight="700" text-anchor="start">直接控制用户态报文处理；本课还包含桥接与轮询线程之间的交接成本。</text>
+<g class="flat-icon" transform="translate(40 1303)" fill="none" stroke="#6a8295" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 2 19 8v13c0 12-11 20-19 23C16 43 5 35 5 23V10zm-9 22 6 6 12-13"/></g>
+<text x="103" y="1335" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">VFIO 建立设备访问与 DMA 映射；IOMMU 检查网卡访问内存的范围。</text>
+</g>
+</g></svg>

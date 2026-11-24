@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="title desc">
+<title id="title">为什么固定Exchange的收包配置</title><desc id="desc">正式四路比较固定Exchange接收端：RSS映射表128项都选择接收队列1，相关IRQ由逻辑CPU2处理，Exchange也固定在CPU2。准备C只检查当前配置，不修改它。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 12 12"><path d="M 0 0 L 12 6 L 0 12 Z" fill="#475569"/></marker></defs>
+<rect width="1200" height="460" rx="20" fill="#fff"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,Arial,sans-serif" fill="#172338">
+<text x="36" y="56" font-size="32" fill="#172338" font-weight="700">四条客户端路径，使用相同的 Exchange 收包条件</text>
+<text x="36" y="101" font-size="23" fill="#64748b" font-weight="400">平台脚本统一设置收包条件；每组预热与正式采样前自动复核。</text>
+<rect x="36" y="194" width="310" height="163" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<rect x="451" y="194" width="270" height="163" rx="14" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<rect x="878" y="194" width="286" height="163" rx="14" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+<text x="57" y="233" font-size="25" fill="#1d4ed8" font-weight="700">Exchange .1 的网卡</text>
+<text x="57" y="275" font-size="23" fill="#172338" font-weight="400">RSS 表：128 个分配项</text>
+<text x="57" y="313" font-size="22" fill="#172338" font-weight="400">每一项都填写队列编号 1</text>
+<text x="477" y="236" font-size="28" fill="#7e22ce" font-weight="700">接收队列 1</text>
+<text x="477" y="279" font-size="22" fill="#172338" font-weight="400">订单报文进入此队列</text>
+<text x="477" y="317" font-size="22" fill="#172338" font-weight="400">通过中断通知 CPU</text>
+<text x="902" y="233" font-size="28" fill="#15803d" font-weight="700">逻辑 CPU 2</text>
+<text x="902" y="277" font-size="22" fill="#172338" font-weight="400">处理这条队列的中断</text>
+<text x="902" y="316" font-size="22" fill="#172338" font-weight="400">Exchange 也运行在此</text>
+<path d="M 359 272 H 426" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<path d="M 734 272 H 853" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<text x="360" y="172" font-size="20" fill="#475569" font-weight="400">RSS 分配</text>
+<text x="748" y="172" font-size="20" fill="#475569" font-weight="400">IRQ 通知</text>
+<text x="36" y="408" font-size="26" fill="#172338" font-weight="400">128 是表项数量，1 是队列编号，2 是逻辑 CPU 编号。</text>
+</g></svg>

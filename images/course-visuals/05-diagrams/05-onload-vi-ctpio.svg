@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1260" viewBox="0 0 1200 1260" role="img" aria-labelledby="title desc">
+<title id="title">VI 与 CTPIO · 资源与发送方式</title><desc id="desc">VI 提供网卡收发资源；CTPIO 改变 CPU 把报文交给网卡的方式。。蓝色为发送，绿色为接收；编号对应完整源码阅读页。</desc>
+<defs>
+<marker id="tx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#1769c2"/></marker>
+<marker id="rx" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#078576"/></marker>
+<marker id="muted" viewBox="0 0 12 12" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#8193a6"/></marker>
+</defs>
+<rect width="1200" height="1260" rx="22" fill="#f4f7fb"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif">
+<rect x="28" y="24" width="1144" height="100" rx="16" fill="#ffffff" stroke="#e2e9f0" stroke-width="2"/>
+<g class="flat-icon" transform="translate(49 48)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="6"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M16 0v8m16-8v8M16 40v8m16-8v8M0 16h8m-8 16h8m32-16h8m-8 16h8"/></g>
+<text x="110" y="66" font-size="32" fill="#163047" font-weight="700" text-anchor="start">VI 与 CTPIO · 资源与发送方式</text>
+<text x="110" y="101" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">VI 提供网卡收发资源；CTPIO 改变 CPU 把报文交给网卡的方式。</text>
+<rect x="995" y="43" width="153" height="45" rx="22" fill="#078576" stroke="#078576" stroke-width="2"/>
+<text x="1071" y="73" font-size="18" fill="#ffffff" font-weight="700" text-anchor="middle">X2522 / Onload</text>
+<text x="40" y="164" font-size="24" fill="#078576" font-weight="700" text-anchor="start">① 应用仍写 Socket；Onload 库使用 VI</text>
+<rect x="40" y="190" width="300" height="174" rx="16" fill="#fff" stroke="#dce6ef" stroke-width="2"/>
+<g class="flat-icon" transform="translate(56 207)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="44" height="36" rx="6"/><path d="m17 16-7 7 7 7m14-14 7 7-7 7m-9-17-5 21"/></g>
+<text x="116" y="239" font-size="24" fill="#163047" font-weight="700" text-anchor="start">你的交易程序</text>
+<rect x="56" y="264" width="268" height="82" rx="9" fill="#132d43" stroke="#132d43" stroke-width="2"/>
+<text x="70" y="293" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">send_all → ::send</text>
+<text x="70" y="322" font-size="19" fill="#e9f4ff" font-weight="700" text-anchor="start" font-family="DejaVu Sans Mono,monospace">recv_all → ::recv</text>
+<rect x="402" y="190" width="300" height="174" rx="16" fill="#e8f5f1" stroke="#bdded2" stroke-width="2"/>
+<g class="flat-icon" transform="translate(418 207)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="6"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M16 0v8m16-8v8M16 40v8m16-8v8M0 16h8m-8 16h8m32-16h8m-8 16h8"/></g>
+<text x="478" y="239" font-size="24" fill="#163047" font-weight="700" text-anchor="start">Onload 库</text>
+<text x="423" y="294" font-size="21" fill="#163047" font-weight="700" text-anchor="start">CPU 执行 TCP/IP 处理</text>
+<text x="423" y="330" font-size="21" fill="#52677c" font-weight="400" text-anchor="start">使用队列，读取事件</text>
+<rect x="770" y="190" width="390" height="228" rx="16" fill="#fff" stroke="#b4d9cf" stroke-width="2"/>
+<g class="flat-icon" transform="translate(789 202)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="42" height="30" rx="5"/><rect x="8" y="15" width="15" height="13" rx="2"/><path d="M29 16h9m-9 8h9M9 37v7m7-7v7m7-7v7m7-7v7m7-7v7"/></g>
+<text x="850" y="235" font-size="24" fill="#163047" font-weight="700" text-anchor="start">VI · 一套收发资源</text>
+<rect x="789" y="255" width="68" height="34" rx="6" fill="#f1f6fa" stroke="#1769c2" stroke-width="2"/>
+<text x="823" y="279" font-size="19" fill="#1769c2" font-weight="700" text-anchor="middle">TX</text>
+<text x="871" y="280" font-size="20" fill="#163047" font-weight="700" text-anchor="start">发送队列 / 发送入口</text>
+<rect x="789" y="302" width="68" height="34" rx="6" fill="#f1f6fa" stroke="#078576" stroke-width="2"/>
+<text x="823" y="326" font-size="19" fill="#078576" font-weight="700" text-anchor="middle">RX</text>
+<text x="871" y="327" font-size="20" fill="#163047" font-weight="700" text-anchor="start">接收队列 → 收包缓冲</text>
+<rect x="789" y="349" width="68" height="34" rx="6" fill="#f1f6fa" stroke="#8055b4" stroke-width="2"/>
+<text x="823" y="373" font-size="19" fill="#8055b4" font-weight="700" text-anchor="middle">EVQ</text>
+<text x="871" y="374" font-size="20" fill="#163047" font-weight="700" text-anchor="start">事件队列 → 收发进展</text>
+<path class="flow" d="M348 286 L376.0 286.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M394 331 L366.0 331.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<path class="flow" d="M710 286 L744.0 286.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M762 331 L728.0 331.0" fill="none" stroke="#078576" stroke-width="3" stroke-linecap="butt" marker-end="url(#rx)"/>
+<text x="40" y="407" font-size="19" fill="#52677c" font-weight="400" text-anchor="start">蓝色：发送方向　绿色：回报方向</text>
+<rect x="40" y="439" width="1120" height="61" rx="12" fill="#eef2fa" stroke="#d6e0ef" stroke-width="2"/>
+<text x="60" y="476" font-size="22" fill="#163047" font-weight="700" text-anchor="start">sfc 与配套内核模块先分配资源；Onload 库使用它们，业务代码无需直接操作网卡队列。</text>
+<text x="40" y="544" font-size="24" fill="#078576" font-weight="700" text-anchor="start">② 同一个 VI，可使用不同的发送方式</text>
+<rect x="40" y="569" width="1120" height="225" rx="16" fill="#edf4fd" stroke="#ccddf3" stroke-width="2"/>
+<text x="60" y="605" font-size="24" fill="#1769c2" font-weight="700" text-anchor="start">DMA 发送 · 网卡从主机内存读取报文</text>
+<rect x="60" y="627" width="300" height="110" rx="12" fill="#fff" stroke="#d2dfec" stroke-width="2"/>
+<g class="flat-icon" transform="translate(76 637)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="6"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M16 0v8m16-8v8M16 40v8m16-8v8M0 16h8m-8 16h8m32-16h8m-8 16h8"/></g>
+<text x="137" y="667" font-size="23" fill="#163047" font-weight="700" text-anchor="start">CPU / Onload 库</text>
+<text x="78" y="713" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">准备报文与 TX 描述符</text>
+<rect x="450" y="627" width="300" height="110" rx="12" fill="#fff" stroke="#d2dfec" stroke-width="2"/>
+<g class="flat-icon" transform="translate(466 637)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m24 4 22 11-22 11L2 15zm-22 22 22 11 22-11M2 36l22 11 22-11"/></g>
+<text x="527" y="667" font-size="23" fill="#163047" font-weight="700" text-anchor="start">主机内存</text>
+<text x="468" y="713" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">保存待发送的报文</text>
+<rect x="840" y="627" width="300" height="110" rx="12" fill="#fff" stroke="#d2dfec" stroke-width="2"/>
+<g class="flat-icon" transform="translate(856 637)" fill="none" stroke="#1769c2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="42" height="30" rx="5"/><rect x="8" y="15" width="15" height="13" rx="2"/><path d="M29 16h9m-9 8h9M9 37v7m7-7v7m7-7v7m7-7v7m7-7v7"/></g>
+<text x="917" y="667" font-size="23" fill="#163047" font-weight="700" text-anchor="start">X2522 网卡</text>
+<text x="858" y="713" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">DMA 取回报文，再发送</text>
+<path class="flow" d="M368 683 L424.0 683.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M758 683 L814.0 683.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<text x="60" y="771" font-size="21" fill="#163047" font-weight="700" text-anchor="start">描述符告诉网卡报文在哪里；网卡经 PCIe 发起 DMA 读取。</text>
+<rect x="40" y="819" width="1120" height="225" rx="16" fill="#e9f7f1" stroke="#badfcf" stroke-width="2"/>
+<text x="60" y="855" font-size="24" fill="#078576" font-weight="700" text-anchor="start">CTPIO 发送 · CPU 经 PCIe 把报文推到网卡</text>
+<rect x="60" y="877" width="300" height="110" rx="12" fill="#fff" stroke="#d2dfec" stroke-width="2"/>
+<g class="flat-icon" transform="translate(76 887)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="32" rx="6"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M16 0v8m16-8v8M16 40v8m16-8v8M0 16h8m-8 16h8m32-16h8m-8 16h8"/></g>
+<text x="137" y="917" font-size="23" fill="#163047" font-weight="700" text-anchor="start">CPU / Onload 库</text>
+<text x="78" y="963" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">读出待发送的小报文</text>
+<rect x="450" y="877" width="300" height="110" rx="12" fill="#fff" stroke="#d2dfec" stroke-width="2"/>
+<g class="flat-icon" transform="translate(466 887)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v12m16-12v12M10 15h28v7a14 14 0 0 1-28 0zm14 21v10"/></g>
+<text x="527" y="917" font-size="23" fill="#163047" font-weight="700" text-anchor="start">PCIe 写入</text>
+<text x="468" y="963" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">CPU 把报文直接写向网卡</text>
+<rect x="840" y="877" width="300" height="110" rx="12" fill="#fff" stroke="#d2dfec" stroke-width="2"/>
+<g class="flat-icon" transform="translate(856 887)" fill="none" stroke="#078576" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="42" height="30" rx="5"/><rect x="8" y="15" width="15" height="13" rx="2"/><path d="M29 16h9m-9 8h9M9 37v7m7-7v7m7-7v7m7-7v7m7-7v7"/></g>
+<text x="917" y="917" font-size="23" fill="#163047" font-weight="700" text-anchor="start">X2522 发送端</text>
+<text x="858" y="963" font-size="20" fill="#52677c" font-weight="400" text-anchor="start">本课整包到卡后发送</text>
+<path class="flow" d="M368 933 L424.0 933.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<path class="flow" d="M758 933 L814.0 933.0" fill="none" stroke="#1769c2" stroke-width="3" stroke-linecap="butt" marker-end="url(#tx)"/>
+<text x="60" y="1021" font-size="21" fill="#163047" font-weight="700" text-anchor="start">减少等待网卡 DMA 取报文的环节；不符合条件时仍可使用 DMA。</text>
+<text x="40" y="1092" font-size="24" fill="#078576" font-weight="700" text-anchor="start">③ 对本课代码有什么影响？</text>
+<rect x="40" y="1116" width="1120" height="107" rx="16" fill="#fff" stroke="#d6e0eb" stroke-width="2"/>
+<text x="62" y="1156" font-size="23" fill="#163047" font-weight="700" text-anchor="start">业务仍调用 send / recv；VI 的操作与 CTPIO 的选择发生在 Onload 库内部。</text>
+<text x="62" y="1195" font-size="22" fill="#52677c" font-weight="400" text-anchor="start">CTPIO 只涉及发送；接收仍由网卡 DMA 写入缓冲区，再由库处理回报。</text>
+</g></svg>

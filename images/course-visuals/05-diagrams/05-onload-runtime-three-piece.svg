@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1180" viewBox="0 0 1500 1180" role="img" aria-labelledby="title desc">
+  <title id="title">OpenOnload 的运行条件、控制入口与加速数据路径</title>
+  <desc id="desc">图上先对照准备阶段读到的 Onload 版本、两个字符设备和 sfc 驱动，再比较传统 Kernel 路径与 Onload 加速路径。橙色虚线表示建栈与 socket 支撑，紫色虚线表示 VI 资源申请和映射，二者都不承载逐包业务流量；蓝色和绿色实线分别表示加速发送与接收。加速数据经用户态协议栈和映射的 VI 队列到具备硬件 VI / 队列能力、并由 ef_vi 暴露这些能力的 X2522，不经过 Linux 网络栈和 sfc 普通 netdev 热路径；不支持或不加速的 socket 透明回退到 Kernel 路径。</desc>
+  <defs>
+    <marker id="arrow-blue" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-green" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#15803d"/></marker>
+    <marker id="arrow-orange" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#d97706"/></marker>
+    <marker id="arrow-purple" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#7e22ce"/></marker>
+    <marker id="arrow-slate" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#475569"/></marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .mono{font-family:"DejaVu Sans Mono","Noto Sans Mono CJK SC",monospace;fill:#0f172a}
+      .h{font-size:29px;font-weight:900}
+      .sub{font-size:16px;fill:#475569}
+      .k{font-size:19px;font-weight:900}
+      .body{font-size:15px;fill:#334155}
+      .small{font-size:13px;fill:#475569}
+      .code{font-size:16px;font-weight:800}
+      .badge{font-size:15px;font-weight:900;fill:#fff}
+      .lane{font-size:17px;font-weight:900;fill:#fff}
+    </style>
+  </defs>
+
+  <rect x="12" y="12" width="1476" height="1156" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="52" y="54">运行 ③：三件套为什么存在，Onload 为什么可能更快</text>
+  <text class="t sub" x="52" y="82">先把三组真实输出放回机器，再分清“准备通道的虚线”和“业务报文经过的实线”</text>
+
+  <g id="evidence-cards" data-extension-role="replace-from-run-output">
+    <rect x="50" y="104" width="430" height="112" rx="17" fill="#dcfce7" stroke="#4ade80" stroke-width="2"/>
+    <circle cx="82" cy="136" r="18" fill="#15803d"/><text class="t badge" x="82" y="142" text-anchor="middle">1</text>
+    <text class="t k" x="112" y="143">用户态 / 内核版本对上</text>
+    <text class="mono code" x="76" y="177">Onload 9f330e7</text>
+    <text class="mono code" x="76" y="203">Kernel module: 9f330e7</text>
+
+    <rect x="535" y="104" width="430" height="112" rx="17" fill="#ede9fe" stroke="#a78bfa" stroke-width="2"/>
+    <circle cx="567" cy="136" r="18" fill="#7e22ce"/><text class="t badge" x="567" y="142" text-anchor="middle">2</text>
+    <text class="t k" x="597" y="143">两扇字符设备门在</text>
+    <text class="mono code" x="561" y="177">c  /dev/onload</text>
+    <text class="mono code" x="561" y="203">c  /dev/sfc_char</text>
+
+    <rect x="1020" y="104" width="430" height="112" rx="17" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+    <circle cx="1052" cy="136" r="18" fill="#2563eb"/><text class="t badge" x="1052" y="142" text-anchor="middle">3</text>
+    <text class="t k" x="1082" y="143">PCI function 仍绑定 sfc</text>
+    <text class="mono code" x="1046" y="180">/sys/bus/pci/drivers/sfc</text>
+    <text class="t small" x="1046" y="204">普通 netdev 保留；没有把整块卡交给 VFIO</text>
+  </g>
+
+  <g id="kernel-data-path" data-extension-role="retain-as-comparison-lane">
+    <rect x="50" y="240" width="1400" height="166" rx="20" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="70" y="258" width="132" height="32" rx="16" fill="#475569"/>
+    <text class="t lane" x="136" y="280" text-anchor="middle">传统路径</text>
+
+    <rect x="170" y="300" width="230" height="76" rx="15" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <text class="t k" x="285" y="330" text-anchor="middle">普通 socket 程序</text>
+    <text class="mono body" x="285" y="357" text-anchor="middle">send / recv</text>
+
+    <rect x="520" y="300" width="260" height="76" rx="15" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <text class="t k" x="650" y="330" text-anchor="middle">Linux 网络栈</text>
+    <text class="t body" x="650" y="357" text-anchor="middle">内核 socket / TCP / IP</text>
+
+    <rect x="900" y="300" width="240" height="76" rx="15" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <text class="mono k" x="1020" y="330" text-anchor="middle">sfc.ko</text>
+    <text class="t body" x="1020" y="357" text-anchor="middle">Linux netdev 驱动</text>
+
+    <rect x="1260" y="300" width="150" height="76" rx="15" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <text class="t k" x="1335" y="330" text-anchor="middle">X2522</text>
+    <text class="t body" x="1335" y="357" text-anchor="middle">物理网卡</text>
+
+    <path d="M400 319H502" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#arrow-slate)"/>
+    <path d="M780 319H882" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#arrow-slate)"/>
+    <path d="M1140 319H1242" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#arrow-slate)"/>
+    <text class="t small" x="446" y="310" text-anchor="middle">TX</text>
+    <path d="M1260 356H1158" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow-slate)"/>
+    <path d="M900 356H798" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow-slate)"/>
+    <path d="M520 356H418" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow-slate)"/>
+    <text class="t small" x="1210" y="375" text-anchor="middle">RX</text>
+    <text class="t small" x="750" y="397" text-anchor="middle">每次 socket 收发调用都要经过用户态 / 内核态边界、内核协议栈和普通 netdev</text>
+  </g>
+
+  <g id="onload-data-path" data-extension-role="replace-accelerated-data-path-from-real-technology">
+    <rect x="50" y="430" width="1400" height="390" rx="20" fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+    <rect x="70" y="448" width="154" height="32" rx="16" fill="#2563eb"/>
+    <text class="t lane" x="147" y="470" text-anchor="middle">Onload 路径</text>
+    <text class="t small" x="242" y="469">蓝 / 绿实线 = TX / RX　　橙 / 紫虚线 = 建栈支撑 / VI 资源准备</text>
+    <text class="t small" x="1420" y="469" text-anchor="end">本章硬件前提：X2522 的 VI / 队列能力</text>
+
+    <rect x="115" y="496" width="220" height="82" rx="15" fill="#fff" stroke="#60a5fa" stroke-width="2"/>
+    <text class="t k" x="225" y="526" text-anchor="middle">同一个 socket 程序</text>
+    <text class="t body" x="225" y="554" text-anchor="middle">业务代码不用改 API</text>
+
+    <rect x="410" y="486" width="330" height="102" rx="16" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+    <text class="mono k" x="575" y="517" text-anchor="middle">libonload.so</text>
+    <text class="t k" x="575" y="545" text-anchor="middle">用户态 TCP / UDP 栈</text>
+    <text class="t body" x="575" y="572" text-anchor="middle">拦截 socket · 处理协议 · 管 packet buffer</text>
+
+    <rect x="835" y="486" width="330" height="102" rx="16" fill="#dcfce7" stroke="#22c55e" stroke-width="2.5"/>
+    <text class="t k" x="1000" y="517" text-anchor="middle">映射到用户态的 VI</text>
+    <text class="t body" x="1000" y="545" text-anchor="middle">RX / TX / Event 队列 · 过滤器</text>
+    <text class="t body" x="1000" y="572" text-anchor="middle">用户态直接 post / poll</text>
+
+    <rect x="1240" y="496" width="180" height="82" rx="15" fill="#fff" stroke="#60a5fa" stroke-width="2"/>
+    <text class="t k" x="1330" y="522" text-anchor="middle">X2522</text>
+    <text class="t body" x="1330" y="546" text-anchor="middle">硬件 VI · 队列</text>
+    <text class="t small" x="1330" y="568" text-anchor="middle">VI · DMA · CTPIO</text>
+
+    <path d="M335 514H392" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+    <path d="M740 514H817" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+    <path d="M1165 514H1222" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+    <text class="t small" x="366" y="503" text-anchor="middle">TX</text>
+    <path d="M1240 558H1183" fill="none" stroke="#15803d" stroke-width="4" marker-end="url(#arrow-green)"/>
+    <path d="M835 558H758" fill="none" stroke="#15803d" stroke-width="4" marker-end="url(#arrow-green)"/>
+    <path d="M410 558H353" fill="none" stroke="#15803d" stroke-width="4" marker-end="url(#arrow-green)"/>
+    <text class="t small" x="1220" y="578" text-anchor="middle">RX</text>
+
+    <path d="M650 486V388" fill="none" stroke="#64748b" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arrow-slate)"/>
+    <text class="t small" x="670" y="422">不支持 / 不加速的 socket：透明回退到 Kernel 路径</text>
+
+    <rect x="350" y="625" width="420" height="120" rx="16" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+    <text class="mono k" x="560" y="655" text-anchor="middle">/dev/onload  ↔  onload.ko</text>
+    <text class="t body" x="560" y="683" text-anchor="middle">建 / 附着 Onload stack · 管加速 socket / FD</text>
+    <text class="t body" x="560" y="708" text-anchor="middle">应用未调度时提供内核协作</text>
+    <text class="t small" x="560" y="732" text-anchor="middle">控制与支撑到此完成；它不是业务报文的下一跳</text>
+
+    <rect x="805" y="625" width="420" height="120" rx="16" fill="#fff" stroke="#a78bfa" stroke-width="2"/>
+    <text class="mono k" x="1015" y="655" text-anchor="middle">/dev/sfc_char  ↔  sfc_char.ko</text>
+    <text class="t body" x="1015" y="683" text-anchor="middle">申请 VI · RX/TX/Event 队列 · 过滤器</text>
+    <text class="t body" x="1015" y="708" text-anchor="middle">映射 packet buffer / DMA；通过 sfc driverlink 协调资源</text>
+    <text class="t small" x="1015" y="732" text-anchor="middle">资源准备入口；不是报文逐包穿过的网口</text>
+
+    <path d="M520 588V607" fill="none" stroke="#d97706" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arrow-orange)"/>
+    <path d="M1080 625V606" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arrow-purple)"/>
+    <rect x="350" y="758" width="875" height="52" rx="12" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5"/>
+    <text class="t k" x="525" y="790" text-anchor="middle">sfc.ko：PCI owner / 普通 netdev</text>
+    <line x1="700" y1="766" x2="700" y2="802" stroke="#94a3b8" stroke-width="1.5"/>
+    <text class="t small" x="962" y="779" text-anchor="middle">持有 PCI function · 保留 Linux netdev · 用 driverlink 协调资源</text>
+    <text class="t small" x="962" y="801" text-anchor="middle">蓝 / 绿实线直连 VI ↔ X2522；sfc.ko 不是加速包的下一跳</text>
+  </g>
+
+  <g id="benefit-and-tradeoff" data-extension-role="retain-why-it-matters">
+    <rect x="50" y="844" width="430" height="146" rx="18" fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+    <text class="t k" x="265" y="876" text-anchor="middle">好处 ①：程序改动小</text>
+    <text class="t body" x="265" y="908" text-anchor="middle">继续使用 BSD socket API</text>
+    <text class="t body" x="265" y="933" text-anchor="middle">通常只改变启动方式</text>
+    <text class="t small" x="265" y="967" text-anchor="middle">比改写成 TCPDirect / DPDK API 更容易接入</text>
+
+    <rect x="535" y="844" width="430" height="146" rx="18" fill="#dcfce7" stroke="#4ade80" stroke-width="2"/>
+    <text class="t k" x="750" y="876" text-anchor="middle">好处 ②：热路径更短</text>
+    <text class="t body" x="750" y="908" text-anchor="middle">计时窗内会话 I/O syscall：160 → 0</text>
+    <text class="t body" x="750" y="933" text-anchor="middle">绕过 Linux 协议栈与普通 netdev 接力</text>
+    <text class="t small" x="750" y="967" text-anchor="middle">完成后查询另有 32 → 0；strace 只计数</text>
+
+    <rect x="1020" y="844" width="430" height="146" rx="18" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text class="t k" x="1235" y="876" text-anchor="middle">代价：系统更复杂</text>
+    <text class="t body" x="1235" y="908" text-anchor="middle">多一套用户态栈、内核模块与硬件资源管理</text>
+    <text class="t body" x="1235" y="933" text-anchor="middle">轮询可用更多 CPU 换更低延迟</text>
+    <text class="t small" x="1235" y="967" text-anchor="middle">收益面向微秒敏感链路，不是所有程序都值得使用</text>
+  </g>
+
+  <g id="evidence-boundary" data-extension-role="replace-only-after-new-run">
+    <rect x="50" y="1022" width="1400" height="96" rx="18" fill="#f3e8ff" stroke="#a78bfa" stroke-width="2"/>
+    <text class="t" x="750" y="1052" text-anchor="middle" font-size="17" font-weight="900">读图边界：虚线负责“把快速通道建好”，实线才是加速 socket 的业务报文路径</text>
+    <text class="t body" x="750" y="1082" text-anchor="middle">本轮启动：onload --profile=latency；EF_POLL_USEC=100000，收益包含用户态加速路径与轮询</text>
+    <text class="t body" x="750" y="1107" text-anchor="middle">运行 ③ 证明机制与活路径；运行 ⑤ 用同一 POSIX binary 的真单 A/B 证明方向与量级</text>
+  </g>
+</svg>

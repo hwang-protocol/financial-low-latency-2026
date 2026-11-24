@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">普通 TCP 客户端与 TCPDirect 改良客户端的架构对照</title>
+  <desc id="desc">上方泳道是普通交易客户端：订单会话和报文编解码经 POSIX socket API、Linux TCP 到交易所。下方泳道保留相同的 SoupBinTCP 会话、OUCH 报文字节和业务语义，只把本地 Transport 改成 ZF API，由 TCPDirect 用户态 TCP 栈发出标准 TCP。两条路径进入交易所端的接点分开，表示对端看到的仍是同一 IP 端口上的标准 TCP 流。底部记录本课程已经完成真实 ZF Transport 与订单成交。</desc>
+  <defs>
+    <marker id="arrow-slate" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#475569"/></marker>
+    <marker id="arrow-blue" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-green" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto-start-reverse" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#15803d"/></marker>
+    <marker id="arrow-purple" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#7e22ce"/></marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .mono{font-family:"DejaVu Sans Mono","Noto Sans Mono CJK SC",monospace;fill:#0f172a}
+      .h{font-size:30px;font-weight:900}
+      .sub{font-size:16px;fill:#475569}
+      .lane{font-size:17px;font-weight:900;fill:#fff}
+      .k{font-size:20px;font-weight:900}
+      .body{font-size:15px;fill:#334155}
+      .small{font-size:13px;fill:#475569}
+      .tag{font-size:13px;font-weight:900;fill:#fff}
+    </style>
+  </defs>
+
+  <rect x="12" y="12" width="1576" height="976" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="54" y="58">交易协议不变：只把本地 Transport 换成 TCPDirect</text>
+  <text class="t sub" x="54" y="88">普通客户端与改良客户端发到券商的都是标准 TCP；变化发生在本地主机内部</text>
+
+  <g id="normal-posix-client" data-extension-role="replaceable-normal-transport-lane">
+    <rect x="50" y="122" width="1500" height="244" rx="22" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="72" y="140" width="208" height="34" rx="17" fill="#475569"/>
+    <text class="t lane" x="176" y="163" text-anchor="middle">普通 TCP 客户端</text>
+
+    <rect x="84" y="202" width="330" height="116" rx="17" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <text class="t k" x="249" y="232" text-anchor="middle">订单会话与报文编解码</text>
+    <text class="t body" x="249" y="265" text-anchor="middle">登录 · 分帧 · 业务序号 · 订单 / 回报</text>
+    <text class="t body" x="249" y="292" text-anchor="middle">FIX / OUCH / 券商私有协议字节</text>
+
+    <rect x="474" y="202" width="256" height="116" rx="17" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <text class="t k" x="602" y="232" text-anchor="middle">POSIX Transport</text>
+    <text class="mono body" x="602" y="265" text-anchor="middle">socket · connect</text>
+    <text class="mono body" x="602" y="292" text-anchor="middle">send_all · recv_all</text>
+
+    <rect x="790" y="202" width="240" height="116" rx="17" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+    <text class="t k" x="910" y="232" text-anchor="middle">Linux 内核 TCP</text>
+    <text class="t body" x="910" y="265" text-anchor="middle">建连 · ACK · 重传 · 窗口</text>
+    <text class="t body" x="910" y="292" text-anchor="middle">普通 netdev / Driver 路径</text>
+
+    <path d="M414 260H456" fill="none" stroke="#475569" stroke-width="3.5" marker-end="url(#arrow-slate)"/>
+    <path d="M730 260H772" fill="none" stroke="#475569" stroke-width="3.5" marker-end="url(#arrow-slate)"/>
+    <path d="M1048 260H1212" fill="none" stroke="#475569" stroke-width="3.5" marker-start="url(#arrow-green)" marker-end="url(#arrow-slate)"/>
+    <text class="t small" x="1130" y="241" text-anchor="middle">双向标准 TCP/IP</text>
+  </g>
+
+  <g id="tcpdirect-adapted-client" data-extension-role="replaceable-zf-transport-lane">
+    <rect x="50" y="390" width="1500" height="244" rx="22" fill="#eff6ff" stroke="#60a5fa" stroke-width="2.5"/>
+    <rect x="72" y="408" width="292" height="34" rx="17" fill="#2563eb"/>
+    <text class="t lane" x="218" y="431" text-anchor="middle">TCPDirect 改良客户端</text>
+
+    <rect x="84" y="470" width="330" height="116" rx="17" fill="#fff" stroke="#60a5fa" stroke-width="2"/>
+    <text class="t k" x="249" y="500" text-anchor="middle">同一套订单会话与报文</text>
+    <text class="t body" x="249" y="533" text-anchor="middle">登录 · 分帧 · 业务序号 · 订单 / 回报</text>
+    <text class="t body" x="249" y="560" text-anchor="middle">线上格式和字段语义保持不变</text>
+
+    <rect x="454" y="470" width="296" height="116" rx="17" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2.5"/>
+    <text class="t k" x="602" y="500" text-anchor="middle">ZF Transport Adapter</text>
+    <text class="mono small" x="602" y="533" text-anchor="middle">zft_connect · zft_send_single</text>
+    <text class="mono small" x="602" y="560" text-anchor="middle">zft_zc_recv · zf_reactor_perform</text>
+
+    <rect x="790" y="470" width="240" height="116" rx="17" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5"/>
+    <text class="t k" x="910" y="500" text-anchor="middle">TCPDirect 用户态 TCP</text>
+    <text class="t body" x="910" y="533" text-anchor="middle">CPU 执行建连、ACK、重传</text>
+    <text class="t body" x="910" y="560" text-anchor="middle">VI → X2522 专用数据面</text>
+
+    <path d="M414 528H439" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+    <path d="M750 528H775" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+    <path d="M1048 528H1212" fill="none" stroke="#2563eb" stroke-width="4" marker-start="url(#arrow-green)" marker-end="url(#arrow-blue)"/>
+    <text class="t small" x="1130" y="509" text-anchor="middle">仍是双向标准 TCP/IP</text>
+  </g>
+
+  <g id="broker-view" data-extension-role="fixed-remote-peer">
+    <rect x="1230" y="182" width="290" height="424" rx="22" fill="#dcfce7" stroke="#22c55e" stroke-width="2.5"/>
+    <rect x="1254" y="202" width="242" height="34" rx="17" fill="#15803d"/>
+    <text class="t lane" x="1375" y="225" text-anchor="middle">交易所 / 券商端</text>
+    <text class="t k" x="1375" y="288" text-anchor="middle">同一个 TCP Endpoint</text>
+    <text class="mono body" x="1375" y="321" text-anchor="middle">IP : PORT</text>
+    <line x1="1262" y1="350" x2="1488" y2="350" stroke="#86efac" stroke-width="1.5"/>
+    <text class="t body" x="1375" y="388" text-anchor="middle">照常接收 TCP byte stream</text>
+    <text class="t body" x="1375" y="419" text-anchor="middle">照常解析登录、订单与回报</text>
+    <text class="t body" x="1375" y="450" text-anchor="middle">无需安装 TCPDirect</text>
+    <line x1="1262" y1="474" x2="1488" y2="474" stroke="#86efac" stroke-width="1.5"/>
+    <text class="t small" x="1375" y="511" text-anchor="middle">上接点：普通客户端 TCP flow</text>
+    <text class="t small" x="1375" y="541" text-anchor="middle">下接点：改良客户端 TCP flow</text>
+    <text class="t" x="1375" y="578" text-anchor="middle" font-size="16" font-weight="900" fill="#166534">对端看见的协议没有变</text>
+  </g>
+
+  <g id="replacement-seam" data-extension-role="extend-with-real-client-transport-interface">
+    <path d="M602 324V452" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow-purple)"/>
+    <path d="M910 324V452" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="8 7" marker-end="url(#arrow-blue)"/>
+    <text class="t small" x="650" y="385" text-anchor="middle">替换本地 API</text>
+    <text class="t small" x="963" y="385" text-anchor="middle">替换本地 TCP 实现</text>
+  </g>
+
+  <g id="adaptation-contract" data-extension-role="extend-with-certification-checks">
+    <rect x="50" y="664" width="1500" height="132" rx="20" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="72" y="682" width="122" height="30" rx="15" fill="#15803d"/>
+    <text class="t lane" x="133" y="703" text-anchor="middle">保持不变</text>
+    <text class="t body" x="72" y="744">业务报文格式 · 登录 / 分帧 / 业务序号</text>
+    <text class="t body" x="72" y="770">券商 IP / Port · 远端解码与会话规则</text>
+    <line x1="548" y1="682" x2="548" y2="778" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="576" y="682" width="122" height="30" rx="15" fill="#7e22ce"/>
+    <text class="t lane" x="637" y="703" text-anchor="middle">必须改写</text>
+    <text class="t body" x="576" y="744">建连 · 收发 · 事件循环</text>
+    <text class="t body" x="576" y="770">buffer 生命周期 · 断线重连与背压</text>
+    <line x1="1084" y1="682" x2="1084" y2="778" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="1112" y="682" width="122" height="30" rx="15" fill="#d97706"/>
+    <text class="t lane" x="1173" y="703" text-anchor="middle">重新验收</text>
+    <text class="t body" x="1112" y="744">TCPDirect 功能边界 · TLS / 特殊选项</text>
+    <text class="t body" x="1112" y="770">认证环境 · 故障恢复</text>
+  </g>
+
+  <g id="course-evidence-boundary" data-extension-role="replace-after-trading-client-zf-run">
+    <rect x="50" y="824" width="1500" height="132" rx="20" fill="#fff7ed" stroke="#fb923c" stroke-width="2.5"/>
+    <text class="t k" x="78" y="858">本课程当前事实</text>
+    <text class="t body" x="78" y="891">已做：`flle-trader-tcpdirect` 复用同一 SoupBinTCP / OUCH 会话和编解码，只替换 OrderTransport。</text>
+    <text class="t body" x="78" y="920">实测：经 ZF API、X2522 VI 与强制 CTPIO 合同完成真实订单 Accepted / Executed；交易所端仍是标准 TCP。</text>
+    <rect x="1260" y="849" width="258" height="72" rx="16" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text class="t" x="1389" y="878" text-anchor="middle" font-size="16" font-weight="900" fill="#166534">交易 Transport 已完成</text>
+    <text class="t" x="1389" y="905" text-anchor="middle" font-size="15" font-weight="900" fill="#166534">真单与 ZF stack 已验收</text>
+  </g>
+</svg>

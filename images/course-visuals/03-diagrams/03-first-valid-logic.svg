@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">运行 ⑦ 实测：到达顺序决定首份来源</title>
+  <desc id="desc">Feed A 先到、Feed B 后到，两份都携带 sequence 0。Handler 先验证 A 的 wire-v1 结构，发现 sequence 0 尚未登记，于是把 accepted[0] 记为 A；随后验证 B，发现 sequence 0 已经登记，于是把 duplicates 加到 1。本轮输出为 accepted_source 等于 A、duplicates 等于 1、accepted keys 等于集合 0。脚本没有向下游发布的步骤。</desc>
+  <defs>
+    <style>
+      .title{font:700 30px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0f172a}
+      .sub{font:600 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .head{font:700 22px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#fff}
+      .feed{font:700 21px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0e7490}
+      .lane{font:600 17px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .row{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+      .rowok{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#166534}
+      .num{font:700 16px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#fff}
+      .key{font:700 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+      .val{font:700 22px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#0f172a}
+      .foot{font:700 18px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+      .mono{font:700 19px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#334155}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" overflow="visible">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="620" rx="18" fill="#fff"/>
+  <text x="600" y="44" text-anchor="middle" class="title">同一个 sequence 0 到达两次：登记一次，duplicate 一次</text>
+  <text x="600" y="76" text-anchor="middle" class="sub">首份来源由到达顺序决定；若 B 先到，B 同样成为首份来源，算法不偏向 A</text>
+
+  <text x="36" y="132" class="lane">本轮先到</text>
+  <rect x="36" y="144" width="184" height="80" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="3"/>
+  <text x="128" y="176" text-anchor="middle" class="feed">Feed A</text>
+  <text x="128" y="205" text-anchor="middle" class="mono">sequence 0</text>
+
+  <text x="36" y="302" class="lane">本轮后到</text>
+  <rect x="36" y="314" width="184" height="80" rx="10" fill="#faf5ff" stroke="#7e22ce" stroke-width="3"/>
+  <text x="128" y="346" text-anchor="middle" class="feed">Feed B</text>
+  <text x="128" y="375" text-anchor="middle" class="mono">sequence 0</text>
+
+  <path d="M220,184 H262" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M220,354 H262" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+
+  <rect x="266" y="112" width="452" height="384" rx="14" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+  <rect x="266" y="112" width="452" height="52" rx="14" fill="#334155"/>
+  <text x="492" y="148" text-anchor="middle" class="head">Feed Handler</text>
+
+  <circle cx="304" cy="202" r="15" fill="#7e22ce"/><text x="304" y="208" text-anchor="middle" class="num">1</text>
+  <text x="332" y="209" class="row">验证 A 的 wire-v1 结构</text>
+  <circle cx="304" cy="250" r="15" fill="#7e22ce"/><text x="304" y="256" text-anchor="middle" class="num">2</text>
+  <text x="332" y="257" class="row">sequence 0 尚未登记</text>
+  <circle cx="304" cy="298" r="15" fill="#15803d"/><text x="304" y="304" text-anchor="middle" class="num">3</text>
+  <text x="332" y="305" class="rowok">登记 accepted[0] = A</text>
+  <circle cx="304" cy="346" r="15" fill="#7e22ce"/><text x="304" y="352" text-anchor="middle" class="num">4</text>
+  <text x="332" y="353" class="row">验证 B 的 wire-v1 结构</text>
+  <circle cx="304" cy="394" r="15" fill="#7e22ce"/><text x="304" y="400" text-anchor="middle" class="num">5</text>
+  <text x="332" y="401" class="row">sequence 0 已经登记</text>
+  <circle cx="304" cy="442" r="15" fill="#64748b"/><text x="304" y="448" text-anchor="middle" class="num">6</text>
+  <text x="332" y="449" class="row">duplicates 加到 1</text>
+
+  <path d="M718,304 H770" fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+
+  <rect x="774" y="150" width="390" height="308" rx="14" fill="#fff" stroke="#7e22ce" stroke-width="3"/>
+  <rect x="774" y="150" width="390" height="52" rx="14" fill="#7e22ce"/>
+  <text x="969" y="186" text-anchor="middle" class="head">本轮实测输出</text>
+  <text x="800" y="248" class="key">accepted_source</text>
+  <text x="800" y="282" class="val">= A</text>
+  <line x1="800" y1="300" x2="1138" y2="300" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="800" y="336" class="key">duplicates</text>
+  <text x="800" y="370" class="val">= 1</text>
+  <line x1="800" y1="388" x2="1138" y2="388" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="800" y="424" class="key">accepted keys</text>
+  <text x="1000" y="424" class="val">= {0}</text>
+
+  <rect x="36" y="518" width="1128" height="80" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="600" y="552" text-anchor="middle" class="foot">脚本到「登记与计数」为止：只有 accepted_source 与 duplicates 两个观测量</text>
+  <text x="600" y="580" text-anchor="middle" class="sub">这一层没有下游消费者，因此不存在「只发布一次」这类可观测结论</text>
+</svg>

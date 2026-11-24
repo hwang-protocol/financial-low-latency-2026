@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">第三部分真实交易流量地图</title>
+  <desc id="desc">Exchange把Nasdaq历史ITCH消息装入MoldUDP64后通过UDP发布；AUTO和MANUAL客户端各自维护Feed Handler，并通过两条独立SoupBinTCP连接发送OUCH订单和接收回报。</desc>
+  <defs>
+    <marker id="cyanArrow" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="1" refY="6" markerWidth="16" markerHeight="12" orient="auto" overflow="visible"><path d="M0 1 L14 6 L0 11 Z" fill="#0891b2"/></marker>
+    <marker id="purpleArrow" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="1" refY="6" markerWidth="16" markerHeight="12" orient="auto" overflow="visible"><path d="M0 1 L14 6 L0 11 Z" fill="#7e22ce"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity=".12"/></filter>
+  </defs>
+  <rect x="18" y="18" width="1164" height="584" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="70" y="74" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#475569">FLLE · LIVE TRAFFIC</text>
+  <text x="70" y="116" font-family="Arial,'Noto Sans SC',sans-serif" font-size="34" font-weight="800" fill="#0f172a">同一个在线应用，两条方向相反的交易通道</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="160" width="340" height="340" rx="22" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+    <rect x="70" y="160" width="340" height="62" rx="22" fill="#fed7aa"/>
+    <path d="M70 200v22h340v-22" fill="#fed7aa"/>
+    <text x="94" y="201" font-family="Arial,'Noto Sans SC',sans-serif" font-size="27" font-weight="800" fill="#0f172a">.1 Exchange · C++</text>
+    <text x="94" y="260" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#334155">真实历史输入</text>
+    <text x="94" y="294" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" fill="#334155">Nasdaq AAPL / NVDA ITCH 5.0</text>
+    <text x="94" y="346" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#334155">行情发布</text>
+    <text x="94" y="380" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" fill="#334155">MoldUDP64 · UDP</text>
+    <text x="94" y="432" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="700" fill="#334155">纸面订单服务</text>
+    <text x="94" y="466" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" fill="#334155">SoupBinTCP · OUCH 5.0</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="790" y="160" width="340" height="340" rx="22" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+    <rect x="790" y="160" width="340" height="62" rx="22" fill="#a7f3d0"/>
+    <path d="M790 200v22h340v-22" fill="#a7f3d0"/>
+    <text x="814" y="201" font-family="Arial,'Noto Sans SC',sans-serif" font-size="27" font-weight="800" fill="#0f172a">.2 Trader · C++</text>
+    <rect x="814" y="248" width="292" height="92" rx="14" fill="#fff" stroke="#10b981"/>
+    <text x="836" y="282" font-family="Arial,'Noto Sans SC',sans-serif" font-size="21" font-weight="800" fill="#065f46">AUTO client</text>
+    <text x="836" y="314" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" fill="#334155">行情 · 策略 · 订单会话</text>
+    <rect x="814" y="362" width="292" height="92" rx="14" fill="#fff" stroke="#10b981"/>
+    <text x="836" y="396" font-family="Arial,'Noto Sans SC',sans-serif" font-size="21" font-weight="800" fill="#065f46">MANUAL client</text>
+    <text x="836" y="428" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" fill="#334155">行情 · 指令 · 订单会话</text>
+  </g>
+
+  <line x1="420" y1="256" x2="776" y2="256" stroke="#0891b2" stroke-width="7" marker-end="url(#cyanArrow)"/>
+  <text x="458" y="235" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#0e7490">行情：MoldUDP64 / ITCH</text>
+  <text x="487" y="289" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" fill="#475569">A 组播 / B 组播 / 双路</text>
+
+  <line x1="776" y1="392" x2="423" y2="392" stroke="#7e22ce" stroke-width="7" marker-end="url(#purpleArrow)"/>
+  <text x="492" y="372" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#6b21a8">订单：OUCH O</text>
+  <line x1="420" y1="448" x2="776" y2="448" stroke="#7e22ce" stroke-width="7" marker-end="url(#purpleArrow)"/>
+  <text x="480" y="481" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#6b21a8">回报：OUCH A / E / J</text>
+
+  <rect x="70" y="532" width="1060" height="44" rx="14" fill="#e2e8f0"/>
+  <text x="600" y="561" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" font-weight="700" fill="#334155">本章只观察这两条 C++ 数据路径；Python 网页和管理 API 不进入报文热路径</text>
+</svg>

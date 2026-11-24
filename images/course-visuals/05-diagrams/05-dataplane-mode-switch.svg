@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">数据面模式切换：网页按钮和 curl 走同一条 API</title>
+  <desc id="desc">网页切到 DPDK 独占按钮与课堂 curl 都 POST /api/data-plane。Gateway 再转给控制器 /mode，labctl 在交易机上停客户端并用 dpdk-devbind 更换 X2522 的 PCI 驱动。</desc>
+  <defs>
+    <filter id="shadow" x="-8%" y="-16%" width="116%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 1 1 L 11 6 L 1 11 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 1 1 L 11 6 L 1 11 Z" fill="#ea580c"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 1 1 L 11 6 L 1 11 Z" fill="#059669"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="900" rx="28" fill="#f8fafc"/>
+  <text x="700" y="48" text-anchor="middle" fill="#0f2742" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="30" font-weight="800">同一条 API，两种入口</text>
+  <text x="700" y="80" text-anchor="middle" fill="#475569" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">网页按钮和课堂 curl 都只是在喊切模式；真正换主人的是后面的绑卡命令</text>
+  <g id="entry-web" filter="url(#shadow)">
+    <rect x="70" y="108" width="520" height="118" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="330" y="148" text-anchor="middle" fill="#1e3a8a" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="800">网页按钮</text>
+    <text x="330" y="180" text-anchor="middle" fill="#334155" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">「切到 DPDK 独占」或「交还并切回 SFC」</text>
+    <text x="330" y="206" text-anchor="middle" fill="#1d4ed8" font-family="Consolas, Liberation Mono, monospace" font-size="15">POST /api/data-plane  {mode}</text>
+  </g>
+  <g id="entry-curl" filter="url(#shadow)">
+    <rect x="810" y="108" width="520" height="118" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="1070" y="148" text-anchor="middle" fill="#1e3a8a" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="20" font-weight="800">课堂脚本</text>
+    <text x="1070" y="180" text-anchor="middle" fill="#334155" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">07-dpdk-real-order.sh 里的 post_mode</text>
+    <text x="1070" y="206" text-anchor="middle" fill="#1d4ed8" font-family="Consolas, Liberation Mono, monospace" font-size="15">curl POST /api/data-plane  {mode}</text>
+  </g>
+  <path d="M 330 226 L 330 268 L 700 268 L 700 292" stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1070 226 L 1070 268 L 700 268" stroke="#64748b" stroke-width="3" fill="none"/>
+  <g id="api-chain" filter="url(#shadow)">
+    <rect x="90" y="300" width="1220" height="118" rx="18" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+    <text x="700" y="332" text-anchor="middle" fill="#5b21b6" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="800">封装成 API 的是整段换主人流程，不是单独一条绑卡命令</text>
+    <rect x="120" y="350" width="330" height="50" rx="12" fill="#ede9fe"/>
+    <text x="285" y="381" text-anchor="middle" fill="#5b21b6" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700">Gateway · /api/data-plane</text>
+    <rect x="535" y="350" width="330" height="50" rx="12" fill="#ede9fe"/>
+    <text x="700" y="381" text-anchor="middle" fill="#5b21b6" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700">Controller · POST /mode</text>
+    <rect x="950" y="350" width="330" height="50" rx="12" fill="#ede9fe"/>
+    <text x="1115" y="381" text-anchor="middle" fill="#5b21b6" font-family="Consolas, Liberation Mono, monospace" font-size="16" font-weight="700">labctl  sfc | dpdk</text>
+  </g>
+  <path d="M 450 375 L 525 375" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 865 375 L 940 375" stroke="#7c3aed" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 460 418 L 460 456" stroke="#ea580c" stroke-width="3" fill="none" marker-end="url(#arrow-orange)"/>
+  <path d="M 940 418 L 940 456" stroke="#059669" stroke-width="3" fill="none" marker-end="url(#arrow-green)"/>
+  <g id="to-dpdk" filter="url(#shadow)">
+    <rect x="70" y="464" width="610" height="360" rx="18" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="375" y="504" text-anchor="middle" fill="#9a3412" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="22" font-weight="800">切到 DPDK · mode=DPDK</text>
+    <text x="120" y="548" fill="#7c2d12" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">1. 停掉 Socket / Onload / TCPDirect</text>
+    <text x="120" y="588" fill="#7c2d12" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">2. 加载 VFIO 模块</text>
+    <text x="148" y="616" fill="#9a3412" font-family="Consolas, Liberation Mono, monospace" font-size="16">modprobe vfio-pci</text>
+    <text x="120" y="656" fill="#7c2d12" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">3. 把 X2522 从 sfc 交给 vfio-pci</text>
+    <text x="148" y="684" fill="#9a3412" font-family="Consolas, Liberation Mono, monospace" font-size="16">dpdk-devbind --bind=vfio-pci 0000:03:00.0</text>
+    <text x="120" y="724" fill="#7c2d12" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">4. 启动 F-Stack / DPDK 客户端</text>
+    <rect x="148" y="748" width="454" height="50" rx="12" fill="#ea580c"/>
+    <text x="375" y="780" text-anchor="middle" fill="#fff7ed" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="800">owner = vfio-pci</text>
+  </g>
+  <g id="to-sfc" filter="url(#shadow)">
+    <rect x="720" y="464" width="610" height="360" rx="18" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+    <text x="1025" y="504" text-anchor="middle" fill="#065f46" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="22" font-weight="800">切回 SFC · mode=SFC</text>
+    <text x="770" y="548" fill="#14532d" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">1. 停掉 DPDK / F-Stack 客户端</text>
+    <text x="770" y="588" fill="#14532d" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">2. 把同一块卡绑回 sfc</text>
+    <text x="798" y="616" fill="#065f46" font-family="Consolas, Liberation Mono, monospace" font-size="16">dpdk-devbind --bind=sfc 0000:03:00.0</text>
+    <text x="770" y="656" fill="#14532d" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">3. 恢复网口名和课程地址</text>
+    <text x="770" y="696" fill="#14532d" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="17">4. 重新拉起前三个 sfc 客户端</text>
+    <rect x="798" y="748" width="454" height="50" rx="12" fill="#059669"/>
+    <text x="1025" y="780" text-anchor="middle" fill="#ecfdf5" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="18" font-weight="800">owner = sfc</text>
+  </g>
+  <text x="700" y="868" text-anchor="middle" fill="#64748b" font-family="Noto Sans CJK SC, Microsoft YaHei, Arial, sans-serif" font-size="16" font-weight="700">curl 和网页按钮是同一扇门；门后才是停进程、绑驱动、再启动</text>
+</svg>

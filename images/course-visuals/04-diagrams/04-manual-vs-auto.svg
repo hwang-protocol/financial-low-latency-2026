@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850" role="img" aria-labelledby="title description">
+<title id="title">MANUAL 换赛道，AUTO 始终陪跑</title>
+<desc id="description">赛道表示配置。MANUAL 每轮只选择一种配置，在原队列、固定队列、SPSC忙轮询及CPU位置之间比较。AUTO 每轮都保持原队列、锁与条件变量，下单线程固定CPU3，陪每一种MANUAL配置运行，提供环境参照。脚本按5比1发单，AUTO原有策略继续独立运行。</desc>
+<defs>
+<style>
+text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#475569}
+.title{font-size:32px;font-weight:650;fill:#334155}
+.section{font-size:25px;font-weight:600}
+.name{font-size:23px;font-weight:500;fill:#334155}
+.body{font-size:21px}
+.small{font-size:20px}
+</style>
+<marker id="switch" markerUnits="userSpaceOnUse" viewBox="0 0 12 12" refX="0" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse" overflow="visible"><path d="M0 1 L12 6 L0 11 Z" fill="#6993bd"/></marker>
+<g id="runner" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+ <circle cx="29" cy="8" r="6" fill="currentColor" stroke="none"/>
+ <path d="m25 22-9 16 14 10-6 16M25 22l12 12 14-3M23 27 9 31 1 22M16 38 7 53h-18"/>
+</g>
+<g id="track-marks" stroke-width="2" fill="none">
+ <path d="M435 0H1128M435 48H1128"/>
+ <path d="M435 24H1128" stroke-dasharray="16 12" opacity=".5"/>
+ <path d="M446 0v48M453 0v48" opacity=".6"/>
+</g>
+</defs>
+<rect x="12" y="12" width="1176" height="826" rx="22" fill="#fbfcfe" stroke="#d4dde8" stroke-width="1.5"/>
+<text class="title" x="48" y="61">MANUAL 换赛道，AUTO 始终陪跑</text>
+<text class="body" x="48" y="97">赛道表示配置：MANUAL 每轮只选一条，AUTO 每轮都跑同一条。</text>
+<rect x="74" y="125" width="232" height="41" rx="12" fill="#e8f0fa"/>
+<text class="section" x="94" y="154" style="fill:#507aa6">MANUAL · 被测</text>
+<text class="body" x="330" y="153">运行①从第一条开始；后续轮次在不同配置之间来回切换。</text>
+<rect x="74" y="190" width="1080" height="74" rx="12" fill="#edf4fc"/>
+<text class="name" x="94" y="221">原队列 + 锁 / 条件变量</text>
+<text class="small" x="94" y="250">下单线程：CPU 2</text>
+<use href="#track-marks" y="203" stroke="#8caac9"/>
+<circle cx="832" cy="227" r="35" fill="#e0ecfa"/>
+<use href="#runner" x="806" y="195" color="#5486b7"/>
+<text class="small" x="906" y="234" style="fill:#507aa6">本轮选择</text>
+<rect x="74" y="277" width="1080" height="74" rx="12" fill="#f4f7fb"/>
+<text class="name" x="94" y="308">固定队列 + 锁 / 条件变量</text>
+<text class="small" x="94" y="337">下单线程：CPU 2</text>
+<use href="#track-marks" y="290" stroke="#bacbde"/>
+<rect x="74" y="364" width="1080" height="74" rx="12" fill="#f4f7fb"/>
+<text class="name" x="94" y="395">固定队列 + SPSC 忙轮询</text>
+<text class="small" x="94" y="424">下单线程：CPU 2</text>
+<use href="#track-marks" y="377" stroke="#bacbde"/>
+<rect x="74" y="451" width="1080" height="74" rx="12" fill="#f4f7fb"/>
+<text class="name" x="94" y="482">同一套 SPSC 忙轮询</text>
+<text class="small" x="94" y="511">下单线程：CPU 0，与其他线程共用</text>
+<use href="#track-marks" y="464" stroke="#bacbde"/>
+<path d="M43 223V490" fill="none" stroke="#6993bd" stroke-width="2.5" stroke-linecap="butt" marker-start="url(#switch)" marker-end="url(#switch)"/>
+<rect x="25" y="322" width="36" height="67" rx="10" fill="#e8f0fa"/>
+<text class="small" x="43" y="349" text-anchor="middle" style="fill:#507aa6">换</text>
+<text class="small" x="43" y="376" text-anchor="middle" style="fill:#507aa6">道</text>
+
+<path d="M74 553H1154" stroke="#dae3ed" stroke-width="1.5"/>
+<rect x="74" y="575" width="322" height="42" rx="12" fill="#dff0e7"/>
+<text class="section" x="94" y="604" style="fill:#3f826a">AUTO · 固定陪跑</text>
+<text class="body" x="422" y="603" style="fill:#3f826a">配置保持不变，为每一轮 MANUAL 提供参照。</text>
+<rect x="74" y="637" width="1080" height="80" rx="12" fill="#e7f4ed" stroke="#9fc8b5" stroke-width="1.5"/>
+<text class="name" x="94" y="669">原队列 + 锁 / 条件变量</text>
+<text class="small" x="94" y="701">下单线程：固定 CPU 3</text>
+<use href="#track-marks" y="653" stroke="#79aa93"/>
+<circle cx="832" cy="677" r="35" fill="#d5ecdf"/>
+<use href="#runner" x="806" y="645" color="#4c9274"/>
+<text class="small" x="906" y="684" style="fill:#3f826a">每轮都在</text>
+
+<text class="small" x="74" y="765">脚本发单：MANUAL 每 20 ms 一笔，目标 50 笔/秒；每 5 笔配 1 笔 AUTO 对照，约 10 笔/秒。</text>
+<text class="small" x="74" y="800">AUTO 对照只统计这批脚本订单；原有策略继续运行，策略订单不混入这组读数。</text>
+</svg>

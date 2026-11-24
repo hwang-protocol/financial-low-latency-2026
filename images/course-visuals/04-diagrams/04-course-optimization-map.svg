@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc"><title id="title">从报文到软件，再到网络路径</title><desc id="desc">依据课程现役代码与章节顺序整理；图示为机制说明，不含新增实测结果。</desc>
+<defs><style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#475569} .label{fill:#35688c;font-weight:600}</style><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto"><path d="M0 -6 L12 0 L0 6 Z" fill="#7694ab"/></marker><symbol id="clock" viewBox="0 0 48 48"><circle cx="24" cy="26" r="17"/><path d="M24 15v12l9 5M24 9V3m-7 0h14"/></symbol><symbol id="queue" viewBox="0 0 48 48"><rect x="3" y="15" width="10" height="20" rx="2"/><rect x="18" y="15" width="10" height="20" rx="2"/><rect x="33" y="15" width="10" height="20" rx="2"/><path d="M3 42h40"/></symbol><symbol id="packet" viewBox="0 0 48 48"><rect x="3" y="9" width="42" height="30" rx="4"/><path d="m4 10 20 16 20-16"/></symbol><symbol id="server" viewBox="0 0 48 48"><rect x="9" y="3" width="30" height="42" rx="4"/><path d="M10 17h28M10 31h28M17 10h2m5 0h9M17 24h2m5 0h9M17 38h2m5 0h9"/></symbol></defs>
+<rect width="1200" height="630" rx="18" fill="#f8fafc"/>
+<text x="40" y="52" font-size="32" class="label">从报文到软件，再到网络路径</text>
+<text x="40" y="94" font-size="23">先知道消息怎样往返，再用时间戳定位等待；每章围绕一个具体改动读结果。</text>
+<rect x="40" y="135" width="320" height="190" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<use href="#server" x="58" y="150" width="46" height="46" fill="none" stroke="#6486a0" stroke-width="2.5"/>
+<text x="118" y="179" font-size="25" class="label">02</text>
+<text x="60" y="224" font-size="26" class="label">启动交易应用</text>
+<text x="60" y="267" font-size="23">历史行情持续回放</text>
+<text x="60" y="304" font-size="23">完成一笔模拟交易</text>
+<rect x="440" y="135" width="320" height="190" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<use href="#packet" x="458" y="150" width="46" height="46" fill="none" stroke="#6486a0" stroke-width="2.5"/>
+<text x="518" y="179" font-size="25" class="label">03</text>
+<text x="460" y="224" font-size="26" class="label">认包与字段</text>
+<text x="460" y="267" font-size="23">看行情、请求和回报</text>
+<text x="460" y="304" font-size="23">为后续过滤认清结构</text>
+<rect x="840" y="135" width="320" height="190" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<use href="#clock" x="858" y="150" width="46" height="46" fill="none" stroke="#6486a0" stroke-width="2.5"/>
+<text x="918" y="179" font-size="25" class="label">04 · 本章</text>
+<text x="860" y="224" font-size="26" class="label">测量并优化交接</text>
+<text x="860" y="267" font-size="23">先读时间和样本</text>
+<text x="860" y="304" font-size="23">再改队列、等待、CPU</text>
+<path d="M372 230 L416 230" fill="none" stroke="#7694ab" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<path d="M772 230 L816 230" fill="none" stroke="#7694ab" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<rect x="40" y="390" width="320" height="154" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="60" y="427" font-size="25" class="label">05</text>
+<text x="60" y="474" font-size="25" class="label">比较四条收发路径</text>
+<text x="60" y="518" font-size="22">同条件比较发送到回报</text>
+<rect x="440" y="390" width="320" height="154" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="460" y="427" font-size="25" class="label">06</text>
+<text x="460" y="474" font-size="25" class="label">观察交换机与时间</text>
+<text x="460" y="518" font-size="22">队列、QoS、时间戳和 PTP</text>
+<rect x="840" y="390" width="320" height="154" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="860" y="427" font-size="25" class="label">07–09</text>
+<text x="860" y="474" font-size="25" class="label">把过滤位置往前移</text>
+<text x="860" y="518" font-size="22">XDP → P4 → RTL</text>
+<text x="40" y="593" font-size="23">读数始终回答：改了哪里，这一段耗时或下游行为发生了什么变化。</text>
+</svg>
