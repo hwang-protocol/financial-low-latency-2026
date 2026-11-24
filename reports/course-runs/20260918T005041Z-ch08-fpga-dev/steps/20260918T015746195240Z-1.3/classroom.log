@@ -1,0 +1,75 @@
+Low-Latency-Ops / 第 1.3 步 · 安装本轮开发工具
+===== 本步开始：自动执行并保存输出 =====
+[执行位置] 对: 操作终端 .111，开发机 .101  证: 下面保留命令及原始返回
+本步记录目录: /financial-low-latency/Documents/reports/course-runs/20260918T005041Z-ch08-fpga-dev/steps/20260918T015746195240Z-1.3
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 bash -s -- /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/dev.env
+
+vm-monitor / 1.3 安装开发工具
+===== 查执行主机与本轮目录 =====
+[开发机] 对: 管理地址为 10.1.1.101；目录与本轮 RUN_ID 一致  证: 保护安装和生成文件的目标位置
+$ ip -4 -o address show
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+2: ens33    inet 10.1.1.101/24 brd 10.1.1.255 scope global ens33\       valid_lft forever preferred_lft forever
+3: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+$ cat /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/dev.env
+RUN_ID=20260918T005041Z-ch08-fpga-dev
+FLLE_DEV=/opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev
+FLLE_CORE=/opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/core
+RESULT_DIR=/financial-low-latency/Documents/reports/course-runs/20260918T005041Z-ch08-fpga-dev
+STARTED_AT_UTC=2026-09-18T00:50:42Z
+PURPOSE=ch08-fpga-development
+PROFILE_ID=vm101-ubuntu22.04-offline
+STATUS=ACTIVE
+
+vm-monitor / 1.3 安装开发工具
+===== 查离线安装包 =====
+[SHA-256] 对: 清单中的每份文件均返回 OK  证: 安装前确认离线材料与已登记的内容一致
+$ sha256sum -c SHA256SUMS
+deb/iverilog_11.0-1.1_amd64.deb: OK
+requirements.txt: OK
+wheels/click-8.5.0-py3-none-any.whl: OK
+wheels/packaging-26.3-py3-none-any.whl: OK
+wheels/pip-25.2-py3-none-any.whl: OK
+wheels/platformdirs-4.11.9-py3-none-any.whl: OK
+wheels/setuptools-84.0.0-py3-none-any.whl: OK
+wheels/six-1.17.0-py2.py3-none-any.whl: OK
+wheels/wasmtime-47.0.1-py3-none-manylinux1_x86_64.whl: OK
+wheels/wheel-0.48.0-py3-none-any.whl: OK
+wheels/yowasp_runtime-1.96-py3-none-any.whl: OK
+wheels/yowasp_yosys-0.69.0.0.post1233-py3-none-any.whl: OK
+
+vm-monitor / 1.3 安装开发工具
+===== 安装 Icarus 仿真工具 =====
+[Icarus] 对: dpkg 安装完成，无错误退出  证: iverilog 编译电路仿真程序；vvp 执行该程序
+$ dpkg -i deb/iverilog_11.0-1.1_amd64.deb > /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/work/iverilog-install.log 2>&1
+$ tail -n 12 /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/work/iverilog-install.log
+(Reading database ... 104059 files and directories currently installed.)
+Preparing to unpack .../iverilog_11.0-1.1_amd64.deb ...
+Unpacking iverilog (11.0-1.1) over (11.0-1.1) ...
+Setting up iverilog (11.0-1.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+
+vm-monitor / 1.3 安装开发工具
+===== 安装独立 Python 工具环境 =====
+[Python 与 Yosys] 对: 本地 wheel 安装完成，无依赖冲突  证: 管理测试与通用综合使用本轮独立环境
+$ python3 -m venv --without-pip /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/venv
+$ env PYTHONPATH=/opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/tools/wheels/pip-25.2-py3-none-any.whl /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/venv/bin/python -m pip install --no-index --find-links=/opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/tools/wheels -r /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/tools/requirements.txt > /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/work/python-install.log 2>&1
+$ tail -n 4 /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/work/python-install.log
+Processing ./wheels/six-1.17.0-py2.py3-none-any.whl (from -r /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev/tools/requirements.txt (line 10))
+Installing collected packages: wasmtime, six, setuptools, platformdirs, pip, packaging, click, yowasp-runtime, wheel, yowasp-yosys
+
+Successfully installed click-8.5.0 packaging-26.3 pip-25.2 platformdirs-4.11.9 setuptools-84.0.0 six-1.17.0 wasmtime-47.0.1 wheel-0.48.0 yowasp-runtime-1.96 yowasp-yosys-0.69.0.0.post1233
+
+vm-monitor / 1.3 安装开发工具
+===== 查供下一章复用的源码 =====
+[第 09 章输入] 对: market_filter.sv 与 offline-selftest.sh 均存在且非空  证: 恢复快照后沿用本轮分发材料，无需在开发机另行查找源码
+bash: line 69: CH09_SRC: missing CH09_SRC in this run dev.env
+===== 保存开发机工作记录到 .111 =====
+[结果留存] 对: 收回截至本步的 work 目录  证: 即使本步失败也尝试保存日志
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 'set -eu; cd /opt/flle-ch08-dev/20260918T005041Z-ch08-fpga-dev; if test -d work; then tar -czf - work; else tar -czf - --files-from /dev/null; fi' > remote-work.tgz
+已保存开发机累计工作文件: /financial-low-latency/Documents/reports/course-runs/20260918T005041Z-ch08-fpga-dev/steps/20260918T015746195240Z-1.3/remote-work.tgz
+===== 本步结束 =====
+步骤退出码: 1
+结果收回退出码: 0
+本步未完成；保留以上错误与日志，修正后重跑本卡。
+终端完整记录: /financial-low-latency/Documents/reports/course-runs/20260918T005041Z-ch08-fpga-dev/steps/20260918T015746195240Z-1.3/classroom.log
