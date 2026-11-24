@@ -1,0 +1,178 @@
+vm-2522-01 / probe
+===== 查主机名 =====
+[主机说明] 以下检查对应当前主机：vm-2522-01 或 vm-2522-02。
+$ hostname
+vm-2522-01
+===== 查下次启动参数 =====
+[配置说明] GRUB_CMDLINE_LINUX 中应有 intel_iommu=on iommu=pt，供下次开机使用。
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX=""
+===== 查本轮备份 =====
+[备份说明] 列出启动配置备份；<none> 表示没有备份文件。
+$ find /var/backups -maxdepth 1 -type f -name flle-ch02-grub.\* -printf %p\\n | LC_ALL=C sort
+<none>
+===== 查当前启动参数 =====
+[生效检查] 当前启动参数应同时包含 intel_iommu=on 和 iommu=pt。
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+===== 查隔离组 =====
+[设备检查] 自动核对本课网卡的 IOMMU 分组，预期为 /sys/kernel/iommu_groups/7。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/devices/pci0000:03/0000:03:00.0/iommu_group
+===== 核对分组内设备 =====
+[设备检查] 本课应只包含数据口 0000:03:00.0，脚本会自动核对。
+$ find /sys/devices/pci0000:03/0000:03:00.0/iommu_group/devices -mindepth 1 -maxdepth 1 -printf %f\\n | LC_ALL=C sort
+<absent>
+vm-2522-02 / probe
+===== 查主机名 =====
+[主机说明] 以下检查对应当前主机：vm-2522-01 或 vm-2522-02。
+$ hostname
+vm-2522-02
+===== 查下次启动参数 =====
+[配置说明] GRUB_CMDLINE_LINUX 中应有 intel_iommu=on iommu=pt，供下次开机使用。
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX=""
+===== 查本轮备份 =====
+[备份说明] 列出启动配置备份；<none> 表示没有备份文件。
+$ find /var/backups -maxdepth 1 -type f -name flle-ch02-grub.\* -printf %p\\n | LC_ALL=C sort
+<none>
+===== 查当前启动参数 =====
+[生效检查] 当前启动参数应同时包含 intel_iommu=on 和 iommu=pt。
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro
+===== 查隔离组 =====
+[设备检查] 自动核对本课网卡的 IOMMU 分组，预期为 /sys/kernel/iommu_groups/7。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/devices/pci0000:03/0000:03:00.0/iommu_group
+===== 核对分组内设备 =====
+[设备检查] 本课应只包含数据口 0000:03:00.0，脚本会自动核对。
+$ find /sys/devices/pci0000:03/0000:03:00.0/iommu_group/devices -mindepth 1 -maxdepth 1 -printf %f\\n | LC_ALL=C sort
+<absent>
+vm-2522-01 / apply
+===== 配置下次启动参数 =====
+先备份当前文件，再加入 IOMMU 参数；重启后还需读取实际状态。
+$ install -m 600 /etc/default/grub /var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+备份文件：/var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+$ sed s/\^GRUB_CMDLINE_LINUX=\"\"\$/GRUB_CMDLINE_LINUX=\"intel_iommu=on\ iommu=pt\"/ /etc/default/grub > /etc/default/grub.flle02.xVBSKX
+$ install -m 644 /etc/default/grub.flle02.xVBSKX /etc/default/grub
+$ update-grub
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/init-select.cfg'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.15.0-164-generic
+Found initrd image: /boot/initrd.img-5.15.0-164-generic
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+vm-2522-02 / apply
+===== 配置下次启动参数 =====
+先备份当前文件，再加入 IOMMU 参数；重启后还需读取实际状态。
+$ install -m 600 /etc/default/grub /var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+备份文件：/var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+$ sed s/\^GRUB_CMDLINE_LINUX=\"\"\$/GRUB_CMDLINE_LINUX=\"intel_iommu=on\ iommu=pt\"/ /etc/default/grub > /etc/default/grub.flle02.O35cni
+$ install -m 644 /etc/default/grub.flle02.O35cni /etc/default/grub
+$ update-grub
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/init-select.cfg'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.15.0-164-generic
+Found initrd image: /boot/initrd.img-5.15.0-164-generic
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+10.1.1.1 / reboot
+===== 重启以应用参数 =====
+仅重启本次改过配置的主机；等待启动标识变化后再核验。
+$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.1 bash -s -- reboot 20260917T091003Z-02-guest-iommu-prep
+远端 REMOTE 段执行：systemctl reboot
+10.1.1.2 / reboot
+===== 重启以应用参数 =====
+仅重启本次改过配置的主机；等待启动标识变化后再核验。
+$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 bash -s -- reboot 20260917T091003Z-02-guest-iommu-prep
+远端 REMOTE 段执行：systemctl reboot
+vm-2522-01 / verify
+===== 查主机名 =====
+[主机说明] 以下检查对应当前主机：vm-2522-01 或 vm-2522-02。
+$ hostname
+vm-2522-01
+===== 查下次启动参数 =====
+[配置说明] GRUB_CMDLINE_LINUX 中应有 intel_iommu=on iommu=pt，供下次开机使用。
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+===== 查本轮备份 =====
+[备份说明] 列出启动配置备份；<none> 表示没有备份文件。
+$ find /var/backups -maxdepth 1 -type f -name flle-ch02-grub.\* -printf %p\\n | LC_ALL=C sort
+/var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+===== 查当前启动参数 =====
+[生效检查] 当前启动参数应同时包含 intel_iommu=on 和 iommu=pt。
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[设备检查] 自动核对本课网卡的 IOMMU 分组，预期为 /sys/kernel/iommu_groups/7。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+===== 核对分组内设备 =====
+[设备检查] 本课应只包含数据口 0000:03:00.0，脚本会自动核对。
+$ find /sys/kernel/iommu_groups/7/devices -mindepth 1 -maxdepth 1 -printf %f\\n | LC_ALL=C sort
+0000:03:00.0
+vm-2522-02 / verify
+===== 查主机名 =====
+[主机说明] 以下检查对应当前主机：vm-2522-01 或 vm-2522-02。
+$ hostname
+vm-2522-02
+===== 查下次启动参数 =====
+[配置说明] GRUB_CMDLINE_LINUX 中应有 intel_iommu=on iommu=pt，供下次开机使用。
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+===== 查本轮备份 =====
+[备份说明] 列出启动配置备份；<none> 表示没有备份文件。
+$ find /var/backups -maxdepth 1 -type f -name flle-ch02-grub.\* -printf %p\\n | LC_ALL=C sort
+/var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+===== 查当前启动参数 =====
+[生效检查] 当前启动参数应同时包含 intel_iommu=on 和 iommu=pt。
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[设备检查] 自动核对本课网卡的 IOMMU 分组，预期为 /sys/kernel/iommu_groups/7。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+===== 核对分组内设备 =====
+[设备检查] 本课应只包含数据口 0000:03:00.0，脚本会自动核对。
+$ find /sys/kernel/iommu_groups/7/devices -mindepth 1 -maxdepth 1 -printf %f\\n | LC_ALL=C sort
+0000:03:00.0
+vm-2522-01 / vfio
+===== 加载 VFIO 支持 =====
+加载模块后核对安全模式；本步不把网卡交给 VFIO。
+$ modprobe vfio-pci
+vm-2522-01 / vfio
+===== 查是否允许绕过 IOMMU =====
+[参数说明] 这个开关决定：是否允许 VFIO 绕过 IOMMU？
+[模式检查] N = No：不允许绕过。脚本要求 N，否则停止。
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N
+vm-2522-02 / vfio
+===== 加载 VFIO 支持 =====
+加载模块后核对安全模式；本步不把网卡交给 VFIO。
+$ modprobe vfio-pci
+vm-2522-02 / vfio
+===== 查是否允许绕过 IOMMU =====
+[参数说明] 这个开关决定：是否允许 VFIO 绕过 IOMMU？
+[模式检查] N = No：不允许绕过。脚本要求 N，否则停止。
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N
+vm-2522-01 / cleanup
+===== 清理本次备份 =====
+启动状态核验已通过；删除本次临时备份，rm 成功时没有正文输出。
+$ rm -f /var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+vm-2522-02 / cleanup
+===== 清理本次备份 =====
+启动状态核验已通过；删除本次临时备份，rm 成功时没有正文输出。
+$ rm -f /var/backups/flle-ch02-grub.20260917T091003Z-02-guest-iommu-prep
+===== 准备结果 =====
+[检查结果] IOMMU 启动参数与 VFIO 支持检查通过，数据口仍由 sfc 管理。
+[下一步] 执行准备 B2，安装 DPDK / F-Stack 软件。
+evidence=Documents/reports/course-runs/20260917T091003Z-02-guest-iommu-prep

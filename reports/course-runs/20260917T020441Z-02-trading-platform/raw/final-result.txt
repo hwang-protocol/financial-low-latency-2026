@@ -1,0 +1,15 @@
+===== 第 05 章 · 收尾检查 =====
+# 1. 网卡与客户端：已恢复本章常用的 SFC 模式。
+data_plane=SFC/READY/sfc  # X2522 由 sfc 驱动管理
+clients=Kernel Socket, Onload, TCPDirect ONLINE  # 前三路在线
+dpdk=WAITING  # 等待切到 DPDK 模式，属于正常状态
+
+# 2. 网页与数据链路：页面可访问，Trader 到 Exchange 连通。
+web=http://10.1.1.101:8088/ HTTP 200
+data_link=ping 3/3  # 发出 3 个探测包，收到 3 个回复
+
+# 3. 本章收尾通过，保留控制台供后续使用。
+result=READY
+next=第 06 章
+# 完整检查记录保存在：
+evidence=Documents/reports/course-runs/20260917T020441Z-02-trading-platform

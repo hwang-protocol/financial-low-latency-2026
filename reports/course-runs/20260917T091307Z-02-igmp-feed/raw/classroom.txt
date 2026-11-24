@@ -1,0 +1,36 @@
+10.1.1.1 / market
+===== 临时发送组播行情 =====
+只切换行情目的地址；检查结束恢复原模式。
+$ curl -fsS --max-time 10 -X POST -H Content-Type:\ application/json -d \{\"market_mode\":\"DUAL\"\} http://10.1.1.101:8088/api/market
+轮询确认模式已切换：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=DUAL
+10.1.1.2 / capture
+===== 同时看 A、B 两路行情包 =====
+[报文] 同一窗口共抓十包，两组都应出现；各路包数不要求相等。
+$ ssh root@10.1.1.2 timeout 12 tcpdump -p -i ens64np1 -nn -c 10 udp\ and\ src\ host\ 20.1.1.1\ and\ \(\(dst\ host\ 233.74.125.32\ and\ dst\ port\ 31032\)\ or\ \(dst\ host\ 233.74.125.33\ and\ dst\ port\ 31033\)\)
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+17:13:07.477792 IP 20.1.1.1.51745 > 233.74.125.32.31032: UDP, length 58
+17:13:07.477792 IP 20.1.1.1.51745 > 233.74.125.33.31033: UDP, length 58
+17:13:07.477812 IP 20.1.1.1.51745 > 233.74.125.32.31032: UDP, length 58
+17:13:07.477816 IP 20.1.1.1.51745 > 233.74.125.33.31033: UDP, length 58
+17:13:07.477826 IP 20.1.1.1.51745 > 233.74.125.32.31032: UDP, length 58
+17:13:07.477830 IP 20.1.1.1.51745 > 233.74.125.33.31033: UDP, length 58
+17:13:07.477840 IP 20.1.1.1.51745 > 233.74.125.32.31032: UDP, length 58
+17:13:07.477843 IP 20.1.1.1.51745 > 233.74.125.33.31033: UDP, length 58
+17:13:07.477854 IP 20.1.1.1.51745 > 233.74.125.32.31032: UDP, length 58
+17:13:07.477857 IP 20.1.1.1.51745 > 233.74.125.33.31033: UDP, length 58
+10 packets captured
+1418 packets received by filter
+0 packets dropped by kernel
+===== 核对两路都收到 =====
+$ python3 -c import\ pathlib\,sys\;\ s=pathlib.Path\(sys.argv\[1\]\).read_text\(\)\;\ a=s.count\(\"\>\ 233.74.125.32.31032:\"\)\;\ b=s.count\(\"\>\ 233.74.125.33.31033:\"\)\;\ print\(\"A\ 路=%s\ 包，B\ 路=%s\ 包，共\ %s\ 包\"\ %\ \(a\,b\,a+b\)\,flush=True\)\;\ sys.exit\(0\ if\ a\>0\ and\ b\>0\ and\ a+b==10\ else\ \"两路抓包检查未通过：应共十包且两组都有包。\"\) Documents/reports/course-runs/20260917T091307Z-02-igmp-feed/raw/packets.txt
+A 路=5 包，B 路=5 包，共 10 包
+===== 查应用接收状态 =====
+$ python3 Documents/newDoc/assets/common/wait-feed-state.py http://10.1.1.101:8088/api/state HEALTHY --timeout 25
+$ python3 -c import\ json\,sys\;\ s=json.load\(open\(sys.argv\[1\]\)\)\;\ print\(\"market_mode=%s\ integrity=%s\ next_expected=%s\"\ %\ \(s\[\"market_mode\"\]\,s\[\"feed\"\]\[\"integrity\"\]\,s\[\"feed\"\]\[\"next_expected\"\]\)\) Documents/reports/course-runs/20260917T091307Z-02-igmp-feed/raw/feed.json
+market_mode=DUAL integrity=HEALTHY next_expected=292433
+===== 恢复检查前的行情模式 =====
+$ curl -fsS --max-time 10 -X POST -H Content-Type:\ application/json -d \{\"market_mode\":\"MULTICAST_A\"\} http://10.1.1.101:8088/api/market
+轮询确认模式已切换：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=MULTICAST_A

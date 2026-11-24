@@ -1,0 +1,64 @@
+===== 准备 B · 切换测试配置 =====
+使用第二章备好的程序；各阶段完成后显示耗时。
+
+[1/7] 读取当前平台身份
+[日志] Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z/raw/before.txt
+[完成] 读取当前平台身份（0 秒）
+
+[2/7] 核对第二章准备的测试客户端
+[日志] Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z/raw/posix-qos-prep.txt
+[完成] 核对第二章准备的测试客户端（1 秒）
+
+[3/7] 切换到路径测试客户端
+[日志] Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z/raw/start.txt
+[完成] 切换到路径测试客户端（60 秒）
+
+[4/7] 核对客户端默认打标
+[日志] Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z/raw/order-dscp.txt
+[完成] 核对客户端默认打标（0 秒）
+
+[5/7] 核验测试环境
+[日志] Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z/raw/verify.txt
+[完成] 核验测试环境（17 秒）
+
+[6/7] 核对 Exchange 与网页是否保持原进程
+[日志] Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z/raw/after.txt
+[完成] 核对 Exchange 与网页是否保持原进程（1 秒）
+
+[7/7] 等待三路客户端就绪
+[日志] Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z/raw/transport-lab.json
+[完成] 等待三路客户端就绪（0 秒）
+准备 B：停掉普通客户端，换上测试客户端
+# 本步只换客户端，不下单。Exchange 和网页保持原进程。
+
+# 1. 沿用的平台
+platform_run=20260917T091038Z-02-trading-platform
+# 第 02 章已经部署的交易平台，不另起一套系统。
+
+# 2. 切换结果
+result=READY
+# 前三路测试客户端已就绪。
+
+# 3. 当前配置
+profile=TRANSPORT
+# 已停掉普通 AUTO / MANUAL，换上路径测试客户端。
+
+# 4. 四路客户端
+clients=Kernel Socket, Onload, TCPDirect ONLINE; DPDK WAITING
+# 前三路在线；DPDK 等运行 ④ 再独占网卡。
+
+# 5. 订单队列
+queue_mode=DEQUE_CV
+# 四路都用第 04 章的 deque + 互斥锁 + 条件变量。
+
+# 6. Exchange 与网页
+exchange_and_gui=UNCHANGED
+# 进程身份和文件清单与切换前一致。
+
+# 7. 订单打标
+order_dscp=0
+# Socket / Onload 默认不打标；第 06 章才临时设为 DSCP 46。
+
+# 可以进入运行 ① 下单。
+# 完整校验记录保存在下方 evidence 目录。
+evidence=Documents/reports/course-runs/20260917T091038Z-02-trading-platform/profile-switches/20260917T093032.365548414Z

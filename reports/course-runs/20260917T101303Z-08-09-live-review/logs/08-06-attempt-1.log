@@ -1,0 +1,20 @@
+正在执行 drop；完成后显示本步关键回执，详细日志保存到 /financial-low-latency/Documents/reports/course-runs/20260917T101713Z-09-p4-drop-live/raw。
+本步失败，完整日志：/financial-low-latency/Documents/reports/course-runs/20260917T101713Z-09-p4-drop-live/raw/drop-full.txt
+10.1.1.11 / verify
+===== 查界面与 GAP 状态合同 =====
+[GUI] 对: 红条、灰簿、按钮合同通过  证: 页面源与 live 状态一致；不是浏览器截图
+$ python3 "$COMMON/assert-feed-gap-ui.py" "$API" "$OUT/raw"
+Traceback (most recent call last):
+  File "/financial-low-latency/Documents/newDoc/assets/common/assert-feed-gap-ui.py", line 40, in <module>
+    assert 'document.body.classList.toggle("feed-gap", gap)' in javascript
+AssertionError
+本步失败，完整日志：/financial-low-latency/Documents/reports/course-runs/20260917T101713Z-09-p4-drop-live/raw/cleanup-full.txt
+interface Ethernet24
+!
+interface Management1
+   ip address 10.1.1.253/24
+!
+no ip routing
+!
+end
+P4 stage stopped: drop failed (1)

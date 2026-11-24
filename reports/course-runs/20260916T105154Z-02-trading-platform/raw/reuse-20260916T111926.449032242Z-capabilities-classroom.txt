@@ -1,0 +1,15 @@
+
+Low-Latency-Ops / 准备后续实验程序
+===== 准备后续实验程序 =====
+补齐并核对后续路径测试与 LANZ 所需程序。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/prepare-course-capabilities.sh 20260916T105154Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260916T105154Z-02-trading-platform/raw/reuse-20260916T111926.449032242Z-capabilities.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260916T105154Z-02-trading-platform/raw/reuse-20260916T111926.449032242Z-capabilities.txt
+posix_qos_archive=PASS default_dscp=0
+posix_client=PREPARED default_dscp=0
+lanz_reader=PREPARED host=.101 service=NOT_STARTED
+posix_qos_archive=PASS default_dscp=0
+posix_client=PREPARED default_dscp=0
+lanz_reader=PREPARED host=.101 service=NOT_STARTED
+course_capabilities=PREPARED

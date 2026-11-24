@@ -1,0 +1,800 @@
+{
+  "title": "FLLE Trading Lab",
+  "gapVisible": true,
+  "gapText": "行情序号中断 · next_expected=191 · pending=262 · gap_size=1 · 已持续 51296 ms。订单簿冻结，交易已停单。 缓存已受限，需重新同步；重新开始并清空交易会重建回放起点。",
+  "manualDisabled": true,
+  "transportDisabled": [
+    {
+      "disabled": true,
+      "text": "用 Socket 下单"
+    },
+    {
+      "disabled": true,
+      "text": "用 Onload 下单"
+    },
+    {
+      "disabled": true,
+      "text": "用 TCPDirect 下单"
+    },
+    {
+      "disabled": true,
+      "text": "用 DPDK 下单"
+    }
+  ],
+  "mode": "路径测试 · SFC",
+  "transition": "READY",
+  "switchDisabled": false,
+  "overflow": false,
+  "bodyText": "FLLE Trading Lab\n低延时交易基线\n历史行情时间\n2026-06-12 09:30:00.193157168\n模拟成交\n实时连接\nFEED GAP\n行情序号中断 · next_expected=191 · pending=262 · gap_size=1 · 已持续 51296 ms。订单簿冻结，交易已停单。 缓存已受限，需重新同步；重新开始并清空交易会重建回放起点。\nNASDAQ 常规交易时段\n行情回放\n已暂停\n第 16 轮\n0.00%\n09:30:00 → 16:00:00\n预计剩余 6小时30分\n播放速度\n0.5×\n1×\n2×\n5×\n10×\n20×\n继续\n重新开始并清空交易\n\n窗口内按原始事件时间播放，不压缩空档。到达 16:00 后自动清空订单、成交、持仓与延时样本，再开始下一轮。\n\n真实历史 ITCH 数据\n市场行情\nONLINE\nAAPL\n296.08\nNASDAQ\n+6.08 bps\nNVDA\n204.69\nNASDAQ\n-7.32 bps\n当前标的\nAAPL\n最新价\n296.08\n最佳买价\n295.80\n44 股\n最佳卖价\n296.09\n200 股\n行情传输 · UDP 组播\n仅 A 路\n仅 B 路\nA/B 双路\n\nA 233.74.125.32:31032\nB 233.74.125.33:31033\n\n当前：仅 A 路组播\n\n交易端构建\n五档订单簿\nAAPL\n档位\n价格\n数量\nL5\n296.41\n100\nL4\n296.25\n235\nL3\n296.14\n622\nL2\n296.10\n1,000\nL1\n296.09\n200\n价差\n0.29 USD\n中间价 295.945\nL1\n295.80\n44\nL2\n295.79\n75\nL3\n295.76\n28\nL4\n295.75\n1,002\nL5\n295.70\n300\nOUCH 5.0 · 模拟账本\n手动下单\nIOC 限价单\n\n交易方向\n\n买入\n卖出\n股票\nAAPL\nNVDA\n数量\n限价（留空则取当前对手价）\n提交买单 · AAPL 10 股\n\n通过 Kernel Socket 提交；请先选择方向和数量。\n\n本轮最后一笔手动订单\n尚未下单\n—\n成交结果会固定显示在这里，不会一闪而过。\n同一平台 · 同一笔 SoupBinTCP / OUCH 订单\nX2522 数据通道控制台\n\n业务报文和交易所不变，只切换客户端 Transport；每张卡把代码代价与网卡能力放在一起验收。\n\nREADY\n当前数据面\n路径测试 · SFC\nPCI owner\nsfc\n恢复普通交易\n切到 DPDK 独占\nX2522 · 0000:03:00.0\n三条 sfc 路径可用；DPDK 等待独占切换\n切换期间全部锁定，管理面始终走 10.1.1.x\n同一任务\n1 股 IOC · SoupBinTCP / OUCH\n同一应用交接\nDEQUE_CV · 空队列睡眠\n同一计时边界\nC++ send → 最终响应\n主要比较\n客户端 Transport / 数据面实现\n\n“不一直盯”只约束应用交棒：四个客户端都在空队列上睡眠，用条件变量唤醒；TCPDirect 与 DPDK 为驱动用户态网卡队列，网络 reactor 仍会轮询。这和第四章的 SPSC_SPIN 不是一回事。\n\n为什么网页读数通常更高？\n四张卡展示少量手动下单的交互观测值，不是第 05 章正式 benchmark。订单仍走同一客户端 Transport，RTT 仍由 C++ 记录 send → 最终响应；浏览器与 Python 请求本身不计入秒表。\n不过，交互订单会保留 Accepted 页面遥测，Gateway / 页面轮询和行情回放也会带来运行噪声，而且没有执行正式实验每格 100 笔预热、1000 笔采样及环境隔离；最初几笔还可能包含 Transport / TCP / Soup 会话的首次建立，以及缓存、线程和调度的冷状态。因此这里样本很少时 P50 更高、波动更大是正常的；正式结论以封存 RUN 为准，STALE 只代表上一次模式的历史值，不能参加当前四路横比。\n01 · 基线\nONLINE\nKernel Socket\n\nsocket / send / recv\n代码不改\n\nX2522 硬件合同\nsfc 普通 netdev\nLinux TCP/IP；不冒充内核旁路\n交互 RTT P50\n—\n样本\n0\n收据待采集\n用 Socket 下单\n02 · 透明加速\nONLINE\nOpenOnload\n\n同一份 BSD socket\n启动方式改变\n\nX2522 硬件合同\nVI · DMA · CTPIO\n用户态 TCP；标准 socket 保留\n交互 RTT P50\n—\n样本\n0\n收据待采集\n用 Onload 下单\n03 · 专用 TCP\nONLINE\nTCPDirect\n\nZF API / reactor\n重写 Transport\n\nX2522 硬件合同\nVI · DMA · CTPIO 必备\nZF 用户态 TCP；当前卡 Plus 已开放\n交互 RTT P50\n—\n样本\n0\n收据待采集\n用 TCPDirect 下单\n04 · 独占数据面\nWAITING\nDPDK + TCP\n\nF-Stack / ff_*\n应用与运行时改造\n\nX2522 硬件合同\nVFIO · net_sfc_efx\nRX/TX 队列、大页、用户态轮询\n交互 RTT P50\n—\n样本\n0\n收据待采集\n用 DPDK 下单\n四路整体比较\n同一笔订单，代码代价与硬件收益一起看\n应用交接均为 DEQUE_CV\n路径\n应用接口\nTCP 在哪\nX2522 用法\n网络等待\n当前交互 P50\nKernel Socket\nBSD socket\nLinux 内核\nsfc netdev\n阻塞 I/O\n—\nOpenOnload\nBSD socket\n用户态 Onload\nVI / DMA / CTPIO\nOnload 调度\n—\nTCPDirect\nZF API\n用户态 ZF\nVI / CTPIO 能力合同\n有单时 reactor poll\n—\nDPDK + TCP\nF-Stack ff_*\n用户态 F-Stack\nVFIO / net_sfc_efx\nF-Stack reactor poll\n—\n点亮原则\nONLINE 只说明进程活着；必须拿到对应路径收据，硬件标签才会变成“已验真”。\n最后下单通道：—\n真实历史 ITCH · 最近 360 个页面采样\nAAPL 价格走势\n296.08\n+6.08 bps\n296.0944\n296.0248\n295.9552\n295.8856\n开始 09:30:00\n3 个采样\n当前 09:30:00\n尚未使用任何加速技术\n延时基线\nC++ 自动热路径\n自动订单 RTT P50\n—\n自动订单 RTT P99\n—\n最大值\n—\n样本数\n0\n\n计时范围：C++ 自动交易进程发出订单 → 收到最终结果。Python 网页不在被测链路内；手动单 RTT 在交易记录中单独显示。\n\n预置课堂策略 · 本章只需开关\n五档失衡 ≥ 35% → 25 股 IOC\n同标的冷却 5 秒 · AUTO 仓位上限 ±200\n已关闭\nAAPL 合计持仓\n0\nNVDA 合计持仓\n0\n合计模拟盈亏\n$0.00\n当前回放轮次 · 手动与自动统一记录\n交易记录\nExchange 账本 0 · 0 成交 / 0 订单\n时间\n来源\n股票\n方向\n数量\n价格\n结果\nRTT\n本轮还没有订单\n课堂系统边界\n一笔交易经过哪里\nSESSION 0612260016\n主机 .1 · C++ 进程\n历史行情交易所\n持续回放 + 独立纸面账本\nITCH 行情 / OUCH 订单\n主机 .2 · 两个 C++ 进程\n自动交易 + 手动交易\n各自 Feed、订单 ID 与 SoupBinTCP 会话\n旁路状态\n管理机 .101 · Python\n统一交易记录\n只展示，不进入延时测量路径\n当前行情：仅 A 路组播\n历史数据 + 模拟成交，不涉及真实资金\n7150 管理口 TCP 50001 · 与上面成交无关\n交换机队列事件\n接收器未连接\n显示采集器保留的全部 0 条记录，最新在上。保留上限 80 条，更早记录不在此列表。\n缓冲段大小 480 B\n记录类型\n接口\n流量类别\n队列长度（段）\n交换机时刻（UTC）\n还没有收到拥塞记录\n\nS：开始；U：更新；E：结束。每行保留该条记录的队列长度；E 的队列长度为对应拥塞期间的最大值。时间戳粒度 10 µs。",
+  "api": {
+    "schema": "flle.terminal-state.v1",
+    "historical_market": true,
+    "paper_execution": true,
+    "features": {
+      "transport_lab": true
+    },
+    "experiment_profile": "TRANSPORT",
+    "data_plane_mode": "SFC",
+    "data_plane_transition": "READY",
+    "data_plane_owner": "sfc",
+    "hardware_receipts": {
+      "socket": {
+        "launch_verified": true,
+        "verified": false,
+        "summary": "当前进程身份已验；路径收据待首笔 warmup",
+        "pid": 17078,
+        "start_ticks": 483536,
+        "boot_id": "a64f95af-33e3-4d69-9003-7f49cf1217ab",
+        "generation": "socket-17078-483536",
+        "attested_monotonic_ns": 4835863406071,
+        "path_counter": 0,
+        "verification": "LAUNCH_POSIX_CURRENT_PID"
+      },
+      "onload": {
+        "launch_verified": true,
+        "verified": false,
+        "summary": "当前进程身份已验；路径收据待首笔 warmup",
+        "pid": 17089,
+        "start_ticks": 483542,
+        "boot_id": "a64f95af-33e3-4d69-9003-7f49cf1217ab",
+        "generation": "onload-17089-483542",
+        "attested_monotonic_ns": 4835863406071,
+        "path_counter": 0,
+        "verification": "LAUNCH_ONLOAD_CURRENT_PID"
+      },
+      "tcpdirect": {
+        "launch_verified": true,
+        "verified": false,
+        "summary": "当前进程身份已验；路径收据待首笔 warmup",
+        "pid": 17113,
+        "start_ticks": 483544,
+        "boot_id": "a64f95af-33e3-4d69-9003-7f49cf1217ab",
+        "generation": "tcpdirect-17113-483544",
+        "attested_monotonic_ns": 4835863406071,
+        "path_counter": 0,
+        "verification": "LAUNCH_ZF_CURRENT_PID"
+      },
+      "dpdk": {
+        "launch_verified": false,
+        "verified": false,
+        "summary": "当前进程代收据待采集"
+      },
+      "exchange_rss": {
+        "launch_verified": true,
+        "verified": true,
+        "summary": "X2522 128 个 RSS 桶固定到与 Exchange 同核的 RX ring 1",
+        "entries": 128,
+        "queue": 1,
+        "irq": 33,
+        "requested_cpu": 2,
+        "effective_cpu": 2,
+        "irqbalance": "paused",
+        "verification": "X2522_RSS_ALL_BUCKETS_TO_EXCHANGE_CPU_QUEUE"
+      }
+    },
+    "gateway_sequence": 110682,
+    "session": "0612260016",
+    "market_mode": "MULTICAST_A",
+    "market_network": {
+      "market_schema": "udp-multicast-ab-v1",
+      "market_group_a": "233.74.125.32",
+      "market_group_b": "233.74.125.33",
+      "market_port_a": 31032,
+      "market_port_b": 31033
+    },
+    "replay": {
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "market_date": "2026-06-12",
+      "status": "PAUSED",
+      "speed": 1,
+      "loop": 16,
+      "source_timestamp_ns": 34200193157168,
+      "source_clock": "09:30:00.193157168",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "window": "REGULAR_SESSION",
+      "progress": 8.25458e-06,
+      "remaining_source_ns": 23399806842832,
+      "estimated_remaining_wall_ns": 23399806842832,
+      "messages": 453
+    },
+    "instruments": {
+      "NVDA": {
+        "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+        "historical_market": true,
+        "paper_execution": true,
+        "market_date": "2026-06-12",
+        "source_timestamp_ns": 34200167144558,
+        "source_clock": "09:30:00.167144558",
+        "replay_loop": 16,
+        "replay_speed": 1,
+        "session": "0612260016",
+        "market_mode": "MULTICAST_A",
+        "market_sequence": 372,
+        "symbol": "NVDA",
+        "bids": [
+          [
+            2046900,
+            50
+          ],
+          [
+            2046500,
+            101
+          ],
+          [
+            2046300,
+            1
+          ],
+          [
+            2046200,
+            22
+          ],
+          [
+            2045000,
+            214
+          ]
+        ],
+        "asks": [
+          [
+            2049100,
+            40
+          ],
+          [
+            2049400,
+            199
+          ],
+          [
+            2049500,
+            411
+          ],
+          [
+            2049600,
+            1
+          ],
+          [
+            2050000,
+            2946
+          ]
+        ],
+        "last_x10000": 2046900,
+        "volume": 2342
+      },
+      "AAPL": {
+        "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+        "historical_market": true,
+        "paper_execution": true,
+        "market_date": "2026-06-12",
+        "source_timestamp_ns": 34200172954750,
+        "source_clock": "09:30:00.172954750",
+        "replay_loop": 16,
+        "replay_speed": 1,
+        "session": "0612260016",
+        "market_mode": "MULTICAST_A",
+        "market_sequence": 378,
+        "symbol": "AAPL",
+        "bids": [
+          [
+            2958600,
+            20
+          ],
+          [
+            2958000,
+            44
+          ],
+          [
+            2957900,
+            75
+          ],
+          [
+            2957600,
+            28
+          ],
+          [
+            2957500,
+            1002
+          ]
+        ],
+        "asks": [
+          [
+            2961000,
+            254
+          ],
+          [
+            2961400,
+            622
+          ],
+          [
+            2962500,
+            235
+          ],
+          [
+            2964100,
+            100
+          ],
+          [
+            2964400,
+            5
+          ]
+        ],
+        "last_x10000": 2960800,
+        "volume": 9548
+      }
+    },
+    "trader_books": {
+      "AAPL": {
+        "symbol": "AAPL",
+        "session": "0612260016",
+        "market_sequence": 2,
+        "market_path": "UNICAST",
+        "next_expected": 3,
+        "last_delivered": 2,
+        "first_pending": 0,
+        "highest_received": 2,
+        "gap_age_ms": 0,
+        "pending": 0,
+        "duplicates": 0,
+        "bids": [
+          [
+            2958000,
+            44
+          ],
+          [
+            2957900,
+            75
+          ],
+          [
+            2957600,
+            28
+          ],
+          [
+            2957500,
+            1002
+          ],
+          [
+            2957000,
+            300
+          ]
+        ],
+        "asks": [
+          [
+            2960900,
+            200
+          ],
+          [
+            2961000,
+            1000
+          ],
+          [
+            2961400,
+            622
+          ],
+          [
+            2962500,
+            235
+          ],
+          [
+            2964100,
+            100
+          ]
+        ],
+        "integrity": "HEALTHY",
+        "trading_gate": "OPEN"
+      },
+      "NVDA": {
+        "symbol": "NVDA",
+        "session": "0612260016",
+        "market_sequence": 2,
+        "market_path": "UNICAST",
+        "next_expected": 3,
+        "last_delivered": 2,
+        "first_pending": 0,
+        "highest_received": 2,
+        "gap_age_ms": 0,
+        "pending": 0,
+        "duplicates": 0,
+        "bids": [
+          [
+            2047400,
+            80
+          ],
+          [
+            2047100,
+            25
+          ],
+          [
+            2047000,
+            30
+          ],
+          [
+            2046800,
+            3
+          ],
+          [
+            2046500,
+            1
+          ]
+        ],
+        "asks": [
+          [
+            2049400,
+            199
+          ],
+          [
+            2049500,
+            411
+          ],
+          [
+            2049600,
+            1
+          ],
+          [
+            2050000,
+            2946
+          ],
+          [
+            2050500,
+            1
+          ]
+        ],
+        "integrity": "HEALTHY",
+        "trading_gate": "OPEN"
+      }
+    },
+    "chart": {
+      "NVDA": [
+        [
+          34200000078144,
+          2048400
+        ],
+        [
+          34200080684652,
+          2047000
+        ],
+        [
+          34200086942154,
+          2047000
+        ],
+        [
+          34200167144558,
+          2046900
+        ]
+      ],
+      "AAPL": [
+        [
+          34200051133946,
+          2959000
+        ],
+        [
+          34200090218959,
+          2959000
+        ],
+        [
+          34200172954750,
+          2960800
+        ]
+      ]
+    },
+    "orders": [],
+    "fills": [],
+    "health": {
+      "exchange": {
+        "status": "ONLINE",
+        "last_event_ns": 1789641313690458624
+      },
+      "trader_auto": {
+        "status": "ONLINE",
+        "last_event_ns": 1789641313691490560
+      },
+      "trader_manual": {
+        "status": "ONLINE",
+        "last_event_ns": 1789641313692340992
+      },
+      "gateway": {
+        "status": "ONLINE",
+        "last_event_ns": 1789641314295140608
+      },
+      "trader_onload": {
+        "status": "ONLINE",
+        "last_event_ns": 1789641313693274624
+      },
+      "trader_tcpdirect": {
+        "status": "ONLINE",
+        "last_event_ns": 1789641313694201856
+      },
+      "trader_dpdk": {
+        "status": "WAITING",
+        "last_event_ns": 0
+      }
+    },
+    "feed": {
+      "session": "0612260016",
+      "next_expected": 191,
+      "last_delivered": 190,
+      "first_pending": 192,
+      "highest_received": 453,
+      "pending": 262,
+      "duplicates": 0,
+      "gaps": 1,
+      "gap_messages": 262,
+      "resync_required": true,
+      "resync_reason": "RECEIVER_DISCONNECTED",
+      "pending_bytes": 8386,
+      "pending_limit": 32768,
+      "discarded_after_gap": 0,
+      "gap_size": 1,
+      "gap_age_ms": 51296,
+      "path": "UNICAST",
+      "integrity": "GAP",
+      "trading_gate": "INHIBITED_FEED_GAP",
+      "availability": "ACTIVE"
+    },
+    "feed_receiver": {
+      "status": "ONLINE",
+      "pid": 30034,
+      "received": 0,
+      "delivered": 0,
+      "unicast_received": 0,
+      "multicast_a_received": 0,
+      "multicast_b_received": 0,
+      "backpressure_events": 0,
+      "overflow_disconnects": 0,
+      "discarded_queue_packets": 0,
+      "clients": 1,
+      "queued_packets": 0,
+      "queued_bytes": 0,
+      "peak_client_packets": 0,
+      "peak_client_bytes": 0,
+      "client_queue_packets_limit": 32768,
+      "client_queue_bytes_limit": 8388608,
+      "last_event_ns": 1789641314236826624
+    },
+    "strategy": {
+      "enabled": false,
+      "imbalance_threshold": 0.35,
+      "quantity": 25,
+      "max_position": 200,
+      "cooldown_ms": 5000
+    },
+    "positions": {
+      "AAPL": 0,
+      "NVDA": 0
+    },
+    "client_positions": {
+      "trader_auto": {
+        "AAPL": 0,
+        "NVDA": 0
+      },
+      "trader_manual": {
+        "AAPL": 0,
+        "NVDA": 0
+      },
+      "trader_onload": {
+        "AAPL": 0,
+        "NVDA": 0
+      },
+      "trader_tcpdirect": {
+        "AAPL": 0,
+        "NVDA": 0
+      },
+      "trader_dpdk": {
+        "AAPL": 0,
+        "NVDA": 0
+      }
+    },
+    "client_stats": {
+      "trader_auto": {
+        "orders": 0,
+        "fills": 0,
+        "rejects": 0,
+        "transport_retries": 0,
+        "received": 452,
+        "delivered": 190
+      },
+      "trader_manual": {
+        "orders": 0,
+        "fills": 0,
+        "rejects": 0,
+        "transport_retries": 0,
+        "received": 0,
+        "delivered": 0
+      },
+      "trader_onload": {
+        "orders": 0,
+        "fills": 0,
+        "rejects": 0,
+        "transport_retries": 0,
+        "received": 0,
+        "delivered": 0
+      },
+      "trader_tcpdirect": {
+        "orders": 0,
+        "fills": 0,
+        "rejects": 0,
+        "transport_retries": 0,
+        "received": 0,
+        "delivered": 0
+      },
+      "trader_dpdk": {}
+    },
+    "client_latency": {
+      "trader_auto": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_manual": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_onload": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_tcpdirect": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_dpdk": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      }
+    },
+    "client_measurement_latency": {
+      "trader_auto": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0,
+        "generation": 10,
+        "ready_samples": 0
+      },
+      "trader_manual": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0,
+        "generation": 0,
+        "ready_samples": 0
+      },
+      "trader_onload": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0,
+        "generation": 0,
+        "ready_samples": 0
+      },
+      "trader_tcpdirect": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0,
+        "generation": 0,
+        "ready_samples": 0
+      },
+      "trader_dpdk": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0,
+        "generation": 0
+      }
+    },
+    "client_software_latency": {
+      "trader_auto": {
+        "samples": 0,
+        "queue_mode": "DEQUE_CV",
+        "queue_capacity": 1023,
+        "queue_depth": 0,
+        "queue_full_drops": 0,
+        "order_thread_tid": 35709,
+        "order_thread_cpu": 2,
+        "order_thread_allowed_count": 1,
+        "order_rx_cpu": -1,
+        "queue_to_send": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "submit_to_final": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "queue_locked": false,
+        "network_engine": "KERNEL_SOCKET",
+        "management_thread_tid": 35710,
+        "management_thread_cpu": 3,
+        "management_thread_allowed_count": 1
+      },
+      "trader_manual": {
+        "samples": 0,
+        "queue_mode": "DEQUE_CV",
+        "queue_capacity": 1023,
+        "queue_depth": 0,
+        "queue_full_drops": 0,
+        "order_thread_tid": 17084,
+        "order_thread_cpu": 2,
+        "order_thread_allowed_count": 1,
+        "order_rx_cpu": -1,
+        "queue_to_send": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "submit_to_final": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "queue_locked": true,
+        "network_engine": "KERNEL_SOCKET",
+        "management_thread_tid": 17085,
+        "management_thread_cpu": 3,
+        "management_thread_allowed_count": 1
+      },
+      "trader_onload": {
+        "samples": 0,
+        "queue_mode": "DEQUE_CV",
+        "queue_capacity": 1023,
+        "queue_depth": 0,
+        "queue_full_drops": 0,
+        "order_thread_tid": 17129,
+        "order_thread_cpu": 2,
+        "order_thread_allowed_count": 1,
+        "order_rx_cpu": -1,
+        "queue_to_send": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "submit_to_final": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "queue_locked": true,
+        "network_engine": "ONLOAD_USER_STACK",
+        "management_thread_tid": 17130,
+        "management_thread_cpu": 3,
+        "management_thread_allowed_count": 1
+      },
+      "trader_tcpdirect": {
+        "samples": 0,
+        "queue_mode": "DEQUE_CV",
+        "queue_capacity": 1023,
+        "queue_depth": 0,
+        "queue_full_drops": 0,
+        "order_thread_tid": 17126,
+        "order_thread_cpu": 2,
+        "order_thread_allowed_count": 1,
+        "order_rx_cpu": -1,
+        "queue_to_send": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "submit_to_final": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "queue_locked": true,
+        "network_engine": "ZF_REACTOR_POLL",
+        "management_thread_tid": 17127,
+        "management_thread_cpu": 3,
+        "management_thread_allowed_count": 1
+      },
+      "trader_dpdk": {
+        "samples": 0,
+        "queue_mode": "DEQUE_CV",
+        "queue_capacity": 1023,
+        "queue_depth": 0,
+        "queue_full_drops": 0,
+        "order_thread_tid": -1,
+        "order_thread_cpu": -1,
+        "order_thread_allowed_count": 0,
+        "order_rx_cpu": -1,
+        "queue_to_send": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        },
+        "submit_to_final": {
+          "p50_ns": 0,
+          "p99_ns": 0,
+          "max_ns": 0
+        }
+      }
+    },
+    "client_reaction_latency": {
+      "trader_auto": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_manual": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_onload": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_tcpdirect": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      },
+      "trader_dpdk": {
+        "samples": 0,
+        "p50_ns": 0,
+        "p99_ns": 0,
+        "max_ns": 0
+      }
+    },
+    "paper_epoch": 1,
+    "gui_reset_ns": 1789641050389458944,
+    "exchange_ledger_entries": 0,
+    "exchange_ledger": [],
+    "pnl_x10000": 0,
+    "stats": {
+      "orders": 0,
+      "fills": 0,
+      "rejects": 0,
+      "transport_retries": 0,
+      "received": 452,
+      "delivered": 190
+    },
+    "latency": {
+      "samples": 0,
+      "p50_ns": 0,
+      "p99_ns": 0,
+      "max_ns": 0
+    },
+    "reaction_latency": {
+      "samples": 0,
+      "p50_ns": 0,
+      "p99_ns": 0,
+      "max_ns": 0
+    },
+    "server_ns": 1789641314295140608
+  }
+}

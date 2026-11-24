@@ -1,0 +1,37 @@
+===== LANZ 接收器 =====
+每入口 10k pps：开始 0 条，更新 0 条，结束 0 条。
+每入口 25k pps：开始 40 条，更新 0 条，结束 40 条。
+以上为当前保留的 Et2 明细计数；采集器仅保留最近 80 条事件记录。
+采集器连接：已连接交换机 TCP 50001。
+最近一次完整事件：Ethernet2 / TC1
+  开始记录：队列长度 64 个缓冲段。
+  结束记录：本次事件最大队列长度 64 个缓冲段。
+
+===== 交换机查询结果（恢复配置前） =====
+$ show queue-monitor length statistics
+Interface      Traffic Class  Count
+-----------------------------------------------------------------
+Et2             1               164
+
+最近两条记录节选：
+$ show queue-monitor length Ethernet 2
+S-Start, U-Update, E-End, TC-Traffic Class
+Segment size for S, U and E congestion records is 480 bytes
+* Max queue length during period of congestion
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+ E   0:00:05.45679 ago         Et2(1)    28            64*         0
+ S   0:00:05.45681 ago         Et2(1)    N/A           64          N/A
+
+$ show queue-monitor streaming clients
+Number of clients connected : 1
+--------------------------------
+::ffff:10.1.1.101:56228
+
+恢复检查：交换机配置和发流网卡已恢复，采集器保留事件记录。

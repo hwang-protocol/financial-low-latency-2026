@@ -1,0 +1,174 @@
+[
+  {
+    "run_id": "20260917T091438Z-05-deque-cv",
+    "source": "Documents/reports/course-runs/20260917T091438Z-05-deque-cv/raw/software.summary.json",
+    "comparison_verdict": "VALID_COMPARISON",
+    "round_count": 8,
+    "stable_rounds": 8,
+    "within_round_stable": true,
+    "environment_control_comparable": true,
+    "direction_consistent": true,
+    "single_profile_stable": true,
+    "rx_target_stable": true,
+    "queue_full_drops": {
+      "manual": 0,
+      "auto_control": 0
+    },
+    "queue_effect": null,
+    "total_effect": null,
+    "environment_control_check": null
+  },
+  {
+    "run_id": "20260917T091639Z-05-fixed-cv",
+    "source": "Documents/reports/course-runs/20260917T091639Z-05-fixed-cv/raw/software.summary.json",
+    "comparison_verdict": "VALID_COMPARISON",
+    "round_count": 16,
+    "stable_rounds": 16,
+    "within_round_stable": true,
+    "environment_control_comparable": true,
+    "direction_consistent": true,
+    "single_profile_stable": true,
+    "rx_target_stable": true,
+    "queue_full_drops": {
+      "manual": 0,
+      "auto_control": 0
+    },
+    "queue_effect": {
+      "difference_ns": -1262,
+      "ci95": {
+        "low_ns": -3221,
+        "high_ns": 369
+      },
+      "left": "DEQUE_CV/dedicated",
+      "right": "FIXED_CV/dedicated",
+      "ratio": 0.94,
+      "verdict": "NO_DETECTED_DIFFERENCE"
+    },
+    "total_effect": {
+      "difference_ns": -696,
+      "ci95": {
+        "low_ns": -4004,
+        "high_ns": 3827
+      },
+      "left": "DEQUE_CV/dedicated",
+      "right": "FIXED_CV/dedicated",
+      "verdict": "NO_DETECTED_DIFFERENCE"
+    },
+    "environment_control_check": {
+      "difference_ns": 908,
+      "ci95": {
+        "low_ns": -523,
+        "high_ns": 2383
+      },
+      "left": "DEQUE_CV/dedicated",
+      "right": "FIXED_CV/dedicated",
+      "base_equivalence_margin_ns": 17606,
+      "tailwind_limit_ns": 631,
+      "direction": "not_detected",
+      "verdict": "NO_DETECTED_DIFFERENCE_WITHIN_MARGIN",
+      "comparable": true
+    }
+  },
+  {
+    "run_id": "20260917T092103Z-05-spsc-spin",
+    "source": "Documents/reports/course-runs/20260917T092103Z-05-spsc-spin/raw/software.summary.json",
+    "comparison_verdict": "VALID_COMPARISON",
+    "round_count": 16,
+    "stable_rounds": 16,
+    "within_round_stable": true,
+    "environment_control_comparable": true,
+    "direction_consistent": true,
+    "single_profile_stable": true,
+    "rx_target_stable": true,
+    "queue_full_drops": {
+      "manual": 0,
+      "auto_control": 0
+    },
+    "queue_effect": {
+      "difference_ns": 15218,
+      "ci95": {
+        "low_ns": 13622,
+        "high_ns": 16333
+      },
+      "left": "FIXED_CV/dedicated",
+      "right": "SPSC_SPIN/dedicated",
+      "ratio": 3.22,
+      "verdict": "RIGHT_LOWER"
+    },
+    "total_effect": {
+      "difference_ns": 13024,
+      "ci95": {
+        "low_ns": 10643,
+        "high_ns": 15393
+      },
+      "left": "FIXED_CV/dedicated",
+      "right": "SPSC_SPIN/dedicated",
+      "verdict": "RIGHT_LOWER"
+    },
+    "environment_control_check": {
+      "difference_ns": 1859,
+      "ci95": {
+        "low_ns": 430,
+        "high_ns": 2827
+      },
+      "left": "FIXED_CV/dedicated",
+      "right": "SPSC_SPIN/dedicated",
+      "base_equivalence_margin_ns": 17775,
+      "tailwind_limit_ns": 7609,
+      "direction": "tailwind",
+      "verdict": "DETECTED_TAILWIND_WITHIN_LIMIT",
+      "comparable": true
+    }
+  },
+  {
+    "run_id": "20260917T092527Z-05-spsc-shared-cpu",
+    "source": "Documents/reports/course-runs/20260917T092527Z-05-spsc-shared-cpu/raw/software.summary.json",
+    "comparison_verdict": "VALID_COMPARISON",
+    "round_count": 16,
+    "stable_rounds": 16,
+    "within_round_stable": true,
+    "environment_control_comparable": true,
+    "direction_consistent": true,
+    "single_profile_stable": true,
+    "rx_target_stable": true,
+    "queue_full_drops": {
+      "manual": 0,
+      "auto_control": 0
+    },
+    "queue_effect": {
+      "difference_ns": -52429,
+      "ci95": {
+        "low_ns": -58740,
+        "high_ns": -47371
+      },
+      "left": "SPSC_SPIN/dedicated",
+      "right": "SPSC_SPIN/shared",
+      "ratio": 0.13,
+      "verdict": "LEFT_LOWER"
+    },
+    "total_effect": {
+      "difference_ns": -40692,
+      "ci95": {
+        "low_ns": -47525,
+        "high_ns": -35763
+      },
+      "left": "SPSC_SPIN/dedicated",
+      "right": "SPSC_SPIN/shared",
+      "verdict": "LEFT_LOWER"
+    },
+    "environment_control_check": {
+      "difference_ns": -5163,
+      "ci95": {
+        "low_ns": -6401,
+        "high_ns": -3950
+      },
+      "left": "SPSC_SPIN/dedicated",
+      "right": "SPSC_SPIN/shared",
+      "base_equivalence_margin_ns": 16990,
+      "tailwind_limit_ns": 26214,
+      "direction": "tailwind",
+      "verdict": "DETECTED_TAILWIND_WITHIN_LIMIT",
+      "comparable": true
+    }
+  }
+]

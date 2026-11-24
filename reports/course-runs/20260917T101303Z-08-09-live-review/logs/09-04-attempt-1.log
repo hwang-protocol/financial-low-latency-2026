@@ -1,0 +1,13 @@
+正在执行运行③：核对结果；完成后显示本步回执，完整日志：/financial-low-latency/Documents/reports/course-runs/20260917T103243Z-10-rtl-stages/raw。
+vm-2522-02 / verify
+===== 查丢弃与缺失序号 =====
+[Feed] 对: 同一序号 / 缺口1 / 拒单  证: 过滤判决与接收结果一致
+$ bash Documents/newDoc/assets/09-verilator/08c-verify-rtl-filter.sh
+rtl_drop sequence=191 remaining=0 drop_count=1
+Feed：session=0612260016  integrity=GAP  next_expected=191  gap_size=1
+路径：Exchange=MULTICAST_A  Guardian=UNICAST  交易闸门=INHIBITED_FEED_GAP
+订单API：http_status=400  error=FEED_NOT_HEALTHY
+丢弃序号 = 缺失序号，丢弃数 = 缺口数 = 1。现场仍暂停；讲解后执行恢复。
+正在执行保留缺口并撤出过滤；完成后显示本步回执，完整日志：/financial-low-latency/Documents/reports/course-runs/20260917T103243Z-10-rtl-stages/raw。
+过滤程序已退出，接收路径已归还；行情仍为 GAP / PAUSED。
+打开 http://10.1.1.101:8088/ 观察缺口与禁单；看完后亲自点击“重新开始并清空交易”，不要点“继续”。

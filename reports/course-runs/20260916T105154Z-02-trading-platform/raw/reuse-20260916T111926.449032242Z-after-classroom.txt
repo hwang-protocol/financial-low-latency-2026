@@ -1,0 +1,20 @@
+
+Low-Latency-Ops / 查已有平台
+===== 查已有平台 =====
+补齐后再次核对当前交易配置。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh verify 20260916T105154Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260916T105154Z-02-trading-platform/raw/reuse-20260916T111926.449032242Z-after.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260916T105154Z-02-trading-platform/raw/reuse-20260916T111926.449032242Z-after.txt
+exchange=ONLINE pid=3506
+trader-auto=ONLINE pid=12046
+trader-manual=ONLINE pid=12052
+gateway=ONLINE pid=4276
+deployed_sha256=PASS exchange,trader_auto,trader_manual,source,replay,manifest,opening_book_checkpoint
+restore_verdict=TRADING_LAB_READY
+feed_receiver=VERIFIED market_schema=udp-multicast-ab-v1 multicast_source=20.1.1.1
+market_network=UDP_MULTICAST_AB A=233.74.125.32:31032 B=233.74.125.33:31033
+[进程说明] exchange 是 .1 交易所；trader-auto / trader-manual 是 .2 自动与手动客户端；gateway 是 .101 网页后台。
+[在线说明] ONLINE 表示对应进程在线；pid 是该主机上的进程编号，每次启动可能不同，不是端口号。
+[文件说明] deployed_sha256=PASS 表示所列部署文件摘要核验通过；进程在线与文件一致需要一起看。
+[就绪说明] restore_verdict=TRADING_LAB_READY 表示部署核验通过，不代表已经完成首笔成交或延迟测试。

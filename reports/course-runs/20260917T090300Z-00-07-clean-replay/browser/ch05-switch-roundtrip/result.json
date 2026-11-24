@@ -1,0 +1,48 @@
+{
+  "action": "switch-roundtrip",
+  "label": "ch05-switch-roundtrip",
+  "observations": [
+    {
+      "name": "before",
+      "session": "0612260005",
+      "feed": "HEALTHY",
+      "gate": "OPEN",
+      "mode": "路径测试 · SFC"
+    },
+    {
+      "name": "DPDK",
+      "session": "0612260005",
+      "feed": "HEALTHY",
+      "gate": "OPEN",
+      "mode": "路径测试 · DPDK"
+    },
+    {
+      "name": "SFC",
+      "session": "0612260006",
+      "feed": "HEALTHY",
+      "gate": "OPEN",
+      "mode": "路径测试 · SFC"
+    }
+  ],
+  "locks": [
+    {
+      "target": "DPDK",
+      "locked": true,
+      "baselineLocked": true,
+      "localLock": true,
+      "renderedTransition": "READY"
+    },
+    {
+      "target": "SFC",
+      "locked": true,
+      "baselineLocked": true,
+      "localLock": true,
+      "renderedTransition": "READY"
+    }
+  ],
+  "confirmations": [
+    "切到 DPDK 会停止三条 sfc 客户端，并由 VFIO 暂时接管 X2522。继续吗？",
+    "将切换到三路径测试配置，自动策略暂停。继续吗？"
+  ],
+  "result": "PASS"
+}

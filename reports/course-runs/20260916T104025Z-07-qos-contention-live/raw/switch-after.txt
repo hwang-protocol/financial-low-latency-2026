@@ -1,0 +1,170 @@
+$ show interfaces Management1 status
+show interfaces Management1 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Ma1               connected    routed   a-full a-1G   10/100/1000                     
+
+
+$ show switch forwarding-mode
+show switch forwarding-mode | no-more
+Current switching mode:    cut through
+Available switching modes: cut through, store and forward
+
+$ show qos interfaces Ethernet1
+show qos interfaces Ethernet1 | no-more
+Ethernet1:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show qos interfaces Ethernet2
+show qos interfaces Ethernet2 | no-more
+Ethernet2:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show queue-monitor length status
+show queue-monitor length status | no-more
+queue-monitor length disabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+Global Buffer Monitoring
+------------------------
+Global buffer monitoring is enabled
+Segment size in bytes :   160
+Total buffers in segments : 49152
+High threshold : 20540
+Low threshold :  8216
+
+
+Per-Interface Queue Length Monitoring
+-------------------------------------
+Queue length monitoring is disabled
+Segment size in bytes :   480
+Maximum queue length in segments :  6847
+Port thresholds in segments:
+Port     High threshold  Low threshold   Mirroring Enabled       Warnings
+Cpu               15888          15888               False
+Et1                 512            256               False
+Et2                 512            256               False
+Et3                 512            256               False
+Et4                 512            256               False
+Et5                 512            256               False
+Et6                 512            256               False
+Et7                 512            256               False
+Et8                 512            256               False
+Et9                 512            256               False
+Et10                512            256               False
+Et11                512            256               False
+Et12                512            256               False
+Et13                512            256               False
+Et14                512            256               False
+Et15                512            256               False
+Et16                512            256               False
+Et17                512            256               False
+Et18                512            256               False
+Et19                512            256               False
+Et20                512            256               False
+Et21                512            256               False
+Et22                512            256               False
+Et23                512            256               False
+Et24                512            256               False
+
+$ show mac address-table static
+show mac address-table static | no-more
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+Total Mac Addresses for this criterion: 0
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0
+
+$ show running-config | include ^queue-monitor|^qos map|mac address-table static
+show running-config | include ^queue-monitor|^qos map|mac address-table static | no-more
+
+$ show startup-config | include ^queue-monitor|^qos map|mac address-table static
+show startup-config | include ^queue-monitor|^qos map|mac address-table static | no-more
+
+$ show running-config interfaces Ethernet1
+show running-config interfaces Ethernet1 | no-more
+interface Ethernet1
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2 | no-more
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show startup-config interfaces Ethernet1
+show startup-config interfaces Ethernet1 | no-more
+interface Ethernet1
+
+$ show startup-config interfaces Ethernet2
+show startup-config interfaces Ethernet2 | no-more
+interface Ethernet2
+
+$ show interfaces Ethernet1 counters errors
+show interfaces Ethernet1 counters errors | no-more
+Port               FCS    Align   Symbol       Rx    Runts   Giants       Tx
+Et1                  0        0        0        0        0        0        0
+
+$ show interfaces Ethernet2 counters errors
+show interfaces Ethernet2 counters errors | no-more
+Port               FCS    Align   Symbol       Rx    Runts   Giants       Tx
+Et2                  0        0        0        0        0        0        0

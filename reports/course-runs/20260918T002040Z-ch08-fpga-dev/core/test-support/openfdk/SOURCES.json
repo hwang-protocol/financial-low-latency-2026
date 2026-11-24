@@ -1,0 +1,62 @@
+{
+  "verified_on": "2026-09-18",
+  "purpose": "Offline source dependencies for Chapter 08 test_eos_control.py only",
+  "upstream_repository": "https://github.com/aristanetworks/openfdk",
+  "upstream_commit": "13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d",
+  "license": "BSD-3-Clause; complete upstream LICENSE.md and per-file copyright notices retained",
+  "verification": "All four copied files match fixed Git objects; three Python files also match archived source hashes.",
+  "archived_evidence": "Documents/design/evidence/ch08-modern-eos-20260917.json",
+  "files": [
+    {
+      "path": "resources/libapp/register_file.py",
+      "source": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/libapp/register_file.py",
+      "sha256": "0c8ca2494107f52b0a3892fdac78523a07a2b54697f4028e4e53c17fdd2989fa",
+      "bytes": 11630,
+      "unchanged_from_upstream": true,
+      "matches_archived_source_hash": true
+    },
+    {
+      "path": "resources/libapp/serial.py",
+      "source": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/libapp/serial.py",
+      "sha256": "301d6f67a44c3ed5a4954c0a5ccbb657c67b462a4d0892b994373f7da346677a",
+      "bytes": 1191,
+      "unchanged_from_upstream": true,
+      "matches_archived_source_hash": true
+    },
+    {
+      "path": "resources/libapp/cli.py",
+      "source": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/libapp/cli.py",
+      "sha256": "28f1cdfa342075e9f5345f65b644bdf3a51e4819e7aff20760d1d416f9651094",
+      "bytes": 9924,
+      "unchanged_from_upstream": true,
+      "matches_archived_source_hash": true
+    },
+    {
+      "path": "LICENSE.md",
+      "source": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/LICENSE.md",
+      "sha256": "1c2765b91c54014a27868ac615f143c513447bc89e394ff9cbc7ae063cb90847",
+      "bytes": 1503,
+      "unchanged_from_upstream": true,
+      "matches_archived_source_hash": null
+    }
+  ],
+  "dependency_review": {
+    "method": "Static review of imports and test harness dynamic loading; no test run performed while creating this subset",
+    "python_environment_requirement": "Python 3 with six already installed",
+    "openfdk_files_required_by_current_test": [
+      "resources/libapp/register_file.py",
+      "resources/libapp/serial.py",
+      "resources/libapp/cli.py"
+    ],
+    "injected_by_test": [
+      "libapp package with IS_EOS=False",
+      "device object",
+      "CliExtension",
+      "CliExtensionLib",
+      "fake hardware and command context"
+    ],
+    "optional_import": "cli.py catches ImportError for eossdk; the tested paths do not require EOSSDK",
+    "not_a_complete_fdk": true,
+    "hardware_or_eos_validation": false
+  }
+}

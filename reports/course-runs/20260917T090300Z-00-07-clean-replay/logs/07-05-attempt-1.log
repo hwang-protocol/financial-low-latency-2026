@@ -1,0 +1,56 @@
+旧实验属于已更换的平台，已归档；当前平台与接收口检查通过，继续本次实验。
+
+vm-2522-02 / verify
+===== 查 XDP 挂载身份 =====
+[ens64np1] 对: prog/xdp / jited / native  证: 本次程序确实挂在客户端驱动接收口
+$ ip -details link show dev ens64np1
+9: ens64np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdp qdisc mq state UP mode DEFAULT group default qlen 1000
+    prog/xdp id 64 tag 8c60d945e15524ab jited
+
+vm-2522-02 / verify
+===== 查初始放行策略 =====
+[policy] 对: remaining_drops=0  证: 接流时先全部放行，再观察健康基线
+$ python3 set-xdp-policy.py allow 0 5 "$PROG_ID"
+policy_id=1 mode=allow remaining=0 ttl_seconds=0
+
+vm-2522-02 / verify
+===== 查行情放行基线 =====
+[Feed] 对: 新 Session / HEALTHY  证: 未武装时原行情可以穿过当前路径
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" HEALTHY --timeout 25 --session-not "$session_before"
+行情关键字段：
+会话            0612260009
+发送方式        组播 A（MULTICAST_A）
+接收程序        ONLINE
+行情状态        正常（HEALTHY）
+交易闸门        开放（OPEN）
+下一条期望      114
+
+vm-2522-02 / verify
+===== 查行情缺口 =====
+[Feed] 对: GAP / gap_size=1 / 闸门关闭  证: 策略执行后接收器自己发现序号缺失
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" GAP --timeout 12
+行情关键字段：
+会话            0612260009
+发送方式        组播 A（MULTICAST_A）
+接收程序        ONLINE
+行情状态        有缺口（GAP）
+交易闸门        暂停下单（INHIBITED_FEED_GAP）
+序号对照        已交付 672 → 期望 673 → 最早待处理 674
+缺失消息        1 条；等待补齐后处理的消息 1 条
+
+vm-2522-02 / verify
+===== 查被丢序号与 Feed 对账 =====
+[XDP audit] 对: 恰好一包 / Locate 8095 / Sequence 等于 next_expected  证: 计数与行情缺口指向同一条消息
+$ python3 - <counters.json> <drop-audit.json> <feed-gap.json>
+实际丢包        1 包
+被丢序号        673
+接收端缺失序号  673（已核对一致）
+股票编号        8095（NVDA）
+owned_xdp=detached
+
+现场状态：行情有缺口，交易闸门暂停下单，回放已暂停。
+result=GAP_HELD
+本次 XDP 已卸载，行情缺口保留；丢包后未重放或重启服务。
+打开 http://10.1.1.101:8088/ 观察 FEED GAP、冻结的订单簿和禁用的下单按钮。
+看完后在网页点击“重新开始并清空交易”；行情恢复后可再次运行本脚本。
+evidence=/financial-low-latency/Documents/reports/course-runs/20260917T095358.999385461Z-07-xdp-drop

@@ -1,0 +1,767 @@
+#!/usr/bin/env bash
+# Teacher live C2: send real Socket orders through a shared, contended egress;
+# compare unmarked Q1 with DSCP 46 -> TC5 -> explicitly strict Q5, then restore.
+set -Eeuo pipefail
+cd /financial-low-latency
+
+ASSET=Documents/newDoc/assets/06-arista-time
+COMMON=Documents/newDoc/assets/common
+SUPPORT="$ASSET/live-support"
+SUPPORT_MANIFEST="$ASSET/LIVE-SUPPORT-SHA256SUMS"
+ENTRY_SCRIPT="$ASSET/11-qos-real-order-contention-live.sh"
+EOS_CLI="$COMMON/eos_cli.py"
+TREX_TEMPLATE="$SUPPORT/lanz/remote-lanz-trex-control.sh"
+TREX_CLIENT="$SUPPORT/qos/trex_qos_contention_client.py"
+TREX_CFG="$SUPPORT/lanz/trex-dual.yaml"
+. Documents/reports/run-state/02-trading-baseline.env
+PARENT_RUN_ID="$RUN_ID"
+RUN_ID="$(date -u +%Y%m%dT%H%M%SZ)-07-qos-contention-live"
+OUT="Documents/reports/course-runs/$RUN_ID"
+RAW="$OUT/raw"
+DERIVED="$OUT/derived"
+TMP="$(mktemp -d)"
+API=http://10.1.1.101:8088
+CAPTURE_DIR="/run/flle-ch07-qos/$RUN_ID"
+TREX_DIR="/run/flle-qos-contention-$RUN_ID"
+TREX_CTL="$TREX_DIR/remote-qos-trex-control.sh"
+FAKE_MAC_DOTTED=0200.0007.0001
+FAKE_MAC_COLON=02:00:00:07:00:01
+ORDER_COUNT=120
+LOAD_PPS_PER_INGRESS=500000
+LOAD_DURATION_SECONDS=15
+SOURCE_PORT=""
+POSITION_BEFORE=""
+SWITCH_CONFIGURED=0
+source "$ASSET/order-dscp-control.sh"
+CAPTURE_REMOTE_CREATED=0
+TREX_REMOTE_DEPLOYED=0
+TREX_INSTALLED=0
+
+test ! -e "$OUT"
+mkdir -p "$RAW/source" "$DERIVED"
+SUPPORT_MANIFEST_SHA256="$(sha256sum "$SUPPORT_MANIFEST" | awk '{print $1}')"
+ENTRY_SCRIPT_SHA256="$(sha256sum "$ENTRY_SCRIPT" | awk '{print $1}')"
+EOS_CLI_SHA256="$(sha256sum "$EOS_CLI" | awk '{print $1}')"
+printf 'RUN_ID=%s\nPARENT_RUN_ID=%s\nRESULT_KIND=FRESH_LIVE_REAL_ORDER_QOS_CONTENTION\nDSCP=46\nTRAFFIC_CLASS=5\nTX_QUEUE=5\nORDER_COUNT=%s\nORDER_MARKING=SETSOCKOPT_IP_TOS\nLOAD_PPS_PER_INGRESS=%s\nLOAD_DURATION_SECONDS=%s\nLOAD_PROTOCOL=MOLDUDP64_ITCH_5_0_TO_TEST_MAC\nSUPPORT_MANIFEST_SHA256=%s\nENTRY_SCRIPT_SHA256=%s\nEOS_CLI_SHA256=%s\nQOS_TRANSPORT=%s\nPHASE=STARTED\n' \
+  "$RUN_ID" "$PARENT_RUN_ID" "$ORDER_COUNT" "$LOAD_PPS_PER_INGRESS" \
+  "$LOAD_DURATION_SECONDS" "$SUPPORT_MANIFEST_SHA256" "$ENTRY_SCRIPT_SHA256" \
+  "$EOS_CLI_SHA256" "$QOS_TRANSPORT" >"$OUT/run.env"
+install -m 0644 "$ENTRY_SCRIPT" "$RAW/source/11-qos-real-order-contention-live.sh"
+install -m 0644 "$EOS_CLI" "$RAW/source/eos_cli.py"
+install -m 0644 "$ASSET/order-dscp-control.sh" "$RAW/source/"
+install -m 0644 "$QOS_TOOL" "$RAW/source/"
+install -m 0644 "$SUPPORT_MANIFEST" "$RAW/LIVE-SUPPORT-SHA256SUMS"
+(cd "$ASSET" && sha256sum -c LIVE-SUPPORT-SHA256SUMS) \
+  >"$RAW/local-support-sha256.txt"
+
+switch_config() {
+  local name="$1"; shift
+  printf '%s\n' "$@" >"$TMP/$name.plan"
+  python3 "$EOS_CLI" --mode controlled-config \
+    --plan "$TMP/$name.plan" --output "$RAW/$name.txt" >/dev/null
+}
+
+switch_show() {
+  local name="$1"; shift
+  printf '%s\n' "$@" >"$TMP/$name.plan"
+  python3 "$EOS_CLI" --mode show \
+    --plan "$TMP/$name.plan" --output "$RAW/$name.txt" >/dev/null
+}
+
+restore_switch() {
+  test "$SWITCH_CONFIGURED" -eq 1 || return 0
+  switch_config switch-restore \
+    'configure terminal' \
+    'no mac address-table static 0200.0007.0001 vlan 20 interface Ethernet1' \
+    'interface Ethernet1' \
+    'default queue-monitor length thresholds' \
+    'tx-queue 0' 'default bandwidth percent' 'default priority' 'exit' \
+    'tx-queue 1' 'default bandwidth percent' 'default priority' 'exit' \
+    'tx-queue 2' 'default bandwidth percent' 'default priority' 'exit' \
+    'tx-queue 3' 'default bandwidth percent' 'default priority' 'exit' \
+    'tx-queue 5' 'default priority' 'exit' \
+    'interface Ethernet2' 'default qos trust' \
+    'end' \
+    'configure terminal' 'default queue-monitor length' 'end' \
+    'show qos interfaces Ethernet1' \
+    'show qos interfaces Ethernet2' \
+    'show queue-monitor length status' \
+    'show mac address-table static' \
+    'show running-config interfaces Ethernet1' \
+    'show running-config interfaces Ethernet2'
+  SWITCH_CONFIGURED=0
+}
+
+cleanup_capture_remote() {
+  test "$CAPTURE_REMOTE_CREATED" -eq 1 || return 0
+  ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.1 \
+    bash -s -- "$CAPTURE_DIR" <<'REMOTE'
+set -eu
+case "$1" in /run/flle-ch07-qos/*) ;; *) exit 91;; esac
+if test -d "$1"; then
+  for pidfile in "$1"/*.pid; do
+    test -f "$pidfile" || continue
+    pid="$(cat "$pidfile")"
+    kill -INT "$pid" 2>/dev/null || true
+  done
+  find "$1" -depth -delete
+fi
+REMOTE
+  CAPTURE_REMOTE_CREATED=0
+}
+
+remove_trex_install() {
+  # TRex 刚退出时 /opt/trex 下可能还有临时文件，首次 rmdir 会失败；重试几次再判定
+  local attempt
+  for attempt in 1 2 3 4 5; do
+    if remove_trex_install_once; then return 0; fi
+    printf 'remove_trex_install attempt %s failed; retrying\n' "$attempt"
+    sleep 1
+  done
+  return 1
+}
+
+remove_trex_install_once() {
+  ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+    'set -eu; if test -e /opt/trex/v3.08 || test -L /opt/trex/v3.08; then test -d /opt/trex/v3.08 && test ! -L /opt/trex/v3.08; find /opt/trex/v3.08 -depth -delete; fi; if test -e /opt/trex/v3.08.tar.gz || test -L /opt/trex/v3.08.tar.gz; then test -L /opt/trex/v3.08.tar.gz; test "$(readlink /opt/trex/v3.08.tar.gz)" = /opt/flle/prewarm/trex/v3.08.tar.gz; unlink /opt/trex/v3.08.tar.gz; fi; rmdir /opt/trex 2>/dev/null || true; test ! -e /opt/trex && test ! -L /opt/trex'
+}
+
+recover_trex() {
+  if test "$TREX_REMOTE_DEPLOYED" -eq 1; then
+    ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+      /usr/bin/bash "$TREX_CTL" recover >"$RAW/vm11-explicit-recover.txt" 2>&1
+    ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+      /usr/bin/bash "$TREX_CTL" disarm-deadman >"$RAW/vm11-deadman-disarm.txt" 2>&1
+  fi
+  if test "$TREX_INSTALLED" -eq 1; then
+    remove_trex_install >"$RAW/vm11-remove-trex.txt" 2>&1
+    TREX_INSTALLED=0
+  fi
+}
+
+cleanup_trex_remote() {
+  test "$TREX_REMOTE_DEPLOYED" -eq 1 || return 0
+  ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+    bash -s -- "$TREX_DIR" <<'REMOTE'
+set -eu
+case "$1" in /run/flle-qos-contention-*-07-qos-contention-live) ;; *) exit 91;; esac
+test -d "$1"
+find "$1" -depth -delete
+test ! -e "$1"
+REMOTE
+  TREX_REMOTE_DEPLOYED=0
+}
+
+cleanup() {
+  local original_rc=$? cleanup_failed=0
+  trap - EXIT INT TERM HUP
+  set +e
+  recover_trex || cleanup_failed=1
+  qos_restore || cleanup_failed=1
+  cleanup_capture_remote || cleanup_failed=1
+  restore_switch || cleanup_failed=1
+  cleanup_trex_remote || cleanup_failed=1
+  find "$TMP" -depth -delete
+  if test "$cleanup_failed" -ne 0; then
+    printf 'QOS_CONTENTION_CLEANUP=FAIL original_rc=%s\n' "$original_rc" >&2
+    exit 125
+  fi
+  if test "$original_rc" -ne 0; then exit "$original_rc"; fi
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+trap 'exit 129' HUP
+
+start_capture() {
+  local stage="$1"
+  CAPTURE_REMOTE_CREATED=1
+  ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.1 \
+    bash -s -- "$CAPTURE_DIR" "$stage" "$SOURCE_PORT" <<'REMOTE'
+set -eu
+dir="$1"; stage="$2"
+case "$dir" in /run/flle-ch07-qos/*) ;; *) exit 91;; esac
+mkdir -p "$dir"
+test ! -e "$dir/$stage.pid"
+nohup tcpdump -ni ens64np0 -s 0 -U -w "$dir/$stage.pcap" \
+  "src host 20.1.1.2 and dst host 20.1.1.1 and tcp dst port 43120 and src port $3" \
+  >"$dir/$stage-tcpdump.txt" 2>&1 </dev/null &
+pid=$!
+printf '%s\n' "$pid" >"$dir/$stage.pid"
+for _ in $(seq 1 30); do
+  kill -0 "$pid" 2>/dev/null && test -f "$dir/$stage.pcap" && exit 0
+  sleep 0.1
+done
+exit 92
+REMOTE
+}
+
+stop_capture() {
+  local stage="$1"
+  ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.1 \
+    bash -s -- "$CAPTURE_DIR" "$stage" <<'REMOTE'
+set -eu
+dir="$1"; stage="$2"
+case "$dir" in /run/flle-ch07-qos/*) ;; *) exit 91;; esac
+pid="$(cat "$dir/$stage.pid")"
+kill -INT "$pid" 2>/dev/null || true
+for _ in $(seq 1 50); do
+  kill -0 "$pid" 2>/dev/null || break
+  sleep 0.1
+done
+! kill -0 "$pid" 2>/dev/null
+tcpdump -nn -e -vv -r "$dir/$stage.pcap" >"$dir/$stage-decode.txt" 2>&1
+REMOTE
+  scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes \
+    "root@10.1.1.1:$CAPTURE_DIR/$stage.pcap" \
+    "root@10.1.1.1:$CAPTURE_DIR/$stage-tcpdump.txt" \
+    "root@10.1.1.1:$CAPTURE_DIR/$stage-decode.txt" "$RAW/"
+}
+
+issue_orders() {
+  local stage count require_load replies ids batch_ids rows response oid state ready index side limit payload
+  stage="$1"
+  count="$2"
+  require_load="${3:-1}"
+  replies="$RAW/$stage-orders-issued.ndjson"
+  ids="$RAW/$stage-order-ids.txt"
+  batch_ids="$RAW/$stage-order-batch-ids.txt"
+  rows="$RAW/$stage-order-rows.ndjson"
+  : >"$replies"
+  : >"$ids"
+  : >"$batch_ids"
+  : >"$rows"
+  for index in $(seq 1 "$count"); do
+    if (( index % 2 == 1 )); then
+      side=SELL
+      limit=1
+    else
+      side=BUY
+      limit=999999999999
+    fi
+    payload="{\"symbol\":\"AAPL\",\"side\":\"$side\",\"quantity\":1,\"limit_price_x10000\":$limit,\"transport\":\"$QOS_TRANSPORT\"}"
+    if response="$(curl -sS --fail-with-body --connect-timeout 5 --max-time 10 \
+      -X POST -H 'Content-Type: application/json' -d "$payload" "$API/api/order")"; then
+      :
+    else
+      local request_rc=$?
+      printf '%s\n' "$response" >"$RAW/$stage-order-error.json"
+      printf '下单失败：%s 组第 %s 笔，退出码 %s；接口返回：%s\n日志：%s\n' \
+        "$stage" "$index" "$request_rc" "$response" "$RAW/$stage-order-error.json" >&2
+      return "$request_rc"
+    fi
+    oid="$(python3 -c 'import json,sys; print(json.load(sys.stdin)["client_order_id"])' <<<"$response")"
+    printf '%s\n' "$response" >>"$replies"
+    printf '%s\n' "$oid" >>"$ids"
+    printf '%s\n' "$oid" >>"$batch_ids"
+    sleep 0.01
+    if (( index % 20 == 0 || index == count )); then
+      ready=0
+      for _ in $(seq 1 250); do
+        state="$(curl -fsS "$API/api/state")"
+        if python3 - "$batch_ids" "$state" <<'PY'
+import json, pathlib, sys
+ids = {int(line) for line in pathlib.Path(sys.argv[1]).read_text().splitlines()}
+rows = {int(row.get("client_order_id", 0)): row for row in json.loads(sys.argv[2]).get("orders", [])}
+raise SystemExit(not all(
+    oid in rows
+    and rows[oid].get("result") == "ORDER_EXECUTED"
+    and int(rows[oid].get("order_rtt_ns", 0)) > 0
+    for oid in ids
+))
+PY
+        then
+          ready=1
+          printf '%s' "$state" >"$RAW/$stage-state.json"
+          break
+        fi
+        sleep 0.1
+      done
+      test "$ready" -eq 1
+      python3 - "$batch_ids" "$RAW/$stage-state.json" >>"$rows" <<'PY'
+import json, pathlib, sys
+ids = [int(line) for line in pathlib.Path(sys.argv[1]).read_text().splitlines()]
+state = json.load(open(sys.argv[2], encoding="utf-8"))
+by_id = {int(row.get("client_order_id", 0)): row for row in state.get("orders", [])}
+for oid in ids:
+    print(json.dumps(by_id[oid], separators=(",", ":"), ensure_ascii=False))
+PY
+      : >"$batch_ids"
+    fi
+  done
+  if test "$require_load" -eq 1; then
+    ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+      "set -eu; pid=\$(cat '$TREX_DIR/$stage-load.pid'); kill -0 \"\$pid\""
+  fi
+  python3 - "$ids" "$rows" "$DERIVED/$stage-order-stats.json" <<'PY'
+import json, math, pathlib, statistics, sys
+ids = [int(line) for line in pathlib.Path(sys.argv[1]).read_text().splitlines()]
+records = [json.loads(line) for line in pathlib.Path(sys.argv[2]).read_text().splitlines()]
+by_id = {int(row.get("client_order_id", 0)): row for row in records}
+assert len(ids) == len(set(ids)) == len(by_id), (len(ids), len(set(ids)), len(by_id))
+rows = [by_id[oid] for oid in ids]
+values = sorted(int(row["order_rtt_ns"]) for row in rows)
+def nearest_rank(q):
+    return values[max(0, math.ceil(q * len(values)) - 1)]
+out = {
+    "status": "PASS",
+    "orders_executed": len(rows),
+    "first_client_order_id": ids[0],
+    "last_client_order_id": ids[-1],
+    "rtt_ns": {
+        "min": values[0],
+        "p50": int(statistics.median(values)),
+        "p99_nearest_rank": nearest_rank(0.99),
+        "max": values[-1],
+    },
+    "p99_sample_rank": max(1, math.ceil(0.99 * len(values))),
+    "rows": rows,
+}
+json.dump(out, open(sys.argv[3], "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+print(f"orders_executed={len(rows)}")
+print(f"rtt_ns_min_p50_p99_max={values[0]}/{out['rtt_ns']['p50']}/{out['rtt_ns']['p99_nearest_rank']}/{values[-1]}")
+PY
+}
+
+queue_counter() {
+  local file="$1" priority="$2"
+  python3 - "$file" "$priority" <<'PY'
+import re, sys
+text = open(sys.argv[1], encoding="utf-8").read()
+match = re.search(r"Ethernet1\s+tx frames with priority_%s\s+(\d+)" % re.escape(sys.argv[2]), text)
+if not match:
+    raise SystemExit("priority counter not found")
+print(match.group(1))
+PY
+}
+
+lanz_count() {
+  awk '
+    /^Interface[[:space:]]+Traffic Class[[:space:]]+Count/ {table=1; next}
+    /^Global Hit Count/ {table=0}
+    table && $1=="Et1" && $2 ~ /^[0-9]+$/ && $3 ~ /^[0-9]+$/ {sum+=$3}
+    END {print sum+0}
+  ' "$1"
+}
+
+capture_tos_count() {
+  local file="$1" tos="$2"
+  grep -Ec "tos $tos([, ])" "$file"
+}
+
+capture_frame_count() {
+  grep -Ec '^[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+ ' "$1"
+}
+
+switch_snapshot() {
+  local name="$1"
+  switch_show "$name" \
+    'show queue-monitor length statistics' \
+    'show queue-monitor length Ethernet 1' \
+    'show queue-monitor length drops' \
+    'show platform fm6000 counters interface Ethernet1' \
+    'show interfaces Ethernet1 counters errors' \
+    'show interfaces Ethernet1 counters discards'
+}
+
+start_load() {
+  local stage="$1"
+  ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+    bash -s -- "$TREX_DIR" "$stage" "$RUN_ID" "$FAKE_MAC_COLON" \
+    "$LOAD_PPS_PER_INGRESS" "$LOAD_DURATION_SECONDS" <<'REMOTE'
+set -eu
+dir="$1"; stage="$2"; run_id="$3"; dst="$4"; pps="$5"; duration="$6"
+case "$dir" in /run/flle-qos-contention-*) ;; *) exit 91;; esac
+rm -f -- "$dir/$stage-ready.json" "$dir/$stage-load.json" "$dir/$stage-load.pid"
+nohup /usr/bin/python3 "$dir/trex_qos_contention_client.py" \
+  --run-id "$run_id" --mode load --stage "$stage" --dst-mac "$dst" \
+  --pps "$pps" --duration "$duration" --packet-size 1514 \
+  --ready "$dir/$stage-ready.json" --summary "$dir/$stage-load.json" \
+  >"$dir/$stage-load.txt" 2>&1 </dev/null &
+printf '%s\n' "$!" >"$dir/$stage-load.pid"
+REMOTE
+  for _ in $(seq 1 100); do
+    if ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+      "test -s '$TREX_DIR/$stage-ready.json'"; then
+      scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes \
+        "root@10.1.1.11:$TREX_DIR/$stage-ready.json" "$RAW/"
+      return 0
+    fi
+    sleep 0.1
+  done
+  return 1
+}
+
+finish_load() {
+  local stage="$1"
+  for _ in $(seq 1 300); do
+    if ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+      "test -s '$TREX_DIR/$stage-load.json'"; then
+      scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes \
+        "root@10.1.1.11:$TREX_DIR/$stage-load.json" \
+        "root@10.1.1.11:$TREX_DIR/$stage-load.txt" "$RAW/"
+      python3 - "$RAW/$stage-load.json" <<'PY'
+import json, sys
+row = json.load(open(sys.argv[1], encoding="utf-8"))
+assert row["status"] == "PASS"
+assert row["actual_total_opackets_delta"] > 0
+assert row["protocol_profile"] == "MOLDUDP64_ITCH_5_0_TO_TEST_MAC"
+assert not any(row["io_error_deltas"].values())
+PY
+      return 0
+    fi
+    sleep 0.1
+  done
+  return 1
+}
+
+run_stage() {
+  local stage="$1" tos="$2" tagged="$3"
+  if test "$tagged" -eq 1; then
+    qos_mark
+  fi
+  switch_snapshot "$stage-before"
+  start_capture "$stage"
+  start_load "$stage"
+  sleep 0.2
+  issue_orders "$stage" "$ORDER_COUNT" | tee "$RAW/$stage-orders-summary.txt"
+  finish_load "$stage"
+  sleep 1
+  stop_capture "$stage"
+  switch_snapshot "$stage-after"
+  if test "$tagged" -eq 1; then qos_restore; fi
+
+  local frames tos_count p1_before p1_after p5_before p5_after events_before events_after
+  frames="$(capture_frame_count "$RAW/$stage-decode.txt")"
+  tos_count="$(capture_tos_count "$RAW/$stage-decode.txt" "$tos")"
+  p1_before="$(queue_counter "$RAW/$stage-before.txt" 1)"
+  p1_after="$(queue_counter "$RAW/$stage-after.txt" 1)"
+  p5_before="$(queue_counter "$RAW/$stage-before.txt" 5)"
+  p5_after="$(queue_counter "$RAW/$stage-after.txt" 5)"
+  events_before="$(lanz_count "$RAW/$stage-before.txt")"
+  events_after="$(lanz_count "$RAW/$stage-after.txt")"
+  test "$frames" -ge "$ORDER_COUNT"
+  test "$tos_count" -eq "$frames"
+  test "$events_after" -gt "$events_before"
+  test "$p1_after" -gt "$p1_before"
+  if test "$tagged" -eq 1; then
+    test $((p5_after - p5_before)) -ge "$frames"
+  else
+    test $((p5_after - p5_before)) -eq 0
+  fi
+  python3 - "$RAW/$stage-load.json" "$DERIVED/$stage-order-stats.json" \
+    "$frames" "$tos_count" "$((p1_after - p1_before))" \
+    "$((p5_after - p5_before))" "$((events_after - events_before))" \
+    "$DERIVED/$stage.json" <<'PY'
+import json, sys
+load = json.load(open(sys.argv[1], encoding="utf-8"))
+orders = json.load(open(sys.argv[2], encoding="utf-8"))
+out = {
+    "status": "PASS",
+    "load": load,
+    "orders": orders,
+    "captured_order_frames": int(sys.argv[3]),
+    "captured_expected_tos_frames": int(sys.argv[4]),
+    "et1_priority_1_delta": int(sys.argv[5]),
+    "et1_priority_5_delta": int(sys.argv[6]),
+    "et1_lanz_event_delta": int(sys.argv[7]),
+}
+json.dump(out, open(sys.argv[8], "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+PY
+}
+
+# A fresh Chapter 05 client has a launch receipt; verify its path after connecting.
+qos_check_platform
+qos_connect(){ issue_orders qos-connect 2 0; }
+qos_preflight >"$RAW/order-dscp-preflight.txt"
+cat "$RAW/order-dscp-preflight.txt"
+qos_verify_path
+curl -fsS "$API/api/state" >"$RAW/order-preflight-state.json"
+POSITION_BEFORE="$(python3 - "$RAW/order-preflight-state.json" <<'PY'
+import json, sys
+s = json.load(open(sys.argv[1], encoding="utf-8"))
+feed = s.get("feed", {})
+if feed.get("integrity") != "HEALTHY":
+    raise SystemExit(
+        "下单前检查失败：行情/下单门控为 "
+        f"{feed.get('integrity', 'UNKNOWN')} / {feed.get('trading_gate', 'UNKNOWN')}；"
+        f"尚未配置交换机或启动背景流量。日志：{sys.argv[1]}"
+    )
+print(s["positions"]["AAPL"])
+PY
+)"
+[[ "$POSITION_BEFORE" =~ ^-?[0-9]+$ ]]
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 \
+  "set -eu; test \"\$(basename \"\$(readlink /sys/bus/pci/devices/0000:03:00.0/driver)\")\" = sfc; ip -4 addr show dev ens64np1 | grep -Fq '20.1.1.2/24'; ping -q -I ens64np1 -c 3 -W 1 20.1.1.1" \
+  >"$RAW/vm2-preflight.txt"
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 \
+  "iptables-save -t mangle | sed -E '/^# (Generated|Completed) /d'" \
+  >"$RAW/vm2-iptables-before.txt"
+
+switch_show switch-before \
+  'show version' \
+  'show interfaces Ethernet1, Ethernet2, Ethernet11, Ethernet12 status' \
+  'show qos interfaces Ethernet1' \
+  'show qos interfaces Ethernet2' \
+  'show qos maps' \
+  'show queue-monitor length status' \
+  'show mac address-table static' \
+  'show running-config | include ^queue-monitor|^qos map|mac address-table static' \
+  'show startup-config | include ^queue-monitor|^qos map|mac address-table static' \
+  'show running-config interfaces Ethernet1' \
+  'show running-config interfaces Ethernet2' \
+  'show startup-config interfaces Ethernet1' \
+  'show startup-config interfaces Ethernet2'
+grep -Fq 'queue-monitor length disabled' "$RAW/switch-before.txt"
+! grep -Fq "$FAKE_MAC_DOTTED" "$RAW/switch-before.txt"
+if grep -Eq '^   (qos|tx-queue|queue-monitor)' "$RAW/switch-before.txt"; then
+  printf 'pre-existing QoS/queue-monitor config on Et1/Et2; refusing to overwrite\n' >&2
+  exit 1
+fi
+
+# Reuse the already-audited BCM/TRex bootstrap; only the bounded load client differs.
+sed \
+  -e "s/readonly run_id=20260721T053935Z/readonly run_id=$RUN_ID/" \
+  -e 's#/run/flle-lanz-lower-#/run/flle-qos-contention-#g' \
+  -e 's/trex_lanz_lower_client.py/trex_qos_contention_client.py/g' \
+  -e 's/fllelanzlower53935/flleqoscontention/g' \
+  -e 's/flle-lanz-lower-recovery-/flle-qos-contention-recovery-/g' \
+  -e 's#/opt/trex/v3.08.tar.gz#/opt/flle/prewarm/trex/v3.08.tar.gz#g' \
+  "$TREX_TEMPLATE" >"$TMP/remote-qos-trex-control.sh"
+install -m 0755 "$TREX_CLIENT" "$TMP/trex_qos_contention_client.py"
+install -m 0644 "$TREX_CFG" "$TMP/trex-dual.yaml"
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  "set -eu; test ! -e '$TREX_DIR'; mkdir -m 700 '$TREX_DIR'"
+TREX_REMOTE_DEPLOYED=1
+scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes \
+  "$TMP/remote-qos-trex-control.sh" "$TMP/trex_qos_contention_client.py" \
+  "$TMP/trex-dual.yaml" "root@10.1.1.11:$TREX_DIR/"
+bash Documents/newDoc/assets/common/ensure-trex-archive.sh >"$RAW/trex-archive-prep.txt" 2>&1
+
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  'set -eu; test ! -e /opt/trex && test ! -L /opt/trex; archive=/opt/flle/prewarm/trex/v3.08.tar.gz; test "$(stat -c %s "$archive")" = 284092535; test "$(sha256sum "$archive" | cut -d" " -f1)" = d2ac73627906c4ce01127c1c6954464fab373463966ea9592509446e74972b5f'
+TREX_INSTALLED=1
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  'set -eu; install -d -m 0755 /opt/trex; tar -xzf /opt/flle/prewarm/trex/v3.08.tar.gz -C /opt/trex; test -x /opt/trex/v3.08/t-rex-64'
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  "/usr/bin/bash '$TREX_CTL' preflight" >"$RAW/vm11-preflight.txt"
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  "/usr/bin/bash '$TREX_CTL' arm-deadman 900" >"$RAW/vm11-deadman-arm.txt"
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  "/usr/bin/bash '$TREX_CTL' start" >"$RAW/vm11-trex-start.txt"
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  "/usr/bin/python3 '$TREX_DIR/trex_qos_contention_client.py' --run-id '$RUN_ID' --mode prepare --summary '$TREX_DIR/prepare.json'" \
+  >"$RAW/vm11-trex-prepare.txt" 2>&1
+scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes \
+  "root@10.1.1.11:$TREX_DIR/prepare.json" "$RAW/trex-prepare.json"
+python3 - "$RAW/trex-prepare.json" <<'PY'
+import json, sys
+assert json.load(open(sys.argv[1], encoding="utf-8"))["status"] == "PASS"
+PY
+
+SWITCH_CONFIGURED=1
+switch_config switch-qos-active \
+  'configure terminal' \
+  'queue-monitor length' \
+  'mac address-table static 0200.0007.0001 vlan 20 interface Ethernet1' \
+  'interface Ethernet2' 'qos trust dscp' \
+  'interface Ethernet1' \
+  'queue-monitor length thresholds 64 32' \
+  'tx-queue 5' 'priority strict' 'exit' \
+  'tx-queue 3' 'no priority' 'bandwidth percent 40' 'exit' \
+  'tx-queue 2' 'bandwidth percent 30' 'exit' \
+  'tx-queue 1' 'bandwidth percent 20' 'exit' \
+  'tx-queue 0' 'bandwidth percent 10' 'exit' \
+  'end' \
+  'show qos interfaces Ethernet1' \
+  'show qos interfaces Ethernet2' \
+  'show qos maps' \
+  'show queue-monitor length status' \
+  'show mac address-table static' \
+  'show running-config interfaces Ethernet1' \
+  'show running-config interfaces Ethernet2'
+grep -Fq 'Trust Mode: DSCP' "$RAW/switch-qos-active.txt"
+grep -Eq '^   5 +[-0-9 /().]+SP / SP' "$RAW/switch-qos-active.txt"
+grep -A2 -F 'tx-queue 5' "$RAW/switch-qos-active.txt" | grep -Fq 'priority strict'
+grep -Eq '^   3 +40 / 40 +[-0-9 /().]+RR / RR' "$RAW/switch-qos-active.txt"
+grep -Fq 'tc:   1  0  2  3  4  5  6  7' "$RAW/switch-qos-active.txt"
+grep -Fq 'tx-queue:  0  1  2  3  4  5  6  7' "$RAW/switch-qos-active.txt"
+grep -Fq "$FAKE_MAC_DOTTED" "$RAW/switch-qos-active.txt"
+
+ready=0
+for attempt in $(seq 1 24); do
+  switch_show "switch-lanz-ready-$attempt" \
+    'show agent uptime | include AltaLanz' 'show queue-monitor length statistics'
+  if grep -Fq 'AltaLanz' "$RAW/switch-lanz-ready-$attempt.txt" && \
+      ! grep -Fq '! Lanz agent not running.' "$RAW/switch-lanz-ready-$attempt.txt"; then
+    cp "$RAW/switch-lanz-ready-$attempt.txt" "$RAW/switch-lanz-ready.txt"
+    ready=1
+    break
+  fi
+  sleep 3
+done
+test "$ready" -eq 1
+
+run_stage baseline 0x0 0
+run_stage tagged 0xb8 1
+
+# Compare like-for-like load and require the tagged strict queue to improve p99.
+python3 - "$DERIVED/baseline.json" "$DERIVED/tagged.json" "$OUT/result.json" <<'PY'
+import json, sys
+a = json.load(open(sys.argv[1], encoding="utf-8"))
+b = json.load(open(sys.argv[2], encoding="utf-8"))
+a_pkts = a["load"]["actual_total_opackets_delta"]
+b_pkts = b["load"]["actual_total_opackets_delta"]
+ratio = min(a_pkts, b_pkts) / max(a_pkts, b_pkts)
+a99 = a["orders"]["rtt_ns"]["p99_nearest_rank"]
+b99 = b["orders"]["rtt_ns"]["p99_nearest_rank"]
+assert ratio >= 0.90, (a_pkts, b_pkts, ratio)
+assert b99 < a99, (a99, b99)
+out = {
+    "result": "PASS",
+    "evidence_kind": "fresh_live_real_orders_with_shared_egress_contention",
+    "load_packet_count_similarity_ratio": ratio,
+    "baseline": a,
+    "tagged": b,
+    "p99_improvement_ratio": a99 / b99,
+}
+json.dump(out, open(sys.argv[3], "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+PY
+
+# Stop the isolated protocol-shaped load before restoring the switch and proving business health.
+recover_trex
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.11 \
+  "/usr/bin/bash '$TREX_CTL' final-assert" >"$RAW/vm11-final.txt"
+mkdir -p "$RAW/vm11-artifacts"
+scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes \
+  "root@10.1.1.11:$TREX_DIR/"'*' "$RAW/vm11-artifacts/"
+cleanup_trex_remote
+qos_restore
+restore_switch
+ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 \
+  "iptables-save -t mangle | sed -E '/^# (Generated|Completed) /d'" \
+  >"$RAW/vm2-iptables-after.txt"
+cmp "$RAW/vm2-iptables-before.txt" "$RAW/vm2-iptables-after.txt"
+qos_verify_restored
+switch_show switch-after \
+  'show interfaces Management1 status' \
+  'show switch forwarding-mode' \
+  'show qos interfaces Ethernet1' \
+  'show qos interfaces Ethernet2' \
+  'show queue-monitor length status' \
+  'show mac address-table static' \
+  'show running-config | include ^queue-monitor|^qos map|mac address-table static' \
+  'show startup-config | include ^queue-monitor|^qos map|mac address-table static' \
+  'show running-config interfaces Ethernet1' \
+  'show running-config interfaces Ethernet2' \
+  'show startup-config interfaces Ethernet1' \
+  'show startup-config interfaces Ethernet2' \
+  'show interfaces Ethernet1 counters errors' \
+  'show interfaces Ethernet2 counters errors'
+python3 - "$RAW/switch-before.txt" "$RAW/switch-after.txt" <<'PY'
+import re, sys
+def sections(path):
+    text = open(path, encoding="utf-8").read()
+    return re.findall(r"\$ show (?:running|startup)-config interfaces Ethernet[12]\n(.*?)(?=\n\$ |\Z)", text, re.S)
+before, after = sections(sys.argv[1]), sections(sys.argv[2])
+assert len(before) == len(after) == 4
+assert before == after
+PY
+grep -Fq 'connected' "$RAW/switch-after.txt"
+grep -Fq 'cut through' "$RAW/switch-after.txt"
+grep -Fq 'queue-monitor length disabled' "$RAW/switch-after.txt"
+! grep -Fq "$FAKE_MAC_DOTTED" "$RAW/switch-after.txt"
+test "$(grep -c 'SP / SP' "$RAW/switch-after.txt")" -eq 16
+post_restore_summary="$(issue_orders post-restore 2 0)"
+printf '%s\n' "$post_restore_summary" >"$RAW/post-restore-order-summary.txt"
+POSITION_AFTER="$(curl -fsS "$API/api/state" | python3 -c 'import json,sys; print(json.load(sys.stdin)["positions"]["AAPL"])')"
+test "$POSITION_AFTER" -eq "$POSITION_BEFORE"
+printf 'position_before=%s\nposition_after=%s\n' "$POSITION_BEFORE" "$POSITION_AFTER" \
+  >"$RAW/position-restore.txt"
+cleanup_capture_remote
+
+python3 - "$OUT/result.json" "$RAW/result.txt" "$OUT" "$RAW/result-display.txt" <<'PY'
+import json, sys, unicodedata
+r = json.load(open(sys.argv[1], encoding="utf-8"))
+a, b = r["baseline"], r["tagged"]
+lines = [
+    "===== 实验一 · 在线真实订单共享出口 QoS A/B =====",
+    "result=PASS",
+    "platform=DCS-7150S-24-F / EOS 4.23.16M-2GB / FM6000",
+    "background=MoldUDP64/ITCH5 controlled load, Et11+Et12 untagged 1514B -> isolated test MAC -> Et1 -> TC1/Q1",
+    f"background_configured={a['load']['configured_pps_per_ingress']} pps/ingress x2 for {a['load']['configured_duration_seconds']}s",
+    f"background_actual_packets={a['load']['actual_total_opackets_delta']} / {b['load']['actual_total_opackets_delta']}",
+    f"baseline=unmarked orders in Q1; executed={a['orders']['orders_executed']}; p50/p99={a['orders']['rtt_ns']['p50']}/{a['orders']['rtt_ns']['p99_nearest_rank']} ns",
+    f"baseline_queue=P1 +{a['et1_priority_1_delta']}; P5 +{a['et1_priority_5_delta']}; LANZ +{a['et1_lanz_event_delta']}",
+    f"tagged=DSCP46 -> TC5 -> Q5 explicit priority strict; executed={b['orders']['orders_executed']}; p50/p99={b['orders']['rtt_ns']['p50']}/{b['orders']['rtt_ns']['p99_nearest_rank']} ns",
+    f"tagged_queue=P1 +{b['et1_priority_1_delta']}; P5 +{b['et1_priority_5_delta']}; LANZ +{b['et1_lanz_event_delta']}",
+    f"p99_improvement_ratio={r['p99_improvement_ratio']:.2f}x",
+    "host_restore=order DSCP restored to original value; iptables unchanged",
+    "switch_restore=temporary static MAC, LANZ and QoS removed; startup unchanged; Management1 connected",
+    "post_restore_orders=2/2 ORDER_EXECUTED; AAPL position unchanged",
+    "save_config=NO",
+    f"evidence={sys.argv[3]}",
+]
+open(sys.argv[2], "w", encoding="utf-8").write("\n".join(lines) + "\n")
+
+# Keep the machine-readable summary above; print an aligned classroom comparison.
+def pad(value, width):
+    value = str(value)
+    cells = sum(2 if unicodedata.east_asian_width(c) in "WF" else 1 for c in value)
+    return value + " " * max(0, width - cells)
+
+def table(rows):
+    widths = (22, 25, 25)
+    output = [" | ".join(pad(value, width) for value, width in zip(row, widths)).rstrip()
+              for row in rows]
+    output.insert(1, "-+-".join("-" * width for width in widths))
+    return output
+
+def difference(label, q1, q5):
+    delta = q1 - q5
+    if delta == 0:
+        return f"{label}：两组相同。"
+    direction = "低" if delta > 0 else "高"
+    percent = f"（{abs(delta) / q1:.2%}）" if q1 else ""
+    return f"{label}：Q5 比 Q1 {direction} {abs(delta) / 1000:,.3f} µs{percent}。"
+
+a50, a99 = a["orders"]["rtt_ns"]["p50"], a["orders"]["rtt_ns"]["p99_nearest_rank"]
+b50, b99 = b["orders"]["rtt_ns"]["p50"], b["orders"]["rtt_ns"]["p99_nearest_rank"]
+display = ["===== QoS 结果：Q1 与严格优先级 Q5 =====", ""]
+display += table([
+    ("对比项", "A 组：未标记，进 Q1", "B 组：DSCP 46，进 Q5"),
+    ("背景发包（帧）", f"{a['load']['actual_total_opackets_delta']:,}", f"{b['load']['actual_total_opackets_delta']:,}"),
+    ("成交订单（笔）", a["orders"]["orders_executed"], b["orders"]["orders_executed"]),
+    ("订单 RTT p50（µs）", f"{a50 / 1000:,.3f}", f"{b50 / 1000:,.3f}"),
+    ("订单 RTT p99（µs）", f"{a99 / 1000:,.3f}", f"{b99 / 1000:,.3f}"),
+])
+comparison = ["", "===== 延迟差异 =====", difference("p50", a50, b50), difference("p99", a99, b99)]
+if b99:
+    comparison.append(f"p99 比值：Q1 / Q5 = {a99 / b99:.2f} 倍。")
+else:
+    comparison.append("Q5 的 p99 为 0，倍数不计算。")
+if b99 < a99:
+    comparison.append("本次结果：订单进入严格优先级 Q5 后，p99 低于进入 Q1。")
+elif b99 > a99:
+    comparison.append("本次结果：Q5 的订单 p99 高于 Q1，未观察到改善。")
+else:
+    comparison.append("本次结果：两组订单 p99 相同。")
+display += ["", "===== 队列核对 ====="]
+display += table([
+    ("Et1 计数增量", "A 组", "B 组"),
+    ("Q1 发包（P1）", f"+{a['et1_priority_1_delta']:,}", f"+{b['et1_priority_1_delta']:,}"),
+    ("Q5 发包（P5）", f"+{a['et1_priority_5_delta']:,}", f"+{b['et1_priority_5_delta']:,}"),
+    ("LANZ 事件", f"+{a['et1_lanz_event_delta']:,}", f"+{b['et1_lanz_event_delta']:,}"),
+])
+display += ["", "恢复检查：配置已恢复，恢复后 2 笔订单成交，AAPL 净持仓不变。", f"结果记录：{sys.argv[3]}"]
+display += comparison
+open(sys.argv[4], "w", encoding="utf-8").write("\n".join(display) + "\n")
+PY
+printf 'PHASE=COMPLETE\n' >>"$OUT/run.env"
+(cd "$OUT" && find raw derived -type f -print0 | sort -z | xargs -0 sha256sum >SHA256SUMS)
+ROOT_SHA256="$(sha256sum "$OUT/SHA256SUMS" | awk '{print $1}')"
+printf 'ROOT_SHA256=%s\n' "$ROOT_SHA256" >>"$OUT/run.env"
+printf 'root_sha256=%s\n' "$ROOT_SHA256"
+cat "$RAW/result-display.txt"
+trap - EXIT INT TERM HUP
+find "$TMP" -depth -delete

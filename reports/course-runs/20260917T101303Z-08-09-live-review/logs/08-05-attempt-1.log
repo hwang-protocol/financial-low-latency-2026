@@ -1,0 +1,20 @@
+正在执行 inspect；完成后显示本步关键回执，详细日志保存到 /financial-low-latency/Documents/reports/course-runs/20260917T101713Z-09-p4-drop-live/raw。
+[2/4 查看规则与放行] 完成
+# EOS：show vlan id 100 / show vlan id 200
+100   FLLE_P4_LEFT                     active    Et1, Et11
+200   FLLE_P4_RIGHT                    active    Et2, Et12
+# CLI：table_dump IngressImpl.market_policy
+* ipv4.src            : EXACT     14010101
+* ipv4.dst            : EXACT     e94a7d20
+* itch_type.value     : EXACT     41
+* itch_add.locate     : EXACT     1f9f
+* itch_add.stock      : EXACT     4e56444120202020
+Action entry: IngressImpl.select_policy -
+# CLI：register_read IngressImpl.remaining_drops 0
+IngressImpl.remaining_drops[0]= 0
+# CLI：counter_read IngressImpl.policy_drop_packets 0
+IngressImpl.policy_drop_packets[0]= (0 bytes, 0 packets)
+Feed：session=0612260011  integrity=HEALTHY  next_expected=180
+行情播放：PAUSED
+解读：五字段规则已装入；丢包数0，行情健康，播放保持暂停。
+完整回执：/financial-low-latency/Documents/reports/course-runs/20260917T101713Z-09-p4-drop-live

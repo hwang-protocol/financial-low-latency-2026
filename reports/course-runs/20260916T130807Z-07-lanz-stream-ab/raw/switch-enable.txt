@@ -1,0 +1,100 @@
+$ show clock
+show clock | no-more
+Wed Sep 16 12:51:32 2026
+Timezone: UTC
+Clock source: local
+
+$ configure terminal
+configure terminal
+
+$ queue-monitor length
+queue-monitor length
+
+$ mac address-table static 0200.0007.0002 vlan 20 interface Ethernet2
+mac address-table static 0200.0007.0002 vlan 20 interface Ethernet2
+
+$ interface Ethernet2
+interface Ethernet2
+
+$ queue-monitor length thresholds 64 32
+queue-monitor length thresholds 64 32
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ queue-monitor streaming
+queue-monitor streaming
+
+$ no shutdown
+no shutdown
+
+$ end
+end
+
+$ show clock
+show clock | no-more
+Wed Sep 16 12:51:33 2026
+Timezone: UTC
+Clock source: local
+
+$ show queue-monitor length status
+show queue-monitor length status | no-more
+queue-monitor length enabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+Global Buffer Monitoring
+------------------------
+Global buffer monitoring is enabled
+Segment size in bytes :   160
+Total buffers in segments : 49152
+High threshold : 20540
+Low threshold :  8216
+
+
+Per-Interface Queue Length Monitoring
+-------------------------------------
+Queue length monitoring is enabled
+Segment size in bytes :   480
+Maximum queue length in segments :  6847
+Port thresholds in segments:
+Port     High threshold  Low threshold   Mirroring Enabled       Warnings
+Cpu               15888          15888               False
+Et1                 512            256               False
+Et2                  64             32               False
+Et3                 512            256               False
+Et4                 512            256               False
+Et5                 512            256               False
+Et6                 512            256               False
+Et7                 512            256               False
+Et8                 512            256               False
+Et9                 512            256               False
+Et10                512            256               False
+Et11                512            256               False
+Et12                512            256               False
+Et13                512            256               False
+Et14                512            256               False
+Et15                512            256               False
+Et16                512            256               False
+Et17                512            256               False
+Et18                512            256               False
+Et19                512            256               False
+Et20                512            256               False
+Et21                512            256               False
+Et22                512            256               False
+Et23                512            256               False
+Et24                512            256               False
+
+$ show queue-monitor streaming clients
+show queue-monitor streaming clients | no-more
+Number of clients connected : 0
+--------------------------------
+
+$ show running-config | include queue-monitor
+show running-config | include queue-monitor | no-more
+queue-monitor length
+   queue-monitor length thresholds 64 32
+queue-monitor streaming
