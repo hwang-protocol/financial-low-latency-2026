@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="940" viewBox="0 0 1200 940" role="img" aria-labelledby="title desc">
+<title id="title">线程准备好以后，等待调度器安排执行</title>
+<desc id="desc">全图统一平面正视构图。左侧为已准备好的候选线程，仍需等待执行机会；中间为内核调度器，右侧为两个逻辑处理器。①选择，②③安排执行为主线；④执行中等待数据而暂停，⑤条件满足后回到候选线程等待安排为次要路径。全部图形采用纯色和统一描边。</desc>
+<defs>
+<marker id="arrow-gold" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6Z" fill="#b78330"/></marker>
+<marker id="arrow-green" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6Z" fill="#3d907d"/></marker>
+<marker id="arrow-rust" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6Z" fill="#b16d53"/></marker>
+</defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#263c51}.body{font-size:23px}.head{font-size:28px;font-weight:750}.small{font-size:21px;fill:#63778c}.edge{fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round}.outline{stroke-width:2.5;stroke-linejoin:round}</style>
+<rect width="1200" height="940" fill="#f7f9fc"/>
+<rect x="24" y="20" width="1152" height="900" rx="24" fill="white" stroke="#e1e8ef"/>
+<text x="56" y="76" font-size="35" font-weight="800">线程已经准备好，仍可能要等执行机会</text>
+<text x="56" y="118" class="body">先看左侧候选线程，再看调度器怎样安排处理器执行。</text>
+
+<rect id="ready" x="50" y="240" width="340" height="310" rx="10" fill="none" stroke="none" stroke-width="2.5"/>
+<rect id="cpu0" x="950" y="175" width="210" height="190" rx="10" fill="none" stroke="none" stroke-width="2.5"/>
+<rect id="cpu1" x="950" y="415" width="210" height="190" rx="10" fill="none" stroke="none" stroke-width="2.5"/>
+<rect x="65" y="164" width="318" height="49" rx="10" fill="#fff2d9" stroke="none" stroke-width="2.5"/>
+<text x="224" y="197" class="small" text-anchor="middle" style="fill:#986d2b">准备好了，还在等执行机会</text>
+<path d="M65 293 V524 H375 V293 M65 320 H375" fill="none" stroke="#9aafc1" stroke-width="5" stroke-linejoin="round"/>
+<rect x="50" y="240" width="340" height="62" rx="10" fill="#263f56" stroke="none" stroke-width="2.5"/>
+<text x="220" y="281" class="head" text-anchor="middle" style="fill:#fff">已准备好的线程</text>
+<path d="M108 320 V340" stroke="#9aafc1" stroke-width="4"/>
+<rect x="75" y="341" width="78" height="147" rx="10" fill="#3485ad" stroke="none" stroke-width="2.5"/>
+<rect x="98" y="332" width="32" height="17" rx="5" fill="#fff" stroke="#9aafc1" stroke-width="2.5"/>
+<path d="M99 371 H129" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<path d="M99 383 H129" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<path d="M99 395 H129" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<text x="114" y="445" class="head" text-anchor="middle" style="fill:#fff">丙</text>
+<path d="M212 320 V340" stroke="#9aafc1" stroke-width="4"/>
+<rect x="179" y="341" width="78" height="147" rx="10" fill="#378e73" stroke="none" stroke-width="2.5"/>
+<rect x="202" y="332" width="32" height="17" rx="5" fill="#fff" stroke="#9aafc1" stroke-width="2.5"/>
+<path d="M203 371 H233" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<path d="M203 383 H233" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<path d="M203 395 H233" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<text x="218" y="445" class="head" text-anchor="middle" style="fill:#fff">丁</text>
+<path d="M316 320 V340" stroke="#9aafc1" stroke-width="4"/>
+<rect x="283" y="341" width="78" height="147" rx="10" fill="#8266ad" stroke="none" stroke-width="2.5"/>
+<rect x="306" y="332" width="32" height="17" rx="5" fill="#fff" stroke="#9aafc1" stroke-width="2.5"/>
+<path d="M307 371 H337" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<path d="M307 383 H337" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<path d="M307 395 H337" stroke="#edf6fc" stroke-width="3" stroke-linecap="round"/>
+<text x="322" y="445" class="head" text-anchor="middle" style="fill:#fff">戊</text>
+<rect x="50" y="521" width="340" height="20" rx="5" fill="#dce6ee" stroke="none" stroke-width="2.5"/>
+<rect id="scheduler" x="510" y="175" width="300" height="415" rx="14" fill="#f4f6fb" stroke="#c4d1df" stroke-width="2.5"/>
+<rect x="510" y="175" width="300" height="61" rx="12" fill="#263f56" stroke="none" stroke-width="2.5"/>
+<text x="660" y="216" class="head" text-anchor="middle" style="fill:#fff">内核调度器</text>
+<text x="660" y="274" class="body" text-anchor="middle">选择下一个线程</text>
+<rect x="539" y="304" width="242" height="58" rx="8" fill="#fff" stroke="#c5d3e0" stroke-width="2.5"/>
+<rect x="553" y="320" width="26" height="26" rx="6" fill="#c8d7e4" stroke="none" stroke-width="2.5"/>
+<path d="M594 326 H674" stroke="#c5d3e0" stroke-width="3" stroke-linecap="round"/>
+<path d="M594 341 H711" stroke="#c5d3e0" stroke-width="3" stroke-linecap="round"/>
+<rect x="539" y="380" width="242" height="58" rx="8" fill="#e7f4ee" stroke="#5a9e87" stroke-width="2.5"/>
+<rect x="553" y="396" width="26" height="26" rx="6" fill="#5a9e87" stroke="none" stroke-width="2.5"/>
+<path d="M594 402 H674" stroke="#5a9e87" stroke-width="3" stroke-linecap="round"/>
+<path d="M594 417 H711" stroke="#5a9e87" stroke-width="3" stroke-linecap="round"/>
+<circle cx="752" cy="409" r="12" fill="#5a9e87"/><path d="M745 409 L750 414 L759 404" stroke="white" stroke-width="2.5" fill="none"/>
+<rect x="539" y="456" width="242" height="58" rx="8" fill="#fff" stroke="#c5d3e0" stroke-width="2.5"/>
+<rect x="553" y="472" width="26" height="26" rx="6" fill="#c8d7e4" stroke="none" stroke-width="2.5"/>
+<path d="M594 478 H674" stroke="#c5d3e0" stroke-width="3" stroke-linecap="round"/>
+<path d="M594 493 H711" stroke="#c5d3e0" stroke-width="3" stroke-linecap="round"/>
+<text x="660" y="559" class="small" text-anchor="middle">内核中的调度功能</text>
+<text x="1055" y="202" class="body" text-anchor="middle">逻辑处理器 0</text>
+<path d="M1014 226 V238 M1014 334 V346" stroke="#9cabbc" stroke-width="5"/>
+<path d="M1039 226 V238 M1039 334 V346" stroke="#9cabbc" stroke-width="5"/>
+<path d="M1064 226 V238 M1064 334 V346" stroke="#9cabbc" stroke-width="5"/>
+<path d="M1089 226 V238 M1089 334 V346" stroke="#9cabbc" stroke-width="5"/>
+<path d="M979 261 H991 M1119 261 H1131" stroke="#9cabbc" stroke-width="5"/>
+<path d="M979 286 H991 M1119 286 H1131" stroke="#9cabbc" stroke-width="5"/>
+<path d="M979 311 H991 M1119 311 H1131" stroke="#9cabbc" stroke-width="5"/>
+<rect x="991" y="238" width="128" height="96" rx="9" fill="#263f56" stroke="none" stroke-width="2.5"/>
+<rect x="1001" y="248" width="108" height="76" rx="6" fill="#3485ad" stroke="none" stroke-width="2.5"/>
+<text x="1055" y="295" class="body" text-anchor="middle" style="fill:#fff">线程甲</text>
+<text x="1055" y="442" class="body" text-anchor="middle">逻辑处理器 1</text>
+<path d="M1014 466 V478 M1014 574 V586" stroke="#9cabbc" stroke-width="5"/>
+<path d="M1039 466 V478 M1039 574 V586" stroke="#9cabbc" stroke-width="5"/>
+<path d="M1064 466 V478 M1064 574 V586" stroke="#9cabbc" stroke-width="5"/>
+<path d="M1089 466 V478 M1089 574 V586" stroke="#9cabbc" stroke-width="5"/>
+<path d="M979 501 H991 M1119 501 H1131" stroke="#9cabbc" stroke-width="5"/>
+<path d="M979 526 H991 M1119 526 H1131" stroke="#9cabbc" stroke-width="5"/>
+<path d="M979 551 H991 M1119 551 H1131" stroke="#9cabbc" stroke-width="5"/>
+<rect x="991" y="478" width="128" height="96" rx="9" fill="#263f56" stroke="none" stroke-width="2.5"/>
+<rect x="1001" y="488" width="108" height="76" rx="6" fill="#378e73" stroke="none" stroke-width="2.5"/>
+<text x="1055" y="535" class="body" text-anchor="middle" style="fill:#fff">线程乙</text>
+<rect id="waiting" x="535" y="685" width="267" height="152" rx="12" fill="#fbf3ec" stroke="#d9bda8" stroke-width="2.5"/>
+<rect x="535" y="685" width="267" height="44" rx="10" fill="#806955" stroke="none" stroke-width="2.5"/>
+<text x="668.5" y="716" class="body" text-anchor="middle" style="fill:#fff">等待数据 · 暂停</text>
+<circle cx="610" cy="780" r="22" fill="#edddce"/><path d="M603 768 V792 M617 768 V792" stroke="#9c7453" stroke-width="5" stroke-linecap="round"/>
+<text x="708" y="789" class="body" text-anchor="middle" style="fill:#8b6a51">保留进度</text>
+<path id="edge-1" class="edge" d="M402 415 H486" stroke="#b78330" marker-end="url(#arrow-gold)" data-source="ready" data-target="scheduler" data-tip="498,415"/>
+<text x="450" y="385" class="small" text-anchor="middle" style="fill:#9c702a">① 选择</text>
+<path id="edge-2" class="edge" d="M822 290 H926" stroke="#b78330" marker-end="url(#arrow-gold)" data-source="scheduler" data-target="cpu0" data-tip="938,290"/>
+<text x="878" y="260" class="small" text-anchor="middle" style="fill:#9c702a">② 执行</text>
+<path id="edge-3" class="edge" d="M822 500 H926" stroke="#b78330" marker-end="url(#arrow-gold)" data-source="scheduler" data-target="cpu1" data-tip="938,500"/>
+<text x="878" y="470" class="small" text-anchor="middle" style="fill:#9c702a">③ 执行</text>
+<path id="edge-4" class="edge" d="M1055 617 V736 Q1055 760 1031 760 H826" stroke="#b16d53" marker-end="url(#arrow-rust)" data-source="cpu1" data-target="waiting" data-tip="814,760"/>
+<text x="931" y="703" class="small" text-anchor="middle" style="fill:#986f58">④ 等待数据</text>
+<path id="edge-5" class="edge" d="M523 760 H214 Q190 760 190 736 V574" stroke="#3d907d" marker-end="url(#arrow-green)" data-source="waiting" data-target="ready" data-tip="190,562"/>
+<text x="361" y="735" class="small" text-anchor="middle" style="fill:#367f6e">⑤ 条件满足</text>
+<text x="600" y="890" class="body" text-anchor="middle">主线看①～③：准备好之后，仍可能等待处理器的执行机会。</text>
+</svg>

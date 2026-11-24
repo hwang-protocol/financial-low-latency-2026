@@ -1,0 +1,49 @@
+arista-images/
+# Artifact blobs are denied by default.  The current Chapter 05 recovery
+# closure is explicitly re-included below so a clean Git checkout can deploy
+# the fixed applications and rebuild the kernel-matched Onload module without
+# relying on a VM-local vault.  Keep historical runtimes and unrelated vendor
+# media ignored unless a later reviewed recovery manifest adds them.
+/artifacts/blobs/*
+!/artifacts/blobs/x2522/
+/artifacts/blobs/x2522/*
+!/artifacts/blobs/x2522/ch05-four-path/
+!/artifacts/blobs/x2522/onload/
+/artifacts/blobs/x2522/ch05-four-path/*
+!/artifacts/blobs/x2522/ch05-four-path/v5/
+!/artifacts/blobs/x2522/ch05-four-path/v12/
+/artifacts/blobs/x2522/ch05-four-path/v5/*
+!/artifacts/blobs/x2522/ch05-four-path/v5/flle-ch05-four-path-v5-build-inputs-x86_64-jammy.tgz
+/artifacts/blobs/x2522/ch05-four-path/v12/*
+!/artifacts/blobs/x2522/ch05-four-path/v12/BUILD-PROVENANCE.json
+!/artifacts/blobs/x2522/ch05-four-path/v12/flle-ch05-four-path-v12-source.tgz
+!/artifacts/blobs/x2522/ch05-four-path/v12/flle-ch05-four-path-v12-x86_64-jammy-runtime.tgz
+/artifacts/blobs/x2522/onload/*
+!/artifacts/blobs/x2522/onload/v9.0.2/
+/artifacts/blobs/x2522/onload/v9.0.2/*
+!/artifacts/blobs/x2522/onload/v9.0.2/onload-9f330e7-vm-2522-01.tgz
+__pycache__/
+*.py[cod]
+
+# Current traffic/controller revision; retain v12 as historical evidence.
+!/artifacts/blobs/x2522/ch05-four-path/v13/
+/artifacts/blobs/x2522/ch05-four-path/v13/*
+!/artifacts/blobs/x2522/ch05-four-path/v13/BUILD-PROVENANCE.json
+!/artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-source.tgz
+!/artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz
+
+# Chapter 05 additive Socket / Onload QoS client (v13 retained).
+!/artifacts/blobs/x2522/ch05-four-path/posix-qos-v1/
+/artifacts/blobs/x2522/ch05-four-path/posix-qos-v1/*
+!/artifacts/blobs/x2522/ch05-four-path/posix-qos-v1/BUILD-PROVENANCE.json
+!/artifacts/blobs/x2522/ch05-four-path/posix-qos-v1/CONTRACT.json
+!/artifacts/blobs/x2522/ch05-four-path/posix-qos-v1/flle-posix-qos-v1-x86_64-jammy.tgz
+
+# Chapter 06 official LANZ client: exact recovery files, compiler cache excluded.
+!/artifacts/blobs/arista/
+/artifacts/blobs/arista/*
+!/artifacts/blobs/arista/lanz-reader-v1/
+/artifacts/blobs/arista/lanz-reader-v1/*
+!/artifacts/blobs/arista/lanz-reader-v1/flle-lanz-reader-linux-amd64
+!/artifacts/blobs/arista/lanz-reader-v1/flle-lanz-reader-v1-source.tgz
+!/artifacts/blobs/arista/lanz-reader-v1/BUILD-PROVENANCE.json

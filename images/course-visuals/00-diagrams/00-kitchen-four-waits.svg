@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">四个等待点分别在等什么</title>
+<desc id="desc">取数据等的是数据不在缓存，要到更远处取；准备内存等的是首次访问时内核准备物理页与映射；等CPU执行等的是线程就绪后才轮到执行；收包交给程序等的是报文已在内存、程序还要经过内核处理才读到。括号内为本章的厨房说法。图中不给出耗时。</desc>
+<defs><symbol id="chip" viewBox="0 0 64 64"><rect x="12" y="12" width="40" height="40" rx="6"/><rect x="23" y="23" width="18" height="18" rx="2"/><path d="M20 4v8m12-8v8m12-8v8M20 52v8m12-8v8m12-8v8M4 20h8m-8 12h8m-8 12h8m40-24h8m-8 12h8m-8 12h8"/></symbol>
+<symbol id="queue" viewBox="0 0 64 64"><rect x="6" y="24" width="13" height="20" rx="2"/><rect x="24" y="20" width="13" height="24" rx="2"/><rect x="42" y="14" width="13" height="30" rx="2"/><path d="M4 52h56"/></symbol>
+<symbol id="clock" viewBox="0 0 64 64"><circle cx="32" cy="35" r="22"/><path d="M32 13V6m-9 0h18M32 22v14l11 6"/></symbol>
+<symbol id="drawer" viewBox="0 0 64 64"><rect x="9" y="11" width="46" height="42" rx="4"/><path d="M9 25h46M9 39h46M26 18h12M26 32h12M26 46h12"/></symbol>
+<symbol id="shelf" viewBox="0 0 64 64"><path d="M10 14h44v38H10zM10 27h44M10 40h44M24 14v38M40 14v38"/></symbol>
+<symbol id="lane" viewBox="0 0 64 64"><path d="M6 20h52M6 44h52M18 32h10m8 0h10"/><path d="M4 12v40M60 12v40"/></symbol>
+<symbol id="cache" viewBox="0 0 64 64"><rect x="6" y="10" width="52" height="44" rx="5"/><path d="M7 32h50M24 21h16M24 43h16"/></symbol>
+<symbol id="crate" viewBox="0 0 64 64"><path d="m8 20 24-12 24 12v28L32 60 8 48zM8 20l24 12 24-12M32 32v28"/></symbol>
+<symbol id="switchico" viewBox="0 0 64 64"><rect x="6" y="20" width="52" height="24" rx="4"/><circle cx="18" cy="32" r="3"/><circle cx="30" cy="32" r="3"/><circle cx="42" cy="32" r="3"/><path d="M20 20V10m24 10V10M20 44v10m24-10v10"/></symbol></defs>
+<rect width="1200" height="760" fill="#f7f9fc"/>
+<g font-family="Noto Sans CJK SC, Microsoft YaHei, sans-serif" fill="#172338">
+<text x="36" y="52" font-size="32" font-weight="700">四个等待点分别在等什么</text>
+<text x="36" y="90" font-size="23" fill="#64748b">先看技术上在等什么，再看这间厨房里对应哪一步。</text>
+
+<rect x="36" y="126" width="546" height="230" rx="15" fill="#fff" stroke="#b45309" stroke-width="1.6"/>
+<use href="#cache" x="56" y="150" width="52" height="52" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="126" y="178" font-size="22" font-weight="700" fill="#b45309">1 · 取数据</text>
+<text x="126" y="208" font-size="22" font-weight="700">这份数据不在缓存里</text>
+<text x="56" y="268" font-size="21">还要到更远的缓存或主内存取。</text>
+<text x="56" y="308" font-size="21" fill="#475569">厨房里：手边抽屉没有，去货架拿。</text>
+
+<rect x="618" y="126" width="546" height="230" rx="15" fill="#fff" stroke="#7e22ce" stroke-width="1.6"/>
+<use href="#shelf" x="638" y="150" width="52" height="52" fill="none" stroke="#7e22ce" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="708" y="178" font-size="22" font-weight="700" fill="#7e22ce">2 · 准备内存</text>
+<text x="708" y="208" font-size="22" font-weight="700">第一次访问才真正备好</text>
+<text x="638" y="268" font-size="21">内核要准备实际空间和地址对应。</text>
+<text x="638" y="308" font-size="21" fill="#475569">厨房里：空位要先摆出来。</text>
+
+<rect x="36" y="382" width="546" height="230" rx="15" fill="#fff" stroke="#1d4ed8" stroke-width="1.6"/>
+<use href="#chip" x="56" y="406" width="52" height="52" fill="none" stroke="#1d4ed8" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="126" y="434" font-size="22" font-weight="700" fill="#1d4ed8">3 · 等 CPU 执行</text>
+<text x="126" y="464" font-size="22" font-weight="700">已经就绪，还没轮到</text>
+<text x="56" y="524" font-size="21">处理器可能正在执行别的任务。</text>
+<text x="56" y="564" font-size="21" fill="#475569">厨房里：主厨在做另一道菜。</text>
+
+<rect x="618" y="382" width="546" height="230" rx="15" fill="#fff" stroke="#0f766e" stroke-width="1.6"/>
+<use href="#crate" x="638" y="406" width="52" height="52" fill="none" stroke="#0f766e" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="708" y="434" font-size="22" font-weight="700" fill="#0f766e">4 · 收包交给程序</text>
+<text x="708" y="464" font-size="22" font-weight="700">报文到了，程序还没读到</text>
+<text x="638" y="524" font-size="21">中间还有内核处理和一次交接。</text>
+<text x="638" y="564" font-size="21" fill="#475569">厨房里：货已入库，还没送到工位。</text>
+
+<rect x="36" y="640" width="1128" height="90" rx="12" fill="#eef2f7" stroke="#94a3b8" stroke-width="1.6"/>
+<text x="56" y="678" font-size="21">热路径是程序频繁走过的那串步骤，四个等待点都可能落在上面。</text>
+<text x="56" y="712" font-size="21" fill="#475569">这四点会互相重叠，不是四个可以相加的数字；耗时留到第 04 章测量。</text>
+</g>
+</svg>

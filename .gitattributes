@@ -1,0 +1,6 @@
+# Immutable recovery archives are binary Git objects.  Git LFS is not
+# installed in the current management environment, so keep them in ordinary
+# Git without text conversion, merge attempts, or meaningless binary diffs.
+/artifacts/blobs/**/*.tgz -text -diff -merge
+/artifacts/blobs/**/*.tar.gz -text -diff -merge
+/artifacts/blobs/**/*.zip -text -diff -merge

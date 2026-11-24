@@ -1,0 +1,48 @@
+diff --git a/lib/ff_dpdk_if.c b/lib/ff_dpdk_if.c
+index 34e821c..9b9874a 100644
+--- a/lib/ff_dpdk_if.c
++++ b/lib/ff_dpdk_if.c
+@@ -44,6 +44,7 @@
+ #include <rte_mbuf.h>
+ #include <rte_memory.h>
+ #include <rte_lcore.h>
++#include <rte_version.h>
+ #include <rte_launch.h>
+ #include <rte_ethdev.h>
+ #include <rte_debug.h>
+@@ -358,7 +359,13 @@ ff_dpdk_if_get_mtu_capability(struct ff_dpdk_if_context *ctx,
+     cap->min_mtu = dev_info.min_mtu;
+     cap->max_mtu = dev_info.max_mtu;
+     cap->max_rx_pktlen = dev_info.max_rx_pktlen;
++#if RTE_VERSION >= RTE_VERSION_NUM(24, 11, 0, 0)
+     cap->max_rx_bufsize = dev_info.max_rx_bufsize;
++#else
++    /* DPDK 21.11 has no max_rx_bufsize member.  F-Stack only uses this
++     * value as the upper bound when validating a requested MTU. */
++    cap->max_rx_bufsize = dev_info.max_rx_pktlen;
++#endif
+     cap->rx_scatter = !!(dev_info.rx_offload_capa &
+         RTE_ETH_RX_OFFLOAD_SCATTER);
+     cap->tx_multi_segs = !!(dev_info.tx_offload_capa &
+@@ -1160,7 +1167,11 @@ init_port_start(void)
+                 mode = rte_eth_bond_mode_get(port_id);
+                 ff_log(FF_LOG_INFO, FF_LOGTYPE_FSTACK_LIB, "Port %u, bond mode:%d\n", port_id, mode);
+ 
++#if RTE_VERSION >= RTE_VERSION_NUM(24, 11, 0, 0)
+                 count = rte_eth_bond_members_get(port_id, slaves, len);
++#else
++                count = rte_eth_bond_slaves_get(port_id, slaves, len);
++#endif
+                 ff_log(FF_LOG_INFO, FF_LOGTYPE_FSTACK_LIB, "Port %u, %s's slave ports count:%d\n", port_id,
+                             ff_global_cfg.dpdk.bond_cfgs->name, count);
+                 for (x=0; x<count; x++) {
+@@ -1242,7 +1253,9 @@ static int
+ init_clock(void)
+ {
+     rte_timer_subsystem_init();
++#if RTE_VERSION >= RTE_VERSION_NUM(24, 11, 0, 0)
+     rte_timer_meta_init();
++#endif
+     uint64_t hz = rte_get_timer_hz();
+     uint64_t intrs = US_PER_S / ff_global_cfg.freebsd.hz;
+     uint64_t tsc = (hz + US_PER_S - 1) / US_PER_S * intrs;

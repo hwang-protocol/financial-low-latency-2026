@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1690" viewBox="0 0 1200 1690" role="img" aria-labelledby="title desc">
+<title id="title">首次写入实验：从代码到内存准备</title>
+<desc id="desc">从上到下按A到E阅读。A查询页大小并用mmap申请128页匿名地址范围；B读取进程次缺页累计次数记为before；C按页步进，每页首字节写1，联系前图5处理缺页和6重试；D读after；E输出三项结果和计数差，再关闭映射。箭头字母与代码阶段相同。</desc>
+<defs>
+ <linearGradient id="purple" x2="1" y2="1"><stop stop-color="#bda1f8"/><stop offset="1" stop-color="#7149b8"/></linearGradient>
+ <linearGradient id="blue" x2="1" y2="1"><stop stop-color="#9ab9ef"/><stop offset="1" stop-color="#42669b"/></linearGradient>
+ <linearGradient id="metal" x2="1" y2="1"><stop stop-color="#dce5f0"/><stop offset="1" stop-color="#879bad"/></linearGradient>
+ <linearGradient id="navy" x2="1" y2="1"><stop stop-color="#537aa6"/><stop offset="1" stop-color="#18334f"/></linearGradient>
+ <linearGradient id="page" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#e9eef8"/></linearGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="170%" height="180%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#203453" flood-opacity=".13"/></filter>
+
+<marker id="arrow-purple" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#7752b7"/></marker>
+<marker id="arrow-green" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#238453"/></marker>
+<marker id="arrow-orange" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#b66328"/></marker>
+<marker id="arrow-red" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#bc4651"/></marker>
+<symbol id="terminal" viewBox="0 0 160 120">
+ <ellipse cx="80" cy="108" rx="66" ry="7" fill="#d9deeb"/>
+ <path d="M22 90 L139 90 L150 105 L10 105Z" fill="url(#metal)" stroke="#42546d" stroke-width="2"/>
+ <rect x="20" y="8" width="120" height="85" rx="9" fill="url(#purple)" stroke="#534078" stroke-width="2"/>
+ <rect x="27" y="15" width="106" height="69" rx="4" fill="#faf8ff"/>
+ <path d="M39 35 L50 43 L39 51 M58 53 H84" fill="none" stroke="#7752b7" stroke-width="4" stroke-linejoin="round"/>
+ <path d="M39 67 H111 M97 42 H115 M97 52 H115" stroke="#c2b1de" stroke-width="3"/>
+ <path d="M59 98 H101" stroke="#8393ab" stroke-width="3"/>
+</symbol>
+<symbol id="tlb" viewBox="0 0 130 135">
+ <ellipse cx="65" cy="125" rx="60" ry="7" fill="#d9d8e9"/>
+ <path d="M13 27 L30 13 H115 V111 L99 124 H13Z" fill="#674899" stroke="#49356f" stroke-width="2"/>
+ <path d="M13 27 L30 13 H115 L99 27Z" fill="#c8b3ed"/>
+ <rect x="13" y="27" width="86" height="97" rx="7" fill="url(#purple)" stroke="#49356f" stroke-width="2"/>
+ <rect x="23" y="40" width="67" height="70" rx="4" fill="#f6f2ff" stroke="#614985" stroke-width="2"/>
+ <path d="M24 63 H90 M24 86 H90 M45 40 V110 M68 40 V110" stroke="#b9aed0" stroke-width="2"/>
+ <path d="M24 65 H89 V85 H24Z" fill="#bfe7d2"/>
+ <path d="M45 65 V85 M68 65 V85" stroke="#93bba4" stroke-width="2"/>
+ <circle cx="78" cy="75" r="8" fill="#238453"/><path d="M74 75 L77 78 L82 72" fill="none" stroke="white" stroke-width="2"/>
+ <path d="M106 37 V106" stroke="#9674c5" stroke-width="4"/>
+</symbol>
+<symbol id="book" viewBox="0 0 140 140">
+ <ellipse cx="70" cy="128" rx="61" ry="7" fill="#d6deeb"/>
+ <path d="M23 19 L45 8 L124 20 V116 L100 131 L23 118Z" fill="#3d5e96" stroke="#304e7c" stroke-width="2"/>
+ <path d="M101 30 L119 22 V112 L101 122Z" fill="#fafbfd" stroke="#a8b4c9" stroke-width="2"/>
+ <path d="M107 29 V117 M113 25 V114" stroke="#c4cbdb" stroke-width="2"/>
+ <path d="M23 19 L101 31 V131 L23 118Z" fill="url(#blue)" stroke="#304e7c" stroke-width="2"/>
+ <path d="M33 33 L90 42 V111 L33 102Z" fill="url(#page)" stroke="#7f9ac6" stroke-width="2"/>
+ <path d="M43 53 L79 59 M43 64 L79 70 M43 75 L79 81 M43 86 L70 91" stroke="#9eafd0" stroke-width="3"/>
+ <path d="M119 43 H130 V56 H119 M119 70 H130 V83 H119 M119 97 H130 V110 H119" fill="#83c0a4" stroke="#426887" stroke-width="2"/>
+</symbol>
+<symbol id="memory" viewBox="0 0 145 220">
+ <ellipse cx="75" cy="208" rx="64" ry="8" fill="#d7e0ea"/>
+ <path d="M20 9 L119 17 L132 29 V200 L117 211 L20 201Z" fill="#18334f" stroke="#17314c" stroke-width="2"/>
+ <path d="M20 9 L119 17 L132 29 L34 20Z" fill="#8299b8"/>
+ <path d="M20 9 L117 20 V210 L20 201Z" fill="url(#navy)" stroke="#17314c" stroke-width="2"/>
+ <path d="M31 35 L106 43 V188 L31 181Z" fill="#e4ebf3" stroke="#162d45" stroke-width="3"/>
+ <path d="M31 72 L106 80 M31 110 L106 118 M31 147 L106 155 M67 39 V184" stroke="#8193a9" stroke-width="2"/>
+ <path d="M25 104 L113 113 V149 L25 141Z" fill="#c3efd1" stroke="#238453" stroke-width="2"/>
+ <path d="M39 124 L51 125 M58 126 L83 129" stroke="#238453" stroke-width="4"/>
+</symbol>
+<symbol id="workshop" viewBox="0 0 140 130">
+ <ellipse cx="70" cy="122" rx="63" ry="6" fill="#dce1e7"/>
+ <path d="M14 29 L27 15 H124 V112 L110 125 H14Z" fill="#718397" stroke="#455367" stroke-width="2"/>
+ <path d="M14 29 L27 15 H124 L110 29Z" fill="#dce4ed"/>
+ <rect x="14" y="29" width="96" height="94" rx="3" fill="url(#metal)" stroke="#455367" stroke-width="2"/>
+ <rect x="24" y="51" width="76" height="61" rx="3" fill="#43556b"/>
+ <path d="M25 58 H99 M25 66 H99" stroke="#8193a8" stroke-width="3"/>
+ <rect x="26" y="12" width="9" height="17" rx="3" fill="#fbb477" stroke="#b66328" stroke-width="2"/>
+ <rect x="91" y="12" width="9" height="17" rx="3" fill="#fbb477" stroke="#b66328" stroke-width="2"/>
+ <g transform="translate(51 88)" fill="#aebccc" stroke="#c9d4df" stroke-width="2">
+ <path d="M-6 -21 H6 L8 -14 L14 -10 L21 -10 L24 0 L18 5 L15 12 L15 18 L5 22 L0 16 L-7 15 L-14 18 L-21 9 L-17 3 L-18 -4 L-22 -10 L-14 -18 L-8 -15Z"/>
+ <circle r="8" fill="#43556b"/>
+ </g>
+ <path d="M87 81 V106 M81 87 H94 M81 99 H94" stroke="#d8e4ee" stroke-width="4"/>
+ <path d="M16 115 H109" stroke="#edbd6c" stroke-width="5" stroke-dasharray="11 8"/>
+</symbol>
+<symbol id="error" viewBox="0 0 100 100">
+ <path d="M50 8 L85 22 V52 Q85 77 50 94 Q15 77 15 52 V22Z" fill="#fde6e8" stroke="#bc4651" stroke-width="3"/>
+ <path d="M37 35 L64 63 M64 35 L37 63" stroke="#bc4651" stroke-width="7" stroke-linecap="round"/>
+</symbol>
+<symbol id="counter" viewBox="0 0 130 120">
+<ellipse cx="66" cy="108" rx="58" ry="7" fill="#dce5e2"/>
+<path d="M13 25 L26 12 H116 V95 L103 108 H13Z" fill="#486a64" stroke="#34574d" stroke-width="2"/>
+<path d="M13 25 L26 12 H116 L103 25Z" fill="#a7cdc0"/>
+<rect x="13" y="25" width="90" height="83" rx="7" fill="#d5e9e0" stroke="#456e5d" stroke-width="2"/>
+<rect x="24" y="38" width="67" height="37" rx="4" fill="#f9fdfa" stroke="#6b9681" stroke-width="2"/>
+<path d="M34 51 H44 M34 63 H44 M54 51 H64 M54 63 H64 M74 51 H82 M74 63 H82" stroke="#b0c9bc" stroke-width="4"/>
+<circle cx="36" cy="90" r="5" fill="#65a181"/><path d="M55 89 H85" stroke="#81aa93" stroke-width="4"/>
+</symbol></defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#24354e} .h{font-size:25px;font-weight:750} .body{font-size:22px} .small{font-size:20px} .code{font-family:'DejaVu Sans Mono',monospace;font-size:19px;fill:#405275} .muted{fill:#5e7088} .edge{fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round}</style>
+<rect width="1200" height="1690" fill="#f7f9fd"/>
+<rect x="24" y="20" width="1152" height="1650" rx="24" fill="#fff" stroke="#e1e7f0"/>
+<text x="52" y="70" font-size="33" font-weight="800">首次写入实验：代码怎样准备内存</text>
+<text x="52" y="111" class="body muted">从上往下读 A → B → C → D → E；C 步对应前图的⑤与⑥。</text>
+<text x="62" y="158" class="h">代码动作</text><text x="702" y="158" class="h">内存与计数怎样变化</text>
+
+<rect id="code-A" x="40" y="185" width="490" height="225" rx="17" fill="#f8f5ff" stroke="#d2c4e8" stroke-width="2"/>
+<rect id="effect-A" x="680" y="185" width="480" height="225" rx="17" fill="#f8f5ff" stroke="#d2c4e8" stroke-width="2"/>
+<path id="edge-A" data-source="code-A" data-target="effect-A" data-tip="668,297.5" class="edge" d="M542 297.5 H656" stroke="#7752b7" marker-end="url(#arrow-purple)"/>
+<circle cx="600" cy="297.5" r="19" fill="#7752b7" stroke="#fff" stroke-width="3"/>
+<text x="600" y="305.5" class="h" text-anchor="middle" style="fill:#fff">A</text>
+<rect id="code-B" x="40" y="455" width="490" height="180" rx="17" fill="#f2f9f6" stroke="#bad9c9" stroke-width="2"/>
+<rect id="effect-B" x="680" y="455" width="480" height="180" rx="17" fill="#f2f9f6" stroke="#bad9c9" stroke-width="2"/>
+<path id="edge-B" data-source="code-B" data-target="effect-B" data-tip="668,545.0" class="edge" d="M542 545.0 H656" stroke="#238453" marker-end="url(#arrow-green)"/>
+<circle cx="600" cy="545.0" r="19" fill="#238453" stroke="#fff" stroke-width="3"/>
+<text x="600" y="553.0" class="h" text-anchor="middle" style="fill:#fff">B</text>
+<rect id="code-C" x="40" y="680" width="490" height="410" rx="17" fill="#fff8ee" stroke="#e7caaa" stroke-width="2"/>
+<rect id="effect-C" x="680" y="680" width="480" height="410" rx="17" fill="#fff8ee" stroke="#e7caaa" stroke-width="2"/>
+<path id="edge-C" data-source="code-C" data-target="effect-C" data-tip="668,885.0" class="edge" d="M542 885.0 H656" stroke="#b66328" marker-end="url(#arrow-orange)"/>
+<circle cx="600" cy="885.0" r="19" fill="#b66328" stroke="#fff" stroke-width="3"/>
+<text x="600" y="893.0" class="h" text-anchor="middle" style="fill:#fff">C</text>
+<rect id="code-D" x="40" y="1135" width="490" height="180" rx="17" fill="#f2f9f6" stroke="#bad9c9" stroke-width="2"/>
+<rect id="effect-D" x="680" y="1135" width="480" height="180" rx="17" fill="#f2f9f6" stroke="#bad9c9" stroke-width="2"/>
+<path id="edge-D" data-source="code-D" data-target="effect-D" data-tip="668,1225.0" class="edge" d="M542 1225.0 H656" stroke="#238453" marker-end="url(#arrow-green)"/>
+<circle cx="600" cy="1225.0" r="19" fill="#238453" stroke="#fff" stroke-width="3"/>
+<text x="600" y="1233.0" class="h" text-anchor="middle" style="fill:#fff">D</text>
+<rect id="code-E" x="40" y="1360" width="490" height="235" rx="17" fill="#f3f7ff" stroke="#bbcee9" stroke-width="2"/>
+<rect id="effect-E" x="680" y="1360" width="480" height="235" rx="17" fill="#f3f7ff" stroke="#bbcee9" stroke-width="2"/>
+<path id="edge-E" data-source="code-E" data-target="effect-E" data-tip="668,1477.5" class="edge" d="M542 1477.5 H656" stroke="#7752b7" marker-end="url(#arrow-purple)"/>
+<circle cx="600" cy="1477.5" r="19" fill="#7752b7" stroke="#fff" stroke-width="3"/>
+<text x="600" y="1485.5" class="h" text-anchor="middle" style="fill:#fff">E</text>
+<text x="62" y="224" class="h">先申请 128 页的地址范围</text>
+<text x="62" y="270" class="code">page = os.sysconf(&quot;SC_PAGE_SIZE&quot;)</text>
+<text x="62" y="305" class="code">size = page * 128</text>
+<text x="62" y="340" class="code">buf = mmap.mmap(-1, size, ...)</text>
+<text x="62" y="382" class="small">page 是页大小；size 是申请的总字节数</text>
+<use href="#book" x="695" y="238" width="120" height="120" filter="url(#shadow)"/>
+<text x="836" y="242" class="body">先登记可用的地址范围</text>
+<text x="836" y="280" class="small">共 128 页，允许读写</text>
+<text x="836" y="318" class="small">物理页在首次写入时准备</text>
+<text x="702" y="386" class="small">像先领到一段库存编号，存放位置随后安排。</text>
+<text x="62" y="494" class="h">记下写入前的计数</text>
+<text x="62" y="538" class="code">before = resource.getrusage(</text>
+<text x="62" y="569" class="code">    resource.RUSAGE_SELF</text>
+<text x="62" y="600" class="code">).ru_minflt</text>
+<use href="#counter" x="699" y="506" width="122" height="112" filter="url(#shadow)"/>
+<text x="838" y="532" class="h">保存为 before</text>
+<text x="838" y="569" class="small">本进程累计的次缺页次数</text>
+<text x="838" y="605" class="small">此时还没开始逐页写入</text>
+<text x="62" y="1174" class="h">再读一次写入后的计数</text>
+<text x="62" y="1218" class="code">after = resource.getrusage(</text>
+<text x="62" y="1249" class="code">    resource.RUSAGE_SELF</text>
+<text x="62" y="1280" class="code">).ru_minflt</text>
+<use href="#counter" x="699" y="1186" width="122" height="112" filter="url(#shadow)"/>
+<text x="838" y="1212" class="h">保存为 after</text>
+<text x="838" y="1249" class="small">本进程累计的次缺页次数</text>
+<text x="838" y="1285" class="small">此时逐页写入已经结束</text>
+<text x="62" y="721" class="h">每页的第一个字节写入 1</text>
+<text x="62" y="769" class="code">for offset in range(0, size, page):</text>
+<text x="62" y="805" class="code">    buf[offset] = 1</text>
+<text x="62" y="858" class="small">offset 从 0 开始，每次增加 page</text>
+<rect x="66" y="887" width="94" height="100" rx="8" fill="#fff" stroke="#d4b68f" stroke-width="2"/>
+<rect x="78" y="901" width="18" height="18" rx="3" fill="#e8a55e"/>
+<path d="M78 936 H146 M78 953 H146" stroke="#e0d5c5" stroke-width="3"/>
+<text x="113" y="981" class="small" text-anchor="middle">第 1 页</text>
+<text x="113" y="1022" class="small" text-anchor="middle">0</text>
+<rect x="175" y="887" width="94" height="100" rx="8" fill="#fff" stroke="#d4b68f" stroke-width="2"/>
+<rect x="187" y="901" width="18" height="18" rx="3" fill="#e8a55e"/>
+<path d="M187 936 H255 M187 953 H255" stroke="#e0d5c5" stroke-width="3"/>
+<text x="222" y="981" class="small" text-anchor="middle">第 2 页</text>
+<text x="222" y="1022" class="small" text-anchor="middle">page</text>
+<rect x="365" y="887" width="94" height="100" rx="8" fill="#fff" stroke="#d4b68f" stroke-width="2"/>
+<rect x="377" y="901" width="18" height="18" rx="3" fill="#e8a55e"/>
+<path d="M377 936 H445 M377 953 H445" stroke="#e0d5c5" stroke-width="3"/>
+<text x="412" y="981" class="small" text-anchor="middle">第 128 页</text>
+<text x="412" y="1022" class="small" text-anchor="middle">127 × page</text>
+<text x="309" y="944" class="h" text-anchor="middle">…</text>
+<text x="62" y="1060" class="small">橙色小格表示本页第一次写入的位置。</text>
+<text x="702" y="721" class="h">第一次写到这一页时</text>
+<use href="#workshop" x="698" y="743" width="112" height="106" filter="url(#shadow)"/>
+<text x="837" y="780" class="body">上图⑤：处理次缺页</text>
+<text x="837" y="817" class="small">准备物理页，补好页表记录</text>
+<path d="M706 867 H1134" stroke="#ead7bc" stroke-width="2"/>
+<use href="#book" x="700" y="888" width="106" height="106" filter="url(#shadow)"/>
+<text x="837" y="923" class="body">上图⑥：重试刚才的写入</text>
+<text x="837" y="960" class="small">这一页准备好，写入完成</text>
+<text x="702" y="1056" class="small">循环继续到下一页，共写过 128 页。</text>
+<text x="62" y="1400" class="h">输出三项结果，再释放这段内存</text>
+<text x="62" y="1441" class="code">print(&quot;page_size=%d&quot; % page)</text>
+<text x="62" y="1470" class="code">print(&quot;touched_pages=%d&quot; % ...)</text>
+<text x="62" y="1499" class="code">print(&quot;minor_fault_delta=%d&quot; %</text>
+<text x="62" y="1528" class="code">      (after - before))</text>
+<text x="62" y="1564" class="code">buf.close()</text>
+<use href="#terminal" x="692" y="1416" width="128" height="99" filter="url(#shadow)"/>
+<text x="837" y="1437" class="body">页大小、写过的页数</text>
+<text x="837" y="1476" class="small">次缺页增量：after − before</text>
+<text x="702" y="1540" class="small">buf.close() 释放本次申请的内存映射</text>
+<text x="702" y="1575" class="small">实际输出见下面运行代码后的结果。</text>
+<text x="52" y="1631" class="small" style="fill:#5e7088">计数比较的是 B 到 D 之间的变化，也包含这段时间内 Python 自身发生的次缺页。</text>
+</svg>

@@ -1,0 +1,137 @@
+PROVENANCE=20260820T023156Z-08-xdp-live
+CAPTURED_AT_UTC=2026-08-20T02:38:21Z
+TARGET=vm-broadcom-01/ens64f0np0
+OBJECT_SHA256=2eed327b9ccd96febf42486c62fb03ec8ae74002ef0fdc1636505cebd32e6028
+
+$ bpftool version
+/usr/lib/linux-tools/5.15.0-164-generic/bpftool v5.15.193
+features:
+
+$ ip link set dev ens64f0np0 xdp obj /run/flle-xdp-cli-20260820T023156Z/flle_xdp_a1_exact.o sec xdp
+
+$ ip -details link show dev ens64f0np0
+11: ens64f0np0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 xdp qdisc mq state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 3502 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p0 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.0 
+    prog/xdp id 148 tag 918a00806b51ccc3 jited 
+    altname enp3s0f0np0
+
+$ bpftool net show dev ens64f0np0
+xdp:
+ens64f0np0(11) driver id 148
+
+tc:
+
+flow_dissector:
+
+
+$ bpftool prog show id 148
+148: xdp  name flle_xdp_a1_exa  tag 918a00806b51ccc3  gpl
+	loaded_at 2026-08-20T10:38:21+0800  uid 0
+	xlated 984B  jited 647B  memlock 4096B  map_ids 2
+	btf_id 112
+
+$ bpftool map show id 2
+2: array  name flle_drop_cnt  flags 0x0
+	key 4B  value 8B  max_entries 9  memlock 4096B
+	btf_id 112
+
+$ bpftool -p -j map dump id 2
+[{
+        "key": ["0x00","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 0,
+            "value": 0
+        }
+    },{
+        "key": ["0x01","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 1,
+            "value": 0
+        }
+    },{
+        "key": ["0x02","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 2,
+            "value": 0
+        }
+    },{
+        "key": ["0x03","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 3,
+            "value": 0
+        }
+    },{
+        "key": ["0x04","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 4,
+            "value": 0
+        }
+    },{
+        "key": ["0x05","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 5,
+            "value": 0
+        }
+    },{
+        "key": ["0x06","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 6,
+            "value": 0
+        }
+    },{
+        "key": ["0x07","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 7,
+            "value": 0
+        }
+    },{
+        "key": ["0x08","0x00","0x00","0x00"
+        ],
+        "value": ["0x00","0x00","0x00","0x00","0x00","0x00","0x00","0x00"
+        ],
+        "formatted": {
+            "key": 8,
+            "value": 0
+        }
+    }
+]
+
+$ ip link set dev ens64f0np0 xdp off
+
+$ bpftool net show dev ens64f0np0
+xdp:
+
+tc:
+
+flow_dissector:
+
+
+$ ip -details link show dev ens64f0np0
+11: ens64f0np0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p0 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.0 
+    altname enp3s0f0np0
+STANDARD_CLI_LIFECYCLE=PASS

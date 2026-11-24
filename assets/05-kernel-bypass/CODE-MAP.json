@@ -1,0 +1,111 @@
+{
+  "posix_source_archive": "artifacts/blobs/x2522/ch05-four-path/posix-qos-v1/flle-posix-qos-v1-x86_64-jammy.tgz",
+  "posix_source_archive_sha256": "307ed39428770766453095cf04dd4b2432b2e765c6c233f4a0f86ebd117eb05e",
+  "source_archive": "artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-source.tgz",
+  "source_archive_sha256": "1cbae2786192ac16c39b1ebbdb7a19101b99a532430903839de39a8f0fa62bc7",
+  "editor_source_directory": "assets/05-kernel-bypass/source-reading",
+  "source_files": {
+    "posix_order_transport.cpp": "c7041ac69a87942b85ed596e129ad4a840a090c9432ae62cf25742f246cb5dda",
+    "common.hpp": "b063b81dc6b583c1df5d0f547f7ddf67f2098d1134e2f10c15ee519ead7fdfdf",
+    "tcpdirect_order_transport.cpp": "d304c7aa6ec5257b5e74603b21b1b50e15d7e4e6157795736845b495eebc94bb",
+    "dpdk_trader.cpp": "75ecd9a2d70d1368290571df84eb0a7961f28dea06c01e4be497bd2c2ae75cbf",
+    "trader.cpp": "c63d51360dbf60f7e633e574e4eeb42563ea4e49cbf8d73003d6ba91f2eaf9bf",
+    "order_queue.hpp": "9bf66b40239654160d56019061ad998e0ea99e0d584edf0e38d36fa9b4433696",
+    "nasdaq_protocol.hpp": "3f4f65a86ea2be9bee21006514d14b0dd67ff9115a3a0a19a9e5bdac485a7879",
+    "order_transport.hpp": "a1a52474913fc6b9f8a1134408f94e24cf1f094ad7cef0f21b0a35fe25fb8b4b",
+    "start_sfc_clients.sh": "e43f804892b7f417b1865ff9e3ff7289dd504eb7c29a3e429ef69f2a1dacbc2d"
+  },
+  "anchors": [
+    {
+      "id": "K1",
+      "file": "posix_order_transport.cpp",
+      "search": "  bool connect(",
+      "line": 14
+    },
+    {
+      "id": "K2",
+      "file": "common.hpp",
+      "search": "inline bool send_all(",
+      "line": 118
+    },
+    {
+      "id": "K3",
+      "file": "common.hpp",
+      "search": "inline bool recv_all(",
+      "line": 130
+    },
+    {
+      "id": "K4",
+      "file": "common.hpp",
+      "search": "    const auto received = ::recv(",
+      "line": 133
+    },
+    {
+      "id": "O1",
+      "file": "start_sfc_clients.sh",
+      "search": "onload --profile=latency",
+      "line": 6
+    },
+    {
+      "id": "O2",
+      "file": "common.hpp",
+      "search": "inline bool send_all(",
+      "line": 118
+    },
+    {
+      "id": "O3",
+      "file": "common.hpp",
+      "search": "inline bool recv_all(",
+      "line": 130
+    },
+    {
+      "id": "Z1",
+      "file": "tcpdirect_order_transport.cpp",
+      "search": "  bool connect(",
+      "line": 31
+    },
+    {
+      "id": "Z2",
+      "file": "tcpdirect_order_transport.cpp",
+      "search": "  bool send_all(",
+      "line": 71
+    },
+    {
+      "id": "Z3",
+      "file": "tcpdirect_order_transport.cpp",
+      "search": "  bool recv_all(",
+      "line": 87
+    },
+    {
+      "id": "Z4",
+      "file": "tcpdirect_order_transport.cpp",
+      "search": "      zf_reactor_perform(stack_);",
+      "line": 82,
+      "within": "  bool send_all("
+    },
+    {
+      "id": "D1",
+      "file": "dpdk_trader.cpp",
+      "search": "  int run(",
+      "line": 116
+    },
+    {
+      "id": "D2",
+      "file": "dpdk_trader.cpp",
+      "search": "  void flush_tx(",
+      "line": 309
+    },
+    {
+      "id": "D3",
+      "file": "dpdk_trader.cpp",
+      "search": "  void drain_rx(",
+      "line": 326
+    },
+    {
+      "id": "D4",
+      "file": "dpdk_trader.cpp",
+      "search": "  void bridge_loop(",
+      "line": 631
+    }
+  ]
+}

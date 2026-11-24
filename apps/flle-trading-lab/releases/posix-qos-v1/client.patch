@@ -1,0 +1,161 @@
+--- a/src/order_transport.hpp
++++ b/src/order_transport.hpp
+@@ -22,6 +22,11 @@
+   virtual bool recv_all(void *data, std::size_t length) = 0;
+   virtual void close() = 0;
+   virtual int incoming_cpu() const = 0;
++  // Called only by the order thread, while no order is in flight.
++  virtual bool set_order_dscp(int) { return false; }
++  virtual std::string order_dscp_state() const {
++    return "{\"error\":\"order DSCP is unsupported\"}";
++  }
+ };
+ 
+ std::unique_ptr<OrderTransport> make_order_transport();
+--- a/src/posix_order_transport.cpp
++++ b/src/posix_order_transport.cpp
+@@ -30,6 +30,7 @@
+       close();
+       return false;
+     }
++    if (!set_order_dscp(dscp_)) return false;
+     sockaddr_in local{};
+     local.sin_family = AF_INET;
+     local.sin_port = 0;
+@@ -68,8 +69,47 @@
+                : -1;
+   }
+ 
++  bool set_order_dscp(int dscp) override {
++    if (dscp < 0 || dscp > 63) return false;
++    if (fd_ >= 0) {
++      int before = 0, observed = 0;
++      socklen_t length = sizeof(before);
++      if (::getsockopt(fd_, IPPROTO_IP, IP_TOS, &before, &length) < 0) {
++        close();
++        return false;
++      }
++      const int tos = (dscp << 2) | (before & 3);  // Preserve ECN bits.
++      length = sizeof(observed);
++      if (::setsockopt(fd_, IPPROTO_IP, IP_TOS, &tos, sizeof(tos)) < 0 ||
++          ::getsockopt(fd_, IPPROTO_IP, IP_TOS, &observed, &length) < 0 ||
++          (observed >> 2) != dscp) {
++        close();  // Do not continue with an unverified socket marking.
++        return false;
++      }
++    }
++    dscp_ = dscp;  // Also applied when this transport reconnects.
++    return true;
++  }
++
++  std::string order_dscp_state() const override {
++    int tos = 0;
++    sockaddr_in local{};
++    socklen_t length = sizeof(tos), address_length = sizeof(local);
++    if (fd_ >= 0 &&
++        (::getsockopt(fd_, IPPROTO_IP, IP_TOS, &tos, &length) < 0 ||
++         ::getsockname(fd_, reinterpret_cast<sockaddr *>(&local), &address_length) < 0 ||
++         (tos >> 2) != dscp_))
++      return "{\"error\":\"order IP_TOS readback failed\"}";
++    return "{\"ok\":true,\"dscp\":" + std::to_string(dscp_) +
++           ",\"tos\":" + (fd_ < 0 ? std::string("null") : std::to_string(tos)) +
++           ",\"connected\":" + (fd_ < 0 ? "false" : "true") +
++           ",\"local_port\":" + std::to_string(ntohs(local.sin_port)) +
++           ",\"pid\":" + std::to_string(::getpid()) + "}";
++  }
++
+  private:
+   int fd_{-1};
++  int dscp_{0};
+ };
+ 
+ }  // namespace
+--- a/src/trader.cpp
++++ b/src/trader.cpp
+@@ -280,6 +280,11 @@
+   FeedHandler feed_;
+   std::mutex mutex_;
+   std::mutex feed_mutex_;
++  std::mutex qos_mutex_;
++  std::condition_variable qos_changed_;
++  std::atomic<bool> qos_pending_{false};
++  std::atomic<int> order_dscp_{0};
++  std::string qos_request_, qos_response_;
+   flle::OrderQueue<WorkOrder, 1024> order_queue_;
+   std::map<std::string, std::int64_t> positions_;
+   std::map<std::string, std::int64_t> pending_delta_;
+@@ -765,7 +770,25 @@
+     std::uint64_t connected_epoch{};
+     while (!g_stop.load()) {
+       WorkOrder work;
+-      if (!order_queue_.front(work, g_stop)) continue;
++      if (!order_queue_.front(work, g_stop)) {
++        // Control work runs only when idle, never in the timed send/receive path.
++        if (qos_pending_.load()) {
++          std::lock_guard<std::mutex> lock(qos_mutex_);
++          if (qos_pending_) {
++            if (qos_request_ != "GET" &&
++                !transport->set_order_dscp(std::stoi(qos_request_))) {
++              connected = false;
++              qos_response_ = "{\"error\":\"IP_TOS update failed; socket closed\"}";
++            } else {
++              if (qos_request_ != "GET") order_dscp_ = std::stoi(qos_request_);
++              qos_response_ = transport->order_dscp_state();
++            }
++            qos_pending_ = false;
++            qos_changed_.notify_one();
++          }
++        }
++        continue;
++      }
+       if (connected && connected_epoch != work.paper_epoch) {
+         transport->close();
+         connected = false;
+@@ -965,6 +988,8 @@
+         << (config_.market_receiver_enabled ? "ITCH_5.0_OVER_MOLDUDP64"
+                                             : "COMMON_GATEWAY_BOOK")
+         << "\""
++        << ",\"order_dscp_control\":\"POSIX_QOS_V1\""
++        << ",\"order_dscp\":" << order_dscp_.load()
+         << ",\"order_protocol\":\"OUCH_5.0_OVER_SOUPBINTCP\""
+         << ",\"order_transport\":\"" << config_.order_transport
+         << "\",\"tcp_nodelay\":"
+@@ -1043,6 +1068,29 @@
+   std::string command(const std::string &line) {
+     const auto parts = flle::split(line, '|');
+     if (parts.size() == 1 && parts[0] == "STATE") return state_json();
++    if ((parts.size() == 2 || parts.size() == 3) && parts[0] == "ORDER_DSCP") {
++      if (parts.size() == 3 && parts[2] != std::to_string(::getpid()))
++        return "{\"error\":\"order client PID changed; DSCP not modified\"}";
++      if (config_.role != "MANUAL" || config_.market_receiver_enabled ||
++          !config_.lock_order_queue)
++        return "{\"error\":\"order DSCP requires the Chapter 05 order-only client\"}";
++      const auto &value = parts[1];
++      if (value != "GET" && (value.empty() || value.size() > 2 ||
++          value.find_first_not_of("0123456789") != std::string::npos ||
++          std::stoi(value) > 63))
++        return "{\"error\":\"DSCP must be an integer from 0 to 63\"}";
++      std::unique_lock<std::mutex> lock(qos_mutex_);
++      if (order_queue_.depth() || qos_pending_)
++        return "{\"error\":\"order queue must be idle before DSCP query/update\"}";
++      qos_request_ = value;
++      qos_pending_ = true;
++      if (!qos_changed_.wait_for(lock, std::chrono::seconds(3),
++                                [&] { return !qos_pending_.load(); })) {
++        qos_pending_ = false;  // Cancel, so a timed-out command cannot apply later.
++        return "{\"error\":\"order DSCP control timed out; request cancelled\"}";
++      }
++      return qos_response_;
++    }
+     if (parts.size() == 1 && parts[0] == "MEASUREMENT_PROGRESS")
+       return "{\"measurement_generation\":" +
+              std::to_string(measurement_generation_.load()) +
+@@ -1101,6 +1149,8 @@
+     if (parts.size() == 5 &&
+         (parts[0] == "ORDER" || parts[0] == "MEASUREMENT_ORDER")) {
+       const bool measurement_order = parts[0] == "MEASUREMENT_ORDER";
++      if (measurement_order && order_dscp_.load() != 0)
++        return "{\"error\":\"formal comparison requires order DSCP 0\"}";
+       if (!measurement_order && config_.role != "MANUAL")
+         return "{\"error\":\"automatic client does not accept manual orders\"}";
+       const auto symbol = parts[1];

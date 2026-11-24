@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1660" viewBox="0 0 1600 1660" role="img" aria-labelledby="title desc"><title id="title">普通收包与OpenOnload：从内存落点到应用读取</title><desc id="desc">上图：①网卡写入主内存缓冲区；②中断通知安排批量收包；③驱动取包，内核处理TCP或UDP并放入套接字接收队列；④应用读取。下图：⑤同样由网卡写入主内存；⑥应用进程内Onload库直接取包并处理协议；⑦原程序沿用套接字调用；⑧内核与驱动仍管理资源并处理未加速收发。箭头是处理关系，不代表每步都复制报文或固定时序。</desc>
+<defs>
+<symbol id="nic" viewBox="0 0 140 100">
+<rect x="10" y="20" width="120" height="64" rx="7" fill="#d7e8eb" stroke="#3e7b88" stroke-width="3"/>
+<path d="M10 13 V92 M32 84 V92 M45 84 V92 M58 84 V92 M71 84 V92 M84 84 V92 M97 84 V92" stroke="#3e7b88" stroke-width="3"/>
+<rect x="23" y="35" width="36" height="32" rx="4" fill="#497f8d"/>
+<path d="M71 41 H111 M71 52 H111 M71 63 H94" stroke="#77a0ab" stroke-width="3"/>
+<rect x="106" y="31" width="25" height="18" rx="2" fill="#fff" stroke="#3e7b88" stroke-width="2"/>
+</symbol>
+<symbol id="stack" viewBox="0 0 100 100">
+<rect x="13" y="12" width="74" height="21" rx="5" fill="#d8e1f0" stroke="#58769e" stroke-width="2.5"/>
+<rect x="13" y="40" width="74" height="21" rx="5" fill="#c3d3e8" stroke="#58769e" stroke-width="2.5"/>
+<rect x="13" y="68" width="74" height="21" rx="5" fill="#a6bedc" stroke="#58769e" stroke-width="2.5"/>
+<path d="M26 23 H51 M26 51 H51 M26 79 H51" stroke="#58769e" stroke-width="3"/>
+<circle cx="74" cy="23" r="3" fill="#58769e"/><circle cx="74" cy="51" r="3" fill="#58769e"/><circle cx="74" cy="79" r="3" fill="#58769e"/>
+</symbol>
+<symbol id="app" viewBox="0 0 120 100">
+<rect x="9" y="9" width="102" height="79" rx="7" fill="#fff" stroke="#568676" stroke-width="3"/>
+<path d="M9 29 H111" stroke="#568676" stroke-width="2"/>
+<circle cx="20" cy="20" r="3" fill="#b6cfc5"/><circle cx="31" cy="20" r="3" fill="#b6cfc5"/>
+<path d="M26 70 V59 H42 V65 H58 V48 H74 V54 H95" stroke="#3b9177" stroke-width="4" fill="none" stroke-linejoin="round"/>
+</symbol>
+<symbol id="memory" viewBox="0 0 140 100">
+<rect x="8" y="21" width="124" height="61" rx="5" fill="#e5edf3" stroke="#617f98" stroke-width="3"/>
+<rect x="19" y="32" width="26" height="33" rx="3" fill="#c1d3e1"/><rect x="57" y="32" width="26" height="33" rx="3" fill="#9dbed3"/><rect x="95" y="32" width="26" height="33" rx="3" fill="#c1d3e1"/>
+<path d="M22 82 V91 M36 82 V91 M50 82 V91 M64 82 V91 M78 82 V91 M92 82 V91 M106 82 V91 M120 82 V91" stroke="#b29356" stroke-width="4"/>
+</symbol>
+<symbol id="cpu" viewBox="0 0 100 100">
+<path d="M30 8 V20 M50 8 V20 M70 8 V20 M30 80 V92 M50 80 V92 M70 80 V92 M8 30 H20 M8 50 H20 M8 70 H20 M80 30 H92 M80 50 H92 M80 70 H92" stroke="#8ea2b9" stroke-width="4"/>
+<rect x="20" y="20" width="60" height="60" rx="6" fill="#304c66"/><rect x="29" y="29" width="42" height="42" rx="4" fill="#a7c1d7"/>
+</symbol>
+<symbol id="bell" viewBox="0 0 100 100">
+<path d="M25 69 V45 Q25 19 50 19 Q75 19 75 45 V69 L84 79 H16Z" fill="#fff2d9" stroke="#b18a47" stroke-width="3" stroke-linejoin="round"/>
+<path d="M42 86 Q50 96 58 86 M50 10 V18 M11 31 L6 23 M89 31 L94 23" stroke="#b18a47" stroke-width="3" fill="none" stroke-linecap="round"/>
+</symbol>
+<marker id="arrow-blue" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6Z" fill="#5a7fa9"/></marker>
+<marker id="arrow-green" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6Z" fill="#398c76"/></marker>
+<marker id="arrow-amber" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6Z" fill="#b18a47"/></marker>
+<marker id="arrow-gray" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0,-6 L12,0 L0,6Z" fill="#8796a8"/></marker>
+</defs>
+<style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#263c51}.head{font-size:31px;font-weight:750}.body{font-size:28px}.small{font-size:25px;fill:#61778c}.edge{fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round}</style>
+<rect width="1600" height="1660" fill="#f7f9fc"/>
+<rect x="24" y="20" width="1552" height="1620" rx="24" fill="white" stroke="#e1e8ef"/>
+<text x="56" y="78" class="head" text-anchor="start">报文怎样交到程序手里？</text>
+<text x="56" y="123" class="body" text-anchor="start">两条路线都先把报文放进主内存，再看谁来取包、处理协议。</text>
+<rect x="44" y="160" width="1512" height="630" rx="14" fill="#fff" stroke="#d9e3ed" stroke-width="2"/>
+<text x="68" y="208" class="head" text-anchor="start">普通收包：内核处理协议，应用再读取</text>
+<rect x="345" y="300" width="850" height="390" rx="14" fill="#f2f5fc" stroke="#d8e1ee" stroke-width="2"/>
+<text x="770" y="336" class="body" text-anchor="middle">操作系统内核</text>
+<rect x="1245" y="300" width="290" height="390" rx="14" fill="#f1f8f4" stroke="#c7dfd3" stroke-width="2"/>
+<text x="1390" y="336" class="body" text-anchor="middle">应用进程</text>
+<rect id="nic-0" x="65" y="360" width="195" height="280" rx="14" fill="#f3f8fa" stroke="#b9d5de" stroke-width="2"/>
+<text x="162" y="405" class="body" text-anchor="middle">X2522 网卡</text>
+<use href="#nic" x="92" y="432" width="140" height="112"/>
+<text x="162" y="592" class="small" text-anchor="middle">收到报文</text>
+<rect id="buffer-0" x="375" y="360" width="270" height="280" rx="14" fill="#fff" stroke="#bacfdc" stroke-width="2"/>
+<text x="510" y="405" class="head" text-anchor="middle">主内存</text>
+<use href="#memory" x="438" y="430" width="144" height="108"/>
+<text x="510" y="575" class="small" text-anchor="middle">内核接收缓冲区</text>
+<text x="510" y="613" class="small" text-anchor="middle">暂存报文字节</text>
+<rect id="stack-0" x="775" y="360" width="390" height="280" rx="14" fill="#fff" stroke="#b9cddd" stroke-width="2"/>
+<use href="#stack" x="794" y="376" width="44" height="50"/>
+<text x="987" y="407" class="head" text-anchor="middle">内核收包处理</text>
+<rect x="791" y="438" width="358" height="49" rx="14" fill="#f3f6fa" stroke="#e2e9ef" stroke-width="2"/>
+<text x="970" y="472" class="small" text-anchor="middle">驱动：一次取一批报文</text>
+<rect x="791" y="500" width="358" height="49" rx="14" fill="#f3f6fa" stroke="#e2e9ef" stroke-width="2"/>
+<text x="970" y="534" class="small" text-anchor="middle">网络栈：处理 TCP / UDP</text>
+<rect x="791" y="562" width="358" height="49" rx="14" fill="#f3f6fa" stroke="#e2e9ef" stroke-width="2"/>
+<text x="970" y="596" class="small" text-anchor="middle">套接字接收队列：等待读取</text>
+<rect id="app-0" x="1275" y="360" width="230" height="280" rx="14" fill="#fff" stroke="#b7d6c7" stroke-width="2"/>
+<text x="1390" y="405" class="head" text-anchor="middle">应用线程</text>
+<use href="#app" x="1340" y="429" width="100" height="86"/>
+<text x="1390" y="558" class="small" text-anchor="middle">调用套接字接口</text>
+<text x="1390" y="599" class="small" text-anchor="middle">读取后处理业务</text>
+<path id="edge-1" class="edge" d="M272 503 H351" stroke="#5a7fa9" marker-end="url(#arrow-blue)" data-source="nic-0" data-target="buffer-0" data-tip="363,503"/>
+<text x="317" y="472" class="small" text-anchor="middle">① 写入</text>
+<path id="edge-3" class="edge" d="M657 503 H751" stroke="#5a7fa9" marker-end="url(#arrow-blue)" data-source="buffer-0" data-target="stack-0" data-tip="763,503"/>
+<text x="710" y="472" class="small" text-anchor="middle">③ 取包</text>
+<path id="edge-4" class="edge" d="M1177 503 H1251" stroke="#5a7fa9" marker-end="url(#arrow-blue)" data-source="stack-0" data-target="app-0" data-tip="1263,503"/>
+<text x="1220" y="472" class="small" text-anchor="middle">④ 交付</text>
+<path id="edge-2" class="edge" d="M162 348 V265 H970 V336" stroke="#b18a47" marker-end="url(#arrow-amber)" data-source="nic-0" data-target="stack-0" data-tip="970,348"/>
+<use href="#bell" x="460" y="215" width="42" height="42"/>
+<text x="743" y="248" class="small" text-anchor="middle">② 中断：到货通知，安排批量收包</text>
+<text x="800" y="739" class="body" text-anchor="middle">通知、协议处理和应用读取需要时间；应用线程也可能等待 CPU 执行。</text>
+<rect x="44" y="830" width="1512" height="710" rx="14" fill="#fff" stroke="#d9e3ed" stroke-width="2"/>
+<text x="68" y="878" class="head" text-anchor="start">OpenOnload：库在应用进程内取包、处理协议</text>
+<text x="68" y="917" class="body" text-anchor="start">用 onload 启动原程序 → 加载 Onload 库 → 接手受支持的套接字调用</text>
+<text x="68" y="957" class="small" text-anchor="start">收包等待方式：可以主动查看，也可以等待事件唤醒。</text>
+<rect x="345" y="990" width="1190" height="390" rx="14" fill="#f1f8f4" stroke="#c7dfd3" stroke-width="2"/>
+<text x="940" y="1026" class="body" text-anchor="middle">同一个应用进程：可访问的缓冲区、Onload 库与业务线程</text>
+<rect id="nic-1" x="65" y="1050" width="195" height="280" rx="14" fill="#f3f8fa" stroke="#b9d5de" stroke-width="2"/>
+<text x="162" y="1095" class="body" text-anchor="middle">X2522 网卡</text>
+<use href="#nic" x="92" y="1122" width="140" height="112"/>
+<text x="162" y="1282" class="small" text-anchor="middle">收到报文</text>
+<rect id="buffer-1" x="375" y="1050" width="270" height="280" rx="14" fill="#fff" stroke="#bacfdc" stroke-width="2"/>
+<text x="510" y="1095" class="head" text-anchor="middle">主内存</text>
+<use href="#memory" x="438" y="1120" width="144" height="108"/>
+<text x="510" y="1265" class="small" text-anchor="middle">Onload 接收缓冲区</text>
+<text x="510" y="1303" class="small" text-anchor="middle">暂存报文字节</text>
+<rect id="stack-1" x="775" y="1050" width="390" height="280" rx="14" fill="#fff" stroke="#afd1c2" stroke-width="2"/>
+<use href="#stack" x="794" y="1066" width="44" height="50"/>
+<text x="987" y="1097" class="head" text-anchor="middle">OpenOnload 库</text>
+<rect x="791" y="1128" width="358" height="49" rx="14" fill="#f1f8f4" stroke="#e2e9ef" stroke-width="2"/>
+<text x="970" y="1162" class="small" text-anchor="middle">直接查看网卡接收队列</text>
+<rect x="791" y="1190" width="358" height="49" rx="14" fill="#f1f8f4" stroke="#e2e9ef" stroke-width="2"/>
+<text x="970" y="1224" class="small" text-anchor="middle">库内处理 TCP / UDP</text>
+<rect x="791" y="1252" width="358" height="49" rx="14" fill="#f1f8f4" stroke="#e2e9ef" stroke-width="2"/>
+<text x="970" y="1286" class="small" text-anchor="middle">库内排队，交给原程序</text>
+<rect id="app-1" x="1275" y="1050" width="230" height="280" rx="14" fill="#fff" stroke="#b7d6c7" stroke-width="2"/>
+<text x="1390" y="1095" class="head" text-anchor="middle">应用线程</text>
+<use href="#app" x="1340" y="1119" width="100" height="86"/>
+<text x="1390" y="1248" class="small" text-anchor="middle">调用套接字接口</text>
+<text x="1390" y="1289" class="small" text-anchor="middle">读取后处理业务</text>
+<path id="edge-5" class="edge" d="M272 1193 H351" stroke="#398c76" marker-end="url(#arrow-green)" data-source="nic-1" data-target="buffer-1" data-tip="363,1193"/>
+<text x="317" y="1162" class="small" text-anchor="middle">⑤ 写入</text>
+<path id="edge-6" class="edge" d="M657 1193 H751" stroke="#398c76" marker-end="url(#arrow-green)" data-source="buffer-1" data-target="stack-1" data-tip="763,1193"/>
+<text x="710" y="1162" class="small" text-anchor="middle">⑥ 取包</text>
+<path id="edge-7" class="edge" d="M1177 1193 H1251" stroke="#398c76" marker-end="url(#arrow-green)" data-source="stack-1" data-target="app-1" data-tip="1263,1193"/>
+<text x="1220" y="1162" class="small" text-anchor="middle">⑦ 交付</text>
+<rect id="support" x="775" y="1450" width="730" height="65" rx="14" fill="#f4f6f8" stroke="#c9d3dd" stroke-width="2"/>
+<text x="1140" y="1492" class="body" text-anchor="middle">内核与驱动：资源管理、未加速的收发</text>
+<path id="edge-8" class="edge" d="M840 1342 V1426" stroke="#8796a8" marker-end="url(#arrow-gray)" data-source="stack-1" data-target="support" data-tip="840,1438" stroke-dasharray="7 6"/>
+<text x="1120" y="1421" class="small" text-anchor="middle">⑧ 资源管理与未加速路径</text>
+<use href="#cpu" x="64" y="1580" width="52" height="52"/>
+<text x="140" y="1599" class="body" text-anchor="start">省去可加速收发中的部分内核调用与交接；协议仍要处理，代码仍由 CPU 执行。</text>
+</svg>
