@@ -1,0 +1,26 @@
+===== switch X2522 to safe VFIO =====
+switched mode=DPDK transition=READY owner=vfio-pci
+
+===== one real SoupBinTCP/OUCH order =====
+{"ok":true,"client_order_id":3900000000,"transport":"DPDK"}
+dpdk_final orders=1 fills=1 queue=DEQUE_CV
+dpdk_runtime tcp_nodelay=true reactor_cpu=2 bridge_cpu=3 management_cpu=3
+
+===== X2522 native receipts =====
+driver=vfio-pci
+iommu_group=7
+group_device=0000:03:00.0
+unsafe_noiommu=N
+EAL: Using IOMMU type 1 (Type 1)
+EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)
+PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency
+pid=34511
+start_ticks=11628538
+boot_id=3807feeb-9fcc-4d4d-9f48-73af0b4d1394
+cmdline=/var/tmp/flle-trading-lab-20260901T111345Z-06-four-path-orders/flle-exchange --telemetry-host 10.1.1.101 --replay-file /var/tmp/flle-trading-lab-20260901T111345Z-06-four-path-orders/AAPL_NVDA.itch --book-checkpoint /var/tmp/flle-trading-lab-20260901T111345Z-06-four-path-orders/opening-book.checkpoint --market-date 2026-06-12 --market-mode UNICAST --replay-speed 1 
+0      0      20.1.1.1:43120   20.1.1.2:16095 users:(("flle-exchange",pid=34511,fd=8))
+0      0      10.1.1.1:22    10.1.1.111:32926 users:(("sshd",pid=34884,fd=4))         
+
+===== restore SFC =====
+{"mode":"SFC","transition":"READY","owner":"sfc","hardware_receipts":{"socket":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":24260,"start_ticks":11638730,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"socket-24260-11638730","attested_monotonic_ns":116388421965382,"path_counter":0,"verification":"LAUNCH_POSIX_CURRENT_PID"},"onload":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":24314,"start_ticks":11638748,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"onload-24314-11638748","attested_monotonic_ns":116388421965382,"path_counter":0,"verification":"LAUNCH_ONLOAD_CURRENT_PID"},"tcpdirect":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":24386,"start_ticks":11638764,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"tcpdirect-24386-11638764","attested_monotonic_ns":116388421965382,"path_counter":0,"verification":"LAUNCH_ZF_CURRENT_PID"},"dpdk":{"launch_verified":false,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u4ee3\u6536\u636e\u5f85\u91c7\u96c6"}}}
+restored mode=SFC transition=READY owner=sfc

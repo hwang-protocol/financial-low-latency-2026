@@ -1,0 +1,22 @@
+{"mode":"SFC","transition":"STOPPED","owner":"sfc","hardware_receipts":{}}
+
+===== root@10.1.1.1 =====
+vm-2522-01
+/sys/bus/pci/drivers/sfc
+8: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+
+===== root@10.1.1.2 =====
+vm-2522-02
+/sys/bus/pci/drivers/sfc
+52: ens64np1    inet 20.1.1.2/24 scope global ens64np1\       valid_lft forever preferred_lft forever
+
+===== .2 resource and link check =====
+0
+PING 20.1.1.1 (20.1.1.1) from 20.1.1.2 ens64np1: 56(84) bytes of data.
+64 bytes from 20.1.1.1: icmp_seq=1 ttl=64 time=0.045 ms
+64 bytes from 20.1.1.1: icmp_seq=2 ttl=64 time=0.031 ms
+64 bytes from 20.1.1.1: icmp_seq=3 ttl=64 time=0.024 ms
+
+--- 20.1.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2038ms
+rtt min/avg/max/mdev = 0.024/0.033/0.045/0.008 ms

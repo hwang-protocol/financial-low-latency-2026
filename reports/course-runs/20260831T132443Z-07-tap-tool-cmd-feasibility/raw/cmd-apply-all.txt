@@ -1,0 +1,266 @@
+===== show running-config diffs BEFORE =====
+$ show running-config diffs BEFORE
+show running-config diffs
+--- flash:/startup-config
++++ system:/running-config
+@@ -11,10 +11,18 @@
+ no aaa root
+ !
+ username admin privilege 15 role network-admin secret 5 $1$l7bhLSwL$8uEpS3kN.iM1oxiMu/LQI1
++username admin ssh-key ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1dV2le47i3YJoW9NFcqWbcEGe1pavdMsRkjoTFxIQs flle-course-jump-host-20260722
++!
++vlan 20
++   name fll
+ !
+ interface Ethernet1
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet2
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet3
+ !
+@@ -33,8 +41,12 @@
+ interface Ethernet10
+ !
+ interface Ethernet11
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet12
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet13
+ !
+@@ -63,6 +75,9 @@
+ interface Management1
+    ip address 10.1.1.253/24
+ !
++interface Vlan20
++   ip address 20.1.1.254/24
++!
+ no ip routing
+ !
+ end
+
+
+===== configure terminal =====
+$ configure terminal
+configure terminal
+
+===== default interface Ethernet3 cleanup =====
+$ default interface Ethernet3 cleanup
+default interface Ethernet3
+
+===== no monitor session FLLEPROBE cleanup =====
+$ no monitor session FLLEPROBE cleanup
+no monitor session FLLEPROBE
+% Monitor session FLLEPROBE does not exist.
+
+===== interface Ethernet3 =====
+$ interface Ethernet3
+interface Ethernet3
+
+===== switchport mode tap =====
+$ switchport mode tap
+switchport mode tap
+
+===== show active after tap =====
+$ show active after tap
+show active
+interface Ethernet3
+   switchport mode tap
+
+===== switchport mode tool =====
+$ switchport mode tool
+switchport mode tool
+
+===== show active after tool =====
+$ show active after tool
+show active
+interface Ethernet3
+   switchport mode tool
+
+===== mac timestamp before-fcs =====
+$ mac timestamp before-fcs
+mac timestamp before-fcs
+
+===== show active after timestamp =====
+$ show active after timestamp
+show active
+interface Ethernet3
+   mac timestamp before-fcs
+   switchport mode tool
+
+===== no mac timestamp =====
+$ no mac timestamp
+no mac timestamp
+
+===== switchport mode access =====
+$ switchport mode access
+switchport mode access
+
+===== exit if =====
+$ exit if
+exit
+
+===== monitor session FLLEPROBE =====
+$ monitor session FLLEPROBE
+monitor session FLLEPROBE
+% Incomplete command
+
+===== destination Ethernet3 =====
+$ destination Ethernet3
+destination Ethernet3
+% Invalid input
+
+===== source Ethernet3 rx =====
+$ source Ethernet3 rx
+source Ethernet3 rx
+% Invalid input
+
+===== show active monitor =====
+$ show active monitor
+show active
+% Invalid input
+
+===== exit monitor =====
+$ exit monitor
+exit
+
+===== no monitor session FLLEPROBE =====
+$ no monitor session FLLEPROBE
+no monitor session FLLEPROBE
+% Invalid input
+
+===== default interface Ethernet3 =====
+$ default interface Ethernet3
+default interface Ethernet3
+% Invalid input
+
+===== end =====
+$ end
+end
+% Invalid input
+
+===== restore default Et3 =====
+$ restore default Et3
+configure terminal
+
+===== restore default Et3 cmd =====
+$ restore default Et3 cmd
+default interface Ethernet3
+
+===== restore no session =====
+$ restore no session
+no monitor session FLLEPROBE
+% Monitor session FLLEPROBE does not exist.
+
+===== restore end =====
+$ restore end
+end
+
+===== show running-config diffs AFTER =====
+$ show running-config diffs AFTER
+show running-config diffs
+--- flash:/startup-config
++++ system:/running-config
+@@ -11,10 +11,18 @@
+ no aaa root
+ !
+ username admin privilege 15 role network-admin secret 5 $1$l7bhLSwL$8uEpS3kN.iM1oxiMu/LQI1
++username admin ssh-key ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1dV2le47i3YJoW9NFcqWbcEGe1pavdMsRkjoTFxIQs flle-course-jump-host-20260722
++!
++vlan 20
++   name fll
+ !
+ interface Ethernet1
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet2
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet3
+ !
+@@ -33,8 +41,12 @@
+ interface Ethernet10
+ !
+ interface Ethernet11
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet12
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet13
+ !
+@@ -63,6 +75,9 @@
+ interface Management1
+    ip address 10.1.1.253/24
+ !
++interface Vlan20
++   ip address 20.1.1.254/24
++!
+ no ip routing
+ !
+ end
+
+
+===== show spanning-tree vlan 20 AFTER =====
+$ show spanning-tree vlan 20 AFTER
+show spanning-tree vlan 20
+Spanning tree instance for vlan 20
+MST0
+  Spanning tree enabled protocol mstp
+  Root ID    Priority    32768
+             Address     001c.7368.e239
+             This bridge is the root
+
+  Bridge ID  Priority    32768  (priority 32768 sys-id-ext 0)
+             Address     001c.7368.e239
+             Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
+
+Interface        Role       State      Cost      Prio.Nbr Type
+---------------- ---------- ---------- --------- -------- --------------------
+Et1              designated forwarding 2000      128.1    P2p Edge                      
+Et2              designated forwarding 2000      128.2    P2p Edge                      
+Et11             designated forwarding 2000      128.11   P2p Edge                      
+Et12             designated forwarding 2000      128.12   P2p Edge                      
+
+
+===== show monitor session AFTER =====
+$ show monitor session AFTER
+show monitor session
+No sessions created
+
+
+===== show tap aggregation groups AFTER =====
+$ show tap aggregation groups AFTER
+show tap aggregation groups
+% Tap-aggregation is not enabled
+
+===== show interfaces Ethernet3 switchport AFTER =====
+$ show interfaces Ethernet3 switchport AFTER
+show interfaces Ethernet3 switchport
+Name: Et3
+Switchport: Enabled
+Administrative Mode: static access
+Operational Mode: static access
+MAC Address Learning: enabled
+Dot1q ethertype/TPID: 0x8100 (active)
+Dot1q VLAN Tag: Allowed
+Access Mode VLAN: 1 (default)
+Trunking Native Mode VLAN: 1 (default)
+Administrative Native VLAN tagging: disabled
+Trunking VLANs Enabled: ALL
+Static Trunk Groups: 
+Dynamic Trunk Groups: 
+Source interface filtering: enabled
+VLAN forwarding mode: allowedVlansOnly
+

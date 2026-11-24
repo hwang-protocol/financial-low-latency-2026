@@ -1,0 +1,34 @@
+
+===== root@10.1.1.1 =====
+$ hostname
+vm-2522-01
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+$ ls -l /sys/bus/pci/devices/0000:03:00.0/net
+total 0
+drwxr-xr-x 5 root root 0 Aug 31 11:42 ens64np0
+$ ip -4 -o addr show dev ens64np0
+7: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+$ ls /sys/bus/pci/devices/0000:03:00.0/iommu_group/devices
+0000:03:00.0
+
+===== root@10.1.1.2 =====
+$ hostname
+vm-2522-02
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+$ ls -l /sys/bus/pci/devices/0000:03:00.0/net
+total 0
+drwxr-xr-x 5 root root 0 Aug 31 11:03 ens64np1
+$ ip -4 -o addr show dev ens64np1
+4: ens64np1    inet 20.1.1.2/24 brd 20.1.1.255 scope global ens64np1\       valid_lft forever preferred_lft forever
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+$ ls /sys/bus/pci/devices/0000:03:00.0/iommu_group/devices
+0000:03:00.0

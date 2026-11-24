@@ -1,0 +1,13 @@
+===== switch X2522 to safe VFIO =====
+{"mode":"DPDK","transition":"READY","owner":"vfio-pci","hardware_receipts":{"socket":{"verified":true,"summary":"sfc netdev + Kernel TCP \u771f\u5355"},"onload":{"verified":true,"summary":"Onloaded(Valid) + X2522 VI"},"tcpdirect":{"verified":true,"summary":"ZF stack + \u5f3a\u5236 CTPIO \u5408\u540c"},"dpdk":{"verified":true,"summary":"IOMMU type 1 + net/sfc PMD + ULL firmware"}}}
+===== one real SoupBinTCP/OUCH order =====
+{"ok":true,"client_order_id":3900000000,"transport":"DPDK"}
+dpdk_final orders=1 fills=1 queue=DEQUE_CV
+
+===== X2522 native receipts =====
+EAL: Using IOMMU type 1 (Type 1)
+EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)
+PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency
+
+===== restore SFC =====
+{"mode":"SFC","transition":"READY","owner":"sfc","hardware_receipts":{"socket":{"verified":true,"summary":"sfc netdev + Kernel TCP \u771f\u5355"},"onload":{"verified":true,"summary":"Onloaded(Valid) + X2522 VI"},"tcpdirect":{"verified":true,"summary":"ZF stack + \u5f3a\u5236 CTPIO \u5408\u540c"},"dpdk":{"verified":true,"summary":"IOMMU type 1 + net/sfc PMD + ULL firmware"}}}restored mode=SFC transition=READY owner=sfc

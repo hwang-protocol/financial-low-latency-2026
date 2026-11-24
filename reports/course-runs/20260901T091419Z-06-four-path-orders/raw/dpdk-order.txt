@@ -1,0 +1,15 @@
+===== switch X2522 to safe VFIO =====
+switched mode=DPDK transition=READY owner=vfio-pci
+
+===== one real SoupBinTCP/OUCH order =====
+{"ok":true,"client_order_id":3900000000,"transport":"DPDK"}
+dpdk_final orders=1 fills=1 queue=DEQUE_CV
+dpdk_runtime tcp_nodelay=true reactor_cpu=2 bridge_cpu=3 management_cpu=3
+
+===== X2522 native receipts =====
+EAL: Using IOMMU type 1 (Type 1)
+EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)
+PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency
+
+===== restore SFC =====
+{"mode":"SFC","transition":"READY","owner":"sfc","hardware_receipts":{"socket":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":3326,"start_ticks":10920490,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"socket-3326-10920490","attested_monotonic_ns":109206002639329,"path_counter":0,"verification":"LAUNCH_POSIX_CURRENT_PID"},"onload":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":3379,"start_ticks":10920507,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"onload-3379-10920507","attested_monotonic_ns":109206002639329,"path_counter":0,"verification":"LAUNCH_ONLOAD_CURRENT_PID"},"tcpdirect":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":3451,"start_ticks":10920523,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"tcpdirect-3451-10920523","attested_monotonic_ns":109206002639329,"path_counter":0,"verification":"LAUNCH_ZF_CURRENT_PID"},"dpdk":{"launch_verified":false,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u4ee3\u6536\u636e\u5f85\u91c7\u96c6"}}}restored mode=SFC transition=READY owner=sfc

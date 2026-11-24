@@ -1,0 +1,134 @@
+EAL: Detected CPU lcores: 4
+EAL: Detected NUMA nodes: 1
+EAL: Detected shared linkage of DPDK
+EAL: Multi-process socket /var/run/dpdk/rte/mp_socket
+EAL: Selected IOVA mode 'VA'
+EAL: No available 1048576 kB hugepages reported
+EAL: VFIO support initialized
+EAL: Using IOMMU type 1 (Type 1)
+EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)
+PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency
+PMD: sfc_efx 0000:03:00.0 #0: use ef10 Rx datapath
+PMD: sfc_efx 0000:03:00.0 #0: use ef10 Tx datapath
+testpmd: Flow action FLAG will not affect Rx mbufs on port 0
+testpmd: Flow action MARK will not affect Rx mbufs on port 0
+testpmd: Flow tunnel offload support might be limited or unavailable on port 0
+testpmd: create a new mbuf pool <mb_pool_0>: n=2048, size=2176, socket=0
+testpmd: preferred mempool ops selected: ring_mp_mc
+
+Warning! port-topology=paired and odd forward ports number, the last port will pair with itself.
+
+PMD: sfc_efx 0000:03:00.0 #0: Rx checksum offloads cannot be disabled - always on (IPv4/TCP/UDP)
+Set macswap packet forwarding mode
+Auto-start selected
+Configuring Port 0 (socket 0)
+Port 0: 00:0F:53:D3:AF:20
+Checking link statuses...
+Done
+No commandline core given, start packet forwarding
+macswap packet forwarding - ports=1 - cores=1 - streams=1 - NUMA support enabled, MP allocation mode: native
+Logical Core 2 (socket 0) forwards packets on 1 streams:
+  RX P=0/Q=0 (socket 0) -> TX P=0/Q=0 (socket 0) peer=02:00:00:00:00:00
+
+  macswap packet forwarding packets/burst=32
+  nb forwarding cores=1 - nb forwarding ports=1
+  port 0: RX queue number: 1 Tx queue number: 1
+    Rx offloads=0xe Tx offloads=0x0
+    RX queue: 0
+      RX desc=512 - RX free threshold=32
+      RX threshold registers: pthresh=0 hthresh=0  wthresh=0
+      RX Offloads=0xe
+    TX queue: 0
+      TX desc=512 - TX free threshold=32
+      TX threshold registers: pthresh=0 hthresh=0  wthresh=0
+      TX offloads=0x0 - TX RS bit threshold=0
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 0          RX-missed: 0          RX-bytes:  0
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 0          TX-errors: 0          TX-bytes:  0
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:            0
+  Tx-pps:            0          Tx-bps:            0
+  ############################################################################
+PMD: sfc_efx 0000:03:00.0 #0: link status change event
+
+Port 0: link state change event
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 1          RX-missed: 0          RX-bytes:  119
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 1          TX-errors: 0          TX-bytes:  119
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:          472
+  Tx-pps:            0          Tx-bps:          472
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 2          RX-missed: 0          RX-bytes:  304
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 2          TX-errors: 0          TX-bytes:  304
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:          736
+  Tx-pps:            0          Tx-bps:          736
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 3          RX-missed: 0          RX-bytes:  423
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 3          TX-errors: 0          TX-bytes:  423
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:          472
+  Tx-pps:            0          Tx-bps:          472
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 33004      RX-missed: 0          RX-bytes:  2178542
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 33004      TX-errors: 0          TX-bytes:  2178542
+
+  Throughput (since last show)
+  Rx-pps:        16499          Rx-bps:      8712040
+  Tx-pps:        16499          Tx-bps:      8712040
+  ############################################################################
+Telling cores to stop...
+Waiting for lcores to finish...
+
+  ---------------------- Forward statistics for port 0  ----------------------
+  RX-packets: 33005          RX-dropped: 0             RX-total: 33005
+  TX-packets: 33005          TX-dropped: 0             TX-total: 33005
+  ----------------------------------------------------------------------------
+
+  +++++++++++++++ Accumulated forward statistics for all ports+++++++++++++++
+  RX-packets: 33005          RX-dropped: 0             RX-total: 33005
+  TX-packets: 33005          TX-dropped: 0             TX-total: 33005
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Done.
+
+Stopping port 0...
+PMD: sfc_efx 0000:03:00.0 #0: TxQ 0 (internal 0) flushed
+PMD: sfc_efx 0000:03:00.0 #0: RxQ 0 (internal 0) flushed
+Stopping ports...
+Done
+
+Shutting down port 0...
+Closing ports...
+Port 0 is closed
+Done
+
+Bye...

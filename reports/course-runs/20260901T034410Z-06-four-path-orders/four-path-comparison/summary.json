@@ -1,0 +1,125 @@
+{
+  "schema": "flle.ch06-four-order-paths.v2",
+  "run_id": "20260901T034410Z-06-four-path-orders",
+  "created_utc": "2026-09-01T03:48:28Z",
+  "phase_order": "three sfc paths with rotated order, then exclusive DPDK, then restore sfc",
+  "limitations": [
+    "DPDK owns the X2522 through vfio-pci and cannot be interleaved with the three sfc paths.",
+    "During the sfc phase all three clients and their Exchange sessions remain online; the two paths not being sampled sleep on DEQUE_CV.",
+    "During the DPDK phase the sfc clients are stopped and the DPDK client runs exclusively.",
+    "DEQUE_CV fixes the application handoff; TCPDirect and F-Stack still poll their network reactors.",
+    "OpenOnload uses --profile=latency, so its result combines the accelerated user-space path with profile polling."
+  ],
+  "runtime_contract": {
+    "application_handoff": "DEQUE_CV",
+    "data_cpu": 2,
+    "management_cpu": 3,
+    "dpdk_bridge_cpu": 3,
+    "fstack_idle_sleep_us": 0,
+    "fstack_pkt_tx_delay_us": 0,
+    "onload_profile": "latency"
+  },
+  "parameters": {
+    "warmup_per_round": 100,
+    "samples_per_round": 1000,
+    "rounds": 3
+  },
+  "summary": {
+    "SOCKET": {
+      "label": "Kernel Socket",
+      "order_rtt": {
+        "rounds": 3,
+        "p50_ns": 47615,
+        "p99_ns": 67092,
+        "mean_ns": 51397,
+        "max_ns": 1408345
+      },
+      "queue_to_send": {
+        "rounds": 3,
+        "p50_ns": 7273,
+        "p99_ns": 16924,
+        "mean_ns": 8312,
+        "max_ns": 408087
+      },
+      "submit_to_final": {
+        "rounds": 3,
+        "p50_ns": 55191,
+        "p99_ns": 83493,
+        "mean_ns": 59450,
+        "max_ns": 1418691
+      }
+    },
+    "OPENONLOAD": {
+      "label": "OpenOnload",
+      "order_rtt": {
+        "rounds": 3,
+        "p50_ns": 30432,
+        "p99_ns": 78924,
+        "mean_ns": 35779,
+        "max_ns": 1956013
+      },
+      "queue_to_send": {
+        "rounds": 3,
+        "p50_ns": 8691,
+        "p99_ns": 13106,
+        "mean_ns": 8673,
+        "max_ns": 429812
+      },
+      "submit_to_final": {
+        "rounds": 3,
+        "p50_ns": 38797,
+        "p99_ns": 114581,
+        "mean_ns": 44629,
+        "max_ns": 1965701
+      }
+    },
+    "TCPDIRECT": {
+      "label": "TCPDirect",
+      "order_rtt": {
+        "rounds": 3,
+        "p50_ns": 28993,
+        "p99_ns": 45318,
+        "mean_ns": 33774,
+        "max_ns": 3772544
+      },
+      "queue_to_send": {
+        "rounds": 3,
+        "p50_ns": 7237,
+        "p99_ns": 13288,
+        "mean_ns": 8064,
+        "max_ns": 74426
+      },
+      "submit_to_final": {
+        "rounds": 3,
+        "p50_ns": 36649,
+        "p99_ns": 58082,
+        "mean_ns": 41839,
+        "max_ns": 3783113
+      }
+    },
+    "DPDK": {
+      "label": "DPDK + F-Stack TCP",
+      "order_rtt": {
+        "rounds": 3,
+        "p50_ns": 46000,
+        "p99_ns": 112458,
+        "mean_ns": 49937,
+        "max_ns": 1249519
+      },
+      "queue_to_send": {
+        "rounds": 3,
+        "p50_ns": 5557,
+        "p99_ns": 38848,
+        "mean_ns": 11092,
+        "max_ns": 358103
+      },
+      "submit_to_final": {
+        "rounds": 3,
+        "p50_ns": 51655,
+        "p99_ns": 146562,
+        "mean_ns": 61029,
+        "max_ns": 1255985
+      }
+    }
+  }
+}

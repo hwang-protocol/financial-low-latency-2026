@@ -1,0 +1,32 @@
+===== 活连接 Onloaded(Valid) =====
+----- server -----
+TCP 5:2045 lcl=20.1.1.1:46211 rmt=20.1.1.2:44449 ESTABLISHED
+  snd: sndbuf_pkts=136 Onloaded(Valid) if=7 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 203-e
+env: LD_PRELOAD=libonload.so
+server_bytes=52
+
+----- client -----
+TCP 2:2047 lcl=20.1.1.2:44449 rmt=20.1.1.1:46211 ESTABLISHED
+  snd: sndbuf_pkts=136 Onloaded(Valid) if=4 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-15
+env: LD_PRELOAD=libonload.so
+client_bytes=52
+client_reply=ACK
+
+===== 同一份程序两种启动 =====
+----- kernel -----
+client_bytes=52
+client_reply=ACK
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 35.21    0.000025          25         1           connect
+ 19.72    0.000014          14         1           sendto
+ 16.90    0.000012          12         1           socket
+ 12.68    0.000009           9         1           recvfrom
+  9.86    0.000007           7         1           getsockname
+  5.63    0.000004           4         1           getpeername
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000071          11         6           total
+
+----- onload -----
+client_bytes=52
+client_reply=ACK

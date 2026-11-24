@@ -1,0 +1,31 @@
+measure=SOCKET round=1 position=1
+measure=OPENONLOAD round=1 position=2
+measure=DPDK round=1 position=3
+measure=TCPDIRECT round=1 position=4
+measure=OPENONLOAD round=2 position=1
+measure=TCPDIRECT round=2 position=2
+measure=SOCKET round=2 position=3
+measure=DPDK round=2 position=4
+measure=TCPDIRECT round=3 position=1
+measure=DPDK round=3 position=2
+measure=OPENONLOAD round=3 position=3
+measure=SOCKET round=3 position=4
+measure=DPDK round=4 position=1
+measure=SOCKET round=4 position=2
+measure=TCPDIRECT round=4 position=3
+measure=OPENONLOAD round=4 position=4
+
+===== 描述性副表：同一订单合同的四轮统计量中位数 =====
+路径                    send→final P50    P95       P99        queue→final P50
+Kernel Socket                39801 ns     53427 ns     66692 ns         48983 ns
+OpenOnload                   25584 ns     31467 ns     36755 ns         33733 ns
+TCPDirect                    20582 ns     27512 ns     34986 ns         29238 ns
+DPDK + F-Stack TCP           29386 ns     37489 ns     42952 ns         35223 ns
+合同：1 股可成交 IOC；SoupBinTCP/OUCH；逐笔单飞；DEQUE_CV；数据 CPU 2；辅助 CPU 3
+全部提交身份：submitted total=unique=17600；result_files=16
+正式样本身份：measured total=unique=16000；submission_to_raw=ORDER_AND_SET_EXACT
+交易所账本硬门：before=2070 after=19670 delta=expected=17600
+顺序平衡：每条路径每位置一次；12 种行内有序前序各一次；每格 warmup 只减弱 carryover；末尾 SFC
+原生收据：16 格 pre/post 共 32 套；原件、摘要和执行脚本均进 SHA；重型探针不进计时样本
+边界：DPDK 独占 VFIO 分阶段测；Onload latency profile、ZF/F-Stack reactor 会轮询
+evidence=/financial-low-latency/Documents/reports/course-runs/20260901T103156Z-06-four-path-orders/four-path-comparison

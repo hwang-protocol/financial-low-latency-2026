@@ -1,0 +1,104 @@
+exchange_data=PASS interface=ens64np0 address=20.1.1.1/24 link=yes
+trader_data=PASS interface=ens64np1 address=20.1.1.2/24 link=yes
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+rm -f build/flle-exchange build/flle-trader build/flle-trader-tcpdirect build/flle-trader-dpdk build/flle-selftest build/flle-itch-filter build/flle-book-checkpoint
+mkdir -p build
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-exchange src/exchange.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-trader src/trader.cpp src/posix_order_transport.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-selftest src/selftest.cpp
+build/flle-selftest
+SELFTEST PASS protocol=ITCH5/MoldUDP64+OUCH5/SoupBinTCP mold_messages=2 book=AAPL ouch=O/A/E/J
+python3 -m unittest discover -s tests -v
+test_automatic_flow_does_not_evict_manual_history (test_gateway.StateStoreTest) ... ok
+test_completed_order_updates_queued_row (test_gateway.StateStoreTest) ... ok
+test_management_line_roundtrip (test_gateway.StateStoreTest) ... ok
+test_market_and_fill_projection (test_gateway.StateStoreTest) ... ok
+test_new_replay_loop_clears_all_paper_state (test_gateway.StateStoreTest) ... ok
+test_prometheus_metrics_keep_identity_low_cardinality (test_gateway.StateStoreTest) ... ok
+test_transport_lab_is_an_explicit_chapter_six_feature (test_gateway.StateStoreTest) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+OK
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-itch-filter src/itch_filter.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-book-checkpoint src/book_checkpoint.cpp
+checkpoint=PASS start_ns=34200000000000 source_messages=97498 active_orders=18108
+transport-runtime.tgz: OK
+tar: flle-ch06-four-path/MANIFEST.sha256: time stamp 2026-09-01 12:30:00 is 363.769247106 s in the future
+tar: flle-ch06-four-path/bin/dpdk-devbind.py: time stamp 2026-09-01 12:30:00 is 363.769062934 s in the future
+tar: flle-ch06-four-path/bin/flle-trader: time stamp 2026-09-01 12:30:00 is 363.750246194 s in the future
+tar: flle-ch06-four-path/bin/flle-trader-dpdk: time stamp 2026-09-01 12:30:00 is 363.488109175 s in the future
+tar: flle-ch06-four-path/bin/flle-trader-tcpdirect: time stamp 2026-09-01 12:30:00 is 363.438977944 s in the future
+tar: flle-ch06-four-path/bin/zf_stackdump: time stamp 2026-09-01 12:30:00 is 363.408532336 s in the future
+tar: flle-ch06-four-path/bin: time stamp 2026-09-01 12:30:00 is 363.408438625 s in the future
+tar: flle-ch06-four-path/etc/f-stack-x2522.ini: time stamp 2026-09-01 12:30:00 is 363.408295811 s in the future
+tar: flle-ch06-four-path/etc: time stamp 2026-09-01 12:30:00 is 363.408230409 s in the future
+tar: flle-ch06-four-path/lib/libIPSec_MB.so.1: time stamp 2026-09-01 12:30:00 is 363.361776147 s in the future
+tar: flle-ch06-four-path/lib/libatomic.so.1: time stamp 2026-09-01 12:30:00 is 363.361515513 s in the future
+tar: flle-ch06-four-path/lib/libbpf.so.0: time stamp 2026-09-01 12:30:00 is 363.358741771 s in the future
+tar: flle-ch06-four-path/lib/libbsd.so.0: time stamp 2026-09-01 12:30:00 is 363.35816253 s in the future
+tar: flle-ch06-four-path/lib/libcap.so.2: time stamp 2026-09-01 12:30:00 is 363.3575915 s in the future
+tar: flle-ch06-four-path/lib/libcrypto.so.3: time stamp 2026-09-01 12:30:00 is 363.324354043 s in the future
+tar: flle-ch06-four-path/lib/libdbus-1.so.3: time stamp 2026-09-01 12:30:00 is 363.321830927 s in the future
+tar: flle-ch06-four-path/lib/libelf.so.1: time stamp 2026-09-01 12:30:00 is 363.320713274 s in the future
+tar: flle-ch06-four-path/lib/libfdt.so.1: time stamp 2026-09-01 12:30:00 is 363.320424634 s in the future
+tar: flle-ch06-four-path/lib/libgcrypt.so.20: time stamp 2026-09-01 12:30:00 is 363.310551142 s in the future
+tar: flle-ch06-four-path/lib/libgpg-error.so.0: time stamp 2026-09-01 12:30:00 is 363.30935756 s in the future
+tar: flle-ch06-four-path/lib/libibverbs.so.1: time stamp 2026-09-01 12:30:00 is 363.308074089 s in the future
+tar: flle-ch06-four-path/lib/libisal.so.2: time stamp 2026-09-01 12:30:00 is 363.305986994 s in the future
+tar: flle-ch06-four-path/lib/libjansson.so.4: time stamp 2026-09-01 12:30:00 is 363.305410216 s in the future
+tar: flle-ch06-four-path/lib/liblz4.so.1: time stamp 2026-09-01 12:30:00 is 363.304257967 s in the future
+tar: flle-ch06-four-path/lib/liblzma.so.5: time stamp 2026-09-01 12:30:00 is 363.302851026 s in the future
+tar: flle-ch06-four-path/lib/libmd.so.0: time stamp 2026-09-01 12:30:00 is 363.30226962 s in the future
+tar: flle-ch06-four-path/lib/libmlx4.so.1: time stamp 2026-09-01 12:30:00 is 363.301776079 s in the future
+tar: flle-ch06-four-path/lib/libmlx5.so.1: time stamp 2026-09-01 12:30:00 is 363.297847932 s in the future
+tar: flle-ch06-four-path/lib/libnl-3.so.200: time stamp 2026-09-01 12:30:00 is 363.296773953 s in the future
+tar: flle-ch06-four-path/lib/libnl-route-3.so.200: time stamp 2026-09-01 12:30:00 is 363.292739496 s in the future
+tar: flle-ch06-four-path/lib/libnuma.so.1: time stamp 2026-09-01 12:30:00 is 363.29219984 s in the future
+tar: flle-ch06-four-path/lib/libpcap.so.0.8: time stamp 2026-09-01 12:30:00 is 363.289677575 s in the future
+tar: flle-ch06-four-path/lib/libsystemd.so.0: time stamp 2026-09-01 12:30:00 is 363.283057601 s in the future
+tar: flle-ch06-four-path/lib/libz.so.1: time stamp 2026-09-01 12:30:00 is 363.282176769 s in the future
+tar: flle-ch06-four-path/lib/libzstd.so.1: time stamp 2026-09-01 12:30:00 is 363.275156039 s in the future
+tar: flle-ch06-four-path/lib: time stamp 2026-09-01 12:30:00 is 363.275046165 s in the future
+tar: flle-ch06-four-path: time stamp 2026-09-01 12:30:00 is 363.274967523 s in the future
+bin/dpdk-devbind.py: OK
+bin/flle-trader: OK
+bin/flle-trader-dpdk: OK
+bin/flle-trader-tcpdirect: OK
+bin/zf_stackdump: OK
+etc/f-stack-x2522.ini: OK
+lib/libIPSec_MB.so.1: OK
+lib/libatomic.so.1: OK
+lib/libbpf.so.0: OK
+lib/libbsd.so.0: OK
+lib/libcap.so.2: OK
+lib/libcrypto.so.3: OK
+lib/libdbus-1.so.3: OK
+lib/libelf.so.1: OK
+lib/libfdt.so.1: OK
+lib/libgcrypt.so.20: OK
+lib/libgpg-error.so.0: OK
+lib/libibverbs.so.1: OK
+lib/libisal.so.2: OK
+lib/libjansson.so.4: OK
+lib/liblz4.so.1: OK
+lib/liblzma.so.5: OK
+lib/libmd.so.0: OK
+lib/libmlx4.so.1: OK
+lib/libmlx5.so.1: OK
+lib/libnl-3.so.200: OK
+lib/libnl-route-3.so.200: OK
+lib/libnuma.so.1: OK
+lib/libpcap.so.0.8: OK
+lib/libsystemd.so.0: OK
+lib/libz.so.1: OK
+lib/libzstd.so.1: OK
+started mode=SFC transition=READY owner=sfc
+
+===== Kernel Socket baseline order =====
+{"ok":true,"client_order_id":2341424481,"transport":"SOCKET"}
+data_plane mode=SFC transition=READY owner=sfc
+kernel_final orders=1 fills=1 queue=DEQUE_CV engine=KERNEL_SOCKET
+
+GUI=http://10.1.1.101:8088/

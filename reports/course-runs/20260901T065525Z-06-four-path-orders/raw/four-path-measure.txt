@@ -1,0 +1,28 @@
+measure=SOCKET round=1
+measure=OPENONLOAD round=1
+measure=TCPDIRECT round=1
+measure=DPDK round=1
+measure=OPENONLOAD round=2
+measure=TCPDIRECT round=2
+measure=DPDK round=2
+measure=SOCKET round=2
+measure=TCPDIRECT round=3
+measure=DPDK round=3
+measure=SOCKET round=3
+measure=OPENONLOAD round=3
+measure=DPDK round=4
+measure=SOCKET round=4
+measure=OPENONLOAD round=4
+measure=TCPDIRECT round=4
+
+===== 同一真实订单的四轮中位数 =====
+路径                    send→final P50    P95       P99        queue→final P50
+Kernel Socket                39861 ns     52007 ns     82467 ns         48262 ns
+OpenOnload                   25214 ns     30939 ns     59319 ns         32997 ns
+TCPDirect                    24378 ns     29832 ns     57821 ns         32082 ns
+DPDK + F-Stack TCP           27195 ns     36770 ns     46954 ns         33461 ns
+合同：1 股可成交 IOC；SoupBinTCP/OUCH；逐笔单飞；DEQUE_CV；数据 CPU 2；辅助 CPU 3
+样本身份：client_order_id total=unique=16000；raw_files=16
+顺序平衡：4×4 Latin 方；每条路径各占一次第 1 / 2 / 3 / 4 位；末尾 SFC
+边界：DPDK 独占 VFIO 分阶段测；Onload latency profile、ZF/F-Stack reactor 会轮询
+evidence=/financial-low-latency/Documents/reports/course-runs/20260901T065525Z-06-four-path-orders/four-path-comparison

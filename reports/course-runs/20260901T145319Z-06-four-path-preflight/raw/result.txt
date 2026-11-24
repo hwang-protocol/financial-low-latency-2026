@@ -1,0 +1,34 @@
+artifacts/blobs/x2522/ch06-four-path/v12/flle-ch06-four-path-v12-x86_64-jammy-runtime.tgz: OK
+
+===== root@10.1.1.1 =====
+vm-2522-01
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:00:12 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+crw-rw-rw- 1 root root 237, 0 Aug 31 11:37 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Aug 31 16:25 /dev/sfc_char
+driver=sfc
+8: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+cmdline=BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+iommu_group=7 group_device=0000:03:00.0
+
+===== root@10.1.1.2 =====
+vm-2522-02
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:03:13 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+crw-rw-rw- 1 root root 237, 0 Sep  1 20:14 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Sep  1 22:46 /dev/sfc_char
+driver=sfc
+74: ens64np1    inet 20.1.1.2/24 scope global ens64np1\       valid_lft forever preferred_lft forever
+cmdline=BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+iommu_group=7 group_device=0000:03:00.0
+control_assets=PASS replay_bytes=561727241 symbols=AAPL,NVDA
+exchange_data=PASS interface=ens64np0 address=20.1.1.1/24 link=yes
+trader_data=PASS interface=ens64np1 address=20.1.1.2/24 link=yes
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+transport_preflight=PASS runtime_sha256=163618ccbb99d272d1f4703822781984d754c690d23fba5503e503486e33c9f3 queue=DEQUE_CV

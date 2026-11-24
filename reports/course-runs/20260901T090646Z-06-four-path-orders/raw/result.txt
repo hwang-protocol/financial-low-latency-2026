@@ -1,0 +1,75 @@
+exchange_data=PASS interface=ens64np0 address=20.1.1.1/24 link=yes
+trader_data=PASS interface=ens64np1 address=20.1.1.2/24 link=yes
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+rm -f build/flle-exchange build/flle-trader build/flle-trader-tcpdirect build/flle-trader-dpdk build/flle-selftest build/flle-itch-filter build/flle-book-checkpoint
+mkdir -p build
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-exchange src/exchange.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-trader src/trader.cpp src/posix_order_transport.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-selftest src/selftest.cpp
+build/flle-selftest
+SELFTEST PASS protocol=ITCH5/MoldUDP64+OUCH5/SoupBinTCP mold_messages=2 book=AAPL ouch=O/A/E/J
+python3 -m unittest discover -s tests -v
+test_equal_cell_mean_is_half_up (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_pooled_summary_rejects_unequal_cells (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_pooled_summary_uses_all_equal_cells (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_automatic_flow_does_not_evict_manual_history (test_gateway.StateStoreTest) ... ok
+test_completed_order_updates_queued_row (test_gateway.StateStoreTest) ... ok
+test_management_line_roundtrip (test_gateway.StateStoreTest) ... ok
+test_market_and_fill_projection (test_gateway.StateStoreTest) ... ok
+test_new_replay_loop_clears_all_paper_state (test_gateway.StateStoreTest) ... ok
+test_prometheus_metrics_keep_identity_low_cardinality (test_gateway.StateStoreTest) ... ok
+test_transport_lab_is_an_explicit_chapter_six_feature (test_gateway.StateStoreTest) ... ok
+test_cyclic_position_only_order_fails_predecessor_hard_gate (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_default_identity_gates_cover_all_17600_submissions (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_exchange_ledger_gate_rejects_replay_change (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_exchange_ledger_gate_rejects_too_few_entries (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_exchange_ledger_gate_rejects_too_many_entries (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_formal_measurement_stops_gateway_polling (test_measure_four_transports.FourTransportStatisticsTest) ... ERROR
+test_four_round_summary_rounds_half_nanosecond_up (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_hugepage_contract_accepts_sfc_and_dpdk_profiles (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_hugepage_contract_rejects_wrong_active_pool (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_hugepage_reader_uses_read_only_root_ssh (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_measurement_mapping_rejects_response_order_mismatch (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_measurement_mapping_rejects_response_set_mismatch (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_nearest_rank_summary_includes_p95 (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_order_balances_positions_and_within_round_predecessors (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_path_receipt_distinguishes_launch_from_current_path (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_report_persists_identity_summary_and_total_equals_unique (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_round_summary_uses_median_of_round_percentiles (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_sample_identity_rejects_duplicate_with_both_locations (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_sample_identity_rejects_duplicate_within_raw_file (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_sample_identity_success_reports_counts_and_ranges (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_single_flight_returns_the_submitted_client_order_id (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_status_collector_has_no_heavy_stack_probe_or_receipt_write (test_measure_four_transports.FourTransportStatisticsTest) ... ERROR
+test_submission_identity_rejects_cross_file_collision (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_submission_identity_rejects_warmup_measurement_collision (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+
+======================================================================
+ERROR: test_formal_measurement_stops_gateway_polling (test_measure_four_transports.FourTransportStatisticsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/flle-trading-lab-20260901T090646Z-06-four-path-orders/tests/test_measure_four_transports.py", line 558, in test_formal_measurement_stops_gateway_polling
+    ).read_text()
+  File "/usr/lib/python3.10/pathlib.py", line 1134, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/usr/lib/python3.10/pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+FileNotFoundError: [Errno 2] No such file or directory: '/var/tmp/flle-trading-lab-20260901T090646Z-06-four-path-orders/scripts/transport_labctl.sh'
+
+======================================================================
+ERROR: test_status_collector_has_no_heavy_stack_probe_or_receipt_write (test_measure_four_transports.FourTransportStatisticsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/flle-trading-lab-20260901T090646Z-06-four-path-orders/tests/test_measure_four_transports.py", line 546, in test_status_collector_has_no_heavy_stack_probe_or_receipt_write
+    ).read_text()
+  File "/usr/lib/python3.10/pathlib.py", line 1134, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/usr/lib/python3.10/pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+FileNotFoundError: [Errno 2] No such file or directory: '/var/tmp/flle-trading-lab-20260901T090646Z-06-four-path-orders/scripts/transport_labctl.sh'
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.066s
+
+FAILED (errors=2)
+make: *** [Makefile:49: test] Error 1

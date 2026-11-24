@@ -1,0 +1,16 @@
+===== 平衡主表：四个 Williams 单元统计量等权平均 =====
+路径                    send→final P50    P95       P99        queue→final P50
+Kernel Socket                40426 ns     55721 ns     62854 ns         49093 ns
+OpenOnload                   26164 ns     29626 ns     37920 ns         34950 ns
+TCPDirect                    25654 ns     28706 ns     32690 ns         34376 ns
+DPDK + F-Stack TCP           28676 ns     33737 ns     37585 ns         34170 ns
+平衡合同：每路每位置一次；12 种行内有序前序各一次；四格等权
+身份硬门：submitted=17600；warmup Executed=1600；measured Executed=16000
+原生路径收据：16/16 格 pre/post 独立复解；PID/start_ticks 与计数增长一致
+DPDK 端点：Exchange 当前 PID 所见 20.1.1.2 peer；不冒充客户端 PID 绑定
+DPDK port 0：RX delta=8811 TX delta=4404 4/4 格 drop/error delta=0
+TCPDirect 重传观察：delta_sum=8；路径健康线索，不映射到延迟样本
+程序来源：analyzer 与 measure 模块均匹配 formal RUN 封存 SHA
+账本与回放：delta=expected=17600 replay_loop=1 session=0612260001
+边界：warmup 只减弱 carryover；合并分布和四轮中位数只作描述
+evidence=Documents/reports/course-runs/20260901T150724Z-06-four-path-orders/four-path-comparison/balanced-analysis

@@ -1,0 +1,30 @@
+
+===== root@10.1.1.1 =====
+$ hostname
+vm-2522-01
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:00:12 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Aug 31 11:37 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Aug 31 11:38 /dev/sfc_char
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+
+===== root@10.1.1.2 =====
+$ hostname
+vm-2522-02
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:03:13 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Aug 31 11:37 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Aug 31 11:38 /dev/sfc_char
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc

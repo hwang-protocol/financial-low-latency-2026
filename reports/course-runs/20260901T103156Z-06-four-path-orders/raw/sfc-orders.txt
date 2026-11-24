@@ -1,0 +1,22 @@
+
+===== OPENONLOAD real OUCH order =====
+{"ok":true,"client_order_id":2500000000,"transport":"OPENONLOAD"}
+
+===== TCPDIRECT real OUCH order =====
+{"ok":true,"client_order_id":2900000000,"transport":"TCPDIRECT"}
+
+===== three-client state =====
+trader_manual orders=1 fills=1 engine=KERNEL_SOCKET
+trader_onload orders=1 fills=1 engine=ONLOAD_USER_STACK
+trader_tcpdirect orders=1 fills=1 engine=ZF_REACTOR_POLL
+62:  snd: sndbuf_pkts=136 Onloaded(Valid) if=52 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-a6
+287:ctpio_pkts: 3
+288:ctpio_dma_fallbacks: 0
+1:flle-tcpdirect id=20    pid=38052
+8:ctpio=3
+9:ctpio_mode=sf-np
+17:  txq: pio_buf_size=4096 added=4 removed=4
+19:TCP flle-tcpdirect:0 lcl=20.1.1.2:37123 rmt=20.1.1.1:43120 retransmits=0 ESTABLISHED
+
+===== Kernel vs Onload true-order mechanism =====
+mechanism Kernel_syscalls=192 Onload_syscalls=0 evidence=Documents/reports/course-runs/20260901T103156Z-06-four-path-orders/kernel-onload-mechanism

@@ -1,0 +1,12 @@
+=== preflight ===
+driver=sfc group=7 group_device=0000:03:00.0 unsafe_noiommu=N
+vm.nr_hugepages = 256
+TESTPMD_READY
+vm.nr_hugepages = 0
+=== restore ===
+driver=sfc
+netdev=ens64np0
+8: ens64np0    inet 20.1.1.1/24 scope global ens64np0\       valid_lft forever preferred_lft forever
+carrier=0
+hugepages=0
+RESTORE_DONE

@@ -1,0 +1,722 @@
+{
+  "schema": "flle.ch06-four-order-paths.v5",
+  "run_id": "20260901T080729Z-06-four-path-orders",
+  "created_utc": "2026-09-01T08:14:02Z",
+  "phase_order": [
+    [
+      "SOCKET",
+      "OPENONLOAD",
+      "DPDK",
+      "TCPDIRECT"
+    ],
+    [
+      "OPENONLOAD",
+      "TCPDIRECT",
+      "SOCKET",
+      "DPDK"
+    ],
+    [
+      "TCPDIRECT",
+      "DPDK",
+      "OPENONLOAD",
+      "SOCKET"
+    ],
+    [
+      "DPDK",
+      "SOCKET",
+      "TCPDIRECT",
+      "OPENONLOAD"
+    ]
+  ],
+  "limitations": [
+    "DPDK owns the X2522 through vfio-pci and cannot be interleaved per order with the three sfc paths; the controller switches mode when DPDK reaches its balanced position.",
+    "The 12 distinct ordered predecessor pairs occur once on within-round edges. The three cross-round edges necessarily repeat existing pairs, so the complete sequence guarantees only that all 12 possible predecessors occur at least once.",
+    "Each transport cell begins with configured warmup orders to reduce carryover before measured submissions; this does not claim to eliminate carryover.",
+    "During the sfc phase all three clients and their Exchange sessions remain online; the two paths not being sampled sleep on DEQUE_CV.",
+    "During the DPDK phase the sfc clients are stopped and the DPDK client runs exclusively.",
+    "DEQUE_CV fixes the application handoff; TCPDirect and F-Stack still poll their network reactors.",
+    "OpenOnload uses --profile=latency, so its result combines the accelerated user-space path with profile polling."
+  ],
+  "runtime_contract": {
+    "application_handoff": "DEQUE_CV",
+    "data_cpu": 2,
+    "management_cpu": 3,
+    "dpdk_bridge_cpu": 3,
+    "fstack_idle_sleep_us": 0,
+    "fstack_pkt_tx_delay_us": 0,
+    "sfc_hugepages_2mb": 128,
+    "dpdk_hugepages_2mb": 256,
+    "onload_profile": "latency",
+    "order_design": "POSITION_AND_WITHIN_ROUND_FIRST_ORDER_PREDECESSOR_BALANCED_4X4",
+    "round_aggregation": "MEDIAN_OF_4_ROUND_STATISTICS_HALF_UP_TO_INTEGER_NS",
+    "order_balance": {
+      "rounds": 4,
+      "position_balance": [
+        {
+          "transport": "SOCKET",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "OPENONLOAD",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "TCPDIRECT",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "DPDK",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        }
+      ],
+      "within_round_first_order_predecessor_balance": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 1
+        }
+      ],
+      "cross_round_boundaries": [
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD"
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT"
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK"
+        }
+      ],
+      "complete_sequence_predecessor_coverage": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 2
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 2
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 2
+        }
+      ]
+    },
+    "final_data_plane_mode": "SFC"
+  },
+  "parameters": {
+    "warmup_per_round": 100,
+    "samples_per_round": 1000,
+    "rounds": 4
+  },
+  "exchange_ledger_gate": {
+    "host": "10.1.1.1",
+    "port": 48120,
+    "before": 2070,
+    "after": 19670,
+    "delta": 17600,
+    "expected": 17600,
+    "replay_loop": 1,
+    "session": "0612260001"
+  },
+  "submission_identity": {
+    "field": "client_order_id",
+    "scope": "WARMUP_AND_MEASUREMENT_SUBMISSIONS",
+    "total": 17600,
+    "unique": 17600,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3904001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2102001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2104000000,
+        "max_client_order_id": 2104001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2108000000,
+        "max_client_order_id": 2108001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2110000000,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2502001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2504000000,
+        "max_client_order_id": 2504001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2508000000,
+        "max_client_order_id": 2508001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2510000000,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2904001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2904001100,
+        "max_client_order_id": 2904002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2906000000,
+        "max_client_order_id": 2906001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2910000000,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3901001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3902000000,
+        "max_client_order_id": 3902001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3903000000,
+        "max_client_order_id": 3903001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3904000000,
+        "max_client_order_id": 3904001099
+      }
+    ]
+  },
+  "sample_identity": {
+    "field": "client_order_id",
+    "scope": "MEASUREMENT_RESPONSES",
+    "total": 16000,
+    "unique": 16000,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2102000100,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2502000100,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2904000100,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 3901000100,
+        "max_client_order_id": 3904001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2102000100,
+        "max_client_order_id": 2102001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2104000100,
+        "max_client_order_id": 2104001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2108000100,
+        "max_client_order_id": 2108001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2110000100,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2502000100,
+        "max_client_order_id": 2502001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2504000100,
+        "max_client_order_id": 2504001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2508000100,
+        "max_client_order_id": 2508001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2510000100,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2904000100,
+        "max_client_order_id": 2904001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2904001200,
+        "max_client_order_id": 2904002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2906000100,
+        "max_client_order_id": 2906001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2910000100,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3901000100,
+        "max_client_order_id": 3901001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3902000100,
+        "max_client_order_id": 3902001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3903000100,
+        "max_client_order_id": 3903001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3904000100,
+        "max_client_order_id": 3904001099
+      }
+    ]
+  },
+  "summary": {
+    "SOCKET": {
+      "label": "Kernel Socket",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 39684,
+        "p95_ns": 48499,
+        "p99_ns": 77094,
+        "mean_ns": 43110,
+        "max_ns": 11592499
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 7990,
+        "p95_ns": 10603,
+        "p99_ns": 13023,
+        "mean_ns": 9240,
+        "max_ns": 1066535
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 48282,
+        "p95_ns": 58796,
+        "p99_ns": 91335,
+        "mean_ns": 52141,
+        "max_ns": 11601183
+      }
+    },
+    "OPENONLOAD": {
+      "label": "OpenOnload",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 23761,
+        "p95_ns": 30413,
+        "p99_ns": 43130,
+        "mean_ns": 25551,
+        "max_ns": 2372558
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 7809,
+        "p95_ns": 10668,
+        "p99_ns": 18360,
+        "mean_ns": 9234,
+        "max_ns": 3299746
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 31742,
+        "p95_ns": 40741,
+        "p99_ns": 73447,
+        "mean_ns": 37308,
+        "max_ns": 3345150
+      }
+    },
+    "TCPDIRECT": {
+      "label": "TCPDirect",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 24463,
+        "p95_ns": 31431,
+        "p99_ns": 72560,
+        "mean_ns": 27996,
+        "max_ns": 2547188
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 7727,
+        "p95_ns": 10330,
+        "p99_ns": 17174,
+        "mean_ns": 9739,
+        "max_ns": 4058602
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 32392,
+        "p95_ns": 40422,
+        "p99_ns": 94422,
+        "mean_ns": 39395,
+        "max_ns": 4084206
+      }
+    },
+    "DPDK": {
+      "label": "DPDK + F-Stack TCP",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 29280,
+        "p95_ns": 32102,
+        "p99_ns": 37751,
+        "mean_ns": 31764,
+        "max_ns": 2117219
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 5586,
+        "p95_ns": 34727,
+        "p99_ns": 43412,
+        "mean_ns": 11811,
+        "max_ns": 320410
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 34986,
+        "p95_ns": 65056,
+        "p99_ns": 77541,
+        "mean_ns": 43157,
+        "max_ns": 2123952
+      }
+    }
+  }
+}

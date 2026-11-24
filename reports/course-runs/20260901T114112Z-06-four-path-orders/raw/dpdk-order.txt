@@ -1,0 +1,29 @@
+===== switch X2522 to safe VFIO =====
+switched mode=DPDK transition=READY owner=vfio-pci
+
+===== one real SoupBinTCP/OUCH order =====
+{"ok":true,"client_order_id":3900000000,"transport":"DPDK"}
+dpdk_final orders=1 fills=1 queue=DEQUE_CV
+dpdk_runtime tcp_nodelay=true reactor_cpu=2 bridge_cpu=3 management_cpu=3
+
+===== X2522 native receipts =====
+driver=vfio-pci
+iommu_group=7
+group_device=0000:03:00.0
+unsafe_noiommu=N
+EAL: Using IOMMU type 1 (Type 1)
+EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)
+PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency
+pid=36931
+start_ticks=11788867
+boot_id=3807feeb-9fcc-4d4d-9f48-73af0b4d1394
+cmdline=/var/tmp/flle-trading-lab-20260901T114112Z-06-four-path-orders/flle-exchange --telemetry-host 10.1.1.101 --replay-file /var/tmp/flle-trading-lab-20260901T114112Z-06-four-path-orders/AAPL_NVDA.itch --book-checkpoint /var/tmp/flle-trading-lab-20260901T114112Z-06-four-path-orders/opening-book.checkpoint --market-date 2026-06-12 --market-mode UNICAST --replay-speed 1 
+listener_count=1
+listener_ss_line_1=LISTEN 0      32     20.1.1.1:43120 0.0.0.0:* users:(("flle-exchange",pid=36931,fd=5))
+0      0      20.1.1.1:43120   20.1.1.2:21486 users:(("flle-exchange",pid=36931,fd=8))
+0      0      10.1.1.1:22    10.1.1.111:37510 users:(("sshd",pid=37313,fd=4))         
+
+===== restore SFC =====
+curl: (22) The requested URL returned error: 400
+
+restored mode=DPDK transition=SWITCHING owner=vfio-pci

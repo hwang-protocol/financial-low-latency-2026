@@ -1,0 +1,123 @@
+{
+  "schema": "flle.ch06-kernel-onload-mechanism.v3",
+  "run_id": "20260901T114112Z-06-four-path-orders",
+  "scope": "established SoupBinTCP true-order hot path; strace is not a timer",
+  "execution_provenance": {
+    "sealed_program": {
+      "path": "provenance/measure_kernel_onload_mechanism.py",
+      "sha256": "5202bc1ab3d1913711995dabb2649dfc81ed71aa614ad9287455d1744275e3f0",
+      "bytes": 22263
+    }
+  },
+  "program_sha256": "5202bc1ab3d1913711995dabb2649dfc81ed71aa614ad9287455d1744275e3f0",
+  "artifact_gate": {
+    "sha256_entries": 17,
+    "exact_path_set": true
+  },
+  "transports": {
+    "SOCKET": {
+      "pid": 53001,
+      "order_tid": 53003,
+      "trace": {
+        "orders_executed": 32,
+        "order_peer": "20.1.1.1:43120",
+        "order_tcp_syscalls": 192,
+        "order_tcp_calls": {
+          "sendto": 32,
+          "recvfrom": 128,
+          "getsockopt": 32
+        },
+        "excluded_telemetry_peer": "10.1.1.101:46120",
+        "excluded_telemetry_syscalls": 32
+      },
+      "schedule_probe": {
+        "orders_executed": 1000,
+        "wall_ns": 396258512,
+        "wall_scope": "submit_batch management orchestration only",
+        "counter_scope": "persisted remote pre snapshot through persisted remote post snapshot; excludes original transfer/parsing; includes submit_batch orchestration and post-batch observation tail",
+        "counter_tail_ms": 200,
+        "order_thread_identity": {
+          "pid": 53001,
+          "pid_start_ticks": 11789030,
+          "tid": 53003,
+          "tid_start_ticks": 11789031,
+          "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+          "comm": "flle-order",
+          "cpus_allowed_list": "2",
+          "exe_path": "/var/tmp/flle-trading-lab-20260901T114112Z-06-four-path-orders/transport-runtime/flle-ch06-four-path/bin/flle-trader",
+          "exe_sha256": "4badf1be94cfb4fa98761ad7c3587b79c3e0026faa97be66e11b69dd8fe7b1e8"
+        },
+        "proc_originals": {
+          "pre": {
+            "identity": "raw/socket-order-thread-pre.identity",
+            "status": "raw/socket-order-thread-pre.status",
+            "schedstat": "raw/socket-order-thread-pre.schedstat"
+          },
+          "post": {
+            "identity": "raw/socket-order-thread-post.identity",
+            "status": "raw/socket-order-thread-post.status",
+            "schedstat": "raw/socket-order-thread-post.schedstat"
+          }
+        },
+        "order_thread_delta": {
+          "voluntary": 2040,
+          "nonvoluntary": 5,
+          "runtime_ns": 26658781,
+          "runqueue_wait_ns": 982213,
+          "timeslices": 2045
+        }
+      },
+      "transport_retries": 0
+    },
+    "OPENONLOAD": {
+      "pid": 53054,
+      "order_tid": 53076,
+      "trace": {
+        "orders_executed": 32,
+        "order_peer": "20.1.1.1:43120",
+        "order_tcp_syscalls": 0,
+        "order_tcp_calls": {},
+        "excluded_telemetry_peer": "10.1.1.101:46120",
+        "excluded_telemetry_syscalls": 0
+      },
+      "schedule_probe": {
+        "orders_executed": 1000,
+        "wall_ns": 400353524,
+        "wall_scope": "submit_batch management orchestration only",
+        "counter_scope": "persisted remote pre snapshot through persisted remote post snapshot; excludes original transfer/parsing; includes submit_batch orchestration and post-batch observation tail",
+        "counter_tail_ms": 200,
+        "order_thread_identity": {
+          "pid": 53054,
+          "pid_start_ticks": 11789047,
+          "tid": 53076,
+          "tid_start_ticks": 11789051,
+          "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+          "comm": "flle-order",
+          "cpus_allowed_list": "2",
+          "exe_path": "/var/tmp/flle-trading-lab-20260901T114112Z-06-four-path-orders/transport-runtime/flle-ch06-four-path/bin/flle-trader",
+          "exe_sha256": "4badf1be94cfb4fa98761ad7c3587b79c3e0026faa97be66e11b69dd8fe7b1e8"
+        },
+        "proc_originals": {
+          "pre": {
+            "identity": "raw/openonload-order-thread-pre.identity",
+            "status": "raw/openonload-order-thread-pre.status",
+            "schedstat": "raw/openonload-order-thread-pre.schedstat"
+          },
+          "post": {
+            "identity": "raw/openonload-order-thread-post.identity",
+            "status": "raw/openonload-order-thread-post.status",
+            "schedstat": "raw/openonload-order-thread-post.schedstat"
+          }
+        },
+        "order_thread_delta": {
+          "voluntary": 1024,
+          "nonvoluntary": 14,
+          "runtime_ns": 40669336,
+          "runqueue_wait_ns": 1740033,
+          "timeslices": 1038
+        }
+      },
+      "transport_retries": 0
+    }
+  }
+}

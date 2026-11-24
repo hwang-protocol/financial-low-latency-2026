@@ -1,0 +1,50 @@
+===== switch X2522 to safe VFIO =====
+switched mode=DPDK transition=READY owner=vfio-pci
+
+===== one real SoupBinTCP/OUCH order =====
+{"ok":true,"client_order_id":3902000000,"transport":"DPDK"}
+dpdk_final orders=1 fills=1 queue=DEQUE_CV
+dpdk_runtime tcp_nodelay=true reactor_cpu=2 bridge_cpu=3 management_cpu=3
+
+===== X2522 native receipts =====
+driver=vfio-pci
+iommu_group=7
+group_device=0000:03:00.0
+unsafe_noiommu=N
+EAL: Using IOMMU type 1 (Type 1)
+EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)
+PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency
+pid=4771
+start_ticks=12965545
+boot_id=3807feeb-9fcc-4d4d-9f48-73af0b4d1394
+cmdline=/var/tmp/flle-trading-lab-20260901T145721Z-06-four-path-orders/transport-runtime/flle-ch06-four-path/bin/flle-exchange --telemetry-host 10.1.1.101 --replay-file /var/tmp/flle-trading-lab-20260901T145721Z-06-four-path-orders/AAPL_NVDA.itch --book-checkpoint /var/tmp/flle-trading-lab-20260901T145721Z-06-four-path-orders/opening-book.checkpoint --market-date 2026-06-12 --market-mode UNICAST --replay-speed 1 
+exe_path=/var/tmp/flle-trading-lab-20260901T145721Z-06-four-path-orders/transport-runtime/flle-ch06-four-path/bin/flle-exchange
+exe_sha256=e24c7ec1289dd0d550cc27004dc10c3f78a558d72da98d84c4ddbd24a94e6092
+exe_manifest_sha256=e24c7ec1289dd0d550cc27004dc10c3f78a558d72da98d84c4ddbd24a94e6092
+checkpoint_sha256=1543c06f281665e394801f6de5f9673fd2801abb7f7d83590f777e5e1e0b7a70
+checkpoint_generator_sha256=7b14eecd37b3b01cd5bf73f1f95dea2785aead65829eba5d5a73c880abdb2d02
+checkpoint_generator_manifest_sha256=7b14eecd37b3b01cd5bf73f1f95dea2785aead65829eba5d5a73c880abdb2d02
+itch_sha256=82e1d74f961803e0646e1f09329f080d72f21f581540344ed8da605a7641ef2b
+listener_count=1
+listener_ss_line_1=LISTEN 0      32     20.1.1.1:43120 0.0.0.0:* users:(("flle-exchange",pid=4771,fd=5))
+argv_count=13
+argv_00=/var/tmp/flle-trading-lab-20260901T145721Z-06-four-path-orders/transport-runtime/flle-ch06-four-path/bin/flle-exchange
+argv_01=--telemetry-host
+argv_02=10.1.1.101
+argv_03=--replay-file
+argv_04=/var/tmp/flle-trading-lab-20260901T145721Z-06-four-path-orders/AAPL_NVDA.itch
+argv_05=--book-checkpoint
+argv_06=/var/tmp/flle-trading-lab-20260901T145721Z-06-four-path-orders/opening-book.checkpoint
+argv_07=--market-date
+argv_08=2026-06-12
+argv_09=--market-mode
+argv_10=UNICAST
+argv_11=--replay-speed
+argv_12=1
+0      0      10.1.1.1:22    10.1.1.111:43726 users:(("sshd",pid=15964,fd=4))
+0      0      20.1.1.1:43120   20.1.1.2:51043 users:(("flle-exchange",pid=4771,fd=8))
+
+===== restore SFC =====
+
+===== abnormal exit: direct SFC recovery =====
+{"mode":"SFC","transition":"READY","owner":"sfc","hugepages_2mb":128,"data_ip_present":true,"hardware_receipts":{"socket":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":53371,"start_ticks":13001459,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"socket-53371-13001459","attested_monotonic_ns":130015697399486,"path_counter":0,"verification":"LAUNCH_POSIX_CURRENT_PID"},"onload":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":53428,"start_ticks":13001476,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"onload-53428-13001476","attested_monotonic_ns":130015697399486,"path_counter":0,"verification":"LAUNCH_ONLOAD_CURRENT_PID"},"tcpdirect":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":53504,"start_ticks":13001492,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"tcpdirect-53504-13001492","attested_monotonic_ns":130015697399486,"path_counter":0,"verification":"LAUNCH_ZF_CURRENT_PID"},"dpdk":{"launch_verified":false,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u4ee3\u6536\u636e\u5f85\u91c7\u96c6"}}}

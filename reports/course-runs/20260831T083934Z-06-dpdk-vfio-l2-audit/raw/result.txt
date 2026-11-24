@@ -1,0 +1,31 @@
+
+===== [1/5] 固定合同与编译两端 L2 尺子 =====
+payload=52 B  frame=66 B(no FCS)  warmup=1000  measured=10000  rounds=3+3  cpu=2
+
+===== [2/5] Kernel 回弹 — .1 保持 sfc，AF_PACKET echo =====
+KERNEL r1  completed=10000 lost=0  p50=29921 ns  p99=31709 ns  max=116668 ns
+KERNEL r2  completed=10000 lost=0  p50=30018 ns  p99=31636 ns  max=51968 ns
+KERNEL r3  completed=10000 lost=0  p50=28760 ns  p99=31898 ns  max=125909 ns
+
+===== [3/5] 交闸 — .1 从 sfc 改绑 vfio-pci，启动 testpmd =====
+driver=sfc group=7 group_device=0000:03:00.0 unsafe_noiommu=N
+EAL: Using IOMMU type 1 (Type 1)
+Set macswap packet forwarding mode
+TESTPMD_READY
+
+===== [4/5] DPDK 回弹 — .2 尺子不变，.1 使用 testpmd macswap =====
+DPDK   r1  completed=10000 lost=0  p50=19677 ns  p99=20074 ns  max=37187 ns
+DPDK   r2  completed=10000 lost=0  p50=19570 ns  p99=19999 ns  max=46716 ns
+DPDK   r3  completed=10000 lost=0  p50=19545 ns  p99=19991 ns  max=31441 ns
+RX-packets: 33005          RX-dropped: 0             RX-total: 33005
+TX-packets: 33005          TX-dropped: 0             TX-total: 33005
+
+===== [5/5] 交还验收 — X2522 回到 sfc，网口、地址和大页复原 =====
+driver=sfc
+netdev=ens64np0
+8: ens64np0    inet 20.1.1.1/24 scope global ens64np0\       valid_lft forever preferred_lft forever
+hugepages=0
+RESTORE_DONE
+3 packets transmitted, 3 received, 0% packet loss, time 2043ms
+rtt min/avg/max/mdev = 0.023/0.052/0.105/0.037 ms
+evidence=Documents/reports/course-runs/20260831T083934Z-06-dpdk-vfio-l2-audit

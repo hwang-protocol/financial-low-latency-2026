@@ -1,0 +1,48 @@
++ bash apps/flle-trading-lab/scripts/transport_labctl.sh stop 20260902T000945Z-06-four-path-orders
+tr: read error: No such process
+DPDK_EXCHANGE_ENDPOINT_CLOSED established=0
+{"mode":"SFC","transition":"STOPPED","owner":"sfc","hardware_receipts":{}}
++ for item in '10.1.1.1 ens64np0 20.1.1.1' '10.1.1.2 ens64np1 20.1.1.2'
++ read -r host iface addr
++ printf '\n===== root@%s =====\n' 10.1.1.1
+
+===== root@10.1.1.1 =====
++ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.1 bash -s -- ens64np0 20.1.1.1
+vm-2522-01
+driver=sfc
+8: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+hugepages_2mb=0
++ for item in '10.1.1.1 ens64np0 20.1.1.1' '10.1.1.2 ens64np1 20.1.1.2'
++ read -r host iface addr
++ printf '\n===== root@%s =====\n' 10.1.1.2
+
+===== root@10.1.1.2 =====
++ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 bash -s -- ens64np1 20.1.1.2
+vm-2522-02
+driver=sfc
+91: ens64np1    inet 20.1.1.2/24 scope global ens64np1\       valid_lft forever preferred_lft forever
+hugepages_2mb=0
++ printf '\n===== .2 mount baseline and 3/3 link check =====\n'
+
+===== .2 mount baseline and 3/3 link check =====
++ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 'findmnt -rn --mountpoint /dev/hugepages -o FSTYPE,TARGET,SOURCE,OPTIONS || true'
++ cmp -s Documents/reports/course-runs/20260902T000945Z-06-four-path-orders/raw/hugetlbfs-baseline.txt Documents/reports/course-runs/20260902T000945Z-06-four-path-orders/raw/hugetlbfs-final.txt
++ cat Documents/reports/course-runs/20260902T000945Z-06-four-path-orders/raw/hugetlbfs-final.txt
+hugetlbfs /dev/hugepages hugetlbfs rw,relatime,pagesize=2M
+++ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 'LC_ALL=C ping -q -I ens64np1 -c 3 -W 1 20.1.1.1'
++ ping_out='PING 20.1.1.1 (20.1.1.1) from 20.1.1.2 ens64np1: 56(84) bytes of data.
+
+--- 20.1.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2053ms
+rtt min/avg/max/mdev = 0.029/0.044/0.056/0.011 ms'
++ grep -Fq '3 packets transmitted, 3 received'
++ printf '%s\n' 'PING 20.1.1.1 (20.1.1.1) from 20.1.1.2 ens64np1: 56(84) bytes of data.
+
+--- 20.1.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2053ms
+rtt min/avg/max/mdev = 0.029/0.044/0.056/0.011 ms'
+PING 20.1.1.1 (20.1.1.1) from 20.1.1.2 ens64np1: 56(84) bytes of data.
+
+--- 20.1.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2053ms
+rtt min/avg/max/mdev = 0.029/0.044/0.056/0.011 ms

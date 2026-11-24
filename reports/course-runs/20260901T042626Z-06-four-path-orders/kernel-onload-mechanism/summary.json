@@ -1,0 +1,59 @@
+{
+  "schema": "flle.ch06-kernel-onload-mechanism.v1",
+  "run_id": "20260901T042626Z-06-four-path-orders",
+  "scope": "established SoupBinTCP true-order hot path; strace is not a timer",
+  "transports": {
+    "SOCKET": {
+      "pid": 58305,
+      "order_tid": 58306,
+      "trace": {
+        "orders_executed": 32,
+        "order_peer": "20.1.1.1:43120",
+        "order_tcp_syscalls": 192,
+        "order_tcp_calls": {
+          "sendto": 32,
+          "recvfrom": 128,
+          "getsockopt": 32
+        },
+        "excluded_telemetry_peer": "10.1.1.101:46120",
+        "excluded_telemetry_syscalls": 32
+      },
+      "schedule_probe": {
+        "orders_executed": 1000,
+        "wall_ns": 388380805,
+        "order_thread_delta": {
+          "voluntary": 2076,
+          "nonvoluntary": 6,
+          "runtime_ns": 48271314,
+          "runqueue_wait_ns": 500211,
+          "timeslices": 2082
+        }
+      },
+      "transport_retries": 0
+    },
+    "OPENONLOAD": {
+      "pid": 58358,
+      "order_tid": 58380,
+      "trace": {
+        "orders_executed": 32,
+        "order_peer": "20.1.1.1:43120",
+        "order_tcp_syscalls": 0,
+        "order_tcp_calls": {},
+        "excluded_telemetry_peer": "10.1.1.101:46120",
+        "excluded_telemetry_syscalls": 0
+      },
+      "schedule_probe": {
+        "orders_executed": 1000,
+        "wall_ns": 422758588,
+        "order_thread_delta": {
+          "voluntary": 1022,
+          "nonvoluntary": 16,
+          "runtime_ns": 51100811,
+          "runqueue_wait_ns": 5197087,
+          "timeslices": 1038
+        }
+      },
+      "transport_retries": 0
+    }
+  }
+}

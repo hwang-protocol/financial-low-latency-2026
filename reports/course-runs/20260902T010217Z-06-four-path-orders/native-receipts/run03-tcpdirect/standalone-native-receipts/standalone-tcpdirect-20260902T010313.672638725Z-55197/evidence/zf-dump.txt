@@ -1,0 +1,62 @@
+============================================================
+onload version=9f330e7 
+tcpdirect version=9.0.2 0abc996 2025-06-13 tcpdirect-9.0.2
+name=flle-tcpdirect interface=ens64np1 vlan_id=65535
+  pool: pkt_bufs_n=17536 free=17027
+  config: tcp_timewait_ticks=166 tcp_finwait_ticks=166 ctpio_threshold=65535
+  config: tcp_initial_cwnd=0 ms_per_tcp_tick=90
+  alts: n_alts=0
+  stats: ring_refill_nomem=0 cplane_alien_ifindex=0
+         tcp_retransmits=0
+  discards: discard_csum_bad=0 discard_mcast_mismatch=0
+         discard_crc_bad=0 discard_trunc=0 discard_rights=0
+         discard_ev_error=0 discard_other=0 discard_inner_csum_bad=0
+         non_tcpudp=0 
+]
+nic0: vi=249 vi_flags=3000000 nic_flags=6 intf=ens64np1 index=96 hw=1C1
+  txq: pio_buf_size=4096 added=4 removed=4
+============================================================
+TCP flle-tcpdirect:0 lcl=20.1.1.2:43293 rmt=20.1.1.1:43120 retransmits=0 ESTABLISHED
+  path: dst=20.1.1.1 src=20.1.1.2 nic=0
+   L2: 14: 00 0f 53 d3 af 20 00 0f 53 d3 af 21 08 00
+   L3: 20: 45 00 00 5a 00 00 40 00 80 06 d0 99 14 01 01 02 14 01 01 01
+   L4: 20: a9 1d a8 70 98 ad d0 45 0b ab 51 1a 50 18 ff de 8c ff 00 00
+  rx: unread=0 begin=3 process=2 end=3
+  tcp: flags=309 flags_ack_delay=8 error=0
+  tcp: parent=65535 refcount=2
+  snd: snd_nxt=2561527927 lastack=2561527927 wnd=65535 snd_wnd_max=64240
+  snd: snd_wl1=195776794 snd_wl2=195776794 snd_lbb=2561527927 snd_right_edge=2561592068
+  snd: delegated=0  snd: send=0 inflight=0
+  snd: qbegin=3 qmiddle=3 qend=3
+  snd: sndbuf=93440 cwnd=17520 ssthresh=65535 mss_lim=1460
+  rcv: rcv_nxt=195776900 rcv_ann_wnd=65396 rcv_ann_right_edge=195842296
+  rcv: mss=1460
+  rtt: est=0 seq=2561527877 sa=8 sv=2
+  cong: nrtx=0 dupacks=0 persist_backoff=0
+  timers: DACK 
+  ooo: added=0 removed=0 replaced=0
+  ooo: handling_deferred=0 dropped_nomem=0 drop_overfilled=0
+  stats: msg_more_send_delayed=0 send_nomem=0
+------------------------------------------------------------
+---------------------attributes-------------------------------
+tx_ring_max=512
+rx_ring_max=512
+tx_timestamping=0
+rx_timestamping=0
+ctpio=3
+ctpio_mode=sf-np
+pio=3
+reactor_spin_count=128
+tcp_timewait_ms=15000
+alt_buf_size=40960
+alt_count=0
+rx_ring_refill_batch_size=16
+tcp_alt_ack_rewind=65536
+tcp_delayed_ack=1
+tcp_finwait_ms=15000
+tcp_wait_for_time_wait=0
+ctpio_max_frame_len=-1
+force_separate_tx_vi=0
+rx_ring_refill_interval=1
+udp_ttl=64
+log_level=11111111

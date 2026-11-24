@@ -1,0 +1,1608 @@
+{
+  "schema": "flle.ch06-four-order-paths-balanced-analysis.v3",
+  "run_id": "20260901T103156Z-06-four-path-orders",
+  "source_schema": "flle.ch06-four-order-paths.v7",
+  "source_manifest_sha256": "94d8fcc4f50b382c97bb4531d4a54855b71cdf2716f9c89e9604c6e27e4836f0",
+  "analysis_script_sha256": "b7ec00fc1e4871761233f0a6c3ac7ba629d6e10a61b90362c4fcf47a10bab586",
+  "measurement_script_sha256": "914a00a354f9b393237d8c8bd7fd1bb96265baaedb8dd999ac03cc9f861aec00",
+  "analysis_matches_sealed_program": true,
+  "measurement_module_matches_sealed_program": true,
+  "method": {
+    "primary": "EQUAL_CELL_MEAN_OF_4_ROUND_NEAREST_RANK_STATISTICS",
+    "reason": "the four cells are the repeated balanced units; their linear equal-weight mean retains one cell for every position and first-order predecessor context",
+    "secondary": "the pooled 4000-sample empirical distribution weights cells equally by count but is kept descriptive because the 1000 observations inside one cell are not 1000 independent design replicates; the median of four round statistics is also descriptive because it selects only two cells",
+    "order_design": {
+      "rounds": 4,
+      "position_balance": [
+        {
+          "transport": "SOCKET",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "OPENONLOAD",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "TCPDIRECT",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "DPDK",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        }
+      ],
+      "within_round_first_order_predecessor_balance": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 1
+        }
+      ],
+      "cross_round_boundaries": [
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD"
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT"
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK"
+        }
+      ],
+      "complete_sequence_predecessor_coverage": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 2
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 2
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 2
+        }
+      ]
+    },
+    "warmup_boundary": "100 orders per cell reduce carryover but do not prove its elimination"
+  },
+  "exchange_ledger_gate": {
+    "host": "10.1.1.1",
+    "port": 48120,
+    "before": 2070,
+    "after": 19670,
+    "delta": 17600,
+    "expected": 17600,
+    "replay_loop": 1,
+    "session": "0612260001"
+  },
+  "submission_identity": {
+    "field": "client_order_id",
+    "scope": "WARMUP_AND_MEASUREMENT_SUBMISSIONS",
+    "total": 17600,
+    "unique": 17600,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3904001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2102001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2104000000,
+        "max_client_order_id": 2104001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2108000000,
+        "max_client_order_id": 2108001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2110000000,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2502001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2504000000,
+        "max_client_order_id": 2504001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2508000000,
+        "max_client_order_id": 2508001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2510000000,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2904001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2904001100,
+        "max_client_order_id": 2904002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2906000000,
+        "max_client_order_id": 2906001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2910000000,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3901001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3902000000,
+        "max_client_order_id": 3902001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3903000000,
+        "max_client_order_id": 3903001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3904000000,
+        "max_client_order_id": 3904001099
+      }
+    ]
+  },
+  "sample_identity": {
+    "field": "client_order_id",
+    "scope": "MEASUREMENT_RESPONSES",
+    "total": 16000,
+    "unique": 16000,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2102000100,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2502000100,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2904000100,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 3901000100,
+        "max_client_order_id": 3904001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2102000100,
+        "max_client_order_id": 2102001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2104000100,
+        "max_client_order_id": 2104001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2108000100,
+        "max_client_order_id": 2108001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2110000100,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2502000100,
+        "max_client_order_id": 2502001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2504000100,
+        "max_client_order_id": 2504001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2508000100,
+        "max_client_order_id": 2508001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2510000100,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2904000100,
+        "max_client_order_id": 2904001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2904001200,
+        "max_client_order_id": 2904002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2906000100,
+        "max_client_order_id": 2906001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2910000100,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3901000100,
+        "max_client_order_id": 3901001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3902000100,
+        "max_client_order_id": 3902001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3903000100,
+        "max_client_order_id": 3903001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3904000100,
+        "max_client_order_id": 3904001099
+      }
+    ]
+  },
+  "runtime_acceptance": {
+    "cell_native_path_receipts": 16,
+    "expected_cell_native_path_receipts": 16,
+    "pre_post_original_sets": 32,
+    "validation": "INDEPENDENT_REPARSE_OF_NATIVE_ORIGINALS_NOT_CONTROLLER_BOOLEANS",
+    "gateway_stopped_during_measurement": true,
+    "onload_ctpio_hardware_witness": {
+      "cells": 4,
+      "ctpio_pkts_delta_sum": 4396,
+      "ctpio_dma_fallbacks_delta_sum": 0,
+      "scope": "CURRENT_PID_ONLOAD_STACK_PER_CELL_NOT_ORDER_COUNTER"
+    },
+    "cells": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 44916,
+        "start_ticks": 11383137,
+        "generation": "socket-44916-11383137",
+        "order_thread_tid": 44918,
+        "cell_duration_ns": 381148403,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "0      0      20.1.1.2:49345   20.1.1.1:43120 users:((\"flle-trader\",pid=44916,fd=5))"
+        ],
+        "native_post_matches": [
+          "0      0      20.1.1.2:49345   20.1.1.1:43120 users:((\"flle-trader\",pid=44916,fd=5))"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 44969,
+        "start_ticks": 11383154,
+        "generation": "onload-44969-11383154",
+        "order_thread_tid": 44991,
+        "cell_duration_ns": 384453229,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "  Onload 9f330e7  uid=0 pid=44969 ns_flags=a0",
+          "TCP 3:2046 lcl=20.1.1.2:42255 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=53 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-ab",
+          "ctpio_pkts: 3",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "native_post_matches": [
+          "  Onload 9f330e7  uid=0 pid=44969 ns_flags=a0",
+          "TCP 3:2046 lcl=20.1.1.2:42255 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=53 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-ab",
+          "ctpio_pkts: 1102",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "hardware_witness": {
+          "counter_scope": "CURRENT_PID_ONLOAD_STACK",
+          "ctpio_pkts_before": 3,
+          "ctpio_pkts_after": 1102,
+          "ctpio_pkts_delta": 1099,
+          "ctpio_dma_fallbacks_before": 0,
+          "ctpio_dma_fallbacks_after": 0,
+          "ctpio_dma_fallbacks_delta": 0
+        }
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 50758,
+        "start_ticks": 11392347,
+        "generation": "dpdk-50758-11392347",
+        "order_thread_tid": 50758,
+        "cell_duration_ns": 373757931,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "native_post_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 52813,
+        "start_ticks": 11393778,
+        "generation": "tcpdirect-52813-11393778",
+        "order_thread_tid": 52814,
+        "cell_duration_ns": 379408588,
+        "counter_kind": "zf_txq_added",
+        "path_counter_before": 4,
+        "path_counter_after": 1131,
+        "native_pre_matches": [
+          "flle-tcpdirect id=21    pid=52813",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:42681 rmt=20.1.1.1:43120 retransmits=0 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=4 removed=4"
+        ],
+        "native_post_matches": [
+          "flle-tcpdirect id=21    pid=52813",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:42681 rmt=20.1.1.1:43120 retransmits=2 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=1131 removed=1131"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 52741,
+        "start_ticks": 11393760,
+        "generation": "onload-52741-11393760",
+        "order_thread_tid": 52763,
+        "cell_duration_ns": 377602312,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "  Onload 9f330e7  uid=0 pid=52741 ns_flags=a0",
+          "TCP 4:2046 lcl=20.1.1.2:42979 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=54 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-b0",
+          "ctpio_pkts: 3",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "native_post_matches": [
+          "  Onload 9f330e7  uid=0 pid=52741 ns_flags=a0",
+          "TCP 4:2046 lcl=20.1.1.2:42979 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=54 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-b0",
+          "ctpio_pkts: 1102",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "hardware_witness": {
+          "counter_scope": "CURRENT_PID_ONLOAD_STACK",
+          "ctpio_pkts_before": 3,
+          "ctpio_pkts_after": 1102,
+          "ctpio_pkts_delta": 1099,
+          "ctpio_dma_fallbacks_before": 0,
+          "ctpio_dma_fallbacks_after": 0,
+          "ctpio_dma_fallbacks_delta": 0
+        }
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 52813,
+        "start_ticks": 11393778,
+        "generation": "tcpdirect-52813-11393778",
+        "order_thread_tid": 52814,
+        "cell_duration_ns": 434264758,
+        "counter_kind": "zf_txq_added",
+        "path_counter_before": 1137,
+        "path_counter_after": 2275,
+        "native_pre_matches": [
+          "flle-tcpdirect id=21    pid=52813",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:42681 rmt=20.1.1.1:43120 retransmits=3 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=1137 removed=1137"
+        ],
+        "native_post_matches": [
+          "flle-tcpdirect id=21    pid=52813",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:42681 rmt=20.1.1.1:43120 retransmits=5 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=2275 removed=2275"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 52688,
+        "start_ticks": 11393743,
+        "generation": "socket-52688-11393743",
+        "order_thread_tid": 52690,
+        "cell_duration_ns": 388813989,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "0      0      20.1.1.2:42009   20.1.1.1:43120 users:((\"flle-trader\",pid=52688,fd=6))"
+        ],
+        "native_post_matches": [
+          "0      0      20.1.1.2:42009   20.1.1.1:43120 users:((\"flle-trader\",pid=52688,fd=6))"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 58355,
+        "start_ticks": 11400806,
+        "generation": "dpdk-58355-11400806",
+        "order_thread_tid": 58355,
+        "cell_duration_ns": 373220132,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "native_post_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 60403,
+        "start_ticks": 11402190,
+        "generation": "tcpdirect-60403-11402190",
+        "order_thread_tid": 60404,
+        "cell_duration_ns": 390107070,
+        "counter_kind": "zf_txq_added",
+        "path_counter_before": 4,
+        "path_counter_after": 1128,
+        "native_pre_matches": [
+          "flle-tcpdirect id=22    pid=60403",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:45981 rmt=20.1.1.1:43120 retransmits=0 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=4 removed=4"
+        ],
+        "native_post_matches": [
+          "flle-tcpdirect id=22    pid=60403",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:45981 rmt=20.1.1.1:43120 retransmits=2 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=1128 removed=1128"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 62542,
+        "start_ticks": 11403032,
+        "generation": "dpdk-62542-11403032",
+        "order_thread_tid": 62542,
+        "cell_duration_ns": 439753646,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "native_post_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 64519,
+        "start_ticks": 11404430,
+        "generation": "onload-64519-11404430",
+        "order_thread_tid": 64541,
+        "cell_duration_ns": 374683697,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "  Onload 9f330e7  uid=0 pid=64519 ns_flags=a0",
+          "TCP 6:2046 lcl=20.1.1.2:53779 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=56 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-b5",
+          "ctpio_pkts: 3",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "native_post_matches": [
+          "  Onload 9f330e7  uid=0 pid=64519 ns_flags=a0",
+          "TCP 6:2046 lcl=20.1.1.2:53779 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=56 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-b5",
+          "ctpio_pkts: 1102",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "hardware_witness": {
+          "counter_scope": "CURRENT_PID_ONLOAD_STACK",
+          "ctpio_pkts_before": 3,
+          "ctpio_pkts_after": 1102,
+          "ctpio_pkts_delta": 1099,
+          "ctpio_dma_fallbacks_before": 0,
+          "ctpio_dma_fallbacks_after": 0,
+          "ctpio_dma_fallbacks_delta": 0
+        }
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 64466,
+        "start_ticks": 11404412,
+        "generation": "socket-64466-11404412",
+        "order_thread_tid": 64467,
+        "cell_duration_ns": 386137424,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "0      0      20.1.1.2:50189   20.1.1.1:43120 users:((\"flle-trader\",pid=64466,fd=5))"
+        ],
+        "native_post_matches": [
+          "0      0      20.1.1.2:50189   20.1.1.1:43120 users:((\"flle-trader\",pid=64466,fd=5))"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 2762,
+        "start_ticks": 11410702,
+        "generation": "dpdk-2762-11410702",
+        "order_thread_tid": 2762,
+        "cell_duration_ns": 393119204,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "native_post_matches": [
+          "EAL: Using IOMMU type 1 (Type 1)",
+          "EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)",
+          "PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency",
+          "driver=vfio-pci",
+          "iommu_group=7",
+          "group_device=0000:03:00.0",
+          "unsafe_noiommu=N"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 4691,
+        "start_ticks": 11412096,
+        "generation": "socket-4691-11412096",
+        "order_thread_tid": 4693,
+        "cell_duration_ns": 385811076,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "0      0      20.1.1.2:36359   20.1.1.1:43120 users:((\"flle-trader\",pid=4691,fd=6))"
+        ],
+        "native_post_matches": [
+          "0      0      20.1.1.2:36359   20.1.1.1:43120 users:((\"flle-trader\",pid=4691,fd=6))"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 4816,
+        "start_ticks": 11412130,
+        "generation": "tcpdirect-4816-11412130",
+        "order_thread_tid": 4818,
+        "cell_duration_ns": 392200412,
+        "counter_kind": "zf_txq_added",
+        "path_counter_before": 4,
+        "path_counter_after": 1123,
+        "native_pre_matches": [
+          "flle-tcpdirect id=23    pid=4816",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:44275 rmt=20.1.1.1:43120 retransmits=0 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=4 removed=4"
+        ],
+        "native_post_matches": [
+          "flle-tcpdirect id=23    pid=4816",
+          "ctpio=3",
+          "ctpio_mode=sf-np",
+          "TCP flle-tcpdirect:0 lcl=20.1.1.2:44275 rmt=20.1.1.1:43120 retransmits=2 ESTABLISHED",
+          "  txq: pio_buf_size=4096 added=1123 removed=1123"
+        ],
+        "hardware_witness": null
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "boot_id": "88520d19-9c38-4352-a01b-dc97036bfdd7",
+        "pid": 4744,
+        "start_ticks": 11412113,
+        "generation": "onload-4744-11412113",
+        "order_thread_tid": 4766,
+        "cell_duration_ns": 390421898,
+        "counter_kind": "trader_orders",
+        "path_counter_before": 1,
+        "path_counter_after": 1100,
+        "native_pre_matches": [
+          "  Onload 9f330e7  uid=0 pid=4744 ns_flags=a0",
+          "TCP 7:2046 lcl=20.1.1.2:59445 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=57 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-ba",
+          "ctpio_pkts: 3",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "native_post_matches": [
+          "  Onload 9f330e7  uid=0 pid=4744 ns_flags=a0",
+          "TCP 7:2046 lcl=20.1.1.2:59445 rmt=20.1.1.1:43120 ESTABLISHED",
+          "  snd: sndbuf_pkts=136 Onloaded(Valid) if=57 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-ba",
+          "ctpio_pkts: 1102",
+          "ctpio_dma_fallbacks: 0"
+        ],
+        "hardware_witness": {
+          "counter_scope": "CURRENT_PID_ONLOAD_STACK",
+          "ctpio_pkts_before": 3,
+          "ctpio_pkts_after": 1102,
+          "ctpio_pkts_delta": 1099,
+          "ctpio_dma_fallbacks_before": 0,
+          "ctpio_dma_fallbacks_after": 0,
+          "ctpio_dma_fallbacks_delta": 0
+        }
+      }
+    ]
+  },
+  "kernel_minus_onload_same_round_p50_ns": [
+    13794,
+    15738,
+    18630,
+    12094
+  ],
+  "summary": {
+    "SOCKET": {
+      "label": "Kernel Socket",
+      "balanced_equal_cell_mean": {
+        "order_rtt": {
+          "p50_ns": 39650,
+          "p95_ns": 53576,
+          "p99_ns": 67733,
+          "mean_ns": 43402,
+          "max_ns": 1866753,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "queue_to_send": {
+          "p50_ns": 8685,
+          "p95_ns": 10819,
+          "p99_ns": 12403,
+          "mean_ns": 8757,
+          "max_ns": 38698,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "submit_to_final": {
+          "p50_ns": 48477,
+          "p95_ns": 62539,
+          "p99_ns": 78245,
+          "mean_ns": 52158,
+          "max_ns": 1874414,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        }
+      },
+      "pooled_empirical_descriptive": {
+        "order_rtt": {
+          "samples": 4000,
+          "p50_ns": 39663,
+          "p95_ns": 58091,
+          "p99_ns": 67115,
+          "mean_ns": 43401,
+          "max_ns": 1866753,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "queue_to_send": {
+          "samples": 4000,
+          "p50_ns": 8853,
+          "p95_ns": 10899,
+          "p99_ns": 12088,
+          "mean_ns": 8757,
+          "max_ns": 38698,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "submit_to_final": {
+          "samples": 4000,
+          "p50_ns": 48596,
+          "p95_ns": 67962,
+          "p99_ns": 77896,
+          "mean_ns": 52158,
+          "max_ns": 1874414,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        }
+      },
+      "median_of_rounds_descriptive": {
+        "label": "Kernel Socket",
+        "order_rtt": {
+          "rounds": 4,
+          "p50_ns": 39801,
+          "p95_ns": 53427,
+          "p99_ns": 66692,
+          "mean_ns": 42944,
+          "max_ns": 1866753
+        },
+        "queue_to_send": {
+          "rounds": 4,
+          "p50_ns": 8945,
+          "p95_ns": 10854,
+          "p99_ns": 12141,
+          "mean_ns": 8839,
+          "max_ns": 38698
+        },
+        "submit_to_final": {
+          "rounds": 4,
+          "p50_ns": 48983,
+          "p95_ns": 62503,
+          "p99_ns": 76670,
+          "mean_ns": 51594,
+          "max_ns": 1874414
+        }
+      },
+      "round_ranges": {
+        "order_rtt": {
+          "p50_ns": {
+            "min_ns": 37661,
+            "max_ns": 41339
+          },
+          "p95_ns": {
+            "min_ns": 46469,
+            "max_ns": 60981
+          },
+          "p99_ns": {
+            "min_ns": 65211,
+            "max_ns": 72337
+          }
+        },
+        "queue_to_send": {
+          "p50_ns": {
+            "min_ns": 7555,
+            "max_ns": 9293
+          },
+          "p95_ns": {
+            "min_ns": 10481,
+            "max_ns": 11086
+          },
+          "p99_ns": {
+            "min_ns": 11738,
+            "max_ns": 13591
+          }
+        },
+        "submit_to_final": {
+          "p50_ns": {
+            "min_ns": 45985,
+            "max_ns": 49958
+          },
+          "p95_ns": {
+            "min_ns": 55112,
+            "max_ns": 70039
+          },
+          "p99_ns": {
+            "min_ns": 75267,
+            "max_ns": 84372
+          }
+        }
+      }
+    },
+    "OPENONLOAD": {
+      "label": "OpenOnload",
+      "balanced_equal_cell_mean": {
+        "order_rtt": {
+          "p50_ns": 24586,
+          "p95_ns": 31279,
+          "p99_ns": 37234,
+          "mean_ns": 26325,
+          "max_ns": 1588066,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "queue_to_send": {
+          "p50_ns": 8635,
+          "p95_ns": 10588,
+          "p99_ns": 11779,
+          "mean_ns": 8656,
+          "max_ns": 146794,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "submit_to_final": {
+          "p50_ns": 33056,
+          "p95_ns": 39981,
+          "p99_ns": 46737,
+          "mean_ns": 34981,
+          "max_ns": 1596907,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        }
+      },
+      "pooled_empirical_descriptive": {
+        "order_rtt": {
+          "samples": 4000,
+          "p50_ns": 24856,
+          "p95_ns": 32443,
+          "p99_ns": 37318,
+          "mean_ns": 26325,
+          "max_ns": 1588066,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "queue_to_send": {
+          "samples": 4000,
+          "p50_ns": 8720,
+          "p95_ns": 10904,
+          "p99_ns": 12308,
+          "mean_ns": 8655,
+          "max_ns": 146794,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "submit_to_final": {
+          "samples": 4000,
+          "p50_ns": 33427,
+          "p95_ns": 41112,
+          "p99_ns": 46033,
+          "mean_ns": 34980,
+          "max_ns": 1596907,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        }
+      },
+      "median_of_rounds_descriptive": {
+        "label": "OpenOnload",
+        "order_rtt": {
+          "rounds": 4,
+          "p50_ns": 25584,
+          "p95_ns": 31467,
+          "p99_ns": 36755,
+          "mean_ns": 26605,
+          "max_ns": 1588066
+        },
+        "queue_to_send": {
+          "rounds": 4,
+          "p50_ns": 8770,
+          "p95_ns": 10837,
+          "p99_ns": 12382,
+          "mean_ns": 8652,
+          "max_ns": 146794
+        },
+        "submit_to_final": {
+          "rounds": 4,
+          "p50_ns": 33733,
+          "p95_ns": 40403,
+          "p99_ns": 45934,
+          "mean_ns": 35144,
+          "max_ns": 1596907
+        }
+      },
+      "round_ranges": {
+        "order_rtt": {
+          "p50_ns": {
+            "min_ns": 20669,
+            "max_ns": 26508
+          },
+          "p95_ns": {
+            "min_ns": 29130,
+            "max_ns": 33053
+          },
+          "p99_ns": {
+            "min_ns": 35732,
+            "max_ns": 39693
+          }
+        },
+        "queue_to_send": {
+          "p50_ns": {
+            "min_ns": 8215,
+            "max_ns": 8787
+          },
+          "p95_ns": {
+            "min_ns": 9372,
+            "max_ns": 11306
+          },
+          "p99_ns": {
+            "min_ns": 9867,
+            "max_ns": 12484
+          }
+        },
+        "submit_to_final": {
+          "p50_ns": {
+            "min_ns": 29490,
+            "max_ns": 35266
+          },
+          "p95_ns": {
+            "min_ns": 37154,
+            "max_ns": 41966
+          },
+          "p99_ns": {
+            "min_ns": 44748,
+            "max_ns": 50331
+          }
+        }
+      }
+    },
+    "TCPDIRECT": {
+      "label": "TCPDirect",
+      "balanced_equal_cell_mean": {
+        "order_rtt": {
+          "p50_ns": 21528,
+          "p95_ns": 27952,
+          "p99_ns": 35846,
+          "mean_ns": 23945,
+          "max_ns": 2071752,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "queue_to_send": {
+          "p50_ns": 8399,
+          "p95_ns": 10702,
+          "p99_ns": 13259,
+          "mean_ns": 8619,
+          "max_ns": 82481,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "submit_to_final": {
+          "p50_ns": 30032,
+          "p95_ns": 37208,
+          "p99_ns": 47242,
+          "mean_ns": 32564,
+          "max_ns": 2078779,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        }
+      },
+      "pooled_empirical_descriptive": {
+        "order_rtt": {
+          "samples": 4000,
+          "p50_ns": 21130,
+          "p95_ns": 29552,
+          "p99_ns": 34887,
+          "mean_ns": 23945,
+          "max_ns": 2071752,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "queue_to_send": {
+          "samples": 4000,
+          "p50_ns": 8717,
+          "p95_ns": 10799,
+          "p99_ns": 13650,
+          "mean_ns": 8619,
+          "max_ns": 82481,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "submit_to_final": {
+          "samples": 4000,
+          "p50_ns": 30263,
+          "p95_ns": 38871,
+          "p99_ns": 46261,
+          "mean_ns": 32564,
+          "max_ns": 2078779,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        }
+      },
+      "median_of_rounds_descriptive": {
+        "label": "TCPDirect",
+        "order_rtt": {
+          "rounds": 4,
+          "p50_ns": 20582,
+          "p95_ns": 27512,
+          "p99_ns": 34986,
+          "mean_ns": 24086,
+          "max_ns": 2071752
+        },
+        "queue_to_send": {
+          "rounds": 4,
+          "p50_ns": 8576,
+          "p95_ns": 10675,
+          "p99_ns": 13314,
+          "mean_ns": 8608,
+          "max_ns": 82481
+        },
+        "submit_to_final": {
+          "rounds": 4,
+          "p50_ns": 29238,
+          "p95_ns": 36744,
+          "p99_ns": 47544,
+          "mean_ns": 32693,
+          "max_ns": 2078779
+        }
+      },
+      "round_ranges": {
+        "order_rtt": {
+          "p50_ns": {
+            "min_ns": 20366,
+            "max_ns": 24582
+          },
+          "p95_ns": {
+            "min_ns": 25481,
+            "max_ns": 31302
+          },
+          "p99_ns": {
+            "min_ns": 31474,
+            "max_ns": 41939
+          }
+        },
+        "queue_to_send": {
+          "p50_ns": {
+            "min_ns": 7512,
+            "max_ns": 8933
+          },
+          "p95_ns": {
+            "min_ns": 10353,
+            "max_ns": 11105
+          },
+          "p99_ns": {
+            "min_ns": 12212,
+            "max_ns": 14197
+          }
+        },
+        "submit_to_final": {
+          "p50_ns": {
+            "min_ns": 28216,
+            "max_ns": 33435
+          },
+          "p95_ns": {
+            "min_ns": 34702,
+            "max_ns": 40641
+          },
+          "p99_ns": {
+            "min_ns": 43940,
+            "max_ns": 49942
+          }
+        }
+      }
+    },
+    "DPDK": {
+      "label": "DPDK + F-Stack TCP",
+      "balanced_equal_cell_mean": {
+        "order_rtt": {
+          "p50_ns": 28856,
+          "p95_ns": 37603,
+          "p99_ns": 45108,
+          "mean_ns": 32139,
+          "max_ns": 2779673,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "queue_to_send": {
+          "p50_ns": 5544,
+          "p95_ns": 16040,
+          "p99_ns": 33481,
+          "mean_ns": 6789,
+          "max_ns": 60819,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        },
+        "submit_to_final": {
+          "p50_ns": 34573,
+          "p95_ns": 50032,
+          "p99_ns": 71463,
+          "mean_ns": 38928,
+          "max_ns": 2785877,
+          "cells": 4,
+          "aggregation": "EQUAL_CELL_MEAN_OF_ROUND_STATISTICS_HALF_UP"
+        }
+      },
+      "pooled_empirical_descriptive": {
+        "order_rtt": {
+          "samples": 4000,
+          "p50_ns": 29081,
+          "p95_ns": 37738,
+          "p99_ns": 42803,
+          "mean_ns": 32139,
+          "max_ns": 2779673,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "queue_to_send": {
+          "samples": 4000,
+          "p50_ns": 5517,
+          "p95_ns": 11923,
+          "p99_ns": 35111,
+          "mean_ns": 6789,
+          "max_ns": 60819,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        },
+        "submit_to_final": {
+          "samples": 4000,
+          "p50_ns": 34828,
+          "p95_ns": 50287,
+          "p99_ns": 69650,
+          "mean_ns": 38928,
+          "max_ns": 2785877,
+          "cells": 4,
+          "samples_per_cell": 1000,
+          "aggregation": "POOLED_EQUAL_CELL_COUNTS"
+        }
+      },
+      "median_of_rounds_descriptive": {
+        "label": "DPDK + F-Stack TCP",
+        "order_rtt": {
+          "rounds": 4,
+          "p50_ns": 29386,
+          "p95_ns": 37489,
+          "p99_ns": 42952,
+          "mean_ns": 31730,
+          "max_ns": 2779673
+        },
+        "queue_to_send": {
+          "rounds": 4,
+          "p50_ns": 5523,
+          "p95_ns": 16510,
+          "p99_ns": 32048,
+          "mean_ns": 6781,
+          "max_ns": 60819
+        },
+        "submit_to_final": {
+          "rounds": 4,
+          "p50_ns": 35223,
+          "p95_ns": 48912,
+          "p99_ns": 71262,
+          "mean_ns": 38511,
+          "max_ns": 2785877
+        }
+      },
+      "round_ranges": {
+        "order_rtt": {
+          "p50_ns": {
+            "min_ns": 26788,
+            "max_ns": 29864
+          },
+          "p95_ns": {
+            "min_ns": 36704,
+            "max_ns": 38731
+          },
+          "p99_ns": {
+            "min_ns": 40356,
+            "max_ns": 54172
+          }
+        },
+        "queue_to_send": {
+          "p50_ns": {
+            "min_ns": 5344,
+            "max_ns": 5785
+          },
+          "p95_ns": {
+            "min_ns": 10516,
+            "max_ns": 20625
+          },
+          "p99_ns": {
+            "min_ns": 28857,
+            "max_ns": 40969
+          }
+        },
+        "submit_to_final": {
+          "p50_ns": {
+            "min_ns": 32372,
+            "max_ns": 35473
+          },
+          "p95_ns": {
+            "min_ns": 47195,
+            "max_ns": 55107
+          },
+          "p99_ns": {
+            "min_ns": 67378,
+            "max_ns": 75950
+          }
+        }
+      }
+    }
+  }
+}

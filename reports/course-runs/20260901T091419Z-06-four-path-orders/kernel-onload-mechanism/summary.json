@@ -1,0 +1,65 @@
+{
+  "schema": "flle.ch06-kernel-onload-mechanism.v2",
+  "run_id": "20260901T091419Z-06-four-path-orders",
+  "scope": "established SoupBinTCP true-order hot path; strace is not a timer",
+  "transports": {
+    "SOCKET": {
+      "pid": 58331,
+      "order_tid": 58333,
+      "trace": {
+        "orders_executed": 32,
+        "order_peer": "20.1.1.1:43120",
+        "order_tcp_syscalls": 192,
+        "order_tcp_calls": {
+          "sendto": 32,
+          "recvfrom": 128,
+          "getsockopt": 32
+        },
+        "excluded_telemetry_peer": "10.1.1.101:46120",
+        "excluded_telemetry_syscalls": 32
+      },
+      "schedule_probe": {
+        "orders_executed": 1000,
+        "wall_ns": 431884436,
+        "wall_scope": "submit_batch management orchestration only",
+        "counter_scope": "submit_batch plus post-batch observation tail",
+        "counter_tail_ms": 200,
+        "order_thread_delta": {
+          "voluntary": 2020,
+          "nonvoluntary": 9,
+          "runtime_ns": 44691265,
+          "runqueue_wait_ns": 8207493,
+          "timeslices": 2029
+        }
+      },
+      "transport_retries": 0
+    },
+    "OPENONLOAD": {
+      "pid": 58384,
+      "order_tid": 58406,
+      "trace": {
+        "orders_executed": 32,
+        "order_peer": "20.1.1.1:43120",
+        "order_tcp_syscalls": 0,
+        "order_tcp_calls": {},
+        "excluded_telemetry_peer": "10.1.1.101:46120",
+        "excluded_telemetry_syscalls": 0
+      },
+      "schedule_probe": {
+        "orders_executed": 1000,
+        "wall_ns": 406380861,
+        "wall_scope": "submit_batch management orchestration only",
+        "counter_scope": "submit_batch plus post-batch observation tail",
+        "counter_tail_ms": 200,
+        "order_thread_delta": {
+          "voluntary": 1019,
+          "nonvoluntary": 14,
+          "runtime_ns": 50550094,
+          "runqueue_wait_ns": 2453746,
+          "timeslices": 1033
+        }
+      },
+      "transport_retries": 0
+    }
+  }
+}

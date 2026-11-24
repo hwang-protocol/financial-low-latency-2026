@@ -1,0 +1,14 @@
+=== preflight ===
+driver=sfc group=7 group_device=0000:03:00.0 unsafe_noiommu=N
+=== acquire X2522 with safe VFIO ===
+vm.nr_hugepages = 256
+=== start DPDK/F-Stack OUCH client ===
+trader_pid=943
+DPDK_TRADER_READY
+DPDK_TRADER_STOP_REQUESTED
+=== restore ===
+driver=sfc
+netdev=ens64np1
+13: ens64np1    inet 20.1.1.2/24 scope global ens64np1\       valid_lft forever preferred_lft forever
+hugepages=0
+RESTORE_DONE

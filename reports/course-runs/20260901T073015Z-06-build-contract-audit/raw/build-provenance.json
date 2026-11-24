@@ -1,0 +1,58 @@
+{
+  "schema": "flle.ch06-four-path-build-provenance.v1",
+  "created_utc": "2026-09-01T06:49:19Z",
+  "build_host": {
+    "hostname": "vm-2522-02",
+    "os": "Ubuntu 22.04",
+    "architecture": "x86_64",
+    "kernel": "5.15.0-164-generic",
+    "compiler": "g++-11 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+    "make": "GNU Make 4.3"
+  },
+  "application_source": {
+    "path": "blobs/x2522/ch06-four-path/v4/flle-ch06-four-path-v4-source.tgz",
+    "sha256": "26b88d8d30167186c83d751747fbd8bd400866d13e11f4e235da0c7d4ecd9df8",
+    "scope": "exact Makefile, src tree and F-Stack build-contract closure used by the three trader binaries; runtime control scripts are verified separately by each RUN"
+  },
+  "dependencies": {
+    "onload": {
+      "commit": "9f330e7058f6062596f2a7316952c67963a0aac3",
+      "source_archive_sha256": "998d218db3733d85e3732f56790eca963f24deb05c6da4306d4dd9ab0c29d9e2"
+    },
+    "tcpdirect": {
+      "commit": "0abc996ae4709e49dedd3e65da1eb134dea0632d",
+      "source_archive_sha256": "db5142a6e74f71584d46c42a512fb6bc2eb703ecda507c932e3d817c8c84f622",
+      "libonload_zf_static_sha256": "d1dbad843d7cc68d7d74076d5eed242cf6749c001cf7d88f253a6b86557b418e"
+    },
+    "f_stack_dpdk": {
+      "f_stack_commit": "0abb713721a6a0ba95768acde052dbd3d2fdf3fe",
+      "source_archive_sha256": "eb5845b48f67b1a719986aeff9c86fa61c1e7531d2c9b62871e4f6f008352e20",
+      "dpdk_version": "21.11.9",
+      "compat_patch_sha256": "6d5f3e9d88dc673b56877ba07344aff76f65500ef1208068df0f73767f16a29c",
+      "libfstack_sha256": "b1b9b772196e1ef4b51be4481d80a3989d92cfbf452d7c55efc86168721c070b"
+    },
+    "runtime_support_base": {
+      "artifact": "flle-ch06-four-path-v3-x86_64-jammy-runtime.tgz",
+      "sha256": "04dda25cc600201f540f6e227389eb9caeb6cab5f05be111c3e7ac8fc180c454",
+      "scope": "shared-library closure, dpdk-devbind.py and frozen F-Stack INI only; all three trader binaries and zf_stackdump were replaced by this build"
+    }
+  },
+  "commands": [
+    "make -C flle-trading-lab-v4-source -j4 build/flle-trader",
+    "make -C flle-trading-lab-v4-source -j4 tcpdirect TCPDIRECT_TREE=/var/tmp/flle-ch06-v4-build/tcpdirect-0abc996",
+    "make -C flle-trading-lab-v4-source -j4 dpdk FSTACK_TREE=/var/tmp/flle-fstack-dpdk21",
+    "make -C flle-trading-lab-v4-source -j4 build/flle-selftest",
+    "flle-trading-lab-v4-source/build/flle-selftest"
+  ],
+  "build_log_sha256": "221332ca9d4119b84b0ce06deecd5220a67f754442a103a8da01d51f6dcce259",
+  "outputs": {
+    "bin/flle-trader": "0a9a8d426b95b3fa715c89a4f603c1cbd83e62f54e79b40f79c03b594c3600b6",
+    "bin/flle-trader-tcpdirect": "06bc423716721aba1f70981cd9bac94eac2699d7d4d26bcae57aaf0f9219e0bf",
+    "bin/flle-trader-dpdk": "1b41944f6c01563745bbccf43aaa3c8e60221feada261f6e78743fb7051a877d",
+    "bin/zf_stackdump": "62891f4701612c7fbf165e23427360761513d9e963be5395e7d70ebebb579726"
+  },
+  "acceptance": {
+    "selftest": "PASS",
+    "hardware_runtime": "PENDING_NEW_V4_RUN"
+  }
+}

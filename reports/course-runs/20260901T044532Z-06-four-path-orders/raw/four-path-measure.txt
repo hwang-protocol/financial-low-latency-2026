@@ -1,0 +1,22 @@
+measure=SOCKET round=1
+measure=OPENONLOAD round=1
+measure=TCPDIRECT round=1
+measure=DPDK round=1
+measure=TCPDIRECT round=2
+measure=SOCKET round=2
+measure=OPENONLOAD round=2
+measure=DPDK round=2
+measure=OPENONLOAD round=3
+measure=TCPDIRECT round=3
+measure=SOCKET round=3
+measure=DPDK round=3
+
+===== 同一真实订单的三轮中位数 =====
+路径                    send→final P50    P99        queue→final P50
+Kernel Socket                38426 ns    102335 ns         46852 ns
+OpenOnload                   24373 ns     65632 ns         31862 ns
+TCPDirect                    20281 ns    104707 ns         27895 ns
+DPDK + F-Stack TCP           28715 ns     42608 ns         34502 ns
+合同：1 股可成交 IOC；SoupBinTCP/OUCH；逐笔单飞；DEQUE_CV；数据 CPU 2；辅助 CPU 3
+边界：DPDK 独占 VFIO 分阶段测；Onload latency profile、ZF/F-Stack reactor 会轮询
+evidence=/financial-low-latency/Documents/reports/course-runs/20260901T044532Z-06-four-path-orders/four-path-comparison

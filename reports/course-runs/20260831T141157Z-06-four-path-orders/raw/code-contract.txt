@@ -1,0 +1,43 @@
+===== common application handoff =====
+apps/flle-trading-lab/src/dpdk_trader.cpp:62:        queue_(flle::OrderQueueMode::DequeCv) {
+apps/flle-trading-lab/src/dpdk_trader.cpp:553:        << ",\"queue_mode\":\"DEQUE_CV\",\"queue_locked\":true,"
+apps/flle-trading-lab/src/trader.cpp:53:  flle::OrderQueueMode order_queue{flle::OrderQueueMode::DequeCv};
+apps/flle-trading-lab/src/trader.cpp:54:  bool lock_order_queue{false};
+apps/flle-trading-lab/src/trader.cpp:86:  c.lock_order_queue =
+apps/flle-trading-lab/src/trader.cpp:852:        << "\",\"queue_locked\":"
+apps/flle-trading-lab/src/trader.cpp:853:        << (config_.lock_order_queue ? "true" : "false")
+apps/flle-trading-lab/src/trader.cpp:888:      if (config_.lock_order_queue)
+apps/flle-trading-lab/src/trader.cpp:891:      if (parts[1] == "DEQUE_CV") mode = flle::OrderQueueMode::DequeCv;
+
+===== POSIX socket transport =====
+17:    fd_ = ::socket(AF_INET, SOCK_STREAM, 0);
+31:        ::connect(fd_, reinterpret_cast<sockaddr *>(&remote), sizeof(remote)) < 0) {
+38:  bool send_all(const void *data, std::size_t length) override {
+39:    return fd_ >= 0 && flle::send_all(fd_, data, length);
+42:  bool recv_all(void *data, std::size_t length) override {
+43:    return fd_ >= 0 && flle::recv_all(fd_, data, length);
+
+===== TCPDirect ZF transport =====
+52:    if (zft_connect(handle, reinterpret_cast<sockaddr *>(&remote),
+75:      const auto result = zft_send_single(zocket_, cursor + sent,
+96:      zft_zc_recv(zocket_, &message.msg, 0);
+106:        zft_zc_recv_done(zocket_, &message.msg);
+121:                             ? zft_zc_recv_done(zocket_, &message.msg)
+122:                             : zft_zc_recv_done_some(zocket_, &message.msg,
+182:      check(zf_attr_set_int(attr_, "ctpio", 3),
+183:            "zf_attr_set_int(ctpio)");
+184:      check(zf_attr_set_str(attr_, "ctpio_mode", "sf-np"),
+185:            "zf_attr_set_str(ctpio_mode)");
+186:      check(zf_stack_alloc(attr_, &stack_), "zf_stack_alloc");
+
+===== DPDK plus F-Stack TCP =====
+176:    order_fd_ = ff_socket(AF_INET, SOCK_STREAM, 0);
+177:    if (order_fd_ < 0) throw std::runtime_error("ff_socket failed");
+187:    const int result = ff_connect(order_fd_,
+191:      throw std::runtime_error("ff_connect failed: " +
+231:      const auto sent = ff_send(order_fd_, tx_buffer_.data() + tx_offset_,
+248:      const auto received = ff_recv(order_fd_, chunk.data(), chunk.size(), 0);
+554:        << "\"network_reactor\":\"FSTACK_POLL\",\"queue_capacity\":"
+
+===== running contract =====
+{"schema":"flle.transport-lab-state.v1","mode":"SFC","transition":"READY","owner":"sfc","hardware_receipts":{"socket":{"verified":true,"summary":"sfc netdev + Kernel TCP \u771f\u5355"},"onload":{"verified":false,"summary":"\u6536\u636e\u5f85\u91c7\u96c6"},"tcpdirect":{"verified":false,"summary":"\u6536\u636e\u5f85\u91c7\u96c6"},"dpdk":{"verified":false,"summary":"\u6536\u636e\u5f85\u91c7\u96c6"}},"clients":{"trader_manual":{"health":{"status":"ONLINE","last_event_ns":1788185562592329950},"stats":{"orders":0,"fills":0,"rejects":0,"transport_retries":0,"received":0,"delivered":0},"latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0},"measurement_latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0,"generation":0},"software":{"samples":0,"queue_mode":"DEQUE_CV","queue_capacity":1023,"queue_depth":0,"queue_full_drops":0,"order_thread_tid":8218,"order_thread_cpu":-1,"order_thread_allowed_count":1,"order_rx_cpu":-1,"queue_to_send":{"p50_ns":0,"p99_ns":0,"max_ns":0},"submit_to_final":{"p50_ns":0,"p99_ns":0,"max_ns":0},"queue_locked":true,"network_engine":"KERNEL_SOCKET"}},"trader_onload":{"health":{"status":"ONLINE","last_event_ns":1788185562592820460},"stats":{"orders":0,"fills":0,"rejects":0,"transport_retries":0,"received":0,"delivered":0},"latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0},"measurement_latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0,"generation":0},"software":{"samples":0,"queue_mode":"DEQUE_CV","queue_capacity":1023,"queue_depth":0,"queue_full_drops":0,"order_thread_tid":8291,"order_thread_cpu":-1,"order_thread_allowed_count":1,"order_rx_cpu":-1,"queue_to_send":{"p50_ns":0,"p99_ns":0,"max_ns":0},"submit_to_final":{"p50_ns":0,"p99_ns":0,"max_ns":0},"queue_locked":true,"network_engine":"ONLOAD_USER_STACK"}},"trader_tcpdirect":{"health":{"status":"ONLINE","last_event_ns":1788185562594878527},"stats":{"orders":0,"fills":0,"rejects":0,"transport_retries":0,"received":0,"delivered":0},"latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0},"measurement_latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0,"generation":0},"software":{"samples":0,"queue_mode":"DEQUE_CV","queue_capacity":1023,"queue_depth":0,"queue_full_drops":0,"order_thread_tid":8343,"order_thread_cpu":-1,"order_thread_allowed_count":1,"order_rx_cpu":-1,"queue_to_send":{"p50_ns":0,"p99_ns":0,"max_ns":0},"submit_to_final":{"p50_ns":0,"p99_ns":0,"max_ns":0},"queue_locked":true,"network_engine":"ZF_REACTOR_POLL"}},"trader_dpdk":{"health":{"status":"WAITING","last_event_ns":0},"stats":{},"latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0},"measurement_latency":{"samples":0,"p50_ns":0,"p99_ns":0,"max_ns":0,"generation":0},"software":{"samples":0,"queue_mode":"DEQUE_CV","queue_capacity":1023,"queue_depth":0,"queue_full_drops":0,"order_thread_tid":-1,"order_thread_cpu":-1,"order_thread_allowed_count":0,"order_rx_cpu":-1,"queue_to_send":{"p50_ns":0,"p99_ns":0,"max_ns":0},"submit_to_final":{"p50_ns":0,"p99_ns":0,"max_ns":0}}}}}

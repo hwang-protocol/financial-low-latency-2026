@@ -1,0 +1,158 @@
+exchange_data=PASS interface=ens64np0 address=20.1.1.1/24 link=yes
+trader_data=PASS interface=ens64np1 address=20.1.1.2/24 link=yes
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+rm -f build/flle-exchange build/flle-trader build/flle-trader-tcpdirect build/flle-trader-dpdk build/flle-selftest build/flle-itch-filter build/flle-book-checkpoint
+mkdir -p build
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-exchange src/exchange.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-trader src/trader.cpp src/posix_order_transport.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-selftest src/selftest.cpp
+build/flle-selftest
+SELFTEST PASS protocol=ITCH5/MoldUDP64+OUCH5/SoupBinTCP mold_messages=2 book=AAPL ouch=O/A/E/J
+python3 -m unittest discover -s tests -v
+test_analysis_contract_requires_v8_and_emits_v4 (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_balanced_analysis_payload_set_is_exactly_two_files (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_balanced_analysis_rejects_stale_file_or_subdirectory (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_exchange_endpoint_is_server_side_not_client_pid (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_exchange_endpoint_must_match_current_exchange_pid (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_exchange_endpoint_sets_may_change_across_snapshots (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_exchange_listener_must_match_current_exchange_pid (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_exchange_observation_allows_multiple_target_endpoints (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_exchange_observation_ignores_non_target_connections (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_mixed_log_selects_only_the_owned_x2522_bdf (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_pmd_and_ull_must_belong_to_the_owned_x2522_bdf (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_dpdk_requires_ull_firmware_native_line (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_each_transport_is_rebuilt_from_native_originals (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_equal_cell_mean_is_half_up (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_formal_manifest_cannot_change_during_analysis (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_formal_manifest_cannot_omit_a_raw_original (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_formal_manifest_rejects_symlinked_originals (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_live_measure_module_must_match_formal_sealed_program (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_native_counter_manifest_is_independently_checked (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_native_original_hash_tamper_is_rejected (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_onload_cell_rejects_dma_fallback_growth (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_onload_cell_reports_growing_ctpio_without_dma_fallback (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_onload_requires_valid_marker_in_same_tcp_block (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_pooled_summary_rejects_unequal_cells (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_pooled_summary_uses_all_equal_cells (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_tcpdirect_retransmit_counter_cannot_move_backward (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_tcpdirect_retransmit_delta_is_reported_without_failing (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_tcpdirect_retransmit_delta_requires_one_stable_endpoint (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok
+test_base_deployment_includes_shell_contracts_used_by_tests (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_controller_refuses_a_failed_dpdk_shutdown_receipt (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_fstack_shutdown_bypasses_incomplete_post_loop_cleanup (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_new_orders_are_rejected_once_shutdown_starts (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_reactor_requires_idle_work_and_peer_eof_before_clean_exit (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_remote_guard_records_and_propagates_trader_exit (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_remote_guard_restores_hugetlbfs_baseline_and_hard_gates_state (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_run04_restore_is_hard_gated_and_exit_fallback_keeps_rc (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... skipped 'runtime-only deployment has no Documents tree'
+test_runtime_only_tree_does_not_invent_a_checkout_root (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_shutdown_eof_is_not_reported_as_a_transport_failure (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_shutdown_receipt_is_flushed_before_process_exit (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok
+test_automatic_flow_does_not_evict_manual_history (test_gateway.StateStoreTest) ... ok
+test_completed_order_updates_queued_row (test_gateway.StateStoreTest) ... ok
+test_management_line_roundtrip (test_gateway.StateStoreTest) ... ok
+test_market_and_fill_projection (test_gateway.StateStoreTest) ... ok
+test_new_replay_loop_clears_all_paper_state (test_gateway.StateStoreTest) ... ok
+test_prometheus_metrics_keep_identity_low_cardinality (test_gateway.StateStoreTest) ... ok
+test_transport_lab_is_an_explicit_chapter_six_feature (test_gateway.StateStoreTest) ... ok
+test_controller_exposes_native_formal_and_standalone_copy_contracts (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_cyclic_position_only_order_fails_predecessor_hard_gate (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_default_identity_gates_cover_all_17600_submissions (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_dpdk_exchange_manifest_allows_multiple_target_endpoints (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_dpdk_exchange_manifest_requires_current_pid_target_endpoint (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_exchange_ledger_gate_rejects_replay_change (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_exchange_ledger_gate_rejects_too_few_entries (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_exchange_ledger_gate_rejects_too_many_entries (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_formal_measurement_stops_gateway_polling (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_formal_native_tree_requires_exactly_32_pre_post_sets (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_formal_program_drift_after_start_snapshot_is_rejected (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_formal_receipt_contract_uses_v8_schema (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_four_round_summary_rounds_half_nanosecond_up (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_hugepage_contract_accepts_sfc_and_dpdk_profiles (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_hugepage_contract_rejects_wrong_active_pool (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_hugepage_reader_uses_read_only_root_ssh (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_measurement_mapping_rejects_response_order_mismatch (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_measurement_mapping_rejects_response_set_mismatch (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_native_fetch_uses_fixed_scp_argv_and_requires_tree (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_native_manifest_is_compact_and_counter_kind_is_explicit (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_native_manifest_rejects_controller_verified_boolean (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_nearest_rank_summary_includes_p95 (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_onload_hardware_witness_is_separate_from_order_counter (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_order_balances_positions_and_within_round_predecessors (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_path_receipt_distinguishes_launch_from_current_path (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_report_persists_identity_summary_and_total_equals_unique (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_round_summary_uses_median_of_round_percentiles (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_sample_identity_rejects_duplicate_with_both_locations (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_sample_identity_rejects_duplicate_within_raw_file (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_sample_identity_success_reports_counts_and_ranges (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_single_flight_returns_the_submitted_client_order_id (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_standalone_export_is_self_contained_and_rejects_extra_file (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_status_collector_has_no_heavy_stack_probe_or_receipt_write (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_submission_identity_rejects_cross_file_collision (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_submission_identity_rejects_warmup_measurement_collision (test_measure_four_transports.FourTransportStatisticsTest) ... ok
+test_main_rebuilds_deltas_and_sha_from_twelve_proc_originals (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+test_proc_snapshot_is_parsed_only_from_persisted_originals (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+test_proc_snapshot_rejects_cpu_binding_drift (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+test_proc_snapshot_rejects_noncanonical_or_unhashed_executable (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+test_report_manifest_requires_the_exact_seventeen_original_paths (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+test_run_id_shell_metacharacters_are_rejected_before_remote_use (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+test_schema_is_bumped_for_proc_original_contract (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+test_strace_cleanup_is_attempted_when_order_submission_fails (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok
+
+----------------------------------------------------------------------
+Ran 89 tests in 0.199s
+
+OK (skipped=1)
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-itch-filter src/itch_filter.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-book-checkpoint src/book_checkpoint.cpp
+checkpoint=PASS start_ns=34200000000000 source_messages=97498 active_orders=18108
+transport-runtime.tgz: OK
+bin/dpdk-devbind.py: OK
+bin/flle-selftest: OK
+bin/flle-trader: OK
+bin/flle-trader-dpdk: OK
+bin/flle-trader-tcpdirect: OK
+bin/zf_stackdump: OK
+etc/f-stack-x2522.ini: OK
+lib/libIPSec_MB.so.1: OK
+lib/libatomic.so.1: OK
+lib/libbpf.so.0: OK
+lib/libbsd.so.0: OK
+lib/libcap.so.2: OK
+lib/libcrypto.so.3: OK
+lib/libdbus-1.so.3: OK
+lib/libelf.so.1: OK
+lib/libfdt.so.1: OK
+lib/libgcrypt.so.20: OK
+lib/libgpg-error.so.0: OK
+lib/libibverbs.so.1: OK
+lib/libisal.so.2: OK
+lib/libjansson.so.4: OK
+lib/liblz4.so.1: OK
+lib/liblzma.so.5: OK
+lib/libmd.so.0: OK
+lib/libmlx4.so.1: OK
+lib/libmlx5.so.1: OK
+lib/libnl-3.so.200: OK
+lib/libnl-route-3.so.200: OK
+lib/libnuma.so.1: OK
+lib/libpcap.so.0.8: OK
+lib/libsystemd.so.0: OK
+lib/libz.so.1: OK
+lib/libzstd.so.1: OK
+provenance/BUILD-PROVENANCE.json: OK
+provenance/app-build.log: OK
+provenance/application-outputs.sha256: OK
+provenance/build-inputs.manifest.sha256: OK
+provenance/dpkg-packages.tsv: OK
+provenance/file.txt: OK
+provenance/fstack-headers.manifest.sha256: OK
+provenance/header-trees.sha256: OK
+provenance/inherited-libraries.sha256: OK
+provenance/interpreters.txt: OK
+provenance/ldd-flle-trader-dpdk.txt: OK
+provenance/ldd-flle-trader-tcpdirect.txt: OK
+provenance/ldd-flle-trader.txt: OK
+provenance/reproducibility.txt: OK
+provenance/runtime-closure-check.txt: OK
+provenance/tcpdirect-headers.manifest.sha256: OK

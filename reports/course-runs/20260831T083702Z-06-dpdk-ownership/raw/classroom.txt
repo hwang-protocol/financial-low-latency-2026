@@ -1,0 +1,22 @@
+===== 10.1.1.1 =====
+[是哪台 Guest] 管理地址对应的 hostname，避免看错机
+  hostname=vm-2522-01
+[Guest 隔离闸] cmdline 必须同时有 intel_iommu=on 和 iommu=pt
+  intel_iommu=on iommu=pt
+[出站闸主人] PCI 驱动仍应是 sfc，不能是 vfio-pci
+  driver=sfc
+[数据口] 普通网口和 IPv4 还在，本步还没包走
+  netdev=ens64np0  addr=20.1.1.1/24
+[隔离组] group 里只能有这块 X2522
+  group=7  members=0000:03:00.0
+===== 10.1.1.2 =====
+[是哪台 Guest] 管理地址对应的 hostname，避免看错机
+  hostname=vm-2522-02
+[Guest 隔离闸] cmdline 必须同时有 intel_iommu=on 和 iommu=pt
+  intel_iommu=on iommu=pt
+[出站闸主人] PCI 驱动仍应是 sfc，不能是 vfio-pci
+  driver=sfc
+[数据口] 普通网口和 IPv4 还在，本步还没包走
+  netdev=ens64np1  addr=20.1.1.2/24
+[隔离组] group 里只能有这块 X2522
+  group=7  members=0000:03:00.0

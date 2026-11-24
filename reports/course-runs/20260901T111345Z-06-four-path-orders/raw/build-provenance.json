@@ -1,0 +1,75 @@
+{
+  "schema": "flle.ch06-four-path-build-provenance.v2",
+  "created_utc": "2026-09-01T08:01:33Z",
+  "build_host": {
+    "hostname": "vm-2522-02",
+    "os": "Ubuntu 22.04.5 LTS (jammy)",
+    "architecture": "x86_64",
+    "kernel": "5.15.0-164-generic",
+    "compiler": "g++-11 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+    "make": "GNU Make 4.3",
+    "dpdk": "21.11.9",
+    "installed_packages_sha256": "8bf8ccf02f7f5513d026946461a459f2c3d0358aac7c636c99ba2cca7715364c"
+  },
+  "application_source": {
+    "path": "blobs/x2522/ch06-four-path/v5/flle-ch06-four-path-v5-source.tgz",
+    "sha256": "138c0effa936d0dfe98a33857ca730f39414bb35b25d30f1100ac14aaf74c3ed",
+    "scope": "exact Makefile, src tree and F-Stack compatibility/audit contracts used by the three trader binaries; runtime control scripts are verified separately by each RUN"
+  },
+  "build_inputs": {
+    "path": "blobs/x2522/ch06-four-path/v5/flle-ch06-four-path-v5-build-inputs-x86_64-jammy.tgz",
+    "sha256": "6caa8e25a4228751872b8b96ed1cff260532fd73ab4fcb14f1d85cb7e7baf451",
+    "manifest_sha256": "f088f4bc6eb6e3d9654f39f3367a19dc26c44d7dbb6ac9aa3198c7a3f3200766",
+    "tcpdirect_headers_manifest_sha256": "c0991903ce16c9c8b2e7634d9cb66cd56bb180469e435b5ea34ae1dab8025f9d",
+    "fstack_headers_manifest_sha256": "3556c7fdd12e77e4872f2a1dd885f1d9e2dca94a40d533af2f82763be8aa904f",
+    "scope": "the exact TCPDirect and F-Stack headers plus static libraries consumed by this application build; it reproduces the v5 application binaries but does not claim to rebuild either static library from upstream source"
+  },
+  "dependencies": {
+    "onload": {
+      "commit": "9f330e7058f6062596f2a7316952c67963a0aac3",
+      "source_archive_sha256": "998d218db3733d85e3732f56790eca963f24deb05c6da4306d4dd9ab0c29d9e2"
+    },
+    "tcpdirect": {
+      "commit": "0abc996ae4709e49dedd3e65da1eb134dea0632d",
+      "source_archive_sha256": "db5142a6e74f71584d46c42a512fb6bc2eb703ecda507c932e3d817c8c84f622",
+      "libonload_zf_static_sha256": "d1dbad843d7cc68d7d74076d5eed242cf6749c001cf7d88f253a6b86557b418e"
+    },
+    "f_stack_dpdk": {
+      "f_stack_commit": "0abb713721a6a0ba95768acde052dbd3d2fdf3fe",
+      "source_archive_sha256": "eb5845b48f67b1a719986aeff9c86fa61c1e7531d2c9b62871e4f6f008352e20",
+      "dpdk_version": "21.11.9",
+      "compat_patch_sha256": "6d5f3e9d88dc673b56877ba07344aff76f65500ef1208068df0f73767f16a29c",
+      "libfstack_sha256": "b1b9b772196e1ef4b51be4481d80a3989d92cfbf452d7c55efc86168721c070b"
+    },
+    "runtime_support_base": {
+      "artifact": "flle-ch06-four-path-v4-x86_64-jammy-runtime.tgz",
+      "sha256": "243fa64ba34ef9d0b0b55f468e347b382afdb48a627cd5436878bcacc2105b10",
+      "scope": "shared-library closure, dpdk-devbind.py, zf_stackdump and frozen F-Stack INI only; all three trader binaries and all provenance files are replaced by v5"
+    }
+  },
+  "build_contract": {
+    "environment": "LC_ALL=C TZ=UTC SOURCE_DATE_EPOCH=0",
+    "path_normalization": "-ffile-prefix-map=<build-root>=/usr/src/flle-ch06-v5 -fdebug-prefix-map=<build-root>=/usr/src/flle-ch06-v5 -fmacro-prefix-map=<build-root>=/usr/src/flle-ch06-v5",
+    "commands": [
+      "make -C <source> -j4 build/flle-trader CXXFLAGS=<fixed-v5-flags>",
+      "make -C <source> -j4 tcpdirect TCPDIRECT_TREE=<fixed-build-inputs>/tcpdirect CXXFLAGS=<fixed-v5-flags>",
+      "make -C <source> -j4 dpdk FSTACK_TREE=<fixed-build-inputs>/fstack CXXFLAGS=<fixed-v5-flags>",
+      "make -C <source> -j4 build/flle-selftest CXXFLAGS=<fixed-v5-flags>",
+      "<source>/build/flle-selftest"
+    ],
+    "build_log_sha256": "69fb9e1bcd2526289d65b66c5c9123bd814ac3b5dda171cdc94fa8671f7304aa",
+    "reproducibility": "two clean builds in different absolute directories produced identical hashes for all four compiled outputs"
+  },
+  "outputs": {
+    "bin/flle-trader": "f0d67e3255863f2f881a0ff4679356319223b73ca25696756af43d1b27399fc3",
+    "bin/flle-trader-tcpdirect": "4dcf4782b0d472eb4fa20d3bb757f5e102f01e8834389922388d69536bde3155",
+    "bin/flle-trader-dpdk": "b2d55423c9318791704f4ebbe6bffcd2ab3085347c60a779f43317d3101b0089",
+    "bin/flle-selftest": "df326803c11d1b24d1b72755efa34bb280a20d957b773a5b4a289a9aa3e19fe5",
+    "bin/zf_stackdump": "62891f4701612c7fbf165e23427360761513d9e963be5395e7d70ebebb579726"
+  },
+  "acceptance": {
+    "selftest": "PASS",
+    "bit_reproducible_application_build": "PASS",
+    "hardware_runtime": "PENDING_NEW_V5_RUN"
+  }
+}

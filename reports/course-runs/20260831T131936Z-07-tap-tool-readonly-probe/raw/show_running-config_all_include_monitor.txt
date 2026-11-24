@@ -1,0 +1,50 @@
+show running-config all | include monitor | no-more
+monitor security audit
+   no monitor group all
+monitor connectivity
+event-monitor route
+event-monitor stpunstable
+event-monitor route6
+event-monitor spstate
+event-monitor neighbor
+event-monitor mac
+event-monitor lacp
+event-monitor sessionstate
+event-monitor arp
+event-monitor igmpsnooping
+event-monitor mroute
+no event-monitor backup path
+no event-monitor route backup path
+no event-monitor stpunstable backup path
+no event-monitor route6 backup path
+no event-monitor spstate backup path
+no event-monitor neighbor backup path
+no event-monitor mac backup path
+no event-monitor lacp backup path
+no event-monitor sessionstate backup path
+no event-monitor arp backup path
+no event-monitor igmpsnooping backup path
+no event-monitor mroute backup path
+event-monitor backup max-size 10
+event-monitor buffer max-size 32
+default monitor device-health
+no queue-monitor length
+no queue-monitor length notifying
+no queue-monitor length tx-latency
+default queue-monitor length global-buffer
+queue-monitor length global-buffer thresholds 20540 8216
+no queue-monitor length mirror
+queue-monitor length update-interval 5000000
+monitor system
+   default arp monitor mac-address
+monitor hadoop
+no arp monitor mac-address
+monitor loop-protection
+no priority-flow-control pause watchdog hardware monitor priority  0
+no priority-flow-control pause watchdog hardware monitor priority  1
+no priority-flow-control pause watchdog hardware monitor priority  2
+no priority-flow-control pause watchdog hardware monitor priority  3
+no priority-flow-control pause watchdog hardware monitor priority  4
+no priority-flow-control pause watchdog hardware monitor priority  5
+no priority-flow-control pause watchdog hardware monitor priority  6
+no priority-flow-control pause watchdog hardware monitor priority  7

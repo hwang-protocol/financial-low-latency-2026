@@ -1,0 +1,45 @@
+show running-config diffs | no-more
+--- flash:/startup-config
++++ system:/running-config
+@@ -11,10 +11,18 @@
+ no aaa root
+ !
+ username admin privilege 15 role network-admin secret 5 $1$l7bhLSwL$8uEpS3kN.iM1oxiMu/LQI1
++username admin ssh-key ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1dV2le47i3YJoW9NFcqWbcEGe1pavdMsRkjoTFxIQs flle-course-jump-host-20260722
++!
++vlan 20
++   name fll
+ !
+ interface Ethernet1
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet2
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet3
+ !
+@@ -33,8 +41,12 @@
+ interface Ethernet10
+ !
+ interface Ethernet11
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet12
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet13
+ !
+@@ -63,6 +75,9 @@
+ interface Management1
+    ip address 10.1.1.253/24
+ !
++interface Vlan20
++   ip address 20.1.1.254/24
++!
+ no ip routing
+ !
+ end
