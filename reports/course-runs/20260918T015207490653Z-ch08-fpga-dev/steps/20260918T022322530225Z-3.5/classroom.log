@@ -1,0 +1,81 @@
+Low-Latency-Ops / 第 3.5 步 · 综合控制寄存器
+===== 本步开始：自动执行并保存输出 =====
+[执行位置] 对: 操作终端 .111，开发机 .101  证: 下面保留命令及原始返回
+本步记录目录: /financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev/steps/20260918T022322530225Z-3.5
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 bash -s -- /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/dev.env
+
+vm-monitor / 3.5 综合寄存器电路
+===== 查执行主机与本轮目录 =====
+[开发机] 对: 管理地址为 10.1.1.101；目录与本轮 RUN_ID 一致  证: 保护安装和生成文件的目标位置
+$ ip -4 -o address show
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+2: ens33    inet 10.1.1.101/24 brd 10.1.1.255 scope global ens33\       valid_lft forever preferred_lft forever
+3: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+$ cat /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/dev.env
+RUN_ID=20260918T015207490653Z-ch08-fpga-dev
+FLLE_DEV=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev
+FLLE_CORE=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/core
+CH09_SRC=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/ch09
+RESULT_DIR=/financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev
+STARTED_AT_UTC=2026-09-18T01:52:09Z
+PURPOSE=ch08-fpga-development
+PROFILE_ID=vm101-ubuntu22.04-offline
+STATUS=ACTIVE
+
+vm-monitor / 3.5 综合寄存器电路
+===== 查 3.4 留下的寄存器源码 =====
+[control_regs.sv] 对: 本轮综合目录中存在该文件  证: 沿用 3.4 已复制的同一批 RTL 源码
+$ ls -l control_regs.sv
+-rw-r--r-- 1 root root 1308 Sep 18 10:00 control_regs.sv
+
+vm-monitor / 3.5 综合寄存器电路
+===== 把寄存器电路综合成通用网表 =====
+[Yosys] 对: 查看 check 的实际问题数和 stat 的电路统计  证: 验证寄存器描述可生成通用逻辑与连接；PDI 构建仍在后续板卡工程中进行
+本步作用: 控制寄存器是独立模块，3.4的过滤顶层没有包含它，需要单独综合。
+$ /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/bin/yowasp-yosys -Q -T -p $'\n  read_verilog -sv control_regs.sv;\n  synth -top control_regs -noabc;\n  check -assert;\n  stat;\n  write_json control-regs-netlist.json\n' > /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/work/core-synthesis/control-regs-synthesis.log 2>&1
+$ grep Found\ and\ reported control-regs-synthesis.log
+Found and reported 0 problems.
+Found and reported 0 problems.
+Found and reported 0 problems.
+$ tail -n 20 control-regs-synthesis.log
+4. Printing statistics.
+
+=== control_regs ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      339 wires
+      733 wire bits
+       15 public wires
+      270 public wire bits
+       15 ports
+      270 port bits
+      442 cells
+      196   $_AND_
+       32   $_MUX_
+       14   $_NOT_
+      198   $_OR_
+        2   $_SDFF_PP0_
+
+5. Executing JSON backend.
+
+vm-monitor / 3.5 综合寄存器电路
+===== 查寄存器网表文件与指纹 =====
+[JSON 网表] 对: 生成 control-regs-netlist.json 并记录 SHA-256  证: 保存本次寄存器综合产物
+$ ls -lh control-regs-netlist.json
+-rw-r--r-- 1 root root 278K Sep 18 10:23 control-regs-netlist.json
+$ sha256sum control-regs-netlist.json > control-regs-netlist.sha256
+$ cat control-regs-netlist.sha256
+f1b6080af90a8d2c4e9a0b7e3915258345e20ced62d2a9a2f693b7270d76ee2b  control-regs-netlist.json
+读数: 0 problems表示寄存器结构检查通过；两份网表分别检查，还未接成板卡工程。
+
+[下一步] 各卡日志已自动保存到 .111；接着阅读第4步，将已验证的源码接入板卡工程。
+===== 保存开发机工作记录到 .111 =====
+[结果留存] 对: 收回截至本步的 work 目录  证: 即使本步失败也尝试保存日志
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 'set -eu; cd /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev; if test -d work; then tar -czf - work; else tar -czf - --files-from /dev/null; fi' > remote-work.tgz
+已保存开发机累计工作文件: /financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev/steps/20260918T022322530225Z-3.5/remote-work.tgz
+===== 本步结束 =====
+步骤退出码: 0
+结果收回退出码: 0
+本步执行完成；核对以上返回后，再执行下一张卡。
+终端完整记录: /financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev/steps/20260918T022322530225Z-3.5/classroom.log

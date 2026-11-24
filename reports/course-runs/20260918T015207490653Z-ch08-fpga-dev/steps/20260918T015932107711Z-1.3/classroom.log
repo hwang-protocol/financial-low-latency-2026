@@ -1,0 +1,105 @@
+Low-Latency-Ops / 第 1.3 步 · 安装本轮开发工具
+===== 本步开始：自动执行并保存输出 =====
+[执行位置] 对: 操作终端 .111，开发机 .101  证: 下面保留命令及原始返回
+本步记录目录: /financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev/steps/20260918T015932107711Z-1.3
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 bash -s -- /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/dev.env
+
+vm-monitor / 1.3 安装开发工具
+===== 查执行主机与本轮目录 =====
+[开发机] 对: 管理地址为 10.1.1.101；目录与本轮 RUN_ID 一致  证: 保护安装和生成文件的目标位置
+$ ip -4 -o address show
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+2: ens33    inet 10.1.1.101/24 brd 10.1.1.255 scope global ens33\       valid_lft forever preferred_lft forever
+3: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+$ cat /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/dev.env
+RUN_ID=20260918T015207490653Z-ch08-fpga-dev
+FLLE_DEV=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev
+FLLE_CORE=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/core
+CH09_SRC=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/ch09
+RESULT_DIR=/financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev
+STARTED_AT_UTC=2026-09-18T01:52:09Z
+PURPOSE=ch08-fpga-development
+PROFILE_ID=vm101-ubuntu22.04-offline
+STATUS=ACTIVE
+
+vm-monitor / 1.3 安装开发工具
+===== 核对两章共享材料 =====
+[准备版本] 对: 本轮包含 ch09 源码目录  证: 先确认1.1已分发两章材料，再安装工具
+$ ls -l /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/ch09/market_filter.sv /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/ch09/offline-selftest.sh
+-rw-r--r-- 1 root root 2026 Sep  4 20:30 /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/ch09/market_filter.sv
+-rw-r--r-- 1 root root 1905 Sep 18 07:10 /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/ch09/offline-selftest.sh
+
+vm-monitor / 1.3 安装开发工具
+===== 查离线安装包 =====
+[SHA-256] 对: 清单中的每份文件均返回 OK  证: 安装前确认离线材料与已登记的内容一致
+$ sha256sum -c SHA256SUMS
+deb/iverilog_11.0-1.1_amd64.deb: OK
+requirements.txt: OK
+wheels/click-8.5.0-py3-none-any.whl: OK
+wheels/packaging-26.3-py3-none-any.whl: OK
+wheels/pip-25.2-py3-none-any.whl: OK
+wheels/platformdirs-4.11.9-py3-none-any.whl: OK
+wheels/setuptools-84.0.0-py3-none-any.whl: OK
+wheels/six-1.17.0-py2.py3-none-any.whl: OK
+wheels/wasmtime-47.0.1-py3-none-manylinux1_x86_64.whl: OK
+wheels/wheel-0.48.0-py3-none-any.whl: OK
+wheels/yowasp_runtime-1.96-py3-none-any.whl: OK
+wheels/yowasp_yosys-0.69.0.0.post1233-py3-none-any.whl: OK
+
+vm-monitor / 1.3 安装开发工具
+===== 安装 Icarus 仿真工具 =====
+[Icarus] 对: dpkg 安装完成，无错误退出  证: iverilog 编译电路仿真程序；vvp 执行该程序
+$ dpkg -i deb/iverilog_11.0-1.1_amd64.deb > /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/work/iverilog-install.log 2>&1
+$ tail -n 12 /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/work/iverilog-install.log
+(Reading database ... 104059 files and directories currently installed.)
+Preparing to unpack .../iverilog_11.0-1.1_amd64.deb ...
+Unpacking iverilog (11.0-1.1) over (11.0-1.1) ...
+Setting up iverilog (11.0-1.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+
+vm-monitor / 1.3 安装开发工具
+===== 安装独立 Python 工具环境 =====
+[Python 与 Yosys] 对: 本地 wheel 安装完成，无依赖冲突  证: 管理测试与通用综合使用本轮独立环境
+$ python3 -m venv --without-pip /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv
+$ env PYTHONPATH=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/tools/wheels/pip-25.2-py3-none-any.whl /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/bin/python -m pip install --no-index --find-links=/opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/tools/wheels -r /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/tools/requirements.txt > /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/work/python-install.log 2>&1
+$ tail -n 4 /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/work/python-install.log
+Requirement already satisfied: wheel==0.48.0 in /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/lib/python3.10/site-packages (from -r /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/tools/requirements.txt (line 7)) (0.48.0)
+Requirement already satisfied: yowasp-runtime==1.96 in /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/lib/python3.10/site-packages (from -r /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/tools/requirements.txt (line 8)) (1.96)
+Requirement already satisfied: yowasp-yosys==0.69.0.0.post1233 in /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/lib/python3.10/site-packages (from -r /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/tools/requirements.txt (line 9)) (0.69.0.0.post1233)
+Requirement already satisfied: six==1.17.0 in /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/lib/python3.10/site-packages (from -r /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/tools/requirements.txt (line 10)) (1.17.0)
+
+vm-monitor / 1.3 安装开发工具
+===== 查工具版本与依赖 =====
+[本章和下一章工具] 对: Icarus 可查版本；pip 无损坏依赖；Yosys、Verilator、g++、make 均可显示版本  证: 本章使用 Icarus/Python/Yosys；下一章复用 Verilator/C++ 编译工具
+$ dpkg-query -W -f=\$\{Package\}\ \$\{Version\}\\n iverilog
+iverilog 11.0-1.1
+$ /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/bin/python -m pip check
+No broken requirements found.
+$ /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev/venv/bin/yowasp-yosys -V
+Yosys 0.69 (git sha1 9f75ca1f9, Release, Clang /workspace/YoWASP/yosys/wasi-sdk-33.0-x86_64-linux/share/cmake/../..//bin/clang++ 22.1.0)
+$ verilator --version
+Verilator 4.038 2020-07-11 rev v4.036-114-g0cd4a57ad
+$ g++ --version
+g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+$ make --version
+GNU Make 4.3
+Built for x86_64-pc-linux-gnu
+Copyright (C) 1988-2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+本步完成: Icarus、Python/Yosys 和下一章共享工具已就绪；第2步看源码，第3步编译与测试。
+===== 保存开发机工作记录到 .111 =====
+[结果留存] 对: 收回截至本步的 work 目录  证: 即使本步失败也尝试保存日志
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 'set -eu; cd /opt/flle-ch08-dev/20260918T015207490653Z-ch08-fpga-dev; if test -d work; then tar -czf - work; else tar -czf - --files-from /dev/null; fi' > remote-work.tgz
+已保存开发机累计工作文件: /financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev/steps/20260918T015932107711Z-1.3/remote-work.tgz
+===== 本步结束 =====
+步骤退出码: 0
+结果收回退出码: 0
+本步执行完成；核对以上返回后，再执行下一张卡。
+终端完整记录: /financial-low-latency/Documents/reports/course-runs/20260918T015207490653Z-ch08-fpga-dev/steps/20260918T015932107711Z-1.3/classroom.log

@@ -1,0 +1,83 @@
+README.md: OK
+market_filter.sv: OK
+market_filter_sim_tb.sv: OK
+market_filter_tb.cpp: OK
+mold_filter_adapter.cpp: OK
+offline-selftest.sh: OK
+
+===== Compile the SV circuit and GUI testbench =====
+Icarus Verilog version 11.0 (stable) ()
+STAGE 1 reset and pass a matching message without credit
+CASE_PASS 1 reset_clears_state credit=0 pass=0 drop=0 seq=0000000000000000
+CASE_PASS 2 default_allow_full_sequence credit=0 pass=1 drop=0 seq=1234567800000064
+STAGE 2 issue one credit while a message waits
+CASE_PASS 3 configuration_holds_input credit=1 pass=1 drop=0 seq=1234567800000064
+CASE_PASS 4 first_target_drops credit=0 pass=1 drop=1 seq=00000000000000c8
+CASE_PASS 5 next_target_passes credit=0 pass=2 drop=1 seq=00000000000000c9
+CASE_PASS 6 idle_does_not_recount credit=0 pass=2 drop=1 seq=00000000000000c9
+STAGE 3 nonmatching fields preserve credit
+CONTROL credit_loaded=1
+CASE_PASS 7 other_type_passes credit=1 pass=3 drop=1 seq=000000000000012c
+CASE_PASS 8 other_locate_passes credit=1 pass=4 drop=1 seq=000000000000012d
+CASE_PASS 9 other_stock_passes credit=1 pass=5 drop=1 seq=000000000000012e
+CASE_PASS 10 stock_padding_is_checked credit=1 pass=6 drop=1 seq=000000000000012f
+CASE_PASS 11 target_drops_full_sequence credit=0 pass=6 drop=2 seq=fedcba9876543210
+STAGE 4 disarm and reset
+CONTROL credit_loaded=1
+CONTROL credit_loaded=0
+CASE_PASS 12 disarmed_target_passes credit=0 pass=7 drop=2 seq=0000000000000130
+CASE_PASS 13 reset_wins_over_input_and_config credit=0 pass=0 drop=0 seq=0000000000000000
+CASE_PASS 14 first_target_after_reset_passes credit=0 pass=1 drop=0 seq=0000000000000132
+RTL_GUI_SIMULATION=PASS cases=14 hardware=NOT_RUN
+RTL_GUI_SIMULATION=PASS cases=14 hardware=NOT_RUN
+
+===== Build and test the same core using Verilator =====
+offline_output=/opt/flle-ch09-dev/20260918T051118170662Z-ch09-vivado-handoff/verilator-results
+%Warning-UNUSED: market_filter.sv:8:26: Bits of signal are not used: 's_itch'[263:96,31:0]
+                                      : ... In instance market_filter
+    8 |     input  logic [287:0] s_itch,
+      |                          ^~~~~~
+                 ... Use "/* verilator lint_off UNUSED */" and lint_on around source to disable this message.
+make: Entering directory '/opt/flle-ch09-dev/20260918T051118170662Z-ch09-vivado-handoff/verilator-results/obj_dir'
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o mold_filter_adapter.o ../mold_filter_adapter.cpp
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o verilated.o /usr/share/verilator/include/verilated.cpp
+/usr/bin/perl /usr/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vmarket_filter.cpp Vmarket_filter__Slow.cpp Vmarket_filter__Syms.cpp > Vmarket_filter__ALL.cpp
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o Vmarket_filter__ALL.o Vmarket_filter__ALL.cpp
+ar -cr Vmarket_filter__ALL.a Vmarket_filter__ALL.o
+ranlib Vmarket_filter__ALL.a
+g++    mold_filter_adapter.o verilated.o Vmarket_filter__ALL.a      -o mold_filter_adapter
+make: Leaving directory '/opt/flle-ch09-dev/20260918T051118170662Z-ch09-vivado-handoff/verilator-results/obj_dir'
+rtl_selftest=PASS allow=1 target_drop=1 second_pass=1 locate_mismatch_pass=1 stock_mismatch_pass=1 type_f_pass=1
+%Warning-UNUSED: market_filter.sv:8:26: Bits of signal are not used: 's_itch'[263:96,31:0]
+                                      : ... In instance market_filter
+    8 |     input  logic [287:0] s_itch,
+      |                          ^~~~~~
+                 ... Use "/* verilator lint_off UNUSED */" and lint_on around source to disable this message.
+make: Entering directory '/opt/flle-ch09-dev/20260918T051118170662Z-ch09-vivado-handoff/verilator-results/obj_regression'
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o market_filter_tb.o ../market_filter_tb.cpp
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o verilated.o /usr/share/verilator/include/verilated.cpp
+/usr/bin/perl /usr/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vmarket_filter.cpp Vmarket_filter__Slow.cpp Vmarket_filter__Syms.cpp > Vmarket_filter__ALL.cpp
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o Vmarket_filter__ALL.o Vmarket_filter__ALL.cpp
+ar -cr Vmarket_filter__ALL.a Vmarket_filter__ALL.o
+ranlib Vmarket_filter__ALL.a
+g++    market_filter_tb.o verilated.o Vmarket_filter__ALL.a      -o market_filter_tb
+make: Leaving directory '/opt/flle-ch09-dev/20260918T051118170662Z-ch09-vivado-handoff/verilator-results/obj_regression'
+CASE_PASS reset_clears_state
+CASE_PASS default_allow_and_full_sequence
+CASE_PASS configuration_preempts_pending_input
+CASE_PASS held_input_consumes_one_credit
+CASE_PASS next_cycle_target_passes
+CASE_PASS idle_clears_verdict_without_recounting
+CASE_PASS type_mismatch_keeps_credit
+CASE_PASS locate_mismatch_keeps_credit
+CASE_PASS stock_mismatch_keeps_credit
+CASE_PASS padding_mismatch_keeps_credit
+CASE_PASS target_after_nonmatches_drops_full_sequence
+CASE_PASS explicit_zero_disarms
+CASE_PASS reset_wins_over_configuration_and_input
+CASE_PASS first_target_after_reset_passes
+RTL_OFFLINE_REGRESSION=PASS cases=14 network=NOT_USED hardware=NOT_RUN
+offline_result=PASS network=NOT_USED hardware=NOT_RUN output=/opt/flle-ch09-dev/20260918T051118170662Z-ch09-vivado-handoff/verilator-results
+
+===== Archive verification logs =====
+results.tgz: OK
