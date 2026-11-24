@@ -1,0 +1,30 @@
+
+跳板机 / verify
+===== 查前章交接 =====
+[交易 profile] 对: SFC / READY / sfc  证: 第七章已归还交易驱动与可用状态
+$ transport_labctl.sh status <已保存的第06章 RUN>
+trading_profile=SFC/READY/sfc
+receiver=ens64np1 BDF=0000:03:00.0 driver=sfc IP=20.1.1.2 no-XDP/no-RTL
+
+vm-2522-02 / verify
+===== 查接收口状态 =====
+[ens64np1] 对: UP / 原 MAC / 无旧 XDP  证: 接收口身份明确且未被旧实验占用
+$ ip -details link show dev ens64np1
+154: ens64np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:0f:53:d3:af:21 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 68 maxmtu 9216 addrgenmode eui64 numtxqueues 255 numrxqueues 255 gso_max_size 65536 gso_max_segs 100 portid 000f53d3af21 parentbus pci parentdev 0000:03:00.0 
+    altname enp3s0
+    altname ens64
+
+===== 查接收口驱动 =====
+[ens64np1] 对: sfc / 0000:03:00.0  证: X2522 仍由前章驱动管理
+$ ethtool -i ens64np1
+driver: sfc
+version: 6.1.0.1009
+firmware-version: 8.0.0.1015 rx1 tx1
+expansion-rom-version: 
+bus-info: 0000:03:00.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: no
+supports-register-dump: yes
+supports-priv-flags: yes

@@ -1,0 +1,30 @@
+Obtaining JSON from switch...
+Done
+Control utility for runtime P4 table manipulation
+RuntimeCmd: Adding entry to exact match table IngressImpl.unicast_dst
+match key:           EXACT-00:0f:53:d3:af:20
+action:              IngressImpl.forward
+runtime data:        00:01
+Entry has been added with handle 0
+RuntimeCmd: Adding entry to exact match table IngressImpl.unicast_dst
+match key:           EXACT-00:0f:53:d3:af:21
+action:              IngressImpl.forward
+runtime data:        00:02
+Entry has been added with handle 1
+RuntimeCmd: ==========
+TABLE ENTRIES
+**********
+Dumping entry 0x0
+Match key:
+* ethernet.dst        : EXACT     000f53d3af20
+Action entry: IngressImpl.forward - 01
+**********
+Dumping entry 0x1
+Match key:
+* ethernet.dst        : EXACT     000f53d3af21
+Action entry: IngressImpl.forward - 02
+==========
+Dumping default entry
+Action entry: IngressImpl.drop - 
+==========
+RuntimeCmd: 

@@ -1,0 +1,105 @@
+===== root@10.1.1.101 =====
+$ sed -n 1,12p /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+$ apt-get update
+$ apt-get install g++ make verilator=4.038-1
+Hit:1 https://download.opensuse.org/repositories/home:/p4lang/xUbuntu_22.04  InRelease
+Hit:2 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Hit:3 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease
+Hit:4 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease
+Hit:5 https://mirrors.aliyun.com/ubuntu jammy-security InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+make is already the newest version (4.3-4.1build1).
+Suggested packages:
+  g++-multilib gcc-multilib bison gdb gcc-doc gtkwave
+Recommended packages:
+  libsystemc-dev
+The following NEW packages will be installed:
+  g++ gcc verilator
+0 upgraded, 3 newly installed, 0 to remove and 118 not upgraded.
+Need to get 4739 kB of archives.
+After this operation, 21.2 MB of additional disk space will be used.
+Get:1 https://mirrors.aliyun.com/ubuntu jammy/main amd64 gcc amd64 4:11.2.0-1ubuntu1 [5112 B]
+Get:2 https://mirrors.aliyun.com/ubuntu jammy/main amd64 g++ amd64 4:11.2.0-1ubuntu1 [1412 B]
+Get:3 https://mirrors.aliyun.com/ubuntu jammy/universe amd64 verilator amd64 4.038-1 [4732 kB]
+Fetched 4739 kB in 57s (83.1 kB/s)
+Selecting previously unselected package gcc.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 122949 files and directories currently installed.)
+Preparing to unpack .../gcc_4%3a11.2.0-1ubuntu1_amd64.deb ...
+Unpacking gcc (4:11.2.0-1ubuntu1) ...
+Selecting previously unselected package g++.
+Preparing to unpack .../g++_4%3a11.2.0-1ubuntu1_amd64.deb ...
+Unpacking g++ (4:11.2.0-1ubuntu1) ...
+Selecting previously unselected package verilator.
+Preparing to unpack .../verilator_4.038-1_amd64.deb ...
+Unpacking verilator (4.038-1) ...
+Setting up verilator (4.038-1) ...
+Setting up gcc (4:11.2.0-1ubuntu1) ...
+Setting up g++ (4:11.2.0-1ubuntu1) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Processing triggers for man-db (2.10.2-1) ...
+
+Running kernel seems to be up-to-date.
+
+Services to be restarted:
+ systemctl restart containerd.service
+ systemctl restart cron.service
+ systemctl restart irqbalance.service
+ systemctl restart multipathd.service
+ systemctl restart open-vm-tools.service
+ systemctl restart packagekit.service
+ systemctl restart polkit.service
+ systemctl restart rsyslog.service
+ systemctl restart ssh.service
+ systemctl restart systemd-journald.service
+ /etc/needrestart/restart.d/systemd-manager
+ systemctl restart systemd-networkd.service
+ systemctl restart systemd-resolved.service
+ systemctl restart systemd-timesyncd.service
+ systemctl restart systemd-udevd.service
+ systemctl restart udisks2.service
+ systemctl restart upower.service
+ systemctl restart vgauth.service
+
+Service restarts being deferred:
+ systemctl restart ModemManager.service
+ /etc/needrestart/restart.d/dbus.service
+ systemctl restart docker.service
+ systemctl restart getty@tty1.service
+ systemctl restart networkd-dispatcher.service
+ systemctl restart systemd-logind.service
+ systemctl restart user@0.service
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+$ dpkg-query -W verilator g++ make
+$ verilator --version
+$ g++ --version
+$ make --version
+g++ 4:11.2.0-1ubuntu1
+make 4.3-4.1build1
+verilator 4.038-1
+Verilator 4.038 2020-07-11 rev v4.036-114-g0cd4a57ad
+g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+GNU Make 4.3
+Built for x86_64-pc-linux-gnu
+Copyright (C) 1988-2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

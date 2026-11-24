@@ -1,0 +1,173 @@
+pkg_info {
+  arch: "v1model"
+}
+tables {
+  preamble {
+    id: 49779420
+    name: "IngressImpl.unicast_dst"
+    alias: "unicast_dst"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ethernet.dst"
+    bitwidth: 48
+    match_type: EXACT
+  }
+  action_refs {
+    id: 33244565
+  }
+  action_refs {
+    id: 17676690
+  }
+  size: 16
+}
+tables {
+  preamble {
+    id: 43121675
+    name: "IngressImpl.market_policy"
+    alias: "market_policy"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.src"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.dst"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  match_fields {
+    id: 3
+    name: "hdr.itch_type.value"
+    bitwidth: 8
+    match_type: EXACT
+  }
+  match_fields {
+    id: 4
+    name: "hdr.itch_add.locate"
+    bitwidth: 16
+    match_type: EXACT
+  }
+  match_fields {
+    id: 5
+    name: "hdr.itch_add.stock"
+    bitwidth: 64
+    match_type: EXACT
+  }
+  action_refs {
+    id: 26495597
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 8
+}
+actions {
+  preamble {
+    id: 21257015
+    name: "NoAction"
+    alias: "NoAction"
+    annotations: "@noWarn(\"unused\")"
+  }
+}
+actions {
+  preamble {
+    id: 17676690
+    name: "IngressImpl.drop"
+    alias: "drop"
+  }
+}
+actions {
+  preamble {
+    id: 33244565
+    name: "IngressImpl.forward"
+    alias: "forward"
+  }
+  params {
+    id: 1
+    name: "port"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 27033816
+    name: "IngressImpl.peer"
+    alias: "peer"
+  }
+}
+actions {
+  preamble {
+    id: 26495597
+    name: "IngressImpl.select_policy"
+    alias: "select_policy"
+  }
+}
+counters {
+  preamble {
+    id: 318318281
+    name: "IngressImpl.frame_class"
+    alias: "frame_class"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 3
+}
+counters {
+  preamble {
+    id: 305589117
+    name: "IngressImpl.stock_packets"
+    alias: "stock_packets"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 2
+}
+counters {
+  preamble {
+    id: 309449428
+    name: "IngressImpl.policy_drop_packets"
+    alias: "policy_drop_packets"
+  }
+  spec {
+    unit: PACKETS
+  }
+  size: 1
+}
+registers {
+  preamble {
+    id: 384143082
+    name: "IngressImpl.remaining_drops"
+    alias: "remaining_drops"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 32
+      }
+    }
+  }
+  size: 1
+}
+registers {
+  preamble {
+    id: 384609840
+    name: "IngressImpl.dropped_sequence"
+    alias: "dropped_sequence"
+  }
+  type_spec {
+    bitstring {
+      bit {
+        bitwidth: 64
+      }
+    }
+  }
+  size: 1
+}
+type_info {
+}

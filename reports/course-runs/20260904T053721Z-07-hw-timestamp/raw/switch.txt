@@ -1,0 +1,12 @@
+$ show hostname
+show hostname | no-more
+Hostname: fll-arista
+FQDN:     fll-arista
+
+$ show ptp
+show ptp | no-more
+PTP Mode: Disabled
+
+$ show running-config all interfaces Ethernet2 | include ptp enable|mac timestamp
+show running-config all interfaces Ethernet2 | include ptp enable|mac timestamp | no-more
+   no ptp enable

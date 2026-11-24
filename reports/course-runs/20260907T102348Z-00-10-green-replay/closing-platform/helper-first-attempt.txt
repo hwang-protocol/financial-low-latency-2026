@@ -1,0 +1,21 @@
+Sep 07 21:34:21 Low-Latency-Ops systemd[1]: Started /usr/bin/python3 /tmp/flle-close-platform.py.
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]: Traceback (most recent call last):
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/tmp/flle-close-platform.py", line 15, in <module>
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     reply=request(base,'/api/order',dict(symbol='AAPL',side=side,quantity=1,limit_price_x10000=price,transport=transport));oid=reply['client_order_id']
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/financial-low-latency/apps/flle-trading-lab/tests/first_trade.py", line 21, in request
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     with urllib.request.urlopen(req, timeout=4) as response:
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/usr/lib/python3.10/urllib/request.py", line 216, in urlopen
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     return opener.open(url, data, timeout)
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/usr/lib/python3.10/urllib/request.py", line 525, in open
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     response = meth(req, response)
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/usr/lib/python3.10/urllib/request.py", line 634, in http_response
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     response = self.parent.error(
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/usr/lib/python3.10/urllib/request.py", line 563, in error
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     return self._call_chain(*args)
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/usr/lib/python3.10/urllib/request.py", line 496, in _call_chain
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     result = func(*args)
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:   File "/usr/lib/python3.10/urllib/request.py", line 643, in http_error_default
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]:     raise HTTPError(req.full_url, code, msg, hdrs, fp)
+Sep 07 21:35:28 Low-Latency-Ops python3[45266]: urllib.error.HTTPError: HTTP Error 400: Bad Request
+Sep 07 21:35:28 Low-Latency-Ops systemd[1]: flle-course-final-handoff.service: Main process exited, code=exited, status=1/FAILURE
+Sep 07 21:35:28 Low-Latency-Ops systemd[1]: flle-course-final-handoff.service: Failed with result 'exit-code'.

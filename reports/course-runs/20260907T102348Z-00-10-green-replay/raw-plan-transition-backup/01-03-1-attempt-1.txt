@@ -1,0 +1,122 @@
+===== admin@10.1.1.253 · EOS course baseline =====
+$ configure terminal
+configure terminal
+
+$ vlan 20
+vlan 20
+
+$ name fll
+name fll
+
+$ interface Ethernet1
+interface Ethernet1
+
+$ switchport access vlan 20
+switchport access vlan 20
+
+$ spanning-tree portfast
+spanning-tree portfast
+! portfast should only be enabled on ports connected to a single host. Connecting hubs, concentrators, switches, bridges, etc. to this interface when portfast is enabled can cause temporary bridging loops. Use with CAUTION.
+
+$ interface Ethernet2
+interface Ethernet2
+
+$ switchport access vlan 20
+switchport access vlan 20
+
+$ spanning-tree portfast
+spanning-tree portfast
+! portfast should only be enabled on ports connected to a single host. Connecting hubs, concentrators, switches, bridges, etc. to this interface when portfast is enabled can cause temporary bridging loops. Use with CAUTION.
+
+$ interface Ethernet11
+interface Ethernet11
+
+$ switchport access vlan 20
+switchport access vlan 20
+
+$ spanning-tree portfast
+spanning-tree portfast
+! portfast should only be enabled on ports connected to a single host. Connecting hubs, concentrators, switches, bridges, etc. to this interface when portfast is enabled can cause temporary bridging loops. Use with CAUTION.
+
+$ interface Ethernet12
+interface Ethernet12
+
+$ switchport access vlan 20
+switchport access vlan 20
+
+$ spanning-tree portfast
+spanning-tree portfast
+! portfast should only be enabled on ports connected to a single host. Connecting hubs, concentrators, switches, bridges, etc. to this interface when portfast is enabled can cause temporary bridging loops. Use with CAUTION.
+
+$ interface Vlan20
+interface Vlan20
+
+$ ip address 20.1.1.254/24
+ip address 20.1.1.254/24
+
+$ no ip routing
+no ip routing
+
+$ end
+end
+
+$ show vlan id 20
+show vlan id 20 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2, Et11, Et12
+
+
+$ show interfaces Ethernet1 status
+show interfaces Ethernet1 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet2 status
+show interfaces Ethernet2 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et2               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet11 status
+show interfaces Ethernet11 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et11              connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet12 status
+show interfaces Ethernet12 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et12              connected    20       full   10G    10GBASE-CR                      
+
+
+$ show ip interface brief
+show ip interface brief | no-more
+                                                                             Address 
+Interface         IP Address          Status       Protocol           MTU    Owner   
+----------------- ------------------- ------------ -------------- ---------- ------- 
+Management1       10.1.1.253/24       up           up                1500            
+Vlan20            20.1.1.254/24       up           up                1500            
+
+$ show spanning-tree vlan 20
+show spanning-tree vlan 20 | no-more
+Spanning tree instance for vlan 20
+MST0
+  Spanning tree enabled protocol mstp
+  Root ID    Priority    32768
+             Address     001c.7368.e239
+             This bridge is the root
+
+  Bridge ID  Priority    32768  (priority 32768 sys-id-ext 0)
+             Address     001c.7368.e239
+             Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
+
+Interface        Role       State      Cost      Prio.Nbr Type
+---------------- ---------- ---------- --------- -------- --------------------
+Et1              designated forwarding 2000      128.1    P2p Edge                      
+Et2              designated forwarding 2000      128.2    P2p Edge                      
+Et11             designated forwarding 2000      128.11   P2p Edge                      
+Et12             designated forwarding 2000      128.12   P2p Edge                      
+
+evidence=Documents/reports/course-runs/20260907T102632Z-01-switch-course-baseline

@@ -1,0 +1,25 @@
+Running timer as unit: flle-qos-contention-recovery-20260907T132153Z-07-qos-contention-live.timer
+Will run service as unit: flle-qos-contention-recovery-20260907T132153Z-07-qos-contention-live.service
+orders_executed=120
+rtt_ns_min_p50_p99_max=2159269/2193639/2299248/2301945
+-A OUTPUT -s 20.1.1.2/32 -d 20.1.1.1/32 -o ens64np1 -p tcp -m tcp --sport 59663 --dport 43120 -m comment --comment FLLE_CH07_QOS_20260907T132153Z-07-qos-contention-live -j DSCP --set-dscp 0x2e
+orders_executed=120
+rtt_ns_min_p50_p99_max=76554/94430/150351/152882
+DSCP  tcp opt -- in * out ens64np1  20.1.1.2  -> 20.1.1.1   tcp spt:59663 dpt:43120 /* FLLE_CH07_QOS_20260907T132153Z-07-qos-contention-live */ DSCP set 0x2e
+===== 实验一 · 在线真实订单共享出口 QoS A/B =====
+result=PASS
+platform=DCS-7150S-24-F / EOS 4.23.16M-2GB / FM6000
+background=MoldUDP64/ITCH5 controlled load, Et11+Et12 untagged 1514B -> isolated test MAC -> Et1 -> TC1/Q1
+background_configured=500000 pps/ingress x2 for 15s
+background_actual_packets=15000000 / 15000000
+baseline=unmarked orders in Q1; executed=120; p50/p99=2193639/2299248 ns
+baseline_queue=P1 +12194511; P5 +0; LANZ +1
+tagged=DSCP46 -> TC5 -> Q5 explicit priority strict; executed=120; p50/p99=94430/150351 ns
+tagged_queue=P1 +12193592; P5 +240; LANZ +1
+p99_improvement_ratio=15.29x
+host_restore=iptables mangle table byte-identical
+switch_restore=temporary static MAC, LANZ and QoS removed; startup unchanged; Management1 connected
+post_restore_orders=2/2 ORDER_EXECUTED; AAPL position unchanged
+save_config=NO
+evidence=Documents/reports/course-runs/20260907T132153Z-07-qos-contention-live
+root_sha256=5738d234290c887887fac163323b09353224e31367ecc034ce7e24f84ecce366

@@ -1,0 +1,34 @@
+$ configure terminal
+configure terminal
+
+$ vlan 3101
+vlan 3101
+
+$ name FLLE_TS_SINK_20260903
+name FLLE_TS_SINK_20260903
+
+$ interface Ethernet11
+interface Ethernet11
+
+$ mac timestamp before-fcs
+mac timestamp before-fcs
+
+$ switchport access vlan 3101
+switchport access vlan 3101
+
+$ end
+end
+
+$ show running-config interfaces Ethernet11
+show running-config interfaces Ethernet11 | no-more
+interface Ethernet11
+   mac timestamp before-fcs
+   switchport access vlan 3101
+   spanning-tree portfast
+
+$ show vlan id 3101
+show vlan id 3101 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+3101  FLLE_TS_SINK_20260903            active    Et11
+

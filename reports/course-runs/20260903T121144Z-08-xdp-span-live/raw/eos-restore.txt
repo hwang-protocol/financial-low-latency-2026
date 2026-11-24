@@ -1,0 +1,215 @@
+$ configure terminal
+configure terminal
+
+$ no monitor session FLLEXDP
+no monitor session FLLEXDP
+
+$ end
+end
+
+$ show monitor session FLLEXDP
+show monitor session FLLEXDP | no-more
+Session not created
+
+
+$ show interfaces status
+show interfaces status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+Et2               connected    20       full   10G    10GBASE-CR                      
+Et3               notconnect   1        full   10G    Not Present                     
+Et4               notconnect   1        full   10G    Not Present                     
+Et5               notconnect   1        full   10G    Not Present                     
+Et6               notconnect   1        full   10G    Not Present                     
+Et7               notconnect   1        full   10G    Not Present                     
+Et8               notconnect   1        full   10G    Not Present                     
+Et9               notconnect   1        full   10G    Not Present                     
+Et10              notconnect   1        full   10G    Not Present                     
+Et11              notconnect   20       full   10G    10GBASE-CR                      
+Et12              connected    20       full   10G    10GBASE-CR                      
+Et13              notconnect   1        full   10G    Not Present                     
+Et14              notconnect   1        full   10G    Not Present                     
+Et15              notconnect   1        full   10G    Not Present                     
+Et16              notconnect   1        full   10G    Not Present                     
+Et17              notconnect   1        full   10G    Not Present                     
+Et18              notconnect   1        full   10G    Not Present                     
+Et19              notconnect   1        full   10G    Not Present                     
+Et20              notconnect   1        full   10G    Not Present                     
+Et21              notconnect   1        full   10G    Not Present                     
+Et22              notconnect   1        full   10G    Not Present                     
+Et23              notconnect   1        full   10G    Not Present                     
+Et24              notconnect   1        full   10G    Not Present                     
+Ma1               connected    routed   a-full a-1G   10/100/1000                     
+
+
+$ show vlan id 20
+show vlan id 20 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2, Et12
+
+
+$ show spanning-tree vlan 20
+show spanning-tree vlan 20 | no-more
+Spanning tree instance for vlan 20
+MST0
+  Spanning tree enabled protocol mstp
+  Root ID    Priority    32768
+             Address     001c.7368.e239
+             This bridge is the root
+
+  Bridge ID  Priority    32768  (priority 32768 sys-id-ext 0)
+             Address     001c.7368.e239
+             Hello Time  2.000 sec  Max Age 20 sec  Forward Delay 15 sec
+
+Interface        Role       State      Cost      Prio.Nbr Type
+---------------- ---------- ---------- --------- -------- --------------------
+Et1              designated forwarding 2000      128.1    P2p Edge                      
+Et2              designated forwarding 2000      128.2    P2p Edge                      
+Et12             designated forwarding 2000      128.12   P2p Edge                      
+
+
+$ show running-config interfaces Ethernet1
+show running-config interfaces Ethernet1 | no-more
+interface Ethernet1
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2 | no-more
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet11
+show running-config interfaces Ethernet11 | no-more
+interface Ethernet11
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet12
+show running-config interfaces Ethernet12 | no-more
+interface Ethernet12
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config diffs
+show running-config diffs | no-more
+--- flash:/startup-config
++++ system:/running-config
+@@ -11,10 +11,18 @@
+ no aaa root
+ !
+ username admin privilege 15 role network-admin secret 5 $1$l7bhLSwL$8uEpS3kN.iM1oxiMu/LQI1
++username admin ssh-key ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1dV2le47i3YJoW9NFcqWbcEGe1pavdMsRkjoTFxIQs flle-course-jump-host-20260722
++!
++vlan 20
++   name fll
+ !
+ interface Ethernet1
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet2
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet3
+ !
+@@ -33,8 +41,12 @@
+ interface Ethernet10
+ !
+ interface Ethernet11
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet12
++   switchport access vlan 20
++   spanning-tree portfast
+ !
+ interface Ethernet13
+ !
+@@ -63,6 +75,9 @@
+ interface Management1
+    ip address 10.1.1.253/24
+ !
++interface Vlan20
++   ip address 20.1.1.254/24
++!
+ no ip routing
+ !
+ end
+
+
+$ show startup-config
+show startup-config | no-more
+! Command: show startup-config
+! Startup-config last modified at  Wed Jul 22 11:58:34 2026 by admin
+! device: fll-arista (DCS-7150S-24, EOS-4.23.16M-2GB)
+!
+! boot system flash:/EOS-2GB-4.23.16M.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname fll-arista
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret 5 $1$l7bhLSwL$8uEpS3kN.iM1oxiMu/LQI1
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Ethernet16
+!
+interface Ethernet17
+!
+interface Ethernet18
+!
+interface Ethernet19
+!
+interface Ethernet20
+!
+interface Ethernet21
+!
+interface Ethernet22
+!
+interface Ethernet23
+!
+interface Ethernet24
+!
+interface Management1
+   ip address 10.1.1.253/24
+!
+no ip routing
+!
+end

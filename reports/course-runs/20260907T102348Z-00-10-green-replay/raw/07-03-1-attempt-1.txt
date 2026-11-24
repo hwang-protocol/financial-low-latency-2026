@@ -1,0 +1,24 @@
+{"END": 0, "OTHER": 0, "POLLING": 0, "START": 0, "UPDATE": 0}
+Running timer as unit: flle-lanz-lower-recovery-20260907T121011Z-07-lanz-stream-ab.timer
+Will run service as unit: flle-lanz-lower-recovery-20260907T121011Z-07-lanz-stream-ab.service
+{"END": 0, "OTHER": 0, "POLLING": 0, "START": 0, "UPDATE": 0}
+{"END": 40, "OTHER": 0, "POLLING": 0, "START": 40, "UPDATE": 0}
+et2_start=40 et2_end=40
+{"END": 40, "OTHER": 0, "POLLING": 0, "START": 40, "UPDATE": 0}
+fll-arista / .101 LANZ stream
+protocol=MoldUDP64/ITCH5 controlled load -> isolated test MAC
+===== 查10k 接收器 =====
+[Et2] 对: START=0 END=0  证: 低档没有跨过当前阈值
+===== 查25k 接收器 =====
+[Et2] 对: START>0 且 END>0  证: 同一批拥塞事件已经推到 .101
+$ curl -fsS http://10.1.1.101:8089/api/lanz
+connected=true
+et2 START=40 END=40
+first START Ethernet2 tc=1 q=72
+last END Ethernet2 tc=1 q=64
+===== 查8088下方 =====
+[panel] 对: 页面最下方出现同一批 S/E  证: 接收器与成交无关
+===== 查恢复 =====
+[status] 对: queue-monitor length disabled 且无 streaming  证: running 已撤，startup 未写；接收器仍保留刚才的事件
+evidence=Documents/reports/course-runs/20260907T121011Z-07-lanz-stream-ab
+root_sha256=420e58a19a2445f59e14ec16296d90ba325a339e265f6862b8548882cd0f9d44

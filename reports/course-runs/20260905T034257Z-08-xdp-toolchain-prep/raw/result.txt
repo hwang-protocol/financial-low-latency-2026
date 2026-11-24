@@ -1,0 +1,24 @@
+===== root@10.1.1.2 =====
+$ apt-get update
+$ apt-get install clang llvm libbpf-dev linux-tools-$(uname -r)
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Hit:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease
+Hit:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease
+Hit:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+clang is already the newest version (1:14.0-55~exp2).
+llvm is already the newest version (1:14.0-55~exp2).
+libbpf-dev is already the newest version (1:0.5.0-1ubuntu22.04.1).
+linux-tools-5.15.0-164-generic is already the newest version (5.15.0-164.174).
+0 upgraded, 0 newly installed, 0 to remove and 120 not upgraded.
+$ clang --version
+Ubuntu clang version 14.0.0-1ubuntu1.1
+Target: x86_64-pc-linux-gnu
+$ bpftool version
+/usr/lib/linux-tools/5.15.0-164-generic/bpftool v5.15.193
+features:
+$ ip -V
+ip utility, iproute2-5.15.0, libbpf 0.5.0

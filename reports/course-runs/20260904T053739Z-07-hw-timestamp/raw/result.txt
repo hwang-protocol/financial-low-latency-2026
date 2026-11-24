@@ -1,0 +1,39 @@
+fll-arista / verify
+===== 查交换机 PTP =====
+[show ptp] 对: PTP Mode: Disabled  证: 7150 认得 PTP，当前没开
+$ show hostname
+show hostname | no-more
+Hostname: fll-arista
+FQDN:     fll-arista
+
+$ show ptp
+show ptp | no-more
+PTP Mode: Disabled
+
+$ show running-config all interfaces Ethernet2 | include mac timestamp
+show running-config all interfaces Ethernet2 | include mac timestamp | no-more
+
+$ show running-config all interfaces Ethernet2 | include ptp enable
+show running-config all interfaces Ethernet2 | include ptp enable | no-more
+vm-2522-02 / verify
+===== 查 Linux 网卡 =====
+[ethtool -T] 对: hardware-transmit / hardware-receive / PTP Hardware Clock: 0  证: 这张 X2522 能盖硬件 TX/RX 戳
+$ hostname
+vm-2522-02
+$ ethtool -T ens64np1
+Time stamping parameters for ens64np1:
+Capabilities:
+	hardware-transmit
+	software-transmit
+	hardware-receive
+	software-receive
+	software-system-clock
+	hardware-legacy-clock
+	hardware-raw-clock
+PTP Hardware Clock: 0
+Hardware Transmit Timestamp Modes:
+	off
+	on
+Hardware Receive Filter Modes:
+	none
+	all

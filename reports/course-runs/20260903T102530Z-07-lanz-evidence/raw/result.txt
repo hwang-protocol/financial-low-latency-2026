@@ -1,0 +1,69 @@
+$ sha256sum Documents/newDoc/assets/07-arista-time/lanz-native-20260820.txt
+dc0d86e6cac292cd8a74ce419c11bf0b78429aac8a5ee5a1dfda50a2a78dfd13  Documents/newDoc/assets/07-arista-time/lanz-native-20260820.txt
+
+$ cat Documents/newDoc/assets/07-arista-time/lanz-native-20260820.txt
+Provenance: 20260820T021557Z-07-lanz-live
+Campaign: Documents/reports/newdoc-full-live-20260820/live/lanz/20260820T021557Z-07-lanz-live
+Fixed profile: dual BCM57414 ingress, 4096 packets per ingress, 1514-byte frames without FCS, destination vm-2522-02/Et2
+TRex acceptance: both stages 8192 packets and 12435456 obytes, 1518 obytes/packet, all port I/O errors 0
+Safety: 900-second host deadman; EOS running-config only; final host recovery bnxt_en/down/no-address/all hugepage pools 0; queue-monitor disabled
+
+Stage: dual-10k-4096, 10000 pps per ingress, No-event
+
+fll-arista#show queue-monitor length statistics
+
+Report generated at 2026-08-20 01:57:18
+Interface      Traffic Class  Count
+-----------------------------------------------------------------
+
+Global Hit Count = 0
+fll-arista#show queue-monitor length Ethernet 2
+
+Report generated at 2026-08-20 01:57:18
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+
+Stage: dual-25k-4096, 25000 pps per ingress, Event
+
+fll-arista#show queue-monitor length statistics
+
+Report generated at 2026-08-20 01:57:27
+Interface      Traffic Class  Count
+-----------------------------------------------------------------
+Et2             1               164
+
+Global Hit Count = 0
+fll-arista#show queue-monitor length Ethernet 2
+
+Report generated at 2026-08-20 01:57:27
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+ E   0:00:07.74116 ago         Et2(1)    28            64*         0
+ S   0:00:07.74119 ago         Et2(1)    N/A           64          N/A
+
+Drop/error boundary: LANZ drop table empty; Et2 FCS/Align/Symbol/Rx/Runts/Giants/Tx errors all 0; Et2 InDiscards/OutDiscards 0/0.
+Recovery: LANZ_TREX_FINAL_ASSERT=PASS; EOS queue-monitor length disabled; no startup-config save.

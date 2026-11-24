@@ -1,0 +1,488 @@
+
+===== root@10.1.1.1 =====
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+$ dpkg --print-architecture
+amd64
+$ cat /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+$ apt-get -o Acquire::Retries=3 update
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease [127 kB]
+Get:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease [129 kB]
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [3794 kB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/main Translation-en [563 kB]
+Get:7 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted amd64 Packages [6541 kB]
+Get:8 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Translation-en [1255 kB]
+Get:9 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1282 kB]
+Get:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe Translation-en [323 kB]
+Get:11 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse amd64 Packages [76.5 kB]
+Get:12 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Translation-en [15.9 kB]
+Get:13 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages [3523 kB]
+Get:14 https://mirrors.aliyun.com/ubuntu jammy-security/main Translation-en [495 kB]
+Get:15 https://mirrors.aliyun.com/ubuntu jammy-security/restricted amd64 Packages [6299 kB]
+Get:16 https://mirrors.aliyun.com/ubuntu jammy-security/restricted Translation-en [1212 kB]
+Get:17 https://mirrors.aliyun.com/ubuntu jammy-security/universe amd64 Packages [1048 kB]
+Get:18 https://mirrors.aliyun.com/ubuntu jammy-security/universe Translation-en [235 kB]
+Get:19 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse amd64 Packages [69.1 kB]
+Get:20 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse Translation-en [12.9 kB]
+Fetched 27.1 MB in 27s (1014 kB/s)
+Reading package lists...
+$ apt-cache policy g++-11
+g++-11:
+  Installed: (none)
+  Candidate: 11.4.0-1ubuntu1~22.04.3
+  Version table:
+     11.4.0-1ubuntu1~22.04.3 500
+        500 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages
+        500 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages
+     11.2.0-19ubuntu1 500
+        500 https://mirrors.aliyun.com/ubuntu jammy/main amd64 Packages
+
+===== root@10.1.1.2 =====
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+$ dpkg --print-architecture
+amd64
+$ cat /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+$ apt-get -o Acquire::Retries=3 update
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease [127 kB]
+Get:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease [129 kB]
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [3794 kB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/main Translation-en [563 kB]
+Get:7 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted amd64 Packages [6541 kB]
+Get:8 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Translation-en [1255 kB]
+Get:9 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1282 kB]
+Get:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe Translation-en [323 kB]
+Get:11 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse amd64 Packages [76.5 kB]
+Get:12 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Translation-en [15.9 kB]
+Get:13 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages [3523 kB]
+Get:14 https://mirrors.aliyun.com/ubuntu jammy-security/main Translation-en [495 kB]
+Get:15 https://mirrors.aliyun.com/ubuntu jammy-security/restricted amd64 Packages [6299 kB]
+Get:16 https://mirrors.aliyun.com/ubuntu jammy-security/restricted Translation-en [1212 kB]
+Get:17 https://mirrors.aliyun.com/ubuntu jammy-security/universe amd64 Packages [1048 kB]
+Get:18 https://mirrors.aliyun.com/ubuntu jammy-security/universe Translation-en [235 kB]
+Get:19 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse amd64 Packages [69.1 kB]
+Get:20 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse Translation-en [12.9 kB]
+Fetched 27.1 MB in 22s (1210 kB/s)
+Reading package lists...
+$ apt-cache policy g++-11
+g++-11:
+  Installed: (none)
+  Candidate: 11.4.0-1ubuntu1~22.04.3
+  Version table:
+     11.4.0-1ubuntu1~22.04.3 500
+        500 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages
+        500 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages
+     11.2.0-19ubuntu1 500
+        500 https://mirrors.aliyun.com/ubuntu jammy/main amd64 Packages
+
+===== root@10.1.1.11 =====
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+$ dpkg --print-architecture
+amd64
+$ cat /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+$ apt-get -o Acquire::Retries=3 update
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease [127 kB]
+Get:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease [129 kB]
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [3794 kB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/main Translation-en [563 kB]
+Get:7 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted amd64 Packages [6541 kB]
+Get:8 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Translation-en [1255 kB]
+Get:9 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1282 kB]
+Get:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe Translation-en [323 kB]
+Get:11 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse amd64 Packages [76.5 kB]
+Get:12 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Translation-en [15.9 kB]
+Get:13 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages [3523 kB]
+Get:14 https://mirrors.aliyun.com/ubuntu jammy-security/main Translation-en [495 kB]
+Get:15 https://mirrors.aliyun.com/ubuntu jammy-security/restricted amd64 Packages [6299 kB]
+Get:16 https://mirrors.aliyun.com/ubuntu jammy-security/restricted Translation-en [1212 kB]
+Get:17 https://mirrors.aliyun.com/ubuntu jammy-security/universe amd64 Packages [1048 kB]
+Get:18 https://mirrors.aliyun.com/ubuntu jammy-security/universe Translation-en [235 kB]
+Get:19 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse amd64 Packages [69.1 kB]
+Get:20 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse Translation-en [12.9 kB]
+Fetched 27.1 MB in 16s (1683 kB/s)
+Reading package lists...
+$ apt-cache policy g++-11
+g++-11:
+  Installed: (none)
+  Candidate: 11.4.0-1ubuntu1~22.04.3
+  Version table:
+     11.4.0-1ubuntu1~22.04.3 500
+        500 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages
+        500 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages
+     11.2.0-19ubuntu1 500
+        500 https://mirrors.aliyun.com/ubuntu jammy/main amd64 Packages
+
+===== root@10.1.1.101 =====
+$ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+$ dpkg --print-architecture
+amd64
+$ cat /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+$ apt-get -o Acquire::Retries=3 update
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease [127 kB]
+Get:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease [129 kB]
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [3794 kB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/main Translation-en [563 kB]
+Get:7 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted amd64 Packages [6541 kB]
+Get:8 https://mirrors.aliyun.com/ubuntu jammy-updates/restricted Translation-en [1255 kB]
+Get:9 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1282 kB]
+Get:10 https://mirrors.aliyun.com/ubuntu jammy-updates/universe Translation-en [323 kB]
+Get:11 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse amd64 Packages [76.5 kB]
+Get:12 https://mirrors.aliyun.com/ubuntu jammy-updates/multiverse Translation-en [15.9 kB]
+Get:13 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages [3523 kB]
+Get:14 https://mirrors.aliyun.com/ubuntu jammy-security/main Translation-en [495 kB]
+Get:15 https://mirrors.aliyun.com/ubuntu jammy-security/restricted amd64 Packages [6299 kB]
+Get:16 https://mirrors.aliyun.com/ubuntu jammy-security/restricted Translation-en [1212 kB]
+Get:17 https://mirrors.aliyun.com/ubuntu jammy-security/universe amd64 Packages [1048 kB]
+Get:18 https://mirrors.aliyun.com/ubuntu jammy-security/universe Translation-en [235 kB]
+Get:19 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse amd64 Packages [69.1 kB]
+Get:20 https://mirrors.aliyun.com/ubuntu jammy-security/multiverse Translation-en [12.9 kB]
+Fetched 27.1 MB in 17s (1598 kB/s)
+Reading package lists...
+$ apt-cache policy g++-11
+g++-11:
+  Installed: (none)
+  Candidate: 11.4.0-1ubuntu1~22.04.3
+  Version table:
+     11.4.0-1ubuntu1~22.04.3 500
+        500 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages
+        500 https://mirrors.aliyun.com/ubuntu jammy-security/main amd64 Packages
+     11.2.0-19ubuntu1 500
+        500 https://mirrors.aliyun.com/ubuntu jammy/main amd64 Packages
+$ apt-get -y install g++-11 make
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  cpp-11 fontconfig-config fonts-dejavu-core gcc-11 gcc-11-base libasan6
+  libatomic1 libc-dev-bin libc-devtools libc6 libc6-dev libcc1-0 libcrypt-dev
+  libdeflate0 libfontconfig1 libgcc-11-dev libgd3 libgomp1 libisl23 libitm1
+  libjbig0 libjpeg-turbo8 libjpeg8 liblsan0 libmpc3 libnsl-dev libquadmath0
+  libstdc++-11-dev libtiff5 libtirpc-dev libtsan0 libubsan1 libwebp7 libxpm4
+  linux-libc-dev manpages-dev rpcsvc-proto
+Suggested packages:
+  gcc-11-locales g++-11-multilib gcc-11-doc gcc-11-multilib glibc-doc
+  libgd-tools libstdc++-11-doc make-doc
+Recommended packages:
+  libnss-nis libnss-nisplus
+The following NEW packages will be installed:
+  cpp-11 fontconfig-config fonts-dejavu-core g++-11 gcc-11 gcc-11-base
+  libasan6 libatomic1 libc-dev-bin libc-devtools libc6-dev libcc1-0
+  libcrypt-dev libdeflate0 libfontconfig1 libgcc-11-dev libgd3 libgomp1
+  libisl23 libitm1 libjbig0 libjpeg-turbo8 libjpeg8 liblsan0 libmpc3
+  libnsl-dev libquadmath0 libstdc++-11-dev libtiff5 libtirpc-dev libtsan0
+  libubsan1 libwebp7 libxpm4 linux-libc-dev make manpages-dev rpcsvc-proto
+The following packages will be upgraded:
+  libc6
+1 upgraded, 38 newly installed, 0 to remove and 125 not upgraded.
+Need to get 65.8 MB of archives.
+After this operation, 202 MB of additional disk space will be used.
+Get:1 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libc6 amd64 2.35-0ubuntu3.14 [3234 kB]
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 gcc-11-base amd64 11.4.0-1ubuntu1~22.04.3 [216 kB]
+Get:3 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libisl23 amd64 0.24-2build1 [727 kB]
+Get:4 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libmpc3 amd64 1.2.1-2build1 [46.9 kB]
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 cpp-11 amd64 11.4.0-1ubuntu1~22.04.3 [10.0 MB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy/main amd64 fonts-dejavu-core all 2.37-2build1 [1041 kB]
+Get:7 https://mirrors.aliyun.com/ubuntu jammy/main amd64 fontconfig-config all 2.13.1-4.2ubuntu5 [29.1 kB]
+Get:8 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libcc1-0 amd64 12.3.0-1ubuntu1~22.04.3 [48.3 kB]
+Get:9 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libgomp1 amd64 12.3.0-1ubuntu1~22.04.3 [127 kB]
+Get:10 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libitm1 amd64 12.3.0-1ubuntu1~22.04.3 [30.2 kB]
+Get:11 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libatomic1 amd64 12.3.0-1ubuntu1~22.04.3 [10.5 kB]
+Get:12 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libasan6 amd64 11.4.0-1ubuntu1~22.04.3 [2283 kB]
+Get:13 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 liblsan0 amd64 12.3.0-1ubuntu1~22.04.3 [1069 kB]
+Get:14 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libtsan0 amd64 11.4.0-1ubuntu1~22.04.3 [2260 kB]
+Get:15 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libubsan1 amd64 12.3.0-1ubuntu1~22.04.3 [976 kB]
+Get:16 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libquadmath0 amd64 12.3.0-1ubuntu1~22.04.3 [154 kB]
+Get:17 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libgcc-11-dev amd64 11.4.0-1ubuntu1~22.04.3 [2517 kB]
+Get:18 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 gcc-11 amd64 11.4.0-1ubuntu1~22.04.3 [20.1 MB]
+Get:19 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libc-dev-bin amd64 2.35-0ubuntu3.14 [20.3 kB]
+Get:20 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 linux-libc-dev amd64 5.15.0-191.201 [1362 kB]
+Get:21 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libcrypt-dev amd64 1:4.4.27-1 [112 kB]
+Get:22 https://mirrors.aliyun.com/ubuntu jammy/main amd64 rpcsvc-proto amd64 1.4.2-0ubuntu6 [68.5 kB]
+Get:23 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libtirpc-dev amd64 1.3.2-2ubuntu0.1 [192 kB]
+Get:24 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libnsl-dev amd64 1.3.0-2build2 [71.3 kB]
+Get:25 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libc6-dev amd64 2.35-0ubuntu3.14 [2100 kB]
+Get:26 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libstdc++-11-dev amd64 11.4.0-1ubuntu1~22.04.3 [2101 kB]
+Get:27 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 g++-11 amd64 11.4.0-1ubuntu1~22.04.3 [11.4 MB]
+Get:28 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libfontconfig1 amd64 2.13.1-4.2ubuntu5 [131 kB]
+Get:29 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libjpeg-turbo8 amd64 2.1.2-0ubuntu1 [134 kB]
+Get:30 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libjpeg8 amd64 8c-2ubuntu10 [2264 B]
+Get:31 https://mirrors.aliyun.com/ubuntu jammy/main amd64 libdeflate0 amd64 1.10-2 [70.9 kB]
+Get:32 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libjbig0 amd64 2.1-3.1ubuntu0.22.04.1 [29.2 kB]
+Get:33 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libwebp7 amd64 1.2.2-2ubuntu0.22.04.2 [206 kB]
+Get:34 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libtiff5 amd64 4.3.0-6ubuntu0.13 [185 kB]
+Get:35 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libxpm4 amd64 1:3.5.12-1ubuntu0.22.04.3 [36.5 kB]
+Get:36 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libgd3 amd64 2.3.0-2ubuntu2.3 [129 kB]
+Get:37 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 libc-devtools amd64 2.35-0ubuntu3.14 [29.0 kB]
+Get:38 https://mirrors.aliyun.com/ubuntu jammy/main amd64 make amd64 4.3-4.1build1 [180 kB]
+Get:39 https://mirrors.aliyun.com/ubuntu jammy/main amd64 manpages-dev all 5.10-1ubuntu1 [2309 kB]
+Preconfiguring packages ...
+Fetched 65.8 MB in 42s (1564 kB/s)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 75927 files and directories currently installed.)
+Preparing to unpack .../libc6_2.35-0ubuntu3.14_amd64.deb ...
+Unpacking libc6:amd64 (2.35-0ubuntu3.14) over (2.35-0ubuntu3.13) ...
+Setting up libc6:amd64 (2.35-0ubuntu3.14) ...
+Selecting previously unselected package gcc-11-base:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 75927 files and directories currently installed.)
+Preparing to unpack .../00-gcc-11-base_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking gcc-11-base:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libisl23:amd64.
+Preparing to unpack .../01-libisl23_0.24-2build1_amd64.deb ...
+Unpacking libisl23:amd64 (0.24-2build1) ...
+Selecting previously unselected package libmpc3:amd64.
+Preparing to unpack .../02-libmpc3_1.2.1-2build1_amd64.deb ...
+Unpacking libmpc3:amd64 (1.2.1-2build1) ...
+Selecting previously unselected package cpp-11.
+Preparing to unpack .../03-cpp-11_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking cpp-11 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package fonts-dejavu-core.
+Preparing to unpack .../04-fonts-dejavu-core_2.37-2build1_all.deb ...
+Unpacking fonts-dejavu-core (2.37-2build1) ...
+Selecting previously unselected package fontconfig-config.
+Preparing to unpack .../05-fontconfig-config_2.13.1-4.2ubuntu5_all.deb ...
+Unpacking fontconfig-config (2.13.1-4.2ubuntu5) ...
+Selecting previously unselected package libcc1-0:amd64.
+Preparing to unpack .../06-libcc1-0_12.3.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libcc1-0:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libgomp1:amd64.
+Preparing to unpack .../07-libgomp1_12.3.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libgomp1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libitm1:amd64.
+Preparing to unpack .../08-libitm1_12.3.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libitm1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libatomic1:amd64.
+Preparing to unpack .../09-libatomic1_12.3.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libatomic1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libasan6:amd64.
+Preparing to unpack .../10-libasan6_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libasan6:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package liblsan0:amd64.
+Preparing to unpack .../11-liblsan0_12.3.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking liblsan0:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libtsan0:amd64.
+Preparing to unpack .../12-libtsan0_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libtsan0:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libubsan1:amd64.
+Preparing to unpack .../13-libubsan1_12.3.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libubsan1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libquadmath0:amd64.
+Preparing to unpack .../14-libquadmath0_12.3.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libquadmath0:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libgcc-11-dev:amd64.
+Preparing to unpack .../15-libgcc-11-dev_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libgcc-11-dev:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package gcc-11.
+Preparing to unpack .../16-gcc-11_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking gcc-11 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libc-dev-bin.
+Preparing to unpack .../17-libc-dev-bin_2.35-0ubuntu3.14_amd64.deb ...
+Unpacking libc-dev-bin (2.35-0ubuntu3.14) ...
+Selecting previously unselected package linux-libc-dev:amd64.
+Preparing to unpack .../18-linux-libc-dev_5.15.0-191.201_amd64.deb ...
+Unpacking linux-libc-dev:amd64 (5.15.0-191.201) ...
+Selecting previously unselected package libcrypt-dev:amd64.
+Preparing to unpack .../19-libcrypt-dev_1%3a4.4.27-1_amd64.deb ...
+Unpacking libcrypt-dev:amd64 (1:4.4.27-1) ...
+Selecting previously unselected package rpcsvc-proto.
+Preparing to unpack .../20-rpcsvc-proto_1.4.2-0ubuntu6_amd64.deb ...
+Unpacking rpcsvc-proto (1.4.2-0ubuntu6) ...
+Selecting previously unselected package libtirpc-dev:amd64.
+Preparing to unpack .../21-libtirpc-dev_1.3.2-2ubuntu0.1_amd64.deb ...
+Unpacking libtirpc-dev:amd64 (1.3.2-2ubuntu0.1) ...
+Selecting previously unselected package libnsl-dev:amd64.
+Preparing to unpack .../22-libnsl-dev_1.3.0-2build2_amd64.deb ...
+Unpacking libnsl-dev:amd64 (1.3.0-2build2) ...
+Selecting previously unselected package libc6-dev:amd64.
+Preparing to unpack .../23-libc6-dev_2.35-0ubuntu3.14_amd64.deb ...
+Unpacking libc6-dev:amd64 (2.35-0ubuntu3.14) ...
+Selecting previously unselected package libstdc++-11-dev:amd64.
+Preparing to unpack .../24-libstdc++-11-dev_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking libstdc++-11-dev:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package g++-11.
+Preparing to unpack .../25-g++-11_11.4.0-1ubuntu1~22.04.3_amd64.deb ...
+Unpacking g++-11 (11.4.0-1ubuntu1~22.04.3) ...
+Selecting previously unselected package libfontconfig1:amd64.
+Preparing to unpack .../26-libfontconfig1_2.13.1-4.2ubuntu5_amd64.deb ...
+Unpacking libfontconfig1:amd64 (2.13.1-4.2ubuntu5) ...
+Selecting previously unselected package libjpeg-turbo8:amd64.
+Preparing to unpack .../27-libjpeg-turbo8_2.1.2-0ubuntu1_amd64.deb ...
+Unpacking libjpeg-turbo8:amd64 (2.1.2-0ubuntu1) ...
+Selecting previously unselected package libjpeg8:amd64.
+Preparing to unpack .../28-libjpeg8_8c-2ubuntu10_amd64.deb ...
+Unpacking libjpeg8:amd64 (8c-2ubuntu10) ...
+Selecting previously unselected package libdeflate0:amd64.
+Preparing to unpack .../29-libdeflate0_1.10-2_amd64.deb ...
+Unpacking libdeflate0:amd64 (1.10-2) ...
+Selecting previously unselected package libjbig0:amd64.
+Preparing to unpack .../30-libjbig0_2.1-3.1ubuntu0.22.04.1_amd64.deb ...
+Unpacking libjbig0:amd64 (2.1-3.1ubuntu0.22.04.1) ...
+Selecting previously unselected package libwebp7:amd64.
+Preparing to unpack .../31-libwebp7_1.2.2-2ubuntu0.22.04.2_amd64.deb ...
+Unpacking libwebp7:amd64 (1.2.2-2ubuntu0.22.04.2) ...
+Selecting previously unselected package libtiff5:amd64.
+Preparing to unpack .../32-libtiff5_4.3.0-6ubuntu0.13_amd64.deb ...
+Unpacking libtiff5:amd64 (4.3.0-6ubuntu0.13) ...
+Selecting previously unselected package libxpm4:amd64.
+Preparing to unpack .../33-libxpm4_1%3a3.5.12-1ubuntu0.22.04.3_amd64.deb ...
+Unpacking libxpm4:amd64 (1:3.5.12-1ubuntu0.22.04.3) ...
+Selecting previously unselected package libgd3:amd64.
+Preparing to unpack .../34-libgd3_2.3.0-2ubuntu2.3_amd64.deb ...
+Unpacking libgd3:amd64 (2.3.0-2ubuntu2.3) ...
+Selecting previously unselected package libc-devtools.
+Preparing to unpack .../35-libc-devtools_2.35-0ubuntu3.14_amd64.deb ...
+Unpacking libc-devtools (2.35-0ubuntu3.14) ...
+Selecting previously unselected package make.
+Preparing to unpack .../36-make_4.3-4.1build1_amd64.deb ...
+Unpacking make (4.3-4.1build1) ...
+Selecting previously unselected package manpages-dev.
+Preparing to unpack .../37-manpages-dev_5.10-1ubuntu1_all.deb ...
+Unpacking manpages-dev (5.10-1ubuntu1) ...
+Setting up gcc-11-base:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Setting up manpages-dev (5.10-1ubuntu1) ...
+Setting up libxpm4:amd64 (1:3.5.12-1ubuntu0.22.04.3) ...
+Setting up libdeflate0:amd64 (1.10-2) ...
+Setting up linux-libc-dev:amd64 (5.15.0-191.201) ...
+Setting up libgomp1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Setting up libjbig0:amd64 (2.1-3.1ubuntu0.22.04.1) ...
+Setting up libasan6:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Setting up libtirpc-dev:amd64 (1.3.2-2ubuntu0.1) ...
+Setting up rpcsvc-proto (1.4.2-0ubuntu6) ...
+Setting up make (4.3-4.1build1) ...
+Setting up libquadmath0:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Setting up libmpc3:amd64 (1.2.1-2build1) ...
+Setting up libatomic1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Setting up fonts-dejavu-core (2.37-2build1) ...
+Setting up libjpeg-turbo8:amd64 (2.1.2-0ubuntu1) ...
+Setting up libwebp7:amd64 (1.2.2-2ubuntu0.22.04.2) ...
+Setting up libubsan1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Setting up libnsl-dev:amd64 (1.3.0-2build2) ...
+Setting up libcrypt-dev:amd64 (1:4.4.27-1) ...
+Setting up libisl23:amd64 (0.24-2build1) ...
+Setting up libc-dev-bin (2.35-0ubuntu3.14) ...
+Setting up libcc1-0:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Setting up liblsan0:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Setting up libitm1:amd64 (12.3.0-1ubuntu1~22.04.3) ...
+Setting up libtsan0:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Setting up libjpeg8:amd64 (8c-2ubuntu10) ...
+Setting up cpp-11 (11.4.0-1ubuntu1~22.04.3) ...
+Setting up fontconfig-config (2.13.1-4.2ubuntu5) ...
+Setting up libgcc-11-dev:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Setting up gcc-11 (11.4.0-1ubuntu1~22.04.3) ...
+Setting up libc6-dev:amd64 (2.35-0ubuntu3.14) ...
+Setting up libtiff5:amd64 (4.3.0-6ubuntu0.13) ...
+Setting up libfontconfig1:amd64 (2.13.1-4.2ubuntu5) ...
+Setting up libgd3:amd64 (2.3.0-2ubuntu2.3) ...
+Setting up libstdc++-11-dev:amd64 (11.4.0-1ubuntu1~22.04.3) ...
+Setting up libc-devtools (2.35-0ubuntu3.14) ...
+Setting up g++-11 (11.4.0-1ubuntu1~22.04.3) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.13) ...
+
+Running kernel seems to be up-to-date.
+
+Services to be restarted:
+ systemctl restart containerd.service
+ systemctl restart cron.service
+ systemctl restart irqbalance.service
+ systemctl restart multipathd.service
+ systemctl restart open-vm-tools.service
+ systemctl restart packagekit.service
+ systemctl restart polkit.service
+ systemctl restart rsyslog.service
+ systemctl restart ssh.service
+ systemctl restart systemd-journald.service
+ systemctl restart systemd-networkd.service
+ systemctl restart systemd-resolved.service
+ systemctl restart systemd-timesyncd.service
+ systemctl restart systemd-udevd.service
+ systemctl restart vgauth.service
+
+Service restarts being deferred:
+ systemctl restart ModemManager.service
+ /etc/needrestart/restart.d/dbus.service
+ systemctl restart docker.service
+ systemctl restart getty@tty1.service
+ systemctl restart networkd-dispatcher.service
+ systemctl restart systemd-logind.service
+ systemctl restart user@0.service
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+$ command -v g++-11 make python3
+/usr/bin/g++-11
+/usr/bin/make
+/usr/bin/python3
+$ g++-11 --version
+g++-11 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0

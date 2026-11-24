@@ -1,0 +1,17 @@
+%Warning-UNUSED: market_pipeline.sv:6:25: Bits of signal are not used: 's_itch'[279:136]
+                                        : ... In instance market_pipeline
+    6 |     input logic [287:0] s_itch, input logic [63:0] s_mold_seq,
+      |                         ^~~~~~
+                 ... Use "/* verilator lint_off UNUSED */" and lint_on around source to disable this message.
+make: Entering directory '/var/tmp/20260903T130355Z-10-itch-pipeline/obj_mutant'
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o itch_pipeline_tb.o ../itch_pipeline_tb.cpp
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o verilated.o /usr/share/verilator/include/verilated.cpp
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o verilated_vcd_c.o /usr/share/verilator/include/verilated_vcd_c.cpp
+/usr/bin/perl /usr/share/verilator/bin/verilator_includer -DVL_INCLUDE_OPT=include Vmarket_pipeline.cpp Vmarket_pipeline__Trace.cpp Vmarket_pipeline__Slow.cpp Vmarket_pipeline__Syms.cpp Vmarket_pipeline__Trace__Slow.cpp > Vmarket_pipeline__ALL.cpp
+g++  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=1 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-shadow      -Os -c -o Vmarket_pipeline__ALL.o Vmarket_pipeline__ALL.cpp
+ar -cr Vmarket_pipeline__ALL.a Vmarket_pipeline__ALL.o
+ranlib Vmarket_pipeline__ALL.a
+g++    itch_pipeline_tb.o verilated.o verilated_vcd_c.o Vmarket_pipeline__ALL.a      -o Vmarket_pipeline
+make: Leaving directory '/var/tmp/20260903T130355Z-10-itch-pipeline/obj_mutant'
+RESET_BOUNDARY_PASS fifo_level=0 counters=0
+TEST_FAIL fifo accepted while full

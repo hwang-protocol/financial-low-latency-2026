@@ -1,0 +1,57 @@
+$ sha256sum Documents/newDoc/assets/07-arista-time/ptp-tc-native-20260820.txt
+fdfffc819cc19aee12dab5707abab26482015831101bd153d6cc1ff6da66e96f  Documents/newDoc/assets/07-arista-time/ptp-tc-native-20260820.txt
+
+$ cat Documents/newDoc/assets/07-arista-time/ptp-tc-native-20260820.txt
+Provenance: 20260820T022052Z-07-ptp-tc-live
+Sources: Documents/reports/newdoc-full-live-20260820/live/ptp/20260820T022052Z-07-ptp-tc-live/eos-active-mid.log; vm02/ptp4l.log; vm02/ptp.pcap
+PCAP: ptp-tc-client-20260820.pcap (SHA256 5e400fa56c2d0bcc06360c8255daae2700003e8462740e0592fe0fadeb618d52)
+Profile: UDPv4 / E2E / two-step / domain 24 / X2522 hardware timestamp / 70-second bounded runner
+Safety: 100-second per-node deadman; final hwstamp off, sfc/IP/link restored, hugepages=0; EOS PTP Disabled and no running PTP config; no startup save
+
+$ show ptp
+PTP Mode: E2E Transparent Clock
+   Interface    Transport
+--------------- ---------
+   Et1          ipv4
+   Et2          ipv4
+
+$ show ptp interface
+Interface Ethernet1
+PTP: Enabled
+Sync messages sent: 0
+Sync messages received: 21
+Follow up messages sent: 0
+Follow up messages received: 21
+Delay request messages sent: 19
+Delay request messages received: 0
+Delay response messages sent: 0
+Delay response messages received: 19
+Interface Ethernet2
+PTP: Enabled
+Sync messages sent: 21
+Sync messages received: 0
+Follow up messages sent: 21
+Follow up messages received: 0
+Delay request messages sent: 0
+Delay request messages received: 19
+Delay response messages sent: 19
+Delay response messages received: 0
+
+ptp4l[2061900.384]: selected /dev/ptp0 as PTP clock
+ptp4l[2061902.844]: port 1: LISTENING to UNCALIBRATED on RS_SLAVE
+ptp4l[2061904.893]: master offset          1 s0 freq      +0 path delay       120
+ptp4l[2061905.893]: master offset          3 s2 freq      +2 path delay       121
+ptp4l[2061905.893]: port 1: UNCALIBRATED to SLAVE on MASTER_CLOCK_SELECTED
+ptp4l[2061906.893]: master offset          6 s2 freq      +8 path delay       121
+
+Locked samples: 62; absolute offset min/median/p95/max = 0/2/5.95/6 ns; path delay min/median/max = 121/123/124 ns
+PCAP counts: Sync=66; Follow_Up=66; Delay_Req=65; Delay_Resp=62; Announce=67; domain24=326; two-step Sync=66
+Correction fields: Follow_Up nonzero=66/66, median=357.14263916015625 ns; Delay_Resp nonzero=62/62, median=362.8570556640625 ns
+
+IP 20.1.1.1.319 > 224.0.1.129.319: PTPv2, msg type : sync msg, length : 44, domain : 24, Flags [two step], NS correction : 0, sub NS correction : 0, seq id : 0
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, msg type : follow up msg, length : 44, domain : 24, NS correction : 0, sub NS correction : 23405700, seq id : 0
+IP 20.1.1.2.319 > 224.0.1.129.319: PTPv2, msg type : delay req msg, length : 44, domain : 24, NS correction : 0, sub NS correction : 0, seq id : 0
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, msg type : delay resp msg, length : 54, domain : 24, NS correction : 0, sub NS correction : 23592900, seq id : 0
+
+Final: vm01_runner_rc=0; vm02_runner_rc=0; PTP Mode Disabled; Et1/Et2 10G/full/connected; hardware error counters all 0.
+Scope: functional/short-window evidence only; no UTC/TAI traceability, external-reference accuracy, one-way latency, holdover, or production SLA claim.

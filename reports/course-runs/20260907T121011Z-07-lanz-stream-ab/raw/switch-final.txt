@@ -1,0 +1,109 @@
+$ configure terminal
+configure terminal
+
+$ interface Ethernet2
+interface Ethernet2
+
+$ default queue-monitor length thresholds
+default queue-monitor length thresholds
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ no mac address-table static 0200.0007.0002 vlan 20 interface Ethernet2
+no mac address-table static 0200.0007.0002 vlan 20 interface Ethernet2
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ default queue-monitor length
+default queue-monitor length
+
+$ end
+end
+
+$ show clock
+show clock | no-more
+Mon Sep  7 11:53:51 2026
+Timezone: UTC
+Clock source: local
+
+$ show running-config | include queue-monitor
+show running-config | include queue-monitor | no-more
+
+$ show startup-config | include queue-monitor
+show startup-config | include queue-monitor | no-more
+
+$ show queue-monitor length status
+show queue-monitor length status | no-more
+queue-monitor length disabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+Global Buffer Monitoring
+------------------------
+Global buffer monitoring is enabled
+Segment size in bytes :   160
+Total buffers in segments : 49152
+High threshold : 20540
+Low threshold :  8216
+
+
+Per-Interface Queue Length Monitoring
+-------------------------------------
+Queue length monitoring is disabled
+Segment size in bytes :   480
+Maximum queue length in segments :  6847
+Port thresholds in segments:
+Port     High threshold  Low threshold   Mirroring Enabled       Warnings
+Cpu               15888          15888               False
+Et1                 512            256               False
+Et2                 512            256               False
+Et3                 512            256               False
+Et4                 512            256               False
+Et5                 512            256               False
+Et6                 512            256               False
+Et7                 512            256               False
+Et8                 512            256               False
+Et9                 512            256               False
+Et10                512            256               False
+Et11                512            256               False
+Et12                512            256               False
+Et13                512            256               False
+Et14                512            256               False
+Et15                512            256               False
+Et16                512            256               False
+Et17                512            256               False
+Et18                512            256               False
+Et19                512            256               False
+Et20                512            256               False
+Et21                512            256               False
+Et22                512            256               False
+Et23                512            256               False
+Et24                512            256               False
+
+$ show queue-monitor streaming clients
+show queue-monitor streaming clients | no-more
+Queue length monitoring is disabled
+
+$ show mac address-table static
+show mac address-table static | no-more
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+Total Mac Addresses for this criterion: 0
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0

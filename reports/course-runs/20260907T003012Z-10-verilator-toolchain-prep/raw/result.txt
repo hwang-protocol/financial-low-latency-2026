@@ -1,0 +1,124 @@
+===== root@10.1.1.2 =====
+
+===== 查软件源配置 =====
+[APT] 对: 源配置可读  证: 明确构建工具从哪里安装
+$ sed -n 1,12p /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+
+===== 查包索引更新 =====
+[APT] 对: 更新无错误  证: 安装前取得软件包索引
+$ apt-get -o Acquire::Retries=3 update
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease [127 kB]
+Get:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease [129 kB]
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [3794 kB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1282 kB]
+Fetched 5461 kB in 3s (1892 kB/s)
+Reading package lists...
+
+===== 查安装周期模型工具 =====
+[APT] 对: Verilator 4.038-1 / g++ / make 安装成功  证: 编译与链接环境齐备
+$ apt-get install g++ make verilator=4.038-1
+Reading package lists...
+Building dependency tree...
+Reading state information...
+g++ is already the newest version (4:11.2.0-1ubuntu1).
+g++ set to manually installed.
+make is already the newest version (4.3-4.1build1).
+make set to manually installed.
+Suggested packages:
+  gtkwave
+Recommended packages:
+  libsystemc-dev
+The following NEW packages will be installed:
+  verilator
+0 upgraded, 1 newly installed, 0 to remove and 120 not upgraded.
+Need to get 4732 kB of archives.
+After this operation, 21.1 MB of additional disk space will be used.
+Get:1 https://mirrors.aliyun.com/ubuntu jammy/universe amd64 verilator amd64 4.038-1 [4732 kB]
+Fetched 4732 kB in 2s (2366 kB/s)
+Selecting previously unselected package verilator.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 84559 files and directories currently installed.)
+Preparing to unpack .../verilator_4.038-1_amd64.deb ...
+Unpacking verilator (4.038-1) ...
+Setting up verilator (4.038-1) ...
+Processing triggers for man-db (2.10.2-1) ...
+
+Running kernel seems to be up-to-date.
+
+Services to be restarted:
+ systemctl restart cron.service
+ systemctl restart irqbalance.service
+ systemctl restart multipathd.service
+ systemctl restart open-vm-tools.service
+ systemctl restart packagekit.service
+ systemctl restart polkit.service
+ systemctl restart rsyslog.service
+ systemctl restart ssh.service
+ systemctl restart systemd-journald.service
+ /etc/needrestart/restart.d/systemd-manager
+ systemctl restart systemd-networkd.service
+ systemctl restart systemd-resolved.service
+ systemctl restart systemd-timesyncd.service
+ systemctl restart systemd-udevd.service
+ systemctl restart vgauth.service
+
+Service restarts being deferred:
+ systemctl restart ModemManager.service
+ /etc/needrestart/restart.d/dbus.service
+ systemctl restart getty@tty1.service
+ systemctl restart networkd-dispatcher.service
+ systemctl restart systemd-logind.service
+ systemctl restart user@0.service
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+
+===== 查安装依赖完整性 =====
+[APT] 对: 无依赖错误  证: 安装结果可继续使用
+$ apt-get check
+Reading package lists...
+Building dependency tree...
+Reading state information...
+
+vm-2522-02 / verify
+===== 查构建工具包 =====
+[工具包] 对: verilator 4.038-1，g++ 和 make 已安装  证: 仿真构建所需三类工具齐备
+$ dpkg-query -W verilator g++ make
+g++ 4:11.2.0-1ubuntu1
+make 4.3-4.1build1
+verilator 4.038-1
+
+vm-2522-02 / verify
+===== 查RTL 翻译器版本 =====
+[Verilator] 对: 4.038  证: 把 SystemVerilog 翻译成 C++ 周期模型的工具可用
+$ verilator --version
+Verilator 4.038 2020-07-11 rev v4.036-114-g0cd4a57ad
+
+vm-2522-02 / verify
+===== 查C++ 编译器版本 =====
+[g++] 对: 能打印版本  证: 把 Verilator 生成的 C++ 与 adapter 编成程序
+$ g++ --version
+g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+vm-2522-02 / verify
+===== 查构建工具版本 =====
+[make] 对: 能打印版本  证: 按生成的 Makefile 编译并链接模型
+$ make --version
+GNU Make 4.3
+Built for x86_64-pc-linux-gnu
+Copyright (C) 1988-2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

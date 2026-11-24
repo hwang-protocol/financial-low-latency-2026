@@ -1,0 +1,407 @@
+[
+  {
+    "chapter": "00",
+    "index": 1,
+    "line": 189,
+    "label": "需要运行 · 运行 ① 在【课程 Linux 终端】运行；只需 python3；影响范围仅限当前进程申请的这段内存，进程退出即释放；预计数秒。",
+    "kind": "BASH",
+    "sha256": "36dcacc11d3405ac1be2334976a2034d5aa29221dd97d271e7b57a746fd65542"
+  },
+  {
+    "chapter": "01",
+    "index": 1,
+    "line": 138,
+    "label": "需要运行 · 准备 A 在【跳板机】以 root 运行；顺序处理 `.1/.2/.11/.101`；修改四台 VM 的 `/etc/apt/sources.list` 并执行 `apt-get update`，只在 `.101` 安装 `g++-11` 与 `make`；预计 1～4 分钟；预期四台索引刷新无错误且 `.101` 打印三项工具路径。",
+    "kind": "BASH",
+    "sha256": "1c43c059b4c651d276ea9f0f3c1a3613788a2579e478c384d4fff7c5cf695a18"
+  },
+  {
+    "chapter": "01",
+    "index": 2,
+    "line": 264,
+    "label": "需要运行 · 准备 B 在【跳板机】以 root 运行；读取仓库外 root-only EOS 凭据（`/root/.config/flle/eos_admin_password`，`0600`），凭据缺失时在交互终端提示输入一次密码；只改 running-config；预计数十秒；预期完成后公钥登录可用并打印账户状态。",
+    "kind": "BASH",
+    "sha256": "0d861aced4d7dbb99ee88d19f91e8177d521a87978a12f5532013829b03d24c8"
+  },
+  {
+    "chapter": "01",
+    "index": 3,
+    "line": 327,
+    "label": "需要运行 · 准备 C 在【跳板机】以 root 运行；前置是准备 B 已完成；幂等配置 VLAN20、Et1/Et2/Et11/Et12 和 Vlan20，只改 running-config；最多轮询 15 次等四口进入 `forwarding`；预计数十秒；预期打印最终 STP 状态。",
+    "kind": "BASH",
+    "sha256": "2273e729e3d6c4df83b16a7f2f37ca82acf84d11bff33e918a7914aabbc530a0"
+  },
+  {
+    "chapter": "01",
+    "index": 4,
+    "line": 422,
+    "label": "需要运行 · 运行 ① 在【跳板机】以 root 运行；远端全部只读，不改网络配置；预计数秒；预期依次打印 `.1/.2` 的管理口与 X2522 数据口地址，并保存原始输出。",
+    "kind": "BASH",
+    "sha256": "b33f6a60ee2e1152a9f6233f6184d915bfbc2f97bde9494705740fc40b342edd"
+  },
+  {
+    "chapter": "01",
+    "index": 5,
+    "line": 551,
+    "label": "需要运行 · 运行 ② 在【跳板机】以 root 运行。读取每台数据口的 sysfs 设备路径、MAC，以及对应 PCI 设备的一行 lspci。",
+    "kind": "BASH",
+    "sha256": "70024e94c9e4b3faa96c5bc099a680b1789dc993e81017be8216eaea50b423a5"
+  },
+  {
+    "chapter": "01",
+    "index": 6,
+    "line": 659,
+    "label": "需要运行 · 运行 ③ 在【跳板机】以 root 运行。读取每台数据口对应 PCI 设备的 driver 路径，以及 ethtool -i 里的 driver 和 bus-info。",
+    "kind": "BASH",
+    "sha256": "7ab8e1cc36cce7fbf5a3cdf84918f12dded329b91ef79266e8577a941bdf3cbb"
+  },
+  {
+    "chapter": "01",
+    "index": 7,
+    "line": 747,
+    "label": "需要运行 · 运行 ④ 在【跳板机】以 root 运行。读取 `.1/.2` 数据口的 ethtool，以及交换机 Et1、Et2 和 VLAN20 的状态。",
+    "kind": "BASH",
+    "sha256": "4da952e17d3ea103ce45c50c052fc413b62ea0e82aa7851a6763cfd89cdc1bee"
+  },
+  {
+    "chapter": "01",
+    "index": 8,
+    "line": 852,
+    "label": "需要运行 · 运行 ⑤ 在【跳板机】以 root 运行。先在 .2 的 ens64np1 上抓包，再从 .1 发出三条 ICMP 探针，最后回读 pcap。",
+    "kind": "BASH",
+    "sha256": "2a1b3bd7aa687118b1db289e5c35c456e1e4ec9bbec1236c84bbce53aca0b15b"
+  },
+  {
+    "chapter": "02",
+    "index": 1,
+    "line": 147,
+    "label": "需要运行 · 运行 ① 在【唯一持久的 `.111` 管理机 `/financial-low-latency`】以 root 运行；前置是第一部分已完成四机 SSH、`.101` 构建工具、`.1/.2` 数据地址和 VLAN20；脚本会在全新 `.101` 构建，向 `.1/.2/.101` 创建本 RUN 目录并启动四项服务；需复制 561.7 MB 行情制品并生成开盘检查点；预期打印 `TRADING_LAB_READY`。",
+    "kind": "MANUAL_OR_MIXED"
+  },
+  {
+    "chapter": "02",
+    "index": 2,
+    "line": 338,
+    "label": "需要运行 · 运行 ② 在【同一持久管理机】以 root 运行；前置是运行 ① 写出的 `02-trading-baseline.env`；影响是增加一笔 AAPL 1 股手动纸面 IOC 及其交易记录；预计数秒；预期成交 1 股并打印 `FIRST_TRADE_PASS`。",
+    "kind": "MANUAL_OR_MIXED"
+  },
+  {
+    "chapter": "03",
+    "index": 1,
+    "line": 180,
+    "label": "需要运行 · 运行 ① 在【持久管理机 `/financial-low-latency`】以 root 运行；前置是第二部分四服务在线且 `.2 ens64np1` 可抓包；脚本自动切到 MULTICAST、抓 200 个组播包并恢复原模式，你不用改网页；不停止回放或订单进程；实测约 6 秒；预期终端打出一棵 Packet Details 树，里面有当前 session、连续 sequence 和一条 AAPL/NVDA Add Order。",
+    "kind": "BASH",
+    "sha256": "1c70ee0c5052a6444cf7905d73f6b6077f9cdca5504716e54d29861f586a342f"
+  },
+  {
+    "chapter": "03",
+    "index": 2,
+    "line": 301,
+    "label": "需要运行 · 运行 ② 在【持久管理机】以 root 运行；前置是运行 ① 通过且应用仍在线；会短时改变 Exchange 行情模式，并在 `.2` 对 UDP `42120-42122` 各抓 120 个包，不改主机网络配置；实测约 4 秒；预期单播只有两个端点、组播只有 group、双路三者都有且 sequence 重合，退出后自动恢复原模式。",
+    "kind": "BASH",
+    "sha256": "ba0303cfdca1508c2e9a9df9a7d2793fe369751979f1ef89b9b12d379a3f2eda"
+  },
+  {
+    "chapter": "03",
+    "index": 3,
+    "line": 481,
+    "label": "需要运行 · 运行 ③ 在【持久管理机】以 root 运行；前置是两条 client 会话在线、AAPL 盘口可成交；短时抓取 `.2 ↔ .1:43120` 并提交 1 股 MANUAL 纸面 IOC，AUTO 与行情回放继续独立运行；实测约 5 秒；预期看到两条 TCP session，在 MANUAL flow 中解出相同 UserRefNum 的 OUCH `O/A/E`，并打出 Soup `U` / OUCH Enter Order 的 Packet Details 树。",
+    "kind": "BASH",
+    "sha256": "3fecd37ef1d4ae6dcba0300a24d8ba512d9a6792192d2b6504b8db851a74216b"
+  },
+  {
+    "chapter": "04",
+    "index": 1,
+    "line": 94,
+    "label": "需要运行 · 准备 A 在【持久管理机 `/financial-low-latency`】以 root 运行；前置是第一部分准备 A 已刷新软件源、第二章 Gateway `/metrics` 在线；会安装或更新 `.101` 的宿主机服务与课程 dashboard，重复执行幂等；预计 15 秒，首次安装可能数分钟；预期两个版本、两个 `active`、Prometheus Ready 与 Grafana `database=ok`。",
+    "kind": "BASH",
+    "sha256": "0797d17ce19985294fbe43ede178f6868c53445e10907c28a2d0b42634491a22"
+  },
+  {
+    "chapter": "04",
+    "index": 2,
+    "line": 198,
+    "label": "需要运行 · 运行 ① 在【持久管理机】以 root 运行；前置是准备 A 通过且第二章应用仍在线；不暂停行情、不关闭 AUTO；产生 20+200 笔 MANUAL 纸面 IOC；约 5 秒；预期 raw CSV 与主机 profile 一并封存，终端打出 p50/p99/max。",
+    "kind": "BASH",
+    "sha256": "bdc113e8e74a9054d3349c62af417a0cad2e951240c209de9c97ad84503c5237"
+  },
+  {
+    "chapter": "04",
+    "index": 3,
+    "line": 278,
+    "label": "需要运行 · 运行 ② 在【持久管理机】以 root 运行；前置是运行 ① 已写出 raw CSV，Prometheus 已在抓取 `.101:8088/metrics`；等待两个 scrape 周期后只读 `/metrics` 与 Prometheus API；不改变交易或服务；预计数秒；预期 `up=1`，baseline p99 秒值能换算回运行 ① 的纳秒值。",
+    "kind": "BASH",
+    "sha256": "cf2417faafd6a1277d62afe4dbe48e584d6ecd2e9f27fcc55d599cc3bc6f6777"
+  },
+  {
+    "chapter": "04",
+    "index": 4,
+    "line": 354,
+    "label": "需要运行 · 运行 ③ 在【Windows Server 2019 浏览器】打开下面 URL；前置是运行 ② 的 `up=1` 与 p99 对账已通过；只读驾驶舱；预期八块面板与截图同构，MANUAL baseline p99 换算后与本轮运行 ①② 一致、样本为 200。",
+    "kind": "MANUAL_OR_MIXED"
+  },
+  {
+    "chapter": "05",
+    "index": 1,
+    "line": 96,
+    "label": "需要运行 · 准备 A 在【持久管理机】以 root 运行；前置是第四部分 Grafana 已在线；只拷一页显示板，不改交易进程；通常 1～10 秒；预期终端写清 8 块表已收下，并给出打开地址。",
+    "kind": "BASH",
+    "sha256": "825a85ca81de498df618f8bf0c27091936f002b557aea19efaf7edca85a9156f"
+  },
+  {
+    "chapter": "05",
+    "index": 2,
+    "line": 281,
+    "label": "需要运行 · 运行 ① 在【持久管理机】以 root 运行。准备 A 那一页已经打开，交易程序还在跑。本步先热身 1000 笔，再连跑 8 轮（每轮预热 40、计入 400），量现在这套交棒要多久。大约 2 分钟。预期 8 轮都能用，AUTO 没有自己乱跳。",
+    "kind": "BASH",
+    "sha256": "91522e02d7b1572bf923583e12d14d95ab173cffdcd777c53811bc83130f3f04"
+  },
+  {
+    "chapter": "05",
+    "index": 3,
+    "line": 400,
+    "label": "需要运行 · 运行 ② 在【持久管理机】以 root 运行；前置是运行 ① 已写出 `05-deque-cv.env`；约 3 分钟；原来的格子和固定格子穿插着各跑 8 轮；预期这一轮能用，再看换格子有没有让交棒更快。",
+    "kind": "BASH",
+    "sha256": "b94cf66197fd64451f297137de85e5a6cbdce2f5189cc75e9f599ffcff969367"
+  },
+  {
+    "chapter": "05",
+    "index": 4,
+    "line": 557,
+    "label": "需要运行 · 运行 ③ 在【持久管理机】以 root 运行；前置是运行 ② 已写出 `05-fixed-cv.env`；约 3 分钟；盯着看时 CPU 2 会一直忙；预期这一轮能用，再看盯着看是不是更快。",
+    "kind": "BASH",
+    "sha256": "7bdaed2543b503297a70079f91209fea3d813ee8ddea68af46a00b6dc0018783"
+  },
+  {
+    "chapter": "05",
+    "index": 5,
+    "line": 717,
+    "label": "需要运行 · 运行 ④ 在【持久管理机】以 root 运行；前置是运行 ③ 已写出 `05-spsc-spin.env`；约 3 分钟；成功或失败都会恢复盯着看和 CPU 2；预期这一轮能用，再比独占座位和挤在杂活核。",
+    "kind": "BASH",
+    "sha256": "6448e3d87698694b13706274cae92ebef28cba79903fd05440d0b6a3ea756fb1"
+  },
+  {
+    "chapter": "06",
+    "index": 1,
+    "line": 114,
+    "label": "需要运行 · 准备 A 在【持久管理机】以 root 串行执行；首次编译约 5～15 分钟，已有运行时通常不到 1 分钟。终验段先写“对 / 证”，再跟原生命令；两端版本、设备入口、`sfc` 与地址齐全才继续。",
+    "kind": "BASH",
+    "sha256": "a6512bb91ffb5481f2ed68e68ce3aaa3cff45e9c7d671eb4bec304956fd47bfa"
+  },
+  {
+    "chapter": "06",
+    "index": 2,
+    "line": 247,
+    "label": "需要运行 · 准备 B 在【持久管理机】以 root 执行；脚本先预检两端，需要修改时才重启对应主机，过程可能持续数分钟；管理连接始终走 `10.1.1.x`。两端 cmdline、独占 group 和 `unsafe no-IOMMU=N` 都对上才继续；未修改主机不会再打印第二套相同结果。",
+    "kind": "BASH",
+    "sha256": "83bdf02edd4548b0f8b23bca86e4b5273a5c7dbaba6fe3b9468b88c8ba521da2"
+  },
+  {
+    "chapter": "06",
+    "index": 3,
+    "line": 374,
+    "label": "需要运行 · 准备 C 在【持久管理机】以 root 执行，全程只读，通常约 5～10 秒。这是 37 行的专项开工工具：只做制品、构建链、行情资产、Builder、RSS 和总闸，不重复准备 A/B。",
+    "kind": "BASH",
+    "sha256": "ce0c060fb0d7e831d8b7f762352cc4d6641afb5c0097482253b194fa317d35fa"
+  },
+  {
+    "chapter": "06",
+    "index": 4,
+    "line": 436,
+    "label": "需要运行 · 准备 D 在【持久管理机】以 root 执行。长部署、状态 JSON 与路径硬门全部写入 raw；课堂只看到就绪摘要。首次通常几十秒，完整复用通常数秒。",
+    "kind": "BASH",
+    "sha256": "3700849047568915bdbd9b2a1755f70b4a3767773b84328c7a1646f25bfe1f26"
+  },
+  {
+    "chapter": "06",
+    "index": 5,
+    "line": 507,
+    "label": "需要运行 · 运行 ① 预计数秒。本卡只下一笔 Socket；完整 API JSON 与当前 PID 路径收据写进独立证据目录，终端只打印这笔单。",
+    "kind": "BASH",
+    "sha256": "6b7ef46f577b0f3b415e3c352313a34034ce0ea19b2a28c4f8773025d00b5f99"
+  },
+  {
+    "chapter": "06",
+    "index": 6,
+    "line": 572,
+    "label": "需要运行 · 运行 ② 预计数秒；只下一笔 Onload。`Onloaded(Valid)`、连接与 CTPIO 收据在后台硬验并写 raw，不把栈转储刷满课堂终端。",
+    "kind": "BASH",
+    "sha256": "efbd3c52fc8ee89dd835420ba9fa6052c0f523b8a8a3e0b6759c2c2010f5e49d"
+  },
+  {
+    "chapter": "06",
+    "index": 7,
+    "line": 628,
+    "label": "需要运行 · 运行 ③ 预计数秒；只下一笔 TCPDirect。当前 ZF stack、`ctpio=3/sf-np`、ESTABLISHED 与 TXQ 收据全部进 raw，课堂层只保留订单结果。",
+    "kind": "BASH",
+    "sha256": "bc0917e18efbf8b218dd9803f297d242d00db37788cc91d18fd4663e404568de"
+  },
+  {
+    "chapter": "06",
+    "index": 8,
+    "line": 720,
+    "label": "需要运行 · 运行 ④ 完整顺刷本卡实测 76 秒，其他顺刷为 76～78 秒，课堂按 60～90 秒预留。其中绝大部分是停止、换 owner、启动、验收和恢复的管理链，真正下单仍只是一笔；热现场定点复跑约 38 秒不能冒充课堂常规耗时。IOMMU type 1、`net_sfc_efx`、ULL firmware 与 owner 原文保存在 raw/native receipts。",
+    "kind": "BASH",
+    "sha256": "8a7c1e3b164c5d294bad663a81b9e4128168684c50f8cfdc145e774168da4609"
+  },
+  {
+    "chapter": "06",
+    "index": 9,
+    "line": 762,
+    "label": "需要运行 · 运行 ⑤ 通常 3～8 分钟。长测量日志、16 格 raw JSON 和机制收据只写 evidence；终端最后只打印一张四路表和几条总账硬门。",
+    "kind": "BASH",
+    "sha256": "391b912f2952af98bb9ae17324b11ad038051a02cfa818a7fadb9e3c2c9bcd46"
+  },
+  {
+    "chapter": "07",
+    "index": 1,
+    "line": 180,
+    "label": "需要运行 · 运行 ① 在【持久管理机 `/financial-low-latency`】以 root 运行；前置是第一章准备 B/C 已恢复公钥和 VLAN20；只读八条 show，不写 running-config、不 save；预计数秒；预期 Et1/Et2 为 connected / VLAN 20 / 10G，mode 为 cut through。",
+    "kind": "BASH",
+    "sha256": "654ec9bddfeacf2bb737c7d690e5afd8d9253ea6ba8ee86b558af18892f149ad"
+  },
+  {
+    "chapter": "08",
+    "index": 1,
+    "line": 99,
+    "label": "需要运行 · 准备 A 教师在跳板机执行，前置为第 07 章已交还 `SFC/READY/sfc`、`.2` 管理 SSH 可用；工具齐全时直接复用，缺包时才安装用户态工具；不替换 sfc、不重启网络服务。首次安装可能超过 3 分钟；预期读到 clang、bpftool、iproute2 与 libbpf 版本。可在同一终端反复粘贴，每次独立留证；失败会打印退出码和日志路径。",
+    "kind": "BASH",
+    "sha256": "f6b57e3f2812abe5647ffb26c309b488e2a535f995e0f49110165d559e9d6997"
+  },
+  {
+    "chapter": "08",
+    "index": 2,
+    "line": 199,
+    "label": "需要运行 · 运行 ① 教师在跳板机执行，前置为准备 A 完成；只读 `.2` 接收口，预计不足 1 分钟。预期 `ens64np1 / 03:00.0 / sfc / UP / 20.1.1.2`，无既有 XDP 或 RTL 适配器。",
+    "kind": "BASH",
+    "sha256": "733fc145e94acadda78ffaad6a60dbc819f37fd4906fca08906b44d83b5d3e2b"
+  },
+  {
+    "chapter": "08",
+    "index": 3,
+    "line": 320,
+    "label": "需要运行 · 运行 ② 在跳板机仓库根目录以有仓库写权限的用户运行，需本机 Python 3；不访问设备，预计数秒。预期打印六行样例：仅目标 Type A 为 DROP，其余 PASS。",
+    "kind": "BASH",
+    "sha256": "0f3e5661ed539c5bb20d082af626abdba0eb139e696c689bd759e6084fde06a2"
+  },
+  {
+    "chapter": "08",
+    "index": 4,
+    "line": 388,
+    "label": "需要运行 · 运行 ③ 在跳板机仓库根目录运行，需有仓库写权限，预计数秒。预期打印带行号的 C 源码，让你看看有哪些检查和过滤规则；同时保存输出和文件指纹。只打印，不执行过滤。",
+    "kind": "BASH",
+    "sha256": "fd11e8b7416fc3cdb90a61bc526f84690a85699ce3d2254bd6d26c6b779c8a0e"
+  },
+  {
+    "chapter": "08",
+    "index": 5,
+    "line": 441,
+    "label": "需要运行 · 运行 ④ 教师在跳板机执行，需准备 A 与 `.2` SSH 就绪；仅远端临时编译后取回并清理，不挂载程序。预计不足 3 分钟；预期获得 BPF object、xdp/maps/BTF 分区及 SHA。",
+    "kind": "BASH",
+    "sha256": "ba96a82f693aff2adbbd99f3fbe6797c9bc0956e1ca24599bdcab2220a5938b6"
+  },
+  {
+    "chapter": "08",
+    "index": 6,
+    "line": 507,
+    "label": "需要运行 · 运行 ⑤ 教师在跳板机仓库根目录执行，先完成准备 A 与运行 ①，且不要同时运行第 09/10 章过滤实验。预计约 1 分钟；预期只丢一包、出现行情缺口，最后恢复健康。",
+    "kind": "BASH",
+    "sha256": "271544d1a386414cfc6377a4a04fe82b8af5973fd365dd3b59cb485a525f70da"
+  },
+  {
+    "chapter": "09",
+    "index": 1,
+    "line": 117,
+    "label": "需要运行 · 准备 A · 编译端工具 教师在跳板机执行，SSH 到 `.101`；前置为前章管理网与预热包可用。安装工具、登记软件源，不改接口/VLAN、不重启服务；首次安装可能超过 3 分钟。预期读到 P4C、BMv2 与 PI 版本；公钥指纹不符会在登记软件源前退出。",
+    "kind": "BASH",
+    "sha256": "e6f9c5f8f48a7bc3364b089218d07ebd52c5feddd2cf2f40a8871812e4859955"
+  },
+  {
+    "chapter": "09",
+    "index": 2,
+    "line": 215,
+    "label": "需要运行 · 准备 B · BMv2 运行工具 教师在跳板机执行，SSH 到 `.11`；前置为准备 A 完成、`.11` 管理可达。只安装 BMv2 工具，不接管双口、不重启服务；首次安装可能超过 3 分钟。预期版本与 CLI 路径均可读。",
+    "kind": "BASH",
+    "sha256": "f0c072b355bebac332205c9197a628987d92013462604070f92c64a66b6c8f05"
+  },
+  {
+    "chapter": "09",
+    "index": 3,
+    "line": 311,
+    "label": "需要运行 · 运行 ① 教师在跳板机执行，前置为准备 A/B 完成；远程在 `.101` 临时编译、取回制品并清理，不启动 target、不改交易路径。预计不足 3 分钟；预期生成三组 JSON/P4Info 与 SHA。",
+    "kind": "BASH",
+    "sha256": "1a62615d8d6a3b4536460646c2566d476b9a43bc9280f4e1019bd1f41400cdb7"
+  },
+  {
+    "chapter": "09",
+    "index": 4,
+    "line": 464,
+    "label": "需要运行 · ②-1 · 配置并接入 P4 教师在跳板机执行；维护窗内，第08章已恢复，准备A/B及运行①完成。预期：VLAN分成两侧，BMv2装入规则；验证HEALTHY后暂停播放。",
+    "kind": "BASH",
+    "sha256": "b6d53c4f7edd15b6b0735cdca85e78b06783647604dc5057c00d30b6f4113662"
+  },
+  {
+    "chapter": "09",
+    "index": 5,
+    "line": 507,
+    "label": "需要运行 · ②-2 · 查看路径、规则与放行结果 教师在跳板机执行；第1张完成。预期：看到两侧VLAN成员、NVDA规则、丢包数0和HEALTHY；播放保持暂停。",
+    "kind": "BASH",
+    "sha256": "1e2889367185d380f537c78a6731d45a26e71df63aaddd02aa3d0f91fc1aa3e0"
+  },
+  {
+    "chapter": "09",
+    "index": 6,
+    "line": 548,
+    "label": "需要运行 · ②-3 · 用 CLI 丢一包并查看效果 教师在跳板机执行；第2张完成；本次只能执行一次。预期：恢复播放并丢1包，序号与Feed缺口一致、订单被拒绝；随后暂停等讲解。",
+    "kind": "BASH",
+    "sha256": "dfd4ac1b0472facebea611fb6e5b8665d786b8da60b0d465dc72c89a9e928579"
+  },
+  {
+    "chapter": "09",
+    "index": 7,
+    "line": 585,
+    "label": "需要运行 · ②-4 · 恢复原路径并验证交易 教师在跳板机执行；演示结束，或需要提前退出。预期：回到图①：VLAN20直通、BMv2退出、行情HEALTHY，两笔订单成交。",
+    "kind": "BASH",
+    "sha256": "1a4d030f570ae7b5c422aa50ddbb39283072ba5469aed73e23a44ef2b6a1092d"
+  },
+  {
+    "chapter": "10",
+    "index": 1,
+    "line": 224,
+    "label": "需要运行 · 准备 A · Verilator 工具 教师在跳板机以 root 身份 SSH 到 `.2`；前置为管理网络可用、目标机 Ubuntu 软件源可用。安装 Verilator/g++/make，不重启服务；首次安装可能超过 3 分钟。预期读到 Verilator 4.038 及编译工具版本。",
+    "kind": "BASH",
+    "sha256": "130a4536a03dee2fc123c3fcdf35521790d0f496f61ba600872097e60f6bb692"
+  },
+  {
+    "chapter": "10",
+    "index": 2,
+    "line": 305,
+    "label": "需要运行 · 运行 ① 教师在跳板机执行；前置为准备 A 完成、行情交易系统正常、原网络路径及管理连接可用。在 .2 构建并接流，通常 1～2 分钟，执行上限 7 分钟；预期六项自测通过、额度 0、策略丢包数 0、行情 HEALTHY。",
+    "kind": "BASH",
+    "sha256": "e768f44f0c70d690a8114f6440af5f4bc5f4c69026898952593610eaa237c750"
+  },
+  {
+    "chapter": "10",
+    "index": 3,
+    "line": 342,
+    "label": "需要运行 · 运行 ② 教师在跳板机执行；前置为运行①成功且过滤进程仍在运行。向 .2 写入 block 并短暂重放，通常十几秒内结束；预期指令被读取、出现缺口后重放暂停。",
+    "kind": "BASH",
+    "sha256": "b4822066ac46fea7252bd7e8ec74a2c58beb9e226ec7d5c550f3401bb6939eac"
+  },
+  {
+    "chapter": "10",
+    "index": 4,
+    "line": 375,
+    "label": "需要运行 · 运行 ③ 教师在跳板机执行；前置为运行②成功、缺口现场仍保留。读取日志并验证缺口期间拒单，预计 10～30 秒；预期丢弃与缺失序号一致、数量均为 1、订单 API 拒绝下单。",
+    "kind": "BASH",
+    "sha256": "104d000484d3a6427f17da5870167621e3bf328f2b649ad1a9ea00aa5b8b8b60"
+  },
+  {
+    "chapter": "10",
+    "index": 5,
+    "line": 409,
+    "label": "需要运行 · 运行 ④ 教师在跳板机执行；运行①成功后可随时提前恢复，正常顺序是运行③讲解完成后执行。停止临时进程、恢复接收与行情并验证两笔订单，预计 30～90 秒；预期 HEALTHY、交易闸门 OPEN、两笔成交、净持仓不变。",
+    "kind": "BASH",
+    "sha256": "04da99b078376913502d0f6e514e4eba6f070b7e875bfbbba801dbbbc5e49e8b"
+  }
+]

@@ -1,0 +1,138 @@
+$ show version
+show version | no-more
+Arista DCS-7150S-24-F
+Hardware version:      02.00
+[REDACTED credential/identity line]
+Hardware MAC address:  001c.7368.e239
+[REDACTED credential/identity line]
+
+Software image version: 4.23.16M-2GB
+Architecture:           i686
+Internal build version: 4.23.16M-2GB-40226546.42316M
+Internal build ID:      bb71297b-4523-465f-a576-6c7d1cb24663
+
+Uptime:                 0 weeks, 0 days, 0 hours and 3 minutes
+Total memory:           4009040 kB
+Free memory:            3078492 kB
+
+
+$ show startup-config
+show startup-config | no-more
+! Command: show startup-config
+! Startup-config last modified at  Wed Jul 22 11:58:34 2026 by admin
+! device: fll-arista (DCS-7150S-24, EOS-4.23.16M-2GB)
+!
+! boot system flash:/EOS-2GB-4.23.16M.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname fll-arista
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+[REDACTED credential/identity line]
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Ethernet16
+!
+interface Ethernet17
+!
+interface Ethernet18
+!
+interface Ethernet19
+!
+interface Ethernet20
+!
+interface Ethernet21
+!
+interface Ethernet22
+!
+interface Ethernet23
+!
+interface Ethernet24
+!
+interface Management1
+   ip address 10.1.1.253/24
+!
+no ip routing
+!
+end
+
+$ show running-config diffs
+show running-config diffs | no-more
+
+
+$ show vlan
+show vlan | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+1     default                          active    Et1, Et2, Et11, Et12
+
+
+$ show interfaces status
+show interfaces status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    1        full   10G    10GBASE-CR                      
+Et2               connected    1        full   10G    10GBASE-CR                      
+Et3               notconnect   1        full   10G    Not Present                     
+Et4               notconnect   1        full   10G    Not Present                     
+Et5               notconnect   1        full   10G    Not Present                     
+Et6               notconnect   1        full   10G    Not Present                     
+Et7               notconnect   1        full   10G    Not Present                     
+Et8               notconnect   1        full   10G    Not Present                     
+Et9               notconnect   1        full   10G    Not Present                     
+Et10              notconnect   1        full   10G    Not Present                     
+Et11              connected    1        full   10G    10GBASE-CR                      
+Et12              connected    1        full   10G    10GBASE-CR                      
+Et13              notconnect   1        full   10G    Not Present                     
+Et14              notconnect   1        full   10G    Not Present                     
+Et15              notconnect   1        full   10G    Not Present                     
+Et16              notconnect   1        full   10G    Not Present                     
+Et17              notconnect   1        full   10G    Not Present                     
+Et18              notconnect   1        full   10G    Not Present                     
+Et19              notconnect   1        full   10G    Not Present                     
+Et20              notconnect   1        full   10G    Not Present                     
+Et21              notconnect   1        full   10G    Not Present                     
+Et22              notconnect   1        full   10G    Not Present                     
+Et23              notconnect   1        full   10G    Not Present                     
+Et24              notconnect   1        full   10G    Not Present                     
+Ma1               connected    routed   a-full a-1G   10/100/1000                     
+
+
+$ show boot-config
+show boot-config | no-more
+Software image: flash:/EOS-2GB-4.23.16M.swi
+Console speed: (not set)
+[REDACTED credential/identity line]
+Memory test iterations: (not set)

@@ -1,0 +1,24 @@
+===== root@10.1.1.1 · ping sender =====
+$ ping -I ens64np0 -c 3 -W 1 20.1.1.2
+PING 20.1.1.2 (20.1.1.2) from 20.1.1.1 ens64np0: 56(84) bytes of data.
+64 bytes from 20.1.1.2: icmp_seq=1 ttl=64 time=0.134 ms
+64 bytes from 20.1.1.2: icmp_seq=2 ttl=64 time=0.087 ms
+64 bytes from 20.1.1.2: icmp_seq=3 ttl=64 time=0.077 ms
+
+--- 20.1.1.2 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2028ms
+rtt min/avg/max/mdev = 0.077/0.099/0.134/0.024 ms
+
+===== root@10.1.1.2 · tcpdump receiver =====
+$ timeout 8 tcpdump -ni ens64np1 -c 3 -w /var/tmp/20260907T102659Z-01-packet-proof/probe.pcap 'icmp[icmptype] = icmp-echo and src 20.1.1.1 and dst 20.1.1.2'
+tcpdump: listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+3 packets captured
+3 packets received by filter
+0 packets dropped by kernel
+
+$ tcpdump -nn -r /var/tmp/20260907T102659Z-01-packet-proof/probe.pcap
+reading from file /var/tmp/20260907T102659Z-01-packet-proof/probe.pcap, link-type EN10MB (Ethernet), snapshot length 262144
+18:27:01.225804 IP 20.1.1.1 > 20.1.1.2: ICMP echo request, id 1, seq 1, length 64
+18:27:02.229453 IP 20.1.1.1 > 20.1.1.2: ICMP echo request, id 1, seq 2, length 64
+18:27:03.253340 IP 20.1.1.1 > 20.1.1.2: ICMP echo request, id 1, seq 3, length 64
+evidence=Documents/reports/course-runs/20260907T102659Z-01-packet-proof

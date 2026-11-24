@@ -1,0 +1,1968 @@
+{
+  "header_types" : [
+    {
+      "name" : "scalars_0",
+      "id" : 0,
+      "fields" : [
+        ["tmp", 32, false],
+        ["left_0", 32, false],
+        ["hasReturned", 1, false],
+        ["Metadata.policy_hit", 1, false],
+        ["Metadata.policy_drop", 1, false],
+        ["_padding_0", 5, false]
+      ]
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 1,
+      "fields" : [
+        ["ingress_port", 9, false],
+        ["egress_spec", 9, false],
+        ["egress_port", 9, false],
+        ["instance_type", 32, false],
+        ["packet_length", 32, false],
+        ["enq_timestamp", 32, false],
+        ["enq_qdepth", 19, false],
+        ["deq_timedelta", 32, false],
+        ["deq_qdepth", 19, false],
+        ["ingress_global_timestamp", 48, false],
+        ["egress_global_timestamp", 48, false],
+        ["mcast_grp", 16, false],
+        ["egress_rid", 16, false],
+        ["checksum_error", 1, false],
+        ["parser_error", 32, false],
+        ["priority", 3, false],
+        ["_padding", 3, false]
+      ]
+    },
+    {
+      "name" : "Ethernet",
+      "id" : 2,
+      "fields" : [
+        ["dst", 48, false],
+        ["src", 48, false],
+        ["etherType", 16, false]
+      ]
+    },
+    {
+      "name" : "IPv4",
+      "id" : 3,
+      "fields" : [
+        ["version", 4, false],
+        ["ihl", 4, false],
+        ["diffserv", 8, false],
+        ["totalLen", 16, false],
+        ["identification", 16, false],
+        ["flags", 3, false],
+        ["fragOffset", 13, false],
+        ["ttl", 8, false],
+        ["protocol", 8, false],
+        ["checksum", 16, false],
+        ["src", 32, false],
+        ["dst", 32, false]
+      ]
+    },
+    {
+      "name" : "UDP",
+      "id" : 4,
+      "fields" : [
+        ["src", 16, false],
+        ["dst", 16, false],
+        ["length", 16, false],
+        ["checksum", 16, false]
+      ]
+    },
+    {
+      "name" : "Mold",
+      "id" : 5,
+      "fields" : [
+        ["session", 80, false],
+        ["sequence", 64, false],
+        ["count", 16, false]
+      ]
+    },
+    {
+      "name" : "MessageLength",
+      "id" : 6,
+      "fields" : [
+        ["value", 16, false]
+      ]
+    },
+    {
+      "name" : "ItchType",
+      "id" : 7,
+      "fields" : [
+        ["value", 8, false]
+      ]
+    },
+    {
+      "name" : "ItchAdd",
+      "id" : 8,
+      "fields" : [
+        ["locate", 16, false],
+        ["tracking", 16, false],
+        ["timestamp", 48, false],
+        ["order_ref", 64, false],
+        ["side", 8, false],
+        ["shares", 32, false],
+        ["stock", 64, false],
+        ["price", 32, false]
+      ]
+    }
+  ],
+  "headers" : [
+    {
+      "name" : "scalars",
+      "id" : 0,
+      "header_type" : "scalars_0",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 1,
+      "header_type" : "standard_metadata",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ethernet",
+      "id" : 2,
+      "header_type" : "Ethernet",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ipv4",
+      "id" : 3,
+      "header_type" : "IPv4",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "udp",
+      "id" : 4,
+      "header_type" : "UDP",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "mold",
+      "id" : 5,
+      "header_type" : "Mold",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "message_length",
+      "id" : 6,
+      "header_type" : "MessageLength",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "itch_type",
+      "id" : 7,
+      "header_type" : "ItchType",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "itch_add",
+      "id" : 8,
+      "header_type" : "ItchAdd",
+      "metadata" : false,
+      "pi_omit" : true
+    }
+  ],
+  "header_stacks" : [],
+  "header_union_types" : [],
+  "header_unions" : [],
+  "header_union_stacks" : [],
+  "field_lists" : [],
+  "errors" : [
+    ["NoError", 0],
+    ["PacketTooShort", 1],
+    ["NoMatch", 2],
+    ["StackOutOfBounds", 3],
+    ["HeaderTooShort", 4],
+    ["ParserTimeout", 5],
+    ["ParserInvalidArgument", 6]
+  ],
+  "enums" : [],
+  "parsers" : [
+    {
+      "name" : "parser",
+      "id" : 0,
+      "init_state" : "start",
+      "parse_states" : [
+        {
+          "name" : "start",
+          "id" : 0,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ethernet"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0800",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "etherType"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_ipv4",
+          "id" : 1,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ipv4"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0511",
+              "mask" : null,
+              "next_state" : "parse_udp"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "ihl"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ipv4", "protocol"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_udp",
+          "id" : 2,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "udp"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0xa488",
+              "mask" : null,
+              "next_state" : "parse_mold"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["udp", "dst"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_mold",
+          "id" : 3,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "mold"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0000",
+              "mask" : null,
+              "next_state" : null
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0001",
+              "mask" : null,
+              "next_state" : "parse_message_length"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["mold", "count"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_message_length",
+          "id" : 4,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "message_length"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0024",
+              "mask" : null,
+              "next_state" : "parse_itch_type"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["message_length", "value"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_itch_type",
+          "id" : 5,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "itch_type"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x41",
+              "mask" : null,
+              "next_state" : "parse_itch_add"
+            },
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["itch_type", "value"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_itch_add",
+          "id" : 6,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "itch_add"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "default",
+              "value" : null,
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        }
+      ]
+    }
+  ],
+  "parse_vsets" : [],
+  "deparsers" : [
+    {
+      "name" : "deparser",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "trading_bridge_nvda_drop.p4",
+        "line" : 156,
+        "column" : 8,
+        "source_fragment" : "DeparserImpl"
+      },
+      "order" : ["ethernet", "ipv4", "udp", "mold", "message_length", "itch_type", "itch_add"],
+      "primitives" : []
+    }
+  ],
+  "meter_arrays" : [],
+  "counter_arrays" : [
+    {
+      "name" : "IngressImpl.frame_class",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "trading_bridge_nvda_drop.p4",
+        "line" : 78,
+        "column" : 36,
+        "source_fragment" : "frame_class"
+      },
+      "size" : 3,
+      "is_direct" : false
+    },
+    {
+      "name" : "IngressImpl.stock_packets",
+      "id" : 1,
+      "source_info" : {
+        "filename" : "trading_bridge_nvda_drop.p4",
+        "line" : 79,
+        "column" : 36,
+        "source_fragment" : "stock_packets"
+      },
+      "size" : 2,
+      "is_direct" : false
+    },
+    {
+      "name" : "IngressImpl.policy_drop_packets",
+      "id" : 2,
+      "source_info" : {
+        "filename" : "trading_bridge_nvda_drop.p4",
+        "line" : 80,
+        "column" : 36,
+        "source_fragment" : "policy_drop_packets"
+      },
+      "size" : 1,
+      "is_direct" : false
+    }
+  ],
+  "register_arrays" : [
+    {
+      "name" : "IngressImpl.remaining_drops",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "trading_bridge_nvda_drop.p4",
+        "line" : 81,
+        "column" : 25,
+        "source_fragment" : "remaining_drops"
+      },
+      "size" : 1,
+      "bitwidth" : 32
+    }
+  ],
+  "calculations" : [],
+  "learn_lists" : [],
+  "actions" : [
+    {
+      "name" : "NoAction",
+      "id" : 0,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "IngressImpl.drop",
+      "id" : 1,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 83,
+            "column" : 20,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "IngressImpl.drop",
+      "id" : 2,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 83,
+            "column" : 20,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "IngressImpl.drop",
+      "id" : 3,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 83,
+            "column" : 20,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "IngressImpl.drop",
+      "id" : 4,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 83,
+            "column" : 20,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "IngressImpl.forward",
+      "id" : 5,
+      "runtime_data" : [
+        {
+          "name" : "port",
+          "bitwidth" : 9
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "count",
+          "parameters" : [
+            {
+              "type" : "counter_array",
+              "value" : "IngressImpl.frame_class"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000000"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 85,
+            "column" : 8,
+            "source_fragment" : "frame_class.count(0)"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 86,
+            "column" : 8,
+            "source_fragment" : "standard_metadata.egress_spec = port"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "IngressImpl.peer",
+      "id" : 6,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "count",
+          "parameters" : [
+            {
+              "type" : "counter_array",
+              "value" : "IngressImpl.frame_class"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000001"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 89,
+            "column" : 8,
+            "source_fragment" : "frame_class.count(1)"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0002"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 90,
+            "column" : 8,
+            "source_fragment" : "standard_metadata.egress_spec = port"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "IngressImpl.peer",
+      "id" : 7,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "count",
+          "parameters" : [
+            {
+              "type" : "counter_array",
+              "value" : "IngressImpl.frame_class"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000001"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 89,
+            "column" : 8,
+            "source_fragment" : "frame_class.count(1)"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0001"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 90,
+            "column" : 8,
+            "source_fragment" : "standard_metadata.egress_spec = port"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "IngressImpl.select_policy",
+      "id" : 8,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "Metadata.policy_hit"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 99,
+            "column" : 29,
+            "source_fragment" : "meta.policy_hit = 1"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "trading_bridge_nvda_drop118",
+      "id" : 9,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "count",
+          "parameters" : [
+            {
+              "type" : "counter_array",
+              "value" : "IngressImpl.stock_packets"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000000"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 118,
+            "column" : 16,
+            "source_fragment" : "stock_packets.count(0)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "trading_bridge_nvda_drop120",
+      "id" : 10,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "count",
+          "parameters" : [
+            {
+              "type" : "counter_array",
+              "value" : "IngressImpl.stock_packets"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000001"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 120,
+            "column" : 16,
+            "source_fragment" : "stock_packets.count(1)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "trading_bridge_nvda_drop127",
+      "id" : 11,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["scalars", "left_0"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xffffffff"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffffffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 127,
+            "column" : 49,
+            "source_fragment" : "left - 1"
+          }
+        },
+        {
+          "op" : "register_write",
+          "parameters" : [
+            {
+              "type" : "register_array",
+              "value" : "IngressImpl.remaining_drops"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000000"
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "tmp"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 127,
+            "column" : 24,
+            "source_fragment" : "remaining_drops.write(0, left - 1)"
+          }
+        },
+        {
+          "op" : "count",
+          "parameters" : [
+            {
+              "type" : "counter_array",
+              "value" : "IngressImpl.policy_drop_packets"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000000"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 128,
+            "column" : 24,
+            "source_fragment" : "policy_drop_packets.count(0)"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "Metadata.policy_drop"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 129,
+            "column" : 24,
+            "source_fragment" : "meta.policy_drop = 1"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "trading_bridge_nvda_drop131",
+      "id" : 12,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "hasReturned"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "b2d",
+                  "left" : null,
+                  "right" : {
+                    "type" : "bool",
+                    "value" : true
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 131,
+            "column" : 24,
+            "source_fragment" : "return"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "trading_bridge_nvda_drop125",
+      "id" : 13,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "register_read",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "left_0"]
+            },
+            {
+              "type" : "register_array",
+              "value" : "IngressImpl.remaining_drops"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000000"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 125,
+            "column" : 20,
+            "source_fragment" : "remaining_drops.read(left, 0)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "trading_bridge_nvda_drop114",
+      "id" : 14,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "hasReturned"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "b2d",
+                  "left" : null,
+                  "right" : {
+                    "type" : "bool",
+                    "value" : false
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "Metadata.policy_hit"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 114,
+            "column" : 8,
+            "source_fragment" : "meta.policy_hit = 0"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "Metadata.policy_drop"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 115,
+            "column" : 8,
+            "source_fragment" : "meta.policy_drop = 0"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "trading_bridge_nvda_drop137",
+      "id" : 15,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "count",
+          "parameters" : [
+            {
+              "type" : "counter_array",
+              "value" : "IngressImpl.frame_class"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000002"
+            }
+          ],
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 137,
+            "column" : 12,
+            "source_fragment" : "frame_class.count(2)"
+          }
+        }
+      ]
+    }
+  ],
+  "pipelines" : [
+    {
+      "name" : "ingress",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "trading_bridge_nvda_drop.p4",
+        "line" : 76,
+        "column" : 8,
+        "source_fragment" : "IngressImpl"
+      },
+      "init_table" : "tbl_trading_bridge_nvda_drop114",
+      "tables" : [
+        {
+          "name" : "tbl_trading_bridge_nvda_drop114",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 114,
+            "column" : 24,
+            "source_fragment" : "= 0; ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [14],
+          "actions" : ["trading_bridge_nvda_drop114"],
+          "base_default_next" : "node_3",
+          "next_tables" : {
+            "trading_bridge_nvda_drop114" : "node_3"
+          },
+          "default_entry" : {
+            "action_id" : 14,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_trading_bridge_nvda_drop118",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 118,
+            "column" : 16,
+            "source_fragment" : "stock_packets.count(0)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [9],
+          "actions" : ["trading_bridge_nvda_drop118"],
+          "base_default_next" : "node_8",
+          "next_tables" : {
+            "trading_bridge_nvda_drop118" : "node_8"
+          },
+          "default_entry" : {
+            "action_id" : 9,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_trading_bridge_nvda_drop120",
+          "id" : 2,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 120,
+            "column" : 16,
+            "source_fragment" : "stock_packets.count(1)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [10],
+          "actions" : ["trading_bridge_nvda_drop120"],
+          "base_default_next" : "node_8",
+          "next_tables" : {
+            "trading_bridge_nvda_drop120" : "node_8"
+          },
+          "default_entry" : {
+            "action_id" : 10,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "IngressImpl.market_policy",
+          "id" : 3,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 100,
+            "column" : 10,
+            "source_fragment" : "market_policy"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ipv4.src",
+              "target" : ["ipv4", "src"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ipv4.dst",
+              "target" : ["ipv4", "dst"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.itch_type.value",
+              "target" : ["itch_type", "value"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.itch_add.locate",
+              "target" : ["itch_add", "locate"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "hdr.itch_add.stock",
+              "target" : ["itch_add", "stock"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 8,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [8, 0],
+          "actions" : ["IngressImpl.select_policy", "NoAction"],
+          "base_default_next" : "node_10",
+          "next_tables" : {
+            "IngressImpl.select_policy" : "node_10",
+            "NoAction" : "node_10"
+          },
+          "default_entry" : {
+            "action_id" : 0,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_trading_bridge_nvda_drop125",
+          "id" : 4,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 125,
+            "column" : 20,
+            "source_fragment" : "remaining_drops.read(left, 0)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [13],
+          "actions" : ["trading_bridge_nvda_drop125"],
+          "base_default_next" : "node_12",
+          "next_tables" : {
+            "trading_bridge_nvda_drop125" : "node_12"
+          },
+          "default_entry" : {
+            "action_id" : 13,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_trading_bridge_nvda_drop127",
+          "id" : 5,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 127,
+            "column" : 24,
+            "source_fragment" : "remaining_drops.write(0, left - 1); ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [11],
+          "actions" : ["trading_bridge_nvda_drop127"],
+          "base_default_next" : "tbl_drop",
+          "next_tables" : {
+            "trading_bridge_nvda_drop127" : "tbl_drop"
+          },
+          "default_entry" : {
+            "action_id" : 11,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_drop",
+          "id" : 6,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 130,
+            "column" : 24,
+            "source_fragment" : "drop()"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [2],
+          "actions" : ["IngressImpl.drop"],
+          "base_default_next" : "tbl_trading_bridge_nvda_drop131",
+          "next_tables" : {
+            "IngressImpl.drop" : "tbl_trading_bridge_nvda_drop131"
+          },
+          "default_entry" : {
+            "action_id" : 2,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_trading_bridge_nvda_drop131",
+          "id" : 7,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 131,
+            "column" : 24,
+            "source_fragment" : "return"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [12],
+          "actions" : ["trading_bridge_nvda_drop131"],
+          "base_default_next" : "node_16",
+          "next_tables" : {
+            "trading_bridge_nvda_drop131" : "node_16"
+          },
+          "default_entry" : {
+            "action_id" : 12,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_trading_bridge_nvda_drop137",
+          "id" : 8,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 137,
+            "column" : 12,
+            "source_fragment" : "frame_class.count(2)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [15],
+          "actions" : ["trading_bridge_nvda_drop137"],
+          "base_default_next" : "tbl_drop_0",
+          "next_tables" : {
+            "trading_bridge_nvda_drop137" : "tbl_drop_0"
+          },
+          "default_entry" : {
+            "action_id" : 15,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_drop_0",
+          "id" : 9,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 138,
+            "column" : 12,
+            "source_fragment" : "drop()"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [3],
+          "actions" : ["IngressImpl.drop"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "IngressImpl.drop" : null
+          },
+          "default_entry" : {
+            "action_id" : 3,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_peer",
+          "id" : 10,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 141,
+            "column" : 16,
+            "source_fragment" : "peer(2)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [6],
+          "actions" : ["IngressImpl.peer"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "IngressImpl.peer" : null
+          },
+          "default_entry" : {
+            "action_id" : 6,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_peer_0",
+          "id" : 11,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 143,
+            "column" : 16,
+            "source_fragment" : "peer(1)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [7],
+          "actions" : ["IngressImpl.peer"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "IngressImpl.peer" : null
+          },
+          "default_entry" : {
+            "action_id" : 7,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_drop_1",
+          "id" : 12,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 145,
+            "column" : 16,
+            "source_fragment" : "drop()"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [4],
+          "actions" : ["IngressImpl.drop"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "IngressImpl.drop" : null
+          },
+          "default_entry" : {
+            "action_id" : 4,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "IngressImpl.unicast_dst",
+          "id" : 13,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 92,
+            "column" : 10,
+            "source_fragment" : "unicast_dst"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "hdr.ethernet.dst",
+              "target" : ["ethernet", "dst"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 16,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [5, 1],
+          "actions" : ["IngressImpl.forward", "IngressImpl.drop"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "IngressImpl.forward" : null,
+            "IngressImpl.drop" : null
+          },
+          "default_entry" : {
+            "action_id" : 1,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        }
+      ],
+      "action_profiles" : [],
+      "conditionals" : [
+        {
+          "name" : "node_3",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 116,
+            "column" : 12,
+            "source_fragment" : "hdr.itch_add.isValid()"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "d2b",
+              "left" : null,
+              "right" : {
+                "type" : "field",
+                "value" : ["itch_add", "$valid$"]
+              }
+            }
+          },
+          "true_next" : "node_4",
+          "false_next" : "node_16"
+        },
+        {
+          "name" : "node_4",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 117,
+            "column" : 16,
+            "source_fragment" : "hdr.itch_add.stock == 0x4141504c20202020"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["itch_add", "stock"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x4141504c20202020"
+              }
+            }
+          },
+          "true_next" : "tbl_trading_bridge_nvda_drop118",
+          "false_next" : "node_6"
+        },
+        {
+          "name" : "node_6",
+          "id" : 2,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 119,
+            "column" : 21,
+            "source_fragment" : "hdr.itch_add.stock == 0x4e56444120202020"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["itch_add", "stock"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x4e56444120202020"
+              }
+            }
+          },
+          "true_next" : "tbl_trading_bridge_nvda_drop120",
+          "false_next" : "node_8"
+        },
+        {
+          "name" : "node_8",
+          "id" : 3,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 121,
+            "column" : 16,
+            "source_fragment" : "hdr.ipv4.flags[0:0] == 0 && hdr.ipv4.fragOffset == 0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "and",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "==",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "&",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv4", "flags"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0x01"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x00"
+                  }
+                }
+              },
+              "right" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "==",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["ipv4", "fragOffset"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x0000"
+                  }
+                }
+              }
+            }
+          },
+          "true_next" : "IngressImpl.market_policy",
+          "false_next" : "node_16"
+        },
+        {
+          "name" : "node_10",
+          "id" : 4,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 123,
+            "column" : 20,
+            "source_fragment" : "meta.policy_hit == 1"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "Metadata.policy_hit"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x01"
+              }
+            }
+          },
+          "true_next" : "tbl_trading_bridge_nvda_drop125",
+          "false_next" : "node_16"
+        },
+        {
+          "name" : "node_12",
+          "id" : 5,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 126,
+            "column" : 24,
+            "source_fragment" : "left > 0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : ">",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "left_0"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00000000"
+              }
+            }
+          },
+          "true_next" : "tbl_trading_bridge_nvda_drop127",
+          "false_next" : "node_16"
+        },
+        {
+          "name" : "node_16",
+          "id" : 6,
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "d2b",
+              "left" : null,
+              "right" : {
+                "type" : "field",
+                "value" : ["scalars", "hasReturned"]
+              }
+            }
+          },
+          "true_next" : null,
+          "false_next" : "node_17"
+        },
+        {
+          "name" : "node_17",
+          "id" : 7,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 136,
+            "column" : 12,
+            "source_fragment" : "(hdr.ethernet.dst & 0xfffffffffff0) == 0x0180c2000000"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["ethernet", "dst"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xfffffffffff0"
+                  }
+                }
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x0180c2000000"
+              }
+            }
+          },
+          "true_next" : "tbl_trading_bridge_nvda_drop137",
+          "false_next" : "node_20"
+        },
+        {
+          "name" : "node_20",
+          "id" : 8,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 139,
+            "column" : 19,
+            "source_fragment" : "hdr.ethernet.dst[40:40] == 1"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "&",
+                      "left" : {
+                        "type" : "expression",
+                        "value" : {
+                          "op" : ">>",
+                          "left" : {
+                            "type" : "field",
+                            "value" : ["ethernet", "dst"]
+                          },
+                          "right" : {
+                            "type" : "hexstr",
+                            "value" : "0x28"
+                          }
+                        }
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xffffffffffff"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x01"
+                  }
+                }
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x01"
+              }
+            }
+          },
+          "true_next" : "node_21",
+          "false_next" : "IngressImpl.unicast_dst"
+        },
+        {
+          "name" : "node_21",
+          "id" : 9,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 140,
+            "column" : 16,
+            "source_fragment" : "standard_metadata.ingress_port == 1"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["standard_metadata", "ingress_port"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x0001"
+              }
+            }
+          },
+          "true_next" : "tbl_peer",
+          "false_next" : "node_23"
+        },
+        {
+          "name" : "node_23",
+          "id" : 10,
+          "source_info" : {
+            "filename" : "trading_bridge_nvda_drop.p4",
+            "line" : 142,
+            "column" : 21,
+            "source_fragment" : "standard_metadata.ingress_port == 2"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["standard_metadata", "ingress_port"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x0002"
+              }
+            }
+          },
+          "true_next" : "tbl_peer_0",
+          "false_next" : "tbl_drop_1"
+        }
+      ]
+    },
+    {
+      "name" : "egress",
+      "id" : 1,
+      "source_info" : {
+        "filename" : "trading_bridge_nvda_drop.p4",
+        "line" : 153,
+        "column" : 8,
+        "source_fragment" : "EgressImpl"
+      },
+      "init_table" : null,
+      "tables" : [],
+      "action_profiles" : [],
+      "conditionals" : []
+    }
+  ],
+  "checksums" : [],
+  "force_arith" : [],
+  "extern_instances" : [],
+  "field_aliases" : [
+    [
+      "queueing_metadata.enq_timestamp",
+      ["standard_metadata", "enq_timestamp"]
+    ],
+    [
+      "queueing_metadata.enq_qdepth",
+      ["standard_metadata", "enq_qdepth"]
+    ],
+    [
+      "queueing_metadata.deq_timedelta",
+      ["standard_metadata", "deq_timedelta"]
+    ],
+    [
+      "queueing_metadata.deq_qdepth",
+      ["standard_metadata", "deq_qdepth"]
+    ],
+    [
+      "intrinsic_metadata.ingress_global_timestamp",
+      ["standard_metadata", "ingress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.egress_global_timestamp",
+      ["standard_metadata", "egress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.mcast_grp",
+      ["standard_metadata", "mcast_grp"]
+    ],
+    [
+      "intrinsic_metadata.egress_rid",
+      ["standard_metadata", "egress_rid"]
+    ],
+    [
+      "intrinsic_metadata.priority",
+      ["standard_metadata", "priority"]
+    ]
+  ],
+  "program" : "trading_bridge_nvda_drop.p4",
+  "__meta__" : {
+    "version" : [2, 23],
+    "compiler" : "https://github.com/p4lang/p4c"
+  }
+}

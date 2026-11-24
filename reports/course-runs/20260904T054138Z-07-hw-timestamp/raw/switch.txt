@@ -1,0 +1,27 @@
+$ show hostname
+show hostname | no-more
+Hostname: fll-arista
+FQDN:     fll-arista
+
+$ show ptp
+show ptp | no-more
+PTP Mode: Disabled
+
+$ show running-config all interfaces Ethernet2 | include timestamp|ptp
+show running-config all interfaces Ethernet2 | include timestamp|ptp | no-more
+   no mac timestamp
+   no ptp enable
+   ptp message-type event dscp 21
+   ptp sync-message interval 0
+   ptp delay-mechanism e2e
+   ptp announce interval 1
+   ptp pdelay-req interval 0
+   ptp transport ipv4
+   ptp pdelay-neighbor-threshold 100000
+   ptp sync timeout 3
+   ptp announce timeout 3
+   ptp profile g8275.1 destination mac-address non-forwardable
+   ptp local-priority 128
+   ptp message-type general dscp 0
+   ptp delay-req interval 5
+   ptp role dynamic

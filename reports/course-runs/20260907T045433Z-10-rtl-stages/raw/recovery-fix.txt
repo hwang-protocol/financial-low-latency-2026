@@ -1,0 +1,7 @@
+2026-09-07 recovery of existing user RUN; no repeat block.
+Original restore and cleanup waited for a received feed while replay was PAUSED; wait diagnostics were discarded.
+Under stage.lock the identity-checked retry guard was stopped after its in-flight cleanup finished. The normal restore entry restarted ownership guard.
+Guardian now sets up the receiver with --defer-feed-check; RESTART precedes strict HEALTHY/new-session/sequence checks.
+restore-1788757259260976511-full.txt completed exit 0; RESTORED, session0612260124, UNICAST/PLAYING, HEALTHY/OPEN, two ORDER_EXECUTED, AAPL10->10; handoff passed.
+Subsequent no-deadline classroom pause change tested offline only, without new live DROP or verification orders.
+Old error moved to previous_error after confirmed success; original state retained in raw/history.

@@ -1,0 +1,19 @@
+===== 教师现场 C · 真实订单 QoS A/B =====
+result=PASS
+platform=DCS-7150S-24-F / EOS 4.23.16M-2GB / FM6000
+baseline=unmarked IPv4 TOS 0x0; default CoS 0 -> Traffic Class 1 -> tx priority 1
+baseline_orders_executed=16
+baseline_captured_frames=32
+baseline_priority_1_delta=37
+baseline_priority_5_delta=0
+tagged=DSCP 46 (TOS 0xb8) -> Traffic Class 5 -> tx priority 5
+tagged_orders_executed=16
+tagged_captured_frames=32
+tagged_priority_1_delta=0
+tagged_priority_5_delta=32
+scheduler=queue 5 explicitly priority strict; queues 4-7 SP; queues 0-3 RR at 10/20/30/40 percent during tagged stage
+host_restore=iptables mangle table byte-identical
+switch_restore=Et1/Et2 running config byte-identical; startup config unchanged; 16/16 queues SP
+post_restore_orders=2/2 ORDER_EXECUTED; AAPL position unchanged
+save_config=NO
+evidence=Documents/reports/course-runs/20260903T102540Z-07-qos-real-order-live
