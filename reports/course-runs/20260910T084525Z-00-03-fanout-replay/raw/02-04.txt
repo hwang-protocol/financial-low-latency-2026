@@ -1,0 +1,84 @@
+
+Low-Latency-Ops / 查已有平台
+===== 查已有平台 =====
+核对已部署进程与文件；通过后直接复用。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh verify 20260910T081653Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260910T081653Z-02-trading-platform/raw/reuse-20260910T084556.880203512Z.txt
+命令失败，退出码 1；以下为日志末尾。
+$ tail -n 20 /financial-low-latency/Documents/reports/course-runs/20260910T081653Z-02-trading-platform/raw/reuse-20260910T084556.880203512Z.txt
+exchange=OFFLINE
+trader-auto=OFFLINE
+trader-manual=OFFLINE
+gateway=OFFLINE
+curl: (7) Failed to connect to 10.1.1.101 port 8088 after 0 ms: Connection refused
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+Low-Latency-Ops / ① 查部署条件
+===== ① 查部署条件 =====
+核对主机、依赖和运行包，确认可以开始部署。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh preflight 20260910T084602Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260910T084602Z-02-trading-platform/raw/01-preflight.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260910T084602Z-02-trading-platform/raw/01-preflight.txt
+control_assets=PASS replay_bytes=561727241 symbols=AAPL,NVDA
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+exchange_rss_preflight=PASS iface=ens64np0 entries=128 table=baseline-0-1-2-3 queue=1 irq=33 requested_cpu=3 effective_cpu=3 irqbalance=active exchange_cpu=2
+transport_preflight=PASS runtime_sha256=ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573 queue=DEQUE_CV
+[条件说明] control_assets / builder_tools / transport_preflight 的 PASS 分别对应管理机材料、.101 编译工具和固定运行包检查。
+[条件说明] exchange_rss_preflight 检查 .1 网卡队列与 CPU 分配是否符合部署前提，不是延迟测量结果。
+
+Low-Latency-Ops / ② 查四条路径的构建来源
+===== ② 查四条路径的构建来源 =====
+核对固定源码、制品和启动约定，为后续路径比较保留依据。
+$ bash Documents/newDoc/assets/06-kernel-bypass/four-path-build-contract-audit.sh /financial-low-latency/Documents/reports/course-runs/20260910T084602Z-02-trading-platform/raw/code-contract
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260910T084602Z-02-trading-platform/raw/02-build-contract.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260910T084602Z-02-trading-platform/raw/02-build-contract.txt
+source_binary_mapping=PASS compiled_outputs=8 packaged_controls=1 inherited_key_files=3
+lcore_mask=4
+memory=256
+idle_sleep=0
+pkt_tx_delay=0
+allow=03:00.0
+hz=100
+fstack_config_contract=PASS
+[来源说明] 文件后的 OK 表示摘要与固定清单一致；source_binary_mapping=PASS 表示源码、构建输入和运行文件的来源关系核验通过。
+[来源说明] fstack_config_contract=PASS 表示 DPDK 路径的 F-Stack 配置符合约定，不表示当前已启动 DPDK。
+
+Low-Latency-Ops / ③ 构建并部署平台
+===== ③ 构建并部署平台 =====
+在监测 VM 构建，向交易所、Trader 和监测 VM 分发本次运行文件。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh deploy 20260910T084602Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260910T084602Z-02-trading-platform/raw/03-deploy.txt
+命令失败，退出码 2；以下为日志末尾。
+$ tail -n 20 /financial-low-latency/Documents/reports/course-runs/20260910T084602Z-02-trading-platform/raw/03-deploy.txt
+ERROR: test_late_start_does_not_claim_a_complete_book (test_feed_integrity.FeedIntegrityTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/flle-trading-lab-20260910T084602Z-02-trading-platform/tests/test_feed_integrity.py", line 115, in test_late_start_does_not_claim_a_complete_book
+    state = self.wait_state(lambda value: value['highest_received'] == 100)
+  File "/var/tmp/flle-trading-lab-20260910T084602Z-02-trading-platform/tests/test_feed_integrity.py", line 66, in wait_state
+    state = self.state()
+  File "/var/tmp/flle-trading-lab-20260910T084602Z-02-trading-platform/tests/test_feed_integrity.py", line 58, in state
+    with socket.create_connection(('127.0.0.1', self.port), timeout=2) as connection:
+  File "/usr/lib/python3.10/socket.py", line 845, in create_connection
+    raise err
+  File "/usr/lib/python3.10/socket.py", line 833, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+----------------------------------------------------------------------
+Ran 200 tests in 6.828s
+
+FAILED (errors=1, skipped=9)
+make: *** [Makefile:49: test] Error 1

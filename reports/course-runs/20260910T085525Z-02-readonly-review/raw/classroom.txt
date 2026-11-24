@@ -1,0 +1,48 @@
+===== 复查平台进程与部署文件 =====
+$ bash apps/flle-trading-lab/scripts/transport_labctl.sh verify 20260910T085337Z-02-trading-platform
+$ awk /\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=/\ \&\&\ length\(\$0\)\<=240\ \{print\} Documents/reports/course-runs/20260910T085525Z-02-readonly-review/raw/platform.txt
+exchange=ONLINE pid=16983
+trader-auto=ONLINE pid=23449
+trader-manual=ONLINE pid=23455
+gateway=ONLINE pid=25998
+deployed_sha256=PASS exchange,trader_auto,trader_manual,source,replay,manifest,opening_book_checkpoint
+restore_verdict=TRADING_LAB_READY
+===== 复查主机成员 =====
+$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 ip maddr show dev ens64np1
+3:	ens64np1
+	link  33:33:00:00:00:01
+	link  01:00:5e:00:00:01
+	link  01:80:c2:00:00:00
+	link  01:80:c2:00:00:03
+	link  01:80:c2:00:00:0e
+	link  33:33:ff:d3:af:21
+	link  01:00:5e:4a:7d:20
+	inet  233.74.125.32
+	inet  224.0.0.1
+	inet6 ff02::1:ffd3:af21
+	inet6 ff02::1 users 2
+	inet6 ff01::1
+===== 复查交换机成员 =====
+$ python3 Documents/newDoc/assets/common/eos_cli.py --mode show --plan Documents/newDoc/assets/02-trading-baseline/igmp-show.plan --output Documents/reports/course-runs/20260910T085525Z-02-readonly-review/raw/switch.txt
+$ python3 Documents/newDoc/assets/02-trading-baseline/inspect-igmp.py Documents/reports/course-runs/20260910T085525Z-02-readonly-review/raw/switch.txt --members --display
+10.1.1.253 / verify
+===== 查 VLAN20 的组播转发方式 =====
+[转发] 对: Enabled、pruning True、Flooding False  证: 按成员端口转发
+$ show ip igmp snooping
+Vlan 20 :
+IGMP snooping                  : Enabled
+IGMP snooping pruning active   : True
+Flooding traffic to VLAN       : False
+===== 查谁发成员查询 =====
+[查询器] 对: VLAN20 / 20.1.1.254 / Switch  证: 交换机持续询问成员
+$ show igmp snooping querier
+20    20.1.1.254       v2       Switch
+===== 查行情组的成员端口 =====
+[成员] 对: VLAN20 / 233.74.125.32 / Dynamic / Et2  证: 接收者在 Trader 数据口
+$ show ip igmp snooping groups
+20    233.74.125.32    Dynamic  -                      Et2
+===== 查看此刻的行情完整性 =====
+ONLINE 只表示进程在线；继续下单前还要确认行情为 HEALTHY、保护闸为 OPEN。
+$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+$ python3 -c import\ json\,sys\;\ s=json.load\(open\(sys.argv\[1\]\)\)\;\ f=s.get\(\"feed\"\)\ or\ \{\}\;\ print\(\"market_mode=%s\ integrity=%s\ next_expected=%s\ trading_gate=%s\"\ %\ \(s.get\(\"market_mode\"\)\,f.get\(\"integrity\"\)\,f.get\(\"next_expected\"\)\,f.get\(\"trading_gate\"\)\)\) Documents/reports/course-runs/20260910T085525Z-02-readonly-review/raw/state.json
+market_mode=UNICAST integrity=HEALTHY next_expected=180912 trading_gate=OPEN

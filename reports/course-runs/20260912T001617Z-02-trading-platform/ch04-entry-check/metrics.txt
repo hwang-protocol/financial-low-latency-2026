@@ -1,0 +1,158 @@
+# HELP flle_component_up Whether the latest component state is ONLINE.
+# TYPE flle_component_up gauge
+flle_component_up{component="exchange"} 1
+flle_component_up{component="trader_auto"} 1
+flle_component_up{component="trader_manual"} 1
+flle_component_up{component="trader_onload"} 1
+flle_component_up{component="trader_tcpdirect"} 1
+flle_component_up{component="trader_dpdk"} 0
+flle_component_up{component="gateway"} 1
+# HELP flle_replay_progress_ratio Current regular-session replay progress from 0 to 1.
+# TYPE flle_replay_progress_ratio gauge
+flle_replay_progress_ratio 0.002896670
+# HELP flle_replay_source_time_seconds Historical market time since midnight.
+# TYPE flle_replay_source_time_seconds gauge
+flle_replay_source_time_seconds 34268.693784181
+# HELP flle_market_messages_total ITCH messages replayed in the current paper epoch.
+# TYPE flle_market_messages_total counter
+flle_market_messages_total 305858
+# HELP flle_feed_pending_messages Messages waiting behind a sequence gap.
+# TYPE flle_feed_pending_messages gauge
+flle_feed_pending_messages 0
+# HELP flle_feed_gap_messages Missing sequence count currently blocking delivery.
+# TYPE flle_feed_gap_messages gauge
+flle_feed_gap_messages 0
+# HELP flle_feed_duplicates Duplicate market-data copies seen in the current epoch.
+# TYPE flle_feed_duplicates gauge
+flle_feed_duplicates 0
+# HELP flle_order_rtt_samples C++ order RTT samples retained in the current epoch.
+# TYPE flle_order_rtt_samples gauge
+# HELP flle_order_rtt_seconds C++ OUCH send to final response RTT summary.
+# TYPE flle_order_rtt_seconds gauge
+# HELP flle_baseline_order_rtt_samples C++ samples in the current fixed measurement generation.
+# TYPE flle_baseline_order_rtt_samples gauge
+# HELP flle_baseline_order_rtt_seconds C++ fixed-profile OUCH RTT summary.
+# TYPE flle_baseline_order_rtt_seconds gauge
+# HELP flle_software_measurement_samples C++ samples in the current software profile.
+# TYPE flle_software_measurement_samples gauge
+# HELP flle_software_queue_to_send_seconds C++ queue ingress to OUCH send summary.
+# TYPE flle_software_queue_to_send_seconds gauge
+# HELP flle_software_submit_to_final_seconds C++ queue ingress to final response summary.
+# TYPE flle_software_submit_to_final_seconds gauge
+# HELP flle_order_queue_depth Current C++ order queue depth.
+# TYPE flle_order_queue_depth gauge
+# HELP flle_order_thread_cpu Last CPU observed by the C++ order thread.
+# TYPE flle_order_thread_cpu gauge
+# HELP flle_order_rx_cpu Last incoming CPU reported by the order socket.
+# TYPE flle_order_rx_cpu gauge
+# HELP flle_paper_orders_total Paper orders submitted in the current epoch.
+# TYPE flle_paper_orders_total counter
+# HELP flle_paper_fills_total Paper fills received in the current epoch.
+# TYPE flle_paper_fills_total counter
+# HELP flle_paper_rejects_total Paper rejects received in the current epoch.
+# TYPE flle_paper_rejects_total counter
+flle_order_rtt_samples{client="auto"} 28
+flle_order_rtt_seconds{client="auto",stat="p50"} 0.000092388
+flle_order_rtt_seconds{client="auto",stat="p99"} 0.000115843
+flle_order_rtt_seconds{client="auto",stat="max"} 0.000144333
+flle_baseline_order_rtt_samples{client="auto"} 0
+flle_baseline_order_rtt_seconds{client="auto",stat="p50"} 0.000000000
+flle_baseline_order_rtt_seconds{client="auto",stat="p99"} 0.000000000
+flle_baseline_order_rtt_seconds{client="auto",stat="max"} 0.000000000
+flle_software_measurement_samples{client="auto",mode="DEQUE_CV",placement="floating"} 0
+flle_software_queue_to_send_seconds{client="auto",mode="DEQUE_CV",placement="floating",stat="p50"} 0.000000000
+flle_software_queue_to_send_seconds{client="auto",mode="DEQUE_CV",placement="floating",stat="p99"} 0.000000000
+flle_software_queue_to_send_seconds{client="auto",mode="DEQUE_CV",placement="floating",stat="max"} 0.000000000
+flle_software_submit_to_final_seconds{client="auto",mode="DEQUE_CV",placement="floating",stat="p50"} 0.000000000
+flle_software_submit_to_final_seconds{client="auto",mode="DEQUE_CV",placement="floating",stat="p99"} 0.000000000
+flle_software_submit_to_final_seconds{client="auto",mode="DEQUE_CV",placement="floating",stat="max"} 0.000000000
+flle_order_queue_depth{client="auto",mode="DEQUE_CV"} 0
+flle_order_thread_cpu{client="auto"} 3
+flle_order_rx_cpu{client="auto"} 2
+flle_paper_orders_total{client="auto"} 28
+flle_paper_fills_total{client="auto"} 23
+flle_paper_rejects_total{client="auto"} 5
+flle_order_rtt_samples{client="manual"} 0
+flle_order_rtt_seconds{client="manual",stat="p50"} 0.000000000
+flle_order_rtt_seconds{client="manual",stat="p99"} 0.000000000
+flle_order_rtt_seconds{client="manual",stat="max"} 0.000000000
+flle_baseline_order_rtt_samples{client="manual"} 0
+flle_baseline_order_rtt_seconds{client="manual",stat="p50"} 0.000000000
+flle_baseline_order_rtt_seconds{client="manual",stat="p99"} 0.000000000
+flle_baseline_order_rtt_seconds{client="manual",stat="max"} 0.000000000
+flle_software_measurement_samples{client="manual",mode="DEQUE_CV",placement="floating"} 0
+flle_software_queue_to_send_seconds{client="manual",mode="DEQUE_CV",placement="floating",stat="p50"} 0.000000000
+flle_software_queue_to_send_seconds{client="manual",mode="DEQUE_CV",placement="floating",stat="p99"} 0.000000000
+flle_software_queue_to_send_seconds{client="manual",mode="DEQUE_CV",placement="floating",stat="max"} 0.000000000
+flle_software_submit_to_final_seconds{client="manual",mode="DEQUE_CV",placement="floating",stat="p50"} 0.000000000
+flle_software_submit_to_final_seconds{client="manual",mode="DEQUE_CV",placement="floating",stat="p99"} 0.000000000
+flle_software_submit_to_final_seconds{client="manual",mode="DEQUE_CV",placement="floating",stat="max"} 0.000000000
+flle_order_queue_depth{client="manual",mode="DEQUE_CV"} 0
+flle_order_thread_cpu{client="manual"} 1
+flle_order_rx_cpu{client="manual"} -1
+flle_paper_orders_total{client="manual"} 0
+flle_paper_fills_total{client="manual"} 0
+flle_paper_rejects_total{client="manual"} 0
+flle_order_rtt_samples{client="onload"} 0
+flle_order_rtt_seconds{client="onload",stat="p50"} 0.000000000
+flle_order_rtt_seconds{client="onload",stat="p99"} 0.000000000
+flle_order_rtt_seconds{client="onload",stat="max"} 0.000000000
+flle_baseline_order_rtt_samples{client="onload"} 0
+flle_baseline_order_rtt_seconds{client="onload",stat="p50"} 0.000000000
+flle_baseline_order_rtt_seconds{client="onload",stat="p99"} 0.000000000
+flle_baseline_order_rtt_seconds{client="onload",stat="max"} 0.000000000
+flle_software_measurement_samples{client="onload",mode="DEQUE_CV",placement="pinned"} 0
+flle_software_queue_to_send_seconds{client="onload",mode="DEQUE_CV",placement="pinned",stat="p50"} 0.000000000
+flle_software_queue_to_send_seconds{client="onload",mode="DEQUE_CV",placement="pinned",stat="p99"} 0.000000000
+flle_software_queue_to_send_seconds{client="onload",mode="DEQUE_CV",placement="pinned",stat="max"} 0.000000000
+flle_software_submit_to_final_seconds{client="onload",mode="DEQUE_CV",placement="pinned",stat="p50"} 0.000000000
+flle_software_submit_to_final_seconds{client="onload",mode="DEQUE_CV",placement="pinned",stat="p99"} 0.000000000
+flle_software_submit_to_final_seconds{client="onload",mode="DEQUE_CV",placement="pinned",stat="max"} 0.000000000
+flle_order_queue_depth{client="onload",mode="DEQUE_CV"} 0
+flle_order_thread_cpu{client="onload"} 2
+flle_order_rx_cpu{client="onload"} -1
+flle_paper_orders_total{client="onload"} 0
+flle_paper_fills_total{client="onload"} 0
+flle_paper_rejects_total{client="onload"} 0
+flle_order_rtt_samples{client="tcpdirect"} 0
+flle_order_rtt_seconds{client="tcpdirect",stat="p50"} 0.000000000
+flle_order_rtt_seconds{client="tcpdirect",stat="p99"} 0.000000000
+flle_order_rtt_seconds{client="tcpdirect",stat="max"} 0.000000000
+flle_baseline_order_rtt_samples{client="tcpdirect"} 0
+flle_baseline_order_rtt_seconds{client="tcpdirect",stat="p50"} 0.000000000
+flle_baseline_order_rtt_seconds{client="tcpdirect",stat="p99"} 0.000000000
+flle_baseline_order_rtt_seconds{client="tcpdirect",stat="max"} 0.000000000
+flle_software_measurement_samples{client="tcpdirect",mode="DEQUE_CV",placement="pinned"} 0
+flle_software_queue_to_send_seconds{client="tcpdirect",mode="DEQUE_CV",placement="pinned",stat="p50"} 0.000000000
+flle_software_queue_to_send_seconds{client="tcpdirect",mode="DEQUE_CV",placement="pinned",stat="p99"} 0.000000000
+flle_software_queue_to_send_seconds{client="tcpdirect",mode="DEQUE_CV",placement="pinned",stat="max"} 0.000000000
+flle_software_submit_to_final_seconds{client="tcpdirect",mode="DEQUE_CV",placement="pinned",stat="p50"} 0.000000000
+flle_software_submit_to_final_seconds{client="tcpdirect",mode="DEQUE_CV",placement="pinned",stat="p99"} 0.000000000
+flle_software_submit_to_final_seconds{client="tcpdirect",mode="DEQUE_CV",placement="pinned",stat="max"} 0.000000000
+flle_order_queue_depth{client="tcpdirect",mode="DEQUE_CV"} 0
+flle_order_thread_cpu{client="tcpdirect"} 2
+flle_order_rx_cpu{client="tcpdirect"} -1
+flle_paper_orders_total{client="tcpdirect"} 0
+flle_paper_fills_total{client="tcpdirect"} 0
+flle_paper_rejects_total{client="tcpdirect"} 0
+flle_order_rtt_samples{client="dpdk"} 0
+flle_order_rtt_seconds{client="dpdk",stat="p50"} 0.000000000
+flle_order_rtt_seconds{client="dpdk",stat="p99"} 0.000000000
+flle_order_rtt_seconds{client="dpdk",stat="max"} 0.000000000
+flle_baseline_order_rtt_samples{client="dpdk"} 0
+flle_baseline_order_rtt_seconds{client="dpdk",stat="p50"} 0.000000000
+flle_baseline_order_rtt_seconds{client="dpdk",stat="p99"} 0.000000000
+flle_baseline_order_rtt_seconds{client="dpdk",stat="max"} 0.000000000
+flle_software_measurement_samples{client="dpdk",mode="DEQUE_CV",placement="floating"} 0
+flle_software_queue_to_send_seconds{client="dpdk",mode="DEQUE_CV",placement="floating",stat="p50"} 0.000000000
+flle_software_queue_to_send_seconds{client="dpdk",mode="DEQUE_CV",placement="floating",stat="p99"} 0.000000000
+flle_software_queue_to_send_seconds{client="dpdk",mode="DEQUE_CV",placement="floating",stat="max"} 0.000000000
+flle_software_submit_to_final_seconds{client="dpdk",mode="DEQUE_CV",placement="floating",stat="p50"} 0.000000000
+flle_software_submit_to_final_seconds{client="dpdk",mode="DEQUE_CV",placement="floating",stat="p99"} 0.000000000
+flle_software_submit_to_final_seconds{client="dpdk",mode="DEQUE_CV",placement="floating",stat="max"} 0.000000000
+flle_order_queue_depth{client="dpdk",mode="DEQUE_CV"} 0
+flle_order_thread_cpu{client="dpdk"} -1
+flle_order_rx_cpu{client="dpdk"} -1
+flle_paper_orders_total{client="dpdk"} 0
+flle_paper_fills_total{client="dpdk"} 0
+flle_paper_rejects_total{client="dpdk"} 0

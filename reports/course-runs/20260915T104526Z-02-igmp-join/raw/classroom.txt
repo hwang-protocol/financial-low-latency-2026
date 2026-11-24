@@ -1,0 +1,43 @@
+10.1.1.2 / join
+===== 确认网卡由 sfc 管理 =====
+$ bash apps/flle-trading-lab/scripts/transport_labctl.sh status 20260915T104327Z-02-trading-platform
+$ python3 -c import\ json\,sys\;\ s=json.load\(open\(sys.argv\[1\]\)\)\;\ print\(\"mode=%s\ transition=%s\ owner=%s\"\ %\ \(s\[\"mode\"\]\,s\[\"transition\"\]\,s\[\"owner\"\]\)\)\;\ assert\ \(s\[\"mode\"\]\,s\[\"transition\"\]\,s\[\"owner\"\]\)\ ==\ \(\"SFC\"\,\"READY\"\,\"sfc\"\) Documents/reports/course-runs/20260915T104526Z-02-igmp-join/raw/status.json
+mode=SFC transition=READY owner=sfc
+===== 让统一接收器保持组播订阅 =====
+[配置说明] direct 是本项目的接收配置：保留内部单播并订阅 A/B 两组，对应 --multicast-receiver 1，不是网卡直通。
+[范围说明] 本步不切换 Exchange 的行情发送模式；主机加组、交换机学到成员和实际收包分别检查。
+$ bash apps/flle-trading-lab/scripts/transport_labctl.sh feed-profile 20260915T104327Z-02-trading-platform direct
+[接收器原生命令：默认参数已展开，仅展示；已有匹配进程时不重复启动]
+$ /var/tmp/flle-trading-lab-20260915T104327Z-02-trading-platform/flle-feed-receiver --data-ip 20.1.1.2 --unicast-port 42121 --multicast-group 233.74.125.32 --multicast-port 31032 --multicast-group-b 233.74.125.33 --multicast-port-b 31033 --multicast-source 20.1.1.1 --multicast-receiver 1 --receive-buffer-bytes 4194304 --client-queue-bytes 8388608 --client-queue-packets 32768 --telemetry-host 10.1.1.101 --socket /var/tmp/flle-trading-lab-20260915T104327Z-02-trading-platform/feed.sock
+feed_receiver=VERIFIED market_schema=udp-multicast-ab-v1 multicast_source=20.1.1.1
+===== 查 Trader 数据口加入了哪些组 =====
+[成员] 对: inet 233.74.125.32 与 inet 233.74.125.33，各有一个订阅  证: 加组发生在 ens64np1
+$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 ip maddr show dev ens64np1
+3:	ens64np1
+	link  33:33:00:00:00:01
+	link  01:00:5e:00:00:01
+	link  01:80:c2:00:00:00
+	link  01:80:c2:00:00:03
+	link  01:80:c2:00:00:0e
+	link  33:33:ff:d3:af:21
+	link  01:00:5e:4a:7d:20
+	link  01:00:5e:4a:7d:21
+	inet  233.74.125.33
+	inet  233.74.125.32
+	inet  224.0.0.1
+	inet6 ff02::1:ffd3:af21
+	inet6 ff02::1 users 2
+	inet6 ff01::1
+===== 查主机组播源过滤 =====
+[源过滤] 核对 A、B 两组的来源均为 20.1.1.1；INC 是包含该源的引用数，EXC 是排除该源的引用数。
+$ ssh root@10.1.1.2 cat /proc/net/mcfilter
+Idx Device        MCA        SRC    INC    EXC
+  3 ens64n 0xe94a7d21 0x14010101      1      0
+  3 ens64n 0xe94a7d20 0x14010101      1      0
+[接口编号] 旧内核可能缩短 Device 名称，按 Idx 对应 ens64np1。
+$ ssh root@10.1.1.2 cat /sys/class/net/ens64np1/ifindex
+3
+[地址读法] 将上面的十六进制地址转为 IP；这是主机记录，不是交换机按源转发的证明。
+$ python3 Documents/newDoc/assets/02-trading-baseline/format-mcfilter.py Documents/reports/course-runs/20260915T104526Z-02-igmp-join/raw/mcfilter.txt Documents/reports/course-runs/20260915T104526Z-02-igmp-join/raw/data-ifindex.txt ens64np1
+ens64np1 (Idx=3)  源 20.1.1.1 → 组 233.74.125.33  INC=1 EXC=0
+ens64np1 (Idx=3)  源 20.1.1.1 → 组 233.74.125.32  INC=1 EXC=0

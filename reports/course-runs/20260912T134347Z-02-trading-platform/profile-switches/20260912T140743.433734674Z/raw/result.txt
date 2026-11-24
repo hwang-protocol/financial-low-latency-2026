@@ -1,0 +1,30 @@
+准备 D：停掉普通客户端，换上测试客户端
+# 本步只换客户端，不下单。Exchange 和网页保持原进程。
+
+# 1. 沿用的平台
+platform_run=20260912T134347Z-02-trading-platform
+# 第 02 章已经部署的交易平台，不另起一套系统。
+
+# 2. 切换结果
+result=READY
+# 前三路测试客户端已就绪。
+
+# 3. 当前配置
+profile=TRANSPORT
+# 已停掉普通 AUTO / MANUAL，换上路径测试客户端。
+
+# 4. 四路客户端
+clients=Socket, Onload, TCPDirect ONLINE; DPDK WAITING
+# 前三路在线；DPDK 等运行 ④ 再独占网卡。
+
+# 5. 订单队列
+queue_mode=DEQUE_CV
+# 四路都用第 04 章的 deque + 互斥锁 + 条件变量。
+
+# 6. Exchange 与网页
+exchange_and_gui=UNCHANGED
+# 进程身份和文件清单与切换前一致。
+
+# 可以进入运行 ① 下单。
+# 完整校验记录保存在下方 evidence 目录。
+evidence=Documents/reports/course-runs/20260912T134347Z-02-trading-platform/profile-switches/20260912T140743.433734674Z

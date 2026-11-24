@@ -1,0 +1,9 @@
+
+Low-Latency-Ops / 升级 A/B 平台
+===== 升级 A/B 平台 =====
+停止已核验的旧会话；保留原始记录，新平台从开盘重新回放。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh stop 20260915T073229Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/reuse-20260915T094014.159176523Z-upgrade.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/reuse-20260915T094014.159176523Z-upgrade.txt
+（没有匹配的短读数；请查完整日志）

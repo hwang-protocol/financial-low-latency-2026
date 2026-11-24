@@ -1,0 +1,3294 @@
+{
+  "schema": "flle.ch06-four-order-paths.v13",
+  "run_id": "20260915T115124Z-02-trading-platform",
+  "created_utc": "2026-09-16T04:54:19Z",
+  "phase_order": [
+    [
+      "SOCKET",
+      "OPENONLOAD",
+      "DPDK",
+      "TCPDIRECT"
+    ],
+    [
+      "OPENONLOAD",
+      "TCPDIRECT",
+      "SOCKET",
+      "DPDK"
+    ],
+    [
+      "TCPDIRECT",
+      "DPDK",
+      "OPENONLOAD",
+      "SOCKET"
+    ],
+    [
+      "DPDK",
+      "SOCKET",
+      "TCPDIRECT",
+      "OPENONLOAD"
+    ]
+  ],
+  "limitations": [
+    "DPDK owns the X2522 through vfio-pci and cannot be interleaved per order with the three sfc paths; the controller switches mode when DPDK reaches its balanced position.",
+    "The 12 distinct ordered predecessor pairs occur once on within-round edges. The three cross-round edges necessarily repeat existing pairs, so the complete sequence guarantees only that all 12 possible predecessors occur at least once.",
+    "Each transport cell begins with configured warmup orders to reduce carryover before measured submissions; this does not claim to eliminate carryover.",
+    "The first warmup establishes traffic, then a PID-bound path witness is captured; the remaining warmups separate that heavyweight probe from measured submissions.",
+    "Before the first formal cell, TCP connection attempts to the Gateway and transport-controller endpoints both returned ABSENT; formal mode changes invoke the fixed local control script directly.",
+    "During the sfc phase all three clients and their Exchange sessions remain online; the two paths not being sampled sleep on DEQUE_CV.",
+    "During the DPDK phase the sfc clients are stopped and the DPDK client runs exclusively.",
+    "DEQUE_CV fixes the application handoff; TCPDirect and F-Stack still poll their network reactors.",
+    "OpenOnload uses --profile=latency, so its result combines the accelerated user-space path with profile polling.",
+    "The formal window pauses Exchange replay at one verified source timestamp under a renewed ten-minute lease; all 16 cells share that fixed book, explicit cleanup restores PLAYING, and lease expiry is the process-kill fallback."
+  ],
+  "runtime_contract": {
+    "application_handoff": "DEQUE_CV",
+    "data_cpu": 2,
+    "management_cpu": 3,
+    "dpdk_bridge_cpu": 3,
+    "fstack_idle_sleep_us": 0,
+    "fstack_pkt_tx_delay_us": 0,
+    "sfc_hugepages_2mb": 128,
+    "dpdk_hugepages_2mb": 256,
+    "onload_profile": "latency",
+    "order_design": "POSITION_AND_WITHIN_ROUND_FIRST_ORDER_PREDECESSOR_BALANCED_4X4",
+    "round_aggregation": "DESCRIPTIVE_MEDIAN_OF_4_ROUND_STATISTICS_HALF_UP_TO_INTEGER_NS",
+    "order_balance": {
+      "rounds": 4,
+      "position_balance": [
+        {
+          "transport": "SOCKET",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "OPENONLOAD",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "TCPDIRECT",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "DPDK",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        }
+      ],
+      "within_round_first_order_predecessor_balance": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 1
+        }
+      ],
+      "cross_round_boundaries": [
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD"
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT"
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK"
+        }
+      ],
+      "complete_sequence_predecessor_coverage": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 2
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 2
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 2
+        }
+      ]
+    },
+    "final_data_plane_mode": "SFC",
+    "observer_absence_before_measurement": [
+      {
+        "host": "10.1.1.101",
+        "port": 8088,
+        "state": "ABSENT"
+      },
+      {
+        "host": "10.1.1.2",
+        "port": 48606,
+        "state": "ABSENT"
+      }
+    ],
+    "native_path_receipts": "PRE_AND_POST_NATIVE_ORIGINALS_OUTSIDE_TIMER",
+    "exchange_book_contract": "REPLAY_PAUSED_AT_STABLE_SOURCE_TIMESTAMP_AND_RESTORED",
+    "exchange_pause_lease_ms": 600000,
+    "exchange_pause_failure_recovery": "PYTHON_FINALLY_PLUS_OUTER_RECONCILE_PLUS_BOUNDED_EXCHANGE_LEASE"
+  },
+  "parameters": {
+    "warmup_per_round": 100,
+    "samples_per_round": 1000,
+    "rounds": 4
+  },
+  "exchange_ledger_gate": {
+    "host": "10.1.1.1",
+    "port": 48120,
+    "before": 35206,
+    "after": 52806,
+    "delta": 17600,
+    "expected": 17600,
+    "replay_loop": 1,
+    "session": "0612260001"
+  },
+  "exchange_replay_gate": {
+    "before": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "MULTICAST_A",
+      "market_schema": "udp-multicast-ab-v1",
+      "market_group_a": "233.74.125.32",
+      "market_group_b": "233.74.125.33",
+      "market_port_a": 31032,
+      "market_port_b": 31033,
+      "session": "0612260001",
+      "replay_status": "PLAYING",
+      "replay_pause_lease_ms": 0,
+      "replay_pause_lease_remaining_ms": 0,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 48265055038450,
+      "source_clock": "13:24:25.055038450",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 35206,
+      "paper_ledger": [
+        {
+          "client_order_id": 2522001060,
+          "clordid": "MNLD2522001060",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001061,
+          "clordid": "MNLD2522001061",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001062,
+          "clordid": "MNLD2522001062",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001063,
+          "clordid": "MNLD2522001063",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001064,
+          "clordid": "MNLD2522001064",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001065,
+          "clordid": "MNLD2522001065",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001066,
+          "clordid": "MNLD2522001066",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001067,
+          "clordid": "MNLD2522001067",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001068,
+          "clordid": "MNLD2522001068",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001069,
+          "clordid": "MNLD2522001069",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001070,
+          "clordid": "MNLD2522001070",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001071,
+          "clordid": "MNLD2522001071",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001072,
+          "clordid": "MNLD2522001072",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001073,
+          "clordid": "MNLD2522001073",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001074,
+          "clordid": "MNLD2522001074",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001075,
+          "clordid": "MNLD2522001075",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001076,
+          "clordid": "MNLD2522001076",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001077,
+          "clordid": "MNLD2522001077",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001078,
+          "clordid": "MNLD2522001078",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001079,
+          "clordid": "MNLD2522001079",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001080,
+          "clordid": "MNLD2522001080",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001081,
+          "clordid": "MNLD2522001081",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001082,
+          "clordid": "MNLD2522001082",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001083,
+          "clordid": "MNLD2522001083",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001084,
+          "clordid": "MNLD2522001084",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001085,
+          "clordid": "MNLD2522001085",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001086,
+          "clordid": "MNLD2522001086",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001087,
+          "clordid": "MNLD2522001087",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001088,
+          "clordid": "MNLD2522001088",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001089,
+          "clordid": "MNLD2522001089",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001090,
+          "clordid": "MNLD2522001090",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001091,
+          "clordid": "MNLD2522001091",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001092,
+          "clordid": "MNLD2522001092",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001093,
+          "clordid": "MNLD2522001093",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001094,
+          "clordid": "MNLD2522001094",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001095,
+          "clordid": "MNLD2522001095",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001096,
+          "clordid": "MNLD2522001096",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001097,
+          "clordid": "MNLD2522001097",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001098,
+          "clordid": "MNLD2522001098",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001099,
+          "clordid": "MNLD2522001099",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        }
+      ],
+      "replay_progress": 0.601071,
+      "remaining_source_ns": 9334944961550,
+      "estimated_remaining_wall_ns": 9334944961550,
+      "market_sequence": 13014928,
+      "replay_messages": 13014928
+    },
+    "paused_first": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "MULTICAST_A",
+      "market_schema": "udp-multicast-ab-v1",
+      "market_group_a": "233.74.125.32",
+      "market_group_b": "233.74.125.33",
+      "market_port_a": 31032,
+      "market_port_b": 31033,
+      "session": "0612260001",
+      "replay_status": "PAUSED",
+      "replay_pause_lease_ms": 600000,
+      "replay_pause_lease_remaining_ms": 599999,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 48265055038450,
+      "source_clock": "13:24:25.055038450",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 35206,
+      "paper_ledger": [
+        {
+          "client_order_id": 2522001060,
+          "clordid": "MNLD2522001060",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001061,
+          "clordid": "MNLD2522001061",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001062,
+          "clordid": "MNLD2522001062",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001063,
+          "clordid": "MNLD2522001063",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001064,
+          "clordid": "MNLD2522001064",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001065,
+          "clordid": "MNLD2522001065",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001066,
+          "clordid": "MNLD2522001066",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001067,
+          "clordid": "MNLD2522001067",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001068,
+          "clordid": "MNLD2522001068",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001069,
+          "clordid": "MNLD2522001069",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001070,
+          "clordid": "MNLD2522001070",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001071,
+          "clordid": "MNLD2522001071",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001072,
+          "clordid": "MNLD2522001072",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001073,
+          "clordid": "MNLD2522001073",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001074,
+          "clordid": "MNLD2522001074",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001075,
+          "clordid": "MNLD2522001075",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001076,
+          "clordid": "MNLD2522001076",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001077,
+          "clordid": "MNLD2522001077",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001078,
+          "clordid": "MNLD2522001078",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001079,
+          "clordid": "MNLD2522001079",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001080,
+          "clordid": "MNLD2522001080",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001081,
+          "clordid": "MNLD2522001081",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001082,
+          "clordid": "MNLD2522001082",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001083,
+          "clordid": "MNLD2522001083",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001084,
+          "clordid": "MNLD2522001084",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001085,
+          "clordid": "MNLD2522001085",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001086,
+          "clordid": "MNLD2522001086",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001087,
+          "clordid": "MNLD2522001087",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001088,
+          "clordid": "MNLD2522001088",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001089,
+          "clordid": "MNLD2522001089",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001090,
+          "clordid": "MNLD2522001090",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001091,
+          "clordid": "MNLD2522001091",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001092,
+          "clordid": "MNLD2522001092",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001093,
+          "clordid": "MNLD2522001093",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001094,
+          "clordid": "MNLD2522001094",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001095,
+          "clordid": "MNLD2522001095",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001096,
+          "clordid": "MNLD2522001096",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001097,
+          "clordid": "MNLD2522001097",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001098,
+          "clordid": "MNLD2522001098",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001099,
+          "clordid": "MNLD2522001099",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        }
+      ],
+      "replay_progress": 0.601071,
+      "remaining_source_ns": 9334944961550,
+      "estimated_remaining_wall_ns": 9334944961550,
+      "market_sequence": 13014928,
+      "replay_messages": 13014928
+    },
+    "paused_stable": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "MULTICAST_A",
+      "market_schema": "udp-multicast-ab-v1",
+      "market_group_a": "233.74.125.32",
+      "market_group_b": "233.74.125.33",
+      "market_port_a": 31032,
+      "market_port_b": 31033,
+      "session": "0612260001",
+      "replay_status": "PAUSED",
+      "replay_pause_lease_ms": 600000,
+      "replay_pause_lease_remaining_ms": 599899,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 48265055038450,
+      "source_clock": "13:24:25.055038450",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 35206,
+      "paper_ledger": [
+        {
+          "client_order_id": 2522001060,
+          "clordid": "MNLD2522001060",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001061,
+          "clordid": "MNLD2522001061",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001062,
+          "clordid": "MNLD2522001062",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001063,
+          "clordid": "MNLD2522001063",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001064,
+          "clordid": "MNLD2522001064",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001065,
+          "clordid": "MNLD2522001065",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001066,
+          "clordid": "MNLD2522001066",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001067,
+          "clordid": "MNLD2522001067",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001068,
+          "clordid": "MNLD2522001068",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001069,
+          "clordid": "MNLD2522001069",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001070,
+          "clordid": "MNLD2522001070",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001071,
+          "clordid": "MNLD2522001071",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001072,
+          "clordid": "MNLD2522001072",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001073,
+          "clordid": "MNLD2522001073",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001074,
+          "clordid": "MNLD2522001074",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001075,
+          "clordid": "MNLD2522001075",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001076,
+          "clordid": "MNLD2522001076",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001077,
+          "clordid": "MNLD2522001077",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001078,
+          "clordid": "MNLD2522001078",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001079,
+          "clordid": "MNLD2522001079",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001080,
+          "clordid": "MNLD2522001080",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001081,
+          "clordid": "MNLD2522001081",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001082,
+          "clordid": "MNLD2522001082",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001083,
+          "clordid": "MNLD2522001083",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001084,
+          "clordid": "MNLD2522001084",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001085,
+          "clordid": "MNLD2522001085",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001086,
+          "clordid": "MNLD2522001086",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001087,
+          "clordid": "MNLD2522001087",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001088,
+          "clordid": "MNLD2522001088",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001089,
+          "clordid": "MNLD2522001089",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001090,
+          "clordid": "MNLD2522001090",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001091,
+          "clordid": "MNLD2522001091",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001092,
+          "clordid": "MNLD2522001092",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001093,
+          "clordid": "MNLD2522001093",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001094,
+          "clordid": "MNLD2522001094",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001095,
+          "clordid": "MNLD2522001095",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001096,
+          "clordid": "MNLD2522001096",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001097,
+          "clordid": "MNLD2522001097",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        },
+        {
+          "client_order_id": 2522001098,
+          "clordid": "MNLD2522001098",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912400
+        },
+        {
+          "client_order_id": 2522001099,
+          "clordid": "MNLD2522001099",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912000
+        }
+      ],
+      "replay_progress": 0.601071,
+      "remaining_source_ns": 9334944961550,
+      "estimated_remaining_wall_ns": 9334944961550,
+      "market_sequence": 13014928,
+      "replay_messages": 13014928
+    },
+    "stable_fields": [
+      "session",
+      "replay_loop",
+      "source_timestamp_ns",
+      "replay_messages",
+      "market_sequence"
+    ],
+    "pause_lease_ms": 600000,
+    "lease_renewals": [
+      {
+        "checkpoint": "before-initial-sfc",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p1-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p2-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p3-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r1-p3-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p4-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r1-p4-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p1-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p2-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p3-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p4-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r2-p4-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p1-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r3-p1-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p2-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r3-p2-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p3-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r3-p3-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p4-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p1-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r4-p1-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p2-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r4-p2-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p3-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p4-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-final-ledger",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 48265055038450,
+        "replay_messages": 13014928,
+        "market_sequence": 13014928,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      }
+    ],
+    "restored": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "MULTICAST_A",
+      "market_schema": "udp-multicast-ab-v1",
+      "market_group_a": "233.74.125.32",
+      "market_group_b": "233.74.125.33",
+      "market_port_a": 31032,
+      "market_port_b": 31033,
+      "session": "0612260001",
+      "replay_status": "PLAYING",
+      "replay_pause_lease_ms": 0,
+      "replay_pause_lease_remaining_ms": 0,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 48265073283145,
+      "source_clock": "13:24:25.073283145",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 52806,
+      "paper_ledger": [
+        {
+          "client_order_id": 2530001060,
+          "clordid": "MNLD2530001060",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001061,
+          "clordid": "MNLD2530001061",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001062,
+          "clordid": "MNLD2530001062",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001063,
+          "clordid": "MNLD2530001063",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001064,
+          "clordid": "MNLD2530001064",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001065,
+          "clordid": "MNLD2530001065",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001066,
+          "clordid": "MNLD2530001066",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001067,
+          "clordid": "MNLD2530001067",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001068,
+          "clordid": "MNLD2530001068",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001069,
+          "clordid": "MNLD2530001069",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001070,
+          "clordid": "MNLD2530001070",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001071,
+          "clordid": "MNLD2530001071",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001072,
+          "clordid": "MNLD2530001072",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001073,
+          "clordid": "MNLD2530001073",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001074,
+          "clordid": "MNLD2530001074",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001075,
+          "clordid": "MNLD2530001075",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001076,
+          "clordid": "MNLD2530001076",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001077,
+          "clordid": "MNLD2530001077",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001078,
+          "clordid": "MNLD2530001078",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001079,
+          "clordid": "MNLD2530001079",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001080,
+          "clordid": "MNLD2530001080",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001081,
+          "clordid": "MNLD2530001081",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001082,
+          "clordid": "MNLD2530001082",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001083,
+          "clordid": "MNLD2530001083",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001084,
+          "clordid": "MNLD2530001084",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001085,
+          "clordid": "MNLD2530001085",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001086,
+          "clordid": "MNLD2530001086",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001087,
+          "clordid": "MNLD2530001087",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001088,
+          "clordid": "MNLD2530001088",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001089,
+          "clordid": "MNLD2530001089",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001090,
+          "clordid": "MNLD2530001090",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001091,
+          "clordid": "MNLD2530001091",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001092,
+          "clordid": "MNLD2530001092",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001093,
+          "clordid": "MNLD2530001093",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001094,
+          "clordid": "MNLD2530001094",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001095,
+          "clordid": "MNLD2530001095",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001096,
+          "clordid": "MNLD2530001096",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001097,
+          "clordid": "MNLD2530001097",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        },
+        {
+          "client_order_id": 2530001098,
+          "clordid": "MNLD2530001098",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918800
+        },
+        {
+          "client_order_id": 2530001099,
+          "clordid": "MNLD2530001099",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2918600
+        }
+      ],
+      "replay_progress": 0.601072,
+      "remaining_source_ns": 9334926716855,
+      "estimated_remaining_wall_ns": 9334926716855,
+      "market_sequence": 13014930,
+      "replay_messages": 13014930
+    }
+  },
+  "submission_identity": {
+    "field": "client_order_id",
+    "scope": "WARMUP_AND_MEASUREMENT_SUBMISSIONS",
+    "total": 17600,
+    "unique": 17600,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2122001100,
+        "max_client_order_id": 2130001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2522001100,
+        "max_client_order_id": 2530001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2924000000,
+        "max_client_order_id": 2930001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 3909000000,
+        "max_client_order_id": 3912001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2122001100,
+        "max_client_order_id": 2122002199
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2124000000,
+        "max_client_order_id": 2124001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2128000000,
+        "max_client_order_id": 2128001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2130000000,
+        "max_client_order_id": 2130001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2522001100,
+        "max_client_order_id": 2522002199
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2524000000,
+        "max_client_order_id": 2524001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2528000000,
+        "max_client_order_id": 2528001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2530000000,
+        "max_client_order_id": 2530001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2924000000,
+        "max_client_order_id": 2924001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2924001100,
+        "max_client_order_id": 2924002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2926000000,
+        "max_client_order_id": 2926001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2930000000,
+        "max_client_order_id": 2930001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3909000000,
+        "max_client_order_id": 3909001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3910000000,
+        "max_client_order_id": 3910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3911000000,
+        "max_client_order_id": 3911001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3912000000,
+        "max_client_order_id": 3912001099
+      }
+    ]
+  },
+  "warmup_sample_identity": {
+    "field": "client_order_id",
+    "scope": "WARMUP_RESPONSES",
+    "total": 1600,
+    "unique": 1600,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 2122001100,
+        "max_client_order_id": 2130000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 2522001100,
+        "max_client_order_id": 2530000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 2924000000,
+        "max_client_order_id": 2930000099
+      },
+      {
+        "transport": "DPDK",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 3909000000,
+        "max_client_order_id": 3912000099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2122001100,
+        "max_client_order_id": 2122001199
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2124000000,
+        "max_client_order_id": 2124000099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2128000000,
+        "max_client_order_id": 2128000099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2130000000,
+        "max_client_order_id": 2130000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2522001100,
+        "max_client_order_id": 2522001199
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2524000000,
+        "max_client_order_id": 2524000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2528000000,
+        "max_client_order_id": 2528000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2530000000,
+        "max_client_order_id": 2530000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2924000000,
+        "max_client_order_id": 2924000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2924001100,
+        "max_client_order_id": 2924001199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2926000000,
+        "max_client_order_id": 2926000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2930000000,
+        "max_client_order_id": 2930000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3909000000,
+        "max_client_order_id": 3909000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3910000000,
+        "max_client_order_id": 3910000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3911000000,
+        "max_client_order_id": 3911000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3912000000,
+        "max_client_order_id": 3912000099
+      }
+    ]
+  },
+  "sample_identity": {
+    "field": "client_order_id",
+    "scope": "MEASUREMENT_RESPONSES",
+    "total": 16000,
+    "unique": 16000,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2122001200,
+        "max_client_order_id": 2130001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2522001200,
+        "max_client_order_id": 2530001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2924000100,
+        "max_client_order_id": 2930001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 3909000100,
+        "max_client_order_id": 3912001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2122001200,
+        "max_client_order_id": 2122002199
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2124000100,
+        "max_client_order_id": 2124001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2128000100,
+        "max_client_order_id": 2128001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2130000100,
+        "max_client_order_id": 2130001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2522001200,
+        "max_client_order_id": 2522002199
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2524000100,
+        "max_client_order_id": 2524001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2528000100,
+        "max_client_order_id": 2528001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2530000100,
+        "max_client_order_id": 2530001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2924000100,
+        "max_client_order_id": 2924001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2924001200,
+        "max_client_order_id": 2924002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2926000100,
+        "max_client_order_id": 2926001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2930000100,
+        "max_client_order_id": 2930001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3909000100,
+        "max_client_order_id": 3909001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3910000100,
+        "max_client_order_id": 3910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3911000100,
+        "max_client_order_id": 3911001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3912000100,
+        "max_client_order_id": 3912001099
+      }
+    ]
+  },
+  "summary": {
+    "SOCKET": {
+      "label": "Kernel Socket",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 31023,
+        "p95_ns": 47603,
+        "p99_ns": 53044,
+        "mean_ns": 33716,
+        "max_ns": 2387089
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 8211,
+        "p95_ns": 9858,
+        "p99_ns": 14957,
+        "mean_ns": 8576,
+        "max_ns": 89651
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 39582,
+        "p95_ns": 57104,
+        "p99_ns": 63639,
+        "mean_ns": 42125,
+        "max_ns": 2394084
+      }
+    },
+    "OPENONLOAD": {
+      "label": "OpenOnload",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 20527,
+        "p95_ns": 24271,
+        "p99_ns": 26715,
+        "mean_ns": 21091,
+        "max_ns": 225759
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 8564,
+        "p95_ns": 9703,
+        "p99_ns": 15155,
+        "mean_ns": 8511,
+        "max_ns": 729888
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 29179,
+        "p95_ns": 33171,
+        "p99_ns": 37324,
+        "mean_ns": 29546,
+        "max_ns": 792814
+      }
+    },
+    "TCPDIRECT": {
+      "label": "TCPDirect",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 20050,
+        "p95_ns": 23789,
+        "p99_ns": 25923,
+        "mean_ns": 20527,
+        "max_ns": 82766
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 7962,
+        "p95_ns": 10412,
+        "p99_ns": 15922,
+        "mean_ns": 8438,
+        "max_ns": 326919
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 28403,
+        "p95_ns": 33077,
+        "p99_ns": 38674,
+        "mean_ns": 28985,
+        "max_ns": 350112
+      }
+    },
+    "DPDK": {
+      "label": "DPDK + F-Stack TCP",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 24204,
+        "p95_ns": 30152,
+        "p99_ns": 31842,
+        "mean_ns": 25102,
+        "max_ns": 438960
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 5266,
+        "p95_ns": 15932,
+        "p99_ns": 25616,
+        "mean_ns": 6178,
+        "max_ns": 140873
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 29582,
+        "p95_ns": 37351,
+        "p99_ns": 53026,
+        "mean_ns": 31332,
+        "max_ns": 467637
+      }
+    }
+  },
+  "native_receipt_gate": {
+    "cells": 16,
+    "pre_post_manifests": 32,
+    "original_files": 192
+  },
+  "execution_provenance": {
+    "capture_contract": "START_SNAPSHOT_END_BYTES_UNCHANGED",
+    "sealed_programs": [
+      {
+        "path": "provenance/analyze_four_transport_raw.py",
+        "sha256": "afe19e8377edc12a1c6dd0b6bc058d56a7c560b73c6627cd7ede66ab44220815",
+        "bytes": 91594
+      },
+      {
+        "path": "provenance/measure_four_transports.py",
+        "sha256": "e13278c7a9fa77e13c1b5cb81b2a720e245c7c7f14eca15cfcb49dbfd2bfe6f2",
+        "bytes": 87686
+      },
+      {
+        "path": "provenance/transport_labctl.sh",
+        "sha256": "88c39e8334718d39bcbe099194e76b7fb8658d5610cb3b8b2b850501bf2c8e3c",
+        "bytes": 154295
+      }
+    ]
+  }
+}

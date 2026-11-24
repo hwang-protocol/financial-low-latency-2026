@@ -1,0 +1,10 @@
+===== 核对安装包 =====
+[来源说明] 使用课程缓存的固定运行包；F-Stack 和 DPDK 已编入交易客户端。
+$ sha256sum artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz
+0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00  artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz
+
+===== 准备 10.1.1.1 的软件 =====
+[安装说明] 安装到独立目录；此时不启动客户端、不改绑数据口。
+$ scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz root@10.1.1.1:/var/tmp/20260915T114049Z-02-dpdk-software-prep-runtime.tgz
+完整日志：Documents/reports/course-runs/20260915T114049Z-02-dpdk-software-prep/raw/10.1.1.1-software.txt
+缺少 IOMMU 隔离组；先执行准备 B1（00b-iommu-prep.sh）。

@@ -1,0 +1,9 @@
+
+Low-Latency-Ops / 恢复中断部署
+===== 恢复中断部署 =====
+按已保存的 RUN 停止残留进程，成功后才能重新部署。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh stop 20260915T103950Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260915T103950Z-02-trading-platform/raw/interrupted-cleanup-20260915T104305.979578513Z.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260915T103950Z-02-trading-platform/raw/interrupted-cleanup-20260915T104305.979578513Z.txt
+（没有匹配的短读数；请查完整日志）

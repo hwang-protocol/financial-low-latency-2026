@@ -1,0 +1,48 @@
+
+跳板机 / verify
+===== 查前章交接 =====
+[交易 profile] 对: SFC / READY / sfc  证: 第六章已归还交易驱动与可用状态
+$ transport_labctl.sh status <已保存的第二章平台 RUN>
+trading_profile=SFC/READY/sfc
+
+vm-2522-02 / verify
+===== 查接收口状态与地址 =====
+[ens64np1] 对: UP / 原 MAC / 20.1.1.2  证: 接收口身份与地址保持前章状态
+$ ip -brief link show dev ens64np1
+ens64np1         UP             00:0f:53:d3:af:21 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+$ ip -brief addr show dev ens64np1
+ens64np1         UP             20.1.1.2/24 fe80::20f:53ff:fed3:af21/64 
+
+===== 查接收口驱动 =====
+[ens64np1] 对: sfc / 0000:03:00.0  证: X2522 仍由前章驱动管理
+$ ethtool -i ens64np1
+driver: sfc
+version: 6.1.0.1009
+firmware-version: 8.0.0.1015 rx1 tx1
+expansion-rom-version: 
+bus-info: 0000:03:00.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: no
+supports-register-dump: yes
+supports-priv-flags: yes
+
+===== 查 XDP 挂载 =====
+[ens64np1] 对: xdp: 段没有程序条目  证: 该接口没有已挂载的 XDP 程序
+$ bpftool net show dev ens64np1
+xdp:
+
+tc:
+
+flow_dissector:
+
+
+===== 查 RTL 适配器进程 =====
+[RTL] 对: 无匹配行且退出码为 1  证: 未找到本课 mold_filter_adapter 进程
+$ pgrep -af '[m]old_filter_adapter'
+pgrep exit_code=1
+
+===== 查 RTL 控制文件 =====
+[RTL] 对: No such file or directory  证: 本课控制文件不存在
+$ ls -ld -- /var/tmp/flle-market-filter.cmd
+ls: cannot access '/var/tmp/flle-market-filter.cmd': No such file or directory

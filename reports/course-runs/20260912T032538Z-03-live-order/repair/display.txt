@@ -1,0 +1,21 @@
+pcap_magic=d4c3b2a1 linktype=1 established_sessions=2 captured_payload_flows=1 auto_pid=19222 manual_pid=19228
+manual_flow=20.1.1.2:37919->20.1.1.1:43120 soup_client=U soup_server=S
+
+① O · 下单请求｜MANUAL → Exchange
+  客户端编号 UserRefNum：2100000000
+  股票 Symbol：AAPL  方向 Side：买入  数量 Quantity：1 股
+  限价 Price：296.0300
+  含义：申请按上述股票、方向、数量和限价下单。
+
+② A · 受理回报｜Exchange → MANUAL
+  客户端编号 UserRefNum：2100000000
+  订单引用号 Order Reference Number：104147
+  含义：订单已受理；这条回报还不能证明成交。
+
+③ E · 成交回报｜Exchange → MANUAL
+  客户端编号 UserRefNum：2100000000
+  成交数量 Quantity：1 股  成交价格 Price：291.0400
+  成交编号 Match Number：904147
+  含义：这些股数已按上述价格成交。
+identity=user_ref:O=A=E clordid:O=A verdict=LIVE_ORDER_FLOW_PASS
+[就绪说明] LIVE_ORDER_FLOW_PASS 是解析器自拼的有限检查汇总，表示所选订单解析及内置检查走通；须核对本单 order_id、O/A/E 和 filled，不代表长期无丢包或所有订单均成功。

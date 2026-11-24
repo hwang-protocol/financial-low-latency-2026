@@ -1,0 +1,10 @@
+
+跳板机 / action-model
+===== 查五类输入的动作 =====
+[Action] 对: 仅目标 Type A 为 DROP，其余 PASS  证: 区分格式判断、证券条件与最终 action
+$ python3 - < Documents/newDoc/assets/07-xdp/xdp_action_model.py
+type=A         locate=37    stock=AAPL     count=1 length=36 action=COUNT_AAPL+XDP_PASS
+type=A         locate=8095  stock=NVDA     count=1 length=36 action=COUNT_NVDA+XDP_DROP
+type=F         locate=8095  stock=NVDA     count=1 length=40 action=COUNT_OTHER_ITCH+XDP_PASS
+type=D         locate=0     stock=-        count=1 length=19 action=COUNT_OTHER_ITCH+XDP_PASS
+type=A         locate=8095  stock=NVDA     count=1 length=20 action=COUNT_OTHER_ITCH+XDP_PASS

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FLLE Trading Lab</title>
+  <link rel="stylesheet" href="/terminal.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><strong>FLLE Trading Lab</strong><span>低延时交易基线</span></div>
+    <div class="source-clock"><small>历史行情时间</small><strong id="wall-clock">2026-06-12 09:30:00.000</strong></div>
+    <div class="header-status"><span class="paper">模拟成交</span><span><i id="stream-dot"></i><b id="stream-label">连接中</b></span></div>
+  </header>
+  <div id="feed-gap-banner" class="feed-gap-banner" hidden>
+    <strong>FEED GAP</strong>
+    <span id="feed-gap-detail">行情序号中断，订单簿冻结，交易已停单。</span>
+  </div>
+
+  <main>
+    <section class="card replay-card">
+      <div class="section-head"><div><small>NASDAQ 常规交易时段</small><h1>行情回放</h1></div><div class="replay-state"><b id="replay-status">WAITING</b><span id="replay-loop">第 0 轮</span></div></div>
+      <div class="progress-track" aria-label="回放进度"><div id="replay-progress-fill"></div></div>
+      <div class="progress-meta"><strong id="replay-progress-text">0.00%</strong><span id="replay-window">09:30:00 → 16:00:00</span><span id="replay-remaining">预计剩余 6小时30分</span></div>
+      <div class="replay-controls">
+        <label>播放速度<select id="replay-speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="5">5×</option><option value="10">10×</option><option value="20">20×</option></select></label>
+        <button id="replay-toggle">暂停</button><button id="replay-restart" class="secondary">重新开始并清空交易</button>
+        <p>窗口内按原始事件时间播放，不压缩空档。到达 16:00 后自动清空订单、成交、持仓与延时样本，再开始下一轮。</p>
+      </div>
+    </section>
+
+    <section class="card market-card">
+      <div class="section-head"><div><small>真实历史 ITCH 数据</small><h2>市场行情</h2></div><b id="exchange-health">WAITING</b></div>
+      <div id="watchlist" class="watchlist"></div>
+      <div class="quote-hero"><div><small>当前标的</small><strong id="selected-symbol">AAPL</strong></div><div><small>最新价</small><strong id="hero-price">—</strong></div></div>
+      <div class="best-quote"><div class="bid"><small>最佳买价</small><b id="best-bid">—</b><span id="bid-size">—</span></div><div class="ask"><small>最佳卖价</small><b id="best-ask">—</b><span id="ask-size">—</span></div></div>
+      <div class="transport"><span>行情传输</span><div><button data-mode="UNICAST">单播</button><button data-mode="MULTICAST">组播</button><button data-mode="DUAL">双路</button></div></div>
+    </section>
+
+    <section class="card book-card">
+      <div class="section-head"><div><small>交易端构建</small><h2>五档订单簿</h2></div><b id="book-symbol">AAPL</b></div>
+      <div class="book-head"><span>档位</span><span>价格</span><span>数量</span></div><div id="ask-book" class="book-side asks"></div>
+      <div class="spread-row"><span>价差</span><strong id="spread">—</strong><small id="mid-price">中间价 —</small></div><div id="bid-book" class="book-side bids"></div>
+    </section>
+
+    <section class="card order-card">
+      <div class="section-head"><div><small>OUCH 5.0 · 模拟账本</small><h2>手动下单</h2></div><b>IOC 限价单</b></div>
+      <p class="order-direction-label">交易方向</p>
+      <div class="side-switch" id="side-switch"><button data-side="BUY" class="active buy" aria-pressed="true">买入</button><button data-side="SELL" class="sell" aria-pressed="false">卖出</button></div>
+      <div class="form-grid"><label>股票<select id="order-symbol"><option>AAPL</option><option>NVDA</option></select></label><label>数量<input id="order-quantity" type="number" value="10" min="1" max="1000"></label><label class="full">限价（留空则取当前对手价）<input id="order-price" inputmode="decimal" placeholder="例如 196.50"></label></div>
+      <button id="submit-order" class="submit-order" disabled>提交买单 · AAPL 10 股</button>
+      <p id="order-submit-status" class="order-submit-status" role="status" aria-live="polite">通过 Kernel Socket 提交；请先选择方向和数量。</p>
+      <div class="manual-receipt"><small>本轮最后一笔手动订单</small><strong id="manual-result">尚未下单</strong><code id="manual-order-id">—</code><span id="manual-order-detail">成交结果会固定显示在这里，不会一闪而过。</span></div>
+    </section>
+
+    <section id="transport-lab" class="card x2522-console" hidden>
+      <div class="x2522-head">
+        <div>
+          <small>同一平台 · 同一笔 SoupBinTCP / OUCH 订单</small>
+          <h2>X2522 数据通道控制台</h2>
+          <p>业务报文和交易所不变，只切换客户端 Transport；每张卡把代码代价与网卡能力放在一起验收。</p>
+        </div>
+        <div class="x2522-mode-panel">
+          <span id="x2522-transition" class="mode-ready">READY</span>
+          <div><small>当前数据面</small><strong id="x2522-mode">SFC ACTIVE</strong></div>
+          <div><small>PCI owner</small><code id="x2522-owner">sfc</code></div>
+          <button id="x2522-baseline" hidden>恢复普通交易</button>
+          <button id="x2522-mode-switch">切到 DPDK 独占</button>
+        </div>
+      </div>
+      <div class="x2522-rule"><span>X2522 · 0000:03:00.0</span><b id="x2522-rule-text">三条 sfc 路径可用；DPDK 等待独占切换</b><small>切换期间全部锁定，管理面始终走 10.1.1.x</small></div>
+      <div class="comparison-contract">
+        <span><small>同一任务</small><b>1 股 IOC · SoupBinTCP / OUCH</b></span>
+        <span><small>同一应用交接</small><b>DEQUE_CV · 空队列睡眠</b></span>
+        <span><small>同一计时边界</small><b>C++ send → 最终响应</b></span>
+        <span><small>主要比较</small><b>客户端 Transport / 数据面实现</b></span>
+      </div>
+      <p class="handoff-boundary"><b>“不一直盯”只约束应用交棒：</b>四个客户端都在空队列上睡眠，用条件变量唤醒；TCPDirect 与 DPDK 为驱动用户态网卡队列，网络 reactor 仍会轮询。这和第四章的 <code>SPSC_SPIN</code> 不是一回事。</p>
+      <aside class="interactive-latency-note" aria-label="交互延时与正式实验的区别">
+        <b>为什么网页读数通常更高？</b>
+        <span>四张卡展示少量手动下单的<strong>交互观测值</strong>，不是第 05 章正式 benchmark。订单仍走同一客户端 Transport，RTT 仍由 C++ 记录 <code>send → 最终响应</code>；浏览器与 Python 请求本身不计入秒表。</span>
+        <span>不过，交互订单会保留 Accepted 页面遥测，Gateway / 页面轮询和行情回放也会带来运行噪声，而且没有执行正式实验每格 100 笔预热、1000 笔采样及环境隔离；最初几笔还可能包含 Transport / TCP / Soup 会话的首次建立，以及缓存、线程和调度的冷状态。因此这里样本很少时 P50 更高、波动更大是正常的；正式结论以封存 RUN 为准，<code>STALE</code> 只代表上一次模式的历史值，不能参加当前四路横比。</span>
+      </aside>
+      <div class="transport-grid">
+        <article id="transport-card-socket" class="transport-card baseline">
+          <div class="transport-card-head"><span>01 · 基线</span><b id="transport-status-socket">WAITING</b></div>
+          <h3>Kernel Socket</h3>
+          <p class="transport-api"><code>socket / send / recv</code><span>代码不改</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>sfc 普通 netdev</strong><span>Linux TCP/IP；不冒充内核旁路</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-socket">—</b></span><span><small>样本</small><b id="transport-samples-socket">0</b></span></div>
+          <div id="transport-receipt-socket" class="transport-receipt pending">收据待采集</div>
+          <button class="transport-submit" data-order-transport="SOCKET">用 Socket 下单</button>
+        </article>
+        <article id="transport-card-onload" class="transport-card onload">
+          <div class="transport-card-head"><span>02 · 透明加速</span><b id="transport-status-onload">WAITING</b></div>
+          <h3>OpenOnload</h3>
+          <p class="transport-api"><code>同一份 BSD socket</code><span>启动方式改变</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>VI · DMA · CTPIO</strong><span>用户态 TCP；标准 socket 保留</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-onload">—</b></span><span><small>样本</small><b id="transport-samples-onload">0</b></span></div>
+          <div id="transport-receipt-onload" class="transport-receipt pending">收据待采集</div>
+          <button class="transport-submit" data-order-transport="OPENONLOAD">用 Onload 下单</button>
+        </article>
+        <article id="transport-card-tcpdirect" class="transport-card tcpdirect">
+          <div class="transport-card-head"><span>03 · 专用 TCP</span><b id="transport-status-tcpdirect">WAITING</b></div>
+          <h3>TCPDirect</h3>
+          <p class="transport-api"><code>ZF API / reactor</code><span>重写 Transport</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>VI · DMA · CTPIO 必备</strong><span>ZF 用户态 TCP；当前卡 Plus 已开放</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-tcpdirect">—</b></span><span><small>样本</small><b id="transport-samples-tcpdirect">0</b></span></div>
+          <div id="transport-receipt-tcpdirect" class="transport-receipt pending">收据待采集</div>
+          <button class="transport-submit" data-order-transport="TCPDIRECT">用 TCPDirect 下单</button>
+        </article>
+        <article id="transport-card-dpdk" class="transport-card dpdk">
+          <div class="transport-card-head"><span>04 · 独占数据面</span><b id="transport-status-dpdk">WAITING</b></div>
+          <h3>DPDK + TCP</h3>
+          <p class="transport-api"><code>F-Stack / ff_*</code><span>应用与运行时改造</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>VFIO · net_sfc_efx</strong><span>RX/TX 队列、大页、用户态轮询</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-dpdk">—</b></span><span><small>样本</small><b id="transport-samples-dpdk">0</b></span></div>
+          <div id="transport-receipt-dpdk" class="transport-receipt pending">收据待采集</div>
+          <button class="transport-submit" data-order-transport="DPDK">用 DPDK 下单</button>
+        </article>
+      </div>
+      <div class="transport-comparison">
+        <div class="comparison-title"><div><small>四路整体比较</small><b>同一笔订单，代码代价与硬件收益一起看</b></div><span>应用交接均为 DEQUE_CV</span></div>
+        <div class="comparison-table">
+          <div class="comparison-row comparison-head"><span>路径</span><span>应用接口</span><span>TCP 在哪</span><span>X2522 用法</span><span>网络等待</span><span>当前交互 P50</span></div>
+          <div class="comparison-row"><strong>Kernel Socket</strong><span>BSD socket</span><span>Linux 内核</span><span>sfc netdev</span><span>阻塞 I/O</span><b id="compare-rtt-socket">—</b></div>
+          <div class="comparison-row"><strong>OpenOnload</strong><span>BSD socket</span><span>用户态 Onload</span><span>VI / DMA / CTPIO</span><span>Onload 调度</span><b id="compare-rtt-onload">—</b></div>
+          <div class="comparison-row"><strong>TCPDirect</strong><span>ZF API</span><span>用户态 ZF</span><span>VI / CTPIO 能力合同</span><span>有单时 reactor poll</span><b id="compare-rtt-tcpdirect">—</b></div>
+          <div class="comparison-row"><strong>DPDK + TCP</strong><span>F-Stack ff_*</span><span>用户态 F-Stack</span><span>VFIO / net_sfc_efx</span><span>F-Stack reactor poll</span><b id="compare-rtt-dpdk">—</b></div>
+        </div>
+      </div>
+      <div class="x2522-evidence"><b>点亮原则</b><span>ONLINE 只说明进程活着；必须拿到对应路径收据，硬件标签才会变成“已验真”。</span><span id="x2522-last-route">最后下单通道：—</span></div>
+    </section>
+
+    <section class="card trend-card">
+      <div class="section-head"><div><small>真实历史 ITCH · 最近 360 个页面采样</small><h2><span id="trend-symbol">AAPL</span> 价格走势</h2></div><div class="trend-value"><strong id="trend-price">—</strong><span id="trend-change">—</span></div></div>
+      <div class="chart-wrap">
+        <svg id="price-chart" viewBox="0 0 800 260" role="img" aria-label="当前所选股票的近期价格走势"></svg>
+        <div id="chart-empty" class="chart-empty">正在等待行情采样</div>
+      </div>
+      <div class="chart-meta"><span id="trend-start">开始 —</span><span id="trend-samples">0 个采样</span><span id="trend-end">当前 —</span></div>
+    </section>
+
+    <section class="card baseline-card">
+      <div class="section-head"><div><small>尚未使用任何加速技术</small><h2>延时基线</h2></div><b>C++ 自动热路径</b></div>
+      <div class="latency-grid"><div><small>自动订单 RTT P50</small><strong id="latency-p50">—</strong></div><div class="primary"><small>自动订单 RTT P99</small><strong id="latency-p99">—</strong></div><div><small>最大值</small><strong id="latency-max">—</strong></div><div><small>样本数</small><strong id="latency-samples">0</strong></div></div>
+      <p>计时范围：C++ 自动交易进程发出订单 → 收到最终结果。Python 网页不在被测链路内；手动单 RTT 在交易记录中单独显示。</p>
+      <div class="strategy-row"><div><small>预置课堂策略 · 本章只需开关</small><b id="strategy-rule">五档失衡 ≥ 35% → 25 股 IOC</b><span id="strategy-guard">同标的冷却 5 秒 · AUTO 仓位上限 ±200</span></div><button id="strategy-toggle"><i></i><span id="strategy-state">已开启</span></button></div>
+      <div class="positions"><div><span>AAPL 合计持仓</span><b id="position-aapl">0</b></div><div><span>NVDA 合计持仓</span><b id="position-nvda">0</b></div><div><span>合计模拟盈亏</span><b id="pnl">$0.00</b></div></div>
+    </section>
+
+    <section class="card orders-card">
+      <div class="section-head"><div><small>当前回放轮次 · 手动与自动统一记录</small><h2>交易记录</h2></div><b>Exchange 账本 <span id="exchange-ledger-count">0</span> · <span id="fill-count">0</span> 成交 / <span id="order-count">0</span> 订单</b></div>
+      <div class="blotter-head"><span>时间</span><span>来源</span><span>股票</span><span>方向</span><span>数量</span><span>价格</span><span>结果</span><span>RTT</span></div><div id="blotter" class="blotter"></div>
+    </section>
+
+    <section class="card path-card">
+      <div class="section-head"><div><small>课堂系统边界</small><h2>一笔交易经过哪里</h2></div><b id="session">SESSION —</b></div>
+      <div class="system-path"><div id="node-exchange"><small>主机 .1 · C++ 进程</small><strong>历史行情交易所</strong><span>持续回放 + 独立纸面账本</span></div><i>ITCH 行情 / OUCH 订单</i><div id="node-trader"><small>主机 .2 · 两个 C++ 进程</small><strong>自动交易 + 手动交易</strong><span>各自 Feed、订单 ID 与 SoupBinTCP 会话</span></div><i>旁路状态</i><div id="node-gateway"><small>管理机 .101 · Python</small><strong>统一交易记录</strong><span>只展示，不进入延时测量路径</span></div></div>
+      <div class="path-meta"><span>当前行情：<b id="market-mode">—</b></span><span>历史数据 + 模拟成交，不涉及真实资金</span></div>
+    </section>
+
+    <section class="card lanz-card" id="lanz-stream-card">
+      <div class="section-head">
+        <div>
+          <small>7150 管理口 TCP 50001 · 与上面成交无关</small>
+          <h2>交换机队列事件</h2>
+        </div>
+        <b id="lanz-stream-status">接收器未连接</b>
+      </div>
+      <p class="lanz-note">这里只显示交换机推过来的 LANZ S/U/E。下单不会让这里亮；教师打 25k fan-in 时才会出现 Et2 的开始 / 结束。</p>
+      <div class="lanz-meta">
+        <span>START <b id="lanz-count-start">0</b></span>
+        <span>UPDATE <b id="lanz-count-update">0</b></span>
+        <span>END <b id="lanz-count-end">0</b></span>
+        <span>格子 <b id="lanz-segment-size">—</b></span>
+      </div>
+      <div class="lanz-head"><span>类型</span><span>接口</span><span>队列</span><span>格数</span><span>交换机时间</span></div>
+      <div id="lanz-stream-rows" class="lanz-rows"></div>
+    </section>
+  </main>
+
+  <div id="toast" role="status"></div>
+  <script src="/terminal.js"></script>
+</body>
+</html>

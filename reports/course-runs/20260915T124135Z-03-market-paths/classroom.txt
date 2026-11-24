@@ -1,0 +1,123 @@
+10.1.1.253 / verify
+===== 查 VLAN20 的组播转发方式 =====
+[转发] 对: Enabled、pruning True、Flooding False  证: 按成员端口转发
+$ show ip igmp snooping
+Vlan 20 :
+IGMP snooping                  : Enabled
+IGMP snooping pruning active   : True
+Flooding traffic to VLAN       : False
+===== 查谁发成员查询 =====
+[查询器] 对: VLAN20 / 20.1.1.254 / Switch  证: 交换机持续询问成员
+$ show igmp snooping querier
+20    20.1.1.254       v2       Switch
+===== 查行情组的成员端口 =====
+[成员] 对: VLAN20 / 233.74.125.32 与 233.74.125.33 / Dynamic / Et2  证: 接收者在 Trader 数据口
+$ show ip igmp snooping groups
+20    233.74.125.32    Dynamic  -                      Et2
+20    233.74.125.33    Dynamic  -                      Et2
+
+Low-Latency-Ops / market
+===== 设置行情发送模式 =====
+[模式] 对: MULTICAST_A  证: 仅改变目的地址与副本数量
+$ curl -fsS --max-time 10 -X POST -H 'Content-Type: application/json' -d '{"market_mode":"MULTICAST_A"}' http://10.1.1.101:8088/api/market
+回读确认：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=MULTICAST_A
+
+10.1.1.2 / capture
+===== 抓取 MULTICAST_A 窗口的 120 包 =====
+[抓包] 对: 120 packets captured；kernel drops 为 0  证: 本窗口的抓包完整性
+$ timeout 8 tcpdump -i ens64np1 -nn -s 0 -c 120 -w /var/tmp/20260915T124135Z-03-market-paths-MULTICAST_A.pcap 'udp and src host 20.1.1.1'
+tcpdump: listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+120 packets captured
+1070 packets received by filter
+0 packets dropped by kernel
+
+Low-Latency-Ops / market
+===== 设置行情发送模式 =====
+[模式] 对: MULTICAST_B  证: 仅改变目的地址与副本数量
+$ curl -fsS --max-time 10 -X POST -H 'Content-Type: application/json' -d '{"market_mode":"MULTICAST_B"}' http://10.1.1.101:8088/api/market
+回读确认：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=MULTICAST_B
+
+10.1.1.2 / capture
+===== 抓取 MULTICAST_B 窗口的 120 包 =====
+[抓包] 对: 120 packets captured；kernel drops 为 0  证: 本窗口的抓包完整性
+$ timeout 8 tcpdump -i ens64np1 -nn -s 0 -c 120 -w /var/tmp/20260915T124135Z-03-market-paths-MULTICAST_B.pcap 'udp and src host 20.1.1.1'
+tcpdump: listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+120 packets captured
+592 packets received by filter
+0 packets dropped by kernel
+
+Low-Latency-Ops / market
+===== 设置行情发送模式 =====
+[模式] 对: DUAL  证: 仅改变目的地址与副本数量
+$ curl -fsS --max-time 10 -X POST -H 'Content-Type: application/json' -d '{"market_mode":"DUAL"}' http://10.1.1.101:8088/api/market
+回读确认：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=DUAL
+
+Low-Latency-Ops / market
+===== 设置行情发送模式 =====
+[模式] 对: DUAL  证: 仅改变目的地址与副本数量
+$ curl -fsS --max-time 10 -X POST -H 'Content-Type: application/json' -d '{"market_mode":"DUAL"}' http://10.1.1.101:8088/api/market
+回读确认：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=DUAL
+
+10.1.1.2 / capture
+===== 抓取 DUAL 窗口的 120 包 =====
+[抓包] 对: 120 packets captured；kernel drops 为 0  证: 本窗口的抓包完整性
+$ timeout 8 tcpdump -i ens64np1 -nn -s 0 -c 120 -w /var/tmp/20260915T124135Z-03-market-paths-DUAL.pcap 'udp and src host 20.1.1.1'
+tcpdump: listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+120 packets captured
+1064 packets received by filter
+0 packets dropped by kernel
+
+Low-Latency-Ops / readback
+===== 查 MULTICAST_A 的原始目的地址 =====
+[报文] 对: 仅 A 路组播 233.74.125.32:31032  证: 识别本窗口的交付路径
+$ tcpdump -nn -t -r /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/MULTICAST_A.pcap -c 2
+reading from file /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/MULTICAST_A.pcap, link-type EN10MB (Ethernet), snapshot length 262144
+IP 20.1.1.1.54155 > 233.74.125.32.31032: UDP, length 58
+IP 20.1.1.1.54155 > 233.74.125.32.31032: UDP, length 58
+
+Low-Latency-Ops / readback
+===== 查 MULTICAST_B 的原始目的地址 =====
+[报文] 对: 仅 B 路组播 233.74.125.33:31033  证: 识别本窗口的交付路径
+$ tcpdump -nn -t -r /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/MULTICAST_B.pcap -c 2
+reading from file /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/MULTICAST_B.pcap, link-type EN10MB (Ethernet), snapshot length 262144
+IP 20.1.1.1.54155 > 233.74.125.33.31033: UDP, length 41
+IP 20.1.1.1.54155 > 233.74.125.33.31033: UDP, length 41
+
+Low-Latency-Ops / readback
+===== 查 DUAL 的原始目的地址 =====
+[报文] 对: A 路 233.74.125.32:31032 与 B 路 233.74.125.33:31033 均有包  证: 识别本窗口的交付路径
+$ tcpdump -nn -t -r /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/DUAL.pcap -c 2
+reading from file /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/DUAL.pcap, link-type EN10MB (Ethernet), snapshot length 262144
+IP 20.1.1.1.54155 > 233.74.125.32.31032: UDP, length 41
+IP 20.1.1.1.54155 > 233.74.125.33.31033: UDP, length 41
+
+10.1.1.2 / membership
+===== 查行情组的主机订阅 =====
+[成员] 对: inet 233.74.125.32 与 inet 233.74.125.33；各有一个订阅  证: 行情接收器已加组
+$ ip maddr show dev ens64np1
+	inet  233.74.125.33
+	inet  233.74.125.32
+[解码说明] 以下字段由配套解析器读取原始文件生成；统计与 verdict 是程序汇总，不是 tcpdump 原文。
+
+Low-Latency-Ops / decode
+===== 对照三种模式与应用计数 =====
+[解码] 对: DUAL 两端点有包、重合与 duplicate_delta 大于 0、pending/gaps 为 0  证: 短窗口副本及去重关系
+$ python3 /financial-low-latency/Documents/newDoc/assets/03-live-traffic/inspect_transport_pcaps.py /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/MULTICAST_A.pcap /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/MULTICAST_B.pcap /financial-low-latency/Documents/reports/course-runs/20260915T124135Z-03-market-paths/raw/DUAL.pcap --duplicates-before 5152 --duplicates-after 6337 --membership-users 1 --membership-users-b 1 --pending 0 --gaps 0
+mode=MULTICAST_A captured=120 multicast_a=120 multicast_b=0
+mode=MULTICAST_B captured=120 multicast_a=0 multicast_b=120
+mode=DUAL captured=120 multicast_a=60 multicast_b=60
+membership_a=1 membership_b=1 dual_sequence_overlap=60 duplicate_delta=1185 pending=0 gaps=0
+verdict=THREE_TRANSPORT_MODES_PASS
+[就绪说明] THREE_TRANSPORT_MODES_PASS 是解析器自拼的有限检查汇总，表示三窗解析及内置检查走通；须核对目的地址、序号重合和应用计数，不代表长期无丢包。
+===== 恢复检查前的行情模式 =====
+
+Low-Latency-Ops / market
+===== 设置行情发送模式 =====
+[模式] 对: MULTICAST_A  证: 仅改变目的地址与副本数量
+$ curl -fsS --max-time 10 -X POST -H 'Content-Type: application/json' -d '{"market_mode":"MULTICAST_A"}' http://10.1.1.101:8088/api/market
+回读确认：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=MULTICAST_A

@@ -1,0 +1,14 @@
+{
+  "observed_at_utc": "2026-09-12T03:31:14.693289+00:00",
+  "note": "Post-failure read-only ss snapshot, then offline decoding of the original pcap. No new order or capture. Original sessions.txt and classroom.txt preserved.",
+  "ssh_command": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "root@10.1.1.2",
+    "printf 'auto_pid='; cat /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/trader-auto.pid; printf 'manual_pid='; cat /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/trader-manual.pid; ss -ntpH state established '( dport = :43120 )'"
+  ],
+  "original_pcap_sha256": "eed644e4380c41ccc624e7f8a715e2442f3009478b762941cc2662142154c42b"
+}

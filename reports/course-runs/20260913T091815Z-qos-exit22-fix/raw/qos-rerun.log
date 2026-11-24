@@ -1,0 +1,33 @@
+Running timer as unit: flle-qos-contention-recovery-20260913T091923Z-07-qos-contention-live.timer
+Will run service as unit: flle-qos-contention-recovery-20260913T091923Z-07-qos-contention-live.service
+orders_executed=120
+rtt_ns_min_p50_p99_max=2160650/2207867/2267668/2268273
+-A OUTPUT -s 20.1.1.2/32 -d 20.1.1.1/32 -o ens64np1 -p tcp -m tcp --sport 51715 --dport 43120 -m comment --comment FLLE_CH07_QOS_20260913T091923Z-07-qos-contention-live -j DSCP --set-dscp 0x2e
+orders_executed=120
+rtt_ns_min_p50_p99_max=84021/110633/226181/250284
+DSCP  tcp opt -- in * out ens64np1  20.1.1.2  -> 20.1.1.1   tcp spt:51715 dpt:43120 /* FLLE_CH07_QOS_20260913T091923Z-07-qos-contention-live */ DSCP set 0x2e
+root_sha256=3e7fca0d71be8226f3c413dba76c21b449245201301a4cc7faa4dd7653fb6349
+===== QoS 结果：Q1 与严格优先级 Q5 =====
+
+对比项                 | A 组：未标记，进 Q1       | B 组：DSCP 46，进 Q5
+-----------------------+---------------------------+--------------------------
+背景发包（帧）         | 15,000,000                | 15,000,000
+成交订单（笔）         | 120                       | 120
+订单 RTT p50（µs）     | 2,207.867                 | 110.633
+订单 RTT p99（µs）     | 2,267.668                 | 226.181
+
+===== 队列核对 =====
+Et1 计数增量           | A 组                      | B 组
+-----------------------+---------------------------+--------------------------
+Q1 发包（P1）          | +12,195,235               | +12,192,763
+Q5 发包（P5）          | +0                        | +240
+LANZ 事件              | +2                        | +1
+
+恢复检查：配置已恢复，恢复后 2 笔订单成交，AAPL 净持仓不变。
+结果记录：Documents/reports/course-runs/20260913T091923Z-07-qos-contention-live
+
+===== 延迟差异 =====
+p50：Q5 比 Q1 低 2,097.234 µs（94.99%）。
+p99：Q5 比 Q1 低 2,041.487 µs（90.03%）。
+p99 比值：Q1 / Q5 = 10.03 倍。
+本次结果：订单进入严格优先级 Q5 后，p99 低于进入 Q1。

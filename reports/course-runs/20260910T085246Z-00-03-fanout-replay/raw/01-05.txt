@@ -1,0 +1,33 @@
+
+10.1.1.1 / verify · ens64np0
+===== 查设备位置 =====
+[设备位置] 对: 路径末段为 0000:03:00.0  证: 找到这个网口对应的 PCI 设备
+$ readlink -f /sys/class/net/ens64np0/device
+/sys/devices/pci0000:03/0000:03:00.0
+===== 查 MAC 地址 =====
+[MAC] 对: 六组十六进制数  证: 读到这个网口当前使用的 MAC 地址
+$ cat /sys/class/net/ens64np0/address
+00:0f:53:d3:af:20
+===== 查设备类型与编号 =====
+[设备类别] 对: 0200  证: 以太网控制器
+[厂商 ID] 对: 1924  证: Solarflare Communications
+[设备 ID] 对: 0b03  证: SFC9250 以太网控制器
+$ lspci -nn -s 0000:03:00.0
+03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)
+
+10.1.1.2 / verify · ens64np1
+===== 查设备位置 =====
+[设备位置] 对: 路径末段为 0000:03:00.0  证: 找到这个网口对应的 PCI 设备
+$ readlink -f /sys/class/net/ens64np1/device
+/sys/devices/pci0000:03/0000:03:00.0
+===== 查 MAC 地址 =====
+[MAC] 对: 六组十六进制数  证: 读到这个网口当前使用的 MAC 地址
+$ cat /sys/class/net/ens64np1/address
+00:0f:53:d3:af:21
+===== 查设备类型与编号 =====
+[设备类别] 对: 0200  证: 以太网控制器
+[厂商 ID] 对: 1924  证: Solarflare Communications
+[设备 ID] 对: 0b03  证: SFC9250 以太网控制器
+$ lspci -nn -s 0000:03:00.0
+03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)
+evidence=Documents/reports/course-runs/20260910T085300Z-01-pci-identity

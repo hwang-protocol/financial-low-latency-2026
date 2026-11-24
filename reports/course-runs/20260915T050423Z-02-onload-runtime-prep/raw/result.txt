@@ -1,0 +1,179 @@
+Low-Latency-Ops / prepare
+===== 查安装归档 =====
+核对固定归档的摘要，确认分发的是本课版本。
+$ printf %s\\n 998d218db3733d85e3732f56790eca963f24deb05c6da4306d4dd9ab0c29d9e2\ \ artifacts/blobs/x2522/onload/v9.0.2/onload-9f330e7-vm-2522-01.tgz | sha256sum -c -
+artifacts/blobs/x2522/onload/v9.0.2/onload-9f330e7-vm-2522-01.tgz: OK
+===== 准备授权查询工具源码 =====
+从本课缓存提取 sfutils 源码；目标机只构建 sfkey。
+$ python3 Documents/newDoc/assets/02-trading-baseline/extract-sfutils-source.py /tmp/flle-sfutils-TgYOfO/sfutils-8.3.3.1000.tar.gz
+sfutils 8.3.3.1000 源码已就绪；ZIP、RPM、源码包三层 SHA-256 核对通过。
+
+10.1.1.1 / prepare
+===== 安装离线构建依赖 =====
+给目标主机补齐 Onload 构建工具；完整过程保存在日志。
+$ python3 Documents/newDoc/assets/common/install-offline-packages.py 10.1.1.1 onload-build
+$ tail -n 8 Documents/reports/course-runs/20260915T050423Z-02-onload-runtime-prep/raw/10.1.1.1-packages.txt
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+离线安装完成；全部来自 .111 缓存，公网下载 0 字节。
+===== 分发安装归档 =====
+复制摘要已核对的源码归档；scp 成功时没有正文输出。
+$ scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes artifacts/blobs/x2522/onload/v9.0.2/onload-9f330e7-vm-2522-01.tgz root@10.1.1.1:/var/tmp/20260915T050423Z-02-onload-runtime-prep.tgz
+$ scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes /tmp/flle-sfutils-TgYOfO/sfutils-8.3.3.1000.tar.gz root@10.1.1.1:/var/tmp/20260915T050423Z-02-onload-runtime-prep-sfutils.tgz
+===== 安装并核对运行库与授权 =====
+按需安装 Onload 和 sfkey，再检查版本、数据口及 Plus 功能。远端 bash 从本脚本的 REMOTE 段读取命令。
+$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.1 bash -s -- /var/tmp/20260915T050423Z-02-onload-runtime-prep.tgz ens64np0 20.1.1.1 /var/tmp/20260915T050423Z-02-onload-runtime-prep-sfutils.tgz
+完整输出：Documents/reports/course-runs/20260915T050423Z-02-onload-runtime-prep/raw/10.1.1.1-runtime.txt
+关键结果（从 verify 阶段开始）：
+$ sed -n /\^\[\^\ \]\*\ \\/\ verify/\,\$p Documents/reports/course-runs/20260915T050423Z-02-onload-runtime-prep/raw/10.1.1.1-runtime.txt
+vm-2522-01 / verify
+
+===== 查主机名 =====
+[主机说明] 确认本段结果来自哪台机器。
+$ hostname
+vm-2522-01
+
+===== 查 Onload 版本 =====
+[版本说明] Onload 与 Kernel module 都应为 9f330e7，说明用户态库与已加载模块匹配。
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Sep 15 2026 13:05:57 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+
+===== 查字符设备 =====
+[设备说明] 两个入口都应存在，且权限字段以 c 开头，表示配套支持已加载。
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Sep 15 13:06 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Sep 15 13:06 /dev/sfc_char
+
+===== 查网卡驱动 =====
+[驱动说明] 结果应指向 /sys/bus/pci/drivers/sfc，说明本步仍由 sfc 管理数据口。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+
+===== 查数据口地址 =====
+[地址说明] ens64np0 应有 20.1.1.1/24，确认加载驱动后课程地址正常。
+$ ip -4 -o addr show dev ens64np0
+4: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+
+===== 查 sfkey 工具 =====
+[工具说明] sfkey 来自 sfutils；版本应为 v8.3.3.1000，后面用它读取本卡授权。
+$ sfkey --version
+sfkey firmware update utility: v8.3.3.1000
+Copyright 2002-2023 Advanced Micro Devices, Inc. 
+
+===== 查 Plus 授权 =====
+[授权说明] Installed keys 后出现 Plus，表示卡上已有 Plus 授权。查询不更新试用授权。
+$ sfkey --adapter=ens64np0 --report --noevaluationupdate
+ens64np0: 000F53D3AF20
+  Product name		Solarflare XtremeScale X2522-25G Adapter
+  Serial number		252220514110251837100195
+  Installed keys	Plus
+
+
+===== 查已启用功能 =====
+[清单说明] 下面是网卡实际返回的功能；$ 前缀表示出厂随卡功能。
+$ sfkey --adapter=ens64np0 --inventory --keys --noevaluationupdate
+ens64np0: 000F53D3AF20, $Onload, $Precision Time, $TCP Direct, $Low Latency, $SolarCapture Tap, $Plus
+
+[功能名称怎么读]
+  Onload           普通 Socket 程序的用户态网络加速
+  TCP Direct       专用 API 的用户态 TCP/UDP 协议栈
+  Low Latency      网卡低延迟功能
+  Precision Time   精确时间与 PTP 功能
+  SolarCapture Tap 抓包相关功能
+  Plus             组合授权名称
+
+[后续使用] 用 onload 启动交易客户端，再用 onload_stackdump 检查连接是否实际得到加速。
+
+10.1.1.2 / prepare
+===== 安装离线构建依赖 =====
+给目标主机补齐 Onload 构建工具；完整过程保存在日志。
+$ python3 Documents/newDoc/assets/common/install-offline-packages.py 10.1.1.2 onload-build
+$ tail -n 8 Documents/reports/course-runs/20260915T050423Z-02-onload-runtime-prep/raw/10.1.1.2-packages.txt
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+离线安装完成；全部来自 .111 缓存，公网下载 0 字节。
+===== 分发安装归档 =====
+复制摘要已核对的源码归档；scp 成功时没有正文输出。
+$ scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes artifacts/blobs/x2522/onload/v9.0.2/onload-9f330e7-vm-2522-01.tgz root@10.1.1.2:/var/tmp/20260915T050423Z-02-onload-runtime-prep.tgz
+$ scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes /tmp/flle-sfutils-TgYOfO/sfutils-8.3.3.1000.tar.gz root@10.1.1.2:/var/tmp/20260915T050423Z-02-onload-runtime-prep-sfutils.tgz
+===== 安装并核对运行库与授权 =====
+按需安装 Onload 和 sfkey，再检查版本、数据口及 Plus 功能。远端 bash 从本脚本的 REMOTE 段读取命令。
+$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 bash -s -- /var/tmp/20260915T050423Z-02-onload-runtime-prep.tgz ens64np1 20.1.1.2 /var/tmp/20260915T050423Z-02-onload-runtime-prep-sfutils.tgz
+完整输出：Documents/reports/course-runs/20260915T050423Z-02-onload-runtime-prep/raw/10.1.1.2-runtime.txt
+关键结果（从 verify 阶段开始）：
+$ sed -n /\^\[\^\ \]\*\ \\/\ verify/\,\$p Documents/reports/course-runs/20260915T050423Z-02-onload-runtime-prep/raw/10.1.1.2-runtime.txt
+vm-2522-02 / verify
+
+===== 查主机名 =====
+[主机说明] 确认本段结果来自哪台机器。
+$ hostname
+vm-2522-02
+
+===== 查 Onload 版本 =====
+[版本说明] Onload 与 Kernel module 都应为 9f330e7，说明用户态库与已加载模块匹配。
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Sep 15 2026 13:08:10 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+
+===== 查字符设备 =====
+[设备说明] 两个入口都应存在，且权限字段以 c 开头，表示配套支持已加载。
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Sep 15 13:08 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Sep 15 13:08 /dev/sfc_char
+
+===== 查网卡驱动 =====
+[驱动说明] 结果应指向 /sys/bus/pci/drivers/sfc，说明本步仍由 sfc 管理数据口。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+
+===== 查数据口地址 =====
+[地址说明] ens64np1 应有 20.1.1.2/24，确认加载驱动后课程地址正常。
+$ ip -4 -o addr show dev ens64np1
+4: ens64np1    inet 20.1.1.2/24 brd 20.1.1.255 scope global ens64np1\       valid_lft forever preferred_lft forever
+
+===== 查 sfkey 工具 =====
+[工具说明] sfkey 来自 sfutils；版本应为 v8.3.3.1000，后面用它读取本卡授权。
+$ sfkey --version
+sfkey firmware update utility: v8.3.3.1000
+Copyright 2002-2023 Advanced Micro Devices, Inc. 
+
+===== 查 Plus 授权 =====
+[授权说明] Installed keys 后出现 Plus，表示卡上已有 Plus 授权。查询不更新试用授权。
+$ sfkey --adapter=ens64np1 --report --noevaluationupdate
+ens64np1: 000F53D3AF20
+  Product name		Solarflare XtremeScale X2522-25G Adapter
+  Serial number		252220514110251837100195
+  Installed keys	Plus
+
+
+===== 查已启用功能 =====
+[清单说明] 下面是网卡实际返回的功能；$ 前缀表示出厂随卡功能。
+$ sfkey --adapter=ens64np1 --inventory --keys --noevaluationupdate
+ens64np1: 000F53D3AF20, $Onload, $Precision Time, $TCP Direct, $Low Latency, $SolarCapture Tap, $Plus
+
+[功能名称怎么读]
+  Onload           普通 Socket 程序的用户态网络加速
+  TCP Direct       专用 API 的用户态 TCP/UDP 协议栈
+  Low Latency      网卡低延迟功能
+  Precision Time   精确时间与 PTP 功能
+  SolarCapture Tap 抓包相关功能
+  Plus             组合授权名称
+
+[后续使用] 用 onload 启动交易客户端，再用 onload_stackdump 检查连接是否实际得到加速。

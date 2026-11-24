@@ -1,0 +1,46 @@
+
+10.1.1.1 / verify · ens64np0
+===== 查主机侧链路 =====
+[链路] 对: 10000Mb/s、Full、yes  证: 本端检测到 10G 全双工链路
+[端口类别] 看: Port 是当前驱动报告的类别，需结合交换机 Type 判断介质
+$ ethtool ens64np0
+	Speed: 10000Mb/s
+	Duplex: Full
+	Port: Direct Attach Copper
+	Link detected: yes
+
+10.1.1.2 / verify · ens64np1
+===== 查主机侧链路 =====
+[链路] 对: 10000Mb/s、Full、yes  证: 本端检测到 10G 全双工链路
+[端口类别] 看: Port 是当前驱动报告的类别，需结合交换机 Type 判断介质
+$ ethtool ens64np1
+	Speed: 10000Mb/s
+	Duplex: Full
+	Port: Direct Attach Copper
+	Link detected: yes
+
+10.1.1.253 / verify
+===== 查交换机 Et1 链路 =====
+[端口] 对: connected、20、full、10G  证: 已连接并接入 VLAN20，使用 10G 全双工
+$ show interfaces Ethernet1 status
+show interfaces Ethernet1 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+
+
+===== 查交换机 Et2 链路 =====
+[端口] 对: connected、20、full、10G  证: 已连接并接入 VLAN20，使用 10G 全双工
+$ show interfaces Ethernet2 status
+show interfaces Ethernet2 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et2               connected    20       full   10G    10GBASE-CR                      
+
+
+===== 查 VLAN20 活动端口 =====
+[VLAN] 对: active，包含 Et1、Et2  证: VLAN20 已启用，两条数据链路处于活动状态
+$ show vlan id 20
+show vlan id 20 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2
+

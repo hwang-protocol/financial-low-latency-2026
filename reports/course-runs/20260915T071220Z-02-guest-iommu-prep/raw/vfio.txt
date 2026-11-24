@@ -1,0 +1,18 @@
+vm-2522-01 / vfio
+===== 加载 VFIO 支持 =====
+加载模块后核对安全模式；本步不把网卡交给 VFIO。
+$ modprobe vfio-pci
+vm-2522-01 / vfio
+===== 查 VFIO DMA 安全模式 =====
+[模式检查] N 表示保留 IOMMU 保护；脚本会自动核对。
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N
+vm-2522-02 / vfio
+===== 加载 VFIO 支持 =====
+加载模块后核对安全模式；本步不把网卡交给 VFIO。
+$ modprobe vfio-pci
+vm-2522-02 / vfio
+===== 查 VFIO DMA 安全模式 =====
+[模式检查] N 表示保留 IOMMU 保护；脚本会自动核对。
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N

@@ -1,0 +1,47 @@
+fll-arista / verify
+===== 查Et1状态 =====
+[Et1] 对: connected / VLAN 20 / full / 10G / 10GBASE-CR  证: Exchange 侧入口在课程链路上
+$ show interfaces Ethernet1 status
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+
+
+===== 查Et2状态 =====
+[Et2] 对: connected / VLAN 20 / full / 10G / 10GBASE-CR  证: Trader 侧出口同速 10G
+$ show interfaces Ethernet2 status
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et2               connected    20       full   10G    10GBASE-CR                      
+
+
+===== 查VLAN20成员 =====
+[VLAN20] 对: active，成员含 Cpu, Et1, Et2；工具口接入后列出  证: 实验走的是课程 VLAN20
+$ show vlan id 20
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2, Et11, Et12
+
+
+===== 查VLAN20动态FDB =====
+[FDB] 对: 000f.53d3.af20 在 Et1，000f.53d3.af21 在 Et2  证: 两端 MAC 学在正确的口
+$ show mac address-table dynamic vlan 20
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  20    000f.53d3.af20    DYNAMIC     Et1        1       1 day, 3:00:28 ago
+  20    000f.53d3.af21    DYNAMIC     Et2        1       12:40:47 ago
+Total Mac Addresses for this criterion: 2
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0
+
+===== 查转发模式 =====
+[mode] 对: Current switching mode: cut through  证: 当前按 cut-through 工作，不是逐包时延
+$ show switch forwarding-mode
+Current switching mode:    cut through
+Available switching modes: cut through, store and forward

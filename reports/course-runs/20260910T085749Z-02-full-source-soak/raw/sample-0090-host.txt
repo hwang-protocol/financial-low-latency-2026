@@ -1,0 +1,56 @@
+{
+  "udp": {
+    "InDatagrams": 36027512,
+    "NoPorts": 40,
+    "InErrors": 0,
+    "OutDatagrams": 4980589,
+    "RcvbufErrors": 0,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "processes": [
+    {
+      "pid": 14423,
+      "command": "/var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/flle-trader --role AUTO --management-port 48121 --feed-socket /var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/feed.sock --user-ref-base 3000001 --user-ref-span 1000000 --clordid-prefix AUTO --telemetry-host 10.1.1.101 --book-checkpoint /var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/opening-book.checkpoint ",
+      "memory": [
+        "VmSize:\t  230728 kB",
+        "VmRSS:\t   20564 kB"
+      ]
+    },
+    {
+      "pid": 14429,
+      "command": "/var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/flle-trader --role MANUAL --management-port 48122 --feed-socket /var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/feed.sock --user-ref-base 2106000000 --user-ref-span 100000 --clordid-prefix MANU --telemetry-host 10.1.1.101 --book-checkpoint /var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/opening-book.checkpoint ",
+      "memory": [
+        "VmSize:\t  230728 kB",
+        "VmRSS:\t   20660 kB"
+      ]
+    },
+    {
+      "pid": 14479,
+      "command": "/var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader --role MANUAL --data-ip 20.1.1.2 --exchange-data-ip 20.1.1.1 --management-ip 10.1.1.2 --telemetry-host 10.1.1.101 --book-checkpoint /var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/opening-book.checkpoint --market-receiver 0 --order-queue DEQUE_CV --lock-order-queue 1 --order-cpu 2 --management-cpu 3 --management-port 48123 --user-ref-base 2506000000 --user-ref-span 100000 --clordid-prefix ONLD --order-transport-label OPENONLOAD ",
+      "memory": [
+        "VmSize:\t  177472 kB",
+        "VmRSS:\t   14888 kB"
+      ]
+    },
+    {
+      "pid": 14495,
+      "command": "/var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader-tcpdirect --role MANUAL --data-ip 20.1.1.2 --exchange-data-ip 20.1.1.1 --management-ip 10.1.1.2 --telemetry-host 10.1.1.101 --book-checkpoint /var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/opening-book.checkpoint --market-receiver 0 --order-queue DEQUE_CV --lock-order-queue 1 --order-cpu 2 --management-cpu 3 --management-port 48124 --user-ref-base 2906000000 --user-ref-span 100000 --clordid-prefix TCPD --order-transport-label TCPDIRECT_ZF ",
+      "memory": [
+        "VmSize:\t  156696 kB",
+        "VmRSS:\t    5944 kB"
+      ]
+    },
+    {
+      "pid": 23436,
+      "command": "/var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/flle-feed-receiver --socket /var/tmp/flle-trading-lab-20260910T085337Z-02-trading-platform/feed.sock --multicast-receiver 1 --telemetry-host 10.1.1.101 ",
+      "memory": [
+        "VmSize:\t    6356 kB",
+        "VmRSS:\t    3720 kB"
+      ]
+    }
+  ],
+  "sockets": "State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                                                                           \nUNCONN 0      0           20.1.1.2:42121      0.0.0.0:*    users:((\"flle-feed-recei\",pid=23436,fd=3))\n\t skmem:(r0,rb8388608,t0,tb212992,f4096,w0,o0,bl0,d0) \nUNCONN 0      0            0.0.0.0:58581      0.0.0.0:*    users:((\"flle-feed-recei\",pid=23436,fd=5))\n\t skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)     \nUNCONN 0      0            0.0.0.0:59951      0.0.0.0:*    users:((\"flle-trader-tcp\",pid=14495,fd=3))\n\t skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)     \nUNCONN 0      0            0.0.0.0:60208      0.0.0.0:*   \n\t skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)                                                \nUNCONN 0      0      233.74.125.32:31032      0.0.0.0:*    users:((\"flle-feed-recei\",pid=23436,fd=4))\n\t skmem:(r0,rb8388608,t0,tb212992,f4096,w0,o48,bl0,d0)\nUNCONN 0      0            0.0.0.0:47518      0.0.0.0:*    users:((\"flle-trader\",pid=14423,fd=3))\n\t skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)         \nUNCONN 0      0            0.0.0.0:48528      0.0.0.0:*    users:((\"flle-trader\",pid=14429,fd=3))\n\t skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)         \nUNCONN 0      0      127.0.0.53%lo:53         0.0.0.0:*    users:((\"systemd-resolve\",pid=746,fd=13))\n\t skmem:(r0,rb212992,t0,tb212992,f4096,w0,o0,bl0,d0)   \n"
+}

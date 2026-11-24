@@ -1,0 +1,24 @@
+===== 运行 ⑤ · 四条路径正式比较 =====
+# 1. 样本检查：预热单不计入延迟统计，正式样本无重复订单。
+warmup_executed=1600  # 预热成交笔数
+measured_executed=16000  # 正式成交笔数，四路各 4000 笔
+path_checks=16/16  # 每个测试单元均通过实际路径检查
+exchange_executed_delta=17600  # Exchange 新增成交数与全部提交订单数相等
+
+# 2. 延迟主表：单位为 µs（微秒），数值越小，耗时越短。
+# send→final：调用发送前 → 收到最终结果；queue→final：订单入队 → 收到最终结果。
+# 每格先求 P50 / P95 / P99（50% / 95% / 99% 分位数），再将该路四格等权平均。
+# 两个窗口的分位数不能直接相减；发送前耗时请看原始记录。
+路径                 send→final                    queue→final
+                     P50       P95       P99        P50
+Kernel Socket          34.068    49.914    56.357    42.342
+OpenOnload             21.612    24.802    27.702    29.634
+TCPDirect              21.160    24.203    27.310    29.495
+DPDK + F-Stack         24.959    30.469    32.533    30.369
+
+# 3. 比较范围：本机、本轮条件下的四套客户端实现。
+# Kernel 与 Onload 使用同一可执行文件；TCPDirect 和 DPDK 还改变了收发代码。
+# DPDK 包含线程交接，其成本已在各自计时窗口中体现，不能据此预判快慢。
+# 正式比较通过；接着执行“实验收尾”。
+# 完整样本、各轮统计及检查记录保存在：
+evidence=Documents/reports/course-runs/20260912T134347Z-02-trading-platform/four-path-comparison/balanced-analysis

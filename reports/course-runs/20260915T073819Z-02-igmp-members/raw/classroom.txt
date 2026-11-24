@@ -1,0 +1,21 @@
+10.1.1.253 / verify
+===== 查看交换机组播状态与成员表 =====
+查询 VLAN20 的转发方式、查询器和行情组成员，不修改配置。
+$ python3 Documents/newDoc/assets/common/eos_cli.py --mode show --plan Documents/newDoc/assets/02-trading-baseline/igmp-show.plan --output Documents/reports/course-runs/20260915T073819Z-02-igmp-members/raw/switch.txt
+$ python3 Documents/newDoc/assets/02-trading-baseline/inspect-igmp.py Documents/reports/course-runs/20260915T073819Z-02-igmp-members/raw/switch.txt --members --display
+10.1.1.253 / verify
+===== 查 VLAN20 的组播转发方式 =====
+[转发] 对: Enabled、pruning True、Flooding False  证: 按成员端口转发
+$ show ip igmp snooping
+Vlan 20 :
+IGMP snooping                  : Enabled
+IGMP snooping pruning active   : True
+Flooding traffic to VLAN       : False
+===== 查谁发成员查询 =====
+[查询器] 对: VLAN20 / 20.1.1.254 / Switch  证: 交换机持续询问成员
+$ show igmp snooping querier
+20    20.1.1.254       v2       Switch
+===== 查行情组的成员端口 =====
+[成员] 对: VLAN20 / 233.74.125.32 / Dynamic / Et2  证: 接收者在 Trader 数据口
+$ show ip igmp snooping groups
+20    233.74.125.32    Dynamic  -                      Et2

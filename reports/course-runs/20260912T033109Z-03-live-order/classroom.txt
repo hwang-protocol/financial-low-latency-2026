@@ -1,0 +1,70 @@
+
+10.1.1.2 / capture
+===== 启动四秒订单抓包 =====
+[抓包] 对: TCP 43120 双向业务字节  证: 本窗口的抓包完整性
+$ timeout -s INT 4 tcpdump -i ens64np1 -nn -s 0 -U -w /var/tmp/20260912T033109Z-03-live-order-order.pcap 'tcp port 43120'
+
+Low-Latency-Ops / first-trade
+===== 提交一股 MANUAL IOC =====
+[本单] 对: ORDER_EXECUTED、filled=1；记下 order_id  证: 关联本次成交与报文
+$ python3 /financial-low-latency/apps/flle-trading-lab/tests/first_trade.py --base-url http://10.1.1.101:8088
+
+10.1.1.2 / sessions
+===== 下单后查订单连接与进程归属 =====
+[连接] 对: MANUAL 有到 .1:43120 的已建立连接  证: 用 MANUAL PID 确认本单连接；AUTO 未下过单时可以尚未连接
+$ printf 'auto_pid='; cat /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/trader-auto.pid; printf 'manual_pid='; cat /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/trader-manual.pid; ss -ntpH state established '( dport = :43120 )'
+auto_pid=19222
+manual_pid=19228
+0      0      20.1.1.2:60753 20.1.1.1:43120 users:(("flle-trader",pid=19222,fd=6))
+0      0      20.1.1.2:37919 20.1.1.1:43120 users:(("flle-trader",pid=19228,fd=6))
+
+10.1.1.2 / capture
+===== 查订单抓包统计 =====
+[抓包] 对: 捕获到包、kernel drops 为 0  证: 本窗口抓取情况
+$ cat /financial-low-latency/Documents/reports/course-runs/20260912T033109Z-03-live-order/raw/tcpdump.txt
+tcpdump: listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+12 packets captured
+12 packets received by filter
+0 packets dropped by kernel
+
+Low-Latency-Ops / first-trade
+===== 查本次提交结果 =====
+[本单] 对: ORDER_EXECUTED、filled=1；记下 order_id  证: 与 O/A/E 的 user_ref 对号
+$ sed -n '/^order_id=/p; /^result=/p' /financial-low-latency/Documents/reports/course-runs/20260912T033109Z-03-live-order/raw/first-trade.txt
+order_id=2100000001 attempts=1 origin=MANUAL_GUI symbol=AAPL side=SELL quantity=1
+result=ORDER_EXECUTED filled=1
+
+Low-Latency-Ops / readback
+===== 查订单包的原始端点 =====
+[报文] 对: MANUAL 临时端口与 Exchange 43120 双向通信  证: 订单沿同一 TCP 连接往返
+$ tcpdump -nn -t -r /financial-low-latency/Documents/reports/course-runs/20260912T033109Z-03-live-order/raw/live-order.pcap -c 2
+reading from file /financial-low-latency/Documents/reports/course-runs/20260912T033109Z-03-live-order/raw/live-order.pcap, link-type EN10MB (Ethernet), snapshot length 262144
+IP 20.1.1.2.37919 > 20.1.1.1.43120: Flags [P.], seq 1938482231:1938482281, ack 1219195075, win 502, options [nop,nop,TS val 99128520 ecr 3224027091], length 50
+IP 20.1.1.1.43120 > 20.1.1.2.37919: Flags [P.], seq 1:68, ack 50, win 509, options [nop,nop,TS val 3224357790 ecr 99128520], length 67
+[解码说明] 以下字段由配套解析器读取原始文件生成；统计与 verdict 是程序汇总，不是 tcpdump 原文。
+
+Low-Latency-Ops / decode
+===== 关联 OUCH 请求与回报 =====
+[解码] 对: O/A/E 的 user_ref 等于本单 order_id，E 的 filled=1  证: 同一笔订单受理并成交
+$ python3 /financial-low-latency/Documents/newDoc/assets/03-live-traffic/inspect_order_pcap.py /financial-low-latency/Documents/reports/course-runs/20260912T033109Z-03-live-order/raw/live-order.pcap /financial-low-latency/Documents/reports/course-runs/20260912T033109Z-03-live-order/raw/sessions.txt --first-trade /financial-low-latency/Documents/reports/course-runs/20260912T033109Z-03-live-order/raw/first-trade.txt
+pcap_magic=d4c3b2a1 linktype=1 established_sessions=2 captured_payload_flows=2 auto_pid=19222 manual_pid=19228
+manual_flow=20.1.1.2:37919->20.1.1.1:43120 soup_client=U soup_server=S
+
+① O · 下单请求｜MANUAL → Exchange
+  客户端编号 UserRefNum：2100000001
+  股票 Symbol：AAPL  方向 Side：卖出  数量 Quantity：1 股
+  限价 Price：285.9500
+  含义：申请按上述股票、方向、数量和限价下单。
+
+② A · 受理回报｜Exchange → MANUAL
+  客户端编号 UserRefNum：2100000001
+  订单引用号 Order Reference Number：104269
+  含义：订单已受理；这条回报还不能证明成交。
+
+③ E · 成交回报｜Exchange → MANUAL
+  客户端编号 UserRefNum：2100000001
+  成交数量 Quantity：1 股  成交价格 Price：290.9500
+  成交编号 Match Number：904269
+  含义：这些股数已按上述价格成交。
+identity=user_ref:O=A=E clordid:O=A verdict=LIVE_ORDER_FLOW_PASS
+[就绪说明] LIVE_ORDER_FLOW_PASS 是解析器自拼的有限检查汇总，表示所选订单解析及内置检查走通；须核对本单 order_id、O/A/E 和 filled，不代表长期无丢包或所有订单均成功。

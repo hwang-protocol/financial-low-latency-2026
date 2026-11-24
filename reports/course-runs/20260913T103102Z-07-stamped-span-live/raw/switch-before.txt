@@ -1,0 +1,45 @@
+$ show switch forwarding-mode
+show switch forwarding-mode | no-more
+Current switching mode:    cut through
+Available switching modes: cut through, store and forward
+
+$ show ptp
+show ptp | no-more
+PTP is not configured
+
+$ show monitor session
+show monitor session | no-more
+No sessions created
+
+
+$ show platform fm6000 keyframe
+show platform fm6000 keyframe | no-more
+No Keyframes configured
+
+$ show vlan id 20
+show vlan id 20 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2, Et11, Et12
+
+
+$ show interfaces Ethernet1, Ethernet2, Ethernet11, Ethernet12 status
+show interfaces Ethernet1, Ethernet2, Ethernet11, Ethernet12 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+Et2               connected    20       full   10G    10GBASE-CR                      
+Et11              connected    20       full   10G    10GBASE-CR                      
+Et12              connected    20       full   10G    10GBASE-CR                      
+
+
+$ show running-config interfaces Ethernet11
+show running-config interfaces Ethernet11 | no-more
+interface Ethernet11
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2 | no-more
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast

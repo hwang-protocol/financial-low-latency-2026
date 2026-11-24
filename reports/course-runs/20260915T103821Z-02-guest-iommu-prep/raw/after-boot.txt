@@ -1,0 +1,50 @@
+vm-2522-01 / verify
+===== 查主机名 =====
+[主机说明] 以下检查对应当前主机：vm-2522-01 或 vm-2522-02。
+$ hostname
+vm-2522-01
+===== 查下次启动参数 =====
+[配置说明] GRUB_CMDLINE_LINUX 中应有 intel_iommu=on iommu=pt，供下次开机使用。
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+===== 查本轮备份 =====
+[备份说明] 列出启动配置备份；<none> 表示没有备份文件。
+$ find /var/backups -maxdepth 1 -type f -name flle-ch02-grub.\* -printf %p\\n | LC_ALL=C sort
+/var/backups/flle-ch02-grub.20260915T103821Z-02-guest-iommu-prep
+===== 查当前启动参数 =====
+[生效检查] 当前启动参数应同时包含 intel_iommu=on 和 iommu=pt。
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[设备检查] 自动核对本课网卡的 IOMMU 分组，预期为 /sys/kernel/iommu_groups/7。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+===== 核对分组内设备 =====
+[设备检查] 本课应只包含数据口 0000:03:00.0，脚本会自动核对。
+$ find /sys/kernel/iommu_groups/7/devices -mindepth 1 -maxdepth 1 -printf %f\\n | LC_ALL=C sort
+0000:03:00.0
+vm-2522-02 / verify
+===== 查主机名 =====
+[主机说明] 以下检查对应当前主机：vm-2522-01 或 vm-2522-02。
+$ hostname
+vm-2522-02
+===== 查下次启动参数 =====
+[配置说明] GRUB_CMDLINE_LINUX 中应有 intel_iommu=on iommu=pt，供下次开机使用。
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+===== 查本轮备份 =====
+[备份说明] 列出启动配置备份；<none> 表示没有备份文件。
+$ find /var/backups -maxdepth 1 -type f -name flle-ch02-grub.\* -printf %p\\n | LC_ALL=C sort
+/var/backups/flle-ch02-grub.20260915T103821Z-02-guest-iommu-prep
+===== 查当前启动参数 =====
+[生效检查] 当前启动参数应同时包含 intel_iommu=on 和 iommu=pt。
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[设备检查] 自动核对本课网卡的 IOMMU 分组，预期为 /sys/kernel/iommu_groups/7。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+===== 核对分组内设备 =====
+[设备检查] 本课应只包含数据口 0000:03:00.0，脚本会自动核对。
+$ find /sys/kernel/iommu_groups/7/devices -mindepth 1 -maxdepth 1 -printf %f\\n | LC_ALL=C sort
+0000:03:00.0

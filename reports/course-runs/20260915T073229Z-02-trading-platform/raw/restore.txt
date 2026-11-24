@@ -1,0 +1,85 @@
+
+Low-Latency-Ops / ① 查部署条件
+===== ① 查部署条件 =====
+核对主机、依赖和运行包，确认可以开始部署。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh preflight 20260915T073229Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/01-preflight.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/01-preflight.txt
+control_assets=PASS replay_bytes=561727241 symbols=AAPL,NVDA
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+exchange_rss_preflight=PASS iface=ens64np0 entries=128 table=baseline-0-1-2-3 queue=1 irq=33 requested_cpu=3 effective_cpu=3 irqbalance=active exchange_cpu=2
+transport_preflight=PASS runtime_sha256=0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00 queue=DEQUE_CV
+[条件说明] control_assets / builder_tools / transport_preflight 的 PASS 分别对应管理机材料、.101 编译工具和固定运行包检查。
+[条件说明] exchange_rss_preflight 检查 .1 网卡队列与 CPU 分配是否符合部署前提，不是延迟测量结果。
+
+Low-Latency-Ops / ② 查四条路径的构建来源
+===== ② 查四条路径的构建来源 =====
+核对固定源码、制品和启动约定，为后续路径比较保留依据。
+$ bash Documents/newDoc/assets/05-kernel-bypass/four-path-build-contract-audit.sh /financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/code-contract
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/02-build-contract.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/02-build-contract.txt
+source_binary_mapping=PASS compiled_outputs=8 packaged_controls=1 inherited_key_files=3
+lcore_mask=4
+memory=256
+idle_sleep=0
+pkt_tx_delay=0
+allow=03:00.0
+hz=100
+fstack_config_contract=PASS
+[来源说明] 文件后的 OK 表示摘要与固定清单一致；source_binary_mapping=PASS 表示源码、构建输入和运行文件的来源关系核验通过。
+[来源说明] fstack_config_contract=PASS 表示 DPDK 路径的 F-Stack 配置符合约定，不表示当前已启动 DPDK。
+
+Low-Latency-Ops / ③ 构建并部署平台
+===== ③ 构建并部署平台 =====
+使用 B2 已准备的软件建立交易会话，并在监测 VM 构建原生客户端与恢复网页服务。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh deploy 20260915T073229Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/03-deploy.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/03-deploy.txt
+checkpoint=PASS start_ns=34200000000000 source_messages=97498 active_orders=18108
+runtime_sha256=0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00
+runtime_manifest_sha256=1cd542e15c2a6ad10e8eede1ccae798ce0395db02b9ea36d736ce75c0f3e36e1
+exchange_sha256=cc987443309ac60b7484c04d36986c48ece81301702ec1d21cb99674d34cc73a
+checkpoint_generator_sha256=ea2eb99cf19b870df2e1bdce5952011c0a238c4d2397107cb34e9b28a3adc039
+opening_book_sha256=1543c06f281665e394801f6de5f9673fd2801abb7f7d83590f777e5e1e0b7a70
+itch_sha256=82e1d74f961803e0646e1f09329f080d72f21f581540344ed8da605a7641ef2b
+Ran 216 tests in 5.912s
+[部署说明] 复用 B2 准备好的固定运行软件；.101 构建原生客户端并恢复网页服务，.1/.2 建立本次交易会话。
+[部署说明] checkpoint 是回放起点的订单簿检查点；*_sha256 是文件内容摘要，用来核对部署材料，不是性能指标。
+
+Low-Latency-Ops / ④ 启动普通交易配置
+===== ④ 启动普通交易配置 =====
+启动行情、交易客户端和网页，建立本章下单环境。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh baseline 20260915T073229Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/04-baseline.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/04-baseline.txt
+irqbalance_baseline=active
+irq_affinity_applied=2
+irqbalance_during_run=inactive
+effective_cpu=2
+exchange_cpu=2
+verification=X2522_RSS_ALL_BUCKETS_TO_EXCHANGE_CPU_QUEUE
+baseline_sha256=a467c9b01cca8e25886393f2e5aaa416dbed339aecbff35eb4554e56b17e4d46
+applied_sha256=f36c85066249a6a0fc129c4db42a9bca29ea0f7baa1a8cb5295dbb467e7696ff
+[启动说明] 本步启动 .1 交易所、.2 行情接收器与交易客户端、.101 网页后台；是否就绪还要看下一步核验。
+
+Low-Latency-Ops / ⑤ 查平台是否就绪
+===== ⑤ 查平台是否就绪 =====
+[平台] 对: 进程 ONLINE、部署摘要核验通过  证: 当前平台可以交给首单步骤
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh verify 20260915T073229Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/05-verify.txt
+关键结果（最多八行）：
+$ awk length\(\$0\)\<=240\ \&\&\ /\(\^\[A-Za-z\]\[A-Za-z0-9_-\]\*=\|:\ OK\$\|\^Ran\ \[0-9\]+\ tests\|\^OK\$\|tests\ passed\)/\ \{\ rows\[++n\]=\$0\ \}\ END\ \{\ for\(i=\(n\>8\?n-7:1\)\;i\<=n\;i++\)\ print\ rows\[i\]\;\ if\(\!n\)\ print\ \"（没有匹配的短读数；请查完整日志）\"\ \} /financial-low-latency/Documents/reports/course-runs/20260915T073229Z-02-trading-platform/raw/05-verify.txt
+exchange=ONLINE pid=7103
+trader-auto=ONLINE pid=55417
+trader-manual=ONLINE pid=55423
+gateway=ONLINE pid=10227
+deployed_sha256=PASS exchange,trader_auto,trader_manual,source,replay,manifest,opening_book_checkpoint
+restore_verdict=TRADING_LAB_READY
+[进程说明] exchange 是 .1 交易所；trader-auto / trader-manual 是 .2 自动与手动客户端；gateway 是 .101 网页后台。
+[在线说明] ONLINE 表示对应进程在线；pid 是该主机上的进程编号，每次启动可能不同，不是端口号。
+[文件说明] deployed_sha256=PASS 表示所列部署文件摘要核验通过；进程在线与文件一致需要一起看。
+[就绪说明] restore_verdict=TRADING_LAB_READY 表示部署核验通过，不代表已经完成首笔成交或延迟测试。

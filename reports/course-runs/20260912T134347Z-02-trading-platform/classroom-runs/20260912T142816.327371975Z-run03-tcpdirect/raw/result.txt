@@ -1,0 +1,17 @@
+===== 运行 ③ · TCPDirect 真单 =====
+# 1. 订单结果：Exchange 已确认成交。
+task=用 TCPDirect 发送一笔 AAPL 1 股可成交订单
+result=ORDER_EXECUTED
+client_order_id=2928001100  # 本笔订单编号，用于查找日志
+
+# 2. 实际收发路径：已通过脚本的连接与原始记录检查。
+engine=ZF_REACTOR_POLL  # TCPDirect 的 ZF 事件循环处理收发
+
+# 3. 订单往返时间：调用发送前 → 收到最终结果；ns 为纳秒。
+order_rtt_ns=104624
+# 单笔会受当时的调度和缓存状态影响，不能据此给四路排快慢。
+scope=单笔路径验证；正式延迟比较看运行 ⑤
+
+# 本步通过；接着执行运行 ④。
+# 完整订单、路径记录及校验文件保存在：
+evidence=Documents/reports/course-runs/20260912T134347Z-02-trading-platform/classroom-runs/20260912T142816.327371975Z-run03-tcpdirect

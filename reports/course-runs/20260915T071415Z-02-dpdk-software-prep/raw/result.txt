@@ -1,0 +1,114 @@
+===== 核对安装包 =====
+[来源说明] 使用课程缓存的固定运行包；F-Stack 和 DPDK 已编入交易客户端。
+$ sha256sum artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz
+0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00  artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz
+
+===== 准备 10.1.1.1 的软件 =====
+[安装说明] 安装到独立目录；此时不启动客户端、不改绑数据口。
+$ scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz root@10.1.1.1:/var/tmp/20260915T071415Z-02-dpdk-software-prep-runtime.tgz
+完整日志：Documents/reports/course-runs/20260915T071415Z-02-dpdk-software-prep/raw/10.1.1.1-software.txt
+vm-2522-01 / verify
+
+===== 查网卡型号 =====
+[型号说明] Subsystem 是板卡型号；方括号中是 PCI 厂商与设备编号。
+$ lspci -nnk -s 0000:03:00.0
+03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)
+	DeviceName: pciPassthru0
+	Subsystem: Solarflare Communications XtremeScale X2522-25G Network Adapter [1924:8028]
+	Kernel driver in use: sfc
+	Kernel modules: sfc
+
+[支持文档] DPDK 21.11.9 → Solarflare libefx-based PMD → Supported NICs
+https://doc.dpdk.org/guides-21.11/nics/sfc_efx.html#supported-nics
+该节列出 Solarflare X2522 Dual Port SFP28 10/25GbE Adapter。
+
+===== 查已安装软件的版本 =====
+[版本说明] 以下读取安装包的构建记录。
+$ python3 -c import\ json\,sys\;\ d=json.load\(open\(sys.argv\[1\]\)\)\[\"dependencies\"\]\[\"f_stack_dpdk\"\]\;\ print\(\"DPDK:\"\,d\[\"dpdk_version\"\]\)\;\ print\(\"F-Stack:\"\,d\[\"f_stack_commit\"\]\) /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path/provenance/BUILD-PROVENANCE.json
+DPDK: 21.11.9
+F-Stack: 0abb713721a6a0ba95768acde052dbd3d2fdf3fe
+
+===== 查运行程序文件 =====
+[文件说明] flle-trader-dpdk 是已编入 DPDK/F-Stack 的交易客户端；dpdk-devbind.py 用于后续切换网卡驱动。
+$ cd /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path
+$ ls -lh bin/flle-trader-dpdk bin/dpdk-devbind.py
+-rwxr-xr-x 1 root root 29K Jan  1  1970 bin/dpdk-devbind.py
+-rwxr-xr-x 1 root root 36M Jan  1  1970 bin/flle-trader-dpdk
+$ test -x bin/flle-trader-dpdk && test -x bin/dpdk-devbind.py
+[文件检查] 两个程序均存在且可执行。
+
+===== 查客户端已包含两套库 =====
+[链接说明] ff_init 来自 F-Stack；rte_eal_init 来自 DPDK。以下读取程序符号，不启动程序。
+$ readelf -Ws /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path/bin/flle-trader-dpdk | awk \$NF==\"ff_init\"\ \|\|\ \$NF==\"rte_eal_init\"\ \{print\ \$NF\} | sort -u
+ff_init
+rte_eal_init
+
+[PMD说明] 客户端中也包含 X2522 对应的 net_sfc_efx 驱动。
+$ strings /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path/bin/flle-trader-dpdk | grep -Fx net_sfc_efx | sort -u
+net_sfc_efx
+
+===== 查隔离与驱动状态 =====
+[状态说明] 已有 IOMMU 隔离组，unsafe 模式为 N；网卡仍归 sfc。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+
+[准备完成] 软件文件、链接依赖与隔离状态已核对。运行①使用这份软件恢复交易系统；第 05 章切到 DPDK 时才启动客户端并接管数据口。
+
+===== 准备 10.1.1.2 的软件 =====
+[安装说明] 安装到独立目录；此时不启动客户端、不改绑数据口。
+$ scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz root@10.1.1.2:/var/tmp/20260915T071415Z-02-dpdk-software-prep-runtime.tgz
+完整日志：Documents/reports/course-runs/20260915T071415Z-02-dpdk-software-prep/raw/10.1.1.2-software.txt
+vm-2522-02 / verify
+
+===== 查网卡型号 =====
+[型号说明] Subsystem 是板卡型号；方括号中是 PCI 厂商与设备编号。
+$ lspci -nnk -s 0000:03:00.0
+03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)
+	DeviceName: pciPassthru0
+	Subsystem: Solarflare Communications XtremeScale X2522-25G Network Adapter [1924:8028]
+	Kernel driver in use: sfc
+	Kernel modules: sfc
+
+[支持文档] DPDK 21.11.9 → Solarflare libefx-based PMD → Supported NICs
+https://doc.dpdk.org/guides-21.11/nics/sfc_efx.html#supported-nics
+该节列出 Solarflare X2522 Dual Port SFP28 10/25GbE Adapter。
+
+===== 查已安装软件的版本 =====
+[版本说明] 以下读取安装包的构建记录。
+$ python3 -c import\ json\,sys\;\ d=json.load\(open\(sys.argv\[1\]\)\)\[\"dependencies\"\]\[\"f_stack_dpdk\"\]\;\ print\(\"DPDK:\"\,d\[\"dpdk_version\"\]\)\;\ print\(\"F-Stack:\"\,d\[\"f_stack_commit\"\]\) /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path/provenance/BUILD-PROVENANCE.json
+DPDK: 21.11.9
+F-Stack: 0abb713721a6a0ba95768acde052dbd3d2fdf3fe
+
+===== 查运行程序文件 =====
+[文件说明] flle-trader-dpdk 是已编入 DPDK/F-Stack 的交易客户端；dpdk-devbind.py 用于后续切换网卡驱动。
+$ cd /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path
+$ ls -lh bin/flle-trader-dpdk bin/dpdk-devbind.py
+-rwxr-xr-x 1 root root 29K Jan  1  1970 bin/dpdk-devbind.py
+-rwxr-xr-x 1 root root 36M Jan  1  1970 bin/flle-trader-dpdk
+$ test -x bin/flle-trader-dpdk && test -x bin/dpdk-devbind.py
+[文件检查] 两个程序均存在且可执行。
+
+===== 查客户端已包含两套库 =====
+[链接说明] ff_init 来自 F-Stack；rte_eal_init 来自 DPDK。以下读取程序符号，不启动程序。
+$ readelf -Ws /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path/bin/flle-trader-dpdk | awk \$NF==\"ff_init\"\ \|\|\ \$NF==\"rte_eal_init\"\ \{print\ \$NF\} | sort -u
+ff_init
+rte_eal_init
+
+[PMD说明] 客户端中也包含 X2522 对应的 net_sfc_efx 驱动。
+$ strings /opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00/flle-ch05-four-path/bin/flle-trader-dpdk | grep -Fx net_sfc_efx | sort -u
+net_sfc_efx
+
+===== 查隔离与驱动状态 =====
+[状态说明] 已有 IOMMU 隔离组，unsafe 模式为 N；网卡仍归 sfc。
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group
+/sys/kernel/iommu_groups/7
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+
+[准备完成] 软件文件、链接依赖与隔离状态已核对。运行①使用这份软件恢复交易系统；第 05 章切到 DPDK 时才启动客户端并接管数据口。

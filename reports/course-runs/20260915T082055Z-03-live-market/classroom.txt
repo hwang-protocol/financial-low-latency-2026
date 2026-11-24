@@ -1,0 +1,68 @@
+
+Low-Latency-Ops / verify
+===== 查基础业务服务 =====
+[平台] 对: 第二章基础服务在线  证: 具备本步抓包前提
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh verify 20260915T073229Z-02-trading-platform
+
+Low-Latency-Ops / market
+===== 设置行情发送模式 =====
+[模式] 对: MULTICAST  证: 仅改变目的地址与副本数量
+$ curl -fsS --max-time 10 -X POST -H 'Content-Type: application/json' -d '{"market_mode":"MULTICAST"}' http://10.1.1.101:8088/api/market
+回读确认：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=MULTICAST
+
+10.1.1.2 / capture
+===== 抓取 200 个组播行情包 =====
+[抓包] 对: 200 packets captured；kernel drops 为 0  证: 本窗口的抓包完整性
+$ timeout 8 tcpdump -i ens64np1 -nn -s 0 -c 200 -w /var/tmp/20260915T082055Z-03-live-market-market.pcap 'udp dst port 31032 and dst host 233.74.125.32'
+tcpdump: listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+200 packets captured
+688 packets received by filter
+0 packets dropped by kernel
+
+Low-Latency-Ops / readback
+===== 查行情包的原始端点 =====
+[报文] 对: 源 20.1.1.1，目的 233.74.125.32.31032  证: 组播包到达 Trader 数据口
+$ tcpdump -nn -t -r /financial-low-latency/Documents/reports/course-runs/20260915T082055Z-03-live-market/raw/live-market.pcap -c 3
+reading from file /financial-low-latency/Documents/reports/course-runs/20260915T082055Z-03-live-market/raw/live-market.pcap, link-type EN10MB (Ethernet), snapshot length 262144
+IP 20.1.1.1.44557 > 233.74.125.32.31032: UDP, length 58
+IP 20.1.1.1.44557 > 233.74.125.32.31032: UDP, length 41
+IP 20.1.1.1.44557 > 233.74.125.32.31032: UDP, length 41
+[解码说明] 以下字段由配套解析器读取原始文件生成；统计与 verdict 是程序汇总，不是 tcpdump 原文。
+
+Low-Latency-Ops / decode
+===== 解码 Mold 与 ITCH 字段 =====
+[解码] 对: 同一 session 内序号连续，Type A 长度 36  证: 消息顺序与字段边界
+$ python3 /financial-low-latency/Documents/newDoc/assets/03-live-traffic/inspect_market_pcap.py /financial-low-latency/Documents/reports/course-runs/20260915T082055Z-03-live-market/raw/live-market.pcap
+pcap_magic=d4c3b2a1 linktype=1 packets=200 mold_packets=200
+path=20.1.1.1:44557->233.74.125.32:31032 session=0612260001
+sequence=3907992..3908191 message_count=1..1 itch_types=A:89,D:88,E:1,P:2,U:20
+Frame 1: 100 bytes on wire, 100 bytes captured
+Ethernet II, Src: 00:0f:53:d3:af:20, Dst: 01:00:5e:4a:7d:20
+Internet Protocol Version 4, Src: 20.1.1.1, Dst: 233.74.125.32
+User Datagram Protocol, Src Port: 44557, Dst Port: 31032
+MoldUDP64
+    Session: 0612260001
+    Sequence Number: 3907992
+    Message Count: 1
+    Message Length: 36
+Nasdaq TotalView-ITCH 5.0
+    Message Type: A (Add Order)
+    Stock Locate: 8095
+    Tracking Number: 0
+    Timestamp: 37041821355479
+    Order Reference Number: 377126955
+    Buy/Sell Indicator: S
+    Shares: 100
+    Stock: NVDA
+    Price: 2063500
+verdict=LIVE_MARKET_FLOW_PASS
+[就绪说明] LIVE_MARKET_FLOW_PASS 是解析器自拼的有限检查汇总，表示本窗口解析及内置检查走通；须核对原始端点、序号与字段，不代表长期无丢包。
+===== 恢复检查前的行情模式 =====
+
+Low-Latency-Ops / market
+===== 设置行情发送模式 =====
+[模式] 对: UNICAST  证: 仅改变目的地址与副本数量
+$ curl -fsS --max-time 10 -X POST -H 'Content-Type: application/json' -d '{"market_mode":"UNICAST"}' http://10.1.1.101:8088/api/market
+回读确认：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=UNICAST
