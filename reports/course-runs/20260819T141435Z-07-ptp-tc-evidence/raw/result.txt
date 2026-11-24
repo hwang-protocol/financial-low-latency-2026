@@ -1,0 +1,48 @@
+$ sha256sum Documents/newDoc/assets/07-arista-time/ptp-tc-native-20260721.txt
+c25e893b15bb0903f92c96c65e87b450648222551c8f5e6f00f745477c1a7bc1  Documents/newDoc/assets/07-arista-time/ptp-tc-native-20260721.txt
+
+$ cat Documents/newDoc/assets/07-arista-time/ptp-tc-native-20260721.txt
+Provenance: 20260721T024157Z-x2522-ptp-hwts-smoke
+Sources: raw/arista/51-tc-active-counters.log; raw/vm-2522-02/51-tc-client-ptp4l.log; raw/vm-2522-02/51-tc-client-pcap-decode.log
+
+$ show ptp
+PTP Mode: E2E Transparent Clock
+   Interface    Transport
+--------------- ---------
+   Et1          ipv4
+   Et2          ipv4
+
+$ show ptp interface
+Interface Ethernet1
+PTP: Enabled
+Sync messages sent: 0
+Sync messages received: 46
+Follow up messages sent: 0
+Follow up messages received: 46
+Delay request messages sent: 44
+Delay request messages received: 0
+Delay response messages sent: 0
+Delay response messages received: 44
+Interface Ethernet2
+PTP: Enabled
+Sync messages sent: 46
+Sync messages received: 0
+Follow up messages sent: 46
+Follow up messages received: 0
+Delay request messages sent: 0
+Delay request messages received: 44
+Delay response messages sent: 44
+Delay response messages received: 0
+
+ptp4l[12555.515]: selected /dev/ptp0 as PTP clock
+ptp4l[12555.517]: port 1: INITIALIZING to LISTENING on INIT_COMPLETE
+ptp4l[12560.469]: port 1: LISTENING to UNCALIBRATED on RS_SLAVE
+ptp4l[12562.518]: master offset         -1 s0 freq     -19 path delay       123
+ptp4l[12563.518]: master offset          6 s2 freq     -12 path delay       123
+ptp4l[12563.518]: port 1: UNCALIBRATED to SLAVE on MASTER_CLOCK_SELECTED
+ptp4l[12564.494]: master offset          4 s2 freq      -8 path delay       124
+
+IP 20.1.1.1.319 > 224.0.1.129.319: PTPv2, v1 compat : no, msg type : sync msg, length : 44, domain : 24, reserved1 : 0, Flags [two step], NS correction : 0, sub NS correction : 0, reserved2 : 0, clock identity : 0xf53fffed3af20, port id : 1, seq id : 0, control : 0 (sync msg), log message interval : 0, originTimeStamp : 0 seconds, 0 nanoseconds
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, v1 compat : no, msg type : follow up msg, length : 44, domain : 24, reserved1 : 0, Flags [none], NS correction : 0, sub NS correction : 23592900, reserved2 : 0, clock identity : 0xf53fffed3af20, port id : 1, seq id : 0, control : 2 (peer delay req msg), log message interval : 0, preciseOriginTimeStamp : 62505 seconds, 742898407 nanoseconds
+IP 20.1.1.2.319 > 224.0.1.129.319: PTPv2, v1 compat : no, msg type : delay req msg, length : 44, domain : 24, reserved1 : 0, Flags [none], NS correction : 0, sub NS correction : 0, reserved2 : 0, clock identity : 0xf53fffed3af21, port id : 1, seq id : 0, control : 1 (delay req msg), log message interval : 127, originTimeStamp : 0 seconds, 0 nanoseconds
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, v1 compat : no, msg type : delay resp msg, length : 54, domain : 24, reserved1 : 0, Flags [none], NS correction : 0, sub NS correction : 23780200, reserved2 : 0, clock identity : 0xf53fffed3af20, port id : 1, seq id : 0, control : 3 (peer delay resp msg), log message interval : 0, receiveTimeStamp : 62506 seconds, 897202868 nanoseconds, port identity : 0xf53fffed3af21, port id : 1

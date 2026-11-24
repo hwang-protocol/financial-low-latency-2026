@@ -1,0 +1,63 @@
+===== root@10.1.1.11 =====
+$ ip -brief link show ens64f0np0
+ens64f0np0       DOWN           00:0a:f7:f8:48:a0 <BROADCAST,MULTICAST> 
+$ ethtool -i ens64f0np0
+driver: bnxt_en
+version: 5.15.0-164-generic
+firmware-version: 230.0.157.0/pkg 230.1.116.0
+expansion-rom-version: 
+bus-info: 0000:03:00.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: yes
+supports-register-dump: yes
+supports-priv-flags: no
+$ ip -o address show dev ens64f0np0
+$ ip -details link show ens64f0np0
+3: ens64f0np0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p0 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.0 
+    altname enp3s0f0np0
+$ ip -brief link show ens64f1np1
+ens64f1np1       DOWN           00:0a:f7:f8:48:a1 <BROADCAST,MULTICAST> 
+$ ethtool -i ens64f1np1
+driver: bnxt_en
+version: 5.15.0-164-generic
+firmware-version: 230.0.157.0/pkg 230.1.116.0
+expansion-rom-version: 
+bus-info: 0000:03:00.1
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: yes
+supports-register-dump: yes
+supports-priv-flags: no
+$ ip -o address show dev ens64f1np1
+$ ip -details link show ens64f1np1
+4: ens64f1np1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a1 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p1 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.1 
+    altname enp3s0f1np1
+$ grep ^Hugetlb: /proc/meminfo
+Hugetlb:               0 kB
+$ for pool in /sys/kernel/mm/hugepages/hugepages-*; do ...; done
+pool=hugepages-1048576kB
+nr_hugepages=0
+free_hugepages=0
+resv_hugepages=0
+surplus_hugepages=0
+pool=hugepages-2048kB
+nr_hugepages=0
+free_hugepages=0
+resv_hugepages=0
+surplus_hugepages=0
+$ findmnt -rn -t hugetlbfs -o TARGET
+/dev/hugepages
+hugetlbfs_mount=/dev/hugepages
+$ find /dev/hugepages -xdev -mindepth 1 -maxdepth 2
+$ find /dev/hugepages -xdev -type f ... | fuser -v
+$ pgrep -a -f <TRex/testpmd/BMv2>
+$ ss -lntup
+Netid State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess                                   
+udp   UNCONN 0      0      127.0.0.53%lo:53        0.0.0.0:*    users:(("systemd-resolve",pid=918,fd=13))
+tcp   LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*    users:(("systemd-resolve",pid=918,fd=14))
+tcp   LISTEN 0      128          0.0.0.0:22        0.0.0.0:*    users:(("sshd",pid=988,fd=3))            
+tcp   LISTEN 0      128             [::]:22           [::]:*    users:(("sshd",pid=988,fd=4))            
+$ systemctl list-units --all --type=timer flle-*-recovery-*

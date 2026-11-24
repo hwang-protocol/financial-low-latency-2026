@@ -1,0 +1,9 @@
+$ docker compose ps grafana
+NAME                           IMAGE                    COMMAND     SERVICE   CREATED          STATUS          PORTS
+flle-observability-grafana-1   grafana/grafana:13.1.0   "/run.sh"   grafana   36 seconds ago   Up 35 seconds   0.0.0.0:3000->3000/tcp
+$ curl -fsS http://127.0.0.1:3000/api/health
+{
+  "database": "ok",
+  "version": "13.1.0",
+  "commit": "b309c9bb3b81a748c3a75289236a27309ed2566a"
+}

@@ -1,0 +1,20 @@
+control_monotonic_ns=407251058392322
+$ show clock
+show clock
+Mon Jul 27 03:55:39 2026
+Timezone: UTC
+Clock source: local
+
+control_monotonic_ns=407251118272143
+$ show running-config | include queue-monitor
+show running-config | include queue-monitor
+queue-monitor length
+   queue-monitor length thresholds 64 32
+
+control_monotonic_ns=407251628198527
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2
+interface Ethernet2
+   switchport access vlan 20
+   queue-monitor length thresholds 64 32
+   spanning-tree portfast

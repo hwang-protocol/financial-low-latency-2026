@@ -1,0 +1,17 @@
+$ strace -qq -f -c -e trace=network python3 /var/tmp/20260819T141125Z-06-onload-strace-audit.client.py 46301
+client_bytes=52
+client_reply=ACK
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 24.62    0.000032          32         1           connect
+ 22.31    0.000029          29         1           recvfrom
+ 16.92    0.000022          22         1           getsockname
+ 13.08    0.000017          17         1           sendto
+ 12.31    0.000016          16         1           getpeername
+ 10.77    0.000014          14         1           socket
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000130          21         6           total
+
+$ strace -qq -f -c -e trace=network onload python3 /var/tmp/20260819T141125Z-06-onload-strace-audit.client.py 46302
+client_bytes=52
+client_reply=ACK

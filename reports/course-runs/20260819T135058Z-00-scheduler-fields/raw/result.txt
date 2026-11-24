@@ -1,0 +1,12 @@
+$ ps -L -p $$ -o pid,tid,psr,stat,comm
+  PID   TID PSR STAT COMMAND
+22412 22412   1 Ss   bash
+
+$ taskset -pc $$
+pid 22412's current affinity list: 0-3
+
+$ /proc/self/status scheduler fields
+Cpus_allowed_list:	0-3
+voluntary_ctxt_switches:	0
+nonvoluntary_ctxt_switches:	0
+nonvoluntary_ctxt_switches:	0

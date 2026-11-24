@@ -1,0 +1,8 @@
+vm-broadcom-01
+BDF=0000:03:00.0 driver=bnxt_en
+9: ens64f0np0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000\    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p0 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.0 \    altname enp3s0f0np0
+BDF=0000:03:00.1 driver=bnxt_en
+10: ens64f1np1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000\    link/ether 00:0a:f7:f8:48:a1 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p1 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.1 \    altname enp3s0f1np1
+hugepages-1048576kB nr=0 free=0 resv=0 surp=0
+hugepages-2048kB nr=0 free=0 resv=0 surp=0
+28877 bash -c hostname; for bdf in 0000:03:00.0 0000:03:00.1; do printf "BDF=%s driver=%s\n" "$bdf" "$(basename "$(readlink /sys/bus/pci/devices/$bdf/driver)")"; for n in /sys/bus/pci/devices/$bdf/net/*; do i="${n##*/}"; ip -details -o link show dev "$i"; ip -4 -o addr show dev "$i" || true; done; done; for p in /sys/kernel/mm/hugepages/hugepages-*; do printf "%s nr=%s free=%s resv=%s surp=%s\n" "${p##*/}" "$(cat "$p/nr_hugepages")" "$(cat "$p/free_hugepages")" "$(cat "$p/resv_hugepages")" "$(cat "$p/surplus_hugepages")"; done; pgrep -af "t-rex-64|trex-daemon|flle-market-day" || true; systemctl list-units --all --plain --no-legend "flle-market-day*" || true

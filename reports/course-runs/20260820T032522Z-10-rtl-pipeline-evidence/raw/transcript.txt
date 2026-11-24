@@ -1,0 +1,48 @@
+===== 2026-08-20 现场 Verilator testbench 标准输出 =====
+$ ./obj_dir/Vmarket_pipeline market_pipeline-run1.vcd
+ASSERT_PASS name=reset_cycles expected=3 actual=3
+CONFIG symbol=0x4141504c
+CASE_PASS name=bad_magic_initial seq=9001 accepted_at_cycle=0
+CASE_PASS name=nonmatch_initial seq=9002 accepted_at_cycle=1
+CASE_PASS name=match_initial seq=1 accepted_at_cycle=2
+ASSERT_OUTPUT_PASS index=0 expected_seq=1 actual_seq=1 expected_symbol=1094799436 actual_symbol=1094799436 expected_side=0 actual_side=0 expected_price=100100 actual_price=100100 expected_qty=10 actual_qty=10 expected_timestamp=2 actual_timestamp=2
+CASE_PASS name=burst_match_10 seq=10 accepted_at_cycle=4
+CASE_PASS name=burst_match_11 seq=11 accepted_at_cycle=5
+CASE_PASS name=burst_match_12 seq=12 accepted_at_cycle=6
+CASE_PASS name=burst_match_13 seq=13 accepted_at_cycle=7
+CASE_PASS name=bad_magic_while_full seq=9003 accepted_at_cycle=8
+CASE_PASS name=nonmatch_while_full seq=9004 accepted_at_cycle=9
+STALL_PASS name=fifo_full_stall_1 seq=14 stalled_at_cycle=10
+STALL_PASS name=fifo_full_stall_2 seq=14 stalled_at_cycle=11
+STALL_PASS name=fifo_full_stall_3 seq=14 stalled_at_cycle=12
+ASSERT_OUTPUT_PASS index=1 expected_seq=10 actual_seq=10 expected_symbol=1094799436 actual_symbol=1094799436 expected_side=0 actual_side=0 expected_price=101000 actual_price=101000 expected_qty=100 actual_qty=100 expected_timestamp=4 actual_timestamp=4
+CASE_PASS name=fifo_release_match_14 seq=14 accepted_at_cycle=13
+ASSERT_OUTPUT_PASS index=2 expected_seq=11 actual_seq=11 expected_symbol=1094799436 actual_symbol=1094799436 expected_side=1 actual_side=1 expected_price=101001 actual_price=101001 expected_qty=101 actual_qty=101 expected_timestamp=5 actual_timestamp=5
+CASE_PASS name=post_release_match_15 seq=15 accepted_at_cycle=14
+ASSERT_OUTPUT_PASS index=3 expected_seq=12 actual_seq=12 expected_symbol=1094799436 actual_symbol=1094799436 expected_side=0 actual_side=0 expected_price=101002 actual_price=101002 expected_qty=102 actual_qty=102 expected_timestamp=6 actual_timestamp=6
+ASSERT_OUTPUT_PASS index=4 expected_seq=13 actual_seq=13 expected_symbol=1094799436 actual_symbol=1094799436 expected_side=1 actual_side=1 expected_price=101003 actual_price=101003 expected_qty=103 actual_qty=103 expected_timestamp=7 actual_timestamp=7
+ASSERT_OUTPUT_PASS index=5 expected_seq=14 actual_seq=14 expected_symbol=1094799436 actual_symbol=1094799436 expected_side=0 actual_side=0 expected_price=101004 actual_price=101004 expected_qty=104 actual_qty=104 expected_timestamp=13 actual_timestamp=13
+ASSERT_OUTPUT_PASS index=6 expected_seq=15 actual_seq=15 expected_symbol=1094799436 actual_symbol=1094799436 expected_side=1 actual_side=1 expected_price=101005 actual_price=101005 expected_qty=105 actual_qty=105 expected_timestamp=14 actual_timestamp=14
+CONFIG symbol=0x4d534654
+CASE_PASS name=reconfigured_nonmatch seq=9005 accepted_at_cycle=19
+CASE_PASS name=reconfigured_match seq=20 accepted_at_cycle=20
+ASSERT_OUTPUT_PASS index=7 expected_seq=20 actual_seq=20 expected_symbol=1297303124 actual_symbol=1297303124 expected_side=1 actual_side=1 expected_price=202000 actual_price=202000 expected_qty=200 actual_qty=200 expected_timestamp=20 actual_timestamp=20
+ASSERT_PASS name=output_sequences expected_count=8 actual_count=8
+ASSERT_PASS name=output_timestamps expected_count=8 actual_count=8
+ASSERT_PASS name=timestamp_monotonic expected=strictly_increasing actual=strictly_increasing
+ASSERT_PASS name=packet_case_count expected=13 actual=13
+ASSERT_PASS name=accepted_count_final expected=13 actual=13
+ASSERT_PASS name=matched_count_final expected=8 actual=8
+ASSERT_PASS name=bad_magic_count_final expected=2 actual=2
+ASSERT_PASS name=nonmatch_count_final expected=3 actual=3
+ASSERT_PASS name=stall_count_final expected=3 actual=3
+ASSERT_PASS name=output_count_final expected=8 actual=8
+ASSERT_PASS name=max_fifo_level expected=4 actual=4
+ASSERT_PASS name=input_backpressure_observations expected=3 actual=3
+ASSERT_PASS name=stalled_head_checks expected=7 actual=7
+ASSERT_PASS name=active_cycles expected=22 actual=22
+ASSERT_PASS name=initial_burst_cycle_0 expected=4 actual=4
+ASSERT_PASS name=initial_burst_cycle_1 expected=5 actual=5
+ASSERT_PASS name=initial_burst_cycle_2 expected=6 actual=6
+ASSERT_PASS name=initial_burst_cycle_3 expected=7 actual=7
+VERILATOR_MARKET_PIPELINE_PASS cases=13 accepted=13 matched=8 bad_magic=2 nonmatch=3 outputs=8 stall_cycles=3 max_fifo=4 first_timestamp=2 last_timestamp=20 active_cycles=22

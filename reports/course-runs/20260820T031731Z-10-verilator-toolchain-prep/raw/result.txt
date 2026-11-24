@@ -1,0 +1,43 @@
+===== root@10.1.1.101 =====
+$ sed -n 1,12p /etc/apt/sources.list
+deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+$ apt-get update
+$ apt-get install g++ make verilator=4.038-1
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Hit:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease
+Hit:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease
+Hit:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease
+Hit:5 https://download.opensuse.org/repositories/home:/p4lang/xUbuntu_22.04  InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+g++ is already the newest version (4:11.2.0-1ubuntu1).
+make is already the newest version (4.3-4.1build1).
+verilator is already the newest version (4.038-1).
+0 upgraded, 0 newly installed, 0 to remove and 105 not upgraded.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+$ dpkg-query -W verilator g++ make
+$ verilator --version
+$ g++ --version
+$ make --version
+g++ 4:11.2.0-1ubuntu1
+make 4.3-4.1build1
+verilator 4.038-1
+Verilator 4.038 2020-07-11 rev v4.036-114-g0cd4a57ad
+g++ (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+GNU Make 4.3
+Built for x86_64-pc-linux-gnu
+Copyright (C) 1988-2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

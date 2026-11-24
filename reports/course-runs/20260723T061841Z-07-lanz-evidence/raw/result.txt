@@ -1,0 +1,35 @@
+$ sha256sum Documents/course/assets/07-arista-time/lanz-native-20260721.txt
+d0585acb662984aba3d937b0efff9b99852763e9a0080cbb36cb8d9b773dc668  Documents/course/assets/07-arista-time/lanz-native-20260721.txt
+
+$ cat Documents/course/assets/07-arista-time/lanz-native-20260721.txt
+Provenance: 20260721T053935Z-arista-lanz-lower-trigger-boundary
+Source: raw/switch-session.txt
+Profile: dual ingress, 25000 pps each, 4096-byte frames
+
+fll-arista#show queue-monitor length statistics
+
+Report generated at 2026-07-21 05:37:58
+Interface      Traffic Class  Count
+-----------------------------------------------------------------
+Et2             1               164
+
+Global Hit Count = 0
+fll-arista#show queue-monitor length Ethernet 2
+
+Report generated at 2026-07-21 05:37:58
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+ E   0:00:27.84238 ago         Et2(1)    28            64*         0
+ S   0:00:27.84240 ago         Et2(1)    N/A           64          N/A

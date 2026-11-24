@@ -1,0 +1,16 @@
+
+===== root@10.1.1.1 · ens64np0 =====
+$ readlink -f /sys/class/net/ens64np0/device
+/sys/devices/pci0000:03/0000:03:00.0
+$ cat /sys/class/net/ens64np0/address
+00:0f:53:d3:af:20
+$ lspci -nn -s 0000:03:00.0
+03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)
+
+===== root@10.1.1.2 · ens64np1 =====
+$ readlink -f /sys/class/net/ens64np1/device
+/sys/devices/pci0000:03/0000:03:00.0
+$ cat /sys/class/net/ens64np1/address
+00:0f:53:d3:af:21
+$ lspci -nn -s 0000:03:00.0
+03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)

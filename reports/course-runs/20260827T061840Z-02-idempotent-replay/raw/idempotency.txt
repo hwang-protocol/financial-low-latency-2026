@@ -1,0 +1,6 @@
+idempotency_scope=(ACCT-7,2026-08-27,client_order_id)
+submit id=ORD-1 quantity=10  response=NEW:ORDER_ACCEPTED     action_count=1
+submit id=ORD-1 quantity=10  response=REPLAY:ORDER_ACCEPTED  action_count=1
+submit id=ORD-1 quantity=99  response=CONFLICT               action_count=1
+submit id=ORD-2 quantity=10  response=NEW:ORDER_ACCEPTED     action_count=2
+submissions=4 distinct_keys=2 action_count=2

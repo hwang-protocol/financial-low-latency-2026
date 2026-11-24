@@ -1,0 +1,37 @@
+fll-arista#show clock
+Tue Jul 21 05:37:58 2026
+Timezone: UTC
+Clock source: local
+fll-arista#show queue-monitor length statistics
+
+Report generated at 2026-07-21 05:37:58
+Interface      Traffic Class  Count
+-----------------------------------------------------------------
+Et2             1               164
+
+Global Hit Count = 0
+fll-arista#show queue-monitor length Ethernet 2
+
+Report generated at 2026-07-21 05:37:58
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+ E   0:00:27.84238 ago         Et2(1)    28            64*         0
+ S   0:00:27.84240 ago         Et2(1)    N/A           64          N/A
+ E   0:00:27.84318 ago         Et2(1)    28            91*         0
+ S   0:00:27.84321 ago         Et2(1)    N/A           91          N/A
+ E   0:00:27.84417 ago         Et2(1)    28            67*         0
+ S   0:00:27.84420 ago         Et2(1)    N/A           67          N/A
+ E   0:00:27.84518 ago         Et2(1)    28            92*         0
+ S   0:00:27.84521 ago         Et2(1)    N/A           92          N/A

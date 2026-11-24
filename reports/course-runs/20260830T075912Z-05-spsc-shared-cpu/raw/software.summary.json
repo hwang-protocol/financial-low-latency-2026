@@ -1,0 +1,883 @@
+{
+  "profile": "HOST_NATIVE_SOFTWARE_BUSY_SPIN_ISOLATED_AUTO_SENTINEL_V14",
+  "profiles": [
+    {
+      "profile": "SPSC_SPIN/dedicated",
+      "rounds": 8,
+      "pooled_manual_samples": 3200,
+      "pooled_auto_control_samples": 640,
+      "queue_to_send_p99": {
+        "p99_ns": 2089,
+        "ci95": {
+          "low_ns": 2033,
+          "high_ns": 2250
+        }
+      },
+      "manual_order_rtt_p99": {
+        "p99_ns": 58173,
+        "ci95": {
+          "low_ns": 56922,
+          "high_ns": 58992
+        }
+      },
+      "auto_queue_to_send_p99": {
+        "p99_ns": 15871,
+        "ci95": {
+          "low_ns": 15250,
+          "high_ns": 16713
+        }
+      },
+      "auto_order_rtt_p99": {
+        "p99_ns": 72307,
+        "ci95": {
+          "low_ns": 69101,
+          "high_ns": 74415
+        }
+      },
+      "auto_submit_to_final_p99": {
+        "p99_ns": 82944,
+        "ci95": {
+          "low_ns": 79744,
+          "high_ns": 87322
+        }
+      },
+      "environment_control_rtt_p50": {
+        "p50_ns": 51720,
+        "ci95": {
+          "low_ns": 51056,
+          "high_ns": 53103
+        }
+      },
+      "submit_to_final_p99": {
+        "p99_ns": 59562,
+        "ci95": {
+          "low_ns": 58372,
+          "high_ns": 60277
+        }
+      },
+      "round_queue_p99_min_ns": 1968,
+      "round_queue_p99_max_ns": 5767,
+      "round_queue_p99_spread_ratio": 2.93,
+      "environment_control_half_drift_max_pct": 3.44
+    },
+    {
+      "profile": "SPSC_SPIN/shared",
+      "rounds": 8,
+      "pooled_manual_samples": 3200,
+      "pooled_auto_control_samples": 640,
+      "queue_to_send_p99": {
+        "p99_ns": 46115,
+        "ci95": {
+          "low_ns": 45242,
+          "high_ns": 48431
+        }
+      },
+      "manual_order_rtt_p99": {
+        "p99_ns": 63307,
+        "ci95": {
+          "low_ns": 60748,
+          "high_ns": 64942
+        }
+      },
+      "auto_queue_to_send_p99": {
+        "p99_ns": 17230,
+        "ci95": {
+          "low_ns": 16413,
+          "high_ns": 18477
+        }
+      },
+      "auto_order_rtt_p99": {
+        "p99_ns": 76490,
+        "ci95": {
+          "low_ns": 73778,
+          "high_ns": 80259
+        }
+      },
+      "auto_submit_to_final_p99": {
+        "p99_ns": 88913,
+        "ci95": {
+          "low_ns": 87188,
+          "high_ns": 93687
+        }
+      },
+      "environment_control_rtt_p50": {
+        "p50_ns": 54935,
+        "ci95": {
+          "low_ns": 54136,
+          "high_ns": 55821
+        }
+      },
+      "submit_to_final_p99": {
+        "p99_ns": 101659,
+        "ci95": {
+          "low_ns": 98143,
+          "high_ns": 105250
+        }
+      },
+      "round_queue_p99_min_ns": 43505,
+      "round_queue_p99_max_ns": 50783,
+      "round_queue_p99_spread_ratio": 1.17,
+      "environment_control_half_drift_max_pct": 11.88
+    }
+  ],
+  "repeat_per_profile": 8,
+  "round_plan": [
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/shared",
+    "SPSC_SPIN/shared",
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/shared",
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/shared",
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/shared",
+    "SPSC_SPIN/shared",
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/shared",
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/dedicated",
+    "SPSC_SPIN/shared"
+  ],
+  "round_count": 16,
+  "warmup_per_round": 40,
+  "precondition_samples": 1000,
+  "samples_per_round": 400,
+  "interval_us": 20000,
+  "control_every": 5,
+  "treatment_cpu": 2,
+  "control_cpu": 3,
+  "shared_cpu": 0,
+  "housekeeping_cpus": "0",
+  "manual_tgid": 3539,
+  "manual_peer_threads": 3,
+  "control_tgid": 3380,
+  "control_peer_threads": 3,
+  "stability_limit_pct": 20.0,
+  "environment_equivalence_pct": 40.0,
+  "direction_consistency_pct": 87.5,
+  "single_profile_spread_limit": 1.5,
+  "bootstrap_resamples": 4000,
+  "bootstrap_seed": 20260828,
+  "stable_rounds": 16,
+  "within_round_stable": true,
+  "environment_control_comparable": true,
+  "direction_consistent": true,
+  "single_profile_stable": true,
+  "rx_target_stable": true,
+  "rx_aligned_rounds": 0,
+  "rx_total_rounds": 0,
+  "queue_effect": {
+    "difference_ns": -44026,
+    "ci95": {
+      "low_ns": -46301,
+      "high_ns": -43159
+    },
+    "left": "SPSC_SPIN/dedicated",
+    "right": "SPSC_SPIN/shared",
+    "ratio": 0.05,
+    "verdict": "LEFT_LOWER"
+  },
+  "manual_rtt_effect": {
+    "difference_ns": -5134,
+    "ci95": {
+      "low_ns": -6970,
+      "high_ns": -2545
+    },
+    "left": "SPSC_SPIN/dedicated",
+    "right": "SPSC_SPIN/shared",
+    "verdict": "LEFT_LOWER"
+  },
+  "total_effect": {
+    "difference_ns": -42097,
+    "ci95": {
+      "low_ns": -46346,
+      "high_ns": -38510
+    },
+    "left": "SPSC_SPIN/dedicated",
+    "right": "SPSC_SPIN/shared",
+    "verdict": "LEFT_LOWER"
+  },
+  "environment_control_check": {
+    "difference_ns": -3215,
+    "ci95": {
+      "low_ns": -4405,
+      "high_ns": -1733
+    },
+    "left": "SPSC_SPIN/dedicated",
+    "right": "SPSC_SPIN/shared",
+    "base_equivalence_margin_ns": 20688,
+    "tailwind_limit_ns": 22013,
+    "direction": "tailwind",
+    "verdict": "DETECTED_TAILWIND_WITHIN_LIMIT",
+    "comparable": true
+  },
+  "direction_consistency": {
+    "applicable": true,
+    "supporting_pairs": 8,
+    "total_pairs": 8,
+    "required_pairs": 7,
+    "required_pct": 87.5,
+    "pass": true,
+    "pair_differences_ns": [
+      -40892,
+      -44394,
+      -42132,
+      -41399,
+      -44856,
+      -48815,
+      -41748,
+      -42645
+    ],
+    "verdict": "CONSISTENT"
+  },
+  "comparison_verdict": "VALID_COMPARISON",
+  "rounds": [
+    {
+      "round": 1,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1134,
+        "p99_ns": 5767,
+        "max_ns": 6633
+      },
+      "manual_order_rtt": {
+        "p50_ns": 41330,
+        "p99_ns": 56463,
+        "max_ns": 60876
+      },
+      "submit_to_final": {
+        "p50_ns": 42656,
+        "p99_ns": 57745,
+        "max_ns": 62334
+      },
+      "environment_control_rtt": {
+        "p50_ns": 48450,
+        "p99_ns": 63437,
+        "max_ns": 63701
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 49191,
+        "second_p50_ns": 48237,
+        "drift_pct": 1.94,
+        "pass": true
+      }
+    },
+    {
+      "round": 2,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 28519,
+        "p99_ns": 46659,
+        "max_ns": 82144
+      },
+      "manual_order_rtt": {
+        "p50_ns": 42150,
+        "p99_ns": 65357,
+        "max_ns": 2241097
+      },
+      "submit_to_final": {
+        "p50_ns": 71708,
+        "p99_ns": 105191,
+        "max_ns": 2276225
+      },
+      "environment_control_rtt": {
+        "p50_ns": 53964,
+        "p99_ns": 70229,
+        "max_ns": 75365
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 49914,
+        "second_p50_ns": 55843,
+        "drift_pct": 11.88,
+        "pass": true
+      }
+    },
+    {
+      "round": 3,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 28822,
+        "p99_ns": 46583,
+        "max_ns": 67121
+      },
+      "manual_order_rtt": {
+        "p50_ns": 43176,
+        "p99_ns": 60520,
+        "max_ns": 82956
+      },
+      "submit_to_final": {
+        "p50_ns": 73388,
+        "p99_ns": 100475,
+        "max_ns": 122137
+      },
+      "environment_control_rtt": {
+        "p50_ns": 55197,
+        "p99_ns": 77710,
+        "max_ns": 80259
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 54586,
+        "second_p50_ns": 55523,
+        "drift_pct": 1.72,
+        "pass": true
+      }
+    },
+    {
+      "round": 4,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1194,
+        "p99_ns": 2189,
+        "max_ns": 6675
+      },
+      "manual_order_rtt": {
+        "p50_ns": 41985,
+        "p99_ns": 59655,
+        "max_ns": 63274
+      },
+      "submit_to_final": {
+        "p50_ns": 43123,
+        "p99_ns": 60979,
+        "max_ns": 65181
+      },
+      "environment_control_rtt": {
+        "p50_ns": 53307,
+        "p99_ns": 67756,
+        "max_ns": 70164
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 53159,
+        "second_p50_ns": 53307,
+        "drift_pct": 0.28,
+        "pass": true
+      }
+    },
+    {
+      "round": 5,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 27162,
+        "p99_ns": 44181,
+        "max_ns": 50721
+      },
+      "manual_order_rtt": {
+        "p50_ns": 43371,
+        "p99_ns": 60041,
+        "max_ns": 105701
+      },
+      "submit_to_final": {
+        "p50_ns": 71729,
+        "p99_ns": 94443,
+        "max_ns": 144970
+      },
+      "environment_control_rtt": {
+        "p50_ns": 56756,
+        "p99_ns": 74612,
+        "max_ns": 80450
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 54935,
+        "second_p50_ns": 59548,
+        "drift_pct": 8.4,
+        "pass": true
+      }
+    },
+    {
+      "round": 6,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1147,
+        "p99_ns": 2049,
+        "max_ns": 2414
+      },
+      "manual_order_rtt": {
+        "p50_ns": 43177,
+        "p99_ns": 58894,
+        "max_ns": 67204
+      },
+      "submit_to_final": {
+        "p50_ns": 44344,
+        "p99_ns": 60372,
+        "max_ns": 69256
+      },
+      "environment_control_rtt": {
+        "p50_ns": 55259,
+        "p99_ns": 72615,
+        "max_ns": 76334
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 55677,
+        "second_p50_ns": 54917,
+        "drift_pct": 1.37,
+        "pass": true
+      }
+    },
+    {
+      "round": 7,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1164,
+        "p99_ns": 2106,
+        "max_ns": 2624
+      },
+      "manual_order_rtt": {
+        "p50_ns": 42768,
+        "p99_ns": 59011,
+        "max_ns": 63021
+      },
+      "submit_to_final": {
+        "p50_ns": 43973,
+        "p99_ns": 60050,
+        "max_ns": 64552
+      },
+      "environment_control_rtt": {
+        "p50_ns": 52423,
+        "p99_ns": 67004,
+        "max_ns": 68439
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 52260,
+        "second_p50_ns": 52985,
+        "drift_pct": 1.39,
+        "pass": true
+      }
+    },
+    {
+      "round": 8,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 27204,
+        "p99_ns": 43505,
+        "max_ns": 213613
+      },
+      "manual_order_rtt": {
+        "p50_ns": 42140,
+        "p99_ns": 63227,
+        "max_ns": 1278916
+      },
+      "submit_to_final": {
+        "p50_ns": 70863,
+        "p99_ns": 96376,
+        "max_ns": 1311811
+      },
+      "environment_control_rtt": {
+        "p50_ns": 53697,
+        "p99_ns": 72964,
+        "max_ns": 73032
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 53697,
+        "second_p50_ns": 53550,
+        "drift_pct": 0.27,
+        "pass": true
+      }
+    },
+    {
+      "round": 9,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1149,
+        "p99_ns": 2089,
+        "max_ns": 2394
+      },
+      "manual_order_rtt": {
+        "p50_ns": 40644,
+        "p99_ns": 57413,
+        "max_ns": 60747
+      },
+      "submit_to_final": {
+        "p50_ns": 41737,
+        "p99_ns": 58965,
+        "max_ns": 61562
+      },
+      "environment_control_rtt": {
+        "p50_ns": 51826,
+        "p99_ns": 73755,
+        "max_ns": 74415
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 52009,
+        "second_p50_ns": 51786,
+        "drift_pct": 0.43,
+        "pass": true
+      }
+    },
+    {
+      "round": 10,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 29278,
+        "p99_ns": 46945,
+        "max_ns": 62340
+      },
+      "manual_order_rtt": {
+        "p50_ns": 43305,
+        "p99_ns": 71269,
+        "max_ns": 90824
+      },
+      "submit_to_final": {
+        "p50_ns": 74036,
+        "p99_ns": 107809,
+        "max_ns": 133875
+      },
+      "environment_control_rtt": {
+        "p50_ns": 56651,
+        "p99_ns": 74146,
+        "max_ns": 76884
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 58414,
+        "second_p50_ns": 54500,
+        "drift_pct": 6.7,
+        "pass": true
+      }
+    },
+    {
+      "round": 11,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 27495,
+        "p99_ns": 50783,
+        "max_ns": 86261
+      },
+      "manual_order_rtt": {
+        "p50_ns": 42531,
+        "p99_ns": 63577,
+        "max_ns": 73424
+      },
+      "submit_to_final": {
+        "p50_ns": 71516,
+        "p99_ns": 103314,
+        "max_ns": 140875
+      },
+      "environment_control_rtt": {
+        "p50_ns": 52349,
+        "p99_ns": 64021,
+        "max_ns": 67919
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 53527,
+        "second_p50_ns": 49408,
+        "drift_pct": 7.7,
+        "pass": true
+      }
+    },
+    {
+      "round": 12,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1197,
+        "p99_ns": 1968,
+        "max_ns": 12193
+      },
+      "manual_order_rtt": {
+        "p50_ns": 42099,
+        "p99_ns": 56232,
+        "max_ns": 66984
+      },
+      "submit_to_final": {
+        "p50_ns": 43179,
+        "p99_ns": 58230,
+        "max_ns": 67799
+      },
+      "environment_control_rtt": {
+        "p50_ns": 52496,
+        "p99_ns": 69384,
+        "max_ns": 73781
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 52877,
+        "second_p50_ns": 51933,
+        "drift_pct": 1.79,
+        "pass": true
+      }
+    },
+    {
+      "round": 13,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 28237,
+        "p99_ns": 43812,
+        "max_ns": 71853
+      },
+      "manual_order_rtt": {
+        "p50_ns": 43130,
+        "p99_ns": 58175,
+        "max_ns": 71004
+      },
+      "submit_to_final": {
+        "p50_ns": 72907,
+        "p99_ns": 95782,
+        "max_ns": 114800
+      },
+      "environment_control_rtt": {
+        "p50_ns": 54264,
+        "p99_ns": 73671,
+        "max_ns": 76238
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 53496,
+        "second_p50_ns": 54976,
+        "drift_pct": 2.77,
+        "pass": true
+      }
+    },
+    {
+      "round": 14,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1116,
+        "p99_ns": 2064,
+        "max_ns": 2196
+      },
+      "manual_order_rtt": {
+        "p50_ns": 41930,
+        "p99_ns": 57810,
+        "max_ns": 61394
+      },
+      "submit_to_final": {
+        "p50_ns": 42781,
+        "p99_ns": 59388,
+        "max_ns": 62895
+      },
+      "environment_control_rtt": {
+        "p50_ns": 50438,
+        "p99_ns": 64787,
+        "max_ns": 69101
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 50630,
+        "second_p50_ns": 50071,
+        "drift_pct": 1.1,
+        "pass": true
+      }
+    },
+    {
+      "round": 15,
+      "profile": "SPSC_SPIN/dedicated",
+      "mode": "SPSC_SPIN",
+      "placement": "dedicated",
+      "affinity_state": "pinned",
+      "cpu_list": "2",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 2,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 1145,
+        "p99_ns": 2055,
+        "max_ns": 2262
+      },
+      "manual_order_rtt": {
+        "p50_ns": 40755,
+        "p99_ns": 55873,
+        "max_ns": 63383
+      },
+      "submit_to_final": {
+        "p50_ns": 41903,
+        "p99_ns": 56825,
+        "max_ns": 64650
+      },
+      "environment_control_rtt": {
+        "p50_ns": 50227,
+        "p99_ns": 71259,
+        "max_ns": 83742
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 49360,
+        "second_p50_ns": 51056,
+        "drift_pct": 3.44,
+        "pass": true
+      }
+    },
+    {
+      "round": 16,
+      "profile": "SPSC_SPIN/shared",
+      "mode": "SPSC_SPIN",
+      "placement": "shared",
+      "affinity_state": "pinned",
+      "cpu_list": "0",
+      "order_thread_tid": 3541,
+      "order_thread_cpu": 0,
+      "order_rx_cpu": 2,
+      "rx_target_aligned": true,
+      "control_cpu_list": "3",
+      "control_order_thread_tid": 3382,
+      "queue_to_send": {
+        "p50_ns": 27724,
+        "p99_ns": 44700,
+        "max_ns": 58899
+      },
+      "manual_order_rtt": {
+        "p50_ns": 42643,
+        "p99_ns": 57522,
+        "max_ns": 63575
+      },
+      "submit_to_final": {
+        "p50_ns": 71412,
+        "p99_ns": 95637,
+        "max_ns": 101659
+      },
+      "environment_control_rtt": {
+        "p50_ns": 56919,
+        "p99_ns": 75503,
+        "max_ns": 91634
+      },
+      "environment_control_half_drift": {
+        "first_p50_ns": 55636,
+        "second_p50_ns": 57342,
+        "drift_pct": 3.07,
+        "pass": true
+      }
+    }
+  ],
+  "source_advance_ns": 172507855725,
+  "auto_strategy_unchanged": true,
+  "queue_full_drops": {
+    "manual": 0,
+    "auto_control": 0
+  }
+}

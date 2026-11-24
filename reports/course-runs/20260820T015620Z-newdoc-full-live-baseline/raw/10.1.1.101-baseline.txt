@@ -1,0 +1,51 @@
+$ hostname
+vm-monitor
+$ cat /etc/machine-id
+3040fa4d7358416588ad2721f9c16865
+$ uname -r
+5.15.0-164-generic
+$ lscpu summary
+CPU(s):                                  4
+On-line CPU(s) list:                     0-3
+Thread(s) per core:                      1
+Core(s) per socket:                      1
+Socket(s):                               4
+NUMA node(s):                            1
+$ ip -br link
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+ens33            UP             00:50:56:83:3e:a0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+docker0          DOWN           42:c3:83:f1:bc:9a <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br-84453bbb7488  UP             86:ea:35:35:eb:d7 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethd624858@if2  UP             26:c2:2a:cf:0f:1c <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth54e3db6@if2  UP             e6:db:ec:54:33:3a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+veth9ba0436@if2  UP             02:9c:e1:4d:12:2d <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vethbbbcb77@if2  UP             32:c3:c2:85:82:61 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+$ ip -4 -br addr
+lo               UNKNOWN        127.0.0.1/8 
+ens33            UP             10.1.1.101/24 
+docker0          DOWN           172.17.0.1/16 
+br-84453bbb7488  UP             172.18.0.1/16 
+$ PCI 03:00 functions
+$ hugepage pools
+/sys/kernel/mm/hugepages/hugepages-1048576kB 0
+0
+0
+0
+/sys/kernel/mm/hugepages/hugepages-2048kB 0
+0
+0
+0
+$ Hugetlb
+Hugetlb:               0 kB
+$ XDP links
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default 
+4: br-84453bbb7488: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default 
+5: vethd624858@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-84453bbb7488 state UP mode DEFAULT group default 
+7: veth54e3db6@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-84453bbb7488 state UP mode DEFAULT group default 
+8: veth9ba0436@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-84453bbb7488 state UP mode DEFAULT group default 
+12: vethbbbcb77@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-84453bbb7488 state UP mode DEFAULT group default 
+$ course listeners
+$ course processes
+$ market runtime

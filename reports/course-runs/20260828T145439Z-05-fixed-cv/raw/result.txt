@@ -1,0 +1,8 @@
+profile=HOST_NATIVE_SOFTWARE_GUEST_ISOLATED_AUTO_SENTINEL_V11 profiles=DEQUE_CV/dedicated,FIXED_CV/dedicated plan=ABBA_BAAB treatment=MANUAL@50Hz sentinel=AUTO_CONTROL@10Hz precondition=1000 rounds_per_profile=8 total_rounds=16 manual_warmup=40 manual_measured=400 control_every=5 bootstrap=4000 seed=20260828
+candidate=DEQUE_CV/dedicated manual_n=3200 auto_control_n=640 queue_p99_ns=16019 ci95_ns=15657..16343 manual_rtt_p99_ns=76722 ci95_ns=75065..79190 auto_control_p50_ns=50526 ci95_ns=49971..51109
+candidate=FIXED_CV/dedicated manual_n=3200 auto_control_n=640 queue_p99_ns=16608 ci95_ns=16050..17033 manual_rtt_p99_ns=76842 ci95_ns=74994..77842 auto_control_p50_ns=50427 ci95_ns=49821..51033
+queue_effect=DEQUE_CV/dedicated_MINUS_FIXED_CV/dedicated difference_ns=-589 ci95_ns=-1218..147 ratio=0.96 verdict=NO_DETECTED_DIFFERENCE
+manual_rtt_effect=DEQUE_CV/dedicated_MINUS_FIXED_CV/dedicated difference_ns=-120 ci95_ns=-2105..3151 verdict=NO_DETECTED_DIFFERENCE
+environment_control_check=DEQUE_CV/dedicated_MINUS_FIXED_CV/dedicated p50_difference_ns=99 ci95_ns=-728..980 base_margin_ns=+/-20171 tailwind_limit_ns=294 direction=not_detected verdict=NO_DETECTED_DIFFERENCE_WITHIN_MARGIN
+comparison_verdict=VALID_COMPARISON stable_control_rounds=16/16 within_limit_pct=20.00 environment_control_comparable=true direction_pairs=0/8 required_pct=87.5 direction_consistent=true single_profile_spread=1.58 spread_limit=1.50 single_profile_stable=true queue_full_drops=0/0
+last_order_tid=1952 placement=dedicated affinity_state=pinned allowed=2 observed_cpu=2 order_rx_cpu=2 source_advance_ns=170571833509 auto_strategy_unchanged=true replay_status=PLAYING

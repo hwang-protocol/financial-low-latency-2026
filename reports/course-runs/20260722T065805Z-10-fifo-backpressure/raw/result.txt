@@ -1,0 +1,8 @@
+PUSH seq=10 level=1
+PUSH seq=11 level=2
+PUSH seq=12 level=3
+PUSH seq=13 level=4
+STALL seq=14 level=4
+POP seq=10
+PUSH seq=14 level=4
+FIFO_BACKPRESSURE_PASS outputs=[10, 11, 12, 13, 14] max_level=4

@@ -1,0 +1,8 @@
+profile=HOST_NATIVE_SOFTWARE_GUEST_ISOLATED_AUTO_SENTINEL_V11 profiles=SPSC_SPIN/dedicated,SPSC_SPIN/rx plan=ABBA_BAAB treatment=MANUAL@50Hz sentinel=AUTO_CONTROL@10Hz precondition=1000 rounds_per_profile=8 total_rounds=16 manual_warmup=40 manual_measured=400 control_every=5 bootstrap=4000 seed=20260828
+candidate=SPSC_SPIN/dedicated manual_n=3200 auto_control_n=640 queue_p99_ns=22276 ci95_ns=20929..23240 manual_rtt_p99_ns=78298 ci95_ns=76971..80778 auto_control_p50_ns=54036 ci95_ns=53399..54611
+candidate=SPSC_SPIN/rx manual_n=3200 auto_control_n=640 queue_p99_ns=65249 ci95_ns=62753..67562 manual_rtt_p99_ns=74806 ci95_ns=72884..76771 auto_control_p50_ns=54752 ci95_ns=54093..55413
+queue_effect=SPSC_SPIN/dedicated_MINUS_SPSC_SPIN/rx difference_ns=-42973 ci95_ns=-45953..-40537 ratio=0.34 verdict=LEFT_LOWER
+manual_rtt_effect=SPSC_SPIN/dedicated_MINUS_SPSC_SPIN/rx difference_ns=3492 ci95_ns=1234..6547 verdict=RIGHT_LOWER
+environment_control_check=SPSC_SPIN/dedicated_MINUS_SPSC_SPIN/rx p50_difference_ns=-716 ci95_ns=-1623..179 base_margin_ns=+/-21614 tailwind_limit_ns=21486 direction=not_detected verdict=NO_DETECTED_DIFFERENCE_WITHIN_MARGIN
+comparison_verdict=VALID_COMPARISON stable_control_rounds=16/16 within_limit_pct=20.00 environment_control_comparable=true direction_pairs=7/8 required_pct=87.5 direction_consistent=true single_profile_spread=2.01 spread_limit=1.50 single_profile_stable=true queue_full_drops=0/0
+last_order_tid=1952 placement=rx affinity_state=pinned allowed=0 observed_cpu=0 order_rx_cpu=1 source_advance_ns=170700344319 auto_strategy_unchanged=true replay_status=PLAYING

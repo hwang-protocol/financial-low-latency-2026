@@ -1,0 +1,26 @@
+
+===== root@10.1.1.1 =====
+$ hostname
+vm-2522-01
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+$ ls -l /sys/bus/pci/devices/0000:03:00.0/net
+total 0
+drwxr-xr-x 5 root root 0 Jul 23 14:08 ens64np0
+$ ip -4 -o addr show dev ens64np0
+4: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+$ ls -ld /sys/bus/pci/devices/0000:03:00.0/iommu_group
+ls: cannot access '/sys/bus/pci/devices/0000:03:00.0/iommu_group': No such file or directory
+
+===== root@10.1.1.2 =====
+$ hostname
+vm-2522-02
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+$ ls -l /sys/bus/pci/devices/0000:03:00.0/net
+total 0
+drwxr-xr-x 5 root root 0 Jul 23 14:10 ens64np1
+$ ip -4 -o addr show dev ens64np1
+4: ens64np1    inet 20.1.1.2/24 brd 20.1.1.255 scope global ens64np1\       valid_lft forever preferred_lft forever
+$ ls -ld /sys/bus/pci/devices/0000:03:00.0/iommu_group
+ls: cannot access '/sys/bus/pci/devices/0000:03:00.0/iommu_group': No such file or directory

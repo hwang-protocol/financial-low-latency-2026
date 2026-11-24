@@ -1,0 +1,52 @@
+*** Welcome to the IPython shell for P4Runtime ***
+P4Runtime sh >>> 
+P4Runtime sh >>> field_id: 1
+lpm {
+  value: "\nc\000\001"
+  prefix_len: 32
+}
+
+
+P4Runtime sh >>> param_id: 1
+value: "\021\"3DU"
+
+
+P4Runtime sh >>> param_id: 2
+value: "\001"
+
+
+P4Runtime sh >>> 
+P4Runtime sh >>> P4RUNTIME_INSERT_OK
+
+P4Runtime sh >>> 
+P4Runtime sh >>> P4RUNTIME_READ_COUNT=1
+
+P4Runtime sh >>> table_id: 37375156 ("MyIngress.ipv4_lpm")
+match {
+  field_id: 1 ("hdr.ipv4.dstAddr")
+  lpm {
+    value: "\\x0a\\x63\\x00\\x01"
+    prefix_len: 32
+  }
+}
+action {
+  action {
+    action_id: 28792405 ("MyIngress.ipv4_forward")
+    params {
+      param_id: 1 ("dstAddr")
+      value: "\\x11\\x22\\x33\\x44\\x55"
+    }
+    params {
+      param_id: 2 ("port")
+      value: "\\x01"
+    }
+  }
+}
+
+
+P4Runtime sh >>> 
+P4Runtime sh >>> P4RUNTIME_DELETE_OK
+
+P4Runtime sh >>> P4RUNTIME_POST_DELETE_COUNT=0
+
+P4Runtime sh >>> 

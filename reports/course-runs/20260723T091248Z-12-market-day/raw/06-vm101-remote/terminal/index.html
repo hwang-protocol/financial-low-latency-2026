@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FLLE Market Day Terminal</title>
+  <link rel="stylesheet" href="/assets/terminal.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">FLLE</span>
+      <div><strong>MARKET DAY</strong><small>LOW-LATENCY ENGINEERING TERMINAL</small></div>
+    </div>
+    <div class="run-strip">
+      <span class="badge simulated">SIMULATED</span>
+      <span>RUN <b id="run-id">—</b></span>
+      <span>MODE <b id="mode">—</b></span>
+      <span>PHASE <b id="phase">—</b></span>
+      <span class="stream"><i id="stream-dot"></i><b id="stream-status">CONNECTING</b></span>
+    </div>
+  </header>
+
+  <nav class="controlbar" aria-label="Market Day controls">
+    <div class="segmented" id="mode-controls">
+      <button data-mode="live">LIVE LAB</button>
+      <button data-mode="replay">REPLAY</button>
+      <button data-mode="fault-demo">FAULT DEMO</button>
+    </div>
+    <div class="phase-controls" id="phase-controls">
+      <button data-phase="CALM">CALM</button>
+      <button data-phase="BURST">BURST</button>
+      <button data-phase="FAULT">FAULT</button>
+      <button data-phase="RECOVER">RECOVER</button>
+    </div>
+    <button class="replay-button" id="replay-button">▶ REPLAY CURRENT RUN</button>
+  </nav>
+
+  <main class="workspace">
+    <section class="panel market-panel">
+      <div class="panel-head">
+        <div><small>SIMULATED INSTRUMENT</small><h1>AAPL</h1></div>
+        <div class="price"><span id="market-price">—</span><small id="price-source">AWAITING PRICE EVENT</small></div>
+      </div>
+      <canvas id="tape-chart" width="900" height="190" aria-label="Current-run tick tape"></canvas>
+      <div class="market-stats">
+        <div><small>LAST SEQUENCE</small><strong id="last-sequence">—</strong></div>
+        <div><small>FEED A EVENTS</small><strong id="feed-a">0</strong></div>
+        <div><small>FEED B EVENTS</small><strong id="feed-b">0</strong></div>
+        <div><small>DUPLICATES</small><strong id="duplicates">0</strong></div>
+        <div><small>GAP REMAINING</small><strong id="gap">—</strong></div>
+        <div><small>TICK WINDOW</small><strong id="tick-window">—</strong></div>
+      </div>
+    </section>
+
+    <section class="panel order-panel">
+      <div class="panel-title"><span>SIMULATED ORDER TICKET</span><b>LIVE ORDER API</b></div>
+      <form id="order-form">
+        <label>SYMBOL<input value="AAPL" readonly></label>
+        <label>SIDE<select id="order-side"><option>BUY</option><option>SELL</option></select></label>
+        <label>QUANTITY<input id="order-quantity" type="number" min="1" max="1000" value="10"></label>
+        <button type="submit">SUBMIT SIMULATED ORDER</button>
+      </form>
+      <p class="boundary">Shared REST API: .101 Gateway → .2 Trader adapter → TCP 20.1.1.2 → 20.1.1.1:43300 .1 order service → ACK / Execution. Market-data processing never waits for browser rendering or SSE.</p>
+      <div class="lifecycle">
+        <div id="life-order"><i></i><span>ORDER</span><b>WAITING</b></div>
+        <div id="life-ack"><i></i><span>ACK</span><b>WAITING</b></div>
+        <div id="life-execution"><i></i><span>EXECUTION</span><b>WAITING</b></div>
+      </div>
+      <div class="correlation"><small>CORRELATION</small><code id="correlation">—</code></div>
+    </section>
+
+    <section class="panel path-panel">
+      <div class="panel-title"><span>OBSERVED NETWORK PATH</span><b>CURRENT RUN ONLY</b></div>
+      <div class="path">
+        <div class="node" id="node-exchange"><small>DATA 20.1.1.1</small><strong>EXCHANGE</strong><span>NO EVENT</span></div>
+        <div class="link"><i></i><small>Et1</small></div>
+        <div class="node fabric"><small>ARISTA</small><strong>7150S FABRIC</strong><span>AWAITING PATH EVENT</span></div>
+        <div class="link"><i></i><small>Et2</small></div>
+        <div class="node" id="node-trader"><small>DATA 20.1.1.2</small><strong>TRADER</strong><span>NO EVENT</span></div>
+        <div class="async-link"><span>REST / SSE</span></div>
+        <div class="node gateway active"><small>10.1.1.101</small><strong>TERMINAL</strong><span>MANAGEMENT PLANE</span></div>
+      </div>
+      <div class="path-note"><i></i> Gateway order commands enter through the Trader adapter; market-data processing and the measured latency path never wait for browser rendering or SSE.</div>
+    </section>
+
+    <section class="panel metrics-panel">
+      <div class="panel-title"><span>ARRIVAL SHAPE & CLOCK</span><b>EVENT-DERIVED</b></div>
+      <div class="metric-grid">
+        <article><small>P50 TICK GAP</small><strong id="p50">—</strong><span>TRADER MONOTONIC</span></article>
+        <article><small>P99 TICK GAP</small><strong id="p99">—</strong><span>TRADER MONOTONIC</span></article>
+        <article><small>P99.9 TICK GAP</small><strong id="p999">—</strong><span>TRADER MONOTONIC</span></article>
+        <article><small>PTP OFFSET</small><strong id="ptp-offset">—</strong><span id="clock-domain">NO CLOCK EVENT</span></article>
+      </div>
+    </section>
+
+    <section class="panel pressure-panel">
+      <div class="panel-title"><span>BURST / LANZ</span><b>CURRENT-RUN EVIDENCE</b></div>
+      <dl>
+        <div><dt>TRex TX</dt><dd id="trex-tx">—</dd></div>
+        <div><dt>NIC RX</dt><dd id="nic-rx">—</dd></div>
+        <div><dt>LANZ EVENTS</dt><dd id="lanz-events">—</dd></div>
+        <div><dt>MAX QUEUE</dt><dd id="max-queue">—</dd></div>
+      </dl>
+      <p id="pressure-note">Awaiting current-run TRex/LANZ event fields.</p>
+    </section>
+
+    <section class="panel health-panel">
+      <div class="panel-title"><span>COMPONENT HEALTH</span><b>LAST OBSERVATION</b></div>
+      <div class="health-list">
+        <div><i id="health-exchange"></i><span>Exchange .1</span><b id="health-exchange-text">UNOBSERVED</b></div>
+        <div><i id="health-trader"></i><span>Trader .2</span><b id="health-trader-text">UNOBSERVED</b></div>
+        <div><i id="health-gateway" class="ok"></i><span>Gateway .101</span><b>ONLINE</b></div>
+        <div><i id="health-stream"></i><span>SSE subscriber</span><b id="health-stream-text">CONNECTING</b></div>
+      </div>
+    </section>
+
+    <section class="panel events-panel">
+      <div class="panel-title">
+        <span>RAW EVENT TAPE</span>
+        <b><span id="event-count">0</span> PERSISTED EVENTS</b>
+      </div>
+      <div class="event-head"><span>SEQ / TIME</span><span>SOURCE / PHASE</span><span>EVENT</span><span>RAW CONTRACT DATA</span></div>
+      <div id="event-tape" class="event-tape" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>EVENT CONTRACT <b>flle.market-event.v1</b></span>
+    <span id="coupling">ORDER CONTROL: GATEWAY TO TRADER ADAPTER</span>
+    <span id="last-update">LAST UPDATE —</span>
+  </footer>
+  <div id="toast" role="status"></div>
+  <script src="/assets/terminal.js"></script>
+</body>
+</html>

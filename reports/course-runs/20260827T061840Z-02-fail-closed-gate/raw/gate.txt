@@ -1,0 +1,11 @@
+sent case=legal           bytes=52 head8=464c010100000020
+sent case=truncated       bytes=40 head8=464c010100000020
+sent case=bad-magic       bytes=52 head8=4646010100000020
+sent case=bad-version     bytes=52 head8=464c020100000020
+sent case=bad-header-len  bytes=52 head8=464c010100000021
+---- 接收端逐条过门禁 ----
+recv bytes=52 head8=464c010100000020 verdict=HEADER_GATE_PASSED
+recv bytes=40 head8=464c010100000020 verdict=BAD_PACKET_SIZE
+recv bytes=52 head8=4646010100000020 verdict=BAD_MAGIC
+recv bytes=52 head8=464c020100000020 verdict=BAD_VERSION
+recv bytes=52 head8=464c010100000021 verdict=BAD_LENGTH

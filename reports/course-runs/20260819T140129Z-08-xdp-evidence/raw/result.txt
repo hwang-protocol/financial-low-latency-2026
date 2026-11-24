@@ -1,0 +1,35 @@
+$ sha256sum Documents/newDoc/assets/08-xdp/xdp-lifecycle-native-20260721.txt
+636c2a29e8d03b9c0b09b9b490621ac49afa5c46fd0250f6101c8bab5fdbb950  Documents/newDoc/assets/08-xdp/xdp-lifecycle-native-20260721.txt
+
+$ cat Documents/newDoc/assets/08-xdp/xdp-lifecycle-native-20260721.txt
+Provenance: 20260721T152613Z-xdp-a1-native-exact-current-fn0
+Sources: raw/active/native-attach.txt; raw/active/*-capture-console.txt; raw/active/native-detach.txt
+
+$ ip -details link show dev ens64f0np0
+3: ens64f0np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdp qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff
+    prog/xdp id 187 tag 918a00806b51ccc3 jited
+    altname enp3s0f0np0
+
+$ tcpdump capture baseline
+tcpdump: listening on ens64f0np0, link-type EN10MB (Ethernet), snapshot length 256 bytes
+8 packets captured
+8 packets received by filter
+0 packets dropped by kernel
+
+$ tcpdump capture exact-drop
+tcpdump: listening on ens64f0np0, link-type EN10MB (Ethernet), snapshot length 256 bytes
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+
+$ ip -details link show dev ens64f0np0
+3: ens64f0np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff
+    altname enp3s0f0np0
+
+$ tcpdump capture recovery
+tcpdump: listening on ens64f0np0, link-type EN10MB (Ethernet), snapshot length 256 bytes
+8 packets captured
+8 packets received by filter
+0 packets dropped by kernel

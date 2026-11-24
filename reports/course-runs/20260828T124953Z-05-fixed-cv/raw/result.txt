@@ -1,0 +1,8 @@
+profile=HOST_NATIVE_SOFTWARE_COUNTERBALANCED_50HZ_V3 profiles=DEQUE_CV/floating,FIXED_CV/floating plan=ABBA_BAAB rounds_per_profile=4 total_rounds=8 warmup_per_round=20 measured_per_round=200 interval_us=20000 bootstrap=4000 seed=20260828
+candidate=DEQUE_CV/floating pooled_n=800 queue_p99_ns=71001 ci95_ns=57602..91213 round_p99_range_ns=29433..93648 spread_ratio=3.18 control_p99_ns=189808 ci95_ns=177349..210740
+candidate=FIXED_CV/floating pooled_n=800 queue_p99_ns=53725 ci95_ns=44896..61854 round_p99_range_ns=30787..63906 spread_ratio=2.08 control_p99_ns=176805 ci95_ns=162370..230511
+queue_effect=DEQUE_CV/floating_MINUS_FIXED_CV/floating difference_ns=17276 ci95_ns=253..40190 ratio=1.32 verdict=RIGHT_LOWER
+control_arm_check=DEQUE_CV/floating_MINUS_FIXED_CV/floating difference_ns=13003 ci95_ns=-49855..38267 verdict=COMPARABLE
+comparison_verdict=REJECTED_WITHIN_ROUND_DRIFT stable_rounds=6/8 within_limit_pct=40.00 control_arm_comparable=true queue_full_drops=0
+last_order_tid=47024 placement=floating affinity_state=floating allowed=0-3 observed_cpu=2 order_rx_cpu=2 source_advance_ns=39936626679 auto_strategy_unchanged=true replay_status=PLAYING
+raw_csv=/financial-low-latency/Documents/reports/course-runs/20260828T124953Z-05-fixed-cv/raw/software.csv summary_json=/financial-low-latency/Documents/reports/course-runs/20260828T124953Z-05-fixed-cv/raw/software.summary.json

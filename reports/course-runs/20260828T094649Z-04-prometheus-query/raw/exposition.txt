@@ -1,0 +1,48 @@
+# HELP flle_component_up Whether the latest component state is ONLINE.
+# TYPE flle_component_up gauge
+flle_component_up{component="exchange"} 1
+flle_component_up{component="trader_auto"} 1
+flle_component_up{component="trader_manual"} 1
+flle_component_up{component="gateway"} 1
+# HELP flle_replay_progress_ratio Current regular-session replay progress from 0 to 1.
+# TYPE flle_replay_progress_ratio gauge
+flle_replay_progress_ratio 0.013000100
+# HELP flle_replay_source_time_seconds Historical market time since midnight.
+# TYPE flle_replay_source_time_seconds gauge
+flle_replay_source_time_seconds 34504.514687697
+# HELP flle_market_messages_total ITCH messages replayed in the current paper epoch.
+# TYPE flle_market_messages_total counter
+flle_market_messages_total 634359
+# HELP flle_feed_pending_messages Messages waiting behind a sequence gap.
+# TYPE flle_feed_pending_messages gauge
+flle_feed_pending_messages 0
+# HELP flle_feed_gap_messages Missing sequence count currently blocking delivery.
+# TYPE flle_feed_gap_messages gauge
+flle_feed_gap_messages 0
+# HELP flle_feed_duplicates Duplicate market-data copies seen in the current epoch.
+# TYPE flle_feed_duplicates gauge
+flle_feed_duplicates 0
+# HELP flle_order_rtt_samples C++ order RTT samples retained in the current epoch.
+# TYPE flle_order_rtt_samples gauge
+# HELP flle_order_rtt_seconds C++ OUCH send to final response RTT summary.
+# TYPE flle_order_rtt_seconds gauge
+# HELP flle_paper_orders_total Paper orders submitted in the current epoch.
+# TYPE flle_paper_orders_total counter
+# HELP flle_paper_fills_total Paper fills received in the current epoch.
+# TYPE flle_paper_fills_total counter
+# HELP flle_paper_rejects_total Paper rejects received in the current epoch.
+# TYPE flle_paper_rejects_total counter
+flle_order_rtt_samples{client="auto"} 122
+flle_order_rtt_seconds{client="auto",stat="p50"} 0.000161074
+flle_order_rtt_seconds{client="auto",stat="p99"} 0.000343866
+flle_order_rtt_seconds{client="auto",stat="max"} 0.000441701
+flle_paper_orders_total{client="auto"} 122
+flle_paper_fills_total{client="auto"} 107
+flle_paper_rejects_total{client="auto"} 15
+flle_order_rtt_samples{client="manual"} 220
+flle_order_rtt_seconds{client="manual",stat="p50"} 0.000151901
+flle_order_rtt_seconds{client="manual",stat="p99"} 0.000240781
+flle_order_rtt_seconds{client="manual",stat="max"} 0.000348444
+flle_paper_orders_total{client="manual"} 220
+flle_paper_fills_total{client="manual"} 220
+flle_paper_rejects_total{client="manual"} 0

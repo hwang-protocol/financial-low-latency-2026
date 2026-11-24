@@ -1,0 +1,18 @@
+
+===== root@10.1.1.1 =====
+$ hostname
+vm-2522-01
+$ ls -l /dev/ptp0
+crw------- 1 root root 246, 0 Jul 23 14:08 /dev/ptp0
+$ phc_ctl /dev/ptp0 get
+phc_ctl[17345.916]: clock time is 247308.141712956 or Sun Jan  4 04:41:48 1970
+
+
+===== root@10.1.1.2 =====
+$ hostname
+vm-2522-02
+$ ls -l /dev/ptp0
+crw------- 1 root root 246, 0 Jul 23 14:10 /dev/ptp0
+$ phc_ctl /dev/ptp0 get
+phc_ctl[17344.193]: clock time is 247308.421805370 or Sun Jan  4 04:41:48 1970
+

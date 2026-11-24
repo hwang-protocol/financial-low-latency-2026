@@ -1,0 +1,75 @@
+$ show version
+show version | no-more
+Arista DCS-7150S-24-F
+Hardware version:      02.00
+Serial number:         JPE13480066
+Hardware MAC address:  001c.7368.e239
+System MAC address:    001c.7368.e239
+
+Software image version: 4.23.16M-2GB
+Architecture:           i686
+Internal build version: 4.23.16M-2GB-40226546.42316M
+Internal build ID:      bb71297b-4523-465f-a576-6c7d1cb24663
+
+Uptime:                 0 weeks, 0 days, 0 hours and 19 minutes
+Total memory:           4009040 kB
+Free memory:            3066084 kB
+
+
+$ show interfaces Ethernet1 status
+show interfaces Ethernet1 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet2 status
+show interfaces Ethernet2 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et2               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet1 counters
+show interfaces Ethernet1 counters | no-more
+Port                           InOctets     InUcastPkts     InMcastPkts     InBcastPkts
+Et1                                6383              32              42               1
+
+Port                          OutOctets    OutUcastPkts    OutMcastPkts    OutBcastPkts
+Et1                               67122              23             517               1
+
+$ show interfaces Ethernet2 counters
+show interfaces Ethernet2 counters | no-more
+Port                           InOctets     InUcastPkts     InMcastPkts     InBcastPkts
+Et2                                4410              23              34               1
+
+Port                          OutOctets    OutUcastPkts    OutMcastPkts    OutBcastPkts
+Et2                               70140              32             540               1
+
+$ show vlan id 20
+show vlan id 20 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2, Et11, Et12
+
+
+$ show mac address-table dynamic vlan 20
+show mac address-table dynamic vlan 20 | no-more
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  20    000f.53d3.af20    DYNAMIC     Et1        1       0:02:38 ago
+  20    000f.53d3.af21    DYNAMIC     Et2        1       0:00:50 ago
+Total Mac Addresses for this criterion: 2
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0
+
+$ show switch forwarding-mode
+show switch forwarding-mode | no-more
+Current switching mode:    cut through
+Available switching modes: cut through, store and forward

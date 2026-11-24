@@ -1,0 +1,67 @@
+===== management: hostname / ens33 / default route =====
+vm-broadcom-01
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:50:56:83:1b:4f brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9190 numtxqueues 18 numrxqueues 18 gso_max_size 65536 gso_max_segs 65535 parentbus pci parentdev 0000:02:01.0 
+    altname enp2s1
+    inet 10.1.1.11/24 brd 10.1.1.255 scope global ens33
+       valid_lft forever preferred_lft forever
+default via 10.1.1.254 dev ens33 proto static 
+===== PCIe function 0000:03:00.0: driver / netdev =====
+/sys/bus/pci/drivers/bnxt_en
+ens64f0np0
+23: ens64f0np0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p0 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.0 
+    altname enp3s0f0np0
+driver: bnxt_en
+version: 5.15.0-164-generic
+firmware-version: 230.0.157.0/pkg 230.1.116.0
+expansion-rom-version: 
+bus-info: 0000:03:00.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: yes
+supports-register-dump: yes
+supports-priv-flags: no
+===== PCIe function 0000:03:00.1: driver / netdev =====
+/sys/bus/pci/drivers/bnxt_en
+ens64f1np1
+24: ens64f1np1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a1 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p1 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.1 
+    altname enp3s0f1np1
+driver: bnxt_en
+version: 5.15.0-164-generic
+firmware-version: 230.0.157.0/pkg 230.1.116.0
+expansion-rom-version: 
+bus-info: 0000:03:00.1
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: yes
+supports-register-dump: yes
+supports-priv-flags: no
+===== hugepage pools / mounts / files / holders =====
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+hugepages-1048576kB nr=0 free=0 resv=0 surp=0
+hugepages-2048kB nr=0 free=0 resv=0 surp=0
+/dev/hugepages hugetlbfs hugetlbfs rw,relatime,pagesize=2M
+hugetlbfs_mount=/dev/hugepages
+path=/var/run/dpdk/fllemarketday state=absent
+path=/opt/trex/v3.08 state=absent
+path=/mnt/huge state=absent
+===== TRex processes / listeners / deadman units =====
+Id=flle-market-day-root.timer
+LoadState=not-found
+ActiveState=inactive
+SubState=dead
+
+Id=flle-market-day-root.service
+LoadState=not-found
+ActiveState=inactive
+SubState=dead
+===== recovery safety gates =====
+bdf=0000:03:00.0 iface=ens64f0np0 mac=00:0a:f7:f8:48:a0 driver=bnxt_en state=down addr=none xdp=none
+bdf=0000:03:00.1 iface=ens64f1np1 mac=00:0a:f7:f8:48:a1 driver=bnxt_en state=down addr=none xdp=none

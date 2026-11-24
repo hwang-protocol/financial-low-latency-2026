@@ -1,0 +1,479 @@
+control_monotonic_ns=75849252433377
+$ show clock
+show clock
+Thu Jul 23 07:52:07 2026
+Timezone: UTC
+Clock source: local
+
+control_monotonic_ns=75849311818120
+$ show queue-monitor length status
+show queue-monitor length status
+queue-monitor length enabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+Global Buffer Monitoring
+------------------------
+Global buffer monitoring is enabled
+Segment size in bytes :   160
+Total buffers in segments : 49152
+High threshold : 20540
+Low threshold :  8216
+
+
+Per-Interface Queue Length Monitoring
+-------------------------------------
+Queue length monitoring is enabled
+Segment size in bytes :   480
+Maximum queue length in segments :  6847
+Port thresholds in segments:
+Port     High threshold  Low threshold   Mirroring Enabled       Warnings
+Cpu               15888          15888               False
+Et1                 512            256               False
+Et2                  64             32               False
+Et3                 512            256               False
+Et4                 512            256               False
+Et5                 512            256               False
+Et6                 512            256               False
+Et7                 512            256               False
+Et8                 512            256               False
+Et9                 512            256               False
+Et10                512            256               False
+Et11                512            256               False
+Et12                512            256               False
+Et13                512            256               False
+Et14                512            256               False
+Et15                512            256               False
+Et16                512            256               False
+Et17                512            256               False
+Et18                512            256               False
+Et19                512            256               False
+Et20                512            256               False
+Et21                512            256               False
+Et22                512            256               False
+Et23                512            256               False
+Et24                512            256               False
+
+control_monotonic_ns=75849395140262
+$ show queue-monitor length statistics
+show queue-monitor length statistics
+
+Report generated at 2026-07-23 07:52:07
+Interface      Traffic Class  Count          
+-----------------------------------------------------------------
+Et2             1               164            
+
+Global Hit Count = 0
+
+control_monotonic_ns=75849490814260
+$ show queue-monitor length Ethernet 2
+show queue-monitor length Ethernet 2
+
+Report generated at 2026-07-23 07:52:07
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+ E   0:00:28.39427 ago         Et2(1)    28            64*         0             
+ S   0:00:28.39430 ago         Et2(1)    N/A           64          N/A           
+ E   0:00:28.39507 ago         Et2(1)    28            84*         0             
+ S   0:00:28.39510 ago         Et2(1)    N/A           84          N/A           
+ E   0:00:28.39607 ago         Et2(1)    28            90*         0             
+ S   0:00:28.39610 ago         Et2(1)    N/A           90          N/A           
+ E   0:00:28.39707 ago         Et2(1)    29            83*         0             
+ S   0:00:28.39710 ago         Et2(1)    N/A           83          N/A           
+ E   0:00:28.39807 ago         Et2(1)    28            88*         0             
+ S   0:00:28.39810 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.39907 ago         Et2(1)    29            84*         0             
+ S   0:00:28.39910 ago         Et2(1)    N/A           84          N/A           
+ E   0:00:28.40007 ago         Et2(1)    29            88*         0             
+ S   0:00:28.40010 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.40107 ago         Et2(1)    28            82*         0             
+ S   0:00:28.40110 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.40207 ago         Et2(1)    28            79*         0             
+ S   0:00:28.40210 ago         Et2(1)    N/A           79          N/A           
+ E   0:00:28.40307 ago         Et2(1)    28            91*         0             
+ S   0:00:28.40310 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.40407 ago         Et2(1)    28            87*         0             
+ S   0:00:28.40410 ago         Et2(1)    N/A           87          N/A           
+ E   0:00:28.40507 ago         Et2(1)    28            83*         0             
+ S   0:00:28.40510 ago         Et2(1)    N/A           83          N/A           
+ E   0:00:28.40608 ago         Et2(1)    28            93*         0             
+ S   0:00:28.40610 ago         Et2(1)    N/A           93          N/A           
+ E   0:00:28.40707 ago         Et2(1)    29            91*         0             
+ S   0:00:28.40710 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.40807 ago         Et2(1)    28            86*         0             
+ S   0:00:28.40810 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.40907 ago         Et2(1)    28            80*         0             
+ S   0:00:28.40910 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.41007 ago         Et2(1)    28            86*         0             
+ S   0:00:28.41010 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.41107 ago         Et2(1)    28            82*         0             
+ S   0:00:28.41110 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.41207 ago         Et2(1)    28            75*         0             
+ S   0:00:28.41210 ago         Et2(1)    N/A           75          N/A           
+ E   0:00:28.41307 ago         Et2(1)    28            70*         0             
+ S   0:00:28.41310 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.41407 ago         Et2(1)    29            93*         0             
+ S   0:00:28.41410 ago         Et2(1)    N/A           93          N/A           
+ E   0:00:28.41507 ago         Et2(1)    29            90*         0             
+ S   0:00:28.41510 ago         Et2(1)    N/A           90          N/A           
+ E   0:00:28.41607 ago         Et2(1)    28            74*         0             
+ S   0:00:28.41610 ago         Et2(1)    N/A           74          N/A           
+ E   0:00:28.41707 ago         Et2(1)    28            70*         0             
+ S   0:00:28.41710 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.41807 ago         Et2(1)    28            93*         0             
+ S   0:00:28.41810 ago         Et2(1)    N/A           93          N/A           
+ E   0:00:28.41907 ago         Et2(1)    28            68*         0             
+ S   0:00:28.41910 ago         Et2(1)    N/A           68          N/A           
+ E   0:00:28.42007 ago         Et2(1)    28            91*         0             
+ S   0:00:28.42010 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.42107 ago         Et2(1)    28            78*         0             
+ S   0:00:28.42110 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.42208 ago         Et2(1)    28            92*         0             
+ S   0:00:28.42210 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.42307 ago         Et2(1)    28            79*         0             
+ S   0:00:28.42310 ago         Et2(1)    N/A           79          N/A           
+ E   0:00:28.42407 ago         Et2(1)    28            72*         0             
+ S   0:00:28.42410 ago         Et2(1)    N/A           72          N/A           
+ E   0:00:28.42507 ago         Et2(1)    29            78*         0             
+ S   0:00:28.42510 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.42607 ago         Et2(1)    28            74*         0             
+ S   0:00:28.42610 ago         Et2(1)    N/A           74          N/A           
+ E   0:00:28.42707 ago         Et2(1)    29            77*         0             
+ S   0:00:28.42710 ago         Et2(1)    N/A           77          N/A           
+ E   0:00:28.42807 ago         Et2(1)    28            92*         0             
+ S   0:00:28.42810 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.42907 ago         Et2(1)    28            88*         0             
+ S   0:00:28.42910 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.43007 ago         Et2(1)    28            82*         0             
+ S   0:00:28.43010 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.43107 ago         Et2(1)    29            78*         0             
+ S   0:00:28.43110 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.43207 ago         Et2(1)    29            91*         0             
+ S   0:00:28.43210 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.43307 ago         Et2(1)    28            86*         0             
+ S   0:00:28.43310 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.43407 ago         Et2(1)    28            80*         0             
+ S   0:00:28.43410 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.43507 ago         Et2(1)    28            87*         0             
+ S   0:00:28.43510 ago         Et2(1)    N/A           87          N/A           
+ E   0:00:28.43607 ago         Et2(1)    28            82*         0             
+ S   0:00:28.43610 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.43707 ago         Et2(1)    28            86*         0             
+ S   0:00:28.43710 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.43807 ago         Et2(1)    28            91*         0             
+ S   0:00:28.43810 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.43907 ago         Et2(1)    28            86*         0             
+ S   0:00:28.43910 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.44007 ago         Et2(1)    28            80*         0             
+ S   0:00:28.44010 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.44107 ago         Et2(1)    28            76*         0             
+ S   0:00:28.44110 ago         Et2(1)    N/A           76          N/A           
+ E   0:00:28.44207 ago         Et2(1)    29            89*         0             
+ S   0:00:28.44210 ago         Et2(1)    N/A           89          N/A           
+ E   0:00:28.44307 ago         Et2(1)    28            84*         0             
+ S   0:00:28.44310 ago         Et2(1)    N/A           84          N/A           
+ E   0:00:28.44407 ago         Et2(1)    28            90*         0             
+ S   0:00:28.44410 ago         Et2(1)    N/A           90          N/A           
+ E   0:00:28.44507 ago         Et2(1)    29            83*         0             
+ S   0:00:28.44510 ago         Et2(1)    N/A           83          N/A           
+ E   0:00:28.44607 ago         Et2(1)    28            88*         0             
+ S   0:00:28.44610 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.44707 ago         Et2(1)    28            93*         0             
+ S   0:00:28.44710 ago         Et2(1)    N/A           93          N/A           
+ E   0:00:28.44807 ago         Et2(1)    28            68*         0             
+ S   0:00:28.44810 ago         Et2(1)    N/A           68          N/A           
+ E   0:00:28.44907 ago         Et2(1)    29            91*         0             
+ S   0:00:28.44910 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.45007 ago         Et2(1)    28            70*         0             
+ S   0:00:28.45010 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.45107 ago         Et2(1)    29            74*         0             
+ S   0:00:28.45110 ago         Et2(1)    N/A           74          N/A           
+ E   0:00:28.45207 ago         Et2(1)    29            78*         0             
+ S   0:00:28.45210 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.45307 ago         Et2(1)    28            84*         0             
+ S   0:00:28.45310 ago         Et2(1)    N/A           84          N/A           
+ E   0:00:28.45407 ago         Et2(1)    29            78*         0             
+ S   0:00:28.45410 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.45507 ago         Et2(1)    28            91*         0             
+ S   0:00:28.45510 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.45607 ago         Et2(1)    29            88*         0             
+ S   0:00:28.45610 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.45707 ago         Et2(1)    29            82*         0             
+ S   0:00:28.45710 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.45807 ago         Et2(1)    28            76*         0             
+ S   0:00:28.45810 ago         Et2(1)    N/A           76          N/A           
+ E   0:00:28.45907 ago         Et2(1)    29            72*         0             
+ S   0:00:28.45910 ago         Et2(1)    N/A           72          N/A           
+ E   0:00:28.46007 ago         Et2(1)    29            76*         0             
+ S   0:00:28.46010 ago         Et2(1)    N/A           76          N/A           
+ E   0:00:28.46107 ago         Et2(1)    29            91*         0             
+ S   0:00:28.46110 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.46207 ago         Et2(1)    29            88*         0             
+ S   0:00:28.46210 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.46307 ago         Et2(1)    28            80*         0             
+ S   0:00:28.46310 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.46407 ago         Et2(1)    28            75*         0             
+ S   0:00:28.46410 ago         Et2(1)    N/A           75          N/A           
+ E   0:00:28.46507 ago         Et2(1)    28            81*         0             
+ S   0:00:28.46510 ago         Et2(1)    N/A           81          N/A           
+ E   0:00:28.46607 ago         Et2(1)    28            75*         0             
+ S   0:00:28.46610 ago         Et2(1)    N/A           75          N/A           
+ E   0:00:28.46707 ago         Et2(1)    29            70*         0             
+ S   0:00:28.46710 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.46807 ago         Et2(1)    28            76*         0             
+ S   0:00:28.46810 ago         Et2(1)    N/A           76          N/A           
+ E   0:00:28.46907 ago         Et2(1)    29            70*         0             
+ S   0:00:28.46910 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.47007 ago         Et2(1)    29            91*         0             
+ S   0:00:28.47010 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.47107 ago         Et2(1)    28            70*         0             
+ S   0:00:28.47110 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.47207 ago         Et2(1)    28            64*         0             
+ S   0:00:28.47210 ago         Et2(1)    N/A           64          N/A           
+ E   0:00:28.47307 ago         Et2(1)    29            68*         0             
+ S   0:00:28.47310 ago         Et2(1)    N/A           68          N/A           
+ E   0:00:28.47407 ago         Et2(1)    28            74*         0             
+ S   0:00:28.47410 ago         Et2(1)    N/A           74          N/A           
+ E   0:00:28.47507 ago         Et2(1)    28            78*         0             
+ S   0:00:28.47510 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.47607 ago         Et2(1)    29            92*         0             
+ S   0:00:28.47610 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.47707 ago         Et2(1)    28            70*         0             
+ S   0:00:28.47710 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.47807 ago         Et2(1)    28            82*         0             
+ S   0:00:28.47810 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.47907 ago         Et2(1)    29            77*         0             
+ S   0:00:28.47910 ago         Et2(1)    N/A           77          N/A           
+ E   0:00:28.48007 ago         Et2(1)    28            91*         0             
+ S   0:00:28.48010 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.48107 ago         Et2(1)    28            87*         0             
+ S   0:00:28.48110 ago         Et2(1)    N/A           87          N/A           
+ E   0:00:28.48207 ago         Et2(1)    28            83*         0             
+ S   0:00:28.48210 ago         Et2(1)    N/A           83          N/A           
+ E   0:00:28.48307 ago         Et2(1)    28            78*         0             
+ S   0:00:28.48310 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.48407 ago         Et2(1)    28            91*         0             
+ S   0:00:28.48410 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.48507 ago         Et2(1)    28            86*         0             
+ S   0:00:28.48510 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.48607 ago         Et2(1)    28            91*         0             
+ S   0:00:28.48610 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.48707 ago         Et2(1)    28            86*         0             
+ S   0:00:28.48710 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.48807 ago         Et2(1)    28            81*         0             
+ S   0:00:28.48810 ago         Et2(1)    N/A           81          N/A           
+ E   0:00:28.48907 ago         Et2(1)    29            87*         0             
+ S   0:00:28.48910 ago         Et2(1)    N/A           87          N/A           
+ E   0:00:28.49007 ago         Et2(1)    28            80*         0             
+ S   0:00:28.49010 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.49107 ago         Et2(1)    29            92*         0             
+ S   0:00:28.49110 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.49207 ago         Et2(1)    28            91*         0             
+ S   0:00:28.49210 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.49307 ago         Et2(1)    28            86*         0             
+ S   0:00:28.49310 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.49407 ago         Et2(1)    28            69*         0             
+ S   0:00:28.49410 ago         Et2(1)    N/A           69          N/A           
+ E   0:00:28.49507 ago         Et2(1)    28            76*         0             
+ S   0:00:28.49510 ago         Et2(1)    N/A           76          N/A           
+ E   0:00:28.49607 ago         Et2(1)    29            79*         0             
+ S   0:00:28.49610 ago         Et2(1)    N/A           79          N/A           
+ E   0:00:28.49707 ago         Et2(1)    29            91*         0             
+ S   0:00:28.49710 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.49807 ago         Et2(1)    28            71*         0             
+ S   0:00:28.49810 ago         Et2(1)    N/A           71          N/A           
+ E   0:00:28.49907 ago         Et2(1)    29            74*         0             
+ S   0:00:28.49910 ago         Et2(1)    N/A           74          N/A           
+ E   0:00:28.50007 ago         Et2(1)    28            78*         0             
+ S   0:00:28.50010 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.50107 ago         Et2(1)    28            74*         0             
+ S   0:00:28.50110 ago         Et2(1)    N/A           74          N/A           
+ E   0:00:28.50207 ago         Et2(1)    29            78*         0             
+ S   0:00:28.50210 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.50307 ago         Et2(1)    28            73*         0             
+ S   0:00:28.50310 ago         Et2(1)    N/A           73          N/A           
+ E   0:00:28.50407 ago         Et2(1)    28            70*         0             
+ S   0:00:28.50410 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.50507 ago         Et2(1)    28            82*         0             
+ S   0:00:28.50510 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.50607 ago         Et2(1)    29            77*         0             
+ S   0:00:28.50610 ago         Et2(1)    N/A           77          N/A           
+ E   0:00:28.50707 ago         Et2(1)    28            92*         0             
+ S   0:00:28.50710 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.50807 ago         Et2(1)    28            78*         0             
+ S   0:00:28.50810 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.50907 ago         Et2(1)    29            94*         0             
+ S   0:00:28.50910 ago         Et2(1)    N/A           94          N/A           
+ E   0:00:28.51007 ago         Et2(1)    28            68*         0             
+ S   0:00:28.51010 ago         Et2(1)    N/A           68          N/A           
+ E   0:00:28.51107 ago         Et2(1)    29            91*         0             
+ S   0:00:28.51110 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.51207 ago         Et2(1)    28            86*         0             
+ S   0:00:28.51210 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.51307 ago         Et2(1)    28            90*         0             
+ S   0:00:28.51310 ago         Et2(1)    N/A           90          N/A           
+ E   0:00:28.51407 ago         Et2(1)    28            86*         0             
+ S   0:00:28.51410 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.51507 ago         Et2(1)    28            80*         0             
+ S   0:00:28.51510 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.51607 ago         Et2(1)    28            76*         0             
+ S   0:00:28.51610 ago         Et2(1)    N/A           76          N/A           
+ E   0:00:28.51707 ago         Et2(1)    28            70*         0             
+ S   0:00:28.51710 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.51807 ago         Et2(1)    29            92*         0             
+ S   0:00:28.51810 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.51907 ago         Et2(1)    28            71*         0             
+ S   0:00:28.51910 ago         Et2(1)    N/A           71          N/A           
+ E   0:00:28.52007 ago         Et2(1)    29            95*         0             
+ S   0:00:28.52010 ago         Et2(1)    N/A           95          N/A           
+ E   0:00:28.52107 ago         Et2(1)    28            90*         0             
+ S   0:00:28.52110 ago         Et2(1)    N/A           90          N/A           
+ E   0:00:28.52207 ago         Et2(1)    28            75*         0             
+ S   0:00:28.52210 ago         Et2(1)    N/A           75          N/A           
+ E   0:00:28.52307 ago         Et2(1)    28            89*         0             
+ S   0:00:28.52310 ago         Et2(1)    N/A           89          N/A           
+ E   0:00:28.52407 ago         Et2(1)    29            75*         0             
+ S   0:00:28.52410 ago         Et2(1)    N/A           75          N/A           
+ E   0:00:28.52507 ago         Et2(1)    29            70*         0             
+ S   0:00:28.52510 ago         Et2(1)    N/A           70          N/A           
+ E   0:00:28.52607 ago         Et2(1)    28            92*         0             
+ S   0:00:28.52610 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.52707 ago         Et2(1)    28            68*         0             
+ S   0:00:28.52710 ago         Et2(1)    N/A           68          N/A           
+ E   0:00:28.52807 ago         Et2(1)    28            92*         0             
+ S   0:00:28.52810 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.52907 ago         Et2(1)    28            88*         0             
+ S   0:00:28.52910 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.53007 ago         Et2(1)    28            83*         0             
+ S   0:00:28.53010 ago         Et2(1)    N/A           83          N/A           
+ E   0:00:28.53107 ago         Et2(1)    28            79*         0             
+ S   0:00:28.53110 ago         Et2(1)    N/A           79          N/A           
+ E   0:00:28.53207 ago         Et2(1)    28            82*         0             
+ S   0:00:28.53210 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.53307 ago         Et2(1)    28            78*         0             
+ S   0:00:28.53310 ago         Et2(1)    N/A           78          N/A           
+ E   0:00:28.53407 ago         Et2(1)    28            83*         0             
+ S   0:00:28.53410 ago         Et2(1)    N/A           83          N/A           
+ E   0:00:28.53507 ago         Et2(1)    29            67*         0             
+ S   0:00:28.53510 ago         Et2(1)    N/A           67          N/A           
+ E   0:00:28.53607 ago         Et2(1)    28            92*         0             
+ S   0:00:28.53610 ago         Et2(1)    N/A           92          N/A           
+ E   0:00:28.53707 ago         Et2(1)    29            94*         0             
+ S   0:00:28.53710 ago         Et2(1)    N/A           94          N/A           
+ E   0:00:28.53807 ago         Et2(1)    29            91*         0             
+ S   0:00:28.53810 ago         Et2(1)    N/A           91          N/A           
+ E   0:00:28.53907 ago         Et2(1)    30            93*         0             
+ S   0:00:28.53910 ago         Et2(1)    N/A           93          N/A           
+ E   0:00:28.54007 ago         Et2(1)    28            72*         0             
+ S   0:00:28.54010 ago         Et2(1)    N/A           72          N/A           
+ E   0:00:28.54107 ago         Et2(1)    28            86*         0             
+ S   0:00:28.54110 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.54207 ago         Et2(1)    29            80*         0             
+ S   0:00:28.54210 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.54307 ago         Et2(1)    28            87*         0             
+ S   0:00:28.54310 ago         Et2(1)    N/A           87          N/A           
+ E   0:00:28.54407 ago         Et2(1)    28            80*         0             
+ S   0:00:28.54410 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.54507 ago         Et2(1)    28            84*         0             
+ S   0:00:28.54510 ago         Et2(1)    N/A           84          N/A           
+ E   0:00:28.54607 ago         Et2(1)    28            82*         0             
+ S   0:00:28.54610 ago         Et2(1)    N/A           82          N/A           
+ E   0:00:28.54707 ago         Et2(1)    28            84*         0             
+ S   0:00:28.54710 ago         Et2(1)    N/A           84          N/A           
+ E   0:00:28.54807 ago         Et2(1)    28            80*         0             
+ S   0:00:28.54810 ago         Et2(1)    N/A           80          N/A           
+ E   0:00:28.54907 ago         Et2(1)    28            86*         0             
+ S   0:00:28.54910 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.55007 ago         Et2(1)    28            79*         0             
+ S   0:00:28.55010 ago         Et2(1)    N/A           79          N/A           
+ E   0:00:28.55107 ago         Et2(1)    29            84*         0             
+ S   0:00:28.55110 ago         Et2(1)    N/A           84          N/A           
+ E   0:00:28.55206 ago         Et2(1)    28            69*         0             
+ S   0:00:28.55209 ago         Et2(1)    N/A           69          N/A           
+ E   0:00:28.55307 ago         Et2(1)    29            88*         0             
+ S   0:00:28.55310 ago         Et2(1)    N/A           88          N/A           
+ E   0:00:28.55407 ago         Et2(1)    29            85*         0             
+ S   0:00:28.55410 ago         Et2(1)    N/A           85          N/A           
+ E   0:00:28.55506 ago         Et2(1)    29            79*         0             
+ S   0:00:28.55509 ago         Et2(1)    N/A           79          N/A           
+ E   0:00:28.55607 ago         Et2(1)    28            86*         0             
+ S   0:00:28.55610 ago         Et2(1)    N/A           86          N/A           
+ E   0:00:28.55706 ago         Et2(1)    27            78*         0             
+ S   0:00:28.55709 ago         Et2(1)    N/A           78          N/A           
+
+control_monotonic_ns=75849686657115
+$ show queue-monitor length drops
+show queue-monitor length drops
+
+Report generated at 2026-07-23 07:52:07
+Time                                    Interface      TX Drops
+-----------------------------------------------------------------
+
+control_monotonic_ns=75849782975101
+$ show interfaces Ethernet2 counters errors
+show interfaces Ethernet2 counters errors
+Port               FCS    Align   Symbol       Rx    Runts   Giants       Tx
+Et2                  0        0        0        0        0        0        0
+
+control_monotonic_ns=75849848709699
+$ show interfaces Ethernet2 counters discards
+show interfaces Ethernet2 counters discards
+Port          InDiscards    OutDiscards 
+---------- ---------------- ----------- 
+Et2                    0              0 
+
+
+control_monotonic_ns=75849915463300
+$ show platform fm6000 danz-processor
+show platform fm6000 danz-processor
+
+Co-Processor Control Status Registers
+-------------------------------------
+Co-Processor Version 4.7
+Co-Processor is RUNNING
+Lanz is ENABLED
+Tracing is DISABLED 
+
+LANZ Control Status Registers
+-------------------------------------
+DMA head ptr: bc400000
+DMA write ptr: 13776
+DMA read ptr: 13776
+DMA size : 8388604
+Qlen update aggr: 80
+Qlen update: 5000000
+Number of update messages: 25
+Global Buffer usage reporting is ENABLED
+GB high wm: 20540
+GB low wm: 8216
+Packet sampling is DISABLED
+Mirror Src Mask ffffffffffffffffffffffff
+   DMA Statistics
+   -------------------------
+   Written records: 492
+   Read records: 492
+   Failed transfers: 0
+
+Keyframe Control Status Registers
+-------------------------------------
+Alta time: 0
+UTC time: 0
+PTP last sync time: 0
+PTP skew numerator: 0
+PTP skew denominator: 0
+Default source IP: 10.1.1.253
+Source MAC: 1c7368e23a
+Keyframe count: 0
+

@@ -1,0 +1,28 @@
+
+===== root@10.1.1.1 =====
+$ hostname
+vm-2522-01
+$ ls -l /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+-rwxr-xr-x 1 root root 3763864 Jul 27 13:48 /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+$ sha256sum /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+4fb06951fb451caac9401bdb69b1c0a5f2450974e1c6b337879ea9173cec8942  /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+$ file /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+/opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=ee9036b6446b1fbfa76dc779cd219055f4bcc9cb, for GNU/Linux 3.2.0, with debug_info, not stripped
+$ cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+0
+$ ls -l /dev/onload
+crw-rw-rw- 1 root root 237, 0 Jul 27 13:48 /dev/onload
+
+===== root@10.1.1.2 =====
+$ hostname
+vm-2522-02
+$ ls -l /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+-rwxr-xr-x 1 root root 3763864 Jul 27 13:48 /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+$ sha256sum /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+4fb06951fb451caac9401bdb69b1c0a5f2450974e1c6b337879ea9173cec8942  /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+$ file /opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong
+/opt/flle/course-bin/tcpdirect-9.0.2/zftcppingpong: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=ee9036b6446b1fbfa76dc779cd219055f4bcc9cb, for GNU/Linux 3.2.0, with debug_info, not stripped
+$ cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+0
+$ ls -l /dev/onload
+crw-rw-rw- 1 root root 237, 0 Jul 27 13:48 /dev/onload

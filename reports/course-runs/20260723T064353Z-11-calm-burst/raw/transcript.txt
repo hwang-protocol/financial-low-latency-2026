@@ -1,0 +1,398 @@
+===== TRex client / dual-10k-4096 =====
+$ cat dual-10k-4096-trex-summary.json
+{
+  "active_counts_exact": true,
+  "active_tx_ports": [
+    0,
+    1
+  ],
+  "actual_obytes_per_packet": 1518.0,
+  "actual_total_obytes_delta": 12435456,
+  "actual_total_opackets_delta": 8192,
+  "configured_pps_per_ingress": 10000,
+  "counter_bytes_over_api_wall_gbps": 0.22723180231744505,
+  "destination_mac": "00:0f:53:d3:af:21",
+  "expected_trx_counter_bytes_per_packet_including_fcs": 1518,
+  "finished_at_utc": "2026-07-21T05:57:24.423716Z",
+  "frame_without_fcs_bytes": 1514,
+  "inactive_tx_ports": [],
+  "inactive_tx_zero": true,
+  "ingress_mode": "dual",
+  "io_error_deltas": {
+    "port_0_ierrors": 0,
+    "port_0_oerrors": 0,
+    "port_1_ierrors": 0,
+    "port_1_oerrors": 0
+  },
+  "mode": "burst",
+  "nominal_aggregate_l2_plus_fcs_gbps": 0.24288,
+  "nominal_aggregate_wire_gbps": 0.24608,
+  "port_counter_deltas": {
+    "0": {
+      "ibytes": 0,
+      "ierrors": 0,
+      "ipackets": 0,
+      "obytes": 6217728,
+      "oerrors": 0,
+      "opackets": 4096
+    },
+    "1": {
+      "ibytes": 0,
+      "ierrors": 0,
+      "ipackets": 0,
+      "obytes": 6217728,
+      "oerrors": 0,
+      "opackets": 4096
+    }
+  },
+  "port_info_before": [
+    {
+      "arp": "-",
+      "cores": [
+        0
+      ],
+      "description": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller",
+      "dest": "00:0a:f7:f8:48:a1",
+      "driver": "net_bnxt",
+      "fc": "none",
+      "fc_supported": "no",
+      "grat_arp": "off",
+      "hw_mac": "00:0a:f7:f8:48:a0",
+      "index": 0,
+      "ipv6": "off",
+      "is_fc_supported": false,
+      "is_ieee1588_supported": "no",
+      "is_led_supported": false,
+      "is_link_supported": true,
+      "is_prom_supported": true,
+      "is_virtual": "no",
+      "is_vxlan_supported": "no",
+      "layer_mode": "Ethernet",
+      "led_change_supported": "no",
+      "link": "UP",
+      "link_change_supported": "yes",
+      "mult": "off",
+      "numa": 0,
+      "pci_addr": "0000:03:00.0",
+      "prom": "off",
+      "prom_supported": "yes",
+      "rx": {
+        "caps": [
+          "latency",
+          "tpg"
+        ],
+        "counters": 47105
+      },
+      "rx_filter_mode": "hardware match",
+      "rx_queue": "off",
+      "speed": 10.0,
+      "src_ipv4": "-",
+      "src_mac": "00:0a:f7:f8:48:a0",
+      "stack": "legacy",
+      "status": "IDLE",
+      "supp_speeds": [],
+      "vlan": "-",
+      "vxlan_fs": "-"
+    },
+    {
+      "arp": "-",
+      "cores": [
+        0
+      ],
+      "description": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller",
+      "dest": "00:0a:f7:f8:48:a0",
+      "driver": "net_bnxt",
+      "fc": "none",
+      "fc_supported": "no",
+      "grat_arp": "off",
+      "hw_mac": "00:0a:f7:f8:48:a1",
+      "index": 1,
+      "ipv6": "off",
+      "is_fc_supported": false,
+      "is_ieee1588_supported": "no",
+      "is_led_supported": false,
+      "is_link_supported": true,
+      "is_prom_supported": true,
+      "is_virtual": "no",
+      "is_vxlan_supported": "no",
+      "layer_mode": "Ethernet",
+      "led_change_supported": "no",
+      "link": "UP",
+      "link_change_supported": "yes",
+      "mult": "off",
+      "numa": 0,
+      "pci_addr": "0000:03:00.1",
+      "prom": "off",
+      "prom_supported": "yes",
+      "rx": {
+        "caps": [
+          "latency",
+          "tpg"
+        ],
+        "counters": 47105
+      },
+      "rx_filter_mode": "hardware match",
+      "rx_queue": "off",
+      "speed": 10.0,
+      "src_ipv4": "-",
+      "src_mac": "00:0a:f7:f8:48:a1",
+      "stack": "legacy",
+      "status": "IDLE",
+      "supp_speeds": [],
+      "vlan": "-",
+      "vxlan_fs": "-"
+    }
+  ],
+  "requested_packets_per_active_ingress": 4096,
+  "run_id": "20260721T053935Z",
+  "source_macs": {
+    "0": "00:0a:f7:f8:48:a0",
+    "1": "00:0a:f7:f8:48:a1"
+  },
+  "stage": "dual-10k-4096",
+  "start_to_wait_complete_wall_seconds": 0.437806887,
+  "started_at_utc": "2026-07-21T05:57:23.985898Z",
+  "status": "PASS",
+  "warnings": [],
+  "wire_accounting_bytes_per_packet": 1538
+}
+===== Arista EOS / dual-10k-4096 =====
+$ show queue-monitor length statistics
+$ show queue-monitor length Ethernet 2
+$ show interfaces Ethernet2 counters errors
+$ show interfaces Ethernet2 counters discards
+fll-arista#show clock
+Tue Jul 21 05:36:14 2026
+Timezone: UTC
+Clock source: local
+fll-arista#show queue-monitor length statistics
+
+Report generated at 2026-07-21 05:36:14
+Interface      Traffic Class  Count
+-----------------------------------------------------------------
+
+Global Hit Count = 0
+fll-arista#show queue-monitor length Ethernet 2
+
+Report generated at 2026-07-21 05:36:14
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+fll-arista#show interfaces Ethernet2 counters errors
+Port               FCS    Align   Symbol       Rx    Runts   Giants       Tx
+Et2                  0        0        0        0        0        0        0
+fll-arista#show interfaces Ethernet2 counters discards
+Port          InDiscards    OutDiscards
+---------- ---------------- -----------
+Et2                    0              0
+===== TRex client / dual-25k-4096 =====
+$ cat dual-25k-4096-trex-summary.json
+{
+  "active_counts_exact": true,
+  "active_tx_ports": [
+    0,
+    1
+  ],
+  "actual_obytes_per_packet": 1518.0,
+  "actual_total_obytes_delta": 12435456,
+  "actual_total_opackets_delta": 8192,
+  "configured_pps_per_ingress": 25000,
+  "counter_bytes_over_api_wall_gbps": 0.48015688333661005,
+  "destination_mac": "00:0f:53:d3:af:21",
+  "expected_trx_counter_bytes_per_packet_including_fcs": 1518,
+  "finished_at_utc": "2026-07-21T05:59:05.262204Z",
+  "frame_without_fcs_bytes": 1514,
+  "inactive_tx_ports": [],
+  "inactive_tx_zero": true,
+  "ingress_mode": "dual",
+  "io_error_deltas": {
+    "port_0_ierrors": 0,
+    "port_0_oerrors": 0,
+    "port_1_ierrors": 0,
+    "port_1_oerrors": 0
+  },
+  "mode": "burst",
+  "nominal_aggregate_l2_plus_fcs_gbps": 0.6072,
+  "nominal_aggregate_wire_gbps": 0.6152,
+  "port_counter_deltas": {
+    "0": {
+      "ibytes": 0,
+      "ierrors": 0,
+      "ipackets": 0,
+      "obytes": 6217728,
+      "oerrors": 0,
+      "opackets": 4096
+    },
+    "1": {
+      "ibytes": 0,
+      "ierrors": 0,
+      "ipackets": 0,
+      "obytes": 6217728,
+      "oerrors": 0,
+      "opackets": 4096
+    }
+  },
+  "port_info_before": [
+    {
+      "arp": "-",
+      "cores": [
+        0
+      ],
+      "description": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller",
+      "dest": "00:0a:f7:f8:48:a1",
+      "driver": "net_bnxt",
+      "fc": "none",
+      "fc_supported": "no",
+      "grat_arp": "off",
+      "hw_mac": "00:0a:f7:f8:48:a0",
+      "index": 0,
+      "ipv6": "off",
+      "is_fc_supported": false,
+      "is_ieee1588_supported": "no",
+      "is_led_supported": false,
+      "is_link_supported": true,
+      "is_prom_supported": true,
+      "is_virtual": "no",
+      "is_vxlan_supported": "no",
+      "layer_mode": "Ethernet",
+      "led_change_supported": "no",
+      "link": "UP",
+      "link_change_supported": "yes",
+      "mult": "off",
+      "numa": 0,
+      "pci_addr": "0000:03:00.0",
+      "prom": "off",
+      "prom_supported": "yes",
+      "rx": {
+        "caps": [
+          "latency",
+          "tpg"
+        ],
+        "counters": 47106
+      },
+      "rx_filter_mode": "hardware match",
+      "rx_queue": "off",
+      "speed": 10.0,
+      "src_ipv4": "-",
+      "src_mac": "00:0a:f7:f8:48:a0",
+      "stack": "legacy",
+      "status": "IDLE",
+      "supp_speeds": [],
+      "vlan": "-",
+      "vxlan_fs": "-"
+    },
+    {
+      "arp": "-",
+      "cores": [
+        0
+      ],
+      "description": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller",
+      "dest": "00:0a:f7:f8:48:a0",
+      "driver": "net_bnxt",
+      "fc": "none",
+      "fc_supported": "no",
+      "grat_arp": "off",
+      "hw_mac": "00:0a:f7:f8:48:a1",
+      "index": 1,
+      "ipv6": "off",
+      "is_fc_supported": false,
+      "is_ieee1588_supported": "no",
+      "is_led_supported": false,
+      "is_link_supported": true,
+      "is_prom_supported": true,
+      "is_virtual": "no",
+      "is_vxlan_supported": "no",
+      "layer_mode": "Ethernet",
+      "led_change_supported": "no",
+      "link": "UP",
+      "link_change_supported": "yes",
+      "mult": "off",
+      "numa": 0,
+      "pci_addr": "0000:03:00.1",
+      "prom": "off",
+      "prom_supported": "yes",
+      "rx": {
+        "caps": [
+          "latency",
+          "tpg"
+        ],
+        "counters": 47106
+      },
+      "rx_filter_mode": "hardware match",
+      "rx_queue": "off",
+      "speed": 10.0,
+      "src_ipv4": "-",
+      "src_mac": "00:0a:f7:f8:48:a1",
+      "stack": "legacy",
+      "status": "IDLE",
+      "supp_speeds": [],
+      "vlan": "-",
+      "vxlan_fs": "-"
+    }
+  ],
+  "requested_packets_per_active_ingress": 4096,
+  "run_id": "20260721T053935Z",
+  "source_macs": {
+    "0": "00:0a:f7:f8:48:a0",
+    "1": "00:0a:f7:f8:48:a1"
+  },
+  "stage": "dual-25k-4096",
+  "start_to_wait_complete_wall_seconds": 0.207189882,
+  "started_at_utc": "2026-07-21T05:59:05.055003Z",
+  "status": "PASS",
+  "warnings": [],
+  "wire_accounting_bytes_per_packet": 1538
+}
+===== Arista EOS / dual-25k-4096 =====
+$ show queue-monitor length statistics
+$ show queue-monitor length Ethernet 2
+$ show interfaces Ethernet2 counters errors
+$ show interfaces Ethernet2 counters discards
+fll-arista#show clock
+Tue Jul 21 05:37:58 2026
+Timezone: UTC
+Clock source: local
+fll-arista#show queue-monitor length statistics
+
+Report generated at 2026-07-21 05:37:58
+Interface      Traffic Class  Count
+-----------------------------------------------------------------
+Et2             1               164
+
+Global Hit Count = 0
+fll-arista#show queue-monitor length Ethernet 2
+
+Report generated at 2026-07-21 05:37:58
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+ E   0:00:27.84238 ago         Et2(1)    28            64*         0
+ S   0:00:27.84240 ago         Et2(1)    N/A           64          N/A
+ E   0:00:27.84318 ago         Et2(1)    28            91*         0
+ S   0:00:27.84321 ago         Et2(1)    N/A           91          N/A
+ E   0:00:27.84417 ago         Et2(1)    28            67*         0
+ S   0:00:27.84420 ago         Et2(1)    N/A           67          N/A
+ E   0:00:27.84518 ago         Et2(1)    28            92*         0
+ S   0:00:27.84521 ago         Et2(1)    N/A           92          N/A

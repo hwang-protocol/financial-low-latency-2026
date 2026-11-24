@@ -1,0 +1,38 @@
+$ sha256sum Documents/newDoc/assets/06-kernel-bypass/dpdk-testpmd-native-20260820.txt
+28b2ed2588a01c54ed1057ef19979e7f58e980267f704163e6c620c5d0371346  Documents/newDoc/assets/06-kernel-bypass/dpdk-testpmd-native-20260820.txt
+
+$ cat Documents/newDoc/assets/06-kernel-bypass/dpdk-testpmd-native-20260820.txt
+Provenance: 20260820T020924Z-06-dpdk-live-target-vm01 + 20260820T021104Z-06-dpdk-live-target-vm02
+Collected at: 2026-08-20T02:09:24Z..2026-08-20T02:12:04Z
+Campaign: Documents/reports/newdoc-full-live-20260820/live/dpdk/
+Command: dpdk-testpmd -l 1-2 -n 2 -a 0000:03:00.0 -- --nb-cores=1 --rxq=1 --txq=1 --forward-mode=macswap --auto-start
+Safety: target data BDF only; uio_pci_generic + 128 temporary 2 MiB hugepages; 120-second deadman; EXIT recovery to sfc and hugepages=0
+
+Role A: vm-2522-01 testpmd, vm-2522-02 exact AF_PACKET source/sink
+probe_sent=256
+probe_unique_returned=256
+probe_duplicates=0
+probe_missing_count=0
+MACSWAP_PROBE_PASS
+
+  ---------------------- Forward statistics for port 0  ----------------------
+  RX-packets: 287            RX-dropped: 0             RX-total: 287
+  TX-packets: 287            TX-dropped: 0             TX-total: 287
+  ----------------------------------------------------------------------------
+
+recovery=RECOVERY_PASS data_if=ens64np0 driver=sfc hugepages=0 link=1
+
+Role B: vm-2522-02 testpmd, vm-2522-01 exact AF_PACKET source/sink
+probe_sent=256
+probe_unique_returned=256
+probe_duplicates=0
+probe_missing_count=0
+MACSWAP_PROBE_PASS
+
+  ---------------------- Forward statistics for port 0  ----------------------
+  RX-packets: 284            RX-dropped: 0             RX-total: 284
+  TX-packets: 284            TX-dropped: 0             TX-total: 284
+  ----------------------------------------------------------------------------
+
+recovery=RECOVERY_PASS data_if=ens64np1 driver=sfc hugepages=0 link=1 ip=20.1.1.2/24
+Scope: current live functional evidence only; not a throughput or latency claim; no VFIO/IOMMU safety claim.

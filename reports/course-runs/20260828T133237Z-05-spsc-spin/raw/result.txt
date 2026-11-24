@@ -1,0 +1,8 @@
+profile=HOST_NATIVE_SOFTWARE_COUNTERBALANCED_AUTO_SENTINEL_V5 profiles=FIXED_CV/floating,SPSC_SPIN/floating plan=ABBA_BAAB treatment=MANUAL@50Hz sentinel=AUTO_CONTROL@5Hz rounds_per_profile=4 total_rounds=8 manual_warmup=20 manual_measured=200 control_every=10 bootstrap=4000 seed=20260828
+candidate=FIXED_CV/floating manual_n=800 auto_control_n=80 queue_p99_ns=53679 ci95_ns=48396..64774 manual_rtt_p99_ns=212533 ci95_ns=197467..224878 auto_control_p50_ns=130291 ci95_ns=122118..133227
+candidate=SPSC_SPIN/floating manual_n=800 auto_control_n=80 queue_p99_ns=17941 ci95_ns=15951..21777 manual_rtt_p99_ns=172345 ci95_ns=158805..192335 auto_control_p50_ns=145048 ci95_ns=139499..166363
+queue_effect=FIXED_CV/floating_MINUS_SPSC_SPIN/floating difference_ns=35738 ci95_ns=29216..48636 ratio=2.99 verdict=RIGHT_LOWER
+manual_rtt_effect=FIXED_CV/floating_MINUS_SPSC_SPIN/floating difference_ns=40188 ci95_ns=8227..58234 verdict=RIGHT_LOWER
+environment_control_check=FIXED_CV/floating_MINUS_SPSC_SPIN/floating difference_ns=-14757 ci95_ns=-41011..-7516 verdict=DIFFERENCE_DETECTED
+comparison_verdict=REJECTED_MULTIPLE_GATES stable_control_rounds=7/8 within_limit_pct=40.00 environment_control_comparable=false queue_full_drops=0/0
+last_order_tid=62355 placement=floating affinity_state=floating allowed=0-3 observed_cpu=0 order_rx_cpu=2 source_advance_ns=42895284101 auto_strategy_unchanged=true replay_status=PLAYING

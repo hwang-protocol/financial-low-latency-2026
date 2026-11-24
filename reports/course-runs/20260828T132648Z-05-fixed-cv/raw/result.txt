@@ -1,0 +1,8 @@
+profile=HOST_NATIVE_SOFTWARE_COUNTERBALANCED_50HZ_V4 profiles=DEQUE_CV/floating,FIXED_CV/floating plan=ABBA_BAAB paired_clients=MANUAL+AUTO_CONTROL rounds_per_profile=4 total_rounds=8 warmup_per_client=20 measured_per_client=200 interval_us=20000 bootstrap=4000 seed=20260828
+candidate=DEQUE_CV/floating pooled_n_per_client=800 queue_p99_ns=67685 ci95_ns=61459..69019 manual_rtt_p99_ns=196973 ci95_ns=169297..216704 auto_control_p99_ns=348606 ci95_ns=287122..386430
+candidate=FIXED_CV/floating pooled_n_per_client=800 queue_p99_ns=43973 ci95_ns=38747..52039 manual_rtt_p99_ns=168103 ci95_ns=147400..190867 auto_control_p99_ns=180577 ci95_ns=165938..194929
+queue_effect=DEQUE_CV/floating_MINUS_FIXED_CV/floating difference_ns=23712 ci95_ns=15916..29099 ratio=1.54 verdict=RIGHT_LOWER
+manual_rtt_effect=DEQUE_CV/floating_MINUS_FIXED_CV/floating difference_ns=28870 ci95_ns=-17306..69276 verdict=NO_DETECTED_DIFFERENCE
+environment_control_check=DEQUE_CV/floating_MINUS_FIXED_CV/floating difference_ns=168029 ci95_ns=101809..220492 verdict=DIFFERENCE_DETECTED
+comparison_verdict=REJECTED_MULTIPLE_GATES stable_control_rounds=7/8 within_limit_pct=40.00 environment_control_comparable=false queue_full_drops=0/0
+last_order_tid=62355 placement=floating affinity_state=floating allowed=0-3 observed_cpu=1 order_rx_cpu=0 source_advance_ns=42278094927 auto_strategy_unchanged=true replay_status=PLAYING

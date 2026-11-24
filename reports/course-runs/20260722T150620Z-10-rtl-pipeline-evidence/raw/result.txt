@@ -1,0 +1,17 @@
+CASE_PASS name=bad_magic_initial seq=9001 accepted_at_cycle=0
+CASE_PASS name=nonmatch_initial seq=9002 accepted_at_cycle=1
+CASE_PASS name=match_initial seq=1 accepted_at_cycle=2
+CASE_PASS name=burst_match_10 seq=10 accepted_at_cycle=4
+CASE_PASS name=burst_match_11 seq=11 accepted_at_cycle=5
+CASE_PASS name=burst_match_12 seq=12 accepted_at_cycle=6
+CASE_PASS name=burst_match_13 seq=13 accepted_at_cycle=7
+CASE_PASS name=bad_magic_while_full seq=9003 accepted_at_cycle=8
+CASE_PASS name=nonmatch_while_full seq=9004 accepted_at_cycle=9
+STALL_PASS name=fifo_full_stall_1 seq=14 stalled_at_cycle=10
+STALL_PASS name=fifo_full_stall_2 seq=14 stalled_at_cycle=11
+STALL_PASS name=fifo_full_stall_3 seq=14 stalled_at_cycle=12
+CASE_PASS name=fifo_release_match_14 seq=14 accepted_at_cycle=13
+CASE_PASS name=post_release_match_15 seq=15 accepted_at_cycle=14
+CASE_PASS name=reconfigured_nonmatch seq=9005 accepted_at_cycle=19
+CASE_PASS name=reconfigured_match seq=20 accepted_at_cycle=20
+VERILATOR_MARKET_PIPELINE_PASS cases=13 accepted=13 matched=8 bad_magic=2 nonmatch=3 outputs=8 stall_cycles=3 max_fifo=4 first_timestamp=2 last_timestamp=20 active_cycles=22

@@ -1,0 +1,8 @@
+profile=HOST_NATIVE_SOFTWARE_COUNTERBALANCED_50HZ_V3 profiles=FIXED_CV/floating,SPSC_SPIN/floating plan=ABBA_BAAB rounds_per_profile=4 total_rounds=8 warmup_per_round=20 measured_per_round=200 interval_us=20000 bootstrap=4000 seed=20260828
+candidate=FIXED_CV/floating pooled_n=800 queue_p99_ns=71154 ci95_ns=61515..90597 round_p99_range_ns=38946..92732 spread_ratio=2.38 control_p99_ns=198816 ci95_ns=187106..205585
+candidate=SPSC_SPIN/floating pooled_n=800 queue_p99_ns=15747 ci95_ns=14728..19712 round_p99_range_ns=14728..18959 spread_ratio=1.29 control_p99_ns=118956 ci95_ns=114067..126585
+queue_effect=FIXED_CV/floating_MINUS_SPSC_SPIN/floating difference_ns=55407 ci95_ns=43663..75755 ratio=4.52 verdict=RIGHT_LOWER
+control_arm_check=FIXED_CV/floating_MINUS_SPSC_SPIN/floating difference_ns=79860 ci95_ns=63592..90966 verdict=DIFFERENCE_DETECTED
+comparison_verdict=REJECTED_MULTIPLE_GATES stable_rounds=6/8 within_limit_pct=40.00 control_arm_comparable=false queue_full_drops=0
+last_order_tid=47024 placement=floating affinity_state=floating allowed=0-3 observed_cpu=1 order_rx_cpu=2 source_advance_ns=40124571487 auto_strategy_unchanged=true replay_status=PLAYING
+raw_csv=/financial-low-latency/Documents/reports/course-runs/20260828T125051Z-05-spsc-spin/raw/software.csv summary_json=/financial-low-latency/Documents/reports/course-runs/20260828T125051Z-05-spsc-spin/raw/software.summary.json

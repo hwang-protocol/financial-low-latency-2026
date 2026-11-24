@@ -1,0 +1,175 @@
+=== preflight ===
+vm-2522-01
+driver=/sys/bus/pci/drivers/sfc
+group_devices=0000:03:00.0
+unsafe_noiommu=N
+5: ens64np0    inet 20.1.1.1/24 scope global ens64np0\       valid_lft forever preferred_lft forever
+mac=00:0f:53:d3:af:20
+vm.nr_hugepages = 256
+hugepages=256
+TARGET         SOURCE    FSTYPE    OPTIONS
+/dev/hugepages hugetlbfs hugetlbfs rw,relatime,pagesize=2M
+=== bind vfio-pci ===
+
+Network devices using DPDK-compatible driver
+============================================
+0000:03:00.0 'XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller 0b03' drv=vfio-pci unused=sfc
+
+Network devices using kernel driver
+===================================
+0000:02:01.0 'VMXNET3 Ethernet Controller 07b0' if=ens33 drv=vmxnet3 unused=vfio-pci *Active*
+driver_now=/sys/bus/pci/drivers/vfio-pci
+total 0
+crw------- 1 root root 242,   0 Aug 31 11:11 7
+crw-rw-rw- 1 root root  10, 196 Aug 31 10:56 vfio
+=== start testpmd ===
+----- testpmd head -----
+EAL: Detected CPU lcores: 4
+EAL: Detected NUMA nodes: 1
+EAL: Detected shared linkage of DPDK
+EAL: Multi-process socket /var/run/dpdk/rte/mp_socket
+EAL: Selected IOVA mode 'VA'
+EAL: No available 1048576 kB hugepages reported
+EAL: VFIO support initialized
+EAL: Using IOMMU type 1 (Type 1)
+EAL: Probe PCI driver: net_sfc_efx (1924:0b03) device: 0000:03:00.0 (socket 0)
+PMD: sfc_efx 0000:03:00.0 #0: running FW variant is ultra-low-latency
+PMD: sfc_efx 0000:03:00.0 #0: use ef10 Rx datapath
+PMD: sfc_efx 0000:03:00.0 #0: use ef10 Tx datapath
+testpmd: Flow action FLAG will not affect Rx mbufs on port 0
+testpmd: Flow action MARK will not affect Rx mbufs on port 0
+testpmd: Flow tunnel offload support might be limited or unavailable on port 0
+testpmd: create a new mbuf pool <mb_pool_0>: n=2048, size=2176, socket=0
+testpmd: preferred mempool ops selected: ring_mp_mc
+
+Warning! port-topology=paired and odd forward ports number, the last port will pair with itself.
+
+PMD: sfc_efx 0000:03:00.0 #0: Rx checksum offloads cannot be disabled - always on (IPv4/TCP/UDP)
+Set macswap packet forwarding mode
+Auto-start selected
+Configuring Port 0 (socket 0)
+Port 0: 00:0F:53:D3:AF:20
+Checking link statuses...
+Done
+No commandline core given, start packet forwarding
+macswap packet forwarding - ports=1 - cores=1 - streams=1 - NUMA support enabled, MP allocation mode: native
+Logical Core 2 (socket 0) forwards packets on 1 streams:
+  RX P=0/Q=0 (socket 0) -> TX P=0/Q=0 (socket 0) peer=02:00:00:00:00:00
+
+  macswap packet forwarding packets/burst=32
+  nb forwarding cores=1 - nb forwarding ports=1
+  port 0: RX queue number: 1 Tx queue number: 1
+    Rx offloads=0xe Tx offloads=0x0
+    RX queue: 0
+      RX desc=512 - RX free threshold=32
+      RX threshold registers: pthresh=0 hthresh=0  wthresh=0
+      RX Offloads=0xe
+    TX queue: 0
+      TX desc=512 - TX free threshold=32
+      TX threshold registers: pthresh=0 hthresh=0  wthresh=0
+      TX offloads=0x0 - TX RS bit threshold=0
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 0          RX-missed: 0          RX-bytes:  0
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 0          TX-errors: 0          TX-bytes:  0
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:            0
+  Tx-pps:            0          Tx-bps:            0
+  ############################################################################
+PMD: sfc_efx 0000:03:00.0 #0: link status change event
+
+Port 0: link state change event
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 1          RX-missed: 0          RX-bytes:  119
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 1          TX-errors: 0          TX-bytes:  119
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:          472
+  Tx-pps:            0          Tx-bps:          472
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 3          RX-missed: 0          RX-bytes:  423
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 3          TX-errors: 0          TX-bytes:  423
+
+  Throughput (since last show)
+TESTPMD_READY
+stop file seen
+----- testpmd tail -----
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 6          RX-missed: 0          RX-bytes:  780
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 6          TX-errors: 0          TX-bytes:  780
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:          472
+  Tx-pps:            0          Tx-bps:          472
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 7          RX-missed: 0          RX-bytes:  899
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 7          TX-errors: 0          TX-bytes:  899
+
+  Throughput (since last show)
+  Rx-pps:            0          Rx-bps:          472
+  Tx-pps:            0          Tx-bps:          472
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 10         RX-missed: 0          RX-bytes:  1138
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 10         TX-errors: 0          TX-bytes:  1138
+
+  Throughput (since last show)
+  Rx-pps:            1          Rx-bps:          952
+  Tx-pps:            1          Tx-bps:          952
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 13         RX-missed: 0          RX-bytes:  1377
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 13         TX-errors: 0          TX-bytes:  1377
+
+  Throughput (since last show)
+  Rx-pps:            1          Rx-bps:          952
+  Tx-pps:            1          Tx-bps:          952
+  ############################################################################
+[2J[1;1H
+Port statistics ====================================
+  ######################## NIC statistics for port 0  ########################
+  RX-packets: 11015      RX-missed: 0          RX-bytes:  727497
+  RX-errors: 0
+  RX-nombuf:  0         
+  TX-packets: 11015      TX-errors: 0          TX-bytes:  727497
+
+  Throughput (since last show)
+  Rx-pps:         5500          Rx-bps:      2904016
+  Tx-pps:         5500          Tx-bps:      2904016
+  ############################################################################
+SESSION_DONE
+=== restore ===
+driver=sfc
+netdev=ens64np0
+6: ens64np0    inet 20.1.1.1/24 scope global ens64np0\       valid_lft forever preferred_lft forever
+carrier=1

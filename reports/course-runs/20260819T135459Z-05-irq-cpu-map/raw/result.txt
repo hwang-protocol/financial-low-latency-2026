@@ -1,0 +1,56 @@
+$ cat /proc/interrupts
+           CPU0       CPU1       CPU2       CPU3       
+  0:          9          0          0          0   IO-APIC   2-edge      timer
+  1:          0          9          0          0   IO-APIC   1-edge      i8042
+  8:          0          0          0          0   IO-APIC   8-edge      rtc0
+  9:          0          0          0          0   IO-APIC   9-fasteoi   acpi
+ 12:         15          0          0          0   IO-APIC  12-edge      i8042
+ 14:          0          0          0          0   IO-APIC  14-edge      ata_piix
+ 15:          0          0          0          0   IO-APIC  15-edge      ata_piix
+ 16:     942980     100271      79202    5486100   IO-APIC  16-fasteoi   vmwgfx
+ 24:     177001     141153        818     763352   PCI-MSI 1064960-edge      ens33-rxtx-0
+ 25:        507      44713        791        334   PCI-MSI 1064961-edge      ens33-rxtx-1
+ 26:      11074        309      17547        153   PCI-MSI 1064962-edge      ens33-rxtx-2
+ 27:        377        430          0      25636   PCI-MSI 1064963-edge      ens33-rxtx-3
+ 28:          0          0          0          0   PCI-MSI 1064964-edge      ens33-event-4
+ 29:      30056       5497      30932      21653   PCI-MSI 1048576-edge      vmw_pvscsi
+ 30:     671093      65896       2693     260958   PCI-MSI 1097728-edge      ahci[0000:02:03.0]
+ 31:        119    4980108      14641     316374   PCI-MSI 1572864-edge      ens64np0-0
+ 32:        102         52       5038         23   PCI-MSI 1572865-edge      ens64np0-1
+ 33:         21          9        151          0   PCI-MSI 1572866-edge      ens64np0-2
+ 34:          0         33        861       1524   PCI-MSI 1572867-edge      ens64np0-3
+ 35:          2          0          0          0   PCI-MSI 1572868-edge      ens64np0-ptp
+ 37:      53464       8558     117250      67570   PCI-MSI 129024-edge      vmw_vmci
+ 38:          0          0          0          0   PCI-MSI 129025-edge      vmw_vmci
+ 39:     116629       5105     252229     118910   PCI-MSI 129026-edge      vmw_vmci
+NMI:          0          0          0          0   Non-maskable interrupts
+LOC:   29769417   30128982   30022969   50578473   Local timer interrupts
+SPU:          0          0          0          0   Spurious interrupts
+PMI:          0          0          0          0   Performance monitoring interrupts
+IWI:          3          0          0          2   IRQ work interrupts
+RTR:          0          0          0          0   APIC ICR read retries
+RES:       8664       7886       8821       8019   Rescheduling interrupts
+CAL:    4719528    6569194    5292451    4559860   Function call interrupts
+TLB:        178        183        179        225   TLB shootdowns
+TRM:          0          0          0          0   Thermal event interrupts
+THR:          0          0          0          0   Threshold APIC interrupts
+DFR:          0          0          0          0   Deferred Error APIC interrupts
+MCE:          0          0          0          0   Machine check exceptions
+MCP:       6480       6481       6481       6481   Machine check polls
+ERR:          0
+MIS:          0
+PIN:          0          0          0          0   Posted-interrupt notification event
+NPI:          0          0          0          0   Nested posted-interrupt event
+PIW:          0          0          0          0   Posted-interrupt wakeup event
+
+$ cat /proc/irq/31/effective_affinity_list
+1
+
+$ cat /proc/irq/32/effective_affinity_list
+1
+
+$ cat /proc/irq/33/effective_affinity_list
+1
+
+$ cat /proc/irq/34/effective_affinity_list
+1

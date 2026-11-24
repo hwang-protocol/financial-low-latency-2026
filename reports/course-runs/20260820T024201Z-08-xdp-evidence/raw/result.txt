@@ -1,0 +1,63 @@
+$ sha256sum Documents/newDoc/assets/08-xdp/xdp-lifecycle-native-20260820.txt
+ca82f8f10773a405d942c1e8ec4e5660a6558c99e917911b27d027505352e737  Documents/newDoc/assets/08-xdp/xdp-lifecycle-native-20260820.txt
+
+$ cat Documents/newDoc/assets/08-xdp/xdp-lifecycle-native-20260820.txt
+Provenance: 20260820T023156Z-08-xdp-live
+Captured at UTC: 2026-08-20T02:34:37Z to 2026-08-20T02:35:19Z
+Sources: raw/active/native-attach.txt; raw/active/*-sender.json; raw/active/*-capture-console.txt; raw/active/native-detach.txt; raw/final/target-health.txt; derived/pcap-audit.txt
+Target: vm-broadcom-01 / ens64f0np0 / BCM57414 function 0 / bnxt_en native XDP
+Source SHA-256: 2556c10ee8bd93ef7787ed0fa5d0fa2bcaf2a0ceec60dc8e4446e6a4da38a763
+Object SHA-256: 2eed327b9ccd96febf42486c62fb03ec8ae74002ef0fdc1636505cebd32e6028
+Three-copy SHA gate: PASS
+
+$ ip -details link show dev ens64f0np0 (native attach)
+11: ens64f0np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdp qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff
+    prog/xdp id 136 tag 918a00806b51ccc3 jited
+    altname enp3s0f0np0
+
+$ tcpdump capture baseline; sender receipt
+sent=8 received=8 missing_sequences=[] unexpected=[]
+8 packets captured
+8 packets received by filter
+0 packets dropped by kernel
+
+$ tcpdump capture wrong-cookie; sender receipt
+sent=5 received=5 missing_sequences=[] unexpected=[]
+5 packets captured
+5 packets received by filter
+0 packets dropped by kernel
+
+$ tcpdump capture wrong-id; sender receipt
+sent=5 received=5 missing_sequences=[] unexpected=[]
+5 packets captured
+5 packets received by filter
+0 packets dropped by kernel
+
+$ tcpdump capture exact-drop; sender receipt
+sent=8 received=0 missing_sequences=[1,2,3,4,5,6,7,8] unexpected=[]
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+
+$ ip -details link show dev ens64f0np0 (after detach)
+11: ens64f0np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff
+    altname enp3s0f0np0
+POST_DETACH_MAP_READER_RC=66
+XDP_DETACH=PASS
+
+$ tcpdump capture recovery; sender receipt
+sent=8 received=8 missing_sequences=[] unexpected=[]
+8 packets captured
+8 packets received by filter
+0 packets dropped by kernel
+
+$ final recovery audit
+BDF=0000:03:00.0 DRIVER=bnxt_en IF=ens64f0np0 ADDRS=0 XDP=0 ADMIN=0x1002
+BDF=0000:03:00.1 DRIVER=bnxt_en IF=ens64f1np1 ADDRS=0 XDP=0 ADMIN=0x1002
+HugePages_Total: 0
+default via 10.1.1.254 dev ens33 proto static
+XDP_A1_PCAP_AUDIT=PASS
+XDP_LIVE_FINAL_AUDIT=PASS
+

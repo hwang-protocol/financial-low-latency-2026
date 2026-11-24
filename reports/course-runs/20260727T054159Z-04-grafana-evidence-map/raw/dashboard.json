@@ -1,0 +1,34 @@
+{
+  "uid": "flle-tail-latency",
+  "title": "FLLE Tail Latency and Feed Health",
+  "schemaVersion": 41,
+  "version": 1,
+  "refresh": "5s",
+  "time": {"from": "now-15m", "to": "now"},
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Tick p99 (ns)",
+      "datasource": {"type": "prometheus", "uid": "flle-prometheus"},
+      "targets": [{"refId": "A", "expr": "flle_tick_p99_ns"}],
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 0}
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Feed gap remaining",
+      "datasource": {"type": "prometheus", "uid": "flle-prometheus"},
+      "targets": [{"refId": "A", "expr": "flle_feed_gap_remaining"}],
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 0}
+    },
+    {
+      "id": 3,
+      "type": "logs",
+      "title": "Normal / Fault / Recovered",
+      "datasource": {"type": "loki", "uid": "flle-loki"},
+      "targets": [{"refId": "A", "expr": "{job=\"flle_course\"}"}],
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 0}
+    }
+  ]
+}

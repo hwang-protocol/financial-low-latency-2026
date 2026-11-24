@@ -1,0 +1,19 @@
+[2026-07-27T04:39:36Z] RUN_ID=20260727T043936Z-12-market-day
+control_monotonic_ns=408608930267706
+$ show clock
+show clock
+Mon Jul 27 04:18:17 2026
+Timezone: UTC
+Clock source: local
+
+control_monotonic_ns=408608990074726
+$ show running-config | include queue-monitor
+show running-config | include queue-monitor
+queue-monitor length
+   queue-monitor length thresholds 64 32
+Traceback (most recent call last):
+  File "/financial-low-latency/Documents/course/assets/12-capstone/market_eos.py", line 340, in <module>
+    main()
+  File "/financial-low-latency/Documents/course/assets/12-capstone/market_eos.py", line 216, in main
+    raise RuntimeError("EOS already has queue-monitor running-config")
+RuntimeError: EOS already has queue-monitor running-config

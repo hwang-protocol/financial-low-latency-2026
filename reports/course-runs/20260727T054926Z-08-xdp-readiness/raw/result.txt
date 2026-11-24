@@ -1,0 +1,20 @@
+
+===== ens64f0np0 =====
+$ readlink -f /sys/class/net/ens64f0np0/device
+/sys/devices/pci0000:03/0000:03:00.0
+$ readlink -f /sys/class/net/ens64f0np0/device/driver
+/sys/bus/pci/drivers/bnxt_en
+$ ip -details link show dev ens64f0np0
+3: ens64f0np0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a0 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p0 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.0 
+    altname enp3s0f0np0
+
+===== ens64f1np1 =====
+$ readlink -f /sys/class/net/ens64f1np1/device
+/sys/devices/pci0000:03/0000:03:00.1
+$ readlink -f /sys/class/net/ens64f1np1/device/driver
+/sys/bus/pci/drivers/bnxt_en
+$ ip -details link show dev ens64f1np1
+4: ens64f1np1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:0a:f7:f8:48:a1 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 60 maxmtu 9600 addrgenmode eui64 numtxqueues 74 numrxqueues 74 gso_max_size 65536 gso_max_segs 65535 portname p1 switchid a048f8fefff70a00 parentbus pci parentdev 0000:03:00.1 
+    altname enp3s0f1np1

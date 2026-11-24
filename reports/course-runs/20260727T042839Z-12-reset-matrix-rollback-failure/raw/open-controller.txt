@@ -1,0 +1,197 @@
+[2026-07-27T04:28:39Z] RUN_ID=20260727T042839Z-12-market-day
+control_monotonic_ns=407951464516622
+$ show clock
+show clock
+Mon Jul 27 04:07:19 2026
+Timezone: UTC
+Clock source: local
+
+control_monotonic_ns=407951523692823
+$ show running-config | include queue-monitor
+show running-config | include queue-monitor
+
+control_monotonic_ns=407952034635360
+$ show queue-monitor length status
+show queue-monitor length status
+queue-monitor length disabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+Global Buffer Monitoring
+------------------------
+Global buffer monitoring is enabled
+Segment size in bytes :   160
+Total buffers in segments : 49152
+High threshold : 20540
+Low threshold :  8216
+
+
+Per-Interface Queue Length Monitoring
+-------------------------------------
+Queue length monitoring is disabled
+Segment size in bytes :   480
+Maximum queue length in segments :  6847
+Port thresholds in segments:
+Port     High threshold  Low threshold   Mirroring Enabled       Warnings
+Cpu               15888          15888               False
+Et1                 512            256               False
+Et2                 512            256               False
+Et3                 512            256               False
+Et4                 512            256               False
+Et5                 512            256               False
+Et6                 512            256               False
+Et7                 512            256               False
+Et8                 512            256               False
+Et9                 512            256               False
+Et10                512            256               False
+Et11                512            256               False
+Et12                512            256               False
+Et13                512            256               False
+Et14                512            256               False
+Et15                512            256               False
+Et16                512            256               False
+Et17                512            256               False
+Et18                512            256               False
+Et19                512            256               False
+Et20                512            256               False
+Et21                512            256               False
+Et22                512            256               False
+Et23                512            256               False
+Et24                512            256               False
+/usr/bin/onload
+/usr/bin/onload
+LISTEN 0      5           20.1.1.1:43300 0.0.0.0:*
+{"schema":"flle.order-service-state.v1","run_id":"20260727T042839Z-12-market-day","simulated":true,"request_count":0,"unique_correlations":0,"action_count":0,"started_at":"2026-07-27T04:28:46.102Z","updated_at":"2026-07-27T04:28:46.102Z"}
+curl: (7) Failed to connect to 10.1.1.2 port 8089 after 0 ms: Connection refused
+curl: (7) Failed to connect to 10.1.1.2 port 8089 after 0 ms: Connection refused
+{"status":"ready","run_id":"20260727T042839Z-12-market-day","exchange":"20.1.1.1:43300","trader_data_ip":"20.1.1.2","state":{"schema":"flle.order-adapter-state.v1","run_id":"20260727T042839Z-12-market-day","simulated":true,"request_count":0,"success_count":0,"conflict_count":0,"failure_count":0,"started_at":"2026-07-27T04:28:46.744Z","updated_at":"2026-07-27T04:28:47.314Z"}}
+bdf=0000:03:00.0 iface=ens64f0np0 mac=00:0a:f7:f8:48:a0 driver=bnxt_en state=down addr=none xdp=none
+bdf=0000:03:00.1 iface=ens64f1np1 mac=00:0a:f7:f8:48:a1 driver=bnxt_en state=down addr=none xdp=none
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+hugepages-1048576kB nr=0 free=0 resv=0 surp=0
+hugepages-2048kB nr=0 free=0 resv=0 surp=0
+/dev/hugepages hugetlbfs hugetlbfs rw,relatime,pagesize=2M
+hugetlbfs_mount=/dev/hugepages
+Running timer as unit: flle-market-day-20260727T042839Z-12-market-day.timer
+Will run service as unit: flle-market-day-20260727T042839Z-12-market-day.service
+NextElapseUSecMonotonic=3h 47min 22.269869s
+ActiveState=active
+SubState=waiting
+vm.nr_hugepages = 1024
+server_ready attempt=9 pid=43986 pgid=43986
+event=trex_link monotonic_ns=11852946770963 attempt=1 links=UP,UP consecutive=1
+event=trex_link monotonic_ns=11853156777601 attempt=2 links=UP,UP consecutive=2
+event=trex_link monotonic_ns=11853366703400 attempt=3 links=UP,UP consecutive=3
+event=trex_link monotonic_ns=11853577968162 attempt=4 links=UP,UP consecutive=4
+event=trex_link monotonic_ns=11853788791670 attempt=5 links=UP,UP consecutive=5
+event=trex_link monotonic_ns=11853999508443 attempt=6 links=UP,UP consecutive=6
+event=trex_link monotonic_ns=11854209000377 attempt=7 links=UP,UP consecutive=7
+event=trex_link monotonic_ns=11854418331295 attempt=8 links=UP,UP consecutive=8
+event=trex_link monotonic_ns=11854628673736 attempt=9 links=UP,UP consecutive=9
+event=trex_link monotonic_ns=11854840119265 attempt=10 links=UP,UP consecutive=10
+{"clock_domain": "vm-broadcom-01 CLOCK_MONOTONIC", "finished_monotonic_ns": 11864465366477, "links": {"after_settle": [{"arp": "-", "cores": [0], "description": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller", "dest": "00:0f:53:d3:af:21", "driver": "net_bnxt", "fc": "none", "fc_supported": "no", "grat_arp": "off", "hw_mac": "00:0a:f7:f8:48:a0", "index": 0, "ipv6": "off", "is_fc_supported": false, "is_ieee1588_supported": "no", "is_led_supported": false, "is_link_supported": true, "is_prom_supported": true, "is_virtual": "no", "is_vxlan_supported": "no", "layer_mode": "Ethernet", "led_change_supported": "no", "link": "UP", "link_change_supported": "yes", "mult": "off", "numa": 0, "pci_addr": "0000:03:00.0", "prom": "off", "prom_supported": "yes", "rx": {"caps": ["tpg"], "counters": 20481}, "rx_filter_mode": "hardware match", "rx_queue": "off", "speed": 10.0, "src_ipv4": "-", "src_mac": "00:0a:f7:f8:48:a0", "stack": "legacy", "status": "IDLE", "supp_speeds": [], "vlan": "-", "vxlan_fs": "-"}, {"arp": "-", "cores": [0], "description": "BCM57414 NetXtreme-E 10Gb/25Gb RDMA Ethernet Controller", "dest": "00:0f:53:d3:af:21", "driver": "net_bnxt", "fc": "none", "fc_supported": "no", "grat_arp": "off", "hw_mac": "00:0a:f7:f8:48:a1", "index": 1, "ipv6": "off", "is_fc_supported": false, "is_ieee1588_supported": "no", "is_led_supported": false, "is_link_supported": true, "is_prom_supported": true, "is_virtual": "no", "is_vxlan_supported": "no", "layer_mode": "Ethernet", "led_change_supported": "no", "link": "UP", "link_change_supported": "yes", "mult": "off", "numa": 0, "pci_addr": "0000:03:00.1", "prom": "off", "prom_supported": "yes", "rx": {"caps": ["tpg"], "counters": 20481}, "rx_filter_mode": "hardware match", "rx_queue": "off", "speed": 10.0, "src_ipv4": "-", "src_mac": "00:0a:f7:f8:48:a1", "stack": "legacy", "status": "IDLE", "supp_speeds": [], "vlan": "-", "vxlan_fs": "-"}], "observations": [{"attempt": 1, "consecutive": 1, "links": ["UP", "UP"], "monotonic_ns": 11852946770963}, {"attempt": 2, "consecutive": 2, "links": ["UP", "UP"], "monotonic_ns": 11853156777601}, {"attempt": 3, "consecutive": 3, "links": ["UP", "UP"], "monotonic_ns": 11853366703400}, {"attempt": 4, "consecutive": 4, "links": ["UP", "UP"], "monotonic_ns": 11853577968162}, {"attempt": 5, "consecutive": 5, "links": ["UP", "UP"], "monotonic_ns": 11853788791670}, {"attempt": 6, "consecutive": 6, "links": ["UP", "UP"], "monotonic_ns": 11853999508443}, {"attempt": 7, "consecutive": 7, "links": ["UP", "UP"], "monotonic_ns": 11854209000377}, {"attempt": 8, "consecutive": 8, "links": ["UP", "UP"], "monotonic_ns": 11854418331295}, {"attempt": 9, "consecutive": 9, "links": ["UP", "UP"], "monotonic_ns": 11854628673736}, {"attempt": 10, "consecutive": 10, "links": ["UP", "UP"], "monotonic_ns": 11854840119265}]}, "mode": "prepare", "run_id": "20260727T042839Z-12-market-day", "started_monotonic_ns": 11852938315363, "warmup": [{"configured_pps": 1000, "deltas": {"0": {"ibytes": 0, "ierrors": 0, "ipackets": 0, "obytes": 33792, "oerrors": 0, "opackets": 256}, "1": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 0, "oerrors": 0, "opackets": 0}}, "frame_without_fcs_bytes": 128, "port_counters_after": {"0": {"ibytes": 0, "ierrors": 0, "ipackets": 0, "obytes": 33792, "oerrors": 0, "opackets": 256, "rx_bps": 0.0, "rx_bps_L1": 0, "rx_pps": 0.0, "rx_util": 0.0, "tx_bps": 65615.53125, "tx_bps_L1": 75557.27868652344, "tx_pps": 62.135921478271484, "tx_util": 0.0007555727868652344}, "1": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 0, "oerrors": 0, "opackets": 0, "rx_bps": 65615.53125, "rx_bps_L1": 75557.27868652344, "rx_pps": 62.135921478271484, "rx_util": 0.0007555727868652344, "tx_bps": 0.0, "tx_bps_L1": 0, "tx_pps": 0.0, "tx_util": 0.0}, "flow_stats": {}, "global": {"active_flows": 0.0, "active_sockets": 0, "bw_per_core": 23.329967498779297, "cpu_util": 0.0005624999757856131, "cpu_util_raw": 0.0, "open_flows": 0.0, "platform_factor": 1.0, "queue_full": 0, "rx_bps": 65615.53125, "rx_core_pps": 62.135921478271484, "rx_cpu_util": 0.0, "rx_drop_bps": 0.0, "rx_pps": 62.135921478271484, "socket_util": 0.0, "total_alloc_error": 0, "total_clients": 0, "total_servers": 0, "tx_bps": 65615.53125, "tx_cps": 0.0, "tx_expected_bps": 0.0, "tx_expected_cps": 0.0, "tx_expected_pps": 0.0, "tx_pps": 62.135921478271484}, "latency": {"global": {"bad_hdr": 0, "old_flow": 0}}, "total": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 33792, "oerrors": 0, "opackets": 256, "rx_bps": 65615.53125, "rx_bps_L1": 75557.27868652344, "rx_pps": 62.135921478271484, "rx_util": 0.0007555727868652344, "tx_bps": 65615.53125, "tx_bps_L1": 75557.27868652344, "tx_pps": 62.135921478271484, "tx_util": 0.0007555727868652344}}, "port_counters_before": {"0": {"ibytes": 0, "ierrors": 0, "ipackets": 0, "obytes": 0, "oerrors": 0, "opackets": 0, "rx_bps": 0.0, "rx_bps_L1": 0, "rx_pps": 0.0, "rx_util": 0.0, "tx_bps": 0.0, "tx_bps_L1": 0, "tx_pps": 0.0, "tx_util": 0.0}, "1": {"ibytes": 0, "ierrors": 0, "ipackets": 0, "obytes": 0, "oerrors": 0, "opackets": 0, "rx_bps": 0.0, "rx_bps_L1": 0, "rx_pps": 0.0, "rx_util": 0.0, "tx_bps": 0.0, "tx_bps_L1": 0, "tx_pps": 0.0, "tx_util": 0.0}, "flow_stats": {}, "global": {"active_flows": 0.0, "active_sockets": 0, "bw_per_core": 0.0, "cpu_util": 0.0, "cpu_util_raw": 0.0, "open_flows": 0.0, "platform_factor": 1.0, "queue_full": 0, "rx_bps": 0.0, "rx_core_pps": 0.0, "rx_cpu_util": 0.0, "rx_drop_bps": 0.0, "rx_pps": 0.0, "socket_util": 0.0, "total_alloc_error": 0, "total_clients": 0, "total_servers": 0, "tx_bps": 0.0, "tx_cps": 0.0, "tx_expected_bps": 0.0, "tx_expected_cps": 0.0, "tx_expected_pps": 0.0, "tx_pps": 0.0}, "latency": {"global": {"bad_hdr": 0, "old_flow": 0}}, "total": {"ibytes": 0, "ierrors": 0, "ipackets": 0, "obytes": 0, "oerrors": 0, "opackets": 0, "rx_bps": 0.0, "rx_bps_L1": 0, "rx_pps": 0.0, "rx_util": 0.0, "tx_bps": 0.0, "tx_bps_L1": 0, "tx_pps": 0.0, "tx_util": 0.0}}, "requested_packets": 256, "rx_port": 1, "tx_port": 0}, {"configured_pps": 1000, "deltas": {"0": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 0, "oerrors": 0, "opackets": 0}, "1": {"ibytes": 0, "ierrors": 0, "ipackets": 0, "obytes": 33792, "oerrors": 0, "opackets": 256}}, "frame_without_fcs_bytes": 128, "port_counters_after": {"0": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 33792, "oerrors": 0, "opackets": 256, "rx_bps": 55106.796875, "rx_bps_L1": 63507.249755859375, "rx_pps": 52.502830505371094, "rx_util": 0.0006350724975585937, "tx_bps": 8201.94140625, "tx_bps_L1": 9444.65983581543, "tx_pps": 7.7669901847839355, "tx_util": 9.44465983581543e-05}, "1": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 33792, "oerrors": 0, "opackets": 256, "rx_bps": 8201.94140625, "rx_bps_L1": 9444.65983581543, "rx_pps": 7.7669901847839355, "rx_util": 9.44465983581543e-05, "tx_bps": 55442.984375, "tx_bps_L1": 63843.437255859375, "tx_pps": 52.502830505371094, "tx_util": 0.0006384343725585938}, "flow_stats": {}, "global": {"active_flows": 0.0, "active_sockets": 0, "bw_per_core": 18.4102840423584, "cpu_util": 0.0006914062541909516, "cpu_util_raw": 0.0, "open_flows": 0.0, "platform_factor": 1.0, "queue_full": 0, "rx_bps": 63308.73828125, "rx_core_pps": 60.26982116699219, "rx_cpu_util": 0.0, "rx_drop_bps": 0.0, "rx_pps": 60.26982116699219, "socket_util": 0.0, "total_alloc_error": 0, "total_clients": 0, "total_servers": 0, "tx_bps": 63644.9296875, "tx_cps": 0.0, "tx_expected_bps": 0.0, "tx_expected_cps": 0.0, "tx_expected_pps": 0.0, "tx_pps": 60.26982116699219}, "latency": {"global": {"bad_hdr": 0, "old_flow": 0}}, "total": {"ibytes": 67584, "ierrors": 0, "ipackets": 512, "obytes": 67584, "oerrors": 0, "opackets": 512, "rx_bps": 63308.73828125, "rx_bps_L1": 72951.9095916748, "rx_pps": 60.26982069015503, "rx_util": 0.0007295190959167479, "tx_bps": 63644.92578125, "tx_bps_L1": 73288.0970916748, "tx_pps": 60.26982069015503, "tx_util": 0.000732880970916748}}, "port_counters_before": {"0": {"ibytes": 0, "ierrors": 0, "ipackets": 0, "obytes": 33792, "oerrors": 0, "opackets": 256, "rx_bps": 0.0, "rx_bps_L1": 0, "rx_pps": 0.0, "rx_util": 0.0, "tx_bps": 65615.53125, "tx_bps_L1": 75557.27868652344, "tx_pps": 62.135921478271484, "tx_util": 0.0007555727868652344}, "1": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 0, "oerrors": 0, "opackets": 0, "rx_bps": 65615.53125, "rx_bps_L1": 75557.27868652344, "rx_pps": 62.135921478271484, "rx_util": 0.0007555727868652344, "tx_bps": 0.0, "tx_bps_L1": 0, "tx_pps": 0.0, "tx_util": 0.0}, "flow_stats": {}, "global": {"active_flows": 0.0, "active_sockets": 0, "bw_per_core": 23.329967498779297, "cpu_util": 0.0005624999757856131, "cpu_util_raw": 0.0, "open_flows": 0.0, "platform_factor": 1.0, "queue_full": 0, "rx_bps": 65615.53125, "rx_core_pps": 62.135921478271484, "rx_cpu_util": 0.0, "rx_drop_bps": 0.0, "rx_pps": 62.135921478271484, "socket_util": 0.0, "total_alloc_error": 0, "total_clients": 0, "total_servers": 0, "tx_bps": 65615.53125, "tx_cps": 0.0, "tx_expected_bps": 0.0, "tx_expected_cps": 0.0, "tx_expected_pps": 0.0, "tx_pps": 62.135921478271484}, "latency": {"global": {"bad_hdr": 0, "old_flow": 0}}, "total": {"ibytes": 33792, "ierrors": 0, "ipackets": 256, "obytes": 33792, "oerrors": 0, "opackets": 256, "rx_bps": 65615.53125, "rx_bps_L1": 75557.27868652344, "rx_pps": 62.135921478271484, "rx_util": 0.0007555727868652344, "tx_bps": 65615.53125, "tx_bps_L1": 75557.27868652344, "tx_pps": 62.135921478271484, "tx_util": 0.0007555727868652344}}, "requested_packets": 256, "rx_port": 0, "tx_port": 1}]}
+control_monotonic_ns=407984780513036
+$ show clock
+show clock
+Mon Jul 27 04:07:53 2026
+Timezone: UTC
+Clock source: local
+
+control_monotonic_ns=407984839841693
+$ show running-config | include queue-monitor
+show running-config | include queue-monitor
+
+control_monotonic_ns=407985356198140
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast
+
+control_monotonic_ns=407985770183302
+$ show running-config | include queue-monitor
+show running-config | include queue-monitor
+
+control_monotonic_ns=407986277153866
+$ show queue-monitor length status
+show queue-monitor length status
+queue-monitor length disabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+Global Buffer Monitoring
+------------------------
+Global buffer monitoring is enabled
+Segment size in bytes :   160
+Total buffers in segments : 49152
+High threshold : 20540
+Low threshold :  8216
+
+
+Per-Interface Queue Length Monitoring
+-------------------------------------
+Queue length monitoring is disabled
+Segment size in bytes :   480
+Maximum queue length in segments :  6847
+Port thresholds in segments:
+Port     High threshold  Low threshold   Mirroring Enabled       Warnings
+Cpu               15888          15888               False
+Et1                 512            256               False
+Et2                 512            256               False
+Et3                 512            256               False
+Et4                 512            256               False
+Et5                 512            256               False
+Et6                 512            256               False
+Et7                 512            256               False
+Et8                 512            256               False
+Et9                 512            256               False
+Et10                512            256               False
+Et11                512            256               False
+Et12                512            256               False
+Et13                512            256               False
+Et14                512            256               False
+Et15                512            256               False
+Et16                512            256               False
+Et17                512            256               False
+Et18                512            256               False
+Et19                512            256               False
+Et20                512            256               False
+Et21                512            256               False
+Et22                512            256               False
+Et23                512            256               False
+Et24                512            256               False
+
+control_monotonic_ns=407986366701728
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast
+
+control_monotonic_ns=407986781778371
+$ show running-config interfaces Ethernet11
+show running-config interfaces Ethernet11
+interface Ethernet11
+   switchport access vlan 20
+   spanning-tree portfast
+
+control_monotonic_ns=407987194294307
+$ show running-config interfaces Ethernet12
+show running-config interfaces Ethernet12
+interface Ethernet12
+   switchport access vlan 20
+   spanning-tree portfast
+owned_server_hint=/run/flle-market-day/20260727T042839Z-12-market-day/trex-server.pgid pid=43986
+owned_server_hint=/run/flle-market-day/20260727T042839Z-12-market-day/trex-server.pid pid=43986
+server_signal=TERM pid=43986
+server_signal=TERM pid=44050
+bdf=0000:03:00.0 iface=ens64f0np0 mac=00:0a:f7:f8:48:a0 driver=bnxt_en state=down addr=none xdp=none
+bdf=0000:03:00.1 iface=ens64f1np1 mac=00:0a:f7:f8:48:a1 driver=bnxt_en state=down addr=none xdp=none
+stopping_pid=27226 cmdline=python3 /run/flle-market-day/20260727T042839Z-12-market-day/terminal_gateway.py --run-id 20260727T042839Z-12-market-day --run-dir /run/flle-market-day/20260727T042839Z-12-market-day --asset-root /run/flle-market-day/20260727T042839Z-12-market-day/terminal --bind 10.1.1.101 --port 8088 --adapter-url http://10.1.1.2:8089/v1/orders --adapter-timeout 45 
+service_roots=preserved_after_failed_stop
+open_rollback_ok=0

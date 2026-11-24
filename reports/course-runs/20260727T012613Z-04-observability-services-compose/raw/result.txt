@@ -1,0 +1,94 @@
+name: flle-observability
+services:
+  grafana:
+    image: grafana/grafana:13.1.0
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 3000
+        published: "3000"
+        protocol: tcp
+    pull_policy: never
+    restart: unless-stopped
+  loki:
+    image: grafana/loki:3.7.2
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 3100
+        published: "3100"
+        protocol: tcp
+    pull_policy: never
+    restart: unless-stopped
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:v1.3.1
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 9100
+        published: "9100"
+        protocol: tcp
+    pull_policy: never
+    restart: unless-stopped
+  prometheus:
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    image: quay.io/prometheus/prometheus:v2.31.2
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 9090
+        published: "9090"
+        protocol: tcp
+    pull_policy: never
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /opt/flle/observability/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: flle-observability_default
+ Network flle-observability_default  Creating
+ Network flle-observability_default  Created
+ Container flle-observability-loki-1  Creating
+ Container flle-observability-node-exporter-1  Creating
+ Container flle-observability-prometheus-1  Creating
+ Container flle-observability-grafana-1  Creating
+ Container flle-observability-grafana-1  Created
+ Container flle-observability-node-exporter-1  Created
+ Container flle-observability-loki-1  Created
+ Container flle-observability-prometheus-1  Created
+ Container flle-observability-node-exporter-1  Starting
+ Container flle-observability-loki-1  Starting
+ Container flle-observability-prometheus-1  Starting
+ Container flle-observability-grafana-1  Starting
+ Container flle-observability-loki-1  Started
+ Container flle-observability-node-exporter-1  Started
+ Container flle-observability-prometheus-1  Started
+ Container flle-observability-grafana-1  Started
+$ docker compose ps
+NAME                                 IMAGE                                     COMMAND                  SERVICE         CREATED          STATUS          PORTS
+flle-observability-grafana-1         grafana/grafana:13.1.0                    "/run.sh"                grafana         18 seconds ago   Up 17 seconds   0.0.0.0:3000->3000/tcp
+flle-observability-loki-1            grafana/loki:3.7.2                        "/usr/bin/loki -conf…"   loki            18 seconds ago   Up 17 seconds   0.0.0.0:3100->3100/tcp
+flle-observability-node-exporter-1   quay.io/prometheus/node-exporter:v1.3.1   "/bin/node_exporter"     node-exporter   18 seconds ago   Up 17 seconds   0.0.0.0:9100->9100/tcp
+flle-observability-prometheus-1      quay.io/prometheus/prometheus:v2.31.2     "/bin/prometheus --c…"   prometheus      18 seconds ago   Up 17 seconds   0.0.0.0:9090->9090/tcp
+$ curl -fsS http://127.0.0.1:9090/-/ready
+Prometheus is Ready.
+$ curl node-exporter /metrics HTTP status
+HTTP 200
+$ curl -fsS http://127.0.0.1:3100/ready
+ready
+$ curl -fsS http://127.0.0.1:3000/api/health
+{
+  "database": "ok",
+  "version": "13.1.0",
+  "commit": "b309c9bb3b81a748c3a75289236a27309ed2566a"
+}

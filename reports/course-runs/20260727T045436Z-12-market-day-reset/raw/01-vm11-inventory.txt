@@ -1,0 +1,13 @@
+vm-broadcom-01
+ROOT 20260727T045344Z-12-market-day
+UNIT flle-market-day-20260727T045344Z-12-market-day.service
+UNIT flle-market-day-20260727T045344Z-12-market-day.timer
+PREFIX /var/run/dpdk/fllemarketday
+TREXROOT /opt/trex/v3.08
+COURSE_TREX pid=7707 cmdline=/bin/bash ./t-rex-64 -i --stl --no-key --cfg /run/flle-market-day/20260727T045344Z-12-market-day/trex-dual.yaml --software --no-hw-flow-stat --no-flow-control-change --checksum-offload-disable --no-scapy-server --no-watchdog --prefix fllemarketday --mbuf-factor 0.1 -c 1 
+COURSE_TREX pid=7771 cmdline=./_t-rex-64 -i --stl --no-key --cfg /run/flle-market-day/20260727T045344Z-12-market-day/trex-dual.yaml --software --no-hw-flow-stat --no-flow-control-change --checksum-offload-disable --no-scapy-server --no-watchdog --prefix fllemarketday --mbuf-factor 0.1 -c 1 
+COURSE_HUGEFILE /mnt/huge/fllemarketdaymap_1
+DRIVER bdf=0000:03:00.0 driver=uio_pci_generic override=(null)
+DRIVER bdf=0000:03:00.1 driver=uio_pci_generic override=(null)
+POOL hugepages-1048576kB nr=2 free=1 resv=0 surp=0
+POOL hugepages-2048kB nr=1024 free=1024 resv=0 surp=0

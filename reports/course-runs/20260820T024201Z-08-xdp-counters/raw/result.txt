@@ -1,0 +1,67 @@
+$ sha256sum Documents/newDoc/assets/08-xdp/xdp-map-native-20260820.txt
+d27630021b40697871922fe60e99db1fbbffb91678eef1ec407632b0729b5dc8  Documents/newDoc/assets/08-xdp/xdp-map-native-20260820.txt
+
+$ cat Documents/newDoc/assets/08-xdp/xdp-map-native-20260820.txt
+Provenance: 20260820T023156Z-08-xdp-live
+Captured at UTC: 2026-08-20T02:34:37Z to 2026-08-20T02:35:19Z
+Sources: raw/active/map-initial.txt; raw/active/map-after-wrong-cookie.txt; raw/active/map-after-wrong-id.txt; raw/active/map-after-exact-drop.txt; derived/counter-audit.txt
+Target: vm-broadcom-01 / ens64f0np0 / BCM57414 function 0 / bnxt_en native XDP
+
+$ bpf_map_reader flle_drop_cnt (initial)
+program_id=136
+program_name=flle_xdp_a1_exa
+program_type=6
+program_tag=918a00806b51ccc3
+program_map_count=1
+map_id=1 map_name=flle_drop_cnt map_type=2 key_size=4 value_size=8 max_entries=9
+counter_key=0 counter_value=0
+counter_key=1 counter_value=0
+counter_key=2 counter_value=0
+counter_key=3 counter_value=0
+counter_key=4 counter_value=0
+counter_key=5 counter_value=0
+counter_key=6 counter_value=0
+counter_key=7 counter_value=0
+counter_key=8 counter_value=0
+
+$ bpf_map_reader flle_drop_cnt (after wrong-cookie: 5 packets passed)
+counter_key=0 counter_value=0
+counter_key=1 counter_value=0
+counter_key=2 counter_value=0
+counter_key=3 counter_value=0
+counter_key=4 counter_value=0
+counter_key=5 counter_value=0
+counter_key=6 counter_value=0
+counter_key=7 counter_value=0
+counter_key=8 counter_value=0
+
+$ bpf_map_reader flle_drop_cnt (after wrong-id: 5 packets passed)
+counter_key=0 counter_value=0
+counter_key=1 counter_value=0
+counter_key=2 counter_value=0
+counter_key=3 counter_value=0
+counter_key=4 counter_value=0
+counter_key=5 counter_value=0
+counter_key=6 counter_value=0
+counter_key=7 counter_value=0
+counter_key=8 counter_value=0
+
+$ bpf_map_reader flle_drop_cnt (after exact-drop: 8 packets)
+program_id=136
+program_name=flle_xdp_a1_exa
+program_type=6
+program_tag=918a00806b51ccc3
+program_map_count=1
+map_id=1 map_name=flle_drop_cnt map_type=2 key_size=4 value_size=8 max_entries=9
+counter_key=0 counter_value=8
+counter_key=1 counter_value=1
+counter_key=2 counter_value=1
+counter_key=3 counter_value=1
+counter_key=4 counter_value=1
+counter_key=5 counter_value=1
+counter_key=6 counter_value=1
+counter_key=7 counter_value=1
+counter_key=8 counter_value=1
+
+Counter audit: XDP_A1_COUNTER_AUDIT=PASS
+

@@ -1,0 +1,34 @@
+$ head -n 20 /proc/interrupts
+           CPU0       CPU1       CPU2       CPU3       
+  0:          8          0          0          0   IO-APIC   2-edge      timer
+  1:          0          9          0          0   IO-APIC   1-edge      i8042
+  8:          0          0          0          0   IO-APIC   8-edge      rtc0
+  9:          0          0          0          0   IO-APIC   9-fasteoi   acpi
+ 12:         15          0          0          0   IO-APIC  12-edge      i8042
+ 14:          0          0          0          0   IO-APIC  14-edge      ata_piix
+ 15:          0          0          0          0   IO-APIC  15-edge      ata_piix
+ 16:    2402603     969423    1035830    1532075   IO-APIC  16-fasteoi   vmwgfx
+ 24:     659020     458749     658548     619998   PCI-MSI 1048576-edge      vmw_pvscsi
+ 25:     234392     317503     338697     409767   PCI-MSI 1064960-edge      ens33-rxtx-0
+ 26:      28652      47243     153619      86295   PCI-MSI 1064961-edge      ens33-rxtx-1
+ 27:      16329     114821      32389      58470   PCI-MSI 1064962-edge      ens33-rxtx-2
+ 28:      19534      35572      32665      67421   PCI-MSI 1064963-edge      ens33-rxtx-3
+ 29:          0          0          0          0   PCI-MSI 1064964-edge      ens33-event-4
+ 30:     108807     187346     248528     477549   PCI-MSI 1097728-edge      ahci[0000:02:03.0]
+ 31:      54538      49321      70350     146448   PCI-MSI 129024-edge      vmw_vmci
+ 32:          0          0          0          0   PCI-MSI 129025-edge      vmw_vmci
+ 33:      79452     244248     170617     145965   PCI-MSI 129026-edge      vmw_vmci
+NMI:          0          0          0          0   Non-maskable interrupts
+
+$ sed -n 1,12p /proc/softirqs
+                    CPU0       CPU1       CPU2       CPU3       
+          HI:          0          0          0          0
+       TIMER:   22656862   38344901   23597550   20635773
+      NET_TX:          2          4     386374          6
+      NET_RX:    8181667    9229993    9238846    8742119
+       BLOCK:     670448    1170879     723313     795154
+    IRQ_POLL:          0          0          0          0
+     TASKLET:      54549      49438      70410     146617
+       SCHED:   34243820   54469294   36866077   33313672
+     HRTIMER:          0          0          0          0
+         RCU:   30256534   40386918   31685501   30596502

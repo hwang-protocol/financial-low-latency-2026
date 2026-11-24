@@ -1,0 +1,19 @@
+$ sha256sum Documents/course/assets/06-kernel-bypass/dpdk-testpmd-native-20260720.txt
+7a7a8e457d69714f658cb53ae336f3f810a73aacbb96644ba63e10139e6b68f9  Documents/course/assets/06-kernel-bypass/dpdk-testpmd-native-20260720.txt
+
+$ cat Documents/course/assets/06-kernel-bypass/dpdk-testpmd-native-20260720.txt
+Provenance: 20260720T235906Z-x2522-dpdk-smoke
+Command: dpdk-testpmd -l 1-2 -n 2 -a 0000:03:00.0 -- --nb-cores=1 --rxq=1 --txq=1 --forward-mode=macswap --auto-start
+Role A: vm-2522-01 testpmd, vm-2522-02 frame source/sink
+
+  ---------------------- Forward statistics for port 0  ----------------------
+  RX-packets: 284            RX-dropped: 0             RX-total: 284
+  TX-packets: 284            TX-dropped: 0             TX-total: 284
+  ----------------------------------------------------------------------------
+
+Role B: vm-2522-02 testpmd, vm-2522-01 frame source/sink
+
+  ---------------------- Forward statistics for port 0  ----------------------
+  RX-packets: 280            RX-dropped: 0             RX-total: 280
+  TX-packets: 280            TX-dropped: 0             TX-total: 280
+  ----------------------------------------------------------------------------

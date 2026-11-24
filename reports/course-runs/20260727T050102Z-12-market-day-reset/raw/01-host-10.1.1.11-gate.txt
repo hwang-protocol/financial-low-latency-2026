@@ -1,0 +1,6 @@
+vm-broadcom-01
+ROOT 20260727T050011Z-12-market-day
+RUN_PROCESS pid=26553 root=/run/flle-market-day/20260727T050011Z-12-market-day cmdline=/bin/bash ./t-rex-64 -i --stl --no-key --cfg /run/flle-market-day/20260727T050011Z-12-market-day/trex-dual.yaml --software --no-hw-flow-stat --no-flow-control-change --checksum-offload-disable --no-scapy-server --no-watchdog --prefix fllemarketday --mbuf-factor 0.1 -c 1 
+RUN_PROCESS pid=26617 root=/run/flle-market-day/20260727T050011Z-12-market-day cmdline=./_t-rex-64 -i --stl --no-key --cfg /run/flle-market-day/20260727T050011Z-12-market-day/trex-dual.yaml --software --no-hw-flow-stat --no-flow-control-change --checksum-offload-disable --no-scapy-server --no-watchdog --prefix fllemarketday --mbuf-factor 0.1 -c 1 
+COURSE_LISTENER pid=26617 line=tcp LISTEN 0      100          0.0.0.0:4500 0.0.0.0:* users:(("_t-rex-64",pid=26617,fd=31))    
+COURSE_LISTENER pid=26617 line=tcp LISTEN 0      100          0.0.0.0:4501 0.0.0.0:* users:(("_t-rex-64",pid=26617,fd=39))    

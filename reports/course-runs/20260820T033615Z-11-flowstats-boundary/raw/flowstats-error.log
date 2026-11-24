@@ -1,0 +1,19 @@
+CLIENT_CONNECT started_at_utc=2026-08-20T03:33:04.671262Z
+LINK_GATE attempt=1 links=['UP', 'UP']
+DIRECTION_STAGE label=p0-to-p1 stage=remove_all_streams
+DIRECTION_STAGE label=p0-to-p1 stage=skip_stats_reset
+DIRECTION_STAGE label=p0-to-p1 stage=build_and_add_stream
+CLIENT_ERROR TRexError(<trex.common.trex_types.RC object at 0x7f5b7661ef80>)
+Traceback (most recent call last):
+  File "/run/flle-lanz-lower-20260820T033031Z-11-trex-lanz-live/flowstats-negative-client.py", line 178, in main
+    run_direction(
+  File "/run/flle-lanz-lower-20260820T033031Z-11-trex-lanz-live/flowstats-negative-client.py", line 68, in run_direction
+    client.add_streams(stream, ports=[tx_port])
+  File "/opt/trex/v3.08/automation/trex_control_plane/interactive/trex/common/trex_api_annotators.py", line 51, in wrap2
+    ret = f(*args, **kwargs)
+  File "/opt/trex/v3.08/automation/trex_control_plane/interactive/trex/stl/trex_stl_client.py", line 48, in wrapper
+    return func(self, *args, **kwargs)
+  File "/opt/trex/v3.08/automation/trex_control_plane/interactive/trex/stl/trex_stl_client.py", line 571, in add_streams
+    raise TRexError(rc)
+trex.common.trex_exceptions.TRexError: Port 0 : *** Interface does not support given rule type
+{"final_status": "FAIL", "summary": "/run/flle-lanz-lower-20260820T033031Z-11-trex-lanz-live/flowstats-negative.json"}

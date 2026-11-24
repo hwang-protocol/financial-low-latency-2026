@@ -1,0 +1,45 @@
+$ hostname
+vm-2522-02
+$ cat /etc/machine-id
+3f78f083a50d44e88f76c5c8739a54d9
+$ uname -r
+5.15.0-164-generic
+$ lscpu summary
+CPU(s):                                  4
+On-line CPU(s) list:                     0-3
+Thread(s) per core:                      1
+Core(s) per socket:                      1
+Socket(s):                               4
+NUMA node(s):                            1
+$ ip -br link
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+ens33            UP             00:50:56:83:6a:95 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+ens64np1         UP             00:0f:53:d3:af:21 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+$ ip -4 -br addr
+lo               UNKNOWN        127.0.0.1/8 
+ens33            UP             10.1.1.2/24 
+ens64np1         UP             20.1.1.2/24 
+$ PCI 03:00 functions
+03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)
+	DeviceName: pciPassthru0
+	Subsystem: Solarflare Communications XtremeScale X2522-25G Network Adapter [1924:8028]
+	Kernel driver in use: sfc
+	Kernel modules: sfc
+$ hugepage pools
+/sys/kernel/mm/hugepages/hugepages-1048576kB 0
+0
+0
+0
+/sys/kernel/mm/hugepages/hugepages-2048kB 0
+0
+0
+0
+$ Hugetlb
+Hugetlb:               0 kB
+$ XDP links
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+4: ens64np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+$ course listeners
+$ course processes
+$ market runtime

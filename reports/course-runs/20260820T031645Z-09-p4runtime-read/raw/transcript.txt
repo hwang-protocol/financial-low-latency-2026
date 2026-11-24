@@ -1,0 +1,52 @@
+===== 2026-08-20 现场 P4Runtime 客户端标准输出 =====
+$ INSERT -> READ -> DELETE -> READ(empty)
+P4RUNTIME_PRE_INSERT_COUNT=0
+field_id: 1
+exact {
+  value: "\017S\323\257!"
+}
+
+param_id: 1
+value: "\002"
+
+P4RUNTIME_INSERT_REQUEST
+table_id: 37286594 ("P1Ingress.dst_mac_exact")
+match {
+  field_id: 1 ("headers.ethernet.dst_addr")
+  exact {
+    value: "\\x0f\\x53\\xd3\\xaf\\x21"
+  }
+}
+action {
+  action {
+    action_id: 20749965 ("P1Ingress.set_egress_port")
+    params {
+      param_id: 1 ("port")
+      value: "\\x02"
+    }
+  }
+}
+
+P4RUNTIME_INSERT_OK
+P4RUNTIME_READ_COUNT=1
+P4RUNTIME_READ_ENTITY
+table_id: 37286594 ("P1Ingress.dst_mac_exact")
+match {
+  field_id: 1 ("headers.ethernet.dst_addr")
+  exact {
+    value: "\\x0f\\x53\\xd3\\xaf\\x21"
+  }
+}
+action {
+  action {
+    action_id: 20749965 ("P1Ingress.set_egress_port")
+    params {
+      param_id: 1 ("port")
+      value: "\\x02"
+    }
+  }
+}
+
+P4RUNTIME_DELETE_OK
+P4RUNTIME_POST_DELETE_COUNT=0
+P4RUNTIME_ROUNDTRIP=PASS

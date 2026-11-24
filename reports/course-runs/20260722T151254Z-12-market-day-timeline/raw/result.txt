@@ -1,0 +1,7 @@
+1 OPEN    action=normal Tick + ACK/Execution proof=functional baseline
+2 CALM    action=steady background proof=latency baseline
+3 BURST   action=dual-ingress microburst proof=queue/tail observation
+4 FAULT   action=Feed A misses one sequence proof=Feed B recovery
+5 RECOVER action=pressure stopped proof=state returns normal
+6 CLOSE   action=stop and restore proof=final receipt
+MARKET_DAY_TIMELINE_PASS periods=6

@@ -1,0 +1,9 @@
+vm-2522-01
+ROOT 20260727T045344Z-12-market-day
+RUN_PROCESS pid=55961 root=/run/flle-market-day/20260727T045344Z-12-market-day cmdline=python3 /run/flle-market-day/20260727T045344Z-12-market-day/order_service.py --run-id 20260727T045344Z-12-market-day --run-dir /run/flle-market-day/20260727T045344Z-12-market-day --bind 20.1.1.1 --port 43300 --allow-peer 20.1.1.2 --socket-timeout 30 
+$ onload_stackdump stacks
+#stack-id stack-name      pids
+3         -               55961 
+$ onload_stackdump 3 netstat
+TCP 0 0 20.1.1.1:43300 0.0.0.0:0 LISTEN
+ONLOAD_COURSE_LISTENER pid=55961 line=tcp LISTEN 0      5           20.1.1.1:43300 0.0.0.0:*                                          

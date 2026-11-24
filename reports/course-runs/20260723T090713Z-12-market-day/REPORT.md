@@ -1,0 +1,132 @@
+# Mini-HFT Market Day Evidence Report
+
+- RUN_ID: `20260723T090713Z-12-market-day`
+- Evidence root: `/financial-low-latency/Documents/reports/course-runs/20260723T090713Z-12-market-day`
+
+## Phase evidence
+
+| Phase | Raw file | SHA-256 | Application summary |
+| --- | --- | --- | --- |
+| OPEN | `raw/01-data-path.txt` | `de357992681fc1d4d1e0c1ca9134cc841617a9c0deba6b02eafc28fe49e781a1` | `raw output` |
+| OPEN | `raw/01-eos-enable.txt` | `58e50dd46d598bd6f5bf9a0b23cc5f2c943ce358e8248c82e8d86d85f5047d2b` | `raw output` |
+| OPEN | `raw/01-eos-preflight.txt` | `7ac770830d2d90953f5a5f06dcb24ad34cec2847145a58d4beaed2c962b09fbd` | `raw output` |
+| OPEN | `raw/01-services-start.txt` | `cccfa4b4226877747b7261cb65f6e611d21f04ee55f8419371744f361c588b4c` | `raw output` |
+| OPEN | `raw/01-services-status.txt` | `83dfaf34dd6b89bd8d1066a3ca788ad1c25f7dd554a276660cd40c42a1c0a966` | `raw output` |
+| OPEN | `raw/01-trex-open.txt` | `abfecf37a9c489be311e3c7180c316edd82e058986a6054a04ada77bd6428cce` | `raw output` |
+| OPEN | `raw/01-trex-prepare.json` | `0f73d41877f2312f8785a5e70b431ed193277565e579575d64437b780008b493` | `raw output` |
+| OPEN | `raw/01-trex-status.txt` | `82fcb5b42ff525114a0ab3159efbfb98bf595e55a2672e22a8b472728cb76de4` | `raw output` |
+| CALM | `raw/02-calm-api-exchange.json` | `4b46750d8c687f0a32cc6e5c25067b180052b81999a78fd8cc3985773c45f82d` | `raw output` |
+| CALM | `raw/02-calm-api-phase.json` | `a52f10ef44f93f4cf6056a222aa57460ee6a23ca6523c8797ef93cfa0437b8f0` | `raw output` |
+| CALM | `raw/02-calm-api-pressure.json` | `137d2555ff720bfe605ba33b68bf3b97607975a0efa7b0be36ea80b2bd5b34e7` | `raw output` |
+| CALM | `raw/02-calm-api-trader.json` | `7c4a879079f96a5f967c63cb0a8108f138f01c6b2842bb99c574327ff676c753` | `raw output` |
+| CALM | `raw/02-calm-eos-after.txt` | `c14fba31dad5396f92eaa51c078c72282f53c9629fd2551942045f5c2a82b543` | `raw output` |
+| CALM | `raw/02-calm-eos-before.txt` | `65cfcb5b08c9344ec23d512dd147b32f2e27f1eb998340fab1205b77cfb5b633` | `raw output` |
+| CALM | `raw/02-calm-exchange.txt` | `d2dafbdb503f5b3708dacb40a5c58b52e410523b309192c48258c1bc8094542b` | `event=summary node=vm-2522-01 monotonic_ns=27456497611497 run_id=20260723T090713Z-12-market-day phase=CALM ticks_sent=32 orders_applied=1 correlation=3869327994` |
+| CALM | `raw/02-calm-nic-after.txt` | `d91e2dae277bb07d24f6e4e40dc5d8391df8b36d937d2802293a37fa7f90e73a` | `raw output` |
+| CALM | `raw/02-calm-nic-before.txt` | `bef26233db109d78742ec9ca3d40d6c9fa75eb42871e01cc26af9a3710b4638c` | `raw output` |
+| CALM | `raw/02-calm-pressure-event.json` | `ec0292b17567ee9c4b1895f7b915c84118bcaf63fb62981a72692f0aedbdd240` | `raw output` |
+| CALM | `raw/02-calm-trader.txt` | `184185c36d8f76dac32ca65e531cea8e927c31ff10dc542a0644687e52eb9292` | `event=summary node=vm-2522-02 monotonic_ns=27454519017880 run_id=20260723T090713Z-12-market-day phase=CALM ticks_received=32 unique=32 duplicate=0 gap_remaining=none tick_window_ns=160701828 order_actions=1 correlation=3869327994` |
+| CALM | `raw/02-calm-trex-console.txt` | `36d1b89f6e4ceafe047895c6a0f1f6b9f3fae1357e9ca186f0f5e36cd18219de` | `raw output` |
+| CALM | `raw/02-calm-trex.json` | `5df7f79fd5e8a31511b214cbe26794d783f155a9368971ba0ac6d6867973f96f` | `raw output` |
+| BURST | `raw/03-burst-api-exchange.json` | `fa7fc022717269fe08ffb3dd67946fb15d604e1c5bb35819ef9659c5a613c277` | `raw output` |
+| BURST | `raw/03-burst-api-phase.json` | `7e4cbd7fa251cdaa9e18ccb6e448977dede5aebaed233d10f17d116fef18812f` | `raw output` |
+| BURST | `raw/03-burst-api-pressure.json` | `0d34c5f0cfb691d2f33a32416ca3a6c8c18929822ad5c54f1137c45fb079548e` | `raw output` |
+| BURST | `raw/03-burst-api-trader.json` | `aeb87aff1899a9255301224dfda7c8f21328c004ce3bb10cdeb202479f4a3e42` | `raw output` |
+| BURST | `raw/03-burst-eos-after.txt` | `e914c5eac707731889d651b6744e2245c600c47770bfd1da2f43470ef8a92027` | `raw output` |
+| BURST | `raw/03-burst-eos-before.txt` | `b4c66ae36a73a2e7447dc5f4d664374ed8389388440f7b529eb07dd558dbdb21` | `raw output` |
+| BURST | `raw/03-burst-exchange.txt` | `4d2a43ac7e39adc220d0828986004f1df2634ea0bd2ffc8126444a2ae53de3ba` | `event=summary node=vm-2522-01 monotonic_ns=27475242964586 run_id=20260723T090713Z-12-market-day phase=BURST ticks_sent=32 orders_applied=1 correlation=785390557` |
+| BURST | `raw/03-burst-nic-after.txt` | `a0dbdd9c7f6caffc214a2fcde3a361d8e9be6e441ee0e91acd01d50d27939f7c` | `raw output` |
+| BURST | `raw/03-burst-nic-before.txt` | `a4bc19892baaf842f28ad85170d4f35b699eba8b961e0273e20ad6a6de814982` | `raw output` |
+| BURST | `raw/03-burst-pressure-event.json` | `d5bbae7c1121da772a2b91c396fdf0ede4b7e86e68247a60937d709e63d07412` | `raw output` |
+| BURST | `raw/03-burst-trader.txt` | `ea140f8d419d0607ae52a6441408fa1219590aaf5f4e728976c9c4d0f4fb69a9` | `event=summary node=vm-2522-02 monotonic_ns=27473265651778 run_id=20260723T090713Z-12-market-day phase=BURST ticks_received=32 unique=32 duplicate=0 gap_remaining=none tick_window_ns=1963439 order_actions=1 correlation=785390557` |
+| BURST | `raw/03-burst-trex-console.txt` | `f11fae147679b2b3ff722284fd933290f96f6567b0e0c3c2d250752f5a6148bd` | `raw output` |
+| BURST | `raw/03-burst-trex.json` | `b0b7782dc371f40a523bcbae00f35e332d43af16b7d4727e1f986a7f3a92e358` | `raw output` |
+| FAULT | `raw/04-fault-api-exchange.json` | `55afab760113c6371540fbb2e329d84d9c0bc0dd57e839cb9059ba89298d29b4` | `raw output` |
+| FAULT | `raw/04-fault-api-phase.json` | `b1167990be603ee37224a35a4145f4f7d81a2ff311ec754e33d98b4f8a04f0b2` | `raw output` |
+| FAULT | `raw/04-fault-api-trader.json` | `3286a5471d09f19602be14e08f6e73234a0e36809e244938166b413170e37899` | `raw output` |
+| FAULT | `raw/04-fault-eos-after.txt` | `cfb8463b7902bc9636c87569f14a78e1b33df607a3ac7bec7500a7f0f906149d` | `raw output` |
+| FAULT | `raw/04-fault-eos-before.txt` | `6f486d6a608374c3eaae379fe3b8119b842c3d5eb6b6e25636985201d77a23c0` | `raw output` |
+| FAULT | `raw/04-fault-exchange.txt` | `7ef762891a156dbdfb02204ca4fd8f0ff5d71593207121ca07fc5fb3003904ef` | `event=summary node=vm-2522-01 monotonic_ns=27577310492873 run_id=20260723T090713Z-12-market-day phase=FAULT ticks_sent=15 orders_applied=1 correlation=3426641358` |
+| FAULT | `raw/04-fault-nic-after.txt` | `4228cf2032c6ea2b5e0931bb863429631aec2e418dcd1a5d8f1a87deab7a3cfc` | `raw output` |
+| FAULT | `raw/04-fault-nic-before.txt` | `f09272fd7d2f4bdad1944222d7bc063e4c3048338ae02b5ee6aa9ccdccb267ea` | `raw output` |
+| FAULT | `raw/04-fault-terminal-state.json` | `1446c4cbb7572328a044c320a25b33deae1250724e22360126fe6dffb3b20aef` | `raw output` |
+| FAULT | `raw/04-fault-trader.txt` | `1cf80b694b12f0ff87c983b4a2e9ad53db4b70639a3442fd63f06e2d0f29475c` | `event=summary node=vm-2522-02 monotonic_ns=27575338659444 run_id=20260723T090713Z-12-market-day phase=FAULT datagrams_received=15 unique=8 duplicate=7 sequence4_source=B gap_remaining=none order_actions=1 correlation=3426641358` |
+| FAULT | `raw/04-fault-trex-lease.txt` | `02a42602fade2d4bf6f13a782d7252196d0cdc0f16917dae0278a5cf40b37e16` | `raw output` |
+| FAULT | `raw/04-fault-trex-status.txt` | `8911e69cc4ca8112222474e01cdd986daa14b1ec1546d7351c4177264227521f` | `raw output` |
+| RECOVER | `raw/05-onload-exchange.txt` | `fd34192df8b8f7963f04a278b787b70763952b1d5bf8415907bd1068d324a9f0` | `raw output` |
+| RECOVER | `raw/05-order-api-replay.json` | `9e8d1f9516e4b4735878741a7c8fa316230b8481e1c9108f97fe9cdffa06c848` | `raw output` |
+| RECOVER | `raw/05-order-api.json` | `b0cb30b64796f8687a112d8ae096dcf40cc70e54ef42edf5703fe2b3557dc050` | `raw output` |
+| RECOVER | `raw/05-order-ui.json` | `ec84a62ca06f618c68042da1a80f190ca9b4dd840853d9d59a26e6c255a3e19a` | `raw output` |
+| RECOVER | `raw/05-recover-exchange.txt` | `6c07ee37de262381615b35d0897a821c9d190f6b8de8048f60696659696c1e3d` | `event=summary node=vm-2522-01 monotonic_ns=27585481744381 run_id=20260723T090713Z-12-market-day phase=RECOVER connections=2 unique_correlations=1 action_count=1` |
+| RECOVER | `raw/05-recover-ingest-exchange.json` | `7994cb13139b2a30bf678fb7655b8a8a96536fee1e591f83943fa9b94d0c7431` | `raw output` |
+| RECOVER | `raw/05-recover-ingest-trader-g1.json` | `0d4f8bf05af3011a82df29e490671e9ba9a70379874cd858e224f03a9ee0b308` | `raw output` |
+| RECOVER | `raw/05-recover-ingest-trader-g2.json` | `e8328ccf5dffaaac87f55badfc2fcd6fd1c928afb7653f5a801d8acf08f87f72` | `raw output` |
+| RECOVER | `raw/05-recover-phase.json` | `27fdfcbff1d9f493bbfc68ee616f373993c39a0d17ecb6978d0af1c3d0aaeae8` | `raw output` |
+| RECOVER | `raw/05-recover-trader-g1.txt` | `59a2f7c1cc60a25ce45c6e2c0654b2b0e3a65ceedba1d2b5c54d04aaf1553789` | `raw output` |
+| RECOVER | `raw/05-recover-trader-g2.txt` | `0fce9a6483c645fb56e9a933a45d910af4ae541fca064f52cc647d3b8d4687b8` | `event=summary node=vm-2522-02 monotonic_ns=27583510162753 run_id=20260723T090713Z-12-market-day phase=RECOVER generation=2 correlation=3615676711 responses=ACK,EXECUTION` |
+| RECOVER | `raw/05-recover-trex-lease.txt` | `b2b7073d6c65362469068e308e711b7bccf4cd6bb1dd27743524234738cb12a6` | `raw output` |
+| RECOVER | `raw/05-sse-disconnect.stderr` | `df811c6fcd97ef43eb0a2819f2a4f9d67993c96e3c999452e6821ac482575549` | `raw output` |
+| RECOVER | `raw/05-sse-disconnect.txt` | `5848786cf689c51bee2259ff27343b67cb312b3b256cc017e083e5f152a3b212` | `raw output` |
+| CLOSE | `raw/06-close-api.json` | `5acb0d9a6591eee855e43f8be7414fd92615c5a6bd6703afd5f6acc82bab5d7e` | `raw output` |
+| CLOSE | `raw/06-close-terminal-state.json` | `f52903d892c90f44b59f1d1306045cf70e1a4f211b4338db64006595ca76cea4` | `raw output` |
+| CLOSE | `raw/06-eos-disable.txt` | `849fb274b1a7fda3d22cdf3d999badef683ee231943e730e5e52dafb25e9b0fa` | `raw output` |
+| CLOSE | `raw/06-remote-remove.txt` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `raw output` |
+| CLOSE | `raw/06-services-stop.txt` | `e64f41ba470bc19f4b3434149aa8cda61f390aac9c9155baa4037aa96e2c1d32` | `raw output` |
+| CLOSE | `raw/06-trex-recover.txt` | `9a71146d66599d2c9af5dac596a8d793e4487b65665a0fe18f362e0fc4290408` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/burst-exchange-40496.pid` | `9332ae3f2a7d5c82c70ef229ad70cc9bf2653e3a06c07f864008c28f7877cc93` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/calm-exchange-40446.pid` | `a2fae8186459ca223b044a1a2d36ce9dfd71920dda0391e8eb0929651399630b` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/fault-exchange-40555.pid` | `3c9543e0b41db2d959d52cf04b2f9f2575a376ab82706d7173ecd6759c5caf93` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/market_day.py` | `427e72c939ede0b726ec7a8f899a1564da9a537533249e59660ba7e8a7fbf431` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order-service/onload-request-20260723T090713Z-12-market-day-api-01-27585737914586.txt` | `87054a47dcb56657dedbcafc7c94837c3bfcda18dbfc29dd58824c95539672bf` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order-service/onload-request-20260723T090713Z-12-market-day-api-01-27585781067825.txt` | `dd1662eaee18dae085263836c75ef82b33c7084778fcaa1dd805dba83e1a732e` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order-service/onload-request-20260723T090713Z-12-market-day-ui-01-27585701964444.txt` | `8c1e62b137fb99eec95a772a00f65987acdf3bcdaae9340910e0b82adeb95fc3` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order-service/onload-start.txt` | `4c9be9e304fdc83a81aeffcd97e79806263cf76a844830ec6583b670ebae7f9d` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order-service/requests.ndjson` | `5fb28eaff2abcaa04242c1d767f0a5241fe6b733865fb585aa5e23d79d820910` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order-service/state.json` | `0ed68f78e61902c90425aa05fba565d9617b282d1a3160c1e6ed7f8332913346` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order.stderr` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order.stdout` | `15969f6d05f230fd52563524ffa8231b4eec74cabc75f37c6624b40640ec52f1` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/order_service.py` | `d1667ee7b495e4f192cc1116025682efb9e2a1c495beba794b244ea48e9d76be` | `raw output` |
+| CLOSE | `raw/06-vm1-remote/recover-exchange-40604.pid` | `ca73be4b2d347e37dfed470c76ecf37fa6690108b50eda69c033c2671f924a84` | `raw output` |
+| CLOSE | `raw/06-vm101-baseline.txt` | `156474c783a413cc763eccd86bbe4967914597b1fd49b88dfe5173ba477e03e7` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/gateway/commands.ndjson` | `c5dfa99ae696609b11089e941b07349748cbf9b1f7a6c88ce5db14edc94323ae` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/gateway/events.ndjson` | `eeb9f227cc97a5242d5b60eab15a94b9ef36595adcbc02b7dfd008ccbc825263` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/gateway/state.json` | `57a9ebe566d618386a368a2b15570735cffc1bde696cd57a77dcbbfce25094dd` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/gateway.stderr` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/gateway.stdout` | `4d27d5d170aa3dccd75c1fbcd9feb8c03828723df776f279e62b266ce480905f` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/terminal/index.html` | `e497424672c48ae5bcd74438433454fc666931160680f68ffb503758cac8ee1a` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/terminal/terminal.css` | `c1161237fd093c044d13fad929e3ea577fac2c04151ed1c25a4822845a33b3e9` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/terminal/terminal.js` | `0961d00005f23b03ef98829b4fb38425bfd39675a203b490b09a40b2bfe6c403` | `raw output` |
+| CLOSE | `raw/06-vm101-remote/terminal_gateway.py` | `add40aaaf3bab35585efe764cbee02406761e24a12d8df4f8ccc813da7c9b06c` | `raw output` |
+| CLOSE | `raw/06-vm11-baseline.txt` | `26c0322d4ed75717c3322a04b48237470edca917fd0063269ba5ea031001204d` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/bind.log` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/market_trex_client.py` | `9feb81559cdd1b974286eef30eac9ee5be092c3f9d6ab91d2ad658de6d664118` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/market_trex_control.sh` | `1030e735159a00ff03ccfa2207b143757d2297deefdb92ba57e02591912cb38f` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/server.log` | `728feade596074947cb48e47cafa7c2f67040b7593975211f723d1c39319b85e` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/trex-burst.json` | `b0b7782dc371f40a523bcbae00f35e332d43af16b7d4727e1f986a7f3a92e358` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/trex-calm.json` | `5df7f79fd5e8a31511b214cbe26794d783f155a9368971ba0ac6d6867973f96f` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/trex-dual.yaml` | `017adf5bbd266ecd700d8150ceb06e6fedcf05cf28d21620487afe7ae4786e77` | `raw output` |
+| CLOSE | `raw/06-vm11-remote/trex-prepare.json` | `0f73d41877f2312f8785a5e70b431ed193277565e579575d64437b780008b493` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/adapter.stderr` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/adapter.stdout` | `7ad3cb7ffd22ec1745e1efe39727d7f9585bb395b15914d74826822e80eefcab` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/burst-trader-27108.pid` | `9cf76dd72c0692125cba38aa644ea3e6d8baefd3f03b03bc4cdc74798c4145a9` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/calm-trader-26961.pid` | `f3086c4740f4b3c2c6d4b85922e250fd74830593878f09cea8a016d075b9042a` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/fault-trader-27265.pid` | `143d9516da0282934699a349d096714523dc2d4c43574b3ee35b5b07b2e5e553` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/market_day.py` | `427e72c939ede0b726ec7a8f899a1564da9a537533249e59660ba7e8a7fbf431` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/order-adapter/onload-request-20260723T090713Z-12-market-day-api-01-27583758770446.txt` | `e96d506b3af2a20fe47a5e7ce13141e36a578abf2772fb8a6a15fe53d6ed2a0e` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/order-adapter/onload-request-20260723T090713Z-12-market-day-api-01-27583801895403.txt` | `249410d104246e92322426a5b3ebd7104e5a5737321a76d696a60c483dea5b9c` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/order-adapter/onload-request-20260723T090713Z-12-market-day-ui-01-27583721574323.txt` | `b1c3e14d859c72950b2351153c9320ffc6f2c9fac196625b0ef6e8d7076093df` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/order-adapter/onload-start.txt` | `4729195c55fbe2a027b2b247978696909f41bf092f7b17b78de563ecf2e74873` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/order-adapter/requests.ndjson` | `c86f5c574b3323ede4241c9864292c9fd953248c1f21c769d3ac851dcd07b446` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/order-adapter/state.json` | `f08097b07cebf8d8b7f08c74d56166108497d5355850d02e925ae00009ba3cc4` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/order_adapter.py` | `ce03d21ffcd6bb28cfae1c03594bfff6c39c9327b58f94f5e3b4618e7dcd0512` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/recover-trader-g1-27363.pid` | `7ad2f550f5b9869bb86bc264176548300724f18322f8b162d5171161acc160dc` | `raw output` |
+| CLOSE | `raw/06-vm2-remote/recover-trader-g2-27413.pid` | `f7df57c2ed48da8931b8afba1eb66411fd47a755d515de84af4d6207413c72f8` | `raw output` |
+| CLOSE | `raw/06-x2522-baseline.txt` | `765d54dffd5094118db6516a6c4a33fd8b18bb70061590089d1336de5f9e4481` | `raw output` |
+
+## Human review
+
+- Compare CALM and BURST `tick_window_ns` on the same Trader clock.
+- Reconcile current-RUN TRex JSON, NIC counters, and EOS LANZ records.
+- Read FAULT `sequence4_source`, `duplicate`, and `gap_remaining`.
+- Read RECOVER `order_apply`, `order_replay`, and `action_count`.
+- Read REST/SSE receipts and then judge the CLOSE device baseline.

@@ -1,0 +1,65 @@
+/var/tmp/20260820T020512Z-06-onload-runtime-prep.tgz: OK
+cpp-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+g++-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+gcc-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Hit:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease
+Hit:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease
+Hit:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+build-essential is already the newest version (12.9ubuntu3).
+libcap-dev is already the newest version (1:2.44-1ubuntu0.22.04.3).
+linux-headers-5.15.0-164-generic is already the newest version (5.15.0-164.174).
+python3-dev is already the newest version (3.10.6-1~22.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 102 not upgraded.
+
+$ hostname
+vm-2522-01
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Jul 27 2026 13:45:21 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Jul 27 13:48 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Jul 27 13:45 /dev/sfc_char
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+$ ip -4 -o addr show dev ens64np0
+4: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+/var/tmp/20260820T020512Z-06-onload-runtime-prep.tgz: OK
+cpp-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+g++-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+gcc-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Hit:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease
+Hit:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease
+Hit:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+build-essential is already the newest version (12.9ubuntu3).
+libcap-dev is already the newest version (1:2.44-1ubuntu0.22.04.3).
+linux-headers-5.15.0-164-generic is already the newest version (5.15.0-164.174).
+python3-dev is already the newest version (3.10.6-1~22.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 102 not upgraded.
+
+$ hostname
+vm-2522-02
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Jul 27 2026 13:47:44 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Jul 27 13:48 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Jul 27 13:48 /dev/sfc_char
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+$ ip -4 -o addr show dev ens64np1
