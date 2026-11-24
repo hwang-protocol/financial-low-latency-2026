@@ -1,0 +1,29 @@
+{
+  "schema": "flle.posix-qos.v1",
+  "base_source_sha256": "1cbae2786192ac16c39b1ebbdb7a19101b99a532430903839de39a8f0fa62bc7",
+  "patch_sha256": "ed67ed2d0034e62e290d3ea142f1cb64fff56157c25bc7b19b38262717ca2e67",
+  "compiler": "g++-11 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+  "command": [
+    "<sysroot>/usr/bin/g++-11",
+    "-std=c++17",
+    "-O2",
+    "-g",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-pthread",
+    "-Isrc",
+    "-ffile-prefix-map=<source>=/usr/src/flle-posix-qos-v1",
+    "--sysroot=<sysroot>",
+    "-B<sysroot>/usr/bin/",
+    "-ffile-prefix-map=<sysroot>=/usr/src/flle-build-sysroot",
+    "src/trader.cpp",
+    "src/posix_order_transport.cpp",
+    "-o",
+    "<package>/bin/flle-trader"
+  ],
+  "binary_sha256": "e7c5be8e70c0e61cede54c9b7ba8406c1640464b5863d93e2a1297e8523343f1",
+  "default_dscp": 0,
+  "hardware_verification": "PENDING",
+  "unchanged": "v13 Exchange, TCPDirect, DPDK and Chapters 00-04 runtime"
+}

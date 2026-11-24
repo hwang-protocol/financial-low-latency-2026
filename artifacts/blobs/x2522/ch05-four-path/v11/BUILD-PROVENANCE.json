@@ -1,0 +1,97 @@
+{
+  "schema": "flle.ch06-four-path-build-provenance.v7",
+  "created_utc": "2026-09-01T14:40:38Z",
+  "build_host": {
+    "hostname": "vm-2522-02",
+    "os": "Ubuntu 22.04.5 LTS (jammy)",
+    "architecture": "x86_64",
+    "kernel": "5.15.0-164-generic",
+    "compiler": "g++-11 (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0",
+    "make": "GNU Make 4.3",
+    "dpdk": "21.11.9",
+    "installed_packages_sha256": "576e50d5ec770ec0c15f5dd05789af7ff184fe9a5aa93dd93670b6bab6c20d98"
+  },
+  "application_source": {
+    "path": "blobs/x2522/ch06-four-path/v11/flle-ch06-four-path-v11-source.tgz",
+    "sha256": "a202afb02b7c49675569069ca82fc840eec1501901fb61b32135154403a73a48",
+    "scope": "exact 17-file closure inherited from v10 with control-file-only changes: x2522-dpdk-trader-remote.sh recognizes and removes both <file_prefix>map_* and F-Stack's actual container-<file_prefix>map_* hugefiles in normal and recover-only restoration, and recover-only accepts a consumed transient timer that systemd has already collected while retaining the durable token/state checks; all Makefile and C/C++ compilation inputs are byte-identical to v10"
+  },
+  "repack_base": {
+    "path": "blobs/x2522/ch06-four-path/v10/flle-ch06-four-path-v10-x86_64-jammy-runtime.tgz",
+    "sha256": "187340e9e21bf6b464b23bb425115ad883e7f4fe7036daa5620caed49ac3371e",
+    "provenance_sha256": "62c31a2c9f69618047f9bac8e9db0f989c793e76716053f16488b02ee993b4b5",
+    "reuse_contract": "the six compiled ELF outputs, shared libraries, tools and F-Stack INI are reused byte-for-byte; only the packaged shell control file, provenance, reproducibility receipt and runtime manifest are regenerated"
+  },
+  "build_inputs": {
+    "path": "blobs/x2522/ch06-four-path/v5/flle-ch06-four-path-v5-build-inputs-x86_64-jammy.tgz",
+    "sha256": "6caa8e25a4228751872b8b96ed1cff260532fd73ab4fcb14f1d85cb7e7baf451",
+    "manifest_sha256": "f088f4bc6eb6e3d9654f39f3367a19dc26c44d7dbb6ac9aa3198c7a3f3200766",
+    "tcpdirect_headers_manifest_sha256": "c0991903ce16c9c8b2e7634d9cb66cd56bb180469e435b5ea34ae1dab8025f9d",
+    "fstack_headers_manifest_sha256": "3556c7fdd12e77e4872f2a1dd885f1d9e2dca94a40d533af2f82763be8aa904f",
+    "scope": "the unchanged v5 TCPDirect and F-Stack headers plus static libraries actually consumed by the v10 application build; this is not a hermetic compiler, system-header or vendor-library source closure"
+  },
+  "dependencies": {
+    "onload": {
+      "commit": "9f330e7058f6062596f2a7316952c67963a0aac3",
+      "source_archive_sha256": "998d218db3733d85e3732f56790eca963f24deb05c6da4306d4dd9ab0c29d9e2"
+    },
+    "tcpdirect": {
+      "commit": "0abc996ae4709e49dedd3e65da1eb134dea0632d",
+      "source_archive_sha256": "db5142a6e74f71584d46c42a512fb6bc2eb703ecda507c932e3d817c8c84f622",
+      "libonload_zf_static_sha256": "d1dbad843d7cc68d7d74076d5eed242cf6749c001cf7d88f253a6b86557b418e"
+    },
+    "f_stack_dpdk": {
+      "f_stack_commit": "0abb713721a6a0ba95768acde052dbd3d2fdf3fe",
+      "source_archive_sha256": "eb5845b48f67b1a719986aeff9c86fa61c1e7531d2c9b62871e4f6f008352e20",
+      "dpdk_version": "21.11.9",
+      "compat_patch_sha256": "6d5f3e9d88dc673b56877ba07344aff76f65500ef1208068df0f73767f16a29c",
+      "libfstack_sha256": "b1b9b772196e1ef4b51be4481d80a3989d92cfbf452d7c55efc86168721c070b"
+    }
+  },
+  "build_contract": {
+    "environment": "LC_ALL=C TZ=UTC SOURCE_DATE_EPOCH=0",
+    "path_normalization": "-ffile-prefix-map=<build-root>=/usr/src/flle-ch06-v10 -fdebug-prefix-map=<build-root>=/usr/src/flle-ch06-v10 -fmacro-prefix-map=<build-root>=/usr/src/flle-ch06-v10",
+    "commands": [
+      "make -C <source> -j4 build/flle-exchange CXXFLAGS=<fixed-v10-flags>",
+      "make -C <source> -j4 build/flle-trader CXXFLAGS=<fixed-v10-flags>",
+      "make -C <source> -j4 tcpdirect TCPDIRECT_TREE=<fixed-v5-build-inputs>/tcpdirect CXXFLAGS=<fixed-v10-flags>",
+      "make -C <source> -j4 dpdk FSTACK_TREE=<fixed-v5-build-inputs>/fstack CXXFLAGS=<fixed-v10-flags>",
+      "make -C <source> -j4 build/flle-selftest CXXFLAGS=<fixed-v10-flags>",
+      "make -C <source> -j4 build/flle-book-checkpoint CXXFLAGS=<fixed-v10-flags>",
+      "<source>/build/flle-selftest"
+    ],
+    "build_log_sha256": "396b5d1dc7da4a99d270838bd8a35fd58ee26a88341cd717abc4b64d782b9f4a",
+    "reproducibility": "v10 performed two clean builds in different absolute directories and produced byte-identical hashes for all six compiled outputs; v11 proves every Makefile and C/C++ compilation input is byte-identical to v10 and therefore reuses those six ELF files without claiming a new compilation"
+  },
+  "compiled_outputs": {
+    "bin/flle-exchange": "e24c7ec1289dd0d550cc27004dc10c3f78a558d72da98d84c4ddbd24a94e6092",
+    "bin/flle-trader": "bd21777b77e039e60fa8c4976ae01303ed9d3f5bcb61d29f4f5f5ee1c86e10dc",
+    "bin/flle-trader-tcpdirect": "e327797d8547764d834cb692189a4e433fdbed4665374715f94c1b15602d5d91",
+    "bin/flle-trader-dpdk": "687b5053827ff4deaa786440d80363ed7ce4009c80e38e813ab16de08441c52c",
+    "bin/flle-selftest": "14ebb13a5c34bd287218336871382a02010c4457ff4b2efd847b4e4234082c3e",
+    "bin/flle-book-checkpoint": "7b14eecd37b3b01cd5bf73f1f95dea2785aead65829eba5d5a73c880abdb2d02"
+  },
+  "packaged_control_files": {
+    "bin/x2522-dpdk-trader-remote.sh": "a442bf477e49e0c7451024968a5c54155f673dacde5b15b7ed0d0330f0501810",
+    "host_command_boundary": "the packaged wrapper additionally requires the target host's Bash, flock, systemd-run/systemctl, ip, findmnt, fuser, ping, udevadm, sysctl and sha256sum; these interpreters and commands are verified at runtime where applicable but are not copied into this runtime archive"
+  },
+  "inherited_runtime_files": {
+    "support_base_path": "blobs/x2522/ch06-four-path/v5/flle-ch06-four-path-v5-x86_64-jammy-runtime.tgz",
+    "support_base_sha256": "1a3c0766dac04774f0d4ed0d3a910de409f52964fb219519ecf326e6fe8e93aa",
+    "scope": "shared-library closure, zf_stackdump, dpdk-devbind.py and the frozen F-Stack INI only; v5 compiled application outputs and provenance are replaced",
+    "bin/zf_stackdump": "62891f4701612c7fbf165e23427360761513d9e963be5395e7d70ebebb579726",
+    "bin/dpdk-devbind.py": "c1a1d398c0386ce8652a0215bf28ad0c15870dc2b7ef4606ca5c1f6c54a8a5f3",
+    "etc/f-stack-x2522.ini": "a47ea5cb71819f7b4591fd0d719bcf4ee60a8554fb235486d79deb9f97ab3e9b",
+    "shared_library_count": 26,
+    "shared_libraries_manifest_sha256": "558d781f88606cb37e55e70d858940cea54b08f4e486d329b13920a934f1dd94"
+  },
+  "acceptance": {
+    "selftest": "PASS",
+    "bit_reproducible_application_build": "PASS",
+    "compiled_application_inputs_unchanged_from_v10": "PASS",
+    "six_compiled_outputs_reused_byte_for_byte_from_v10": "PASS",
+    "packaged_control_files": "PASS",
+    "runtime_dynamic_closure": "PASS",
+    "hardware_runtime": "PENDING_NEW_V11_RUN"
+  }
+}
