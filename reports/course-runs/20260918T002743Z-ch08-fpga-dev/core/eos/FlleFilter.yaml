@@ -1,0 +1,34 @@
+# EOS framework adapted from Arista OpenFDK nullverilog, BSD-3-Clause.
+# The command names below are defined by this course, not built-in EOS commands.
+vendor:
+   name: FLLE Course
+namespace: flle.filter
+daemons:
+   FlleFilterDaemon:
+      exe: /opt/apps/flle_filter/eos/FlleFilterDaemon.py
+modes:
+   flle_filter:
+      command:
+         syntax: flle_filter
+         noSyntax: flle_filter
+      modeKey: flle_filter
+      daemon: FlleFilterDaemon
+commands:
+   disabled:
+      syntax: disabled
+      noSyntax: disabled
+      mode: flle_filter
+   show_filter_status:
+      syntax: show flle_filter status
+      mode: Unprivileged
+      outputSchema: {}
+   arm_once:
+      syntax: arm once
+      mode: flle_filter
+   disarm:
+      syntax: disarm
+      mode: flle_filter
+   show_filter_counters:
+      syntax: show flle_filter counters
+      mode: Unprivileged
+      outputSchema: {}
