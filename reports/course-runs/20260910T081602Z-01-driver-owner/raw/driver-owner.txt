@@ -1,0 +1,42 @@
+
+10.1.1.1 / verify · ens64np0
+===== 查当前绑定的驱动 =====
+[驱动归属] 对: 路径末段为 sfc  证: 这个 PCI 设备当前由 sfc 驱动管理
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+===== 从网口核对驱动信息 =====
+[驱动] 对: driver 为 sfc  证: 与设备目录查到的驱动一致
+[设备地址] 对: bus-info 为 0000:03:00.0  证: 与运行 ② 查到的 BDF 一致
+[版本] 看: version 是驱动版本，firmware-version 是网卡固件版本
+$ ethtool -i ens64np0
+driver: sfc
+version: 6.1.0.1009
+firmware-version: 8.0.0.1015 rx1 tx1
+expansion-rom-version: 
+bus-info: 0000:03:00.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: no
+supports-register-dump: yes
+supports-priv-flags: yes
+
+10.1.1.2 / verify · ens64np1
+===== 查当前绑定的驱动 =====
+[驱动归属] 对: 路径末段为 sfc  证: 这个 PCI 设备当前由 sfc 驱动管理
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+===== 从网口核对驱动信息 =====
+[驱动] 对: driver 为 sfc  证: 与设备目录查到的驱动一致
+[设备地址] 对: bus-info 为 0000:03:00.0  证: 与运行 ② 查到的 BDF 一致
+[版本] 看: version 是驱动版本，firmware-version 是网卡固件版本
+$ ethtool -i ens64np1
+driver: sfc
+version: 6.1.0.1009
+firmware-version: 8.0.0.1015 rx1 tx1
+expansion-rom-version: 
+bus-info: 0000:03:00.0
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: no
+supports-register-dump: yes
+supports-priv-flags: yes

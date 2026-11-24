@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/tmp/flle-topology-review/verify-switch.py", line 7, in <module>
+    before=time.monotonic();r=api('data-plane',{'mode':mode});(out/f'switch-{mode.lower()}.json').write_text(json.dumps(r,indent=2));print(mode,json.dumps(r),round(time.monotonic()-before,2),flush=True)
+  File "/tmp/flle-topology-review/verify-switch.py", line 5, in api
+    with urllib.request.urlopen(req,timeout=610) as r:return json.load(r)
+  File "/usr/lib/python3.10/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.10/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.10/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "/usr/lib/python3.10/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.10/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.10/urllib/request.py", line 1352, in do_open
+    r = h.getresponse()
+  File "/usr/lib/python3.10/http/client.py", line 1395, in getresponse
+    response.begin()
+  File "/usr/lib/python3.10/http/client.py", line 323, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.10/http/client.py", line 292, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response

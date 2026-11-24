@@ -1,0 +1,161 @@
+$ show version
+show version | no-more
+Arista DCS-7150S-24-F
+Hardware version:      02.00
+Serial number:         JPE13480066
+Hardware MAC address:  001c.7368.e239
+System MAC address:    001c.7368.e239
+
+Software image version: 4.23.16M-2GB
+Architecture:           i686
+Internal build version: 4.23.16M-2GB-40226546.42316M
+Internal build ID:      bb71297b-4523-465f-a576-6c7d1cb24663
+
+Uptime:                 0 weeks, 0 days, 6 hours and 49 minutes
+Total memory:           4009040 kB
+Free memory:            3043296 kB
+
+
+$ show running-config
+show running-config | no-more
+! Command: show running-config
+! device: fll-arista (DCS-7150S-24, EOS-4.23.16M-2GB)
+!
+! boot system flash:/EOS-2GB-4.23.16M.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname fll-arista
+!
+spanning-tree mode mstp
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret [REDACTED]
+username admin ssh-key ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1dV2le47i3YJoW9NFcqWbcEGe1pavdMsRkjoTFxIQs flle-course-jump-host-20260722
+!
+vlan 20
+   name fll
+!
+interface Ethernet1
+   switchport access vlan 20
+   spanning-tree portfast
+!
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+   switchport access vlan 20
+   spanning-tree portfast
+!
+interface Ethernet12
+   switchport access vlan 20
+   spanning-tree portfast
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Ethernet16
+!
+interface Ethernet17
+!
+interface Ethernet18
+!
+interface Ethernet19
+!
+interface Ethernet20
+!
+interface Ethernet21
+!
+interface Ethernet22
+!
+interface Ethernet23
+!
+interface Ethernet24
+!
+interface Management1
+   ip address 10.1.1.253/24
+!
+interface Vlan20
+   ip address 20.1.1.254/24
+!
+no ip routing
+!
+end
+
+$ show ip igmp snooping
+show ip igmp snooping | no-more
+   Global IGMP Snooping configuration:
+-------------------------------------------
+IGMP snooping                  : Enabled
+IGMPv2 immediate leave         : Enabled
+Robustness variable            : 2
+Report flooding                : Disabled
+
+Vlan 1 :
+----------
+IGMP snooping                  : Enabled
+IGMPv2 immediate leave         : Default
+Multicast router learning mode : pim-dvmrp
+IGMP max group limit           : No limit set 
+Recent attempt to exceed limit : No 
+Report flooding                : Disabled
+IGMP snooping pruning active   : False
+Flooding traffic to VLAN       : True
+IGMP snooping proxy active     : False
+Vlan 20 :
+----------
+IGMP snooping                  : Enabled
+IGMPv2 immediate leave         : Default
+Multicast router learning mode : pim-dvmrp
+IGMP max group limit           : No limit set 
+Recent attempt to exceed limit : No 
+Report flooding                : Disabled
+IGMP snooping pruning active   : False
+Flooding traffic to VLAN       : True
+IGMP snooping proxy active     : False
+
+$ show ip igmp snooping groups
+show ip igmp snooping groups | no-more
+Vlan  Group            Type     Version             Port-List
+--------------------------------------------------------------------------------
+20    233.74.125.32    Dynamic  -                    * Et2
+--------------------------------------------------------------------------------
+* Warning: IGMP Snooping Pruning is not active. Flooding traffic to vlan.
+Please check for IGMP Querier.
+
+$ show ip igmp snooping querier
+show ip igmp snooping querier | no-more
+% Unavailable command (This command is deprecated by 'show igmp snooping querier ...')
+
+$ show ip igmp snooping mrouter
+show ip igmp snooping mrouter | no-more
+
+$ show interfaces Ethernet1, Ethernet2, Ethernet11, Ethernet12 status
+show interfaces Ethernet1, Ethernet2, Ethernet11, Ethernet12 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+Et2               connected    20       full   10G    10GBASE-CR                      
+Et11              notconnect   20       full   10G    10GBASE-CR                      
+Et12              notconnect   20       full   10G    10GBASE-CR                      
+

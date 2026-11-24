@@ -1,0 +1,21 @@
+# Observability State-transition Smoke Run State
+
+- `RUN_ID`: `20260721T041727Z`
+- 状态：`COMPLETED — PROMETHEUS_LOKI_PASS_GRAFANA_AUTH_BOUNDARY`
+- 创建时间：2026-07-21 04:17:27 UTC / 2026-07-21 12:17:27 CST
+- 完成时间：2026-07-21 04:35:10 UTC / 2026-07-21 12:35:10 CST
+- 目标：限定管理网验证 Module 8 的真实教学边界：Prometheus 远端 exposition target `up=1 → 0 → 1` 与合成金融指标查询；Grafana 最小 dashboard API 的创建/查询/删除或认证负向边界；Loki 同 RUN_ID 正常/故障/恢复三态结构化日志闭环。
+- Profile：`module8-management-observability-state-transition-v1`
+- 允许对象：`.1` 的 `ens33/10.1.1.1` 与隔离目录 `/root/flle-observability-20260721T041727Z`；`.101` 的 `ens33/10.1.1.101`、隔离目录 `/root/flle-observability-20260721T041727Z`、Prometheus 临时 scrape job、Grafana/Loki HTTP API。
+- 明确禁止：不读取或改变任何实验数据网卡、数据地址、PCI/driver、hugepage、交换机、P4/BMv2、TRex；不安装包、不创建持久 service；不停止监控服务、不弱化 Grafana 认证；不保存口令、token 或 datasource secret。
+- Prometheus 恢复门闸：修改前保存配置、owner/mode/SHA 和 `promtool` 结果；临时候选先离线校验，以 HUP 热加载保持 PID；结束时恢复原文件 byte hash，热加载后证明临时 job 消失且服务健康。
+- Grafana 恢复门闸：创建前记录 dashboard count；只使用当前允许的 API 身份。若未认证写 API 返回 401/403，则保留负向结果，不尝试改 auth；若创建成功，仅删除精确 RUN UID 并证明 count 回归。
+- Loki 验收：推送 `normal/fault/recovered` 三条带 RUN_ID/sequence 的结构化日志，以精确 label query 取回并验证顺序与内容；不把单次日志闭环扩写成 retention、告警或长期可靠性结论。
+- 最终门闸：`.1` 临时 listener/process/path 为零；`.101` Prometheus 原 config SHA、四服务 PID/active/enabled/HTTP 回归，隔离 path/deadman 为零；仓库凭据扫描通过。
+- 结果目录：`Documents/reports/20260721T041727Z-observability-state-transition-smoke/`
+- Prometheus 结果：临时远端 target 的 active-target/instant-query 门闸完成 `up=1 → 0 → 1`；正常和恢复态的三项 synthetic 金融指标分别精确为 `4242 / 1.25 / 0.125`。候选与原配置均通过 `promtool`，HUP 前后 PID 保持 `16194`；最终原配置 SHA-256 `6718a9aec0464e1fd5e7acc6d6cbd2dba7e3a0a422b251b582d15581fc0baaa1` 恢复，RUN active target 为 0。
+- Prometheus 查询边界：原配置恢复且 active target 已为 0 后，instant query 在 40 秒观察窗内仍返回最后的 `up=1`；严格 series-absent assertion 失败并保留，修正版把 target removal 与 retained sample 分开。关联 PIT-20260721-79。
+- Grafana 结果：未认证 search 与精确 versioned dashboard POST 均为 HTTP 401；未关闭/弱化/绕过认证，dashboard count 与精确 UID count 均为 `0 → 0`；authenticated create/query/delete 为 `BLOCKED_NOT_TESTED`。
+- Loki 结果：normal/fault/recovered 三次 push 均为 HTTP 204；精确 RUN selector 返回 1 stream、3 条结构化事件，sequence `1/2/3`、up `1/0/1` 顺序一致。
+- 恢复结果：`.1` RUN path、listener 与 tracked PIDs 均为 0；`.101` RUN path、deadman、临时配置与 RUN target 均为 0，Prometheus/node exporter/Grafana/Loki 原 PID `16194/15843/16740/16644` 均 active/running/enabled，HTTP `9090/9100/3000/3100` 均为 200。
+- RUN closure：`CLOSED`；主报告：`Documents/reports/20260721T041727Z-observability-state-transition-smoke/report.md`。

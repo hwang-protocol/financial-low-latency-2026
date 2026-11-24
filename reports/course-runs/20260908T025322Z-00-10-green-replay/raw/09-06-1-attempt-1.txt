@@ -1,0 +1,16 @@
+正在执行 drop；完成后显示本步关键回执，详细日志保存到 /financial-low-latency/Documents/reports/course-runs/20260908T033323Z-09-p4-drop-live/raw。
+[3/4 一次丢包与缺口] 完成
+# CLI：register_write IngressImpl.remaining_drops 0 1，给一次额度。
+# 读回：register_read IngressImpl.dropped_sequence 0
+IngressImpl.dropped_sequence[0]= 290
+# 读回：counter_read IngressImpl.policy_drop_packets 0
+IngressImpl.policy_drop_packets[0]= (100 bytes, 1 packets)
+Feed：session=0612260006  integrity=GAP  next_expected=290
+行情播放：PAUSED
+Feed缺口：gap_size=1
+订单API：http_status=400  error=FEED_NOT_HEALTHY
+# CLI：register_write IngressImpl.remaining_drops 0 0（撤销额度）
+# CLI：register_read IngressImpl.remaining_drops 0
+IngressImpl.remaining_drops[0]= 0
+解读：实际丢1包，P4序号与Feed缺口已对账；额度已清零，下一步恢复。
+完整回执：/financial-low-latency/Documents/reports/course-runs/20260908T033323Z-09-p4-drop-live

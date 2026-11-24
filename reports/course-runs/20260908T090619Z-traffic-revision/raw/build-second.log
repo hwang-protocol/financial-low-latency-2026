@@ -1,0 +1,38 @@
+make: Entering directory '/tmp/20260908T090619Z-traffic-revision/second'
+mkdir -p build
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -fdebug-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs=/usr/src/flle-v5-inputs -o build/flle-exchange src/exchange.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -fdebug-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs=/usr/src/flle-v5-inputs -o build/flle-trader src/trader.cpp src/posix_order_transport.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -fdebug-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs=/usr/src/flle-v5-inputs -o build/flle-feed-receiver src/feed_receiver.cpp
+test -n "/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect"
+test -s "/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/build/gnu_x86_64/lib/libonload_zf_static.a"
+g++-11 -Isrc -I/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -fdebug-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs=/usr/src/flle-v5-inputs -o build/flle-trader-tcpdirect \
+	src/trader.cpp src/tcpdirect_order_transport.cpp /tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/build/gnu_x86_64/lib/libonload_zf_static.a \
+	-lm -lrt -ldl
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -fdebug-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs=/usr/src/flle-v5-inputs -o build/flle-itch-filter src/itch_filter.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -fdebug-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs=/usr/src/flle-v5-inputs -o build/flle-book-checkpoint src/book_checkpoint.cpp
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -fdebug-prefix-map=/tmp/20260908T090619Z-traffic-revision/second=/usr/src/flle-v13 -ffile-prefix-map=/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs=/usr/src/flle-v5-inputs -o build/flle-selftest src/selftest.cpp
+In file included from /tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf.h:18,
+                 from src/tcpdirect_order_transport.cpp:3:
+/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf_platform.h:52:39: warning: ISO C++ forbids zero-size array 'iov' [-Wpedantic]
+   52 |       #define ZF_FLEXIBLE_ARRAY_COUNT 0
+      |                                       ^
+/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf_udp.h:147:20: note: in expansion of macro 'ZF_FLEXIBLE_ARRAY_COUNT'
+  147 |   struct iovec iov[ZF_FLEXIBLE_ARRAY_COUNT];
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf_platform.h:52:39: warning: ISO C++ forbids zero-size array 'iov' [-Wpedantic]
+   52 |       #define ZF_FLEXIBLE_ARRAY_COUNT 0
+      |                                       ^
+/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf_tcp.h:414:20: note: in expansion of macro 'ZF_FLEXIBLE_ARRAY_COUNT'
+  414 |   struct iovec iov[ZF_FLEXIBLE_ARRAY_COUNT];
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~
+In file included from /tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf.h:23,
+                 from src/tcpdirect_order_transport.cpp:3:
+/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf_tcp.h: In member function 'virtual bool flle::{anonymous}::TcpDirectOrderTransport::recv_all(void*, std::size_t)':
+/tmp/20260908T090619Z-traffic-revision/flle-ch06-four-path-v5-build-inputs/tcpdirect/src/include/zf/zf_tcp.h:414:16: warning: zero-size array member 'zft_msg::iov' not at end of 'struct flle::{anonymous}::TcpDirectOrderTransport::recv_all(void*, std::size_t)::RxMessage' [-Wpedantic]
+  414 |   struct iovec iov[ZF_FLEXIBLE_ARRAY_COUNT];
+      |                ^~~
+src/tcpdirect_order_transport.cpp:88:12: note: in the definition of 'struct flle::{anonymous}::TcpDirectOrderTransport::recv_all(void*, std::size_t)::RxMessage'
+   88 |     struct RxMessage {
+      |            ^~~~~~~~~
+make: Leaving directory '/tmp/20260908T090619Z-traffic-revision/second'
+SELFTEST PASS protocol=ITCH5/MoldUDP64+OUCH5/SoupBinTCP mold_messages=2 book=AAPL ouch=O/A/E/J

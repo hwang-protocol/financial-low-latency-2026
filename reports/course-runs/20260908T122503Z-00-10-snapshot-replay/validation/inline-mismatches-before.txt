@@ -1,0 +1,73 @@
+02-04-1 Documents/newDoc/assets/02-trading-baseline/02-first-trade.sh
+--- 
++++ 
+@@ -4,7 +4,7 @@
+ REPO_ROOT=/financial-low-latency
+ SELF="$REPO_ROOT/Documents/newDoc/assets/02-trading-baseline/02-first-trade.sh"
+ STATE="$REPO_ROOT/Documents/reports/run-state/02-trading-baseline.env"
+-LABCTL="$REPO_ROOT/apps/flle-trading-lab/scripts/transport_labctl.sh"
++LABCTL="$REPO_ROOT/apps/flle-trading-lab/scripts/labctl.sh"
+ TRADE_TEST="$REPO_ROOT/apps/flle-trading-lab/tests/first_trade.py"
+ test -s "$STATE"
+ source "$STATE"
+
+05-01-1 Documents/newDoc/assets/05-live-software/00-install-hot-path-dashboard.sh
+--- 
++++ 
+@@ -20,11 +20,11 @@
+ value=json.load(open(sys.argv[1], encoding="utf-8"))
+ assert value["dashboard"]["uid"] == "flle-software-hot-path"
+ assert len(value["dashboard"]["panels"]) == 8
+-print("dashboard_uid=flle-software-hot-path panels=8")
+-print("grafana_service=active access=anonymous_viewer")
+-print("dashboard=http://10.1.1.101:3000/d/flle-software-hot-path/")
++print("Grafana 收下了这 8 块表")
++print("服务在跑，可以匿名打开")
++print("打开这一页：http://10.1.1.101:3000/d/flle-software-hot-path/")
+ PY
+-# ~~~~~封 SHA，写出驾驶舱 URL~~~~~
++# ~~~~~给本轮证据文件算 SHA-256 指纹，写出驾驶舱 URL~~~~~
+ sha256sum "$SELF" "$DASHBOARD" "$OUT/raw/service.txt" "$OUT/raw/dashboard.json" "$OUT/raw/result.txt" "$OUT/run.env" >"$OUT/SHA256SUMS"
+ printf 'DASHBOARD_RUN_ID=%s\nDASHBOARD_URL=http://10.1.1.101:3000/d/flle-software-hot-path/\n' "$RUN_ID" >Documents/reports/run-state/05-software-dashboard.env
+-printf 'evidence=%s\n' "$OUT"
++printf '本轮证据目录：%s\n' "$OUT"
+
+05-02-1 Documents/newDoc/assets/05-live-software/01-measure-deque-cv.sh
+--- 
++++ 
+@@ -20,4 +20,4 @@
+ sha256sum "$SELF" "$HELPER" "$OUT/raw/software.csv" \
+   "$OUT/raw/software.summary.json" "$OUT/raw/result.txt" "$OUT/run.env" >"$OUT/SHA256SUMS"
+ printf 'DEQUE_RUN_ID=%s\nDEQUE_SUMMARY=%s\n' "$RUN_ID" "$OUT/raw/software.summary.json" >Documents/reports/run-state/05-deque-cv.env
+-printf 'evidence=%s\n' "$OUT"
++printf '本轮证据目录：%s\n' "$OUT"
+
+05-03-1 Documents/newDoc/assets/05-live-software/02-measure-fixed-cv.sh
+--- 
++++ 
+@@ -22,4 +22,4 @@
+ sha256sum "$SELF" "$HELPER" "$OUT/raw/software.csv" \
+   "$OUT/raw/software.summary.json" "$OUT/raw/result.txt" "$OUT/run.env" >"$OUT/SHA256SUMS"
+ printf 'FIXED_RUN_ID=%s\nFIXED_SUMMARY=%s\n' "$RUN_ID" "$OUT/raw/software.summary.json" >Documents/reports/run-state/05-fixed-cv.env
+-printf 'evidence=%s\n' "$OUT"
++printf '本轮证据目录：%s\n' "$OUT"
+
+05-04-1 Documents/newDoc/assets/05-live-software/03-measure-spsc-spin.sh
+--- 
++++ 
+@@ -22,4 +22,4 @@
+ sha256sum "$SELF" "$HELPER" "$OUT/raw/software.csv" \
+   "$OUT/raw/software.summary.json" "$OUT/raw/result.txt" "$OUT/run.env" >"$OUT/SHA256SUMS"
+ printf 'SPSC_RUN_ID=%s\nSPSC_SUMMARY=%s\n' "$RUN_ID" "$OUT/raw/software.summary.json" >Documents/reports/run-state/05-spsc-spin.env
+-printf 'evidence=%s\n' "$OUT"
++printf '本轮证据目录：%s\n' "$OUT"
+
+05-05-1 Documents/newDoc/assets/05-live-software/04-measure-spsc-shared-cpu.sh
+--- 
++++ 
+@@ -27,4 +27,4 @@
+ sha256sum "$SELF" "$HELPER" "$RESTORE" "$OUT/raw/software.csv" \
+   "$OUT/raw/software.summary.json" "$OUT/raw/result.txt" "$OUT/raw/restore.txt" "$OUT/run.env" >"$OUT/SHA256SUMS"
+ printf 'SOFTWARE_RUN_ID=%s\nSOFTWARE_PROFILE=SPSC_DEDICATED_SHARED_ABBA_AUTO_SENTINEL_V14\nSOFTWARE_SUMMARY=%s\n' "$RUN_ID" "$OUT/raw/software.summary.json" >Documents/reports/run-state/05-software-current.env
+-printf 'evidence=%s\n' "$OUT"
++printf '本轮证据目录：%s\n' "$OUT"

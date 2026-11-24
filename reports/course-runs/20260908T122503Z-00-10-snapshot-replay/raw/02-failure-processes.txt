@@ -1,0 +1,17 @@
+
+trader-onload
+pid=22142 start_ticks=29330 boot_id=1957bc39-8c20-4cac-85e0-0fa25a40c153
+  PID  PPID STAT ELAPSED COMMAND
+22142     1 Sl        94 /var/tmp/flle-trading-lab-20260908T124028Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader --role MANUAL --data-ip 20.1.1.2 --exchange-data-ip 20.1.1.1 --management-ip 10.1.1.2 --telemetry-host 10.1.1.101 --book-checkpoint /var/tmp/flle-trading-lab-20260908T124028Z-02-trading-platform/opening-book.checkpoint --market-receiver 0 --order-queue DEQUE_CV --lock-order-queue 1 --order-cpu 2 --management-cpu 3 --management-port 48123 --user-ref-base 2500000000 --user-ref-span 100000 --clordid-prefix ONLD --order-transport-label OPENONLOAD
+/var/tmp/flle-trading-lab-20260908T124028Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader
+
+trader-tcpdirect
+pid=22148 start_ticks=29331 boot_id=1957bc39-8c20-4cac-85e0-0fa25a40c153
+  PID  PPID STAT ELAPSED COMMAND
+22148     1 Sl        94 /var/tmp/flle-trading-lab-20260908T124028Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader-tcpdirect --role MANUAL --data-ip 20.1.1.2 --exchange-data-ip 20.1.1.1 --management-ip 10.1.1.2 --telemetry-host 10.1.1.101 --book-checkpoint /var/tmp/flle-trading-lab-20260908T124028Z-02-trading-platform/opening-book.checkpoint --market-receiver 0 --order-queue DEQUE_CV --lock-order-queue 1 --order-cpu 2 --management-cpu 3 --management-port 48124 --user-ref-base 2900000000 --user-ref-span 100000 --clordid-prefix TCPD --order-transport-label TCPDIRECT_ZF
+/var/tmp/flle-trading-lab-20260908T124028Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader-tcpdirect
+LISTEN 0      32     10.1.1.2:48123 0.0.0.0:* users:(("flle-trader",pid=22142,fd=6))
+LISTEN 0      32     10.1.1.2:48124 0.0.0.0:* users:(("flle-trader-tcp",pid=22148,fd=5))
+
+Onload launcher implementation
+/usr/bin/onload: POSIX shell script, ASCII text executable

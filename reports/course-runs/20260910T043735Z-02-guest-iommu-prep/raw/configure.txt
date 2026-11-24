@@ -1,0 +1,36 @@
+vm-2522-01 / apply
+===== 配置下次启动参数 =====
+先备份当前文件，再加入 IOMMU 参数；重启后还需读取实际状态。
+$ install -m 600 /etc/default/grub /var/backups/flle-ch02-grub.20260910T043735Z-02-guest-iommu-prep
+备份文件：/var/backups/flle-ch02-grub.20260910T043735Z-02-guest-iommu-prep
+$ sed s/\^GRUB_CMDLINE_LINUX=\"\"\$/GRUB_CMDLINE_LINUX=\"intel_iommu=on\ iommu=pt\"/ /etc/default/grub > /etc/default/grub.flle02.HR7uHQ
+$ install -m 644 /etc/default/grub.flle02.HR7uHQ /etc/default/grub
+$ update-grub
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/init-select.cfg'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.15.0-164-generic
+Found initrd image: /boot/initrd.img-5.15.0-164-generic
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+vm-2522-02 / apply
+===== 配置下次启动参数 =====
+先备份当前文件，再加入 IOMMU 参数；重启后还需读取实际状态。
+$ install -m 600 /etc/default/grub /var/backups/flle-ch02-grub.20260910T043735Z-02-guest-iommu-prep
+备份文件：/var/backups/flle-ch02-grub.20260910T043735Z-02-guest-iommu-prep
+$ sed s/\^GRUB_CMDLINE_LINUX=\"\"\$/GRUB_CMDLINE_LINUX=\"intel_iommu=on\ iommu=pt\"/ /etc/default/grub > /etc/default/grub.flle02.vz41lp
+$ install -m 644 /etc/default/grub.flle02.vz41lp /etc/default/grub
+$ update-grub
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/init-select.cfg'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-5.15.0-164-generic
+Found initrd image: /boot/initrd.img-5.15.0-164-generic
+Warning: os-prober will not be executed to detect other bootable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done

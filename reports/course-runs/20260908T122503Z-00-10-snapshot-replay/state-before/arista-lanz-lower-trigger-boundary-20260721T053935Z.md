@@ -1,0 +1,33 @@
+# RUN STATE — Arista LANZ Lower-Trigger Boundary
+
+- `RUN_ID`: `20260721T053935Z`
+- `STATUS`: `COMPLETED — OBSERVED FIXED-PROFILE BRACKET PASS`
+- `STARTED_UTC`: `2026-07-21T05:39:35Z`
+- `CONTROL_NODE`: `jiaozhu-dgx-spark`（只做 SSH 编排与仓库证据；不改本机系统）
+- `TOPOLOGY`: `.11/03:00.0/Et11 + .11/03:00.1/Et12` → `.2/ens64np1/Et2`；access VLAN20；双 ingress TRex plain stream，单一 10G egress
+- `LANZ_PROFILE`: 只改 switch running-config；Et2 high/low=`64/32` segment，实测 segment=480 bytes，保持默认5000000 usec update interval；从不 save/write/copy running-config startup-config
+- `FRAME_AND_COUNT`: 全部 attribution/sweep measured stage 固定1514 bytes without FCS、EtherType `0x88B5`、4096 packets per active ingress；只改变 ingress 数和 pps，不混用 burst length
+- `ATTRIBUTION_CONTROL`: dual sweep 前独立执行 single port0 ingress /100000 pps/4096/同 dst Et2 对照；与 dual pps onset 结果分栏，不参与二分。若该对照产生 event，只保留结果并缩小归因结论
+- `DUAL_SWEEP`: 候选 pps/ingress=`1000,5000,10000,25000,50000,75000,100000`；从低到高，首个 count delta>0 后停止上压，只保留相邻已测低档或必要的一次相邻低档复核；不执行 drop/high-pressure stage
+- `READINESS`: 双 TRex port 连续10次 UP + 固定5秒 settle + 双向各256包不计分 warmup；普通 port stats；禁止 flow stats/PGID/latency rule/stats clear/reset
+- `STAGE_EVIDENCE`: 每阶段前后保存 Et2 LANZ cumulative statistics/event records/drops、Et2 ordinary/error/discard counters；`.2` 保存 immediate 与至少2秒 delayed sfc/sysfs snapshot；TRex 保存实际 ordinary-port delta
+- `DEADMAN`: 一次性 transient systemd timer 900秒；不 refresh。每次发流前必须证明 timer active，并以 remote monotonic deadline 计算 remaining > 195秒（75秒 stage budget +120秒 reserve）；不足即 fail closed/recover
+- `SERVER_START`: bounded readiness loop使用正 PID存活、4500/4501 listener与实际 PGID联合门闸，不再用一次性负 PGID `kill -0`
+- `STOP_BOUNDARY`: cumulative delta 不可判、门闸失败、单档 hardware drop/error、switch配置漂移或 deadman预算不足均立即停止发流并恢复；不为获取结果降低门闸
+- `RECOVERY`: `.11` 双 BDF回 `bnxt_en`/down/空配，所有页尺寸 hugepage=0、hugetlbfs空、无 TRex/UIO/listener/deadman/runtime；`.2` 保持 `sfc`/IP/10G；switch撤销 threshold/global LANZ，保留VLAN20且不保存
+- `CONCLUSION_BOUNDARY`: 只找固定4096包 profile 的 dual no-event↔event pps区间，并把 single100k对照单独报告；不外推其他 count/frame、瞬时线速、drop、报文延迟、PPS/L4性能或长期稳定性
+- `RESULT_DIR`: `Documents/reports/20260721T053935Z-arista-lanz-lower-trigger-boundary/`
+- `FINISHED_UTC`: `2026-07-21T06:14:59Z`
+- `READINESS_RESULT`: 修正版 bounded server gate第17次以PID/PGID=`22013`、4500/4501 listener通过；双port连续10次UP+5秒settle，双向warmup各256/256，switch三口STP forwarding，LANZ初始count/event/drop均0
+- `DEADMAN_RESULT`: 一次性900秒timer，remote monotonic deadline=`12733.38`；readiness及single/dual五个发流门闸remaining依次为849.65/771.80/692.38/588.04/505.63/404.60秒，均>195秒；不refresh。显式recovery后disarm与final-assert PASS
+- `SINGLE_ATTRIBUTION_RESULT`: single port0 100000 pps/4096，实际TX4096/6217728 obytes，port1 TX0，`.2`目标尺寸bin+4096且hardware clean；LANZ count `0→0`、event/drop0
+- `DUAL_SWEEP_RESULT`: 固定每ingress4096；1000/5000/10000 pps的LANZ delta均0，25000 pps为`0→164`；所有stage TRex实际TX合计8192、I/O errors0、`.2`目标尺寸bin精确+8192且hardware drop/error0
+- `OBSERVED_BRACKET`: 本次精确profile的单次observed bracket为`(10000,25000] pps/ingress`；未重复、未二分，不能写成确定性物理threshold
+- `FIRST_EVENT_DETAIL`: dual25k nominal aggregate wire=0.6152 Gbit/s；164个End/164个Start，duration=26..30 usec，max queue=64..94 segments（最大45120 bytes），time-of-max全0；LANZ drop0、Et2 OutDiscards/errors0、FM6000 written/read/failed=`492/492/0`
+- `NOT_EXECUTED`: dual50000/75000/100000 pps及任何drop压力stage；首event后按合同停止
+- `FINAL_RECOVERY`: `.11`双BCM `bnxt_en`/down/空配，无TRex/UIO/listener/deadman/runtime，全部页尺寸hugepage=0、hugetlbfs空；`.2`保持`sfc`/IP/10G；switch撤销Et2 threshold/global LANZ、running无queue-monitor、LANZ disabled、VLAN20/errors/startup parse回归且从未save；remote12文件SHA一致后删除
+- `CONCLUSION_LIMIT`: 只覆盖一次1514-byte、4096包/active-ingress、plain SingleBurst、Et2 64/32/480-byte segment profile；不覆盖其他count/frame/profile、重复性/概率onset、瞬时线速、drop、packet latency、PPS/L4或长期稳定性
+- `ARCHIVE_CLOSED_UTC`: `2026-07-21T06:55:14Z`
+- `ARCHIVE_VALIDATION`: 本地静态/JSON/Markdown、派生结果逐字节重算、报告事实、凭据、未执行stage、远端/本地既有SHA diff与恢复证据全部PASS；没有再次访问设备或发流
+- `ARCHIVE_MANIFEST`: RUN目录内除manifest自身外119个文件，最终 `SHA256SUMS` 校验119/119 PASS
+- `LEDGER_MERGE`: `PINS-FREEZE-CANDIDATE.md` 仅为根代理合并候选；本 RUN 未直接修改共享 `00.PINS.md` / `00.FREEZE-LEDGER.md`

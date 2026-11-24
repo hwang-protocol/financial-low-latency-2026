@@ -1,0 +1,9 @@
+vm-2522-02 / verify
+===== 查丢弃与缺失序号 =====
+[Feed] 对: 同一序号 / 缺口1 / 拒单  证: 过滤判决与接收结果一致
+$ bash Documents/newDoc/assets/10-verilator/08c-verify-rtl-filter.sh
+rtl_drop sequence=201 remaining=0 drop_count=1
+Feed：session=0612260011  integrity=GAP  next_expected=201  gap_size=1
+路径：Exchange=MULTICAST  Guardian=UNICAST  交易闸门=INHIBITED_FEED_GAP
+订单API：http_status=400  error=FEED_NOT_HEALTHY
+丢弃序号 = 缺失序号，丢弃数 = 缺口数 = 1。现场仍暂停；讲解后执行恢复。

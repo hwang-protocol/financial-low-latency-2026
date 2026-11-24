@@ -1,0 +1,20 @@
+正在执行 configure；完成后显示本步关键回执，详细日志保存到 /financial-low-latency/Documents/reports/course-runs/20260908T033323Z-09-p4-drop-live/raw。
+[1/4 配置接流] 完成
+# 命令：EOS配置命令节选，先工具口，再交易口。
+interface Ethernet11
+switchport access vlan 100
+interface Ethernet12
+switchport access vlan 200
+interface Ethernet1
+switchport access vlan 100
+interface Ethernet2
+switchport access vlan 200
+# 结果：show vlan id 100 / show vlan id 200 的原生成员行。
+100   FLLE_P4_LEFT                     active    Et1, Et11
+200   FLLE_P4_RIGHT                    active    Et2, Et12
+# CLI：register_read IngressImpl.remaining_drops 0
+IngressImpl.remaining_drops[0]= 0
+Feed：session=0612260006  integrity=HEALTHY  next_expected=288
+行情播放：PAUSED
+解读：两侧已分开，P4已装规则；放行检查通过，暂停播放等下一步。
+完整回执：/financial-low-latency/Documents/reports/course-runs/20260908T033323Z-09-p4-drop-live

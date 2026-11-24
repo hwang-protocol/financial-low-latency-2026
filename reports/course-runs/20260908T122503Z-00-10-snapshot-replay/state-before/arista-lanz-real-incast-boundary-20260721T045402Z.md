@@ -1,0 +1,26 @@
+# RUN STATE — Arista LANZ Real Incast Boundary
+
+- `RUN_ID`: `20260721T045402Z`
+- `STATUS`: `COMPLETED — PARTIAL POSITIVE; CALM/ONSET/DROP BOUNDARY NOT CLOSED`
+- `STARTED_UTC`: `2026-07-21T04:54:02Z`
+- `CONTROL_NODE`: `jiaozhu-dgx-spark`（仅 SSH 编排与仓库证据操作）
+- `PROFILE`: `.11/03:00.0/Et11 + .11/03:00.1/Et12` 两个 10G TRex plain-stream ingress，以独立 source MAC 同时发送到 `.2/ens64np1/Et2` 唯一 10G egress；全程 access VLAN20
+- `READINESS`: 双 TRex port 连续10次 UP、固定5秒 settle、双向各256包不计分 warmup；禁止 `STLFlowStats`、PGID、latency rule 与 stats clear/reset
+- `LANZ_PROFILE`: 只在 running-config 启用 `queue-monitor length`，Et2 high/low threshold `64/32` 个 segment；平台实测 per-interface segment 为480 bytes；保持默认 update interval，不使用小于5秒的告警 profile
+- `FRAME_CONTRACT`: readiness/warmup 沿用 128-byte without-FCS frame；calm/incast 固定 Ethernet frame 为1514 bytes without FCS（14-byte header + 1500-byte payload）。TRex/PMD `obytes` 预期为1518 bytes/packet（含4-byte FCS），但以实际 delta 为准。名义 wire offered-load 据 `1514 + 4 FCS + 8 preamble/SFD + 12 IFG = 1538 bytes/packet` 计算，明确标为配置速率口径，不冒充外部测量值
+- `TRAFFIC_CONTRACT`: 先做每 ingress 100000 pps 的 calm（aggregate nominal wire `2.4608 Gbit/s`）与350000/400000 pps 对照（`8.6128/9.8432 Gbit/s`），再从425000 pps（`10.4584 Gbit/s`）起以受控短 burst 分级递增；单 ingress 上限750000 pps，其 aggregate nominal wire 为 `18.456 Gbit/s > 10 Gbit/s`；每阶段单 ingress 上限4096包，出现首个 drop 后不再增压
+- `ADAPTIVE_CALM`: 首个100000 pps/ingress、4096包候选虽低于10G egress，仍实测产生123个 LANZ event、已见最大121 segments 且无 ASIC/NIC drop，因而不得写成 calm PASS。保持相同1514-byte/EtherType traffic contract，在进一步增压前追加1000 pps/ingress、256包对照，以 LANZ count 不增长为 calm 验收
+- `OBSERVATION`: 每阶段保留 TRex ordinary-port 实际 `opackets/obytes/error` delta、`start→wait_on_traffic` monotonic wall interval 和由此得到的有边界平均值；同时保留 `.2` kernel/NIC RX/drop/error delta、Arista Et2 interface/error/discard counters、LANZ statistics/events/drops、事件时间与最大 queue segments。无法输出的字段保留 CLI 负向证据；不用配置 pps 替代实际 counter delta
+- `RECEIVER_COUNTER_BOUNDARY`: `.2` 每阶段 immediate 后再保留至少2秒 delayed snapshot，规避 sfc/firmware counter 刷新滞后；物理 egress 以 Arista Et2 `OutUcast` delta、LANZ drops 和 X2522 `port_rx_good`/hardware-drop delta 为主证。自定义 EtherType `0x88B5` 在 Linux host stack 的 `rx_dropped` 单独记录为 unsupported-EtherType host drop，不与 ASIC/NIC/wire loss 混用
+- `DEADMAN`: `.11` 240秒 systemd recovery deadman + 控制层 trap；任何门闸失败先停止 TRex/恢复双 BCM，再撤销 Et2 threshold 与 LANZ 全局 running-config
+- `SWITCH_BOUNDARY`: 绝不执行 save/write/copy running-config startup-config；结束时恢复原 running-config，并核对 startup-config 与 VLAN20
+- `HOST_RECOVERY_TARGET`: `.11` 双 BCM 回到 `bnxt_en`、admin down、零地址、无 master/VLAN/XDP/runtime/listener，所有页尺寸 hugepage pool 为0且 hugetlbfs为空；`.2` 保持 `sfc`、原 IP、10G，VLAN20 回归
+- `CONCLUSION_BOUNDARY`: 只验证当前 10G fan-in 的 L2 microburst/queue event/drop 功能边界；不宣称 L4、现场延迟、350ns、线速保证或长期稳定性
+- `RESULT_DIR`: `Documents/reports/20260721T045402Z-arista-lanz-real-incast-boundary/`
+- `FINISHED_UTC`: `2026-07-21T05:18:03Z`
+- `EXECUTED_TRAFFIC`: readiness 与双向 warmup 通过；唯一 measured stage 为 v1 `calm-100k-4096`，最终重分类为 `POSITIVE_QUEUE_PROBE_NOT_CALM`。两 ingress 各实际 TX 4096 packets / 6217728 obytes，合计8192 / 12435456，1518 bytes/packet，I/O error delta0；`start→wait` wall interval `0.059918940 s`，configured nominal wire `2.4608 Gbit/s`
+- `LANZ_RESULT`: Et2 high/low=`64/32` segments，segment=`480 bytes`；候选 calm 使 cumulative Et2 TC1 count `0→123`，123个 End record 的 duration `28..50 usec`、max queue `94..121 segments`（已见上限58080 bytes）、time-of-max 全为0 usec；LANZ drop record0、Et2 OutDiscards0、DMA written/read=`369/369`、failed transfer0
+- `RECEIVER_RESULT`: `.2` immediate sfc hardware counter 快照只刷新1664个目标尺寸帧；至少2秒 delayed 权威快照显示 `port_rx_1024_to_15xx +8192`，与 TRex TX 精确一致，hardware drop/error delta 全0。Linux `rx_dropped +8192` 是 `0x88B5` unsupported-EtherType host-stack drop，不是 wire/NIC/ASIC loss
+- `NOT_EXECUTED`: 1000 pps no-event calm、首个 event onset 下边界、aggregate nominal >10G stage、首个 drop 边界均未执行；不得从本 RUN 补造或外推
+- `DEADMAN_RESULT`: 240秒 systemd deadman 于 `2026-07-21T05:13:11Z` 真实触发，`.11` recovery PASS；因而 1k 命令在 snapshot/发流前以 `timer not found` 停止，明确为 `NOT EXECUTED`。后续 re-arm/start 尝试暴露启动确认竞态，后台 listener 已起但 runner 没有输出 PASS；未发流，按指令立即显式 recovery 并停止本 RUN
+- `FINAL_RECOVERY`: `.11` 双 BCM `bnxt_en`/down/空配，无 TRex/UIO/listener/deadman/run-dir，2 MiB/1 GiB pool 全0、两 hugetlbfs 空；`.2` 保持 `sfc`/`20.1.1.2`/10G，至 `.1/.254` 各3/3。Switch 已 default Et2 threshold 与 global queue-monitor，running 无 LANZ 行、LANZ disabled/agent not running、四口原 VLAN20 配置、errors/discards0、startup parse PASS，running diff 仅既有 EOS 升级 header/boot/tail，从未 save

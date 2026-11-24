@@ -1,0 +1,50 @@
+vm-2522-01 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-01
+===== 查 GRUB 下次清单 =====
+[GRUB下次清单] 对: GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"  证: 下次开机仍开 IOMMU
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+===== 查本轮备份 =====
+[本轮备份] 对: <none> 或本卡 flle-ch02-grub.<RUN>  证: 旧备份不挡重跑
+$ find /var/backups -name flle-ch02-grub.*
+/var/backups/flle-ch02-grub.20260908T025909Z-02-guest-iommu-prep
+===== 查当前 cmdline =====
+[当前cmdline] 对: 同一行同时有 intel_iommu=on 和 iommu=pt  证: Guest IOMMU 已生效
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[隔离组] 对: /sys/kernel/iommu_groups/7（7只是本机号）  证: 内核已给 X2522 建 DMA 围栏
+$ readlink -f .../iommu_group
+/sys/kernel/iommu_groups/7
+===== 查组里有谁 =====
+[组里有谁] 对: 只有 0000:03:00.0  证: 钥匙串无夹带，才能单独交 VFIO
+$ ls .../iommu_group/devices
+0000:03:00.0
+vm-2522-02 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-02
+===== 查 GRUB 下次清单 =====
+[GRUB下次清单] 对: GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"  证: 下次开机仍开 IOMMU
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+===== 查本轮备份 =====
+[本轮备份] 对: <none> 或本卡 flle-ch02-grub.<RUN>  证: 旧备份不挡重跑
+$ find /var/backups -name flle-ch02-grub.*
+/var/backups/flle-ch02-grub.20260908T025909Z-02-guest-iommu-prep
+===== 查当前 cmdline =====
+[当前cmdline] 对: 同一行同时有 intel_iommu=on 和 iommu=pt  证: Guest IOMMU 已生效
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[隔离组] 对: /sys/kernel/iommu_groups/7（7只是本机号）  证: 内核已给 X2522 建 DMA 围栏
+$ readlink -f .../iommu_group
+/sys/kernel/iommu_groups/7
+===== 查组里有谁 =====
+[组里有谁] 对: 只有 0000:03:00.0  证: 钥匙串无夹带，才能单独交 VFIO
+$ ls .../iommu_group/devices
+0000:03:00.0

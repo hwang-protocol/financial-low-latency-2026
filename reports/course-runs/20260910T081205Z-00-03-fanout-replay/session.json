@@ -1,0 +1,361 @@
+{
+  "run_id": "20260910T081205Z-00-03-fanout-replay",
+  "out": "Documents/reports/course-runs/20260910T081205Z-00-03-fanout-replay",
+  "started": "2026-09-10T08:12:05.896026+00:00",
+  "cards": [
+    {
+      "id": "00-01",
+      "chapter": "00",
+      "label": "需要运行 · 运行 ① 在【课程 Linux 终端】运行；只需 python3；影响范围仅限当前进程申请的这段内存，进程退出即释放；预计数秒。",
+      "source": "Documents/newDoc/00-cpu-cache-memory-os-basics.md",
+      "line": 179,
+      "sha256": "a349fa0c08b22246541437162663e48490b8679500b5c501921f8176ca08670c",
+      "status": "PASS",
+      "started": "2026-09-10T08:15:47.741002+00:00",
+      "host": "10.1.1.101",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:15:48.273852+00:00",
+      "seconds": 0.5270299410040025,
+      "result_runs": []
+    },
+    {
+      "id": "01-01",
+      "chapter": "01",
+      "label": "需要运行 · 准备 A 在【跳板机 .111】以 root 运行；顺序处理 .1/.2/.11/.101；核对四台 VM 的 Ubuntu 22.04/amd64 并统一维护用软件源；从 .111 缓存补齐四机基础工具，并给 .101 安装 g++-11 与 make，不访问公网；预期四台系统检查通过且 .101 打印三项工具路径。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 135,
+      "sha256": "6223202c8f0a2a8096e2cd62cff7176653ffbf7859aa207975bd0f9c471154ea",
+      "status": "PASS",
+      "started": "2026-09-10T08:15:48.281611+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:15:54.145217+00:00",
+      "seconds": 5.857699551008409,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081548Z-01-vm-apt-china-mirror"
+      ]
+    },
+    {
+      "id": "01-02",
+      "chapter": "01",
+      "label": "需要运行 · 准备 B 在【跳板机 .111】以 root 运行；需要时按终端提示输入交换机登录密码；完成后应能通过公钥登录，并看到用户账户信息。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 238,
+      "sha256": "0d861aced4d7dbb99ee88d19f91e8177d521a87978a12f5532013829b03d24c8",
+      "status": "PASS",
+      "started": "2026-09-10T08:15:54.152955+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:15:57.170986+00:00",
+      "seconds": 3.010364177986048,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081554Z-01-eos-key-bootstrap"
+      ]
+    },
+    {
+      "id": "01-03",
+      "chapter": "01",
+      "label": "需要运行 · 准备 C 在【跳板机 .111】以 root 运行；前置是准备 B 已完成；配置 VLAN20、Et1/Et2/Et11/Et12 和 Vlan20，重复执行会核对并应用同一组设置，只改 running-config；确认交易口和已连接的工具口进入 forwarding；预期打印最终 STP 状态。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 305,
+      "sha256": "26fcad9a0210435f4074dc622a2fc0635ba392b7c30bac7f373b1336307f855c",
+      "status": "PASS",
+      "started": "2026-09-10T08:15:57.178547+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:02.020306+00:00",
+      "seconds": 4.835422382981051,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081557Z-01-switch-course-baseline"
+      ]
+    },
+    {
+      "id": "01-04",
+      "chapter": "01",
+      "label": "需要运行 · 运行 ① 在【跳板机 .111】以 root 运行，查看 .1/.2 的管理口与 X2522 数据口地址。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 402,
+      "sha256": "b33f6a60ee2e1152a9f6233f6184d915bfbc2f97bde9494705740fc40b342edd",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:02.027861+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:02.432534+00:00",
+      "seconds": 0.39680518498062156,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081602Z-01-plane-map"
+      ]
+    },
+    {
+      "id": "01-05",
+      "chapter": "01",
+      "label": "需要运行 · 运行 ② 在【跳板机 .111】以 root 运行。读取每台数据口的 sysfs 设备路径、MAC，以及对应 PCI 设备的一行 lspci。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 510,
+      "sha256": "bd837ad75caa0febadde0bb2e6dc56ad1b65c46f014c65f10fb4390d7e6d5abe",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:02.440244+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:02.812330+00:00",
+      "seconds": 0.3661156090092845,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081602Z-01-pci-identity"
+      ]
+    },
+    {
+      "id": "01-06",
+      "chapter": "01",
+      "label": "需要运行 · 运行 ③ 在【跳板机 .111】以 root 运行。读取每台数据口对应 PCI 设备的 driver 路径，以及 ethtool -i 里的 driver 和 bus-info。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 599,
+      "sha256": "524e463319214d315b0914009b195bede2819e1ee6d294b7bec87de6cada35eb",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:02.820222+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:03.161355+00:00",
+      "seconds": 0.3352972370048519,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081602Z-01-driver-owner"
+      ]
+    },
+    {
+      "id": "01-07",
+      "chapter": "01",
+      "label": "需要运行 · 运行 ④ 在【跳板机 .111】以 root 运行。读取 .1/.2 数据口的 ethtool，以及交换机 Et1、Et2 和 VLAN20 的状态。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 689,
+      "sha256": "8126b26fb231761e9dd3b60f0e90b1d0a7dd5382351e27b96e2a2b7a27a15f4c",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:03.169055+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:05.244617+00:00",
+      "seconds": 2.06812771098339,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081603Z-01-link-pair"
+      ]
+    },
+    {
+      "id": "01-08",
+      "chapter": "01",
+      "label": "需要运行 · 运行 ⑤ 在【跳板机 .111】以 root 运行。先在 .2 的 ens64np1 上抓包，再从 .1 发出三条 ICMP 探针，最后回读 pcap。",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 823,
+      "sha256": "f9f9986feee4dbcdbc5065cd1a622e8e0264cf7cbf85612f64c7fe3568e8f700",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:05.252430+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:09.198848+00:00",
+      "seconds": 3.938778898998862,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081605Z-01-packet-proof"
+      ]
+    },
+    {
+      "id": "02-01",
+      "chapter": "02",
+      "label": "需要运行 · 准备 A 在管理机 .111 的仓库根目录以 root 执行。首次安装约需 4 分钟；已经安装过会先检查现有依赖。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 86,
+      "sha256": "75ada28985553913159584e449e927072b9833003b234f99c5d28d152971ad89",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:35.978717+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:43.551109+00:00",
+      "seconds": 7.566151430015452,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081635Z-02-onload-runtime-prep"
+      ]
+    },
+    {
+      "id": "02-02",
+      "chapter": "02",
+      "label": "需要运行 · 准备 B 在 .111 仓库根目录以 root 执行。需要重启的主机，SSH 会暂时断开，脚本会等待它恢复。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 149,
+      "sha256": "ab823a99afce7b0e5cbd821d55c991e68b75894fa35c50e8e6805e90e72a0b83",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:43.558581+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:44.253334+00:00",
+      "seconds": 0.6883690750109963,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081643Z-02-guest-iommu-prep"
+      ]
+    },
+    {
+      "id": "02-03",
+      "chapter": "02",
+      "label": "需要运行 · 准备 C 在管理机 .111，以 root 执行；第一部分的 Et1/Et2、VLAN20 和交换机管理连接应已准备好。本步启用 VLAN20 的组播侦听与查询器，完成后核对输出。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 191,
+      "sha256": "7bbec15b014604b774284b7a2343af67704f68f55876d8a53c6422f147fe23f3",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:44.261204+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:16:46.394377+00:00",
+      "seconds": 2.126646468997933,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081644Z-02-igmp-configure"
+      ]
+    },
+    {
+      "id": "02-04",
+      "chapter": "02",
+      "label": "需要运行 · 运行 ① 在管理机 .111 的 /financial-low-latency 目录以 root 执行。第一部分及准备 A～C 应已完成；本步编译、分发并启动交易平台。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 338,
+      "sha256": "af504539b95ee37376cbc8a162930c5ac6f02944ef96096b132190f50a7311fa",
+      "status": "PASS",
+      "started": "2026-09-10T08:16:46.401738+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:18:25.822416+00:00",
+      "seconds": 99.41441903801751,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081653Z-02-trading-platform"
+      ]
+    },
+    {
+      "id": "02-05",
+      "chapter": "02",
+      "label": "需要运行 · 运行 ①A 在管理机 .111，以 root 执行；平台已启动且网卡由 sfc 管理。已订阅时复用接收器；配置不同会重启它，期间行情接收短暂中断。命令失败时先检查报错，暂停后续下单。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 434,
+      "sha256": "a595fa43678517e16daa008b93897520b8c6a46a7ff9befcc22a7c94c3288cb6",
+      "status": "PASS",
+      "started": "2026-09-10T08:18:25.829843+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:18:26.452723+00:00",
+      "seconds": 0.6155491849931423,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081825Z-02-igmp-join"
+      ]
+    },
+    {
+      "id": "02-06",
+      "chapter": "02",
+      "label": "需要运行 · 运行 ①B 在管理机 .111，以 root 执行；先完成①A。本步只查询交换机状态，不改配置；从输出判断是否学到 Et2。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 488,
+      "sha256": "76bd462bf04614dac5f541c619fc7d08855ce6a4efd57a1180609b20375a28a2",
+      "status": "PASS",
+      "started": "2026-09-10T08:18:26.460106+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:18:28.330529+00:00",
+      "seconds": 1.8645918279944453,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081826Z-02-igmp-members"
+      ]
+    },
+    {
+      "id": "02-07",
+      "chapter": "02",
+      "label": "需要运行 · 运行 ①C 在管理机 .111，以 root 执行；先确认主机与交换机成员一致、当前行情为 HEALTHY。本步临时切换 MULTICAST，抓五包后恢复原模式。失败时打印详情并尝试恢复；若退出码为125，先在网页检查行情模式，暂停后续下单。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 542,
+      "sha256": "fb6049ab401c3a6cb0eed334a3cfdc5956ae01551f4dfc78a06ab26bb7bb78fd",
+      "status": "PASS",
+      "started": "2026-09-10T08:18:28.338275+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:18:30.039395+00:00",
+      "seconds": 1.695392082008766,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081828Z-02-igmp-feed"
+      ]
+    },
+    {
+      "id": "02-08",
+      "chapter": "02",
+      "label": "需要运行 · 运行 ② 在管理机 .111 以 root 执行；平台应保持在线，①A～①C 的组播检查已通过。本步提交 AAPL 1 股模拟订单，并核对成交与记录。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 702,
+      "sha256": "cad23d84285b74cfb6150acc80313789d20159fea7c986b42edb851bd78566a5",
+      "status": "PASS",
+      "started": "2026-09-10T08:18:30.046800+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:18:42.388614+00:00",
+      "seconds": 12.33569748600712,
+      "result_runs": []
+    },
+    {
+      "id": "02-09",
+      "chapter": "02",
+      "label": "需要运行 · 运行 ③ 运行②完成后在管理机执行。可重复查看，不改设备配置、接收模式或策略，不提交新订单；命令失败时按终端提示检查。",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 768,
+      "sha256": "702c9fbbf5441eedd0d2200bf96d95d3787fb776a6d88a05fb8e43cb76988397",
+      "status": "PASS",
+      "started": "2026-09-10T08:18:42.396281+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:18:55.460663+00:00",
+      "seconds": 13.02889771698392,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081842Z-02-readonly-review"
+      ]
+    },
+    {
+      "id": "03-01",
+      "chapter": "03",
+      "label": "需要运行 · 运行 ① 在管理机 .111 的仓库根目录以 root 执行。临时切 MULTICAST，在 .2 抓 200 包并取回；终端打印捕获统计、连续序号与一条新增订单行情的详细字段。应用保持在线，退出后按上方检查模式与行情健康。",
+      "source": "Documents/newDoc/03-live-trading-traffic-and-protocols.md",
+      "line": 158,
+      "sha256": "7ad2e19ca95688c4693b31518b1050e0c624b00abf05b2c43711b83ba8982492",
+      "status": "PASS",
+      "started": "2026-09-10T08:19:05.768018+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:19:12.008468+00:00",
+      "seconds": 6.233493199979421,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081905Z-03-live-market"
+      ]
+    },
+    {
+      "id": "03-02",
+      "chapter": "03",
+      "label": "需要运行 · 运行 ② 在 .111 仓库根目录以 root 执行，前置为运行①通过、组播成员正常且行情健康。依次切 UNICAST、MULTICAST、DUAL，每种模式抓 120 包；终端打印端点计数、序号重合与应用重复增量。退出后按运行①的恢复说明检查。",
+      "source": "Documents/newDoc/03-live-trading-traffic-and-protocols.md",
+      "line": 305,
+      "sha256": "f0dc2ec65e161bd78336a1bbe6b759f5b344179e1ffee103c5b63f66144848f7",
+      "status": "PASS",
+      "started": "2026-09-10T08:19:12.016498+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:19:17.428973+00:00",
+      "seconds": 5.404235605004942,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081912Z-03-market-paths"
+      ]
+    },
+    {
+      "id": "03-03",
+      "chapter": "03",
+      "label": "需要运行 · 运行 ③ 在 .111 仓库根目录以 root 执行。先确认行情 HEALTHY、回放推进且交易闸门开放；抓取 MANUAL 既有连接中的一股 IOC 请求与回报。终端打印会话归属、O/A/E 编号链及请求详情；进程、行情模式和策略保持。",
+      "source": "Documents/newDoc/03-live-trading-traffic-and-protocols.md",
+      "line": 484,
+      "sha256": "1edbc2975c718e16ec1d232874364501c05f1fa4cd17edb483c3c55a5ab77c41",
+      "status": "PASS",
+      "started": "2026-09-10T08:19:17.436838+00:00",
+      "host": "10.1.1.111",
+      "exit_code": 0,
+      "finished": "2026-09-10T08:19:22.325292+00:00",
+      "seconds": 4.881564993003849,
+      "result_runs": [
+        "Documents/reports/course-runs/20260910T081917Z-03-live-order"
+      ]
+    }
+  ],
+  "authorization": "User requested ch00-03 sequential replay and approved redeployment and clearing simulated trades."
+}

@@ -1,0 +1,12 @@
+mkdir -p build
+g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-feed-receiver src/feed_receiver.cpp
+test_complete_identical_packets_and_receive_time_for_both_clients (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok
+test_disconnected_consumer_does_not_stop_other_consumer (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok
+test_effective_buffer_is_reported_and_invalid_sizes_rejected (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok
+test_no_second_network_owner_and_existing_receiver_survives (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok
+test_slow_consumer_cannot_block_fast_consumer (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.021s
+
+OK

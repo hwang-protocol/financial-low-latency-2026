@@ -1,0 +1,225 @@
++ set -Eeuo pipefail
++ ACTION=baseline
++ RUN_ID=20260908T092516Z-02-trading-platform
++ TARGET=
++ EXPORT_DIR=
++ case "$RUN_ID" in
++++ dirname -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts/transport_labctl.sh
+++ cd -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts
+++ pwd
++ SCRIPT_DIR=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts
+++ cd -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts/..
+++ pwd
++ APP_DIR=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab
+++ cd -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/../..
+++ pwd
++ REPO_ROOT=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control
++ BASE_CTL=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts/labctl.sh
++ EXCHANGE_HOST=root@10.1.1.1
++ TRADER_HOST=root@10.1.1.2
++ OBSERVER_HOST=root@10.1.1.101
++ TELEMETRY_HOST=10.1.1.101
++ CONTROLLER_IP=10.1.1.2
++ RUN_DIR=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform
++ CONTROL_DIR=/var/tmp/flle-transport-controller-20260908T092516Z-02-trading-platform
++ CONTROLLER_UNIT=flle-transport-controller-20260908T092516Z-02-trading-platform
++ RUNTIME_BLOB=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/artifacts/blobs/x2522/ch06-four-path/v13/flle-ch06-four-path-v13-x86_64-jammy-runtime.tgz
++ RUNTIME_SHA=ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573
++ RUNTIME_ROOT=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime/flle-ch06-four-path
++ DPDK_USER_REF_ROOT=3900000000
++ DPDK_USER_REF_SLOT_SPAN=1000000
++ SFC_SOCKET_USER_REF_ROOT=2100000000
++ SFC_ONLOAD_USER_REF_ROOT=2500000000
++ SFC_TCPDIRECT_USER_REF_ROOT=2900000000
++ SFC_USER_REF_SLOT_STRIDE=2000000
++ SFC_USER_REF_NAMESPACE_SPAN=100000
++ SSH=(ssh -o BatchMode=yes -o StrictHostKeyChecking=yes)
++ SCP=(scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes)
++ source /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts/control-host.sh
+++ CONTROL_LOCAL=0
+++ ip -4 -o addr show
+++ awk '{print $4}'
+++ grep -Fxq 10.1.1.2/24
+++ CONTROL_LOCAL=1
+++ CONTROL_WORKSPACE=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control
+++ CONTROL_SCRIPT=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts/transport_labctl.sh
+++ SSH=(control_host_command)
+++ [[ 1 == 1 ]]
+++ RUNTIME_BLOB=/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime.tgz
++ case "$ACTION" in
++ [[ 0 != 1 ]]
++ exec
++ flock -w 620 8
++ export FLLE_TRANSPORT_LOCK_HELD=1
++ FLLE_TRANSPORT_LOCK_HELD=1
++ source /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/control/apps/flle-trading-lab/scripts/platform-baseline.sh
++ case "$ACTION" in
++ platform_start_software
++ verify_deployed_inputs
++ assert_runtime_blob
++ test -s /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime.tgz
+++ sha256sum /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime.tgz
+++ awk '{print $1}'
++ test ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573 = ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573
++ control_host_command root@10.1.1.1 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime/flle-ch06-four-path ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573
++ local host=root@10.1.1.1
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.1 == 10.1.1.2 ]]
++ command ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 root@10.1.1.1 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime/flle-ch06-four-path ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573
++ control_host_command root@10.1.1.2 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime/flle-ch06-four-path ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime/flle-ch06-four-path ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573'
++ control_host_command root@10.1.1.101 'set -eu; cd '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform'\''; sha256sum -c source.sha256 >/dev/null'
++ local host=root@10.1.1.101
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.101 == 10.1.1.2 ]]
++ command ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 root@10.1.1.101 'set -eu; cd '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform'\''; sha256sum -c source.sha256 >/dev/null'
++ control_host_command root@10.1.1.2 'cd '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform'\'' && sha256sum -c deployed.sha256 >/dev/null'
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'cd '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform'\'' && sha256sum -c deployed.sha256 >/dev/null'
+DEPLOYED_INPUTS_VERIFIED runtime_sha256=ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573
++ echo 'DEPLOYED_INPUTS_VERIFIED runtime_sha256=ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573'
++ platform_is_software
++ [[ 1 != 1 ]]
++ test -f /var/tmp/flle-transport-controller-20260908T092516Z-02-trading-platform/experiment-profile
++ grep -Fxq SOFTWARE /var/tmp/flle-transport-controller-20260908T092516Z-02-trading-platform/experiment-profile
+++ platform_software_status
+++ local auto manual onload tcpdirect physical
++++ management_command 48121 STATE
+++ auto=
++++ management_command 48122 STATE
+++ manual=
++++ management_command 48123 STATE
+++ onload=
++++ management_command 48124 STATE
+++ tcpdirect=
++++ control_host_command root@10.1.1.2 'printf '\''%s %s '\'' "$(basename "$(readlink /sys/bus/pci/devices/0000:03:00.0/driver)")" "$(cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages)"; ip -4 -o addr show dev ens64np1 | grep -Fq '\'' 20.1.1.2/24 '\'' && echo 1 || echo 0'
++++ local host=root@10.1.1.2
++++ shift
++++ [[ 1 == 1 ]]
++++ [[ 10.1.1.2 == 10.1.1.2 ]]
++++ bash -c 'printf '\''%s %s '\'' "$(basename "$(readlink /sys/bus/pci/devices/0000:03:00.0/driver)")" "$(cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages)"; ip -4 -o addr show dev ens64np1 | grep -Fq '\'' 20.1.1.2/24 '\'' && echo 1 || echo 0'
+++ physical='sfc 0 1'
+++ python3 - '' '' 'sfc 0 1' '' ''
++ state='{"mode":"SFC","experiment_profile":"SOFTWARE","transition":"DEGRADED","owner":"sfc","hugepages_2mb":0,"data_ip_present":true,"software_clients_ready":false,"hardware_receipts":{}}'
++ [[ {"mode":"SFC","experiment_profile":"SOFTWARE","transition":"DEGRADED","owner":"sfc","hugepages_2mb":0,"data_ip_present":true,"software_clients_ready":false,"hardware_receipts":{}} == *\"\t\r\a\n\s\i\t\i\o\n\"\:\"\R\E\A\D\Y\"* ]]
++ platform_stop_software_clients
++ stop_remote_process root@10.1.1.2 trader-auto /flle-trader 48121
++ local host=root@10.1.1.2 name=trader-auto expected=/flle-trader
++ shift 3
++ control_host_command root@10.1.1.2 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-auto /flle-trader 48121
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-auto /flle-trader 48121'
++ platform_is_software
++ [[ 1 != 1 ]]
++ test -f /var/tmp/flle-transport-controller-20260908T092516Z-02-trading-platform/experiment-profile
++ grep -Fxq SOFTWARE /var/tmp/flle-transport-controller-20260908T092516Z-02-trading-platform/experiment-profile
++ stop_remote_process root@10.1.1.2 trader-manual /flle-trader 48122
++ local host=root@10.1.1.2 name=trader-manual expected=/flle-trader
++ shift 3
++ control_host_command root@10.1.1.2 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-manual /flle-trader 48122
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-manual /flle-trader 48122'
++ stop_sfc_clients
++ stop_remote_process root@10.1.1.2 trader-tcpdirect /flle-trader-tcpdirect 48124
++ local host=root@10.1.1.2 name=trader-tcpdirect expected=/flle-trader-tcpdirect
++ shift 3
++ control_host_command root@10.1.1.2 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-tcpdirect /flle-trader-tcpdirect 48124
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-tcpdirect /flle-trader-tcpdirect 48124'
++ stop_remote_process root@10.1.1.2 trader-onload /flle-trader 48123
++ local host=root@10.1.1.2 name=trader-onload expected=/flle-trader
++ shift 3
++ control_host_command root@10.1.1.2 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-onload /flle-trader 48123
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-onload /flle-trader 48123'
++ stop_remote_process root@10.1.1.2 trader-socket /flle-trader 48122
++ local host=root@10.1.1.2 name=trader-socket expected=/flle-trader
++ shift 3
++ control_host_command root@10.1.1.2 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-socket /flle-trader 48122
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform trader-socket /flle-trader 48122'
++ control_host_command root@10.1.1.2 'test ! -d '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts'\'' || rm -f -- '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/socket'\'' '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/onload'\'' '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/tcpdirect'\'''
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'test ! -d '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts'\'' || rm -f -- '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/socket'\'' '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/onload'\'' '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/tcpdirect'\'''
++ stop_dpdk_client
++ control_host_command root@10.1.1.2 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime/flle-ch06-four-path
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/transport-runtime/flle-ch06-four-path'
++ control_host_command root@10.1.1.2 'set -eu; for _ in $(seq 1 40); do listener=$(ss -ltnpH '\''( sport = :48125 )'\'' 2>/dev/null || true); test -z "$listener" && break; sleep 0.1; done; test -z "${listener:-}" || { echo '\''DPDK management listener remained LISTEN after client stop:'\'' >&2; printf '\''%s\n'\'' "$listener" >&2; exit 1; }; echo '\''DPDK_MANAGEMENT_LISTENER_CLOSED listen=0'\'''
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'set -eu; for _ in $(seq 1 40); do listener=$(ss -ltnpH '\''( sport = :48125 )'\'' 2>/dev/null || true); test -z "$listener" && break; sleep 0.1; done; test -z "${listener:-}" || { echo '\''DPDK management listener remained LISTEN after client stop:'\'' >&2; printf '\''%s\n'\'' "$listener" >&2; exit 1; }; echo '\''DPDK_MANAGEMENT_LISTENER_CLOSED listen=0'\'''
+DPDK_MANAGEMENT_LISTENER_CLOSED listen=0
++ stop_dpdk_prime
++ control_host_command root@10.1.1.1 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform
++ local host=root@10.1.1.1
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.1 == 10.1.1.2 ]]
++ command ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 root@10.1.1.1 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform
++ control_host_command root@10.1.1.1 'set -eu; for _ in $(seq 1 40); do endpoint=$(ss -ntH state established '\''( sport = :43120 )'\'' | grep -F '\''20.1.1.2:'\'' || true); test -z "$endpoint" && break; sleep 0.1; done; test -z "${endpoint:-}" || { echo '\''DPDK Exchange endpoint remained ESTABLISHED after client stop:'\'' >&2; printf '\''%s\n'\'' "$endpoint" >&2; exit 1; }; echo '\''DPDK_EXCHANGE_ENDPOINT_CLOSED established=0'\'''
++ local host=root@10.1.1.1
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.1 == 10.1.1.2 ]]
++ command ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 root@10.1.1.1 'set -eu; for _ in $(seq 1 40); do endpoint=$(ss -ntH state established '\''( sport = :43120 )'\'' | grep -F '\''20.1.1.2:'\'' || true); test -z "$endpoint" && break; sleep 0.1; done; test -z "${endpoint:-}" || { echo '\''DPDK Exchange endpoint remained ESTABLISHED after client stop:'\'' >&2; printf '\''%s\n'\'' "$endpoint" >&2; exit 1; }; echo '\''DPDK_EXCHANGE_ENDPOINT_CLOSED established=0'\'''
+DPDK_EXCHANGE_ENDPOINT_CLOSED established=0
++ control_host_command root@10.1.1.2 'test ! -d '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts'\'' || rm -f -- '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/dpdk'\'''
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'test ! -d '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts'\'' || rm -f -- '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/active-receipts/dpdk'\'''
++ wait_hugepages_zero
++ control_host_command root@10.1.1.2 'set -eu; for _ in $(seq 1 60); do sysctl -w vm.nr_hugepages=0 >/dev/null; test "$(cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages)" = 0 && exit 0; sleep 1; done; exit 1'
++ local host=root@10.1.1.2
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.2 == 10.1.1.2 ]]
++ bash -c 'set -eu; for _ in $(seq 1 60); do sysctl -w vm.nr_hugepages=0 >/dev/null; test "$(cat /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages)" = 0 && exit 0; sleep 1; done; exit 1'
++ configure_exchange_rss
++ control_host_command root@10.1.1.1 'test -s '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/exchange-rss.receipt'\'''
++ local host=root@10.1.1.1
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.1 == 10.1.1.2 ]]
++ command ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 root@10.1.1.1 'test -s '\''/var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform/exchange-rss.receipt'\'''
++ verify_exchange_rss
++ control_host_command root@10.1.1.1 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform
++ local host=root@10.1.1.1
++ shift
++ [[ 1 == 1 ]]
++ [[ 10.1.1.1 == 10.1.1.2 ]]
++ command ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 root@10.1.1.1 bash -s -- /var/tmp/flle-trading-lab-20260908T092516Z-02-trading-platform

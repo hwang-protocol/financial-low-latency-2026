@@ -1,0 +1,28 @@
+/var/tmp/20260910T081635Z-02-onload-runtime-prep.tgz: OK
+
+vm-2522-02 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-02
+===== 查 Onload 版本 =====
+[Onload版本] 对: Onload 9f330e7 与 Kernel module: 9f330e7 两行一致  证: 用户态与模块同一棵树
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Sep 10 2026 11:42:21 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+===== 查字符设备 =====
+[字符设备] 对: /dev/onload 与 /dev/sfc_char 都以 c 开头  证: 栈控制和 VI 入口都在
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Sep 10 12:39 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Sep 10 12:37 /dev/sfc_char
+===== 查出站闸主人 =====
+[出站闸主人] 对: /sys/bus/pci/drivers/sfc  证: 本步仍由 sfc 管卡
+$ readlink -f /sys/bus/pci/devices/0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+===== 查数据口地址 =====
+[数据口] 对: ens64np1 上有 20.1.1.2/24  证: reload 后课程地址还在
+$ ip -4 -o addr show dev ens64np1
+3: ens64np1    inet 20.1.1.2/24 brd 20.1.1.255 scope global ens64np1\       valid_lft forever preferred_lft forever

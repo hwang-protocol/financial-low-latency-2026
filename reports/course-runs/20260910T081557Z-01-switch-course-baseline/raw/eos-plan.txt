@@ -1,0 +1,25 @@
+configure terminal
+vlan 20
+name fll
+interface Ethernet1
+switchport access vlan 20
+spanning-tree portfast
+interface Ethernet2
+switchport access vlan 20
+spanning-tree portfast
+interface Ethernet11
+switchport access vlan 20
+spanning-tree portfast
+interface Ethernet12
+switchport access vlan 20
+spanning-tree portfast
+interface Vlan20
+ip address 20.1.1.254/24
+no ip routing
+end
+show vlan id 20
+show interfaces Ethernet1 status
+show interfaces Ethernet2 status
+show interfaces Ethernet11 status
+show interfaces Ethernet12 status
+show ip interface brief

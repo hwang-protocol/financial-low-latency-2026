@@ -1,0 +1,24 @@
+
+Low-Latency-Ops / 查已有平台
+===== 查已有平台 =====
+核对已部署进程与文件；通过后直接复用。
+$ bash /financial-low-latency/apps/flle-trading-lab/scripts/transport_labctl.sh verify 20260910T081653Z-02-trading-platform
+完整输出：/financial-low-latency/Documents/reports/course-runs/20260910T081653Z-02-trading-platform/raw/reuse-20260910T084556.880203512Z.txt
+命令失败，退出码 1；以下为日志末尾。
+$ tail -n 20 /financial-low-latency/Documents/reports/course-runs/20260910T081653Z-02-trading-platform/raw/reuse-20260910T084556.880203512Z.txt
+exchange=OFFLINE
+trader-auto=OFFLINE
+trader-manual=OFFLINE
+gateway=OFFLINE
+curl: (7) Failed to connect to 10.1.1.101 port 8088 after 0 ms: Connection refused
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

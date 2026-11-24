@@ -1,0 +1,260 @@
+[
+  {
+    "run": "20260908T125257Z-05-deque-cv",
+    "verdict": "VALID_COMPARISON",
+    "profiles": [
+      {
+        "profile": "DEQUE_CV/dedicated",
+        "pooled_manual_samples": 3200,
+        "pooled_auto_control_samples": 640,
+        "queue_to_send_p99": {
+          "p99_ns": 22830,
+          "ci95": {
+            "low_ns": 21897,
+            "high_ns": 23441
+          }
+        },
+        "submit_to_final_p99": {
+          "p99_ns": 71803,
+          "ci95": {
+            "low_ns": 70399,
+            "high_ns": 73869
+          }
+        }
+      }
+    ],
+    "environment_control_check": null,
+    "direction_consistency": null
+  },
+  {
+    "run": "20260908T125457Z-05-fixed-cv",
+    "verdict": "REJECTED_ENVIRONMENT_CONTROL_DIFFERENCE",
+    "profiles": [
+      {
+        "profile": "DEQUE_CV/dedicated",
+        "pooled_manual_samples": 3200,
+        "pooled_auto_control_samples": 640,
+        "queue_to_send_p99": {
+          "p99_ns": 24022,
+          "ci95": {
+            "low_ns": 23320,
+            "high_ns": 24653
+          }
+        },
+        "submit_to_final_p99": {
+          "p99_ns": 73677,
+          "ci95": {
+            "low_ns": 71776,
+            "high_ns": 75613
+          }
+        }
+      },
+      {
+        "profile": "FIXED_CV/dedicated",
+        "pooled_manual_samples": 3200,
+        "pooled_auto_control_samples": 640,
+        "queue_to_send_p99": {
+          "p99_ns": 23637,
+          "ci95": {
+            "low_ns": 23213,
+            "high_ns": 24342
+          }
+        },
+        "submit_to_final_p99": {
+          "p99_ns": 73823,
+          "ci95": {
+            "low_ns": 72149,
+            "high_ns": 75212
+          }
+        }
+      }
+    ],
+    "environment_control_check": {
+      "difference_ns": -550,
+      "ci95": {
+        "low_ns": -1037,
+        "high_ns": -98
+      },
+      "left": "DEQUE_CV/dedicated",
+      "right": "FIXED_CV/dedicated",
+      "base_equivalence_margin_ns": 14566,
+      "tailwind_limit_ns": 192,
+      "direction": "undetermined",
+      "verdict": "DETECTED_DIFFERENCE_WITHOUT_QUEUE_DIRECTION",
+      "comparable": false
+    },
+    "direction_consistency": {
+      "applicable": false,
+      "supporting_pairs": 0,
+      "total_pairs": 8,
+      "required_pairs": 0,
+      "required_pct": 87.5,
+      "pass": true,
+      "pair_differences_ns": [
+        5071,
+        754,
+        -1576,
+        -2894,
+        -102,
+        2920,
+        -95,
+        -645
+      ],
+      "verdict": "NOT_APPLICABLE_NO_DETECTED_EFFECT"
+    }
+  },
+  {
+    "run": "20260908T125918Z-05-spsc-spin",
+    "verdict": "VALID_COMPARISON",
+    "profiles": [
+      {
+        "profile": "FIXED_CV/dedicated",
+        "pooled_manual_samples": 3200,
+        "pooled_auto_control_samples": 640,
+        "queue_to_send_p99": {
+          "p99_ns": 23336,
+          "ci95": {
+            "low_ns": 22846,
+            "high_ns": 24409
+          }
+        },
+        "submit_to_final_p99": {
+          "p99_ns": 74270,
+          "ci95": {
+            "low_ns": 72106,
+            "high_ns": 77179
+          }
+        }
+      },
+      {
+        "profile": "SPSC_SPIN/dedicated",
+        "pooled_manual_samples": 3200,
+        "pooled_auto_control_samples": 640,
+        "queue_to_send_p99": {
+          "p99_ns": 6614,
+          "ci95": {
+            "low_ns": 6340,
+            "high_ns": 7028
+          }
+        },
+        "submit_to_final_p99": {
+          "p99_ns": 59726,
+          "ci95": {
+            "low_ns": 58664,
+            "high_ns": 60501
+          }
+        }
+      }
+    ],
+    "environment_control_check": {
+      "difference_ns": -1181,
+      "ci95": {
+        "low_ns": -2086,
+        "high_ns": -599
+      },
+      "left": "FIXED_CV/dedicated",
+      "right": "SPSC_SPIN/dedicated",
+      "base_equivalence_margin_ns": 16132,
+      "tailwind_limit_ns": 8361,
+      "direction": "headwind",
+      "verdict": "DETECTED_HEADWIND_WITHIN_MARGIN",
+      "comparable": true
+    },
+    "direction_consistency": {
+      "applicable": true,
+      "supporting_pairs": 8,
+      "total_pairs": 8,
+      "required_pairs": 7,
+      "required_pct": 87.5,
+      "pass": true,
+      "pair_differences_ns": [
+        16916,
+        17866,
+        17089,
+        16930,
+        15737,
+        18829,
+        8735,
+        15100
+      ],
+      "verdict": "CONSISTENT"
+    }
+  },
+  {
+    "run": "20260908T130341Z-05-spsc-shared-cpu",
+    "verdict": "VALID_COMPARISON",
+    "profiles": [
+      {
+        "profile": "SPSC_SPIN/dedicated",
+        "pooled_manual_samples": 3200,
+        "pooled_auto_control_samples": 640,
+        "queue_to_send_p99": {
+          "p99_ns": 6101,
+          "ci95": {
+            "low_ns": 5805,
+            "high_ns": 6275
+          }
+        },
+        "submit_to_final_p99": {
+          "p99_ns": 54877,
+          "ci95": {
+            "low_ns": 53578,
+            "high_ns": 56172
+          }
+        }
+      },
+      {
+        "profile": "SPSC_SPIN/shared",
+        "pooled_manual_samples": 3200,
+        "pooled_auto_control_samples": 640,
+        "queue_to_send_p99": {
+          "p99_ns": 43775,
+          "ci95": {
+            "low_ns": 36365,
+            "high_ns": 51960
+          }
+        },
+        "submit_to_final_p99": {
+          "p99_ns": 86556,
+          "ci95": {
+            "low_ns": 82077,
+            "high_ns": 92009
+          }
+        }
+      }
+    ],
+    "environment_control_check": {
+      "difference_ns": 424,
+      "ci95": {
+        "low_ns": -317,
+        "high_ns": 879
+      },
+      "left": "SPSC_SPIN/dedicated",
+      "right": "SPSC_SPIN/shared",
+      "base_equivalence_margin_ns": 15110,
+      "tailwind_limit_ns": 18837,
+      "direction": "not_detected",
+      "verdict": "NO_DETECTED_DIFFERENCE_WITHIN_MARGIN",
+      "comparable": true
+    },
+    "direction_consistency": {
+      "applicable": true,
+      "supporting_pairs": 8,
+      "total_pairs": 8,
+      "required_pairs": 7,
+      "required_pct": 87.5,
+      "pass": true,
+      "pair_differences_ns": [
+        -46157,
+        -29179,
+        -74039,
+        -29340,
+        -30763,
+        -47227,
+        -37795,
+        -28726
+      ],
+      "verdict": "CONSISTENT"
+    }
+  }
+]

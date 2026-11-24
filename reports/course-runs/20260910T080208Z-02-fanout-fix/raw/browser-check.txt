@@ -1,0 +1,53 @@
+Error occurred in event listener
+Traceback (most recent call last):
+  File "/tmp/flle-playwright/playwright/_impl/_page.py", line 308, in _on_route
+    handled = await route_handler.handle(route)
+  File "/tmp/flle-playwright/playwright/_impl/_helper.py", line 455, in handle
+    raise e
+  File "/tmp/flle-playwright/playwright/_impl/_helper.py", line 442, in handle
+    return await self._handle_internal(route)
+  File "/tmp/flle-playwright/playwright/_impl/_helper.py", line 478, in _handle_internal
+    await handler_finished_future
+  File "/tmp/flle-playwright/playwright/_impl/_helper.py", line 469, in _handler
+    self.handler(route, route.request)  # type: ignore
+  File "/tmp/flle-playwright/playwright/_impl/_impl_to_api_mapping.py", line 139, in wrapper_func
+    return handler(
+  File "/tmp/flle-fanout-browser.py", line 37, in <lambda>
+    page.route('**/api/state', lambda route, value=state: route.fulfill(json=value))
+  File "/tmp/flle-playwright/playwright/sync_api/_generated.py", line 790, in fulfill
+    self._sync(
+  File "/tmp/flle-playwright/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/tmp/flle-playwright/playwright/_impl/_network.py", line 391, in fulfill
+    await self._handle_route(
+  File "/tmp/flle-playwright/playwright/_impl/_network.py", line 468, in _handle_route
+    raise e
+  File "/tmp/flle-playwright/playwright/_impl/_network.py", line 464, in _handle_route
+    await callback()
+  File "/tmp/flle-playwright/playwright/_impl/_network.py", line 412, in _inner_fulfill
+    body = json_utils.dumps(json)
+  File "/usr/lib/python3.10/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/lib/python3.10/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.10/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.10/json/encoder.py", line 179, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type Request is not JSON serializable
+Traceback (most recent call last):
+  File "/tmp/flle-fanout-browser.py", line 64, in <module>
+    browser.close()
+  File "/tmp/flle-playwright/playwright/sync_api/_generated.py", line 16425, in close
+    return mapping.from_maybe_impl(self._sync(self._impl_obj.close(reason=reason)))
+  File "/tmp/flle-playwright/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/tmp/flle-playwright/playwright/_impl/_browser.py", line 244, in close
+    raise e
+  File "/tmp/flle-playwright/playwright/_impl/_browser.py", line 241, in close
+    await self._channel.send("close", None, {"reason": reason})
+  File "/tmp/flle-playwright/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+  File "/tmp/flle-playwright/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+TypeError: Browser.close: Object of type Request is not JSON serializable

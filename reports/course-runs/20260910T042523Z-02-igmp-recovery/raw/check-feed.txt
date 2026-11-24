@@ -1,0 +1,33 @@
+===== 记下当前行情模式 =====
+$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=UNICAST
+$ python3 -c import\ json\,sys\;\ s=json.load\(open\(sys.argv\[1\]\)\)\;\ f=s.get\(\"feed\"\)\ or\ \{\}\;\ print\(\"integrity=%s\ next_expected=%s\ trading_gate=%s\"\ %\ \(f.get\(\"integrity\"\)\,f.get\(\"next_expected\"\)\,f.get\(\"trading_gate\"\)\)\,flush=True\)\;\ sys.exit\(0\ if\ f.get\(\"integrity\"\)==\"HEALTHY\"\ else\ \"检查前行情已非\ HEALTHY；本次不切换模式、不抓包。先处理行情缺口，再重试；不要继续下单。\"\) Documents/reports/course-runs/20260910T042551Z-02-igmp-feed/raw/before.json
+integrity=HEALTHY next_expected=9769 trading_gate=OPEN
+10.1.1.1 / market
+===== 临时发送组播行情 =====
+只切换行情目的地址；检查结束恢复原模式。
+$ curl -fsS --max-time 10 -X POST -H Content-Type:\ application/json -d \{\"market_mode\":\"MULTICAST\"\} http://10.1.1.101:8088/api/market
+轮询确认模式已切换：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=MULTICAST
+10.1.1.2 / capture
+===== 在 Trader 数据口看五个行情包 =====
+[报文] 对: 源 20.1.1.1，目的 233.74.125.32.31032  证: 行情到了 Et2 对应的数据口
+$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 timeout 12 tcpdump -p -i ens64np1 -nn -c 5 udp\ and\ src\ host\ 20.1.1.1\ and\ dst\ host\ 233.74.125.32\ and\ dst\ port\ 31032
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on ens64np1, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+12:25:52.415130 IP 20.1.1.1.41257 > 233.74.125.32.31032: UDP, length 41
+12:25:52.415297 IP 20.1.1.1.41257 > 233.74.125.32.31032: UDP, length 66
+12:25:52.415337 IP 20.1.1.1.41257 > 233.74.125.32.31032: UDP, length 57
+12:25:52.415444 IP 20.1.1.1.41257 > 233.74.125.32.31032: UDP, length 58
+12:25:52.415656 IP 20.1.1.1.41257 > 233.74.125.32.31032: UDP, length 66
+5 packets captured
+1396 packets received by filter
+0 packets dropped by kernel
+===== 查应用接收状态 =====
+$ python3 Documents/newDoc/assets/common/wait-feed-state.py http://10.1.1.101:8088/api/state HEALTHY --timeout 25
+$ python3 -c import\ json\,sys\;\ s=json.load\(open\(sys.argv\[1\]\)\)\;\ print\(\"market_mode=%s\ integrity=%s\ next_expected=%s\"\ %\ \(s\[\"market_mode\"\]\,s\[\"feed\"\]\[\"integrity\"\]\,s\[\"feed\"\]\[\"next_expected\"\]\)\) Documents/reports/course-runs/20260910T042551Z-02-igmp-feed/raw/feed.json
+market_mode=MULTICAST integrity=HEALTHY next_expected=22212
+===== 恢复检查前的行情模式 =====
+$ curl -fsS --max-time 10 -X POST -H Content-Type:\ application/json -d \{\"market_mode\":\"UNICAST\"\} http://10.1.1.101:8088/api/market
+轮询确认模式已切换：$ curl -fsS --max-time 10 http://10.1.1.101:8088/api/state
+market_mode=UNICAST

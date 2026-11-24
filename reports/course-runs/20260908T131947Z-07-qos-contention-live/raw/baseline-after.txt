@@ -1,0 +1,208 @@
+$ show queue-monitor length statistics
+show queue-monitor length statistics | no-more
+
+Report generated at 2026-09-08 13:03:41
+Interface      Traffic Class  Count          
+-----------------------------------------------------------------
+Et1             1               1              
+
+Global Hit Count = 0
+
+$ show queue-monitor length Ethernet 1
+show queue-monitor length Ethernet 1 | no-more
+
+Report generated at 2026-09-08 13:03:41
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+ E   0:00:04.86871 ago         Et1(1)    15002866      6852*       212536        
+ U   0:00:09.86886 ago         Et1(1)    N/A           6798        N/A           
+ U   0:00:14.86917 ago         Et1(1)    N/A           6844        N/A           
+ U   0:00:19.86948 ago         Et1(1)    N/A           1591        N/A           
+ U   0:00:19.86956 ago         Et1(1)    N/A           1591        N/A           
+ U   0:00:19.86964 ago         Et1(1)    N/A           1583        N/A           
+ U   0:00:19.86972 ago         Et1(1)    N/A           1452        N/A           
+ U   0:00:19.86980 ago         Et1(1)    N/A           1430        N/A           
+ U   0:00:19.86988 ago         Et1(1)    N/A           1333        N/A           
+ U   0:00:19.86996 ago         Et1(1)    N/A           1234        N/A           
+ U   0:00:19.87004 ago         Et1(1)    N/A           1220        N/A           
+ U   0:00:19.87012 ago         Et1(1)    N/A           1182        N/A           
+ U   0:00:19.87023 ago         Et1(1)    N/A           1042        N/A           
+ U   0:00:19.87031 ago         Et1(1)    N/A           1046        N/A           
+ U   0:00:19.87039 ago         Et1(1)    N/A           966         N/A           
+ U   0:00:19.87047 ago         Et1(1)    N/A           869         N/A           
+ U   0:00:19.87055 ago         Et1(1)    N/A           810         N/A           
+ U   0:00:19.87063 ago         Et1(1)    N/A           814         N/A           
+ U   0:00:19.87071 ago         Et1(1)    N/A           712         N/A           
+ U   0:00:19.87079 ago         Et1(1)    N/A           663         N/A           
+ U   0:00:19.87087 ago         Et1(1)    N/A           664         N/A           
+ U   0:00:19.87095 ago         Et1(1)    N/A           566         N/A           
+ U   0:00:19.87103 ago         Et1(1)    N/A           464         N/A           
+ U   0:00:19.87111 ago         Et1(1)    N/A           432         N/A           
+ U   0:00:19.87119 ago         Et1(1)    N/A           417         N/A           
+ U   0:00:19.87129 ago         Et1(1)    N/A           255         N/A           
+ U   0:00:19.87138 ago         Et1(1)    N/A           256         N/A           
+ U   0:00:19.87148 ago         Et1(1)    N/A           125         N/A           
+ S   0:00:19.87157 ago         Et1(1)    N/A           115         N/A           
+
+$ show queue-monitor length drops
+show queue-monitor length drops | no-more
+
+Report generated at 2026-09-08 13:03:41
+Time                                    Interface      TX Drops
+-----------------------------------------------------------------
+0:00:04.97548 ago                       Et1            935896    
+0:00:09.97563 ago                       Et1            936318    
+0:00:14.97595 ago                       Et1            935023    
+
+$ show platform fm6000 counters interface Ethernet1
+show platform fm6000 counters interface Ethernet1 | no-more
+Debug counters
+            Description                                             Value          
+Ethernet1   valid non-IP rx octets with unicast L2 DMACS            1344           
+Ethernet1   valid IPv4 rx octets with unicast L2 DMACS              325131624      
+Ethernet1   valid IPv6 rx octets with unicast L2 DMACS              0              
+Ethernet1   valid non-IP rx octets with broadcast L2 DMACS          5952           
+Ethernet1   valid IPv4 rx octets with broadcast L2 DMACS            0              
+Ethernet1   valid IPv6 rx octets with broadcast L2 DMACS            0              
+Ethernet1   valid non-IP rx octets with multicast L2 DMACS          0              
+Ethernet1   valid IPv4 rx octets with multicast L2 DMACS            528957         
+Ethernet1   valid IPv6 rx octets with multicast L2 DMACS            3100           
+Ethernet1   rx valid PAUSE octets                                   0              
+Ethernet1   rx valid PAUSE pkts                                     0              
+Ethernet1   rx valid PFC pkts                                       0              
+Ethernet1   rx octets with CRC error, but proper size               0              
+Ethernet1   rx valid pkts containing _63_ or fewer octets           0              
+Ethernet1   rx pkts with any type of framing error                  0              
+Ethernet1   rx octets with any type of framing error                0              
+Ethernet1   tx pkts with any type of framing error                  0              
+Ethernet1   tx octets with any type of framing error                0              
+Ethernet1   rx frames with priority_0                               0              
+Ethernet1   rx frames with priority_1                               3286246        
+Ethernet1   rx frames with priority_2                               0              
+Ethernet1   rx frames with priority_3                               152            
+Ethernet1   rx frames with priority_4                               0              
+Ethernet1   rx frames with priority_5                               0              
+Ethernet1   rx frames with priority_6                               0              
+Ethernet1   rx frames with priority_7                               0              
+Ethernet1   rx frames with priority_8                               0              
+Ethernet1   rx frames with priority_9                               0              
+Ethernet1   rx frames with priority_10                              0              
+Ethernet1   rx frames with priority_11                              0              
+Ethernet1   rx frames with priority_12                              0              
+Ethernet1   rx frames with priority_13                              0              
+Ethernet1   rx frames with priority_14                              0              
+Ethernet1   rx frames with priority_15                              0              
+Ethernet1   tx frames with priority_0                               0              
+Ethernet1   tx frames with priority_1                               12286738       
+Ethernet1   tx frames with priority_2                               0              
+Ethernet1   tx frames with priority_3                               147            
+Ethernet1   tx frames with priority_4                               0              
+Ethernet1   tx frames with priority_5                               0              
+Ethernet1   tx frames with priority_6                               44             
+Ethernet1   tx frames with priority_7                               0              
+Ethernet1   tx frames with priority_8                               0              
+Ethernet1   tx frames with priority_9                               0              
+Ethernet1   tx frames with priority_10                              0              
+Ethernet1   tx frames with priority_11                              0              
+Ethernet1   tx frames with priority_12                              0              
+Ethernet1   tx frames with priority_13                              0              
+Ethernet1   tx frames with priority_14                              0              
+Ethernet1   tx frames with priority_15                              1739           
+Ethernet1   tx valid unicast pkts                                   12286850       
+Ethernet1   tx valid broadcast pkts                                 5              
+Ethernet1   tx valid multicast pkts                                 1813           
+Ethernet1   tx valid non-IP unicast pkts                            84             
+Ethernet1   tx valid non-IP broadcast pkts                          5              
+Ethernet1   tx valid non-IP multicast pkts                          1739           
+Ethernet1   tx valid IP unicast pkts                                12286766       
+Ethernet1   tx valid IP broadcast pkts                              0              
+Ethernet1   tx valid IP multicast pkts                              74             
+Ethernet1   tx valid PAUSE/PFC pkts                                 0              
+Ethernet1   tx pkts with CRC error, but proper size                 0              
+Ethernet1   tx octets with CRC error, but proper size               0              
+Ethernet1   frames dropped due to frame timeout mechanism           0              
+Ethernet1   octets dropped due to frame timeout mechanism           0              
+Ethernet1   frames discarded due to no memory in tx                 0              
+Ethernet1   octets discarded due to no memory in tx                 0              
+Ethernet1   frames discarded due to unrepairable ECC errors in tx   0              
+Ethernet1   octets discarded due to unrepairable ECC errors in tx   0              
+Ethernet1   frames discarded due to loopback suppression            0              
+Ethernet1   octets discarded due to loopback suppression            0              
+Ethernet1   tx valid non-IP unicast octets                          5376           
+Ethernet1   tx valid non-IP broadcast octets                        320            
+Ethernet1   tx valid non-IP multicast octets                        221223         
+Ethernet1   tx valid IP unicast octets                              18517825819    
+Ethernet1   tx valid IP broadcast octets                            0              
+Ethernet1   tx valid IP multicast octets                            5656           
+Ethernet1   tx valid pkts containing _63_ or fewer octets           0              
+Ethernet1   tx valid pkts containing _10240_ or more octets         0              
+Ethernet1   transmitted frames dropped for congestion management    2807237        
+Ethernet1   frames forwarded normally                               3280597        
+Ethernet1   valid unicast/multicast frames flooded                  3082           
+Ethernet1   valid frames switched based on destination glort        26             
+Ethernet1   valid frames routed based on destination glort          0              
+Ethernet1   frames dropped due to header parse errors               0              
+Ethernet1   frames dropped due to memory parity errors              0              
+Ethernet1   frames trapped to CPU (BPDUs, ICMP, FFU triggers, etc)  0              
+Ethernet1   frames dropped because ing/egr port not STP forwarding  19             
+Ethernet1   frames dropped because ingress port not STP forwarding  1              
+Ethernet1   frames dropped because egress port not STP forwarding   18             
+Ethernet1   frames dropped or trapped because of security violation 0              
+Ethernet1   frames dropped because of tagging configuration         0              
+Ethernet1   frames dropped for ingress VLAN boundary violation      3              
+Ethernet1   frames dropped for egress VLAN boundary violation       21             
+Ethernet1   frames dropped for L2AR loopback suppression            2650           
+Ethernet1   frames dropped due to an FFU action                     0              
+Ethernet1   frames dropped due to an L2AR action                    0              
+Ethernet1   frames dropped due to policer rate limitation           0              
+Ethernet1   IP frames dropped due to TTL less than or equal to_1    0              
+Ethernet1   frames dropped due to global usage exc. global wm       0              
+Ethernet1   frames dropped due to RX mem part. usage above rx wm    0              
+Ethernet1   frames dropped due to RX mem part. usage above hog wm   0              
+Ethernet1   frames dropped due to tx mem part. usage above hog wm   0              
+Ethernet1   frames not counted by any other group _6_ statistic     0              
+Ethernet1   frames dropped because of flood control rules           0              
+Ethernet1   frames terminated or dropped due to underrun during tx  0              
+Ethernet1   frames dropped due to rx overflow                       0              
+Ethernet1   frames dropped by scheduler due to an ingress FCS error 0              
+Ethernet1   octets dropped by scheduler due to an ingress FCS error 0              
+Ethernet1   mirrored tx pkts                                        0              
+Ethernet1   mirrored tx octets                                      0              
+Ethernet1   valid non-IP rx pkts with unicast L2 DMACS              21             
+Ethernet1   valid IPv4 rx pkts with unicast L2 DMACS                3280772        
+Ethernet1   valid IPv6 rx pkts with unicast L2 DMACS                0              
+Ethernet1   valid non-IP rx pkts with broadcast L2 DMACS            93             
+Ethernet1   valid IPv4 rx pkts with broadcast L2 DMACS              0              
+Ethernet1   valid IPv6 rx pkts with broadcast L2 DMACS              0              
+Ethernet1   valid non-IP rx pkts with multicast L2 DMACS            0              
+Ethernet1   valid IPv4 rx pkts with multicast L2 DMACS              5474           
+Ethernet1   valid IPv6 rx pkts with multicast L2 DMACS              38             
+Ethernet1   rx octets in valid Non-IP pkts                          7296           
+Ethernet1   rx octets in valid IPv4 pkts                            325660581      
+Ethernet1   rx octets in valid IPv6 pkts                            3100           
+Ethernet1   rx oversize pkts                                        0              
+
+
+$ show interfaces Ethernet1 counters errors
+show interfaces Ethernet1 counters errors | no-more
+Port               FCS    Align   Symbol       Rx    Runts   Giants       Tx
+Et1                  0        0        0        0        0        0        0
+
+$ show interfaces Ethernet1 counters discards
+show interfaces Ethernet1 counters discards | no-more
+Port          InDiscards    OutDiscards 
+---------- ---------------- ----------- 
+Et1                    0        2807237 
+

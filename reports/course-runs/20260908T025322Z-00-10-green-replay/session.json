@@ -1,0 +1,1463 @@
+{
+  "RUN_ID": "20260908T025322Z-00-10-green-replay",
+  "OUT": "Documents/reports/course-runs/20260908T025322Z-00-10-green-replay",
+  "STATUS": "PASS",
+  "STARTED": "2026-09-08T02:53:22.461504+00:00",
+  "AUTHORIZATION": "DEC-388: user required ch07 QoS/LANZ/PTP/final as green cards; skip ch04 Grafana browser; skip ch10 simulated commands; no git history operations.",
+  "SKIP": [
+    "04-run-③-browser-user-self",
+    "10-命令(模拟)"
+  ],
+  "CARDS": [
+    {
+      "id": "00-01-1",
+      "chapter": "00",
+      "source": "Documents/newDoc/00-cpu-cache-memory-os-basics.md",
+      "line": 189,
+      "label": "需要运行 · 运行 ① 在【课程 Linux 终端】运行；只需 python3；影响范围仅限当前进程申请的这段内存，进程退出即释放；预计数秒。",
+      "sha256": "36dcacc11d3405ac1be2334976a2034d5aa29221dd97d271e7b57a746fd65542",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:53:38.085380+00:00",
+          "sha256": "36dcacc11d3405ac1be2334976a2034d5aa29221dd97d271e7b57a746fd65542",
+          "log": "raw/00-01-1-attempt-1.txt",
+          "pid": 60526,
+          "ended": "2026-09-08T02:53:38.119998+00:00",
+          "exit": 0,
+          "seconds": 0.03,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:53:38.131120+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "01-01-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 138,
+      "label": "需要运行 · 准备 A 在【跳板机】以 root 运行；顺序处理 `.1/.2/.11/.101`；核对四台 VM 的 Ubuntu 22.04/amd64 并统一维护用软件源；从 `.111` 缓存补齐四机基础工具，并给 `.101` 安装 `g++-11` 与 `make`，不访问公网；预期四台系统检查通过且 `.101` 打印三项工具路径。",
+      "sha256": "d51f5fdcdc586df46c4423e9d3aa56ae0e074c8ca5e31e3581e8c9b4556a0868",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:53:38.132982+00:00",
+          "sha256": "d51f5fdcdc586df46c4423e9d3aa56ae0e074c8ca5e31e3581e8c9b4556a0868",
+          "log": "raw/01-01-1-attempt-1.txt",
+          "pid": 60528,
+          "ended": "2026-09-08T02:54:33.674683+00:00",
+          "exit": 0,
+          "seconds": 55.53,
+          "created_runs": [
+            "20260908T025338Z-01-vm-apt-china-mirror"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:54:33.689377+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025338Z-01-vm-apt-china-mirror"
+      ]
+    },
+    {
+      "id": "01-02-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 265,
+      "label": "需要运行 · 准备 B 在【跳板机】以 root 运行；读取仓库外 root-only EOS 凭据（`/root/.config/flle/eos_admin_password`，`0600`），凭据缺失时在交互终端提示输入一次密码；只改 running-config；预计数十秒；预期完成后公钥登录可用并打印账户状态。",
+      "sha256": "0d861aced4d7dbb99ee88d19f91e8177d521a87978a12f5532013829b03d24c8",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:54:33.691874+00:00",
+          "sha256": "0d861aced4d7dbb99ee88d19f91e8177d521a87978a12f5532013829b03d24c8",
+          "log": "raw/01-02-1-attempt-1.txt",
+          "pid": 60623,
+          "ended": "2026-09-08T02:54:39.811536+00:00",
+          "exit": 0,
+          "seconds": 6.11,
+          "created_runs": [
+            "20260908T025433Z-01-eos-key-bootstrap"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:54:39.817798+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025433Z-01-eos-key-bootstrap"
+      ]
+    },
+    {
+      "id": "01-03-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 328,
+      "label": "需要运行 · 准备 C 在【跳板机】以 root 运行；前置是准备 B 已完成；幂等配置 VLAN20、Et1/Et2/Et11/Et12 和 Vlan20，只改 running-config；最多轮询 15 次，确认交易口和已连接的工具口进入 `forwarding`；预计数十秒；预期打印最终 STP 状态。",
+      "sha256": "26fcad9a0210435f4074dc622a2fc0635ba392b7c30bac7f373b1336307f855c",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:54:39.819462+00:00",
+          "sha256": "26fcad9a0210435f4074dc622a2fc0635ba392b7c30bac7f373b1336307f855c",
+          "log": "raw/01-03-1-attempt-1.txt",
+          "pid": 60638,
+          "ended": "2026-09-08T02:55:03.751506+00:00",
+          "exit": 0,
+          "seconds": 23.93,
+          "created_runs": [
+            "20260908T025439Z-01-switch-course-baseline"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:55:03.757750+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025439Z-01-switch-course-baseline"
+      ]
+    },
+    {
+      "id": "01-04-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 423,
+      "label": "需要运行 · 运行 ① 在【跳板机】以 root 运行；远端全部只读，不改网络配置；预计数秒；预期依次打印 `.1/.2` 的管理口与 X2522 数据口地址，并保存原始输出。",
+      "sha256": "b33f6a60ee2e1152a9f6233f6184d915bfbc2f97bde9494705740fc40b342edd",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:55:03.759381+00:00",
+          "sha256": "b33f6a60ee2e1152a9f6233f6184d915bfbc2f97bde9494705740fc40b342edd",
+          "log": "raw/01-04-1-attempt-1.txt",
+          "pid": 60749,
+          "ended": "2026-09-08T02:55:04.758523+00:00",
+          "exit": 0,
+          "seconds": 0.96,
+          "created_runs": [
+            "20260908T025503Z-01-plane-map"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:55:04.764894+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025503Z-01-plane-map"
+      ]
+    },
+    {
+      "id": "01-05-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 552,
+      "label": "需要运行 · 运行 ② 在【跳板机】以 root 运行。读取每台数据口的 sysfs 设备路径、MAC，以及对应 PCI 设备的一行 lspci。",
+      "sha256": "70024e94c9e4b3faa96c5bc099a680b1789dc993e81017be8216eaea50b423a5",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:55:04.766554+00:00",
+          "sha256": "70024e94c9e4b3faa96c5bc099a680b1789dc993e81017be8216eaea50b423a5",
+          "log": "raw/01-05-1-attempt-1.txt",
+          "pid": 60758,
+          "ended": "2026-09-08T02:55:05.325586+00:00",
+          "exit": 0,
+          "seconds": 0.55,
+          "created_runs": [
+            "20260908T025504Z-01-pci-identity"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:55:05.331856+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025504Z-01-pci-identity"
+      ]
+    },
+    {
+      "id": "01-06-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 660,
+      "label": "需要运行 · 运行 ③ 在【跳板机】以 root 运行。读取每台数据口对应 PCI 设备的 driver 路径，以及 ethtool -i 里的 driver 和 bus-info。",
+      "sha256": "7ab8e1cc36cce7fbf5a3cdf84918f12dded329b91ef79266e8577a941bdf3cbb",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:55:05.333874+00:00",
+          "sha256": "7ab8e1cc36cce7fbf5a3cdf84918f12dded329b91ef79266e8577a941bdf3cbb",
+          "log": "raw/01-06-1-attempt-1.txt",
+          "pid": 60767,
+          "ended": "2026-09-08T02:55:05.676937+00:00",
+          "exit": 0,
+          "seconds": 0.34,
+          "created_runs": [
+            "20260908T025505Z-01-driver-owner"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:55:05.683117+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025505Z-01-driver-owner"
+      ]
+    },
+    {
+      "id": "01-07-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 748,
+      "label": "需要运行 · 运行 ④ 在【跳板机】以 root 运行。读取 `.1/.2` 数据口的 ethtool，以及交换机 Et1、Et2 和 VLAN20 的状态。",
+      "sha256": "4da952e17d3ea103ce45c50c052fc413b62ea0e82aa7851a6763cfd89cdc1bee",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:55:05.685152+00:00",
+          "sha256": "4da952e17d3ea103ce45c50c052fc413b62ea0e82aa7851a6763cfd89cdc1bee",
+          "log": "raw/01-07-1-attempt-1.txt",
+          "pid": 60776,
+          "ended": "2026-09-08T02:55:07.799058+00:00",
+          "exit": 0,
+          "seconds": 2.11,
+          "created_runs": [
+            "20260908T025505Z-01-link-pair"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:55:07.805257+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025505Z-01-link-pair"
+      ]
+    },
+    {
+      "id": "01-08-1",
+      "chapter": "01",
+      "source": "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "line": 853,
+      "label": "需要运行 · 运行 ⑤ 在【跳板机】以 root 运行。先在 .2 的 ens64np1 上抓包，再从 .1 发出三条 ICMP 探针，最后回读 pcap。",
+      "sha256": "2a1b3bd7aa687118b1db289e5c35c456e1e4ec9bbec1236c84bbce53aca0b15b",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:55:07.807378+00:00",
+          "sha256": "2a1b3bd7aa687118b1db289e5c35c456e1e4ec9bbec1236c84bbce53aca0b15b",
+          "log": "raw/01-08-1-attempt-1.txt",
+          "pid": 60794,
+          "ended": "2026-09-08T02:55:12.098300+00:00",
+          "exit": 0,
+          "seconds": 4.16,
+          "created_runs": [
+            "20260908T025507Z-01-packet-proof"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:55:12.104639+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025507Z-01-packet-proof"
+      ]
+    },
+    {
+      "id": "02-01-1",
+      "chapter": "02",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 73,
+      "label": "需要运行 · 准备 A 在持久管理机 .111 的仓库根目录以 root 执行；完成后再贴下一张卡。首次安装通常数分钟；已有依赖会先核验。",
+      "sha256": "e368c9e6d9907fddf62d5c906dd542338d6d5428d7efbc67f677e6294a38ce90",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:55:12.106783+00:00",
+          "sha256": "e368c9e6d9907fddf62d5c906dd542338d6d5428d7efbc67f677e6294a38ce90",
+          "log": "raw/02-01-1-attempt-1.txt",
+          "pid": 60812,
+          "ended": "2026-09-08T02:59:09.932656+00:00",
+          "exit": 0,
+          "seconds": 237.82,
+          "created_runs": [
+            "20260908T025512Z-02-onload-runtime-prep"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:59:09.939358+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025512Z-02-onload-runtime-prep"
+      ]
+    },
+    {
+      "id": "02-02-1",
+      "chapter": "02",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 103,
+      "label": "需要运行 · 准备 B 在 .111 仓库根目录以 root 执行。脚本先预检 .1/.2，只重启参数尚未生效的主机；首次通常数分钟，SSH 会短暂断开并自动等待恢复。两端当前启动参数、隔离组和 unsafe 模式均通过后，再启动交易系统。",
+      "sha256": "ab823a99afce7b0e5cbd821d55c991e68b75894fa35c50e8e6805e90e72a0b83",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:59:09.950329+00:00",
+          "sha256": "ab823a99afce7b0e5cbd821d55c991e68b75894fa35c50e8e6805e90e72a0b83",
+          "log": "raw/02-02-1-attempt-1.txt",
+          "pid": 61105,
+          "ended": "2026-09-08T02:59:26.321838+00:00",
+          "exit": 0,
+          "seconds": 16.36,
+          "created_runs": [
+            "20260908T025909Z-02-guest-iommu-prep"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T02:59:26.336003+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025909Z-02-guest-iommu-prep"
+      ]
+    },
+    {
+      "id": "02-03-1",
+      "chapter": "02",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 216,
+      "label": "需要运行 · 运行 ① 在【唯一持久的 `.111` 管理机 `/financial-low-latency`】以 root 运行；前置是第一部分已完成四机 SSH、`.101` 构建工具、`.1/.2` 数据地址和 VLAN20；脚本会在全新 `.101` 构建，向 `.1/.2/.101` 创建本 RUN 目录并启动完整交易平台；需复制 561.7 MB 行情制品并生成开盘检查点；预期打印 `TRADING_LAB_READY` 和 `platform=READY`。",
+      "sha256": "af504539b95ee37376cbc8a162930c5ac6f02944ef96096b132190f50a7311fa",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T02:59:26.337870+00:00",
+          "sha256": "af504539b95ee37376cbc8a162930c5ac6f02944ef96096b132190f50a7311fa",
+          "log": "raw/02-03-1-attempt-1.txt",
+          "pid": 61163,
+          "ended": "2026-09-08T03:00:55.509304+00:00",
+          "exit": 0,
+          "seconds": 89.16,
+          "created_runs": [
+            "20260908T025930Z-02-trading-platform"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:00:55.518654+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/course-runs/20260908T025930Z-02-trading-platform"
+      ]
+    },
+    {
+      "id": "02-04-1",
+      "chapter": "02",
+      "source": "Documents/newDoc/02-host-native-trading-system-baseline.md",
+      "line": 351,
+      "label": "需要运行 · 运行 ② 在【同一持久管理机】以 root 运行；前置是运行 ① 写出的 `02-trading-baseline.env`；影响是增加一笔 AAPL 1 股手动纸面 IOC 及其交易记录；预计数秒；预期成交 1 股并打印 `FIRST_TRADE_PASS`。",
+      "sha256": "e387a6c2a41452105644e1ea68a301c5e914a154d8f73c5b4bd3506bc4343713",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:00:55.520965+00:00",
+          "sha256": "e387a6c2a41452105644e1ea68a301c5e914a154d8f73c5b4bd3506bc4343713",
+          "log": "raw/02-04-1-attempt-1.txt",
+          "pid": 61800,
+          "ended": "2026-09-08T03:00:59.892239+00:00",
+          "exit": 0,
+          "seconds": 4.36,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:00:59.898481+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/course-runs/20260908T025930Z-02-trading-platform"
+      ]
+    },
+    {
+      "id": "03-01-1",
+      "chapter": "03",
+      "source": "Documents/newDoc/03-live-trading-traffic-and-protocols.md",
+      "line": 180,
+      "label": "需要运行 · 运行 ① 在【持久管理机 `/financial-low-latency`】以 root 运行；前置是第二部分完整平台在线且 `.2 ens64np1` 可抓包；脚本自动切到 MULTICAST、抓 200 个组播包并恢复原模式，你不用改网页；不停止回放或订单进程；实测约 6 秒；预期终端打出一棵 Packet Details 树，里面有当前 session、连续 sequence 和一条 AAPL/NVDA Add Order。",
+      "sha256": "0f994ee1fd0eca224ddd030afd41469337d61293123d760b65626f71a2c84735",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:00:59.900591+00:00",
+          "sha256": "0f994ee1fd0eca224ddd030afd41469337d61293123d760b65626f71a2c84735",
+          "log": "raw/03-01-1-attempt-1.txt",
+          "pid": 61905,
+          "ended": "2026-09-08T03:01:05.749998+00:00",
+          "exit": 0,
+          "seconds": 5.84,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:01:05.756227+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/20260908T030059Z-03-live-market"
+      ]
+    },
+    {
+      "id": "03-02-1",
+      "chapter": "03",
+      "source": "Documents/newDoc/03-live-trading-traffic-and-protocols.md",
+      "line": 301,
+      "label": "需要运行 · 运行 ② 在【持久管理机】以 root 运行；前置是运行 ① 通过且应用仍在线；会短时改变 Exchange 行情模式，并在 `.2` 对 UDP `42120-42122` 各抓 120 个包，不改主机网络配置；实测约 4 秒；预期单播只有两个端点、组播只有 group、双路三者都有且 sequence 重合，退出后自动恢复原模式。",
+      "sha256": "ba0303cfdca1508c2e9a9df9a7d2793fe369751979f1ef89b9b12d379a3f2eda",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:01:05.758090+00:00",
+          "sha256": "ba0303cfdca1508c2e9a9df9a7d2793fe369751979f1ef89b9b12d379a3f2eda",
+          "log": "raw/03-02-1-attempt-1.txt",
+          "pid": 62025,
+          "ended": "2026-09-08T03:01:09.014222+00:00",
+          "exit": 0,
+          "seconds": 3.25,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:01:09.020572+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/20260908T030105Z-03-market-paths"
+      ]
+    },
+    {
+      "id": "03-03-1",
+      "chapter": "03",
+      "source": "Documents/newDoc/03-live-trading-traffic-and-protocols.md",
+      "line": 481,
+      "label": "需要运行 · 运行 ③ 在【持久管理机】以 root 运行；前置是两条 client 会话在线、AAPL 盘口可成交；短时抓取 `.2 ↔ .1:43120` 并提交 1 股 MANUAL 纸面 IOC，AUTO 与行情回放继续独立运行；实测约 5 秒；预期看到两条 TCP session，在 MANUAL flow 中解出相同 UserRefNum 的 OUCH `O/A/E`，并打出 Soup `U` / OUCH Enter Order 的 Packet Details 树。",
+      "sha256": "3fecd37ef1d4ae6dcba0300a24d8ba512d9a6792192d2b6504b8db851a74216b",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:01:09.023031+00:00",
+          "sha256": "3fecd37ef1d4ae6dcba0300a24d8ba512d9a6792192d2b6504b8db851a74216b",
+          "log": "raw/03-03-1-attempt-1.txt",
+          "pid": 62153,
+          "ended": "2026-09-08T03:01:14.018346+00:00",
+          "exit": 0,
+          "seconds": 4.99,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:01:14.024814+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/20260908T030109Z-03-live-order"
+      ]
+    },
+    {
+      "id": "04-01-1",
+      "chapter": "04",
+      "source": "Documents/newDoc/04-tail-latency-and-observability.md",
+      "line": 94,
+      "label": "需要运行 · 准备 A 在【持久管理机 `/financial-low-latency`】以 root 运行；前置是第一部分准备 A 已完成离线工具准备、第二章 Gateway `/metrics` 在线；会安装或更新 `.101` 的宿主机服务与课程 dashboard，重复执行幂等；预计 15 秒，首次安装可能数分钟；预期两个版本、两个 `active`、Prometheus Ready 与 Grafana `database=ok`。",
+      "sha256": "0797d17ce19985294fbe43ede178f6868c53445e10907c28a2d0b42634491a22",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:01:14.027054+00:00",
+          "sha256": "0797d17ce19985294fbe43ede178f6868c53445e10907c28a2d0b42634491a22",
+          "log": "raw/04-01-1-attempt-1.txt",
+          "pid": 62252,
+          "ended": "2026-09-08T03:02:29.511007+00:00",
+          "exit": 0,
+          "seconds": 75.48,
+          "created_runs": [
+            "20260908T030114Z-04-observability-restore"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:02:29.517261+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "04-02-1",
+      "chapter": "04",
+      "source": "Documents/newDoc/04-tail-latency-and-observability.md",
+      "line": 198,
+      "label": "需要运行 · 运行 ① 在【持久管理机】以 root 运行；前置是准备 A 通过且第二章应用仍在线；不暂停行情、不关闭 AUTO；产生 20+200 笔 MANUAL 纸面 IOC；约 5 秒；预期 raw CSV 与主机 profile 一并封存，终端打出 p50/p99/max。",
+      "sha256": "bdc113e8e74a9054d3349c62af417a0cad2e951240c209de9c97ad84503c5237",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:02:29.519703+00:00",
+          "sha256": "bdc113e8e74a9054d3349c62af417a0cad2e951240c209de9c97ad84503c5237",
+          "log": "raw/04-02-1-attempt-1.txt",
+          "pid": 63590,
+          "ended": "2026-09-08T03:02:34.339612+00:00",
+          "exit": 0,
+          "seconds": 4.81,
+          "created_runs": [
+            "20260908T030229Z-04-order-rtt-baseline"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:02:34.345816+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/course-runs/20260908T030229Z-04-order-rtt-baseline"
+      ]
+    },
+    {
+      "id": "04-03-1",
+      "chapter": "04",
+      "source": "Documents/newDoc/04-tail-latency-and-observability.md",
+      "line": 278,
+      "label": "需要运行 · 运行 ② 在【持久管理机】以 root 运行；前置是运行 ① 已写出 raw CSV，Prometheus 已在抓取 `.101:8088/metrics`；等待两个 scrape 周期后只读 `/metrics` 与 Prometheus API；不改变交易或服务；预计数秒；预期 `up=1`，baseline p99 秒值能换算回运行 ① 的纳秒值。",
+      "sha256": "cf2417faafd6a1277d62afe4dbe48e584d6ecd2e9f27fcc55d599cc3bc6f6777",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:02:34.348149+00:00",
+          "sha256": "cf2417faafd6a1277d62afe4dbe48e584d6ecd2e9f27fcc55d599cc3bc6f6777",
+          "log": "raw/04-03-1-attempt-1.txt",
+          "pid": 63683,
+          "ended": "2026-09-08T03:02:36.568822+00:00",
+          "exit": 0,
+          "seconds": 2.21,
+          "created_runs": [
+            "20260908T030234Z-04-prometheus-query"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:02:36.576868+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/course-runs/20260908T030234Z-04-prometheus-query"
+      ]
+    },
+    {
+      "id": "05-01-1",
+      "chapter": "05",
+      "source": "Documents/newDoc/05-low-latency-software-design.md",
+      "line": 96,
+      "label": "需要运行 · 准备 A 在【持久管理机】以 root 运行；前置是第四部分 Grafana 已在线；只拷一页显示板，不改交易进程；通常 1～10 秒；预期终端写清 8 块表已收下，并给出打开地址。",
+      "sha256": "825a85ca81de498df618f8bf0c27091936f002b557aea19efaf7edca85a9156f",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:02:36.579523+00:00",
+          "sha256": "825a85ca81de498df618f8bf0c27091936f002b557aea19efaf7edca85a9156f",
+          "log": "raw/05-01-1-attempt-1.txt",
+          "pid": 63741,
+          "ended": "2026-09-08T03:02:43.086478+00:00",
+          "exit": 0,
+          "seconds": 6.5,
+          "created_runs": [
+            "20260908T030236Z-05-software-dashboard"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:02:43.099213+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "05-02-1",
+      "chapter": "05",
+      "source": "Documents/newDoc/05-low-latency-software-design.md",
+      "line": 281,
+      "label": "需要运行 · 运行 ① 在【持久管理机】以 root 运行。准备 A 那一页已经打开，交易程序还在跑。本步先热身 1000 笔，再连跑 8 轮（每轮预热 40、计入 400），量现在这套交棒要多久。大约 2 分钟。预期 8 轮都能用，AUTO 没有自己乱跳。",
+      "sha256": "91522e02d7b1572bf923583e12d14d95ab173cffdcd777c53811bc83130f3f04",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:02:43.101669+00:00",
+          "sha256": "91522e02d7b1572bf923583e12d14d95ab173cffdcd777c53811bc83130f3f04",
+          "log": "raw/05-02-1-attempt-1.txt",
+          "pid": 63876,
+          "ended": "2026-09-08T03:04:42.943844+00:00",
+          "exit": 0,
+          "seconds": 119.84,
+          "created_runs": [
+            "20260908T030243Z-05-deque-cv"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:04:42.950186+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "05-03-1",
+      "chapter": "05",
+      "source": "Documents/newDoc/05-low-latency-software-design.md",
+      "line": 402,
+      "label": "需要运行 · 运行 ② 在【持久管理机】以 root 运行；前置是运行 ① 已写出 `05-deque-cv.env`；约 3 分钟；原来的格子和固定格子穿插着各跑 8 轮；预期这一轮能用，再看换格子有没有让交棒更快。",
+      "sha256": "b94cf66197fd64451f297137de85e5a6cbdce2f5189cc75e9f599ffcff969367",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:04:42.952458+00:00",
+          "sha256": "b94cf66197fd64451f297137de85e5a6cbdce2f5189cc75e9f599ffcff969367",
+          "log": "raw/05-03-1-attempt-1.txt",
+          "pid": 819,
+          "ended": "2026-09-08T03:09:02.448766+00:00",
+          "exit": 0,
+          "seconds": 259.49,
+          "created_runs": [
+            "20260908T030442Z-05-fixed-cv"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:09:02.455748+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "05-04-1",
+      "chapter": "05",
+      "source": "Documents/newDoc/05-low-latency-software-design.md",
+      "line": 559,
+      "label": "需要运行 · 运行 ③ 在【持久管理机】以 root 运行；前置是运行 ② 已写出 `05-fixed-cv.env`；约 3 分钟；盯着看时 CPU 2 会一直忙；预期这一轮能用，再看盯着看是不是更快。",
+      "sha256": "7bdaed2543b503297a70079f91209fea3d813ee8ddea68af46a00b6dc0018783",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:09:02.457684+00:00",
+          "sha256": "7bdaed2543b503297a70079f91209fea3d813ee8ddea68af46a00b6dc0018783",
+          "log": "raw/05-04-1-attempt-1.txt",
+          "pid": 5373,
+          "ended": "2026-09-08T03:13:22.790604+00:00",
+          "exit": 0,
+          "seconds": 260.33,
+          "created_runs": [
+            "20260908T030902Z-05-spsc-spin"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:13:22.796958+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "05-05-1",
+      "chapter": "05",
+      "source": "Documents/newDoc/05-low-latency-software-design.md",
+      "line": 719,
+      "label": "需要运行 · 运行 ④ 在【持久管理机】以 root 运行；前置是运行 ③ 已写出 `05-spsc-spin.env`；约 3 分钟；成功或失败都会恢复盯着看和 CPU 2；预期这一轮能用，再比独占座位和挤在杂活核。",
+      "sha256": "6448e3d87698694b13706274cae92ebef28cba79903fd05440d0b6a3ea756fb1",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:13:22.799078+00:00",
+          "sha256": "6448e3d87698694b13706274cae92ebef28cba79903fd05440d0b6a3ea756fb1",
+          "log": "raw/05-05-1-attempt-1.txt",
+          "pid": 9919,
+          "ended": "2026-09-08T03:17:44.239364+00:00",
+          "exit": 0,
+          "seconds": 261.43,
+          "created_runs": [
+            "20260908T031322Z-05-spsc-shared-cpu"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:17:44.245727+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "06-01-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 110,
+      "label": "需要运行 · 准备 A 在 .111 仓库根目录以 root 执行，只读核对第二章准备好的环境；两端都打印 READY 再继续。",
+      "sha256": "d7e8d742619e0e3e0140775a4596587db159d16cd7f8245358ecff14704e26c4",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:17:44.247844+00:00",
+          "sha256": "d7e8d742619e0e3e0140775a4596587db159d16cd7f8245358ecff14704e26c4",
+          "log": "raw/06-01-1-attempt-1.txt",
+          "pid": 14481,
+          "ended": "2026-09-08T03:17:44.873987+00:00",
+          "exit": 0,
+          "seconds": 0.62,
+          "created_runs": [
+            "20260908T031744.263008037Z-06-runtime-verify"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:17:44.880300+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T031744.263008037Z-06-runtime-verify"
+      ]
+    },
+    {
+      "id": "06-02-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 178,
+      "label": "需要运行 · 准备 B 在 .111 仓库根目录以 root 执行，只读核对第二章准备好的环境；两端都打印 READY 再继续。",
+      "sha256": "868f04d5273235e7b22dd8294819391c61d3d64988847d6eba9e222fab3f7e1e",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:17:44.882420+00:00",
+          "sha256": "868f04d5273235e7b22dd8294819391c61d3d64988847d6eba9e222fab3f7e1e",
+          "log": "raw/06-02-1-attempt-1.txt",
+          "pid": 14512,
+          "ended": "2026-09-08T03:17:45.251606+00:00",
+          "exit": 0,
+          "seconds": 0.36,
+          "created_runs": [
+            "20260908T031744.893109462Z-06-iommu-verify"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:17:45.257921+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T031744.893109462Z-06-iommu-verify"
+      ]
+    },
+    {
+      "id": "06-03-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 227,
+      "label": "需要运行 · 准备 C 在【持久管理机】以 root 执行，全程只读，通常约 5～10 秒。这是 37 行的专项开工工具：只做制品、构建链、行情资产、Builder、RSS 和总闸，不重复准备 A/B。",
+      "sha256": "ce0c060fb0d7e831d8b7f762352cc4d6641afb5c0097482253b194fa317d35fa",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:17:45.259954+00:00",
+          "sha256": "ce0c060fb0d7e831d8b7f762352cc4d6641afb5c0097482253b194fa317d35fa",
+          "log": "raw/06-03-1-attempt-1.txt",
+          "pid": 14524,
+          "ended": "2026-09-08T03:17:51.172593+00:00",
+          "exit": 0,
+          "seconds": 5.91,
+          "created_runs": [
+            "20260908T031745Z-06-four-path-preflight"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:17:51.178924+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T031745Z-06-four-path-preflight"
+      ]
+    },
+    {
+      "id": "06-04-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 292,
+      "label": "需要运行 · 准备 D 在【持久管理机】以 root 执行。切换过程、状态 JSON 与路径验证写入 raw；课堂只看到就绪摘要。通常几十秒；不安装程序、不重启虚拟机。",
+      "sha256": "3700849047568915bdbd9b2a1755f70b4a3767773b84328c7a1646f25bfe1f26",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:17:51.180956+00:00",
+          "sha256": "3700849047568915bdbd9b2a1755f70b4a3767773b84328c7a1646f25bfe1f26",
+          "log": "raw/06-04-1-attempt-1.txt",
+          "pid": 14721,
+          "ended": "2026-09-08T03:18:32.980960+00:00",
+          "exit": 0,
+          "seconds": 41.79,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:18:32.994079+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025930Z-02-trading-platform/profile-switches/20260908T031751.190695354Z"
+      ]
+    },
+    {
+      "id": "06-05-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 363,
+      "label": "需要运行 · 运行 ① 预计数秒。本卡只下一笔 Socket；完整 API JSON 与当前 PID 路径收据写进独立证据目录，终端只打印这笔单。",
+      "sha256": "6b7ef46f577b0f3b415e3c352313a34034ce0ea19b2a28c4f8773025d00b5f99",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:18:32.996107+00:00",
+          "sha256": "6b7ef46f577b0f3b415e3c352313a34034ce0ea19b2a28c4f8773025d00b5f99",
+          "log": "raw/06-05-1-attempt-1.txt",
+          "pid": 15654,
+          "ended": "2026-09-08T03:18:34.165102+00:00",
+          "exit": 0,
+          "seconds": 1.16,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:18:34.173454+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025930Z-02-trading-platform/classroom-runs/20260908T031833.009260234Z-run01-socket"
+      ]
+    },
+    {
+      "id": "06-06-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 428,
+      "label": "需要运行 · 运行 ② 预计数秒；只下一笔 Onload。`Onloaded(Valid)`、连接与 CTPIO 收据在后台硬验并写 raw，不把栈转储刷满课堂终端。",
+      "sha256": "efbd3c52fc8ee89dd835420ba9fa6052c0f523b8a8a3e0b6759c2c2010f5e49d",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:18:34.175555+00:00",
+          "sha256": "efbd3c52fc8ee89dd835420ba9fa6052c0f523b8a8a3e0b6759c2c2010f5e49d",
+          "log": "raw/06-06-1-attempt-1.txt",
+          "pid": 15707,
+          "ended": "2026-09-08T03:18:35.558632+00:00",
+          "exit": 0,
+          "seconds": 1.38,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:18:35.564855+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025930Z-02-trading-platform/classroom-runs/20260908T031834.187278899Z-run02-onload"
+      ]
+    },
+    {
+      "id": "06-07-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 484,
+      "label": "需要运行 · 运行 ③ 预计数秒；只下一笔 TCPDirect。当前 ZF stack、`ctpio=3/sf-np`、ESTABLISHED 与 TXQ 收据全部进 raw，课堂层只保留订单结果。",
+      "sha256": "bc0917e18efbf8b218dd9803f297d242d00db37788cc91d18fd4663e404568de",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:18:35.567039+00:00",
+          "sha256": "bc0917e18efbf8b218dd9803f297d242d00db37788cc91d18fd4663e404568de",
+          "log": "raw/06-07-1-attempt-1.txt",
+          "pid": 15764,
+          "ended": "2026-09-08T03:18:36.705615+00:00",
+          "exit": 0,
+          "seconds": 1.13,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:18:36.711868+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025930Z-02-trading-platform/classroom-runs/20260908T031835.577161139Z-run03-tcpdirect"
+      ]
+    },
+    {
+      "id": "06-08-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 576,
+      "label": "需要运行 · 运行 ④ 完整顺刷本卡实测 76 秒，其他顺刷为 76～78 秒，课堂按 60～90 秒预留。其中绝大部分是停止、换 owner、启动、验收和恢复的管理链，真正下单仍只是一笔；热现场定点复跑约 38 秒不能冒充课堂常规耗时。IOMMU type 1、`net_sfc_efx`、ULL firmware 与 owner 原文保存在 raw/native receipts。",
+      "sha256": "8a7c1e3b164c5d294bad663a81b9e4128168684c50f8cfdc145e774168da4609",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:18:36.713977+00:00",
+          "sha256": "8a7c1e3b164c5d294bad663a81b9e4128168684c50f8cfdc145e774168da4609",
+          "log": "raw/06-08-1-attempt-1.txt",
+          "pid": 15830,
+          "ended": "2026-09-08T03:19:53.859574+00:00",
+          "exit": 0,
+          "seconds": 77.14,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:19:53.871957+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025930Z-02-trading-platform/classroom-runs/20260908T031836.726874975Z-run04-dpdk"
+      ]
+    },
+    {
+      "id": "06-09-1",
+      "chapter": "06",
+      "source": "Documents/newDoc/06-openonload-tcpdirect-dpdk-kernel-bypass.md",
+      "line": 618,
+      "label": "需要运行 · 运行 ⑤ 通常 3～8 分钟。长测量日志、16 格 raw JSON 和机制收据只写 evidence；终端最后只打印一张四路表和几条总账硬门。",
+      "sha256": "391b912f2952af98bb9ae17324b11ad038051a02cfa818a7fadb9e3c2c9bcd46",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:19:53.874101+00:00",
+          "sha256": "391b912f2952af98bb9ae17324b11ad038051a02cfa818a7fadb9e3c2c9bcd46",
+          "log": "raw/06-09-1-attempt-1.txt",
+          "pid": 16244,
+          "ended": "2026-09-08T03:26:37.436042+00:00",
+          "exit": 0,
+          "seconds": 403.56,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:26:37.446692+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T025930Z-02-trading-platform/four-path-comparison/balanced-analysis"
+      ]
+    },
+    {
+      "id": "07-01-1",
+      "chapter": "07",
+      "source": "Documents/newDoc/07-arista-cut-through-ptp-time.md",
+      "line": 180,
+      "label": "需要运行 · 运行 ① 在【持久管理机 `/financial-low-latency`】以 root 运行；前置是第一章准备 B/C 已恢复公钥和 VLAN20；只读八条 show，不写 running-config、不 save；预计数秒；预期 Et1/Et2 为 connected / VLAN 20 / 10G，mode 为 cut through。",
+      "sha256": "654ec9bddfeacf2bb737c7d690e5afd8d9253ea6ba8ee86b558af18892f149ad",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:26:37.448898+00:00",
+          "sha256": "654ec9bddfeacf2bb737c7d690e5afd8d9253ea6ba8ee86b558af18892f149ad",
+          "log": "raw/07-01-1-attempt-1.txt",
+          "pid": 20507,
+          "ended": "2026-09-08T03:26:39.543781+00:00",
+          "exit": 0,
+          "seconds": 2.09,
+          "created_runs": [
+            "20260908T032637Z-07-arista-inventory"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:26:39.550270+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T032637Z-07-arista-inventory"
+      ]
+    },
+    {
+      "id": "07-02-1",
+      "chapter": "07",
+      "source": "Documents/newDoc/07-arista-cut-through-ptp-time.md",
+      "line": 529,
+      "label": "需要运行 · 运行 ② 在【持久管理机 `/financial-low-latency`】以 root 运行；第六章 GUI 和 Socket 长连接保持在线。临时改 mangle、TRex、QoS / LANZ / 静态 MAC，不 save；退出全撤。约 2～3 分钟。预期两档各 120 笔成交，B 档 Q5 `+240`，p99 明显低于 A 档。",
+      "sha256": "9385fafc2590ef3398b7306cace2517b58ba216345252a38ece184b5ed16d80d",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:26:39.552486+00:00",
+          "sha256": "9385fafc2590ef3398b7306cace2517b58ba216345252a38ece184b5ed16d80d",
+          "log": "raw/07-02-1-attempt-1.txt",
+          "pid": 20571,
+          "ended": "2026-09-08T03:28:23.646051+00:00",
+          "exit": 0,
+          "seconds": 104.09,
+          "created_runs": [
+            "20260908T032639Z-07-qos-contention-live"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:28:23.652339+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T032639Z-07-qos-contention-live"
+      ]
+    },
+    {
+      "id": "07-03-1",
+      "chapter": "07",
+      "source": "Documents/newDoc/07-arista-cut-through-ptp-time.md",
+      "line": 671,
+      "label": "需要运行 · 运行 ③ 在【持久管理机 `/financial-low-latency`】以 root 运行；保持当前交易 RUN 与 8088 页面在线。脚本借 `.11` 打 10k / 25k，并临时打开 LANZ length + streaming；不保存 startup-config。预期：脚本运行期间 8088 最下方才出现底栏，10k 仍空，25k 出现 Et2 的 S/E。结束后 running-config 撤掉，8088 恢复实验前逐字节相同的第六章发布资产；`.101:8089` 接收器仍保留事件 JSON 供复核。",
+      "sha256": "53154f14b89a83e9aadd48ff5818ae084a7c8ac4032c41ca6a6c9eedb88a23cc",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:28:23.654700+00:00",
+          "sha256": "53154f14b89a83e9aadd48ff5818ae084a7c8ac4032c41ca6a6c9eedb88a23cc",
+          "log": "raw/07-03-1-attempt-1.txt",
+          "pid": 23662,
+          "ended": "2026-09-08T03:29:27.883202+00:00",
+          "exit": 0,
+          "seconds": 64.22,
+          "created_runs": [
+            "20260908T032823Z-07-lanz-stream-ab"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:29:27.889592+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T032823Z-07-lanz-stream-ab"
+      ]
+    },
+    {
+      "id": "07-04-1",
+      "chapter": "07",
+      "source": "Documents/newDoc/07-arista-cut-through-ptp-time.md",
+      "line": 1025,
+      "label": "需要运行 · 运行 ④ 在【持久管理机 `/financial-low-latency`】以 root 运行；保持第六章交易 GUI 在线。脚本只改 running-config，不保存 startup-config，退出时撤销 PTP、镜像、打戳、Keyframe 和临时 VLAN。通常 1～2 分钟，首次另需装工具。预期 `.2` 进入 SLAVE，配对率 100%，结束后撤销临时配置。",
+      "sha256": "549d12882d4657eb8c50059ce95010ed80c50ea2af6f2176974e18757b7d1574",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:29:27.892222+00:00",
+          "sha256": "549d12882d4657eb8c50059ce95010ed80c50ea2af6f2176974e18757b7d1574",
+          "log": "raw/07-04-1-attempt-1.txt",
+          "pid": 24922,
+          "ended": "2026-09-08T03:31:08.703234+00:00",
+          "exit": 0,
+          "seconds": 100.8,
+          "created_runs": [
+            "20260908T032927Z-07-stamped-span-live"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:08.717050+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T032927Z-07-stamped-span-live"
+      ]
+    },
+    {
+      "id": "07-05-1",
+      "chapter": "07",
+      "source": "Documents/newDoc/07-arista-cut-through-ptp-time.md",
+      "line": 1101,
+      "label": "需要运行 · 运行 ⑤ 在【持久管理机 `/financial-low-latency`】以 root 执行。三项主实验结束后必做，留下统一收据；执行过 TC OFF / ON、切换过 DPDK 或停止过交易时，它同时是恢复验收。脚本对半残留状态保持 fail-closed。预期两笔净持仓不变的真实订单成交，三路 ONLINE，数据链 ping 通。",
+      "sha256": "91c2da5b69bcf84fc615ccac4f91b40c9f62af3bbb69791dbd544e15a8ca74c6",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:08.719824+00:00",
+          "sha256": "91c2da5b69bcf84fc615ccac4f91b40c9f62af3bbb69791dbd544e15a8ca74c6",
+          "log": "raw/07-05-1-attempt-1.txt",
+          "pid": 26808,
+          "ended": "2026-09-08T03:31:37.150410+00:00",
+          "exit": 0,
+          "seconds": 28.42,
+          "created_runs": [
+            "20260908T033133Z-07-trading-online-final"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:37.158920+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033133Z-07-trading-online-final"
+      ]
+    },
+    {
+      "id": "08-01-1",
+      "chapter": "08",
+      "source": "Documents/newDoc/08-ebpf-xdp-programmable-network.md",
+      "line": 99,
+      "label": "需要运行 · 准备 A 教师在跳板机执行，前置为第 07 章已交还 `SFC/READY/sfc`、`.2` 管理 SSH 可用；工具齐全时直接复用，缺包时才安装用户态工具；不替换 sfc、不重启网络服务。从 `.111` 已校验的离线缓存分发安装；预期读到 clang、bpftool、iproute2 与 libbpf 版本。可在同一终端反复粘贴，每次独立留证；失败会打印退出码和日志路径。",
+      "sha256": "194b6f47ab929cc92a5677094ab06577cc1edf96f13653e84b736e94fe9bb62b",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:37.161465+00:00",
+          "sha256": "194b6f47ab929cc92a5677094ab06577cc1edf96f13653e84b736e94fe9bb62b",
+          "log": "raw/08-01-1-attempt-1.txt",
+          "pid": 27540,
+          "ended": "2026-09-08T03:31:46.438085+00:00",
+          "exit": 0,
+          "seconds": 9.27,
+          "created_runs": [
+            "20260908T033137Z-08-xdp-toolchain-prep-aTR3w8"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:46.444695+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "08-02-1",
+      "chapter": "08",
+      "source": "Documents/newDoc/08-ebpf-xdp-programmable-network.md",
+      "line": 189,
+      "label": "需要运行 · 运行 ① 教师在跳板机执行，前置为准备 A 完成；只读 `.2` 接收口，预计不足 1 分钟。预期 `ens64np1 / 03:00.0 / sfc / UP / 20.1.1.2`，无既有 XDP 或 RTL 适配器。",
+      "sha256": "733fc145e94acadda78ffaad6a60dbc819f37fd4906fca08906b44d83b5d3e2b",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:46.447433+00:00",
+          "sha256": "733fc145e94acadda78ffaad6a60dbc819f37fd4906fca08906b44d83b5d3e2b",
+          "log": "raw/08-02-1-attempt-1.txt",
+          "pid": 27699,
+          "ended": "2026-09-08T03:31:47.275022+00:00",
+          "exit": 0,
+          "seconds": 0.82,
+          "created_runs": [
+            "20260908T033146Z-08-xdp-readiness"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:47.281301+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033146Z-08-xdp-readiness"
+      ]
+    },
+    {
+      "id": "08-03-1",
+      "chapter": "08",
+      "source": "Documents/newDoc/08-ebpf-xdp-programmable-network.md",
+      "line": 310,
+      "label": "需要运行 · 运行 ② 在跳板机仓库根目录以有仓库写权限的用户运行，需本机 Python 3；不访问设备，预计数秒。预期打印六行样例：仅目标 Type A 为 DROP，其余 PASS。",
+      "sha256": "0f3e5661ed539c5bb20d082af626abdba0eb139e696c689bd759e6084fde06a2",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:47.284139+00:00",
+          "sha256": "0f3e5661ed539c5bb20d082af626abdba0eb139e696c689bd759e6084fde06a2",
+          "log": "raw/08-03-1-attempt-1.txt",
+          "pid": 27763,
+          "ended": "2026-09-08T03:31:47.323184+00:00",
+          "exit": 0,
+          "seconds": 0.03,
+          "created_runs": [
+            "20260908T033147Z-08-xdp-actions"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:47.328810+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033147Z-08-xdp-actions"
+      ]
+    },
+    {
+      "id": "08-04-1",
+      "chapter": "08",
+      "source": "Documents/newDoc/08-ebpf-xdp-programmable-network.md",
+      "line": 378,
+      "label": "需要运行 · 运行 ③ 在跳板机仓库根目录运行，需有仓库写权限，预计数秒。预期打印带行号的 C 源码，让你看看有哪些检查和过滤规则；同时保存输出和文件指纹。只打印，不执行过滤。",
+      "sha256": "fd11e8b7416fc3cdb90a61bc526f84690a85699ce3d2254bd6d26c6b779c8a0e",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:47.331949+00:00",
+          "sha256": "fd11e8b7416fc3cdb90a61bc526f84690a85699ce3d2254bd6d26c6b779c8a0e",
+          "log": "raw/08-04-1-attempt-1.txt",
+          "pid": 27772,
+          "ended": "2026-09-08T03:31:47.356840+00:00",
+          "exit": 0,
+          "seconds": 0.02,
+          "created_runs": [
+            "20260908T033147Z-08-xdp-bounds"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:47.362411+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033147Z-08-xdp-bounds"
+      ]
+    },
+    {
+      "id": "08-05-1",
+      "chapter": "08",
+      "source": "Documents/newDoc/08-ebpf-xdp-programmable-network.md",
+      "line": 431,
+      "label": "需要运行 · 运行 ④ 教师在跳板机执行，需准备 A 与 `.2` SSH 就绪；仅远端临时编译后取回并清理，不挂载程序。预计不足 3 分钟；预期获得 BPF object、xdp/maps/BTF 分区及 SHA。",
+      "sha256": "ba96a82f693aff2adbbd99f3fbe6797c9bc0956e1ca24599bdcab2220a5938b6",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:47.364876+00:00",
+          "sha256": "ba96a82f693aff2adbbd99f3fbe6797c9bc0956e1ca24599bdcab2220a5938b6",
+          "log": "raw/08-05-1-attempt-1.txt",
+          "pid": 27781,
+          "ended": "2026-09-08T03:31:48.382053+00:00",
+          "exit": 0,
+          "seconds": 1.01,
+          "created_runs": [
+            "20260908T033147Z-08-xdp-build"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:48.388360+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033147Z-08-xdp-build"
+      ]
+    },
+    {
+      "id": "08-06-1",
+      "chapter": "08",
+      "source": "Documents/newDoc/08-ebpf-xdp-programmable-network.md",
+      "line": 497,
+      "label": "需要运行 · 运行 ⑤ 教师在跳板机仓库根目录执行，先完成准备 A 与运行 ①，且不要同时运行第 09/10 章过滤实验。预计约 1 分钟；预期只丢一包、出现行情缺口，最后恢复健康。",
+      "sha256": "271544d1a386414cfc6377a4a04fe82b8af5973fd365dd3b59cb485a525f70da",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:48.391165+00:00",
+          "sha256": "271544d1a386414cfc6377a4a04fe82b8af5973fd365dd3b59cb485a525f70da",
+          "log": "raw/08-06-1-attempt-1.txt",
+          "pid": 27811,
+          "ended": "2026-09-08T03:31:59.883799+00:00",
+          "exit": 0,
+          "seconds": 11.49,
+          "created_runs": [
+            "20260908T033148Z-08-xdp-receiver-live"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:31:59.890319+00:00",
+      "evidence_paths": [
+        "/financial-low-latency/Documents/reports/course-runs/20260908T033148Z-08-xdp-receiver-live"
+      ]
+    },
+    {
+      "id": "09-01-1",
+      "chapter": "09",
+      "source": "Documents/newDoc/09-p4-programmable-data-plane.md",
+      "line": 117,
+      "label": "需要运行 · 准备 A · 编译端工具 教师在跳板机执行，SSH 到 `.101`；前置为管理网与 `.111` 离线缓存可用。校验、分发并安装编译端工具；预期读到 P4C、BMv2 与 PI 版本。",
+      "sha256": "5a65eb33a2237b093c301831bdeff10927726eb08606ed966957adb4ab2c6b19",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:31:59.892757+00:00",
+          "sha256": "5a65eb33a2237b093c301831bdeff10927726eb08606ed966957adb4ab2c6b19",
+          "log": "raw/09-01-1-attempt-1.txt",
+          "pid": 28250,
+          "ended": "2026-09-08T03:32:49.034281+00:00",
+          "exit": 0,
+          "seconds": 49.13,
+          "created_runs": [
+            "20260908T033159Z-09-p4-toolchain-prep"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:32:49.040808+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033159Z-09-p4-toolchain-prep"
+      ]
+    },
+    {
+      "id": "09-02-1",
+      "chapter": "09",
+      "source": "Documents/newDoc/09-p4-programmable-data-plane.md",
+      "line": 191,
+      "label": "需要运行 · 准备 B · BMv2 运行工具 教师在跳板机执行，SSH 到 `.11`；前置为准备 A 完成、`.11` 管理可达。从 `.111` 离线缓存安装 BMv2 工具，此时还不接管双口。预期版本与 CLI 路径均可读。",
+      "sha256": "c66bf030ca8213e3635306665303377895d8a04e23300baa240e17f6086adb1b",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:32:49.044147+00:00",
+          "sha256": "c66bf030ca8213e3635306665303377895d8a04e23300baa240e17f6086adb1b",
+          "log": "raw/09-02-1-attempt-1.txt",
+          "pid": 29060,
+          "ended": "2026-09-08T03:33:19.255074+00:00",
+          "exit": 0,
+          "seconds": 30.2,
+          "created_runs": [
+            "20260908T033249Z-09-bmv2-tool-prep"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:33:19.261439+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033249Z-09-bmv2-tool-prep"
+      ]
+    },
+    {
+      "id": "09-03-1",
+      "chapter": "09",
+      "source": "Documents/newDoc/09-p4-programmable-data-plane.md",
+      "line": 279,
+      "label": "需要运行 · 运行 ① 教师在跳板机执行，前置为准备 A/B 完成；远程在 `.101` 临时编译、取回制品并清理，不启动 target、不改交易路径。预计不足 3 分钟；预期生成三组 JSON/P4Info 与 SHA。",
+      "sha256": "1a62615d8d6a3b4536460646c2566d476b9a43bc9280f4e1019bd1f41400cdb7",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:33:19.264342+00:00",
+          "sha256": "1a62615d8d6a3b4536460646c2566d476b9a43bc9280f4e1019bd1f41400cdb7",
+          "log": "raw/09-03-1-attempt-1.txt",
+          "pid": 29578,
+          "ended": "2026-09-08T03:33:23.479475+00:00",
+          "exit": 0,
+          "seconds": 4.21,
+          "created_runs": [
+            "20260908T033319Z-09-trading-bridge-compile"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:33:23.485928+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T033319Z-09-trading-bridge-compile"
+      ]
+    },
+    {
+      "id": "09-04-1",
+      "chapter": "09",
+      "source": "Documents/newDoc/09-p4-programmable-data-plane.md",
+      "line": 432,
+      "label": "需要运行 · ②-1 · 配置并接入 P4 教师在跳板机执行；维护窗内，第08章已恢复，准备A/B及运行①完成。预期：VLAN分成两侧，BMv2装入规则；验证HEALTHY后暂停播放。",
+      "sha256": "b6d53c4f7edd15b6b0735cdca85e78b06783647604dc5057c00d30b6f4113662",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:33:23.488528+00:00",
+          "sha256": "b6d53c4f7edd15b6b0735cdca85e78b06783647604dc5057c00d30b6f4113662",
+          "log": "raw/09-04-1-attempt-1.txt",
+          "pid": 29682,
+          "ended": "2026-09-08T03:33:52.030908+00:00",
+          "exit": 0,
+          "seconds": 28.53,
+          "created_runs": [
+            "20260908T033323Z-09-p4-drop-live"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:33:52.037300+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "09-05-1",
+      "chapter": "09",
+      "source": "Documents/newDoc/09-p4-programmable-data-plane.md",
+      "line": 475,
+      "label": "需要运行 · ②-2 · 查看路径、规则与放行结果 教师在跳板机执行；第1张完成。预期：看到两侧VLAN成员、NVDA规则、丢包数0和HEALTHY；播放保持暂停。",
+      "sha256": "1e2889367185d380f537c78a6731d45a26e71df63aaddd02aa3d0f91fc1aa3e0",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:35:52.128489+00:00",
+          "sha256": "1e2889367185d380f537c78a6731d45a26e71df63aaddd02aa3d0f91fc1aa3e0",
+          "log": "raw/09-05-1-attempt-1.txt",
+          "pid": 32263,
+          "ended": "2026-09-08T03:35:55.235588+00:00",
+          "exit": 0,
+          "seconds": 3.1,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:35:55.241920+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "09-06-1",
+      "chapter": "09",
+      "source": "Documents/newDoc/09-p4-programmable-data-plane.md",
+      "line": 516,
+      "label": "需要运行 · ②-3 · 用 CLI 丢一包并查看效果 教师在跳板机执行；第2张完成；本次只能执行一次。预期：恢复播放并丢1包，序号与Feed缺口一致、订单被拒绝；随后暂停等讲解。",
+      "sha256": "dfd4ac1b0472facebea611fb6e5b8665d786b8da60b0d465dc72c89a9e928579",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:37:55.246564+00:00",
+          "sha256": "dfd4ac1b0472facebea611fb6e5b8665d786b8da60b0d465dc72c89a9e928579",
+          "log": "raw/09-06-1-attempt-1.txt",
+          "pid": 34308,
+          "ended": "2026-09-08T03:37:58.666425+00:00",
+          "exit": 0,
+          "seconds": 3.41,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:37:58.679890+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "09-07-1",
+      "chapter": "09",
+      "source": "Documents/newDoc/09-p4-programmable-data-plane.md",
+      "line": 553,
+      "label": "需要运行 · ②-4 · 恢复原路径并验证交易 教师在跳板机执行；演示结束，或需要提前退出。预期：回到图①：VLAN20直通、BMv2退出、行情HEALTHY，两笔订单成交。",
+      "sha256": "1a4d030f570ae7b5c422aa50ddbb39283072ba5469aed73e23a44ef2b6a1092d",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:39:58.778567+00:00",
+          "sha256": "1a4d030f570ae7b5c422aa50ddbb39283072ba5469aed73e23a44ef2b6a1092d",
+          "log": "raw/09-07-1-attempt-1.txt",
+          "pid": 36399,
+          "ended": "2026-09-08T03:40:24.288154+00:00",
+          "exit": 0,
+          "seconds": 25.5,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:40:24.302212+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "10-01-1",
+      "chapter": "10",
+      "source": "Documents/newDoc/10-verilator-fpga-smartnic-simulation.md",
+      "line": 224,
+      "label": "需要运行 · 准备 A · Verilator 工具 教师在跳板机以 root 身份 SSH 到 `.2`；前置为管理网络与 `.111` 离线缓存可用。从本机缓存分发并安装 Verilator/g++/make。预期读到 Verilator 4.038 及编译工具版本。",
+      "sha256": "800cec35b5a302349266d8850e19585d503e4e63346eb4e4979f87793e9e1a25",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:40:24.304572+00:00",
+          "sha256": "800cec35b5a302349266d8850e19585d503e4e63346eb4e4979f87793e9e1a25",
+          "log": "raw/10-01-1-attempt-1.txt",
+          "pid": 36959,
+          "ended": "2026-09-08T03:40:31.162469+00:00",
+          "exit": 0,
+          "seconds": 6.85,
+          "created_runs": [
+            "20260908T034024Z-10-verilator-toolchain-prep"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:40:31.168918+00:00",
+      "evidence_paths": [
+        "Documents/reports/course-runs/20260908T034024Z-10-verilator-toolchain-prep"
+      ]
+    },
+    {
+      "id": "10-02-1",
+      "chapter": "10",
+      "source": "Documents/newDoc/10-verilator-fpga-smartnic-simulation.md",
+      "line": 300,
+      "label": "需要运行 · 运行 ① 教师在跳板机执行；前置为准备 A 完成、行情交易系统正常、原网络路径及管理连接可用。在 .2 构建并接流，通常 1～2 分钟，执行上限 7 分钟；预期六项自测通过、额度 0、策略丢包数 0、行情 HEALTHY。",
+      "sha256": "e768f44f0c70d690a8114f6440af5f4bc5f4c69026898952593610eaa237c750",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:40:31.171700+00:00",
+          "sha256": "e768f44f0c70d690a8114f6440af5f4bc5f4c69026898952593610eaa237c750",
+          "log": "raw/10-02-1-attempt-1.txt",
+          "pid": 37101,
+          "ended": "2026-09-08T03:40:45.769234+00:00",
+          "exit": 0,
+          "seconds": 14.59,
+          "created_runs": [
+            "20260908T034031Z-10-rtl-stages"
+          ]
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:40:45.775595+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "10-03-1",
+      "chapter": "10",
+      "source": "Documents/newDoc/10-verilator-fpga-smartnic-simulation.md",
+      "line": 337,
+      "label": "需要运行 · 运行 ② 教师在跳板机执行；前置为运行①成功且过滤进程仍在运行。向 .2 写入 block 并短暂重放，通常十几秒内结束；预期指令被读取、出现缺口后重放暂停。",
+      "sha256": "b4822066ac46fea7252bd7e8ec74a2c58beb9e226ec7d5c550f3401bb6939eac",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:42:45.782990+00:00",
+          "sha256": "b4822066ac46fea7252bd7e8ec74a2c58beb9e226ec7d5c550f3401bb6939eac",
+          "log": "raw/10-03-1-attempt-1.txt",
+          "pid": 39418,
+          "ended": "2026-09-08T03:42:48.262641+00:00",
+          "exit": 0,
+          "seconds": 2.47,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:42:48.269054+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "10-04-1",
+      "chapter": "10",
+      "source": "Documents/newDoc/10-verilator-fpga-smartnic-simulation.md",
+      "line": 370,
+      "label": "需要运行 · 运行 ③ 教师在跳板机执行；前置为运行②成功、缺口现场仍保留。读取日志并验证缺口期间拒单，预计 10～30 秒；预期丢弃与缺失序号一致、数量均为 1、订单 API 拒绝下单。",
+      "sha256": "104d000484d3a6427f17da5870167621e3bf328f2b649ad1a9ea00aa5b8b8b60",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:44:48.370545+00:00",
+          "sha256": "104d000484d3a6427f17da5870167621e3bf328f2b649ad1a9ea00aa5b8b8b60",
+          "log": "raw/10-04-1-attempt-1.txt",
+          "pid": 41454,
+          "ended": "2026-09-08T03:44:49.089594+00:00",
+          "exit": 0,
+          "seconds": 0.71,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:44:49.096068+00:00",
+      "evidence_paths": []
+    },
+    {
+      "id": "10-05-1",
+      "chapter": "10",
+      "source": "Documents/newDoc/10-verilator-fpga-smartnic-simulation.md",
+      "line": 404,
+      "label": "需要运行 · 运行 ④ 教师在跳板机执行；运行①成功后可随时提前恢复，正常顺序是运行③讲解完成后执行。停止临时进程、恢复接收与行情并验证两笔订单，预计 30～90 秒；预期 HEALTHY、交易闸门 OPEN、两笔成交、净持仓不变。",
+      "sha256": "04da99b078376913502d0f6e514e4eba6f070b7e875bfbbba801dbbbc5e49e8b",
+      "status": "PASS",
+      "attempts": [
+        {
+          "started": "2026-09-08T03:46:49.198947+00:00",
+          "sha256": "04da99b078376913502d0f6e514e4eba6f070b7e875bfbbba801dbbbc5e49e8b",
+          "log": "raw/10-05-1-attempt-1.txt",
+          "pid": 43434,
+          "ended": "2026-09-08T03:47:00.733294+00:00",
+          "exit": 0,
+          "seconds": 11.52,
+          "created_runs": []
+        }
+      ],
+      "reviewed_at": "2026-09-08T03:47:00.746949+00:00",
+      "evidence_paths": []
+    }
+  ],
+  "BROWSER_CHECKS": [],
+  "FIXES": [],
+  "CURRENT_CARD": "10-05-1",
+  "ENDED": "2026-09-08T03:47:00.749954+00:00"
+}
