@@ -1,0 +1,30 @@
+{
+  "schema": "flle.listener-identity-guard-review.v1",
+  "checked_at": "2026-09-08T14:08:24.628332+00:00",
+  "status": "PASS",
+  "scope": "LOCAL_ONLY_NO_DEPLOYMENT_OR_LIVE_EXPERIMENT",
+  "change": "Split extra-field and pid-field guards into two standalone test commands under set -e.",
+  "before": {
+    "result": "FAILED (failures=1)",
+    "output": "test_another_process_listener_is_not_ready (test_listener_startup.ListenerStartupTest) ... ok\ntest_delayed_exec_becomes_ready_with_same_pid (test_listener_startup.ListenerStartupTest) ... ok\ntest_extra_identity_field_is_rejected (test_listener_startup.ListenerStartupTest) ... FAIL\ntest_reused_pid_start_time_is_rejected (test_listener_startup.ListenerStartupTest) ... ok\ntest_wrong_command_never_becomes_ready (test_listener_startup.ListenerStartupTest) ... ok\n\n======================================================================\nFAIL: test_extra_identity_field_is_rejected (test_listener_startup.ListenerStartupTest)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/financial-low-latency/apps/flle-trading-lab/tests/test_listener_startup.py\", line 62, in test_extra_identity_field_is_rejected\n    self.assertNotEqual(self.run_waiter(extra_identity_field=True).returncode, 0)\nAssertionError: 0 == 0\n\n----------------------------------------------------------------------\nRan 5 tests in 4.785s\n\nFAILED (failures=1)\n"
+  },
+  "after": {
+    "exit": 0,
+    "tests": 5,
+    "output": "test_another_process_listener_is_not_ready (test_listener_startup.ListenerStartupTest) ... ok\ntest_delayed_exec_becomes_ready_with_same_pid (test_listener_startup.ListenerStartupTest) ... ok\ntest_extra_identity_field_is_rejected (test_listener_startup.ListenerStartupTest) ... ok\ntest_reused_pid_start_time_is_rejected (test_listener_startup.ListenerStartupTest) ... ok\ntest_wrong_command_never_becomes_ready (test_listener_startup.ListenerStartupTest) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 4.762s\n\nOK\n"
+  },
+  "checks": {
+    "bash -n": 0,
+    "git diff --check": 0
+  },
+  "sources": {
+    "apps/flle-trading-lab/scripts/transport_labctl.sh": "5604c38722fce1d1a51ac923dce7cfd9a60b1ce0becf0643d4b0a8bc61a2aaa9",
+    "apps/flle-trading-lab/tests/test_listener_startup.py": "975fcd4b2f9363f23bc8725fb786ccf4a0756c7324ae52f6deb90f78c7b64df7"
+  },
+  "historical_replay_receipt": {
+    "path": "Documents/design/evidence/snapshot-replay-20260908.json",
+    "sha256": "3101cb74453c2598ffdbdc58a230aed209dda186fad7c7859c90ab7c3889e759",
+    "unchanged": true
+  },
+  "boundary": "Previous live validation remains tied to its sealed source; this follow-up patch has not been deployed or live-retested."
+}

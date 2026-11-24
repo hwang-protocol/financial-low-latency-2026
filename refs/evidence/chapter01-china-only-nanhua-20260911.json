@@ -1,0 +1,638 @@
+{
+  "date": "2026-09-11",
+  "type": "PUBLIC DOC + LOCAL DOC CHECK",
+  "task": "Remove chapter 1 US expansion; explain the domestic Nanhua TCPDirect implementation and customer/hosting responsibilities.",
+  "scope": {
+    "changed_files": [
+      "Documents/newDoc/01-financial-low-latency-architecture.md",
+      "Documents/design/FLLE_Trading_Network_Access_2026-09-10.md",
+      "Documents/newDoc/images/course-visuals/01-diagrams/README.md",
+      "Documents/newDoc/images/course-visuals/README.md",
+      "Documents/00.PINS.md",
+      "Documents/00.DECISIONS.md",
+      "Documents/00.FREEZE-LEDGER.md",
+      "Documents/00.NEXT-AI-HANDOFF.md",
+      "Documents/archive/98.INTERNAL-PITFALL-LOG.md"
+    ],
+    "chapter1_outside_extension_unchanged": true,
+    "existing_figure_bytes_unchanged": true,
+    "chapter7_unchanged_this_revision": true,
+    "no_devices_runs_staging_commits_or_pushes": true
+  },
+  "before": {
+    "chapter_sha256": "05fd92f2b61fe62b646fd649af1abe430b5b07f4db0995184657b0bff5e38a9a",
+    "source_notes_sha256": "c7cad57025a8da39e212765d05ccc99a97f90b9d7b1b4fa27359f62cbb251e29",
+    "prior_receipt": "chapter01-tcpdirect-ldds-backup-20260911.json"
+  },
+  "sources": [
+    {
+      "url": "https://www.nanhua.net/news/2020/04/85ff7329-0327-4ad2-a602-bc0e54090674.html",
+      "publication": "2020-04-28",
+      "verification": "Official-domain search returned full article; web direct open failed. Reused HTML successfully acquired earlier in this session, not a fresh download.",
+      "reused_html_sha256": "0333e178f274c675bbd04f6cc7439dcffa5366bf65b2c6d845e29764b8861d62",
+      "supports": [
+        "Nanhua develops NHTD2 itself and uses TCPDirect.",
+        "Separates order and report data flows.",
+        "Supports TCPDirect clients."
+      ],
+      "limits": [
+        "No exact client SDK API/configuration or full topology.",
+        "Historical futures/options example; no XTP-Pro compatibility inference."
+      ]
+    },
+    {
+      "url": "https://www.nanhua.net/news/2020/10/2196ee99-f610-4122-84a2-4dfb6b27dad0.html",
+      "retrieved": "2026-09-11",
+      "status": 200,
+      "bytes": 100899,
+      "sha256": "873e8488e8f148167cbd10788a18b05dd95b28b9bfc0a8e02887508e81c25961",
+      "publication": "2020-10-14 10:00:12",
+      "supports": [
+        "Customer API development and test assistance, external access guidance.",
+        "Hosted or rented computing, trading-system access and network-policy enablement.",
+        "NHTD2 and other trading systems run on tuned dedicated servers.",
+        "Nexus 3548 and Metamako layer-1 switches connect exchange, trading-system area and customer hosts within the hosted network."
+      ],
+      "limits": [
+        "No invented per-hop ordering, NIC models, port configurations or present-day product commitments."
+      ]
+    },
+    {
+      "url": "https://docs.amd.com/v/u/en-US/SF-116303-CD-TCPDirect_User_Guide",
+      "version": "Issue 19, sections 1 and 3.2",
+      "verification": "Previously retrieved official guide reused; no new download claimed.",
+      "supports": [
+        "Application-side network calls must be adapted and linked to the TCPDirect library."
+      ],
+      "limits": [
+        "General implementation requirement, not Nanhua SDK source."
+      ]
+    }
+  ],
+  "checks": {
+    "counts": {
+      "extension_before": 4759,
+      "extension_after": 3007,
+      "domestic_before": 2609,
+      "domestic_after": 2914,
+      "extension_tables": 5,
+      "extension_images": 2,
+      "max_paragraph_display_columns": 235,
+      "source_rows": 56,
+      "navigation_items": 80
+    },
+    "protected_checks": {
+      "extension_introduction_and_navigation": true,
+      "all_outside_extension": true,
+      "us_section_and_onixs_removed": true,
+      "chapter_fences": true,
+      "all_existing_images_manifests_receipts_and_chapter07": 527
+    },
+    "manifest_entries": {
+      "Documents/newDoc/images/course-visuals/01-diagrams": 56,
+      "Documents/newDoc/images/course-visuals": 254
+    },
+    "local_links_checked": 36,
+    "http_previews": [
+      {
+        "document": "chapter",
+        "width": 940,
+        "images": [
+          {
+            "src": "images/course-visuals/01-diagrams/01-cn-access-relationships.png",
+            "natural": [
+              2400,
+              2540
+            ],
+            "display": [
+              800,
+              846.65625
+            ],
+            "complete": true,
+            "border": "1px"
+          },
+          {
+            "src": "images/course-visuals/01-diagrams/01-sse-access-delivery.png",
+            "natural": [
+              2400,
+              2570
+            ],
+            "display": [
+              800,
+              856.65625
+            ],
+            "complete": true,
+            "border": "1px"
+          }
+        ],
+        "tables": [
+          {
+            "rows": 5,
+            "columns": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 4,
+            "columns": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 5,
+            "columns": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 3,
+            "columns": [
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 5,
+            "columns": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          }
+        ],
+        "overflow": {
+          "scroll": 940,
+          "viewport": 940
+        },
+        "responses": [
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/newDoc/01-financial-low-latency-architecture.md",
+            "type": "text/html; charset=utf-8"
+          },
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/newDoc/images/course-visuals/01-diagrams/01-cn-access-relationships.png",
+            "type": "image/png"
+          },
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/newDoc/images/course-visuals/01-diagrams/01-sse-access-delivery.png",
+            "type": "image/png"
+          }
+        ]
+      },
+      {
+        "document": "sources",
+        "width": 940,
+        "images": [],
+        "tables": [
+          {
+            "rows": 15,
+            "columns": [
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "rows": 57,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 10,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 6,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 7,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 4,
+            "columns": [
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 4,
+            "columns": [
+              3,
+              3,
+              3,
+              3
+            ]
+          }
+        ],
+        "overflow": {
+          "scroll": 940,
+          "viewport": 940
+        },
+        "responses": [
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/design/FLLE_Trading_Network_Access_2026-09-10.md",
+            "type": "text/html; charset=utf-8"
+          }
+        ]
+      },
+      {
+        "document": "chapter",
+        "width": 390,
+        "images": [
+          {
+            "src": "images/course-visuals/01-diagrams/01-cn-access-relationships.png",
+            "natural": [
+              2400,
+              2540
+            ],
+            "display": [
+              336,
+              355.59375
+            ],
+            "complete": true,
+            "border": "1px"
+          },
+          {
+            "src": "images/course-visuals/01-diagrams/01-sse-access-delivery.png",
+            "natural": [
+              2400,
+              2570
+            ],
+            "display": [
+              336,
+              359.796875
+            ],
+            "complete": true,
+            "border": "1px"
+          }
+        ],
+        "tables": [
+          {
+            "rows": 5,
+            "columns": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 4,
+            "columns": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 5,
+            "columns": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 3,
+            "columns": [
+              2,
+              2,
+              2
+            ]
+          },
+          {
+            "rows": 5,
+            "columns": [
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          }
+        ],
+        "overflow": {
+          "scroll": 390,
+          "viewport": 390
+        },
+        "responses": [
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/newDoc/01-financial-low-latency-architecture.md",
+            "type": "text/html; charset=utf-8"
+          },
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/newDoc/images/course-visuals/01-diagrams/01-cn-access-relationships.png",
+            "type": "image/png"
+          },
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/newDoc/images/course-visuals/01-diagrams/01-sse-access-delivery.png",
+            "type": "image/png"
+          }
+        ]
+      },
+      {
+        "document": "sources",
+        "width": 390,
+        "images": [],
+        "tables": [
+          {
+            "rows": 15,
+            "columns": [
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3,
+              3
+            ]
+          },
+          {
+            "rows": 57,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 10,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 6,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 7,
+            "columns": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 4,
+            "columns": [
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "rows": 4,
+            "columns": [
+              3,
+              3,
+              3,
+              3
+            ]
+          }
+        ],
+        "overflow": {
+          "scroll": 627,
+          "viewport": 390
+        },
+        "responses": [
+          {
+            "status": 200,
+            "url": "/financial-low-latency/Documents/design/FLLE_Trading_Network_Access_2026-09-10.md",
+            "type": "text/html; charset=utf-8"
+          }
+        ]
+      }
+    ],
+    "visual_review": "Desktop case text and narrow-screen table visually inspected after fixing first-column wrapping; both embedded domestic figures decode and retain their original frames. Figure bytes are unchanged from the previous geometry review."
+  },
+  "protected_baseline": {
+    "file_count": 527,
+    "canonical_map_sha256": "a264f2b43920f64317ba2e58f0d2b657f19bd38e2786f3e404fe9489344d8469",
+    "definition": "Every existing file below course-visuals except README.md, every pre-existing design/evidence JSON, and chapter 7. All 527 matched the baseline captured before this revision."
+  },
+  "limitations": [
+    "No live Nanhua/XTP SDK access or trading test.",
+    "User remote preview not exercised.",
+    "Companion source page retains existing 627px horizontal width at a 390px viewport due to long source tables and hashes.",
+    "Historical foreign sources and assets remain in companion files, not chapter 1 student prose."
+  ],
+  "final_file_sha256": {
+    "Documents/newDoc/01-financial-low-latency-architecture.md": "48aec9c0168aff3ee69d837d4ef76d3a4eb80387b1bb76b5a9fc9b91fdca7f40",
+    "Documents/design/FLLE_Trading_Network_Access_2026-09-10.md": "7f1fa330b7ec2194bb42bbd2fd877d0609f52874261f9eb9a7c52dd81c3f7b9e",
+    "Documents/newDoc/images/course-visuals/01-diagrams/README.md": "6cfaaea3a2124362b243a4206e29d131d802f21ee696b7522bea570cbb04676e",
+    "Documents/newDoc/images/course-visuals/README.md": "cc9c9a6d43f71cd08320a621b5f00af5a5bcf43d2e93c81c19c57a737dfdef16",
+    "Documents/00.PINS.md": "3350f8bd6a3435c39c83b5b8bac6834a13ed55433c9c48ae6f5e1db0cb2885ee",
+    "Documents/00.DECISIONS.md": "45da0cb9c49132f1fdfca7bd5b1381436170b723cdff4078aa5f42acb2ef07fa",
+    "Documents/00.FREEZE-LEDGER.md": "b42810b2a6ece2a1835c5f68e722c23f523bbac9cd0941d1b32e72ade4a8ec3d",
+    "Documents/00.NEXT-AI-HANDOFF.md": "9fbb8d2ccc42a0363c08142403795774f956490810939be9761293bf070fc845",
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md": "8b489f2a524ff2800fa7d875df230074da5c32070f9861e6d4a4f60d6ca72c37"
+  }
+}

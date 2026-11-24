@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-18",
+  "status": "DRAFT / PUBLIC_SOURCE_CHECKED / LOCAL_TESTED / NOT_HARDWARE_VERIFIED",
+  "scope": "Chapter 09: concise AMD/product opening, detailed Verilator lesson and same-core V80 PCIe register-test route",
+  "authorization": "User selected lesson writing and local tests only; no live market gap injection or remote platform operation.",
+  "hardware_target": {
+    "card": "AMD Alveo V80",
+    "device": "Versal HBM XCV80 / xcv80-lsva4737-2MHP-e-S",
+    "tools": "Vivado and Vitis 2026.1",
+    "amr_release": "3.0.0",
+    "amr_tag": "alveo_v80_gen5x8_26.1_20260609",
+    "amr_commit": "bb929d3ea60e67f952c59fde8514383f8648d60a",
+    "hardware_commit": "4b7d244758c683ec4c45f357e65511c25cff8f38",
+    "jtag_tool_tag": "v7.3",
+    "runtime_route": "same-build Boot/AMC then compatible PLD, management PF0 then PF1 BAR2+0x20000"
+  },
+  "implemented": [
+    "Original market_filter.sv reused without modification",
+    "AXI-Lite test-message wrapper",
+    "Linux x86-64 MMIO tool with device/ownership/APP_ID/write checks",
+    "Pinned Vivado integration and report scripts, not executed in Vivado",
+    "Local independent regression and negative controls"
+  ],
+  "local_results": {
+    "adapter_cases": 6,
+    "rtl_cases": 14,
+    "negative_mutants_detected": 2,
+    "axi_lite_checks": 110,
+    "mmio_cli_guards": 5,
+    "verilator_lint": "PASS",
+    "strict_gcc_build": "PASS",
+    "isolated_stage_and_paused_recovery_tests": "PASS",
+    "official_ami_api_cli_build_and_three_command_help": "PASS",
+    "ami_version_without_driver_exit": 1,
+    "document_bash_blocks_checked": 33,
+    "document_images": 10,
+    "final_lines": 903,
+    "html_links_and_navigation": "PASS",
+    "browser_1200_and_800": "PASS",
+    "figure_800_1200_1600_text_bounds_fonts": "PASS",
+    "figure_ch09_manifest": "PASS"
+  },
+  "not_run": [
+    "Vivado synthesis/implementation or XSim",
+    "Vitis AMC image construction",
+    "PDI/XSA/Boot image generation",
+    "AMI driver build/install",
+    "JTAG or card flash writes",
+    "PCIe hardware MMIO",
+    "Ethernet NIC implementation and packet capture",
+    "Hardware latency or throughput measurement",
+    "Live trading platform access, SSH or real packet gap injection"
+  ],
+  "limits": [
+    "V80 example accepts ITCH test messages through PCIe registers; it is not a complete Ethernet NIC.",
+    "Board integration is source-reviewed and must still pass the vendor toolchain and real-card verification.",
+    "Historical live-stage receipts retain their original date; no new RUN_ID generated."
+  ],
+  "preservation": {
+    "original_ch09_core_and_stage_files": [
+      "market_filter.sv",
+      "mold_filter_adapter.cpp",
+      "08a-prepare-rtl-filter.sh",
+      "08b-arm-rtl-filter.sh",
+      "08c-verify-rtl-filter.sh",
+      "08d-restore-rtl-filter.sh",
+      "live-support/stage-actions.sh",
+      "live-support/stage-session.py"
+    ],
+    "concurrent_ch08_changes_preserved": [
+      "Documents/newDoc/08-arista-fpga-market-filter-draft.md",
+      "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.png",
+      "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.svg",
+      "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.png",
+      "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/SHA256SUMS",
+      "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/README.md",
+      "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.svg",
+      "Documents/newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md"
+    ],
+    "git_history_modified": false
+  },
+  "evidence_directory": "Documents/design/evidence/ch09-v80-local-20260918",
+  "evidence_manifest": "Documents/design/evidence/ch09-v80-local-20260918/SHA256SUMS",
+  "source_sha256": {
+    "Documents/newDoc/09-verilator-fpga-smartnic-simulation.md": "7edeb36029c04d92338d798d4aeda3711842938c28a30207e13eb54e849a6838",
+    "Documents/newDoc/assets/09-verilator/HARDWARE-NOTES.md": "695731f579bfffbac7073861b6046aede3d2a9196b27cc8e8822e720b7c0de8e",
+    "Documents/newDoc/assets/09-verilator/U250-LAB-STEPS.md": "d3d11e054627a2e2f196aadae4ff4e2fbaa68b2a0c447ec3981c71d5fd714d75",
+    "Documents/newDoc/assets/09-verilator/live-support/test-paused-recovery.py": "97b1d4b0b9b9ab9c3124730a3fb4f353c8c0581de8ce2a9487190cee558607a1",
+    "Documents/newDoc/assets/09-verilator/market_filter.sv": "5cd5a34ab42b1607d85b45f575f9d7947b759646c541549fd6d95c7205fa8627",
+    "Documents/newDoc/assets/09-verilator/market_filter_tb.cpp": "c03638c5b8e10158264ee4672fa1ba42da3f0f6c4885e556c8b9b902f4ed57cd",
+    "Documents/newDoc/assets/09-verilator/mold_filter_adapter.cpp": "9d5ff40e6db32b82e0754643ff6eef1a1e671f55629e8828056ec9a6344edc01",
+    "Documents/newDoc/assets/09-verilator/offline-selftest.sh": "ccfadaa21697c0611344cae9061e4aafd0be87d19e911d4688468fa6bb50005f",
+    "Documents/newDoc/assets/09-verilator/v80/README.md": "108a58fdab58b2fbfc6e6702f1875b5e19f20576687ce15772512973af899c9d",
+    "Documents/newDoc/assets/09-verilator/v80/build_filter.tcl": "0363f15ef11cb926ec373a39cf5f1096c5aa26a4687fb0b7ff8a3f33033214a8",
+    "Documents/newDoc/assets/09-verilator/v80/check_build.tcl": "60b2320a56eec765af1938be89a1f9f984932227bc036eb3c624a0e8b3326aad",
+    "Documents/newDoc/assets/09-verilator/v80/filter_mmio.c": "8c0c2f98188bb8c281b3102ad43d714b9f3249967ea29918603accceceb7c6ec",
+    "Documents/newDoc/assets/09-verilator/v80/integrate_filter.tcl": "be857ff7b8d624116edddc90bac8490240212b9f3e10cab8ab2f5e8eabea821b",
+    "Documents/newDoc/assets/09-verilator/v80/market_filter_axil.sv": "1c700f8b4eeb7755c6db25b7013663fc96ba7914cc7ec82615a24688112e9eef",
+    "Documents/newDoc/assets/09-verilator/v80/run_local_tests.sh": "1b859f60022533d7de5c75f81c1856781ba031c0b9c5e517eef2d54f23a4f814",
+    "Documents/newDoc/assets/09-verilator/v80/test_market_filter_axil.sv": "770d8bf078219ec09fa2d8ff9e0b7a56c65bc04db3566796e8b67d988c90629d",
+    "Documents/newDoc/assets/09-verilator/v80/test_mmio_guards.py": "d84ed666fc344110ead11c2f7a04d5b271e2aa608200ea85dd0eedb481d68df6",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-amd-product-map.png": "13a2d73d32ec3f4af823ddbdc62cbc82530882f344d19c2fae33d36d631a3d24",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-amd-product-map.svg": "072d53077c5c5ac1c543b9a429d627a62d0af366acdb450fa050449fbb4aae66",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-rtl-verilator-fpga-overview.png": "fb6b683b8d8c0f17f4a0964139ebcda4008c5987af3bc77c6c0d4c6eb4da1448",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-rtl-verilator-fpga-overview.svg": "9c3d030a8871f2a288292cb463167d661fb867a3d689fc2bb27e79018ad346fe",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-v80-build-load.png": "c6cfa01e183f338b0a27ad90650bd28b871ba6e9569145cf2333c20bef8cd540",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-v80-build-load.svg": "eac0d6b0017b5a1e8f448ddb111de811ea9245dfd8197002eb503fc682cf1620",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-v80-register-path.png": "900f732524029b3a5b6f6df2d40386f6e350f287c8cea150914e7b6fae03e13b",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-v80-register-path.svg": "ac07f45cf1a1868a2df4f3ddd02231297c9092881aa5dc19b890e676aa709a2b"
+  },
+  "primary_sources": {
+    "v80": "https://www.amd.com/en/products/accelerators/alveo/v80.html",
+    "ul3422": "https://www.amd.com/en/products/accelerators/alveo/ul3422.html",
+    "ul3524": "https://www.amd.com/en/products/accelerators/alveo/ul3524.html",
+    "amr": "https://xilinx.github.io/amr-docs/docs/3.0.0/index.html",
+    "build": "https://xilinx.github.io/amr-docs/docs/3.0.0/getting-started/build_v80.html",
+    "ami": "https://xilinx.github.io/amr-docs/docs/3.0.0/deployment/ami-tool-guide.html",
+    "jtag": "https://github.com/Xilinx/embpf-bootfw-update-tool/tree/v7.3",
+    "linux_pci": "https://www.kernel.org/doc/html/latest/PCI/sysfs-pci.html"
+  },
+  "suggested_commit_message": "docs(ch09): add V80 workflow and verified local RTL tests"
+}

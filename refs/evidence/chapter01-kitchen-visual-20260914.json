@@ -1,0 +1,203 @@
+{
+  "date": "2026-09-14",
+  "status": "PASS",
+  "scope": "第01章开场增加厨房类比原生SVG，替换三行角色表并缩短驱动说明",
+  "asset": "Documents/newDoc/images/course-visuals/01-diagrams/01-kitchen-nic-pcie-driver.svg",
+  "svg_dimensions": [
+    1200,
+    1040
+  ],
+  "svg_sha256": "716e8cec6cf149dcac9af4bb0679f519ce6bebf7f8a8d2b5b02129d511fbfdfd",
+  "chapter_sha256": "c9e662eaf6dcfe3cd0697127800530cafb4130c2ba48412b5df2eb91d5083c6e",
+  "graphics": {
+    "text_nodes": 30,
+    "icon_definitions": 9,
+    "use_instances_including_nested_icons": 14,
+    "unique_ids": "PASS",
+    "icon_references": "PASS",
+    "text_bounds": "PASS",
+    "text_overlaps": [],
+    "marker_geometry": {
+      "markerUnits": "userSpaceOnUse",
+      "markerWidth": "12",
+      "markerHeight": "12",
+      "viewBox": "0 -6 12 12",
+      "refX": "0",
+      "refY": "0",
+      "orient": "auto",
+      "shape": "M0 -6 L12 0 L0 6Z"
+    },
+    "arrows": [
+      {
+        "id": "prepare-ram",
+        "source": "driver",
+        "target": "ram",
+        "path": "M761 377 V396",
+        "tip": [
+          761.0,
+          408.0
+        ],
+        "tip_gap": 12.0,
+        "kind": "preparation"
+      },
+      {
+        "id": "register-nic",
+        "source": "driver",
+        "target": "nic",
+        "path": "M528 282 H393 V396",
+        "tip": [
+          393.0,
+          408.0
+        ],
+        "tip_gap": 12.0,
+        "kind": "preparation"
+      },
+      {
+        "id": "packet-to-nic",
+        "source": "network",
+        "target": "nic",
+        "path": "M224 557 H254",
+        "tip": [
+          266.0,
+          557.0
+        ],
+        "tip_gap": 12.0,
+        "kind": "data"
+      },
+      {
+        "id": "dma-to-ram",
+        "source": "nic",
+        "target": "ram",
+        "path": "M520 557 H622",
+        "tip": [
+          634.0,
+          557.0
+        ],
+        "tip_gap": 12.0,
+        "kind": "data"
+      },
+      {
+        "id": "cpu-reads",
+        "source": "ram",
+        "target": "cpu",
+        "path": "M888 557 H932",
+        "tip": [
+          944.0,
+          557.0
+        ],
+        "tip_gap": 12.0,
+        "kind": "data"
+      }
+    ],
+    "switch_icon": "front-view flat vector, no perspective",
+    "pcie_identity": {
+      "text": "PCIe 身份：地址 / 型号",
+      "bbox": {
+        "x": 286,
+        "y": 695,
+        "w": 214,
+        "h": 30
+      },
+      "inside_nic_box": true
+    }
+  },
+  "visual_review": {
+    "whole_figure_800px": "PASS",
+    "whole_figure_1200px": "PASS",
+    "all_five_arrow_joins_tips_and_box_gaps": "PASS",
+    "chapter_940px": "PASS"
+  },
+  "previews": {
+    "940": {
+      "viewport": [
+        940,
+        2450
+      ],
+      "scrollWidth": 940,
+      "bodyHeight": 2450,
+      "images": [
+        {
+          "loaded": true,
+          "natural": [
+            1200,
+            1040
+          ],
+          "display": [
+            800,
+            693
+          ],
+          "right": 870
+        }
+      ],
+      "tables": 0
+    },
+    "390": {
+      "viewport": [
+        390,
+        3000
+      ],
+      "scrollWidth": 390,
+      "bodyHeight": 3000,
+      "images": [
+        {
+          "loaded": true,
+          "natural": [
+            1200,
+            1040
+          ],
+          "display": [
+            328,
+            284
+          ],
+          "right": 359
+        }
+      ],
+      "tables": 0
+    }
+  },
+  "checks": {
+    "markdown_html_nesting": "PASS",
+    "local_images": "PASS",
+    "code_fences_unchanged": 27,
+    "chapter_after_opening_unchanged": false,
+    "navigation_and_experiments_unchanged": true,
+    "concurrent_changes": "开场之后存在另一个编辑任务的流量图编号、短表及附录同步变更（chapter01-traffic-order-20260914.json）；本任务保留这些修改，27段代码围栏仍与开场修改前一致。"
+  },
+  "manifests": {
+    "Documents/newDoc/images/course-visuals/01-diagrams/SHA256SUMS": {
+      "entries": 57,
+      "status": "PASS"
+    },
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": {
+      "entries": 279,
+      "status": "PASS"
+    }
+  },
+  "source_review": {
+    "review_date": "2026-09-14",
+    "primary_sources": [
+      {
+        "url": "https://docs.kernel.org/core-api/dma-api-howto.html",
+        "section": "CPU and DMA addresses",
+        "use": "驱动准备缓冲区与设备可访问的DMA地址，再由设备写系统内存；不把CPU虚拟地址直接当设备地址。"
+      },
+      {
+        "url": "https://docs.kernel.org/PCI/sysfs-pci.html",
+        "use": "本章由sysfs识别PCI设备资源与身份。"
+      }
+    ],
+    "existing_course_basis": "第00章4.1缓冲区与DMA；本章开场及运行①～③",
+    "artwork": "课程原生SVG图标，无外部位图"
+  },
+  "boundaries": [
+    "职责类比，不表示厨房人物是独立处理器；驱动明确为CPU执行的软件。",
+    "省略IRQ/NAPI/协议栈/缓存与DMA地址转换，不作为完整接收流水线。",
+    "不表示真实硬件机柜、PCIe拓扑、协议选择或测量结果。",
+    "仅本地文档与图形检查，无设备操作、新RUN或性能实验。"
+  ],
+  "document_status": "DRAFT / NOT FROZEN",
+  "user_corrections": [
+    "交换机改用正面平面图标。",
+    "网卡框内补充PCIe身份：地址/型号；底部检查项有明确对应对象，连线PCIe仍表示总线。"
+  ]
+}

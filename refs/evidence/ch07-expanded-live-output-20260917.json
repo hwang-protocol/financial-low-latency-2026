@@ -1,0 +1,122 @@
+{
+  "date": "2026-09-17",
+  "scope": "Chapter07 run 4 article output expansion only; no runtime or device action",
+  "run_id": "20260917T074307.428975746Z-07-xdp-drop",
+  "source": "User executed original green card and pasted its terminal output; local archived raw verified",
+  "document": "Documents/newDoc/07-ebpf-xdp-programmable-network.md",
+  "document_sha256": "a4e443c92a17992eae601a68b0fc1041ffd5c9a5f2016044fb1ed810d35dda45",
+  "validation": {
+    "archived_sha256_entries_passed": 31,
+    "five_output_blocks_match": true,
+    "markdown_fences": 21,
+    "bash_blocks_unchanged_and_syntax_pass": 9,
+    "green_cards_unchanged": 6,
+    "image_tags_unchanged": 15,
+    "local_link_references_passed": 24,
+    "html_balanced": true,
+    "formatter_matches_archived_version": true
+  },
+  "raw": {
+    "run_env": "RUN_ID=20260917T074307.428975746Z-07-xdp-drop\nPARENT_RUN_ID=20260917T020441Z-02-trading-platform\nSOURCE_SHA256=7780bccc8c4b24511d43e0455983ed6007e4bed1eb353458b4f6865dd7f54cd4\nORIGINAL_MODE=MULTICAST_A\nOBJECT_SHA256=26930b08f5bf9bb6d486675f6547ef89e0c33f33d3e310cad74932624dd1f0e3\nRECEIVER=10.1.1.2\nIFACE=ens64np1\nPROGRAM_ID=40\n",
+    "baseline": {
+      "session": "0612260007",
+      "market_mode": "MULTICAST_A",
+      "trader_auto": "ONLINE",
+      "feed": {
+        "session": "0612260007",
+        "next_expected": 113,
+        "last_delivered": 112,
+        "first_pending": 0,
+        "highest_received": 112,
+        "pending": 0,
+        "duplicates": 0,
+        "gaps": 0,
+        "gap_messages": 0,
+        "resync_required": false,
+        "resync_reason": "",
+        "pending_bytes": 0,
+        "pending_limit": 32768,
+        "discarded_after_gap": 0,
+        "gap_size": 0,
+        "gap_age_ms": 0,
+        "path": "MULTICAST",
+        "integrity": "HEALTHY",
+        "trading_gate": "OPEN"
+      }
+    },
+    "gap": {
+      "session": "0612260007",
+      "market_mode": "MULTICAST_A",
+      "trader_auto": "ONLINE",
+      "feed": {
+        "session": "0612260007",
+        "next_expected": 647,
+        "last_delivered": 646,
+        "first_pending": 648,
+        "highest_received": 648,
+        "pending": 1,
+        "duplicates": 0,
+        "gaps": 1,
+        "gap_messages": 1,
+        "resync_required": false,
+        "resync_reason": "",
+        "pending_bytes": 36,
+        "pending_limit": 32768,
+        "discarded_after_gap": 0,
+        "gap_size": 1,
+        "gap_age_ms": 0,
+        "path": "MULTICAST",
+        "integrity": "GAP",
+        "trading_gate": "INHIBITED_FEED_GAP"
+      }
+    },
+    "proof": "xdp_drop_packets=1 sequence=647 locate=8095\n",
+    "attachment": {
+      "interface": "ens64np1",
+      "ifindex": 3,
+      "program_id": 40
+    },
+    "held": {
+      "session": "0612260007",
+      "feed": {
+        "session": "0612260007",
+        "next_expected": 647,
+        "last_delivered": 646,
+        "first_pending": 648,
+        "highest_received": 876,
+        "pending": 229,
+        "duplicates": 0,
+        "gaps": 1,
+        "gap_messages": 229,
+        "resync_required": false,
+        "resync_reason": "",
+        "pending_bytes": 6995,
+        "pending_limit": 32768,
+        "discarded_after_gap": 0,
+        "gap_size": 1,
+        "gap_age_ms": 1059,
+        "path": "MULTICAST",
+        "integrity": "GAP",
+        "trading_gate": "INHIBITED_FEED_GAP"
+      },
+      "replay_status": "PAUSED"
+    },
+    "detach": "owned_xdp=detached\n"
+  },
+  "initial_allow_policy": {
+    "text": "policy_id=7 mode=allow remaining=0 ttl_seconds=0",
+    "source": "User-provided terminal output from this run; script prints but does not archive allow receipt separately"
+  },
+  "article_output_blocks": [
+    "$ ip -details link show dev ens64np1\n3: ens64np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdp qdisc mq state UP mode DEFAULT group default qlen 1000\n    prog/xdp id 40 tag 8c60d945e15524ab jited\n$ python3 set-xdp-policy.py allow 0 5 \"$PROG_ID\"\npolicy_id=7 mode=allow remaining=0 ttl_seconds=0\n",
+    "行情关键字段：\n会话            0612260007\n发送方式        组播 A（MULTICAST_A）\n接收程序        ONLINE\n行情状态        正常（HEALTHY）\n交易闸门        开放（OPEN）\n下一条期望      113\n",
+    "行情关键字段：\n会话            0612260007\n发送方式        组播 A（MULTICAST_A）\n接收程序        ONLINE\n行情状态        有缺口（GAP）\n交易闸门        暂停下单（INHIBITED_FEED_GAP）\n序号对照        已交付 646 → 期望 647 → 最早待处理 648\n缺失消息        1 条；等待补齐后处理的消息 1 条\n",
+    "实际丢包        1 包\n被丢序号        647\n接收端缺失序号  647（已核对一致）\n股票编号        8095（NVDA）\n",
+    "owned_xdp=detached\n现场状态：行情有缺口，交易闸门暂停下单，回放已暂停。\nresult=GAP_HELD\n本次 XDP 已卸载，行情缺口保留；丢包后未重放或重启服务。\n"
+  ],
+  "limits": [
+    "Read-only archive verification, not a new experiment or a claim about current live state",
+    "Historical screenshot remains separately labeled sequence 626",
+    "Chapters08/09 remain paused"
+  ]
+}

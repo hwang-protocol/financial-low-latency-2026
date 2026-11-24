@@ -1,0 +1,268 @@
+{
+  "verified_at_utc": "2026-09-12T01:44:32.669378+00:00",
+  "scope": "Local reformatting of historical pcap; no live capture, order, device operation or RUN_ID.",
+  "historical_run": "Documents/reports/course-runs/20260910T085551Z-03-live-order",
+  "sources": [
+    {
+      "path": "Documents/reports/course-runs/20260910T085551Z-03-live-order/raw/live-order.pcap",
+      "sha256": "bbaa0bdd7eed9dd1f2670089dfcb75a6b523eb21987fb97267b2bfd02e84f8d8"
+    },
+    {
+      "path": "Documents/reports/course-runs/20260910T085551Z-03-live-order/raw/sessions.txt",
+      "sha256": "25a46b59ab3d96b1c163c97b231c2b729f78859f6fe3c6e0496d560609d09c84"
+    },
+    {
+      "path": "Documents/reports/course-runs/20260910T085551Z-03-live-order/raw/first-trade.txt",
+      "sha256": "3c11719b85d4fe6cce99132c7d52699058970f44d1d425702b6a002dadf230c3"
+    },
+    {
+      "path": "Documents/reports/course-runs/20260910T085551Z-03-live-order/raw/decoded.txt",
+      "sha256": "b235fe795f4a6e6afe30b0c668c457ed92f8117e79203e9a355cd75fec92917f"
+    }
+  ],
+  "source_code": [
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/classroom-output.py",
+      "sha256": "727ebb900c6c0e2632931b3ecc2b93c3e869ababc811705193b247ba8b345771"
+    },
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/inspect_order_pcap.py",
+      "sha256": "9f1d9795f1000fe6efc0c6fb2baacbe0647c06919e3da892dd9e326d0534abab"
+    },
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/test-order-selection.py",
+      "sha256": "f6f406a589d17cc992ff97fd240d42a4c8f20fe0da4e431e9cd6d7d97a37c8d9"
+    }
+  ],
+  "historical_raw_decode_byte_equal": true,
+  "formatted_output_excerpt": [
+    "① O · 下单请求｜MANUAL → Exchange",
+    "  客户端编号 UserRefNum：2100000001",
+    "  股票 Symbol：AAPL  方向 Side：卖出  数量 Quantity：1 股",
+    "  限价 Price：291.6300",
+    "  含义：申请按上述股票、方向、数量和限价下单。",
+    "",
+    "② A · 受理回报｜Exchange → MANUAL",
+    "  客户端编号 UserRefNum：2100000001",
+    "  订单引用号 Order Reference Number：100022",
+    "  含义：订单已受理；这条回报还不能证明成交。",
+    "",
+    "③ E · 成交回报｜Exchange → MANUAL",
+    "  客户端编号 UserRefNum：2100000001",
+    "  成交数量 Quantity：1 股  成交价格 Price：296.6300",
+    "  成交编号 Match Number：900022",
+    "  含义：这些股数已按上述价格成交。"
+  ],
+  "chapter_excerpt_exact": true,
+  "packet_scope": "Selected MANUAL connection: frames 1 O, 2 A, 3 E, 4 pure ACK. Diagram shows three business messages only; full pcap contains five additional AUTO frames.",
+  "diagram": {
+    "path": "Documents/newDoc/images/course-visuals/03-diagrams/03-ouch-request-receipts.svg",
+    "sha256": "31b81b86320196922976df46ed693682965eccb5c49f0e949fa1f3cdfbd2758d",
+    "size": [
+      1200,
+      635
+    ],
+    "arrows": 3,
+    "arrow_tip_gap": 12,
+    "render_widths_visually_checked": [
+      800,
+      1200
+    ]
+  },
+  "chapter_lines": 516,
+  "chapter_images": 7,
+  "formatter_lines": 170,
+  "tests": [
+    {
+      "command": "python3 Documents/newDoc/assets/03-live-traffic/test-document-format.py",
+      "tests": 12,
+      "exit_code": 0,
+      "output": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.058s\n\nOK"
+    },
+    {
+      "command": "python3 Documents/newDoc/assets/03-live-traffic/test-order-selection.py",
+      "tests": 5,
+      "exit_code": 0,
+      "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.009s\n\nOK"
+    }
+  ],
+  "classroom_script_matrix": [
+    {
+      "case": "01-success",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-capture",
+      "exit_code": 42,
+      "expected": 42,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-decode",
+      "exit_code": 44,
+      "expected": 44,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-readback",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-restore-get",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-capture-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-decode-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-initial-state",
+      "exit_code": 1,
+      "expected": 1,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-post-once",
+      "exit_code": 22,
+      "expected": 22,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-verify",
+      "exit_code": 45,
+      "expected": 45,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-success",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-capture",
+      "exit_code": 42,
+      "expected": 42,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-decode",
+      "exit_code": 44,
+      "expected": 44,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-readback",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-restore-get",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-capture-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-decode-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-initial-state",
+      "exit_code": 1,
+      "expected": 1,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-post-once",
+      "exit_code": 22,
+      "expected": 22,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-igmp",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-mode",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-success",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-capture",
+      "exit_code": 1,
+      "expected": 1,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-decode",
+      "exit_code": 44,
+      "expected": 44,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-trade",
+      "exit_code": 43,
+      "expected": 43,
+      "classroom_log_exact": true
+    }
+  ],
+  "classroom_three_blocks_and_no_packet_tree": true,
+  "local_links_checked": 26,
+  "image_manifests": [
+    {
+      "path": "Documents/newDoc/images/course-visuals/03-diagrams/SHA256SUMS",
+      "entries": 57,
+      "exit_code": 0
+    },
+    {
+      "path": "Documents/newDoc/images/course-visuals/SHA256SUMS",
+      "entries": 256,
+      "exit_code": 0
+    }
+  ],
+  "pending": "Live run of all three current entrypoints remains unverified."
+}

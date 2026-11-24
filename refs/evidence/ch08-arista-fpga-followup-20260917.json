@@ -1,0 +1,144 @@
+{
+  "date": "2026-09-17",
+  "status": "DRAFT / DOCUMENT_VERIFIED / BOARD_NOT_RUN",
+  "scope": "Second primary-source review; limited wording and integration-contract clarification",
+  "upstream_revision": "13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d",
+  "upstream_refetched_sources": [
+    {
+      "path": "examples/nullverilog/src/nullverilog-lb2-top.sv",
+      "source": "https://raw.githubusercontent.com/aristanetworks/openfdk/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/nullverilog-lb2-top.sv",
+      "sha256": "fad714ff50989ad5b294bad08ed0bd38bc78c1db066b223ff0fc453f98598bb7",
+      "relevant_lines": [
+        "29: module top_v #("
+      ]
+    },
+    {
+      "path": "examples/nullverilog/src/nullverilog-lb2-cfg.json",
+      "source": "https://raw.githubusercontent.com/aristanetworks/openfdk/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/nullverilog-lb2-cfg.json",
+      "sha256": "5b02b23f7941814e2605c56bde08e5f2fb596120a6ee11bf853df1df762b43f3",
+      "relevant_lines": []
+    },
+    {
+      "path": "src/boards/lb2/board_top.sv",
+      "source": "https://raw.githubusercontent.com/aristanetworks/openfdk/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/src/boards/lb2/board_top.sv",
+      "sha256": "7801123edd20e38480d4690a2a0b1dac840d89458388e590c94d709772f634d5",
+      "relevant_lines": [
+        "29: module board_top (",
+        "254: top_v proj_top_i ("
+      ]
+    },
+    {
+      "path": "resources/create_project.tcl",
+      "source": "https://raw.githubusercontent.com/aristanetworks/openfdk/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/create_project.tcl",
+      "sha256": "c7ebac04cf35eb7957446e1543387df2e6297a5f0ba8a0260fcb2b6e1e2ff134",
+      "relevant_lines": []
+    },
+    {
+      "path": "resources/project.tcl",
+      "source": "https://raw.githubusercontent.com/aristanetworks/openfdk/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/project.tcl",
+      "sha256": "dd06b73e9481133e82e9baaeec8768a69c7c63485d9bb4c42ff735d901b9c6d1",
+      "relevant_lines": []
+    },
+    {
+      "path": "resources/vivado.mk",
+      "source": "https://raw.githubusercontent.com/aristanetworks/openfdk/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/vivado.mk",
+      "sha256": "52e1eed57c41102c0e5eed9a5405e0aff499b80b445f09e2f533a5e5bd54e98e",
+      "relevant_lines": [
+        "63: $(BUILD_DIR)/%/project.runs/impl_1/board_top.bit",
+        "68: $(BUILD_DIR)/%/project.runs/impl_1/board_top.bit \\",
+        "77: $(BUILD_DIR)/%/project.runs/impl_1/board_top.bit: BITFILE_DEPS_MD5S=$(shell \\",
+        "89: $(BUILD_DIR)/%/project.runs/impl_1/board_top.bit: \\"
+      ]
+    }
+  ],
+  "findings": {
+    "top_v": "Confirmed application module; board_top instantiates it and is the board root. Wording added.",
+    "pipeline": "General capability distinguished from the implemented one-frame store-and-forward core.",
+    "mac_interface": "AXI4-Stream-like handshake does not prove specific licensed MAC interface compatibility. Requires adapter contract.",
+    "mos_ports": "Three directional relationships are covered by stated MOS semantics; no evidence of missing Et2 destination. Still unverified on hardware.",
+    "eos_manual": "Official configuring-layer-1 page retrieved; contains both l1 source and l1 connect. Not evidence for MOS.",
+    "udp_length": "58 payload + 8 header = 66 length field, consistent with chapter03.",
+    "lifecycle": "2022-03-30 sale;2024-03-30 software bug fix;2025-03-30 TAC/RMA/EOL."
+  },
+  "source_review": "../../newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md",
+  "document_checks": {
+    "markdown_fences": 41,
+    "snippet_matches": 16,
+    "nav_cards": 10,
+    "green_cards": 0,
+    "images": 11,
+    "local_references": 57,
+    "protected_files_unchanged": 57,
+    "html_tags_balanced": true,
+    "bash_syntax": true,
+    "python_syntax": true
+  },
+  "browser_checks": {
+    "images": 11,
+    "missing": [],
+    "width": 1185,
+    "clientWidth": 1185,
+    "brokenBold": false
+  },
+  "fences_unchanged": 41,
+  "source_files_unchanged": {
+    "Documents/newDoc/assets/08-arista-fpga-draft/filter_tb.sv": "3d2a0c815ef1c42ab1b93e0a689354820908cc0acc8e2dcec4610d738d35262d",
+    "Documents/newDoc/assets/08-arista-fpga-draft/LICENSE-Arista-BSD-3-Clause.txt": "50b40d8ee91487d8c5d6f56e32de95dda0f4269576b97ad645f55134c5132688",
+    "Documents/newDoc/assets/08-arista-fpga-draft/frame_filter.sv": "4787a940bf8dba9456dd33c023227fd84f64bdecec8b084310855f2ca0483bed",
+    "Documents/newDoc/assets/08-arista-fpga-draft/simulate.sh": "e97a846f0538401fd7543063b281797a332808dc48b6d260e8f72b44a2c29eec",
+    "Documents/newDoc/assets/08-arista-fpga-draft/flle_filter_registers.csv": "164389456103557d895efc43efde31dd405af3af868e428fd9b9e90c9f15c7a4",
+    "Documents/newDoc/assets/08-arista-fpga-draft/drop_once.sv": "e4f1d052c8a7ead7a7fb4f8d3578f6bd4d06d7fc6b0046130621213f76dcdb0f",
+    "Documents/newDoc/assets/08-arista-fpga-draft/nvda_match.sv": "8a4aa79b6cce5623a8676fcc8624cb87d2d64de6bf6088b31a414463474a93f6",
+    "Documents/newDoc/assets/08-arista-fpga-draft/example.py": "cf933e1049dabff184890878864f5878671fc2342aed3eb69cf420bd57e2fd63",
+    "Documents/newDoc/assets/08-arista-fpga-draft/control_regs.sv": "c379e06994e702f86ebfd8fc53bb9f9a92dfc86217871b519e9b3c2d59fa77bf",
+    "Documents/newDoc/assets/08-arista-fpga-draft/local-tools-requirements.txt": "66d4186e09016d3620b63187a58255527d82f4c24c0ffbd4ca6ca3f442629233"
+  },
+  "chapter_figure_files_unchanged": 22,
+  "sha_manifests_passed": {
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/SHA256SUMS": 21,
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": 319
+  },
+  "modified_files": {
+    "Documents/00.NEXT-AI-HANDOFF.md": {
+      "before": "e47d02509afddcd1c75f05d80b3b83141708c98b55be4bc1c4959de9db9abdd7",
+      "after": "5b64b53486b4417ec106fe42b124b016641cfabd228d21eb0918a275857323a2"
+    },
+    "Documents/00.FREEZE-LEDGER.md": {
+      "before": "558c08433e16b43710e1e3307e3dcc88a4fc1b8314f37b0a2792765bb478cc90",
+      "after": "cc3a94c8d774f59c9017e2cb6acf47711b29d0fd89cb862f43250edbd464ed2d"
+    },
+    "Documents/00.PINS.md": {
+      "before": "4ec94877d80c7b06525954e42e5359ce4cd2ae7a3965d105d963ef941029d081",
+      "after": "ad287397963a07df85a33c2a480107397ad26086f21c8ccd070aed2e460505e3"
+    },
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md": {
+      "before": "3cf94b31f195ffa2c74f2576fea6bc9d1fea32a68ae76c66e7f13eb99a6df543",
+      "after": "8be2c19b288c7cefcf234e7c2e8c31c09d17cfc13587a93b6ac0139d6ef95bb5"
+    },
+    "Documents/newDoc/08-arista-fpga-market-filter-draft.md": {
+      "before": "c0a4e1886f77640124e7c1822b9bb2a6eac26b86b27e2f70f4de2b092569ce9d",
+      "after": "28b866a3787877ef957e623cc457cfd34fd1aef3476d18d12f710e75eff43ae5"
+    },
+    "Documents/newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md": {
+      "before": "f83d3ccb9757a36bcf5774deac4c0488c08fd5c07b266895e1dce77573655336",
+      "after": "2910a9031b00d03d62bae21971d52d49de6f52808cf54c383be0af6e33d24d50"
+    },
+    "Documents/newDoc/assets/08-arista-fpga-draft/README.md": {
+      "before": "b70c8dbb8409c79733a05541eb107e76d4e94baa6a58f4ba210164d99dd11345",
+      "after": "1ab75890ed49ab3c41fd1bd892ba7c6e460f27c0afb9a79b0ade30b3ad414d34"
+    }
+  },
+  "unrelated_existing_documents_unchanged": 41975,
+  "previous_functional_evidence": "ch08-arista-fpga-draft-20260917.json",
+  "functional_tests_this_turn": "NOT_RERUN; implementation/testbench unchanged",
+  "new_hardware_evidence": false,
+  "hardware_still_missing": [
+    "licensed FDK/IP and board integration",
+    "Vivado and XSim execution",
+    "bit/swix creation",
+    "MOS CLI and dual-port capture",
+    "latency measurement"
+  ],
+  "git_diff_check": "PASS",
+  "git_history_mutations": false
+}

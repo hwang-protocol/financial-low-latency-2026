@@ -1,0 +1,93 @@
+{
+  "date": "2026-09-15",
+  "evidence_kind": "LOCAL_SOURCE_AND_DOCUMENT_VISUAL_REVIEW",
+  "scope": "Chapter 02 opening diagrams and explanation; no application code changes, device operations, orders or new RUN",
+  "facts": {
+    "strategy": "top.bids[0].shares vs top.asks[0].shares; on_book calls maybe_trade when top is ready",
+    "defaults": {
+      "imbalance_threshold": 0.35,
+      "quantity": 25,
+      "max_absolute_position": 200,
+      "per_symbol_cooldown_ms": 5000
+    },
+    "risk": "positions + pending_delta + signed new quantity",
+    "limit": "buy at current best ask, sell at current best bid",
+    "example": {
+      "Qb": 900,
+      "Qa": 300,
+      "I": 0.5,
+      "identity": "teaching calculation, not observed order"
+    },
+    "manual_path": "browser POST /api/order -> Gateway send_command ORDER over TCP48122 -> MANUAL queue and independent OUCH/SoupBinTCP session -> Exchange TCP43120",
+    "strategy_control": "POST /api/strategy -> STRATEGY over TCP48121",
+    "events": "EventEmitter JSON / nonblocking UDP46120 to Gateway",
+    "measurement_followup": "Chapter04 interval-us20000, control-every5: targets MANUAL50Hz/AUTO10Hz; 1-share alternating measurement orders; collect_receipt filters by returned IDs and generation, AUTO_CONTROL measured rows selected separately; original strategy enabled state preserved; 5s signal cooldown belongs only to maybe_trade"
+  },
+  "source_sha256": {
+    "apps/flle-trading-lab/src/trader.cpp": "904dab6ff391a9b67e8418125691e22c5b48d0f13bf1d09bc909b2c38e19632b",
+    "apps/flle-trading-lab/src/exchange.cpp": "d96bcb1b423b89ee9d906ed8086966570c93891c651592752c6ddd4709e6a127",
+    "apps/flle-trading-lab/src/feed_receiver.cpp": "9ea462ef33bcc56023b8649cc09585e5550925cd50f7e6067dd36216b3f65aea",
+    "apps/flle-trading-lab/src/common.hpp": "b063b81dc6b583c1df5d0f547f7ddf67f2098d1134e2f10c15ee519ead7fdfdf",
+    "apps/flle-trading-lab/src/itch_book.hpp": "192dbee129b28217d8740f8461ec0dfc7356beb94b804b1ad939173b48dd9b6b",
+    "apps/flle-trading-lab/flle_trading/gateway.py": "946ee7752e098ca26bfc62e2311e94416704d6f21ec617755550d11c51f886c3",
+    "apps/flle-trading-lab/web/terminal.js": "90d4645d6bc668bbe90aaa7f3b01ca73d80115579e5ad2e8905586b52702c781",
+    "apps/flle-trading-lab/scripts/labctl.sh": "125ad2c55e855d9ff08fed9b5e4cac60b7d7c1200862a0caff285b00b64c6538",
+    "apps/flle-trading-lab/scripts/platform-baseline.sh": "cbdfa365c712edcdab4800a29d636a78d86d20d58caa10b2d9b225ce9e88d46b",
+    "apps/flle-trading-lab/tests/software_measurement.py": "50a3b978163a483f1ad3289fc5ae02d3e9802aa374fef68a9030a1912f4906e6"
+  },
+  "document_checks": {
+    "fences_unchanged": 23,
+    "bash_blocks_unchanged": 10,
+    "navigation_unchanged": true,
+    "local_links_resolved": 15,
+    "html_divs_balanced": true,
+    "no_details": true,
+    "runtime_image_occurrences": 1,
+    "new_strategy_before_navigation": true
+  },
+  "visuals": {
+    "02-trading-lab-runtime": {
+      "sha256": "81b8f841722fb645cb9c9b2db0684d9ea036efcc9420daa88c44fc3ba3b1b3d7",
+      "dimensions": [
+        1200,
+        1030
+      ],
+      "text_count": 59,
+      "arrows": 11,
+      "all_tip_gaps_px": 12,
+      "text_overlap": 0,
+      "text_outside_canvas": 0,
+      "visually_reviewed_widths": [
+        800,
+        1200
+      ]
+    },
+    "02-auto-strategy": {
+      "sha256": "612ff17f9bb7cfe3b42eb6e57152ebace38eaf4be3671c2fbca24ddcf76dd5f4",
+      "dimensions": [
+        1200,
+        970
+      ],
+      "text_count": 33,
+      "arrows": 4,
+      "all_tip_gaps_px": 12,
+      "text_overlap": 0,
+      "text_outside_canvas": 0,
+      "visually_reviewed_widths": [
+        800,
+        1200
+      ]
+    }
+  },
+  "image_manifests": {
+    "Documents/newDoc/images/course-visuals/02-diagrams/SHA256SUMS": 39,
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": 280
+  },
+  "preview": "Local Chrome, 940px chapter excerpts; SVG 800/1200px; no browser requests to lab devices",
+  "limitations": [
+    "Default parameters verified from source, not current VM state",
+    "No new deployment, trade or performance validation",
+    "AUTO control orders provide an environment reference; they do not exclude every source of interference"
+  ],
+  "doc_sha256": "f2b373a31ae0cf1d2d6e00f55adecbb666533125bbdcfe823f012a5ae6ce9816"
+}

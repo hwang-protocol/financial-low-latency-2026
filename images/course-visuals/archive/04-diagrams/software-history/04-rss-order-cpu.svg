@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="600" viewBox="0 0 1160 600">
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="16" refX="18" refY="8" orient="auto"><path d="M0 0L20 8L0 16Z" fill="#2563eb"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:26px;font-weight:900}.k{font-size:18px;font-weight:900}.s{font-size:15px;fill:#475569}.m{font-family:monospace;font-size:14px;font-weight:700}</style>
+  </defs>
+  <rect x="12" y="12" width="1136" height="576" rx="26" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t h" x="52" y="62">固定线程之前，先问订单响应最近落在哪颗 CPU</text>
+  <text class="t s" x="52" y="92">RSS 选 RX ring，MSI-X affinity 决定中断位置；SO_INCOMING_CPU 给出该 socket 最近一次收包 CPU。</text>
+
+  <rect x="54" y="180" width="150" height="110" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text class="t k" x="129" y="224" text-anchor="middle">X2522 NIC</text><text class="t s" x="129" y="254" text-anchor="middle">ens64np1</text>
+  <path d="M204 235H264" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="282" y="125" width="155" height="220" rx="18" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text class="t k" x="359" y="160" text-anchor="middle">4 个 RX ring</text>
+  <text class="t m" x="310" y="205">ring 0</text><text class="t m" x="310" y="240">ring 1</text><text class="t m" x="310" y="275">ring 2</text><text class="t m" x="310" y="310">ring 3</text>
+  <path d="M437 235H497" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="515" y="125" width="170" height="220" rx="18" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text class="t k" x="600" y="160" text-anchor="middle">MSI-X IRQ</text>
+  <text class="t m" x="545" y="205">IRQ 31 · queue 0</text><text class="t m" x="545" y="240">IRQ 32 · queue 1</text><text class="t m" x="545" y="275">IRQ 33 · queue 2</text><text class="t m" x="545" y="310">IRQ 34 · queue 3</text>
+  <path d="M685 235H745" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="763" y="125" width="165" height="220" rx="18" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+  <text class="t k" x="845" y="160" text-anchor="middle">Linux CPU</text>
+  <text class="t m" x="807" y="205">CPU 0</text><text class="t m" x="807" y="240">CPU 1</text><text class="t m" x="807" y="275">CPU 2</text><text class="t m" x="807" y="310">CPU 3</text>
+  <path d="M928 235H988" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="1006" y="180" width="110" height="110" rx="18" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text class="t k" x="1061" y="223" text-anchor="middle">order</text><text class="t k" x="1061" y="248" text-anchor="middle">thread</text>
+
+  <rect x="90" y="405" width="440" height="112" rx="18" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="116" y="442">FLOATING</text><text class="t s" x="116" y="473">allowed = 0–3；调度器可以迁移 order thread</text><text class="t s" x="116" y="498">先记录，不先判断“好”或“坏”</text>
+  <rect x="630" y="405" width="440" height="112" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text class="t k" x="656" y="442">RX-PINNED</text><text class="t s" x="656" y="473">allowed = 最近 SO_INCOMING_CPU；队列模式保持 SPSC</text><text class="t s" x="656" y="498">只改变线程位置，再观察 p50 / p99 / max</text>
+  <path d="M530 461H610" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)"/>
+  <text class="t s" x="580" y="558" text-anchor="middle">effective CPU 由 irqbalance 改动；本图不把瞬时编号固化，实验从原始文件重新读取。</text>
+</svg>

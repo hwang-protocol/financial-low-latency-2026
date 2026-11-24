@@ -1,0 +1,76 @@
+{
+  "date": "2026-09-15",
+  "status": "DOC_SOURCE_LOCAL_TEST_PREVIEW_PASS; LIVE_PENDING_USER",
+  "user_scope": [
+    "Withdraw IOMMU figure and CPU/MMU/group detail; keep why and boot enablement",
+    "Keep brief F-Stack API purpose explanations",
+    "Remove B2 results-and-tools section; check programs in formatted script output",
+    "Final instruction: user runs scripts and returns actual output"
+  ],
+  "changes": {
+    "document": "Two IOMMU paragraphs then GRUB setting, update-grub, reboot, cmdline and modprobe via one B1 entry. F-Stack API in four short bullets. Results section removed.",
+    "figure": "IOMMU figure removed from document; this turn temporary redraw discarded. Original bytes and existing two SHA manifests retained; comparison figures remain.",
+    "b1": "Simplify output labels, preserve actual queries and state machine; final readiness message saved to raw/result.txt before SHA listing.",
+    "b2": "After versions, execute ls -lh and test -x for flle-trader-dpdk/dpdk-devbind.py; show explanatory headings and results. Existing static symbol/PMD checks remain."
+  },
+  "api_sources": {
+    "course": "apps/flle-trading-lab/src/dpdk_trader.cpp:117,139,245,272,312,329",
+    "upstream_fixed_archive": "artifacts/blobs/x2522/f-stack/0abb713-dpdk-24.11.6/f-stack-0abb713721a6-source.tgz",
+    "members": [
+      "lib/ff_init.c",
+      "lib/ff_dpdk_if.c"
+    ],
+    "checked_calls": [
+      "ff_load_config",
+      "ff_dpdk_init",
+      "ff_freebsd_init",
+      "ff_dpdk_run(loop,arg)",
+      "lr->loop(lr->arg)"
+    ]
+  },
+  "official_sources": [
+    "https://www.kernel.org/doc/html/v5.15/driver-api/vfio.html",
+    "https://doc.dpdk.org/guides-21.11/prog_guide/poll_mode_drv.html"
+  ],
+  "readonly_host_query": {
+    "host": "10.1.1.2",
+    "command": "hostname; cat /proc/cmdline; readlink -f /sys/bus/pci/devices/0000:03:00.0/iommu_group; readlink -f /sys/bus/pci/devices/0000:03:00.0/driver; cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode",
+    "stdout": "vm-2522-02\nBOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro\n/sys/devices/pci0000:03/0000:03:00.0/iommu_group\n/sys/bus/pci/drivers/sfc\nN\n",
+    "interpretation": "Course IOMMU boot parameters absent. A readlink -f returned path alone is not proof the IOMMU group exists. No mutation."
+  },
+  "checks": {
+    "software_preparation": "7 PASS, 17.907s; actual fixed archive in temporary directories, fixture sysfs and orchestration",
+    "preparation_contracts": "3 PASS",
+    "iommu_contract": "PASS; remote state machine exercised in local fixtures. Old output-label assertions updated to current labels.",
+    "document": {
+      "fences": 30,
+      "bash_blocks": 11,
+      "navigation_cards": 10,
+      "local_references": 18,
+      "html_tags_balanced": true,
+      "image_sha_counts": [
+        41,
+        282
+      ],
+      "iommu_figure_removed": true,
+      "api_groups": 4,
+      "results_table_removed": true,
+      "b1_boot_text_matches_script": true
+    },
+    "preview": "IOMMU and F-Stack API sections at 940px and 390px; desktop pages viewed, no width overflow",
+    "script_syntax": "B1 and B2 Bash syntax PASS"
+  },
+  "sha256": {
+    "Documents/newDoc/02-host-native-trading-system-baseline.md": "86c1e82248b480e0580489b8d7ba0dcf3d364ba3ec6aca07a9414c6d20f0447b",
+    "Documents/newDoc/assets/02-trading-baseline/00b-iommu-prep.sh": "95ee4dd6d36addcb20936acd06d3753a38c28c8119b91ce839f7bf0095fbe483",
+    "Documents/newDoc/assets/02-trading-baseline/00b-dpdk-software-prep.sh": "a24a24fd5eb12bcc83106e9029d9c6780da458f0ea0f9104c0579e6711a08d66",
+    "Documents/newDoc/assets/02-trading-baseline/test-iommu-prep.py": "873a2ee4282d634876d7a92b946cdb07831123f10949ebcc8c38eb3ea5ced4ca",
+    "Documents/newDoc/assets/02-trading-baseline/test-dpdk-software-prep.py": "689ff8ae498538d518612c1a66fd8cae5dbc4828a239f075d434238b91764030"
+  },
+  "limits": [
+    "No B1/B2 execution on equipment, no reboot/driver binding or installation.",
+    "No new trading/performance validation.",
+    "Local test output is not represented as live output.",
+    "No Git history/remote changes."
+  ]
+}

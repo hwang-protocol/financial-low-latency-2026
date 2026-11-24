@@ -1,0 +1,575 @@
+{
+  "date": "2026-09-10",
+  "status": "LOCAL_PASS_NOT_LIVE_NOT_REBUILT",
+  "new_run_id": null,
+  "device_actions": [],
+  "local_environment_change": {
+    "package": "python3-markdown-it",
+    "dpkg_version": "1.1.0-2",
+    "module_version": "1.1.0",
+    "python_version": "3.10.12",
+    "module_path": "/usr/lib/python3/dist-packages/markdown_it",
+    "installation": "apt-get install --no-install-recommends python3-markdown-it"
+  },
+  "source_hashes": {
+    "Documents/newDoc/03-live-trading-traffic-and-protocols.md": "6df4fac7b344d8ccfebdff03dd58980305efa7eb35afad4671f3858b52254bd0",
+    "Documents/newDoc/assets/03-live-traffic/test-document-format.py": "71e0046c8c516812b3bb5fa2d1cd414e46a60d2ab659e0e74e4ab66a0b70836f",
+    "Documents/newDoc/assets/03-live-traffic/README.md": "739dd4eb01551eb268a682a9199810883d771d5e3bedcc2e9d8c912f101434e1",
+    "Documents/design/FLLE_Chapter03_Report_Review_2026-09-10.md": "6121e9ab455cdb7b04cfeb2f87f7d4d5c7a9d05d57bb36a91f4bc5452eb79f7b",
+    "apps/flle-trading-lab/src/feed_handler.hpp": "a820b4b039a9119c4ea355067910aa649b8fff99265eb26c3d2948d4394bf66b",
+    "apps/flle-trading-lab/src/trader.cpp": "904dab6ff391a9b67e8418125691e22c5b48d0f13bf1d09bc909b2c38e19632b",
+    "apps/flle-trading-lab/src/feed_receiver.cpp": "9ea462ef33bcc56023b8649cc09585e5550925cd50f7e6067dd36216b3f65aea",
+    "apps/flle-trading-lab/src/selftest.cpp": "5d9b5beef1a67df8d25c8ccc1bf566e579561b0db9829264e7745deefc5a6e83",
+    "apps/flle-trading-lab/src/exchange.cpp": "d96bcb1b423b89ee9d906ed8086966570c93891c651592752c6ddd4709e6a127",
+    "apps/flle-trading-lab/src/nasdaq_protocol.hpp": "3f4f65a86ea2be9bee21006514d14b0dd67ff9115a3a0a19a9e5bdac485a7879",
+    "apps/flle-trading-lab/tests/first_trade.py": "d0ca208c0365d2c411d6ec4de02f5165d8f07e7a0c07b5688851f06bd066bf7d",
+    "apps/flle-trading-lab/flle_trading/gateway.py": "e9bb5fbefa34aa0d91376906f4fbb773371ada91426f1de2fbe3f7ab0dba3f33",
+    "Documents/newDoc/assets/03-live-traffic/02-compare-market-transports.sh": "b92918d95e0a9ea525001b0174d8e59513239095bf303048662ae6f6f2ea9e0b",
+    "Documents/newDoc/assets/03-live-traffic/01-capture-live-market.sh": "6fdedcbcda65695539b5111c8c09472a3f38af8ac848e04878ab637e68f50f87",
+    "Documents/newDoc/assets/03-live-traffic/03-capture-live-order.sh": "1edbc2975c718e16ec1d232874364501c05f1fa4cd17edb483c3c55a5ab77c41"
+  },
+  "initial_failures": [
+    {
+      "command": "python3 Documents/newDoc/assets/03-live-traffic/test-document-format.py",
+      "error": "ModuleNotFoundError: markdown_it",
+      "resolution": "Ubuntu package installed, README setup added; 12 tests now pass"
+    },
+    {
+      "command": "make test",
+      "cwd": "apps/flle-trading-lab",
+      "exit_code": 127,
+      "error": "make: command not found",
+      "boundary": "No rebuild; existing binary hashes below. Python application tests and existing selftest passed."
+    },
+    {
+      "test": "test_mold_is_one_envelope_strip_without_field_tables",
+      "error": "Whole-theory no-table assertion rejected legitimate limit/readout tables",
+      "resolution": "Narrowed to prohibit duplicate byte layout tables only; three structural checks added"
+    }
+  ],
+  "tests": {
+    "document": {
+      "count": 12,
+      "exit_code": 0,
+      "output": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.070s\n\nOK\n"
+    },
+    "classroom": {
+      "count": 27,
+      "exit_code": 0,
+      "cases": [
+        {
+          "case": "01-success",
+          "exit_code": 0,
+          "expected": 0,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-capture",
+          "exit_code": 42,
+          "expected": 42,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-decode",
+          "exit_code": 44,
+          "expected": 44,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-restore",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-readback",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-restore-get",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-capture-restore",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-decode-restore",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-initial-state",
+          "exit_code": 1,
+          "expected": 1,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-post-once",
+          "exit_code": 22,
+          "expected": 22,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "01-verify",
+          "exit_code": 45,
+          "expected": 45,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-success",
+          "exit_code": 0,
+          "expected": 0,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-capture",
+          "exit_code": 42,
+          "expected": 42,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-decode",
+          "exit_code": 44,
+          "expected": 44,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-restore",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-readback",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-restore-get",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-capture-restore",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-decode-restore",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-initial-state",
+          "exit_code": 1,
+          "expected": 1,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-post-once",
+          "exit_code": 22,
+          "expected": 22,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-igmp",
+          "exit_code": 0,
+          "expected": 0,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "02-mode",
+          "exit_code": 125,
+          "expected": 125,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "03-success",
+          "exit_code": 0,
+          "expected": 0,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "03-capture",
+          "exit_code": 1,
+          "expected": 1,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "03-decode",
+          "exit_code": 44,
+          "expected": 44,
+          "classroom_log_exact": true
+        },
+        {
+          "case": "03-trade",
+          "exit_code": 43,
+          "expected": 43,
+          "classroom_log_exact": true
+        }
+      ]
+    },
+    "order_selection": {
+      "count": 3,
+      "exit_code": 0,
+      "output": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.007s\n\nOK\n"
+    },
+    "application_python": {
+      "count": 201,
+      "exit_code": 0,
+      "output": "test_analysis_contract_requires_v13_and_emits_v11 (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_analysis_emits_validated_observer_witness_not_boolean (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_balanced_analysis_payload_set_is_exactly_two_files (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_balanced_analysis_rejects_stale_file_or_subdirectory (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_cell_rejects_client_runtime_executable_change (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_client_argv_rejects_changed_role_even_with_rehashed_original (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_client_runtime_identity_must_be_in_compact_excerpts (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_client_runtime_identity_must_match_nul_argv (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_client_runtime_identity_rejects_malformed_sha (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_client_runtime_identity_rejects_wrong_transport_binary (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_common_clock_identity_rejects_boolean_as_integer (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_common_clock_identity_rejects_broken_sample (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_compact_row_generation_and_threads_must_close_native_receipts (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_cell_rejects_port_drop_growth (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_exchange_endpoint_is_server_side_not_client_pid (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_exchange_endpoint_must_match_current_exchange_pid (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_exchange_endpoint_sets_may_change_across_snapshots (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_exchange_listener_must_match_current_exchange_pid (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_exchange_observation_allows_multiple_target_endpoints (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_exchange_observation_ignores_non_target_connections (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_lease_token_must_match_client_environment (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_mixed_log_selects_only_the_owned_x2522_bdf (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_pmd_and_ull_must_belong_to_the_owned_x2522_bdf (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_dpdk_requires_ull_firmware_native_line (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_each_transport_is_rebuilt_from_native_originals (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_each_transport_rejects_client_manifest_sha_mismatch (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_equal_cell_mean_is_half_up (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_formal_manifest_cannot_change_during_analysis (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_formal_manifest_cannot_omit_a_raw_original (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_formal_manifest_rejects_symlinked_originals (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_live_measure_module_must_match_formal_sealed_program (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_native_counter_manifest_is_independently_checked (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_native_original_hash_tamper_is_rejected (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_native_state_rejects_unlocked_queue_even_with_rehashed_original (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_observer_absence_contract_requires_exact_two_endpoints (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_onload_cell_rejects_dma_fallback_growth (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_onload_cell_reports_growing_ctpio_without_dma_fallback (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_onload_requires_valid_marker_in_same_tcp_block (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_pooled_summary_rejects_unequal_cells (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_pooled_summary_uses_all_equal_cells (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_presend_warmup_observation_stays_in_evidence_not_classroom_output (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_tcpdirect_retransmit_counter_cannot_move_backward (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_tcpdirect_retransmit_delta_is_reported_without_failing (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_tcpdirect_retransmit_delta_requires_one_stable_endpoint (test_analyze_four_transport_raw.BalancedAnalysisTest) ... ok\ntest_local_command_preserves_stdin_and_failure (test_control_host.LocalControlTest) ... ok\ntest_local_daemon_does_not_retain_device_lock (test_control_host.LocalControlTest) ... ok\ntest_base_deployment_includes_shell_contracts_used_by_tests (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_controller_requires_terminal_dpdk_shutdown_receipts (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_course_manifests_cover_nested_platform_evidence (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_dpdk_prime_helper_has_generation_identity_and_all_path_cleanup (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_dpdk_stop_retries_hugepage_release_and_reports_late_gate (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_dpdk_stop_retries_management_listener_close_with_diagnostic (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_dpdk_stop_tolerates_proc_exit_while_finding_gate_pid (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_exchange_x2522_rss_is_fixed_verified_and_restored (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_experiment_finish_keeps_reusable_sfc_gui_online (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_foreign_listener_signal_revalidates_pid_generation (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_formal_remeasurement_preserves_prior_native_receipts (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_formal_samples_skip_synchronous_ui_telemetry_and_publish_ready (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_four_classroom_order_cards_each_submit_once_and_hide_raw_json (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_fstack_shutdown_bypasses_incomplete_post_loop_cleanup (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_independent_systemd_lease_can_recover_a_killed_wrapper (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_lease_preflight_and_partial_mutation_are_fail_closed (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_live_path_receipts_are_bound_to_process_generations_and_lease (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_new_orders_are_rejected_once_shutdown_starts (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_preparation_d_reuses_platform_and_checks_identity_before_ready (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_reactor_requires_idle_work_and_peer_eof_before_clean_exit (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_recovery_identity_checks_do_not_depend_on_errexit (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_remote_gate_cannot_erase_a_lost_launcher_stop_request (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_remote_guard_records_and_propagates_trader_exit (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_remote_guard_restores_hugetlbfs_baseline_and_hard_gates_state (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_run04_reads_engine_from_attested_native_schema (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_run04_restore_is_hard_gated_and_exit_fallback_keeps_rc (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_run_five_only_measures_and_formats_the_four_path_comparison (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_runtime_only_tree_does_not_invent_a_checkout_root (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_sfc_only_stop_does_not_require_zero_hugepages_too_early (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_shutdown_eof_is_not_reported_as_a_transport_failure (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_shutdown_receipt_is_flushed_before_process_exit (test_dpdk_shutdown_contract.DpdkShutdownContractTest) ... ok\ntest_disconnect_cannot_reopen_gate_on_same_session (test_feed_integrity.FeedIntegrityTest) ... ok\ntest_late_start_does_not_claim_a_complete_book (test_feed_integrity.FeedIntegrityTest) ... ok\ntest_permanent_gap_is_bounded_and_new_session_restores_consistency (test_feed_integrity.FeedIntegrityTest) ... ok\ntest_automatic_flow_does_not_evict_manual_history (test_gateway.StateStoreTest) ... ok\ntest_completed_order_updates_queued_row (test_gateway.StateStoreTest) ... ok\ntest_feed_gap_and_recovery_drive_one_common_gate (test_gateway.StateStoreTest) ... ok\ntest_management_line_roundtrip (test_gateway.StateStoreTest) ... ok\ntest_market_and_fill_projection (test_gateway.StateStoreTest) ... ok\ntest_new_replay_loop_clears_all_paper_state (test_gateway.StateStoreTest) ... ok\ntest_prometheus_metrics_keep_identity_low_cardinality (test_gateway.StateStoreTest) ... ok\ntest_receiver_counters_and_latched_resync_are_visible (test_gateway.StateStoreTest) ... ok\ntest_transport_lab_is_an_explicit_chapter_six_feature (test_gateway.StateStoreTest) ... ok\ntest_full_projection_reset_preserves_connection_cursor_and_configuration (test_gui_reset.GuiResetTest) ... ok\ntest_lanz_clears_source_counts_and_persisted_history (test_gui_reset.GuiResetTest) ... ok\ntest_missing_real_client_receipt_cannot_report_success (test_gui_reset.GuiResetTest) ... ok\ntest_reset_waits_for_new_session_and_resets_lanz (test_gui_reset.GuiResetTest) ... ok\ntest_another_process_listener_is_not_ready (test_listener_startup.ListenerStartupTest) ... ok\ntest_delayed_exec_becomes_ready_with_same_pid (test_listener_startup.ListenerStartupTest) ... ok\ntest_extra_identity_field_is_rejected (test_listener_startup.ListenerStartupTest) ... ok\ntest_reused_pid_start_time_is_rejected (test_listener_startup.ListenerStartupTest) ... ok\ntest_wrong_command_never_becomes_ready (test_listener_startup.ListenerStartupTest) ... ok\ntest_controller_exposes_native_formal_and_standalone_copy_contracts (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_cyclic_position_only_order_fails_predecessor_hard_gate (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_default_identity_gates_cover_all_17600_submissions (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_dpdk_exchange_manifest_allows_multiple_target_endpoints (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_dpdk_exchange_manifest_requires_current_pid_target_endpoint (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_exchange_ledger_gate_rejects_replay_change (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_exchange_ledger_gate_rejects_too_few_entries (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_exchange_ledger_gate_rejects_too_many_entries (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_formal_measurement_rechecks_mode_and_rss_at_every_cell (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_formal_measurement_stops_gateway_polling (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_formal_native_tree_requires_exactly_32_pre_post_sets (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_formal_pause_renewal_plan_covers_all_cells_and_mode_switches (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_formal_program_drift_after_start_snapshot_is_rejected (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_formal_receipt_contract_uses_v13_schema (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_four_round_summary_rounds_half_nanosecond_up (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_hugepage_contract_accepts_sfc_and_dpdk_profiles (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_hugepage_contract_rejects_wrong_active_pool (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_hugepage_reader_uses_read_only_root_ssh (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_measurement_mapping_rejects_response_order_mismatch (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_measurement_mapping_rejects_response_set_mismatch (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_measurement_single_flight_waits_for_post_work_ready_marker (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_native_fetch_uses_fixed_scp_argv_and_requires_tree (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_native_manifest_is_compact_and_counter_kind_is_explicit (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_native_manifest_rejects_controller_verified_boolean (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_native_receipt_seals_client_executable_against_runtime_manifest (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_nearest_rank_summary_includes_p95 (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_observer_absence_gate_precedes_any_formal_state_change (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_observer_absence_gate_records_both_exact_endpoints (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_observer_absence_gate_rejects_either_connectable_port (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_onload_hardware_witness_is_separate_from_order_counter (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_order_balances_positions_and_within_round_predecessors (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_path_receipt_distinguishes_launch_from_current_path (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_pause_gate_compensates_if_stability_proof_fails (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_pause_gate_proves_book_driving_fields_stable (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_pause_gate_reconciles_a_lost_pause_response (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_pause_lease_renewal_records_a_stable_book (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_pause_lease_renewal_rejects_a_moved_book (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_report_persists_identity_summary_and_total_equals_unique (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_resume_reconciles_a_lost_resume_response (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_round_summary_uses_median_of_round_percentiles (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_sample_identity_rejects_duplicate_with_both_locations (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_sample_identity_rejects_duplicate_within_raw_file (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_sample_identity_success_reports_counts_and_ranges (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_single_flight_returns_the_submitted_client_order_id (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_standalone_export_is_self_contained_and_rejects_extra_file (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_status_collector_has_no_heavy_stack_probe_or_receipt_write (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_submission_identity_rejects_cross_file_collision (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_submission_identity_rejects_warmup_measurement_collision (test_measure_four_transports.FourTransportStatisticsTest) ... ok\ntest_main_rebuilds_deltas_and_sha_from_twelve_proc_originals (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_proc_snapshot_is_parsed_only_from_persisted_originals (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_proc_snapshot_rejects_cpu_binding_drift (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_proc_snapshot_rejects_noncanonical_or_unhashed_executable (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_report_manifest_requires_the_exact_twenty_one_evidence_paths (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_run_id_shell_metacharacters_are_rejected_before_remote_use (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_schema_is_bumped_for_proc_original_contract (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_strace_cleanup_is_attempted_when_order_submission_fails (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_submit_batch_binds_generation_ids_results_and_common_clock (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_submit_batch_rejects_broken_common_clock_identity (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_submit_batch_rejects_generation_change_while_waiting (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_submit_batch_rejects_raw_generation_or_nonexecuted_result (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_submit_batch_rejects_returned_id_order_mismatch (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_submit_batch_rejects_returned_id_set_mismatch (test_measure_kernel_onload_mechanism.KernelOnloadMechanismTest) ... ok\ntest_complete_identical_packets_and_receive_time_for_both_clients (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok\ntest_disconnected_consumer_does_not_stop_other_consumer (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok\ntest_effective_buffer_is_reported_and_invalid_sizes_rejected (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok\ntest_no_second_network_owner_and_existing_receiver_survives (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok\ntest_queue_byte_limit_is_independent_of_packet_limit (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok\ntest_queue_limit_disconnects_only_slow_client_and_is_visible (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok\ntest_slow_consumer_cannot_block_fast_consumer (test_shared_feed_receiver.SharedFeedReceiverTest) ... ok\ntest_already_quiet_is_idempotent (test_snapshot_controller_retirement.SnapshotRetirement) ... ok\ntest_empty_restored_guests_retire_only_owned_controller (test_snapshot_controller_retirement.SnapshotRetirement) ... ok\ntest_partial_guests_or_wrong_identity_never_stop (test_snapshot_controller_retirement.SnapshotRetirement) ... ok\ntest_unknown_listener_not_marked_clean (test_snapshot_controller_retirement.SnapshotRetirement) ... ok\ntest_unverified_shell_rollback_still_uses_direct_recovery (test_transport_controller.ShellRecoveryRetentionTest) ... ok\ntest_verified_software_rollback_is_not_replaced_by_order_only_sfc (test_transport_controller.ShellRecoveryRetentionTest) ... ok\ntest_both_receiver_launchers_forward_telemetry_host (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_ch06_code_contract_does_not_require_optional_ripgrep (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_ch06_prep_c_does_not_repeat_prep_a_or_b_checks (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_failed_mode_action_keeps_original_error_when_recovery_fails (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_failed_mode_action_recovers_while_lock_is_held (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_gate_mutations_have_a_bdf_scoped_interprocess_lock (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_local_children_cannot_retain_operation_or_reset_locks (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_recovery_success_requires_all_sfc_hard_gate_fields (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_software_profile_cannot_satisfy_transport_ready_gate (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_timed_out_mode_action_runs_direct_sfc_recovery (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_timed_out_mode_action_surfaces_recovery_failure (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_timed_out_status_is_read_only_and_does_not_recover (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_timeout_terminates_the_action_process_group (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_unverified_mode_result_recovers_before_releasing_lock (test_transport_controller.TransportControllerRecoveryTest) ... ok\ntest_unit_and_port_must_both_be_absent (test_transport_lifecycle.RemoteAssertionTest) ... ok\ntest_dpdk_stops_consumers_before_receiver (test_transport_lifecycle.TransitionTest) ... ok\ntest_each_dpdk_failure_reports_stage_and_recovers (test_transport_lifecycle.TransitionTest) ... ok\ntest_order_only_origin_recovers_without_starting_feed (test_transport_lifecycle.TransitionTest) ... ok\ntest_ready_sfc_still_removes_guardian_and_receiver (test_transport_lifecycle.TransitionTest) ... ok\ntest_recovery_failure_is_not_reported_as_success (test_transport_lifecycle.TransitionTest) ... ok\ntest_sfc_receiver_failure_stops_transition (test_transport_lifecycle.TransitionTest) ... ok\ntest_software_origin_is_remembered_before_start (test_transport_lifecycle.TransitionTest) ... ok\ntest_complete_same_run_is_reusable (test_transport_reuse.TransportReusePolicyTest) ... ok\ntest_dead_controller_makes_otherwise_ready_stack_incomplete (test_transport_reuse.TransportReusePolicyTest) ... ok\ntest_invalid_json_cannot_become_clean_without_quiescent_gate (test_transport_reuse.TransportReusePolicyTest) ... ok\ntest_offline_client_is_not_reusable (test_transport_reuse.TransportReusePolicyTest) ... ok\ntest_only_verified_quiescent_state_allows_fresh_run (test_transport_reuse.TransportReusePolicyTest) ... ok\ntest_wrong_gateway_identity_is_not_reusable (test_transport_reuse.TransportReusePolicyTest) ... ok\n\n----------------------------------------------------------------------\nRan 201 tests in 5.341s\n\nOK\n",
+      "binary_origin": "Existing build/ binaries, not rebuilt this round"
+    },
+    "cpp_selftest": {
+      "exit_code": 0,
+      "output": "SELFTEST PASS protocol=ITCH5/MoldUDP64+OUCH5/SoupBinTCP mold_messages=2 book=AAPL ouch=O/A/E/J",
+      "binary_origin": "Existing build/flle-selftest, not rebuilt this round"
+    }
+  },
+  "audit": {
+    "documents": {
+      "00-cpu-cache-memory-os-basics.md": {
+        "bash_lines": [
+          30
+        ],
+        "tables": 15
+      },
+      "01-financial-low-latency-architecture.md": {
+        "bash_lines": [
+          43,
+          14,
+          49,
+          25,
+          28,
+          26,
+          43,
+          44
+        ],
+        "tables": 19
+      },
+      "02-host-native-trading-system-baseline.md": {
+        "bash_lines": [
+          1,
+          1,
+          16,
+          1,
+          23,
+          16,
+          49,
+          32,
+          28,
+          3
+        ],
+        "tables": 17
+      },
+      "03-live-trading-traffic-and-protocols.md": {
+        "bash_lines": [
+          42,
+          50,
+          36
+        ],
+        "tables": 15
+      }
+    },
+    "samples": {
+      "行情输出": {
+        "run": "20260910T085538Z-03-live-market",
+        "lines": 47,
+        "raw_ordered_exact": true,
+        "annotations": "Current display helper; the three mode expectations are updated explicitly"
+      },
+      "三模式输出": {
+        "run": "20260910T085544Z-03-market-paths",
+        "lines": 47,
+        "raw_ordered_exact": true,
+        "annotations": "Current display helper; the three mode expectations are updated explicitly"
+      },
+      "订单输出": {
+        "run": "20260910T085551Z-03-live-order",
+        "lines": 62,
+        "raw_ordered_exact": true,
+        "annotations": "Current display helper; the three mode expectations are updated explicitly"
+      },
+      "chapter02-02-01": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-02": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-03": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-04": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-05": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-06": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-07": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-08": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-09": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-native-command-and-price": "PASS"
+    },
+    "navigation": {
+      "00-cpu-cache-memory-os-basics.md": 7,
+      "01-financial-low-latency-architecture.md": 8,
+      "02-host-native-trading-system-baseline.md": 9,
+      "03-live-trading-traffic-and-protocols.md": 3,
+      "04-tail-latency-and-observability.md": 4,
+      "05-low-latency-software-design.md": 5,
+      "06-openonload-tcpdirect-dpdk-kernel-bypass.md": 10,
+      "07-arista-cut-through-ptp-time.md": 10,
+      "08-ebpf-xdp-programmable-network.md": 7,
+      "09-p4-programmable-data-plane.md": 7,
+      "10-verilator-fpga-smartnic-simulation.md": 9
+    },
+    "checksums": {
+      "20260910T085538Z-03-live-market/SHA256SUMS": {
+        "immutable_files_verified": 8,
+        "source_changed_since_live": [
+          "Documents/newDoc/assets/03-live-traffic/01-capture-live-market.sh",
+          "Documents/newDoc/assets/03-live-traffic/market-mode.sh",
+          "Documents/newDoc/assets/03-live-traffic/classroom-output.py"
+        ]
+      },
+      "20260910T085538Z-03-live-market/CLASSROOM_SHA256SUMS": {
+        "immutable_files_verified": 2,
+        "source_changed_since_live": []
+      },
+      "20260910T085544Z-03-market-paths/SHA256SUMS": {
+        "immutable_files_verified": 17,
+        "source_changed_since_live": [
+          "Documents/newDoc/assets/03-live-traffic/02-compare-market-transports.sh",
+          "Documents/newDoc/assets/03-live-traffic/market-mode.sh",
+          "Documents/newDoc/assets/03-live-traffic/classroom-output.py"
+        ]
+      },
+      "20260910T085544Z-03-market-paths/CLASSROOM_SHA256SUMS": {
+        "immutable_files_verified": 2,
+        "source_changed_since_live": []
+      },
+      "20260910T085551Z-03-live-order/SHA256SUMS": {
+        "immutable_files_verified": 7,
+        "source_changed_since_live": [
+          "Documents/newDoc/assets/03-live-traffic/classroom-output.py"
+        ]
+      },
+      "20260910T085551Z-03-live-order/CLASSROOM_SHA256SUMS": {
+        "immutable_files_verified": 2,
+        "source_changed_since_live": []
+      },
+      "Documents/newDoc/images/course-visuals/03-diagrams": 55,
+      "Documents/newDoc/images/course-visuals": 229
+    },
+    "source_boundary": "Only Chapter 03 cards 1/2 changed since live replay; this is local validation, not live replay.",
+    "current_pcap_shared_fields_rtl": "PASS",
+    "asset_table_lines": {
+      "01-capture-live-market.sh": 42,
+      "02-compare-market-transports.sh": 50,
+      "03-capture-live-order.sh": 36,
+      "classroom-output.py": 124,
+      "pcap_tools.py": 139,
+      "inspect_market_pcap.py": 124,
+      "inspect_transport_pcaps.py": 67,
+      "inspect_order_pcap.py": 165
+    },
+    "retired_helper_bytes_preserved": true
+  },
+  "additional_checks": {
+    "decode": [
+      {
+        "run": "20260910T085538Z-03-live-market",
+        "exact_match": true
+      },
+      {
+        "run": "20260910T085544Z-03-market-paths",
+        "exact_match": true
+      },
+      {
+        "run": "20260910T085551Z-03-live-order",
+        "exact_match": true
+      }
+    ],
+    "packet_length_crosscheck": [
+      {
+        "frame": 1,
+        "udp_payload_length": 57,
+        "itch_type": "U",
+        "itch_length": 35
+      },
+      {
+        "frame": 2,
+        "udp_payload_length": 57,
+        "itch_type": "U",
+        "itch_length": 35
+      },
+      {
+        "frame": 3,
+        "udp_payload_length": 57,
+        "itch_type": "U",
+        "itch_length": 35
+      },
+      {
+        "frame": 9,
+        "udp_payload_length": 58,
+        "itch_type": "A",
+        "itch_length": 36
+      }
+    ],
+    "before": {
+      "paragraphs_including_list_items_excluding_html_cards": 76,
+      "total_visible_prose_columns": 12641,
+      "max_visible_prose_columns": 391,
+      "paragraphs_at_least_270_columns": 6,
+      "tables": 10
+    },
+    "after": {
+      "paragraphs_including_list_items_excluding_html_cards": 80,
+      "total_visible_prose_columns": 11232,
+      "max_visible_prose_columns": 247,
+      "paragraphs_at_least_270_columns": 0,
+      "tables": 15
+    },
+    "all_fenced_blocks_unchanged_from_start": true,
+    "binary_sha256": {
+      "apps/flle-trading-lab/build/flle-book-checkpoint": "6a2e75fdf89e9a8ca9d07a6db7847a453aba3881665594b76135045861db4d51",
+      "apps/flle-trading-lab/build/flle-exchange": "3196c7d6a236d93f36f459173922b1ccc5f647b5cd2b07a7f4e5c56a807bba0b",
+      "apps/flle-trading-lab/build/flle-selftest": "3c6217de88ebeb047b26d0c7a15443835164df6ebd896c8bf91be13e3f29f34b",
+      "apps/flle-trading-lab/build/flle-feed-receiver": "2c6cbf07810f20ad66fac8e66b0d2bca76ea0b31f112717bc9f68df967adbbf8",
+      "apps/flle-trading-lab/build/flle-trader": "1fc5b0ddb6d43c26b5ba0e605bf07458de510339a06adca5da9dab5c5e6cba0e",
+      "apps/flle-trading-lab/build/flle-itch-filter": "37b73f4bf2c82eef21d8e1b58721b5431689bc87c316ba0c7a4fd7550aea0be8"
+    }
+  },
+  "rendering": [
+    {
+      "width": 940,
+      "frames": [
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-protocol-and-envelope.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 800
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-message-and-receipt.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 800
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-mold-envelope-strip.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 800
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-itch-type-strips.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 800
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-market-transport-modes.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 800
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-ouch-request-receipts.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 800
+        }
+      ],
+      "reading_tables": 3,
+      "horizontal_page_overflow": false
+    },
+    {
+      "width": 390,
+      "frames": [
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-protocol-and-envelope.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 328
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-message-and-receipt.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 328
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-mold-envelope-strip.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 328
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-itch-type-strips.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 328
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-market-transport-modes.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 328
+        },
+        {
+          "src": "file:///financial-low-latency/Documents/newDoc/images/course-visuals/03-diagrams/03-ouch-request-receipts.svg",
+          "loaded": true,
+          "border": "1px",
+          "padding": "10px",
+          "width": 328
+        }
+      ],
+      "reading_tables": 3,
+      "horizontal_page_overflow": false
+    }
+  ],
+  "visual_inspection": {
+    "desktop": "Three repaired frames and all three readout tables checked at classroom width",
+    "mobile": "Order readout table inspected at 390px; long identifiers wrap",
+    "screenshots": "Temporary local preview; not durable evidence attachments",
+    "renderer_scope": "Custom local CSS; not all Markdown clients"
+  },
+  "remaining": [
+    "Current capture entries require sequential live replay before upgrading verification status",
+    "Current source not rebuilt this round; make/compiler missing"
+  ],
+  "git_history_writes": []
+}

@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-10",
+  "scope": "Clarify local client identifier versus exchange acceptance in chapter 02 first-order sequence diagram",
+  "evidence_level": "SOURCE REVIEW AND LOCAL DOC RENDER",
+  "chapter_sha256": "5015174a7a4bd6846936a99ed8fda246e13267288ef38c763a9a062f98c6405b",
+  "source_review": ["apps/flle-trading-lab/src/trader.cpp:585", "apps/flle-trading-lab/src/trader.cpp:1132", "apps/flle-trading-lab/src/exchange.cpp:378", "apps/flle-trading-lab/src/nasdaq_protocol.hpp:262"],
+  "protocol_reference": "https://www.nasdaqtrader.com/content/technicalsupport/specifications/TradingProducts/OUCH5.0.pdf",
+  "semantics": ["MANUAL allocates UserRefNum before queueing, returns it as client_order_id after successful enqueue", "Local identifier return and order transport remain parallel", "Exchange acceptance includes separately allocated order_reference", "Execution is a separate response; client identifier does not prove acceptance or execution"],
+  "checks": {"mermaid_version": "10.9.3", "diagrams_rendered": 2, "sequence_natural_size": [871,1149], "sequence_visual_widths": [800,871], "visual_review": "PASS; shortened parallel-branch label to prevent isolated closing bracket", "navigation_cards": 79, "bash_fences": 10, "markdown_tables": 17, "inline_assets_exact_match": 6, "existing_output_excerpts": "PASS", "git_diff_check": "PASS"},
+  "limits": ["Documentation and Mermaid only", "No program, script, protocol or historical output changes", "No device operations, new RUN or simulated orders", "No new performance or live validation claim"]
+}

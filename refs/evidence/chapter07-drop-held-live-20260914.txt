@@ -1,0 +1,35 @@
+root@Low-Latency-Ops:/financial-low-latency# bash Documents/newDoc/assets/07-xdp/05-xdp-inline-live.sh
+vm-2522-02 / verify
+===== 查XDP 挂载身份 =====
+[ens64np1] 对: prog/xdp / jited / native  证: 本次程序确实挂在客户端驱动接收口
+$ ip -details link show dev ens64np1
+19: ens64np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdp qdisc mq state UP mode DEFAULT group default qlen 1000
+link/ether 00:0f:53:d3:af:21 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 68 maxmtu 9216 addrgenmode eui64 numtxqueues 255 numrxqueues 255 gso_max_size 65536 gso_max_segs 100 portid 000f53d3af21 parentbus pci parentdev 0000:03:00.0
+prog/xdp id 68 tag 8c60d945e15524ab jited
+vm-2522-02 / verify
+===== 查初始放行策略 =====
+[policy] 对: remaining_drops=0  证: 接流时先全部放行，再观察健康基线
+$ python3 set-xdp-policy.py allow 0 5 "$PROG_ID"
+policy_id=1 mode=allow remaining=0 ttl_seconds=0
+vm-2522-02 / verify
+===== 查行情放行基线 =====
+[Feed] 对: 新 Session / HEALTHY  证: 未武装时原行情可以穿过当前路径
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" HEALTHY --timeout 25 --session-not "$session_before"
+{"session":"0612260007","market_mode":"MULTICAST","trader_auto":"ONLINE","feed":{"session":"0612260007","next_expected":3,"last_delivered":2,"first_pending":0,"highest_received":2,"pending":0,"duplicates":0,"gaps":0,"gap_messages":0,"resync_required":false,"resync_reason":"","pending_bytes":0,"pending_limit":32768,"discarded_after_gap":0,"gap_size":0,"gap_age_ms":0,"path":"MULTICAST","integrity":"HEALTHY","trading_gate":"OPEN"}}
+vm-2522-02 / verify
+===== 查行情缺口 =====
+[Feed] 对: GAP / gap_size=1 / 闸门关闭  证: 策略执行后接收器自己发现序号缺失
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" GAP --timeout 12
+{"session":"0612260007","market_mode":"MULTICAST","trader_auto":"ONLINE","feed":{"session":"0612260007","next_expected":626,"last_delivered":625,"first_pending":627,"highest_received":627,"pending":1,"duplicates":0,"gaps":1,"gap_messages":1,"resync_required":false,"resync_reason":"","pending_bytes":36,"pending_limit":32768,"discarded_after_gap":0,"gap_size":1,"gap_age_ms":0,"path":"MULTICAST","integrity":"GAP","trading_gate":"INHIBITED_FEED_GAP"}}
+vm-2522-02 / verify
+===== 查被丢序号与 Feed 对账 =====
+[XDP audit] 对: 恰好一包 / Locate 8095 / Sequence 等于 next_expected  证: 计数与行情缺口指向同一条消息
+$ python3 - <counters.json> <drop-audit.json> <feed-gap.json>
+xdp_drop_packets=1 sequence=626 locate=8095
+owned_xdp=detached
+feed=GAP trading_gate=INHIBITED_FEED_GAP replay=PAUSED
+result=GAP_HELD
+本次 XDP 已卸载，行情缺口保留；丢包后未重放或重启服务。
+打开 http://10.1.1.101:8088/ 观察 FEED GAP、冻结的订单簿和禁用的下单按钮。
+看完后手动执行：bash Documents/newDoc/assets/07-xdp/06-restart-trading-service.sh
+evidence=/financial-low-latency/Documents/reports/course-runs/20260914T033315.701914816Z-07-xdp-drop

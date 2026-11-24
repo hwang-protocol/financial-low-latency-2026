@@ -1,0 +1,25 @@
+# TRex v3.08 BCM57414 Dual-Port Readiness-Isolation Smoke Run State
+
+- `RUN_ID`: `20260721T033639Z`
+- `PURPOSE`: isolate first-burst readiness with post-link settle, unmeasured warmup, and ordinary-port deltas
+- `PROFILE_ID`: `trex-v3.08-bcm57414-dual-uio-settle5-warm256x2-measure512x2`
+- `STARTED_AT_UTC`: `2026-07-21T03:36:39Z`
+- `FINISHED_AT_UTC`: `2026-07-21T03:41:11Z`
+- `RESULT_DIR`: `reports/20260721T033639Z-trex-bcm57414-dual-port-readiness-isolation-smoke/`
+- `STATUS`: `COMPLETED`
+- `RESULT`: `FUNCTIONAL_PASS`
+- `ACCEPTANCE`: `PASSED`
+- `READINESS`: first observation DOWN/DOWN; first dual-UP at attempt 2; 10 consecutive dual-UP at attempt 11; fixed 5-second settle completed
+- `WARMUP_FORWARD`: TX/RX 256/256 packets, 33792/33792 bytes; missing/excess/background 0; all I/O error deltas 0
+- `WARMUP_REVERSE`: TX/RX 256/256 packets, 33792/33792 bytes; missing/excess/background 0; all I/O error deltas 0
+- `MEASURED_FORWARD`: TX/RX 512/512 packets, 67584/67584 bytes; missing/excess/background 0; all I/O error deltas 0
+- `MEASURED_REVERSE`: TX/RX 512/512 packets, 67584/67584 bytes; missing/excess/background 0; all I/O error deltas 0
+- `FINAL_CUMULATIVE`: each port TX/RX 768/768 packets and 101376/101376 bytes
+- `CLIENT_BOUNDARY`: no stats clear/reset/xstats, PGID, flow-stat or latency API
+- `PMD_LINK`: `PASS`; real `net_bnxt`, two ports UP at 10 Gb/s full-duplex
+- `FINAL_HEALTH`: `PASS`; runner/recovery/final-health/orchestrator all rc=0
+- `MANAGEMENT_PROTECTION`: `PASS`; `ens33/0000:02:01.0/10.1.1.11` and default route via `10.1.1.254` unchanged
+- `DATA_FINAL`: both data BDFs `bnxt_en`, down, zero address, no master/XDP
+- `RUNTIME_FINAL`: hugepages=0; no UIO, TRex/Scapy/testpmd process, 4500/4501/4507 listener, deadman, workdir or runtime temp
+- `PIT`: `PIT-20260721-74` updated to `MITIGATED`; combined readiness workaround verified, internal convergence layer still unknown
+- `NEXT`: use this readiness contract for plain STL functional work; keep flow-stat capability and performance as separate RUNs

@@ -1,0 +1,90 @@
+Original report line: 20989
+Slack (VIOLATED) :        -0.322ns  (required time - arrival time)
+  Source:                 qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_qdma_subsystem_clk_div  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Destination:            qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][2]/CE
+                            (rising edge-triggered cell FDRE clocked by axis_aclk_0  {rise@0.000ns fall@2.000ns period=4.000ns})
+  Path Group:             axis_aclk_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)
+  Data Path Delay:        4.495ns  (logic 1.279ns (28.457%)  route 3.216ns (71.544%))
+  Logic Levels:           10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)
+  Clock Path Skew:        0.381ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.594ns = ( 6.594 - 4.000 ) 
+    Source Clock Delay      (SCD):    2.270ns
+    Clock Pessimism Removal (CPR):    0.057ns
+  Clock Uncertainty:      0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.103ns
+    Phase Error              (PE):    0.086ns
+  Clock Net Delay (Source):      2.652ns (routing 0.955ns, distribution 1.697ns)
+  Clock Net Delay (Destination): 2.402ns (routing 0.550ns, distribution 1.852ns)
+  Clock Domain Crossing:  Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_qdma_subsystem_clk_div rise edge)
+                                                      0.000     0.000 r  <hidden>
+    BUFG_GT_X1Y180       BUFG_GT                      0.000     0.000 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/pcie4_ip_i/inst/qdma_no_sriov_pcie4_ip_gt_top_i/diablo_gt.diablo_gt_phy_wrapper/phy_clk_i/bufg_gt_userclk/O
+                         net (fo=96706, routed)       2.255     2.255    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/clk_div_inst/inst/clk_in1
+    MMCM_X0Y7            MMCME4_ADV (Prop_MMCM_CLKIN1_CLKOUT0)
+                                                     -2.909    -0.654 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/clk_div_inst/inst/mmcme4_adv_inst/CLKOUT0
+                         net (fo=1, routed)           0.244    -0.410    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/clk_div_inst/inst/clk_out1_qdma_subsystem_clk_div
+    BUFGCE_X0Y170        BUFGCE (Prop_BUFCE_BUFGCE_I_O)
+                                                      0.028    -0.382 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/clk_div_inst/inst/clkout1_buf/O
+    X3Y6 (CLOCK_ROOT)    net (fo=17544, routed)       2.652     2.270    qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/clk_out1
+    SLICE_X119Y414       FDRE                                         r  qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X119Y414       FDRE (Prop_EFF_SLICEL_C_Q)
+                                                      0.079     2.349 r  qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/Q
+                         net (fo=2, routed)           0.263     2.612    qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/num_q[0]
+    SLICE_X119Y412       LUT2 (Prop_A6LUT_SLICEL_I1_O)
+                                                      0.090     2.702 r  qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/qdma_inst_i_64/O
+                         net (fo=1, routed)           0.009     2.711    qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/qdma_inst_i_64_n_0
+    SLICE_X119Y412       CARRY8 (Prop_CARRY8_SLICEL_S[0]_CO[7])
+                                                      0.190     2.901 r  qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/qdma_inst_i_48/CO[7]
+                         net (fo=1, routed)           0.026     2.927    qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/qdma_inst_i_48_n_0
+    SLICE_X119Y413       CARRY8 (Prop_CARRY8_SLICEL_CI_O[0])
+                                                      0.056     2.983 r  qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/qdma_inst_i_47/O[0]
+                         net (fo=1, routed)           0.222     3.205    qdma_if[0].qdma_subsystem_inst/h2c_inst/slice_inst/qdma_inst_i_13_0[0]
+    SLICE_X117Y412       LUT2 (Prop_A6LUT_SLICEL_I1_O)
+                                                      0.124     3.329 r  qdma_if[0].qdma_subsystem_inst/h2c_inst/slice_inst/qdma_inst_i_24/O
+                         net (fo=1, routed)           0.009     3.338    qdma_if[0].qdma_subsystem_inst/h2c_inst/slice_inst/qdma_inst_i_24_n_0
+    SLICE_X117Y412       CARRY8 (Prop_CARRY8_SLICEL_S[0]_CO[7])
+                                                      0.197     3.535 r  qdma_if[0].qdma_subsystem_inst/h2c_inst/slice_inst/qdma_inst_i_13/CO[7]
+                         net (fo=3, routed)           0.966     4.501    qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/h2c_slice_inst/CO[0]
+    SLICE_X90Y414        LUT6 (Prop_C6LUT_SLICEL_I3_O)
+                                                      0.050     4.551 f  qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/h2c_slice_inst/qdma_inst_i_6/O
+                         net (fo=5, routed)           0.089     4.640    qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/h2c_slice_inst/h2c_started_reg
+    SLICE_X90Y415        LUT2 (Prop_A6LUT_SLICEL_I0_O)
+                                                      0.035     4.675 f  qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/h2c_slice_inst/qdma_inst_i_1/O
+                         net (fo=45, routed)          0.471     5.146    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/m_axis_h2c_tready
+    SLICE_X83Y412        LUT4 (Prop_C5LUT_SLICEL_I1_O)
+                                                      0.158     5.304 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array[65][7]_i_3/O
+                         net (fo=45, routed)          0.544     5.848    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array[65][7]_i_3_n_0
+    SLICE_X76Y415        LUT6 (Prop_G6LUT_SLICEM_I4_O)
+                                                      0.150     5.998 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array[100][7]_i_3/O
+                         net (fo=1, routed)           0.105     6.103    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_nxt81_out
+    SLICE_X76Y414        LUT3 (Prop_A6LUT_SLICEM_I2_O)
+                                                      0.150     6.253 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array[100][7]_i_1/O
+                         net (fo=8, routed)           0.512     6.765    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array[100][7]_i_1_n_0
+    SLICE_X80Y404        FDRE                                         r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][2]/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock axis_aclk_0 rise edge)
+                                                      4.000     4.000 r  <hidden>
+    GTYE4_CHANNEL_X1Y31  GTYE4_CHANNEL                0.000     4.000 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/pcie4_ip_i/inst/qdma_no_sriov_pcie4_ip_gt_top_i/diablo_gt.diablo_gt_phy_wrapper/gt_wizard.gtwizard_top_i/qdma_no_sriov_pcie4_ip_gt_i/inst/gen_gtwizard_gtye4_top.qdma_no_sriov_pcie4_ip_gt_gtwizard_gtye4_inst/gen_gtwizard_gtye4.gen_channel_container[31].gen_enabled_channel.gtye4_channel_wrapper_inst/channel_inst/gtye4_channel_gen.gen_gtye4_channel_inst[3].GTYE4_CHANNEL_PRIM_INST/TXOUTCLK
+                         net (fo=7, routed)           0.078     4.078    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/pcie4_ip_i/inst/qdma_no_sriov_pcie4_ip_gt_top_i/diablo_gt.diablo_gt_phy_wrapper/phy_clk_i/GT_TXOUTCLK[0]
+    BUFG_GT_X1Y180       BUFG_GT (Prop_BUFG_GT_I_O)
+                                                      0.114     4.192 r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/pcie4_ip_i/inst/qdma_no_sriov_pcie4_ip_gt_top_i/diablo_gt.diablo_gt_phy_wrapper/phy_clk_i/bufg_gt_userclk/O
+    X7Y6 (CLOCK_ROOT)    net (fo=96706, routed)       2.402     6.594    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/user_clk
+    SLICE_X80Y404        FDRE                                         r  qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][2]/C
+                         clock pessimism              0.057     6.651    <hidden>
+                         clock uncertainty           -0.148     6.503    <hidden>
+    SLICE_X80Y404        FDRE (Setup_HFF_SLICEL_C_CE)
+                                                     -0.060     6.443    qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][2]
+  -------------------------------------------------------------------
+                         required time                          6.443    <hidden>
+                         arrival time                          -6.765    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -0.322    <hidden>

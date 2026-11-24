@@ -1,0 +1,69 @@
+{
+  "date": "2026-09-12",
+  "scope": "Final user-requested track metaphor: MANUAL changes one configuration per round while AUTO runs its fixed reference configuration every round. Replaces the rejected process-box diagram; no runtime or script changes.",
+  "source_paths": [
+    "apps/flle-trading-lab/tests/software_measurement.py",
+    "apps/flle-trading-lab/src/trader.cpp"
+  ],
+  "facts": [
+    "Each process owns its management thread, queue and order thread.",
+    "Script targets MANUAL every 20000 us and pairs one AUTO control order per five MANUAL orders; pair ordering can alternate.",
+    "AUTO strategy continues independently; control samples are selected by the order IDs submitted by the script.",
+    "Only MANUAL changes queue profiles across comparisons; AUTO stays DEQUE_CV and its order thread is assigned CPU 3. Common peer-thread affinity is set separately."
+  ],
+  "before_figure_sha256": "3d888e5b0eb1250257d6be6bc665ea97ae727cdfa7c9ae7e463da8730bd11060",
+  "before_doc_sha256": "68fff2ae4504d1658e754384e49a5c1a28205eec4753107482acade7cd2dc014",
+  "current_file_sha256": {
+    "Documents/newDoc/04-low-latency-software-design.md": "812441cb41e0666d84f32d22deff342d8696e7a4580e14af958090de81118fc3",
+    "Documents/newDoc/images/course-visuals/04-diagrams/04-manual-vs-auto.svg": "6cb223c610087f3cdef8db7aea9248c06bf20bd182d925c2af7a2435dd155b97",
+    "Documents/newDoc/images/course-visuals/04-diagrams/README.md": "0cb6c2d4b137348c932366391532b74a07a3cfb11ab06d54b36706d604b47ec0",
+    "Documents/newDoc/images/course-visuals/04-diagrams/SHA256SUMS": "ce495601b684a7d0116cd7fcdf8174419aa7ea4604239b9cb6378fa1cdd45bc6",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": "eef048423cd1e58dd4bec0957817e052332baebc379bc4d2913897cb2ce90b4c",
+    "Documents/newDoc/images/course-visuals/archive/04-diagrams/software-history/README.md": "0210c3e8d524bb3cf924d4edb03b44c72338a19accf27eafa12a6264314fed5e",
+    "Documents/newDoc/images/course-visuals/archive/04-diagrams/README.md": "8f55b9715a7f6ba2a4fc1ad1a8b0de8183d0b92383790913b9231c1db9884888",
+    "Documents/newDoc/images/course-visuals/archive/README.md": "3d44b105d47855c7ea9b04d79400b79ed531d1f405875ade6e8ff94f80c28544",
+    "Documents/archive/retired-observability-20260912/README.md": "d0971aec73171606989ced98dcaff6f590db73dbd29a3cdf6e12fdf64cb421c3",
+    "Documents/newDoc/images/course-visuals/archive/04-diagrams/software-history/SHA256SUMS": "09fecc3128ba2ccbfa23b2c2ae948da639563848e42298db84d1c37a6f82a724"
+  },
+  "validation": {
+    "course_links": 207,
+    "anchors": 27,
+    "navigation_cards": 75,
+    "unchanged_bash_blocks": 4,
+    "unchanged_text_blocks": 4,
+    "unchanged_text_lines": 178,
+    "figure_count": 11,
+    "sha_manifests": 15,
+    "sha_entries": 721,
+    "visual_review_widths": [
+      800,
+      1200
+    ],
+    "visual_review": "PASS at 800 and 1200 px; full track layout and two equal arrowheads inspected. Selector outside tracks; no message arrows or fabricated latency graphics.",
+    "git_diff_check": "PASS",
+    "archive_image_count": 37,
+    "archive_readme_links": 20
+  },
+  "rejected_draft": {
+    "sha256": "de2d879656e47f82b07d7e0a46d6de90daf9893eeebb65544c6476e9c2e29cbd",
+    "reason": "User rejected the management-thread/queue/order-thread box layout because it did not show AUTO as a fixed companion across MANUAL configuration changes."
+  },
+  "figure_semantics": [
+    "Four MANUAL tracks are alternative configurations for one process, not four simultaneous processes.",
+    "One selected MANUAL runner and one AUTO runner; track length and runner position are not measurement results.",
+    "AUTO track keeps DEQUE_CV and order-thread CPU3; original strategy continues independently.",
+    "Vertical two-headed selector means changing configurations between rounds, not packet direction."
+  ],
+  "archived_replaced_figure": {
+    "source": "Documents/newDoc/images/course-visuals/04-diagrams/04-auto-watch.svg",
+    "destination": "Documents/newDoc/images/course-visuals/archive/04-diagrams/software-history/04-auto-watch.svg",
+    "sha256": "2b5c569bdaca2a4f4be7ad15d230a0d5031babd3377dc19da9693dcb2daa1261",
+    "reason": "User requested the track comparison to replace the old AUTO-environment explanation at this location."
+  },
+  "final_location": "AUTO 为什么要固定陪跑",
+  "source_sha256": {
+    "apps/flle-trading-lab/tests/software_measurement.py": "fc47312bfd7209fd9314dd99329c6312ce3351978a177e05abd64d3663510826",
+    "apps/flle-trading-lab/src/trader.cpp": "904dab6ff391a9b67e8418125691e22c5b48d0f13bf1d09bc909b2c38e19632b"
+  },
+  "editing_issue_resolved": "An overly broad purple-card range temporarily removed run 1 gates/card/script while concurrent prose edits moved the warmup figure. Restored the exact original gate and run-1 block; final all four bash blocks match assets and the pre-edit snapshot. Concurrent unrelated prose retained."
+}

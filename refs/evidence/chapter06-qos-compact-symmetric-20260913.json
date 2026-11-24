@@ -1,0 +1,147 @@
+{
+  "date": "2026-09-13",
+  "scope": "压缩QoS/DSCP文字、撤下基础位图、对称A/B路径图、核实240帧与精简结果解释",
+  "validation_kind": "本地文档/图形检查及历史pcap离线复核；无本轮设备实验",
+  "checks": {
+    "fences_unchanged": 28,
+    "navigation_cards_unchanged": 14,
+    "other_assets_byte_unchanged": true,
+    "images_before": 24,
+    "images_after": 23,
+    "figure_paths_match_between_panels": true,
+    "entrance_paths_all_horizontal": true,
+    "merge_legs_mirrored": true,
+    "arrow_target_gaps_px": 12,
+    "metrics": {
+      "before": {
+        "intro_visible_chars": 4121,
+        "intro_lines": 117
+      },
+      "after": {
+        "intro_visible_chars": 1188,
+        "intro_lines": 75
+      }
+    },
+    "outside_qos_and_its_references_unchanged": true,
+    "git_diff_check": "PASS"
+  },
+  "figure": {
+    "file": "Documents/newDoc/images/course-visuals/06-diagrams/06-qos-contention-paths.svg",
+    "sha256": "650d42102bad6c03707e1aa8e4f49919eb0603d06ba2c50f704341e20d90dadb",
+    "renders": [
+      {
+        "width": 800,
+        "text_count": 32,
+        "overflow": [],
+        "png": "/tmp/flle-qos-symmetric-800.png"
+      },
+      {
+        "width": 1200,
+        "text_count": 32,
+        "overflow": [],
+        "png": "/tmp/flle-qos-symmetric-1200.png"
+      },
+      {
+        "width": 2400,
+        "text_count": 32,
+        "overflow": [],
+        "png": "/tmp/flle-qos-symmetric-2400.png"
+      }
+    ],
+    "visual_review": "800/1200整图及2倍箭头目视通过；输入均为水平线，A/B同坐标，汇合上下等距"
+  },
+  "packet_evidence": {
+    "baseline": {
+      "file": "Documents/reports/course-runs/20260903T095143Z-07-qos-contention-live/raw/baseline.pcap",
+      "sha256": "fb6d4f1d6d20ea7e2c9d0dc3c7e5eacc7e909806d9bf940da4927309a17a49b4",
+      "total": 240,
+      "classes": [
+        {
+          "flags": 24,
+          "tcp_payload_bytes": 50,
+          "tos": 0,
+          "dscp": 0,
+          "ecn": 0,
+          "count": 120
+        },
+        {
+          "flags": 16,
+          "tcp_payload_bytes": 0,
+          "tos": 0,
+          "dscp": 0,
+          "ecn": 0,
+          "count": 120
+        }
+      ],
+      "directions": [
+        "20.1.1.2 -> 20.1.1.1"
+      ],
+      "ports": [
+        [
+          49567,
+          43120
+        ]
+      ],
+      "alternates_data_and_ack": true,
+      "order_user_refs_match_all_120_result_rows": true,
+      "each_ack_sequence_follows_50_order_bytes": true,
+      "each_ack_acknowledges_106_new_reverse_direction_bytes": true,
+      "pcap_and_decode_archive_manifest_checked": true
+    },
+    "tagged": {
+      "file": "Documents/reports/course-runs/20260903T095143Z-07-qos-contention-live/raw/tagged.pcap",
+      "sha256": "b4dce5e7e328424eec22eb26220e9e4b949a8fb2de6e271a9aa5534371f02dca",
+      "total": 240,
+      "classes": [
+        {
+          "flags": 24,
+          "tcp_payload_bytes": 50,
+          "tos": 184,
+          "dscp": 46,
+          "ecn": 0,
+          "count": 120
+        },
+        {
+          "flags": 16,
+          "tcp_payload_bytes": 0,
+          "tos": 184,
+          "dscp": 46,
+          "ecn": 0,
+          "count": 120
+        }
+      ],
+      "directions": [
+        "20.1.1.2 -> 20.1.1.1"
+      ],
+      "ports": [
+        [
+          49567,
+          43120
+        ]
+      ],
+      "alternates_data_and_ack": true,
+      "order_user_refs_match_all_120_result_rows": true,
+      "each_ack_sequence_follows_50_order_bytes": true,
+      "each_ack_acknowledges_106_new_reverse_direction_bytes": true,
+      "pcap_and_decode_archive_manifest_checked": true
+    }
+  },
+  "sources": [
+    "https://www.arista.com/en/um-eos/eos-quality-of-service",
+    "https://www.rfc-editor.org/rfc/rfc2474.html#section-3",
+    "https://www.rfc-editor.org/rfc/rfc3168.html#section-5"
+  ],
+  "source_run": "20260903T095143Z-07-qos-contention-live",
+  "manifest_counts": {
+    "Documents/newDoc/images/course-visuals/06-diagrams/SHA256SUMS": 64,
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": 267
+  },
+  "code_and_command_blocks_unchanged": true,
+  "scripts_and_run_data_unchanged": true,
+  "new_live_run": false,
+  "limitations": [
+    "120订单帧和120纯ACK只描述这两份历史pcap，不是每笔交易固定两帧的协议保证",
+    "pcap只含Trader到Exchange方向；反向回报由ACK推进及既有应用证据说明，不宣称本次重新抓到双向流量",
+    "先前11号脚本显示层变更的完整现场复跑仍未执行，本轮未改该脚本"
+  ]
+}

@@ -1,0 +1,198 @@
+<html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FLLE Trading Lab</title>
+  <link rel="stylesheet" href="/terminal.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><strong>FLLE Trading Lab</strong><span>低延时交易基线</span></div>
+    <div class="source-clock"><small>历史行情时间</small><strong id="wall-clock">2026-06-12 09:32:01.447841319</strong></div>
+    <div class="header-status"><span class="paper">模拟成交</span><span><i id="stream-dot" class="ok"></i><b id="stream-label">实时连接</b></span></div>
+  </header>
+  <div id="feed-gap-banner" class="feed-gap-banner" hidden="">
+    <strong>FEED GAP</strong>
+    <span id="feed-gap-detail">行情序号中断，订单簿冻结，交易已停单。</span>
+  </div>
+
+  <main>
+    <section class="card replay-card">
+      <div class="section-head"><div><small>NASDAQ 常规交易时段</small><h1>行情回放</h1></div><div class="replay-state"><b id="replay-status">播放中</b><span id="replay-loop">第 3 轮</span></div></div>
+      <div class="progress-track" aria-label="回放进度"><div id="replay-progress-fill" style="width: 0.516216%;"></div></div>
+      <div class="progress-meta"><strong id="replay-progress-text">0.52%</strong><span id="replay-window">09:30:00 → 16:00:00</span><span id="replay-remaining">预计剩余 6小时28分</span></div>
+      <div class="replay-controls">
+        <label>播放速度<select id="replay-speed"><option value="0.5">0.5×</option><option value="1" selected="">1×</option><option value="2">2×</option><option value="5">5×</option><option value="10">10×</option><option value="20">20×</option></select></label>
+        <button id="replay-toggle">暂停</button><button id="replay-restart" class="secondary">重新开始并清空交易</button>
+        <p>窗口内按原始事件时间播放，不压缩空档。到达 16:00 后自动清空订单、成交、持仓与延时样本，再开始下一轮。</p>
+      </div>
+    </section>
+
+    <section class="card market-card">
+      <div class="section-head"><div><small>真实历史 ITCH 数据</small><h2>市场行情</h2></div><b id="exchange-health">ONLINE</b></div>
+      <div id="watchlist" class="watchlist"><button class="watch-row active"><strong>AAPL</strong><span class="watch-price">296.53</span><small>NASDAQ</small><span class="change ">+23.32 bps</span></button><button class="watch-row "><strong>NVDA</strong><span class="watch-price">204.23</span><small>NASDAQ</small><span class="change ">+3.18 bps</span></button></div>
+      <div class="quote-hero"><div><small>当前标的</small><strong id="selected-symbol">AAPL</strong></div><div><small>最新价</small><strong id="hero-price">296.53</strong></div></div>
+      <div class="best-quote"><div class="bid"><small>最佳买价</small><b id="best-bid">296.51</b><span id="bid-size">80 股</span></div><div class="ask"><small>最佳卖价</small><b id="best-ask">296.58</b><span id="ask-size">40 股</span></div></div>
+      <div class="transport"><span>行情传输 · UDP 组播</span><div><button data-mode="MULTICAST_A" class="active" aria-pressed="true">仅 A 路</button><button data-mode="MULTICAST_B" aria-pressed="false">仅 B 路</button><button data-mode="DUAL" aria-pressed="false">A/B 双路</button></div><p id="market-endpoints" class="market-endpoints">A  233.74.125.32:31032
+B  233.74.125.33:31033</p><p id="market-switch-status" class="market-switch-status" role="status" aria-live="polite" data-observed-mode="MULTICAST_A" data-ready="true">当前：仅 A 路组播</p></div>
+    </section>
+
+    <section class="card book-card">
+      <div class="section-head"><div><small>交易端构建</small><h2>五档订单簿</h2></div><b id="book-symbol">AAPL</b></div>
+      <div class="book-head"><span>档位</span><span>价格</span><span>数量</span></div><div id="ask-book" class="book-side asks"><div class="book-row"><i class="depth" style="width:40.93567251461988%"></i><span>L5</span><span class="price">296.63</span><span>140</span></div><div class="book-row"><i class="depth" style="width:100%"></i><span>L4</span><span class="price">296.62</span><span>342</span></div><div class="book-row"><i class="depth" style="width:29.239766081871345%"></i><span>L3</span><span class="price">296.61</span><span>100</span></div><div class="book-row"><i class="depth" style="width:31.28654970760234%"></i><span>L2</span><span class="price">296.60</span><span>107</span></div><div class="book-row"><i class="depth" style="width:11.695906432748536%"></i><span>L1</span><span class="price">296.58</span><span>40</span></div></div>
+      <div class="spread-row"><span>价差</span><strong id="spread">0.07 USD</strong><small id="mid-price">中间价 296.545</small></div><div id="bid-book" class="book-side bids"><div class="book-row"><i class="depth" style="width:23.391812865497073%"></i><span>L1</span><span class="price">296.51</span><span>80</span></div><div class="book-row"><i class="depth" style="width:3%"></i><span>L2</span><span class="price">296.50</span><span>5</span></div><div class="book-row"><i class="depth" style="width:9.649122807017543%"></i><span>L3</span><span class="price">296.49</span><span>33</span></div><div class="book-row"><i class="depth" style="width:19.883040935672515%"></i><span>L4</span><span class="price">296.48</span><span>68</span></div><div class="book-row"><i class="depth" style="width:8.187134502923977%"></i><span>L5</span><span class="price">296.47</span><span>28</span></div></div>
+    </section>
+
+    <section class="card order-card">
+      <div class="section-head"><div><small>OUCH 5.0 · 模拟账本</small><h2>手动下单</h2></div><b>IOC 限价单</b></div>
+      <p class="order-direction-label">交易方向</p>
+      <div class="side-switch" id="side-switch"><button data-side="BUY" class="active buy" aria-pressed="true">买入</button><button data-side="SELL" class="sell" aria-pressed="false">卖出</button></div>
+      <div class="form-grid"><label>股票<select id="order-symbol"><option>AAPL</option><option>NVDA</option></select></label><label>数量<input id="order-quantity" type="number" value="10" min="1" max="1000"></label><label class="full">限价（留空则取当前对手价）<input id="order-price" inputmode="decimal" placeholder="例如 196.50"></label></div>
+      <button id="submit-order" class="submit-order" title="通过 Kernel Socket 提交订单" style="background: var(--green);">提交买单 · AAPL 10 股</button>
+      <p id="order-submit-status" class="order-submit-status" role="status" aria-live="polite">通过 Kernel Socket 提交；请先选择方向和数量。</p>
+      <div class="manual-receipt"><small>本轮最后一笔手动订单</small><strong id="manual-result">尚未下单</strong><code id="manual-order-id">—</code><span id="manual-order-detail">成交结果会固定显示在这里，不会一闪而过。</span></div>
+    </section>
+
+    <section id="transport-lab" class="card x2522-console">
+      <div class="x2522-head">
+        <div>
+          <small>同一平台 · 同一笔 SoupBinTCP / OUCH 订单</small>
+          <h2>X2522 数据通道控制台</h2>
+          <p>业务报文和交易所不变，只切换客户端 Transport；每张卡把代码代价与网卡能力放在一起验收。</p>
+        </div>
+        <div class="x2522-mode-panel">
+          <span id="x2522-transition" class="mode-ready">READY</span>
+          <div><small>当前数据面</small><strong id="x2522-mode">路径测试 · SFC</strong></div>
+          <div><small>PCI owner</small><code id="x2522-owner">sfc</code></div>
+          <button id="x2522-baseline">恢复普通交易</button>
+          <button id="x2522-mode-switch" data-target-mode="DPDK">切到 DPDK 独占</button>
+        </div>
+      </div>
+      <div class="x2522-rule"><span>X2522 · 0000:03:00.0</span><b id="x2522-rule-text">三条 sfc 路径可用；DPDK 等待独占切换</b><small>切换期间全部锁定，管理面始终走 10.1.1.x</small></div>
+      <div class="comparison-contract">
+        <span><small>同一任务</small><b>1 股 IOC · SoupBinTCP / OUCH</b></span>
+        <span><small>同一应用交接</small><b>DEQUE_CV · 空队列睡眠</b></span>
+        <span><small>同一计时边界</small><b>C++ send → 最终响应</b></span>
+        <span><small>主要比较</small><b>客户端 Transport / 数据面实现</b></span>
+      </div>
+      <p class="handoff-boundary"><b>“不一直盯”只约束应用交棒：</b>四个客户端都在空队列上睡眠，用条件变量唤醒；TCPDirect 与 DPDK 为驱动用户态网卡队列，网络 reactor 仍会轮询。这和第四章的 <code>SPSC_SPIN</code> 不是一回事。</p>
+      <aside class="interactive-latency-note" aria-label="交互延时与正式实验的区别">
+        <b>为什么网页读数通常更高？</b>
+        <span>四张卡展示少量手动下单的<strong>交互观测值</strong>，不是第 05 章正式 benchmark。订单仍走同一客户端 Transport，RTT 仍由 C++ 记录 <code>send → 最终响应</code>；浏览器与 Python 请求本身不计入秒表。</span>
+        <span>不过，交互订单会保留 Accepted 页面遥测，Gateway / 页面轮询和行情回放也会带来运行噪声，而且没有执行正式实验每格 100 笔预热、1000 笔采样及环境隔离；最初几笔还可能包含 Transport / TCP / Soup 会话的首次建立，以及缓存、线程和调度的冷状态。因此这里样本很少时 P50 更高、波动更大是正常的；正式结论以封存 RUN 为准，<code>STALE</code> 只代表上一次模式的历史值，不能参加当前四路横比。</span>
+      </aside>
+      <div class="transport-grid">
+        <article id="transport-card-socket" class="transport-card baseline online available">
+          <div class="transport-card-head"><span>01 · 基线</span><b id="transport-status-socket">ONLINE</b></div>
+          <h3>Kernel Socket</h3>
+          <p class="transport-api"><code>socket / send / recv</code><span>代码不改</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>sfc 普通 netdev</strong><span>Linux TCP/IP；不冒充内核旁路</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-socket">45.846 µs</b></span><span><small>样本</small><b id="transport-samples-socket">2</b></span></div>
+          <div id="transport-receipt-socket" class="transport-receipt">当前 PID 的 sfc netdev + Kernel TCP</div>
+          <button class="transport-submit" data-order-transport="SOCKET">用 Socket 下单</button>
+        </article>
+        <article id="transport-card-onload" class="transport-card onload online available">
+          <div class="transport-card-head"><span>02 · 透明加速</span><b id="transport-status-onload">ONLINE</b></div>
+          <h3>OpenOnload</h3>
+          <p class="transport-api"><code>同一份 BSD socket</code><span>启动方式改变</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>VI · DMA · CTPIO</strong><span>用户态 TCP；标准 socket 保留</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-onload">—</b></span><span><small>样本</small><b id="transport-samples-onload">0</b></span></div>
+          <div id="transport-receipt-onload" class="transport-receipt pending">收据待采集</div>
+          <button class="transport-submit" data-order-transport="OPENONLOAD">用 Onload 下单</button>
+        </article>
+        <article id="transport-card-tcpdirect" class="transport-card tcpdirect online available">
+          <div class="transport-card-head"><span>03 · 专用 TCP</span><b id="transport-status-tcpdirect">ONLINE</b></div>
+          <h3>TCPDirect</h3>
+          <p class="transport-api"><code>ZF API / reactor</code><span>重写 Transport</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>VI · DMA · CTPIO 必备</strong><span>ZF 用户态 TCP；当前卡 Plus 已开放</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-tcpdirect">—</b></span><span><small>样本</small><b id="transport-samples-tcpdirect">0</b></span></div>
+          <div id="transport-receipt-tcpdirect" class="transport-receipt pending">收据待采集</div>
+          <button class="transport-submit" data-order-transport="TCPDIRECT">用 TCPDirect 下单</button>
+        </article>
+        <article id="transport-card-dpdk" class="transport-card dpdk unavailable">
+          <div class="transport-card-head"><span>04 · 独占数据面</span><b id="transport-status-dpdk">WAITING</b></div>
+          <h3>DPDK + TCP</h3>
+          <p class="transport-api"><code>F-Stack / ff_*</code><span>应用与运行时改造</span></p>
+          <div class="hardware-contract"><small>X2522 硬件合同</small><strong>VFIO · net_sfc_efx</strong><span>RX/TX 队列、大页、用户态轮询</span></div>
+          <div class="transport-stats"><span><small>交互 RTT P50</small><b id="transport-rtt-dpdk">—</b></span><span><small>样本</small><b id="transport-samples-dpdk">0</b></span></div>
+          <div id="transport-receipt-dpdk" class="transport-receipt pending">收据待采集</div>
+          <button class="transport-submit" data-order-transport="DPDK" disabled="">用 DPDK 下单</button>
+        </article>
+      </div>
+      <div class="transport-comparison">
+        <div class="comparison-title"><div><small>四路整体比较</small><b>同一笔订单，代码代价与硬件收益一起看</b></div><span>应用交接均为 DEQUE_CV</span></div>
+        <div class="comparison-table">
+          <div class="comparison-row comparison-head"><span>路径</span><span>应用接口</span><span>TCP 在哪</span><span>X2522 用法</span><span>网络等待</span><span>当前交互 P50</span></div>
+          <div class="comparison-row"><strong>Kernel Socket</strong><span>BSD socket</span><span>Linux 内核</span><span>sfc netdev</span><span>阻塞 I/O</span><b id="compare-rtt-socket">45.846 µs</b></div>
+          <div class="comparison-row"><strong>OpenOnload</strong><span>BSD socket</span><span>用户态 Onload</span><span>VI / DMA / CTPIO</span><span>Onload 调度</span><b id="compare-rtt-onload">—</b></div>
+          <div class="comparison-row"><strong>TCPDirect</strong><span>ZF API</span><span>用户态 ZF</span><span>VI / CTPIO 能力合同</span><span>有单时 reactor poll</span><b id="compare-rtt-tcpdirect">—</b></div>
+          <div class="comparison-row"><strong>DPDK + TCP</strong><span>F-Stack ff_*</span><span>用户态 F-Stack</span><span>VFIO / net_sfc_efx</span><span>F-Stack reactor poll</span><b id="compare-rtt-dpdk">—</b></div>
+        </div>
+      </div>
+      <div class="x2522-evidence"><b>点亮原则</b><span>ONLINE 只说明进程活着；必须拿到对应路径收据，硬件标签才会变成“已验真”。</span><span id="x2522-last-route">最后下单通道：—</span></div>
+    </section>
+
+    <section class="card trend-card">
+      <div class="section-head"><div><small>真实历史 ITCH · 最近 360 个页面采样</small><h2><span id="trend-symbol">AAPL</span> 价格走势</h2></div><div class="trend-value"><strong id="trend-price">296.53</strong><span id="trend-change" class="">+23.32 bps</span></div></div>
+      <div class="chart-wrap">
+        <svg id="price-chart" viewBox="0 0 916 298" role="img" aria-label="当前所选股票的近期价格走势"><line x1="72" y1="18" x2="896" y2="18" class="chart-grid"></line><text x="62" y="22" class="chart-axis" text-anchor="end">296.5904</text><line x1="72" y1="100" x2="896" y2="100" class="chart-grid"></line><text x="62" y="104" class="chart-axis" text-anchor="end">296.2985</text><line x1="72" y1="182" x2="896" y2="182" class="chart-grid"></line><text x="62" y="186" class="chart-axis" text-anchor="end">296.0065</text><line x1="72" y1="264" x2="896" y2="264" class="chart-grid"></line><text x="62" y="268" class="chart-axis" text-anchor="end">295.7146</text><path d="M72.00,228.78 L74.07,214.73 L76.18,214.73 L78.31,214.73 L80.39,214.73 L82.53,203.50 L84.67,203.50 L86.70,203.50 L88.70,211.92 L90.72,211.92 L93.18,211.92 L96.46,211.92 L98.77,211.92 L100.78,203.50 L102.87,203.50 L105.53,203.50 L107.57,203.50 L110.49,203.50 L112.51,203.50 L114.71,200.69 L117.07,200.69 L119.85,200.69 L122.10,200.69 L124.18,200.69 L126.28,203.50 L128.29,234.39 L130.55,234.39 L132.92,234.39 L135.35,234.39 L137.78,234.39 L140.61,242.82 L142.74,247.03 L144.76,247.03 L146.88,247.03 L149.02,247.03 L151.03,231.59 L153.15,231.59 L155.18,231.59 L157.40,231.59 L159.41,223.16 L161.56,223.16 L163.63,223.16 L166.33,223.16 L168.36,223.16 L171.21,223.16 L173.55,223.16 L176.07,223.16 L178.27,223.16 L180.46,223.16 L183.56,223.16 L185.58,223.16 L187.62,223.16 L189.64,223.16 L191.72,223.16 L194.14,223.16 L196.67,238.61 L199.36,220.35 L201.48,203.50 L203.75,195.07 L205.86,195.07 L207.88,203.50 L209.89,203.50 L211.93,203.50 L213.98,192.26 L216.01,200.69 L218.16,200.69 L220.19,200.69 L222.68,200.69 L225.22,200.69 L227.47,200.69 L229.52,200.69 L231.58,200.69 L233.58,217.54 L235.69,217.54 L237.75,217.54 L240.00,206.31 L242.06,206.31 L245.01,231.59 L247.78,211.92 L250.15,211.92 L252.33,183.84 L254.50,183.84 L256.81,183.84 L258.84,203.50 L260.95,206.31 L263.37,206.31 L265.65,183.84 L268.09,183.84 L270.12,183.84 L273.01,183.84 L275.08,183.84 L277.35,183.84 L279.48,183.84 L281.55,183.84 L284.20,183.84 L286.22,183.84 L288.38,183.84 L290.39,183.84 L293.73,183.84 L296.09,183.84 L298.35,183.84 L300.71,183.84 L303.60,183.84 L305.98,165.58 L308.78,161.36 L310.97,161.36 L313.03,161.36 L316.02,161.36 L318.80,161.36 L320.99,161.36 L323.11,166.98 L325.54,166.98 L327.58,186.64 L329.64,186.64 L332.85,186.64 L335.20,203.50 L337.38,203.50 L339.63,206.31 L341.66,206.31 L343.68,206.31 L345.79,206.31 L347.80,206.31 L349.98,206.31 L352.00,181.03 L354.00,181.03 L356.02,181.03 L358.37,181.03 L360.95,181.03 L363.05,181.03 L365.07,181.03 L367.21,181.03 L370.84,181.03 L373.11,178.22 L375.12,172.60 L377.40,172.60 L379.40,175.41 L381.71,178.22 L383.72,178.22 L385.72,172.60 L387.92,172.60 L389.95,172.60 L392.60,172.60 L396.78,172.60 L398.92,172.60 L400.93,172.60 L403.26,158.56 L405.26,152.94 L408.75,152.94 L410.85,148.72 L412.89,161.36 L414.90,161.36 L416.92,161.36 L419.20,161.36 L421.22,161.36 L423.87,138.89 L426.15,130.47 L428.54,130.47 L430.63,130.47 L432.66,130.47 L434.70,130.47 L436.96,130.47 L439.15,130.47 L441.81,130.47 L444.61,130.47 L446.61,130.47 L448.68,122.04 L450.71,127.66 L452.78,127.66 L455.61,127.66 L458.67,136.08 L460.74,136.08 L462.84,122.04 L465.62,122.04 L467.75,122.04 L470.07,122.04 L472.15,122.04 L474.45,124.85 L476.75,123.44 L479.08,123.44 L481.28,123.44 L483.30,123.44 L485.33,123.44 L487.77,123.44 L489.92,123.44 L492.16,123.44 L494.47,140.30 L496.53,150.13 L498.64,144.51 L501.17,144.51 L503.51,144.51 L505.53,144.51 L507.78,144.51 L509.89,144.51 L511.96,144.51 L514.24,144.51 L516.35,144.51 L518.37,144.51 L520.41,144.51 L522.42,147.32 L524.43,147.32 L526.57,147.32 L529.98,147.32 L532.15,144.51 L534.16,144.51 L536.25,144.51 L538.34,144.51 L540.35,141.70 L542.66,166.98 L544.76,166.98 L546.88,166.98 L549.38,166.98 L551.86,166.98 L554.80,166.98 L558.40,166.98 L560.46,155.75 L562.55,152.94 L564.88,152.94 L567.15,152.94 L569.40,152.94 L571.60,152.94 L573.77,152.94 L577.61,152.94 L580.07,152.94 L583.24,152.94 L585.39,124.85 L587.47,130.47 L589.51,130.47 L591.94,130.47 L593.97,122.04 L596.45,110.80 L598.57,99.57 L601.15,99.57 L603.22,99.57 L606.47,99.57 L608.98,105.19 L611.16,105.19 L613.17,99.57 L615.23,99.57 L617.26,99.57 L619.53,99.57 L621.55,99.57 L623.63,91.14 L625.84,91.14 L628.06,91.14 L630.07,79.91 L632.13,79.91 L634.17,74.29 L636.51,65.86 L638.53,60.25 L640.68,46.20 L642.86,46.20 L644.96,46.20 L647.29,46.20 L649.95,46.20 L651.98,46.20 L654.15,54.63 L656.20,65.86 L658.96,65.86 L661.75,65.86 L663.75,65.86 L665.80,65.86 L668.18,68.67 L671.45,68.67 L673.68,68.67 L676.19,93.95 L678.70,93.95 L680.70,93.95 L682.94,93.95 L685.02,93.95 L687.02,93.95 L689.10,93.95 L691.33,88.33 L693.75,88.33 L696.85,88.33 L698.88,88.33 L701.23,88.33 L703.33,88.33 L705.49,88.33 L707.49,88.33 L709.55,93.95 L711.57,93.95 L713.60,93.95 L715.77,102.38 L717.77,102.38 L720.00,102.38 L722.73,102.38 L725.23,102.38 L727.23,102.38 L729.42,102.38 L731.88,102.38 L733.94,102.38 L735.96,88.33 L737.99,88.33 L740.03,93.95 L742.24,93.95 L744.27,93.95 L746.33,93.95 L748.87,93.95 L751.53,93.95 L753.61,93.95 L755.65,108.00 L757.71,108.00 L760.30,108.00 L763.52,108.00 L765.77,113.61 L769.07,113.61 L771.86,113.61 L774.87,113.61 L777.45,108.00 L779.46,108.00 L782.37,108.00 L784.53,108.00 L786.95,124.85 L789.30,124.85 L791.33,124.85 L794.23,124.85 L796.32,124.85 L798.70,124.85 L800.83,124.85 L802.98,113.61 L805.10,113.61 L808.22,113.61 L810.99,113.61 L814.61,113.61 L817.07,113.61 L819.24,113.61 L821.41,113.61 L823.55,113.61 L825.56,113.61 L828.08,113.61 L830.71,110.80 L832.72,99.57 L836.13,99.57 L838.28,99.57 L840.42,99.57 L842.53,99.57 L844.55,99.57 L847.00,99.57 L849.50,99.57 L852.50,99.57 L854.58,105.19 L856.65,99.57 L858.65,96.76 L861.02,96.76 L864.22,96.76 L866.22,105.19 L868.38,105.19 L870.78,105.19 L872.81,105.19 L874.92,85.53 L877.10,91.14 L879.20,93.95 L881.46,88.33 L883.50,88.33 L885.65,85.53 L887.66,71.48 L889.66,60.25 L891.89,46.20 L893.97,46.20 L896.00,34.97 L896.00,264.00 L72.00,264.00 Z" class="chart-area"></path><path d="M72.00,228.78 L74.07,214.73 L76.18,214.73 L78.31,214.73 L80.39,214.73 L82.53,203.50 L84.67,203.50 L86.70,203.50 L88.70,211.92 L90.72,211.92 L93.18,211.92 L96.46,211.92 L98.77,211.92 L100.78,203.50 L102.87,203.50 L105.53,203.50 L107.57,203.50 L110.49,203.50 L112.51,203.50 L114.71,200.69 L117.07,200.69 L119.85,200.69 L122.10,200.69 L124.18,200.69 L126.28,203.50 L128.29,234.39 L130.55,234.39 L132.92,234.39 L135.35,234.39 L137.78,234.39 L140.61,242.82 L142.74,247.03 L144.76,247.03 L146.88,247.03 L149.02,247.03 L151.03,231.59 L153.15,231.59 L155.18,231.59 L157.40,231.59 L159.41,223.16 L161.56,223.16 L163.63,223.16 L166.33,223.16 L168.36,223.16 L171.21,223.16 L173.55,223.16 L176.07,223.16 L178.27,223.16 L180.46,223.16 L183.56,223.16 L185.58,223.16 L187.62,223.16 L189.64,223.16 L191.72,223.16 L194.14,223.16 L196.67,238.61 L199.36,220.35 L201.48,203.50 L203.75,195.07 L205.86,195.07 L207.88,203.50 L209.89,203.50 L211.93,203.50 L213.98,192.26 L216.01,200.69 L218.16,200.69 L220.19,200.69 L222.68,200.69 L225.22,200.69 L227.47,200.69 L229.52,200.69 L231.58,200.69 L233.58,217.54 L235.69,217.54 L237.75,217.54 L240.00,206.31 L242.06,206.31 L245.01,231.59 L247.78,211.92 L250.15,211.92 L252.33,183.84 L254.50,183.84 L256.81,183.84 L258.84,203.50 L260.95,206.31 L263.37,206.31 L265.65,183.84 L268.09,183.84 L270.12,183.84 L273.01,183.84 L275.08,183.84 L277.35,183.84 L279.48,183.84 L281.55,183.84 L284.20,183.84 L286.22,183.84 L288.38,183.84 L290.39,183.84 L293.73,183.84 L296.09,183.84 L298.35,183.84 L300.71,183.84 L303.60,183.84 L305.98,165.58 L308.78,161.36 L310.97,161.36 L313.03,161.36 L316.02,161.36 L318.80,161.36 L320.99,161.36 L323.11,166.98 L325.54,166.98 L327.58,186.64 L329.64,186.64 L332.85,186.64 L335.20,203.50 L337.38,203.50 L339.63,206.31 L341.66,206.31 L343.68,206.31 L345.79,206.31 L347.80,206.31 L349.98,206.31 L352.00,181.03 L354.00,181.03 L356.02,181.03 L358.37,181.03 L360.95,181.03 L363.05,181.03 L365.07,181.03 L367.21,181.03 L370.84,181.03 L373.11,178.22 L375.12,172.60 L377.40,172.60 L379.40,175.41 L381.71,178.22 L383.72,178.22 L385.72,172.60 L387.92,172.60 L389.95,172.60 L392.60,172.60 L396.78,172.60 L398.92,172.60 L400.93,172.60 L403.26,158.56 L405.26,152.94 L408.75,152.94 L410.85,148.72 L412.89,161.36 L414.90,161.36 L416.92,161.36 L419.20,161.36 L421.22,161.36 L423.87,138.89 L426.15,130.47 L428.54,130.47 L430.63,130.47 L432.66,130.47 L434.70,130.47 L436.96,130.47 L439.15,130.47 L441.81,130.47 L444.61,130.47 L446.61,130.47 L448.68,122.04 L450.71,127.66 L452.78,127.66 L455.61,127.66 L458.67,136.08 L460.74,136.08 L462.84,122.04 L465.62,122.04 L467.75,122.04 L470.07,122.04 L472.15,122.04 L474.45,124.85 L476.75,123.44 L479.08,123.44 L481.28,123.44 L483.30,123.44 L485.33,123.44 L487.77,123.44 L489.92,123.44 L492.16,123.44 L494.47,140.30 L496.53,150.13 L498.64,144.51 L501.17,144.51 L503.51,144.51 L505.53,144.51 L507.78,144.51 L509.89,144.51 L511.96,144.51 L514.24,144.51 L516.35,144.51 L518.37,144.51 L520.41,144.51 L522.42,147.32 L524.43,147.32 L526.57,147.32 L529.98,147.32 L532.15,144.51 L534.16,144.51 L536.25,144.51 L538.34,144.51 L540.35,141.70 L542.66,166.98 L544.76,166.98 L546.88,166.98 L549.38,166.98 L551.86,166.98 L554.80,166.98 L558.40,166.98 L560.46,155.75 L562.55,152.94 L564.88,152.94 L567.15,152.94 L569.40,152.94 L571.60,152.94 L573.77,152.94 L577.61,152.94 L580.07,152.94 L583.24,152.94 L585.39,124.85 L587.47,130.47 L589.51,130.47 L591.94,130.47 L593.97,122.04 L596.45,110.80 L598.57,99.57 L601.15,99.57 L603.22,99.57 L606.47,99.57 L608.98,105.19 L611.16,105.19 L613.17,99.57 L615.23,99.57 L617.26,99.57 L619.53,99.57 L621.55,99.57 L623.63,91.14 L625.84,91.14 L628.06,91.14 L630.07,79.91 L632.13,79.91 L634.17,74.29 L636.51,65.86 L638.53,60.25 L640.68,46.20 L642.86,46.20 L644.96,46.20 L647.29,46.20 L649.95,46.20 L651.98,46.20 L654.15,54.63 L656.20,65.86 L658.96,65.86 L661.75,65.86 L663.75,65.86 L665.80,65.86 L668.18,68.67 L671.45,68.67 L673.68,68.67 L676.19,93.95 L678.70,93.95 L680.70,93.95 L682.94,93.95 L685.02,93.95 L687.02,93.95 L689.10,93.95 L691.33,88.33 L693.75,88.33 L696.85,88.33 L698.88,88.33 L701.23,88.33 L703.33,88.33 L705.49,88.33 L707.49,88.33 L709.55,93.95 L711.57,93.95 L713.60,93.95 L715.77,102.38 L717.77,102.38 L720.00,102.38 L722.73,102.38 L725.23,102.38 L727.23,102.38 L729.42,102.38 L731.88,102.38 L733.94,102.38 L735.96,88.33 L737.99,88.33 L740.03,93.95 L742.24,93.95 L744.27,93.95 L746.33,93.95 L748.87,93.95 L751.53,93.95 L753.61,93.95 L755.65,108.00 L757.71,108.00 L760.30,108.00 L763.52,108.00 L765.77,113.61 L769.07,113.61 L771.86,113.61 L774.87,113.61 L777.45,108.00 L779.46,108.00 L782.37,108.00 L784.53,108.00 L786.95,124.85 L789.30,124.85 L791.33,124.85 L794.23,124.85 L796.32,124.85 L798.70,124.85 L800.83,124.85 L802.98,113.61 L805.10,113.61 L808.22,113.61 L810.99,113.61 L814.61,113.61 L817.07,113.61 L819.24,113.61 L821.41,113.61 L823.55,113.61 L825.56,113.61 L828.08,113.61 L830.71,110.80 L832.72,99.57 L836.13,99.57 L838.28,99.57 L840.42,99.57 L842.53,99.57 L844.55,99.57 L847.00,99.57 L849.50,99.57 L852.50,99.57 L854.58,105.19 L856.65,99.57 L858.65,96.76 L861.02,96.76 L864.22,96.76 L866.22,105.19 L868.38,105.19 L870.78,105.19 L872.81,105.19 L874.92,85.53 L877.10,91.14 L879.20,93.95 L881.46,88.33 L883.50,88.33 L885.65,85.53 L887.66,71.48 L889.66,60.25 L891.89,46.20 L893.97,46.20 L896.00,34.97" class="chart-line"></path><circle cx="896" cy="34.96551724137931" r="5" class="chart-dot"></circle></svg>
+        <div id="chart-empty" class="chart-empty" hidden="">正在等待行情采样</div>
+      </div>
+      <div class="chart-meta"><span id="trend-start">开始 09:31:28</span><span id="trend-samples">360 个采样</span><span id="trend-end">当前 09:32:01</span></div>
+    </section>
+
+    <section class="card baseline-card">
+      <div class="section-head"><div><small>尚未使用任何加速技术</small><h2>延时基线</h2></div><b>C++ 自动热路径</b></div>
+      <div class="latency-grid"><div><small>自动订单 RTT P50</small><strong id="latency-p50">—</strong></div><div class="primary"><small>自动订单 RTT P99</small><strong id="latency-p99">—</strong></div><div><small>最大值</small><strong id="latency-max">—</strong></div><div><small>样本数</small><strong id="latency-samples">0</strong></div></div>
+      <p>计时范围：C++ 自动交易进程发出订单 → 收到最终结果。Python 网页不在被测链路内；手动单 RTT 在交易记录中单独显示。</p>
+      <div class="strategy-row"><div><small>预置课堂策略 · 本章只需开关</small><b id="strategy-rule">五档失衡 ≥ 35% → 25 股 IOC</b><span id="strategy-guard">同标的冷却 5 秒 · AUTO 仓位上限 ±200</span></div><button id="strategy-toggle"><i></i><span id="strategy-state">已开启</span></button></div>
+      <div class="positions"><div><span>AAPL 合计持仓</span><b id="position-aapl">0</b></div><div><span>NVDA 合计持仓</span><b id="position-nvda">0</b></div><div><span>合计模拟盈亏</span><b id="pnl">−$0.01</b></div></div>
+    </section>
+
+    <section class="card orders-card">
+      <div class="section-head"><div><small>当前回放轮次 · 手动与自动统一记录</small><h2>交易记录</h2></div><b>Exchange 账本 <span id="exchange-ledger-count">0</span> · <span id="fill-count">2</span> 成交 / <span id="order-count">2</span> 订单</b></div>
+      <div class="blotter-head"><span>时间</span><span>来源</span><span>股票</span><span>方向</span><span>数量</span><span>价格</span><span>结果</span><span>RTT</span></div><div id="blotter" class="blotter"><div class="blotter-empty">本轮还没有订单</div></div>
+    </section>
+
+    <section class="card path-card">
+      <div class="section-head"><div><small>课堂系统边界</small><h2>一笔交易经过哪里</h2></div><b id="session">SESSION 0612260003</b></div>
+      <div class="system-path"><div id="node-exchange" class="online"><small>主机 .1 · C++ 进程</small><strong>历史行情交易所</strong><span>持续回放 + 独立纸面账本</span></div><i>ITCH 行情 / OUCH 订单</i><div id="node-trader" class="online"><small>主机 .2 · 两个 C++ 进程</small><strong>自动交易 + 手动交易</strong><span>各自 Feed、订单 ID 与 SoupBinTCP 会话</span></div><i>旁路状态</i><div id="node-gateway" class="online"><small>管理机 .101 · Python</small><strong>统一交易记录</strong><span>只展示，不进入延时测量路径</span></div></div>
+      <div class="path-meta"><span>当前行情：<b id="market-mode">仅 A 路组播</b></span><span>历史数据 + 模拟成交，不涉及真实资金</span></div>
+    </section>
+
+    <section class="card lanz-card" id="lanz-stream-card">
+      <div class="section-head">
+        <div>
+          <small>7150 管理口 TCP 50001 · 与上面成交无关</small>
+          <h2>交换机队列事件</h2>
+        </div>
+        <b id="lanz-stream-status" title="dial tcp 10.1.1.253:50001: connect: connection refused" class="">当前未连接 · 以下为保留的历史记录</b>
+      </div>
+      <div class="lanz-overview">
+        <div><span>本轮已结束的拥塞</span><strong><b id="lanz-count-end">163</b><small> 次</small></strong></div>
+        <p>观察 Ethernet2 · TC1 出口队列<br><span>每个缓冲段 <b id="lanz-segment-size">480 B</b> · 尚未结束 <b id="lanz-count-active">0</b> 次</span></p>
+      </div>
+      <div id="lanz-latest-event" class="lanz-latest">
+        <div class="lanz-event-caption">最近一次拥塞 <span>已结束</span></div>
+        <div class="lanz-event-grid">
+          <div><small>开始时刻 · S</small><b id="lanz-latest-start">00:07:12.929610</b><span id="lanz-latest-start-date">2026-09-17 UTC</span></div>
+          <div><small>结束时刻 · E</small><b id="lanz-latest-end">00:07:12.929640</b><span id="lanz-latest-end-date">2026-09-17 UTC</span></div>
+          <div class="lanz-peak"><small>本次峰值队列</small><b id="lanz-latest-peak">64 段</b><span id="lanz-latest-start-size">开始时 64 段</span></div>
+        </div>
+        <p class="lanz-time-note">时刻来自交换机，粒度 10 µs；拥塞持续时间以终端的 duration 为准。</p>
+      </div>
+      <div id="lanz-event-empty" class="lanz-empty" hidden="">尚未收到完整的开始 / 结束记录</div>
+      <div class="lanz-history-bar"><p id="lanz-history-summary">已保留最近 80 条记录（上限 80 条），可展开核对原始 S/E。</p><button id="lanz-history-toggle" type="button" aria-expanded="false">查看详细记录</button></div>
+      <div id="lanz-history-detail" hidden="">
+        <div class="lanz-meta"><span>累计 S <b id="lanz-count-start">163</b> 条</span><span>累计 U <b id="lanz-count-update">0</b> 条</span><span>一组 S/E 对应一次拥塞；最新记录在上。</span></div>
+        <div class="lanz-head"><span>记录类型</span><span>接口</span><span>流量类别</span><span>队列长度（段）</span><span>交换机时刻（UTC）</span></div>
+        <div id="lanz-stream-rows" class="lanz-rows"><div class="lanz-empty">尚未收到完整的一组开始 / 结束记录</div></div>
+        <p class="lanz-note">S：开始时队列长度；E 的 *：本次拥塞最大队列长度。累计数从采集器启动或清空历史起计算。</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" role="status"></div>
+  <script src="/terminal.js"></script>
+
+
+</body></html>

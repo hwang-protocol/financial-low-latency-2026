@@ -1,0 +1,61 @@
+{
+  "date": "2026-09-15",
+  "status": "USER RUN / DOC PASS",
+  "scope": "第三章运行②实测输出取重点",
+  "run_id": "20260915T102731Z-03-market-paths",
+  "base_run_id": "20260915T094055Z-02-trading-platform",
+  "chapter": "Documents/newDoc/03-live-trading-traffic-and-protocols.md",
+  "chapter_sha256": "4fc4fc00f1f39a465f19f02cbc30896f5bd0b2cafbb2db76163ba740f39e2f43",
+  "classroom_sha256": "8c4fc917cad35293809577ac1b9910e5620e99c6761490107c66dc5ab753f42e",
+  "excerpt_lines": [
+    "IP 20.1.1.1.37505 > 233.74.125.32.31032: UDP, length 41",
+    "IP 20.1.1.1.37505 > 233.74.125.33.31033: UDP, length 41",
+    "mode=MULTICAST_A captured=120 multicast_a=120 multicast_b=0",
+    "mode=MULTICAST_B captured=120 multicast_a=0 multicast_b=120",
+    "mode=DUAL captured=120 multicast_a=60 multicast_b=60",
+    "membership_a=1 membership_b=1 dual_sequence_overlap=60 duplicate_delta=1177 pending=0 gaps=0",
+    "===== 恢复检查前的行情模式 =====",
+    "market_mode=MULTICAST_A"
+  ],
+  "checks": {
+    "sha256_manifests": {
+      "classroom": 2,
+      "raw_and_sources": 32,
+      "result": "PASS"
+    },
+    "excerpt_exact_and_in_order": true,
+    "saved_pcaps_redecoded_match": true,
+    "document_format_tests": "12/12 PASS",
+    "git_diff_check": "PASS"
+  },
+  "observations": {
+    "A": [
+      120,
+      0
+    ],
+    "B": [
+      0,
+      120
+    ],
+    "DUAL": [
+      60,
+      60
+    ],
+    "dual_sequence_overlap": 60,
+    "duplicate_delta": 1177,
+    "pending": 0,
+    "gaps": 0,
+    "restored_market_mode": "MULTICAST_A"
+  },
+  "changes": [
+    "第03章正文",
+    "03-live-traffic/README.md",
+    "03-live-traffic/READING-NOTES.md",
+    "03-live-traffic/test-document-format.py",
+    "00.PINS.md",
+    "00.FREEZE-LEDGER.md",
+    "FLLE_AB_Multicast_Migration_2026-09-15.md"
+  ],
+  "limits": "仅读用户日志与已保存pcap，未重新运行设备、未改运行脚本或原件。该窗口不证明新版源过滤接收器部署、第四章新测量或干净快照顺刷完成。",
+  "suggested_commit": "docs(ch03): 摘录 A/B 三模式实测关键输出"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "flle.lanz-reader-build.v1",
+  "upstream": {
+    "url": "https://github.com/aristanetworks/goarista",
+    "commit": "a373d7c9f0d9de57f4e1fcfe9adc868c7104f9cd",
+    "module_version": "v0.0.0-20251201112602-a373d7c9f0d9",
+    "module_h1": "sUmkQn9Eg+C0sRvW5jtAYUcfT1OWJf747YIh9MIvpWY=",
+    "patched": false
+  },
+  "protobuf": "v1.36.10",
+  "compiler": {
+    "version": "go1.24.13",
+    "url": "https://go.dev/dl/go1.24.13.linux-amd64.tar.gz",
+    "sha256": "1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730"
+  },
+  "build": "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GOAMD64=v1 go build -mod=vendor -trimpath -buildvcs=false -ldflags=\"-s -w -buildid=\"",
+  "source_sha256": "39e86e3f963d057352eddf27c594c6d214b839d6b9caf09fc8bde7ed3ab50099",
+  "binary_sha256": "e6f58a6bd287f7776de936c8b82d5629c4b9afb14b92b721605eb783a0490083",
+  "tests": {
+    "arista_lanz_package": "6 tests PASS",
+    "adapter_go": "3 tests PASS",
+    "sdk_to_http_and_shutdown": "PASS (final offline vendor-build binary)"
+  },
+  "hardware_lanz_ab": "PASS 20260917T002319Z-07-lanz-stream-ab: 10k=0, 25k=163, retained80 match EOS",
+  "vendor_arista_byte_match": true,
+  "offline_archive_rebuild_byte_identical": true,
+  "adapter_version": "1.1",
+  "timestamp_tick_us": 10
+}

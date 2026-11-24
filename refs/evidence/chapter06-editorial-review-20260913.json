@@ -1,0 +1,152 @@
+{
+  "date": "2026-09-13",
+  "scope": "Apply verified editorial review to chapter 06; concise teaching text and EOS command presentation only",
+  "provided_review": {
+    "path": "Documents/design/evidence/chapter06-editorial-review-user-20260913.txt",
+    "sha256": "4e321029d4096937efeebf4e99bd0642ac12ae1bb1931b0b193b6e04a418cb88",
+    "status": "User-supplied assessment, retained as input; individual assertions were checked rather than adopted wholesale"
+  },
+  "adopted": [
+    "delete fourth roadmap repetition",
+    "trim repeated roadmap in platform introduction",
+    "connect serialization to signal processing",
+    "keep FCS comparison without repeating queue conclusion",
+    "remove duplicate inventory entry",
+    "inventory one-line entry and eight actual show commands",
+    "clarify production-only L1 example",
+    "link exact Connect product specification",
+    "use documented unfiltered L1 source query",
+    "shorten fan-in figure caption",
+    "remove duplicated fan-in table and multicast subsection heading",
+    "remove unsupported multicast latency example",
+    "retire redundant QoS trading flow figure",
+    "remove repeated order count",
+    "keep LANZ threshold result at explanation only",
+    "remove unrelated Transparent Clock disambiguation",
+    "remove maintenance paragraph before LANZ run card",
+    "compact LANZ counts interpretation",
+    "add config mode boundaries: ptp",
+    "add config mode boundaries: monitor",
+    "add config mode boundaries: platform",
+    "explicit queue submode exit",
+    "explicit queue submode exit",
+    "explicit queue submode exit",
+    "explicit queue submode exit",
+    "clarify local PTP reference",
+    "state DMF platform and recommended format without claiming exclusive format",
+    "mark dedicated aggregation as untested design",
+    "clarify upstream PTP direction in design card",
+    "complete dedicated TapAgg command modes",
+    "separate tapagg show from configuration",
+    "name identity outer VLAN tag",
+    "clarify upstream multicast and same-counter relative measurement",
+    "compress final acceptance prerequisite",
+    "remove ambiguous TC OFF ON from student run card"
+  ],
+  "review_adjustments": {
+    "dmf_timestamp": "7280R3/7800R3 support and currently recommended 48-bit source-MAC replacement are explained. replace-src-mac is the current recommendation, not a claim that DMF has only one possible timestamp format.",
+    "dmf_details_moved_to_teacher_notes": "Flow Diff min/max/mean and push-per-filter limit retained in asset README. packet-timeout is configurable with default 200 ms, not a fixed universal drop threshold.",
+    "single_7150_counter": "Relative interval between ports sharing a counter does not require cross-device PTP synchronization. Counter rollover and frequency error remain; PTP establishes UTC/cross-device reference. Capture-path delay difference still needs calibration.",
+    "local_ptp_master": "No upstream PTP reference in the course; does not establish UTC accuracy. No assertion that the switch can never have any other UTC reference.",
+    "tap_aggregation_ptp": "Et24 is a preconfigured upstream PTP follower retained with mode exclusive no-errdisable ethernet 24; upstream must statically forward PTP multicast in TAP mode. Keyframe egress/server addressing remain deployment-specific.",
+    "l1_checks": "7130 Connect 16G3S/48G3S have 4 ns port-to-port specification; 96S has 6 ns. Keep lowest 4 ns as product specification only. Use documented show l1 source; documented comma-list path/matrix syntax retained.",
+    "scope_deferred": "RUN_ID -07- suffix migration would change runtime scripts/archive conventions; not undertaken in this prose review. Historical measurements retained without new causal attribution."
+  },
+  "source_urls": [
+    "https://www.arista.com/en/ug-dmf/dmf-dmf-service-node-appliance",
+    "https://www.arista.com/ug-dmf/dmf-advanced-policy-configuration",
+    "https://www.arista.com/en/um-eos/eos-test-access-point-aggregation",
+    "https://www.arista.com/assets/data/pdf/Whitepapers/Overview_Arista_Timestamps.pdf",
+    "https://www.arista.com/en/products/7130-connect",
+    "https://www.arista.com/en/um-eos/eos-7130-layer-1-commands",
+    "https://www.arista.com/assets/data/pdf/user-manual/um-books/EOS-User-Manual.pdf"
+  ],
+  "source_review_level": "Official documentation and existing repository facts; no hardware execution",
+  "document_checks": {
+    "fences_before": 26,
+    "fences_after": 27,
+    "images_before": 24,
+    "images_after": 23,
+    "h1_h3_unchanged": true,
+    "navigation_cards_unchanged": 14,
+    "navigation_placement": "immediately after associated H3",
+    "unparsed_bold": 0,
+    "strong_nodes": 57,
+    "measured_outputs_unchanged": [
+      {
+        "prefix": "fll-arista / verify",
+        "lines": 47,
+        "sha256": "a81991386917ebfeef8325f386a76851dfe6038f97c46eab6f946d0e77f56623"
+      },
+      {
+        "prefix": "===== QoS 结果",
+        "lines": 21,
+        "sha256": "44ac0496e09db7db845aab834aea2cbbdf9d38b91e16765093819ce8205032d8"
+      },
+      {
+        "prefix": "===== LANZ 接收器",
+        "lines": 37,
+        "sha256": "8577784d7247a1da81a08ca77b4aad25dcfcd9a955e08f2db532616d8f0e0514"
+      },
+      {
+        "prefix": "===== PTP 对时",
+        "lines": 21,
+        "sha256": "b79401a1006becab20d6d6b5c265ce66a7330da4d0f5e67f6a1830e093288c7d"
+      },
+      {
+        "prefix": "result=PASS",
+        "lines": 9,
+        "sha256": "28eefdc070015f219262af2f9bf3552dceb1ff6e15936713afd2ec78959e1c47"
+      }
+    ],
+    "modified_existing_fences": 7,
+    "inventory_commands_match_script": true,
+    "local_links_checked": 1,
+    "manifest_counts": {
+      "06-diagrams": 68,
+      "course-visuals": 271
+    },
+    "visible_prose_before": 20534,
+    "visible_prose_after": 19837,
+    "visible_prose_reduction_percent": 3.39
+  },
+  "renders": {
+    "inventory": {
+      "width": 800,
+      "height": 900,
+      "visual_check": "PASS: readable, no overlap or clipping in modified prose, cards and code"
+    },
+    "lanz": {
+      "width": 800,
+      "height": 700,
+      "visual_check": "PASS: readable, no overlap or clipping in modified prose, cards and code"
+    },
+    "ptp": {
+      "width": 800,
+      "height": 1250,
+      "visual_check": "PASS: readable, no overlap or clipping in modified prose, cards and code"
+    },
+    "dmf": {
+      "width": 800,
+      "height": 1050,
+      "visual_check": "PASS: readable, no overlap or clipping in modified prose, cards and code"
+    },
+    "taptool": {
+      "width": 800,
+      "height": 2100,
+      "visual_check": "PASS: readable, no overlap or clipping in modified prose, cards and code"
+    }
+  },
+  "image_bytes_changed": false,
+  "retired_image_reference": "images/course-visuals/06-diagrams/06-qos-trading-flow.svg",
+  "raw_result_bytes_changed": false,
+  "runtime_code_changes": false,
+  "new_device_run": false,
+  "validation_status": "DOC / LOCAL RENDER / OFFICIAL SOURCE PASS",
+  "git_diff_check": "PASS",
+  "pending": "Dedicated 7150 multi-input and DMF deployments remain untested designs in this course. No new live verification claimed.",
+  "second_pass_correction": {
+    "record": "chapter06-editorial-review-second-pass-20260913.json",
+    "scope": "DMF platform and timestamp encoding now have separate source links; L1 query targets Ethernet2-4. Original counts/output checks describe first-pass state."
+  }
+}

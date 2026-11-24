@@ -1,0 +1,131 @@
+{
+  "schema": "flle.traffic-revision-acceptance.v1",
+  "date": "2026-09-08",
+  "run_id": "20260908T090619Z-traffic-revision",
+  "platform_run": "20260908T095222Z-02-trading-platform",
+  "runtime_sha256": "ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573",
+  "controller": "10.1.1.2:48606/TCP",
+  "jumphost_controller_listener": "ABSENT",
+  "market_multicast": "233.74.125.32:31032/UDP",
+  "market_unicast": "20.1.1.2:42121/UDP",
+  "snooping_querier": "20.1.1.254",
+  "snooping_member": "Ethernet2",
+  "tests": {
+    "cpp_selftest": "PASS",
+    "python_local": "173 tests, 1 skipped; shared receiver exercised on build host",
+    "python_builder": "177 tests, 9 repository-only checks skipped",
+    "shared_socket_tests": "4/4 PASS",
+    "two_builds": "7 outputs byte-identical",
+    "web_switch": "DPDK/SFC/BASELINE READY",
+    "order_fills": [
+      {
+        "test": "fill-baseline-OPENONLOAD-BUY",
+        "order_id": 2512000000,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-baseline-OPENONLOAD-SELL",
+        "order_id": 2512000001,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-baseline-SOCKET-BUY",
+        "order_id": 2112000000,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-baseline-SOCKET-SELL",
+        "order_id": 2112000001,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-baseline-TCPDIRECT-BUY",
+        "order_id": 2912000000,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-baseline-TCPDIRECT-SELL",
+        "order_id": 2912000001,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-dpdk-DPDK-BUY",
+        "order_id": 3901000000,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-dpdk-DPDK-SELL",
+        "order_id": 3901000001,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-sfc-OPENONLOAD-BUY",
+        "order_id": 2510000000,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-sfc-OPENONLOAD-SELL",
+        "order_id": 2510000001,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-sfc-SOCKET-BUY",
+        "order_id": 2110000000,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-sfc-SOCKET-SELL",
+        "order_id": 2110000001,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-sfc-TCPDIRECT-BUY",
+        "order_id": 2910000000,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      },
+      {
+        "test": "fill-sfc-TCPDIRECT-SELL",
+        "order_id": 2910000001,
+        "result": "ORDER_EXECUTED",
+        "quantity": 1
+      }
+    ],
+    "market_modes": "120 unicast; 120 multicast; dual 60+60; one membership; gaps=0",
+    "xdp": "20260908T100656Z-08-xdp-receiver-live PASS",
+    "p4": "20260908T101323Z-09-p4-drop-live RESTORED",
+    "rtl": "20260908T101639Z-10-rtl-stages RESTORED"
+  },
+  "evidence_sha256": {
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/final-python-tests.txt": "0ba6c2ea88e72f22279c1881ffa0838808aade06d8fe9fd9911be9958387f22c",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/final-remote-tests.txt": "be63b286e8f5a5985d70f1b84a9b71be0d1c5eac52441e5f2386ba16ca833c25",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/web-switch-accepted.txt": "08404d7c63eab0de649f8090d35ff52aa54efa52e4d6db4ebf14762117e67873",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/market-paths.txt": "69799e1755fd821ac70f1c87bd24f114e0a597470c879f1f28d813d496629bfc",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/final-trader-listeners.txt": "4c509d012f066ae4789128b930e41e577ac29bb4d8a182afc5216184de635ca5",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/final-jumphost-listener.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/igmp-final.txt": "a176d27df9386a7ab75bb3f067564f199d56a4074eec91e82518b94291f793c4",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/p4-final-restore.txt": "130cdfb46561f125d283e5c124f38e8806f2bf8a9ac7f8f225e79eb8c4640329",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/rtl-d.txt": "9555d238bf8354680eae601be5a147b49dcfbac8aa788c58403ea4efddde9454",
+    "Documents/reports/course-runs/20260908T090619Z-traffic-revision/raw/xdp-regression.txt": "cf33ffdc6fd5551828d85c54448e96428a686f19d0c12cf92b2d5b764ca0f5f1"
+  },
+  "final": {
+    "profile": "SOFTWARE",
+    "mode": "SFC",
+    "transition": "READY",
+    "feed": "HEALTHY",
+    "pending": 0,
+    "gaps": 0
+  }
+}

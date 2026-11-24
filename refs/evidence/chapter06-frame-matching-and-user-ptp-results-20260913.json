@@ -1,0 +1,212 @@
+{
+  "date": "2026-09-13",
+  "scope": "Explain same-frame matching without Python excerpts and update PTP result example to user-run measurements",
+  "requests": [
+    "Show what distinguishes same-port UDP packets in the two captures",
+    "Use latest user output in place of older 101.376 us example"
+  ],
+  "matching": {
+    "key": [
+      "IPv4 ID",
+      "UDP destination port",
+      "complete UDP payload after removing copy trailer"
+    ],
+    "prefilter": "20.1.1.1 -> 20.1.1.2; actual market source port; destination ports 42121..42125",
+    "moldudp64_payload_fields": [
+      "session",
+      "first message sequence",
+      "message count",
+      "message data"
+    ],
+    "unique_copy_required": true,
+    "keyframe_role": "Reconstruct time, not identify packet",
+    "source_pcaps": {
+      "run": "20260903T085652Z-07-stamped-span-live",
+      "examples": [
+        {
+          "ipid": 29219,
+          "sport": 38622,
+          "dport": 42121,
+          "session": "0612260001",
+          "mold_first_message_sequence": 10255142,
+          "message_count": 1,
+          "payload_len": 41,
+          "copy_frame_len": 87,
+          "live_frame_len": 83,
+          "payloads_equal": true
+        },
+        {
+          "ipid": 29224,
+          "sport": 38622,
+          "dport": 42121,
+          "session": "0612260001",
+          "mold_first_message_sequence": 10255143,
+          "message_count": 1,
+          "payload_len": 58,
+          "copy_frame_len": 104,
+          "live_frame_len": 100,
+          "payloads_equal": true
+        },
+        {
+          "ipid": 29229,
+          "sport": 38622,
+          "dport": 42121,
+          "session": "0612260001",
+          "mold_first_message_sequence": 10255144,
+          "message_count": 1,
+          "payload_len": 41,
+          "copy_frame_len": 87,
+          "live_frame_len": 83,
+          "payloads_equal": true
+        }
+      ],
+      "all_capture_pairing": {
+        "paired": 20525,
+        "miss_live": 5,
+        "ambiguous": 0,
+        "copy_only": 0
+      },
+      "note": "Examples selected from real matching pairs. Whole-capture totals include capture edges; do not substitute for interior-window published results."
+    }
+  },
+  "user_executed_runs_rechecked": [
+    {
+      "run": "20260913T103102Z-07-stamped-span-live",
+      "manifest_files": 38,
+      "root_sha256": "6ed1fed195d2782e73fca91bf45cf6f4106e10e3bdb5a79a9e2d51bad7813ad6",
+      "phase": "COMPLETE",
+      "source_hashes": {
+        "12-stamped-span-live.sh": "91e0fe3cbe353ed6408f9c0eabd5c4d80a433400fe709d081238e2ebe8a2eec5",
+        "format_stamped_span_result.py": "08776a39feb0347924dca55212d261809c4f9e0f7bb28db709c91067dd86ac0e",
+        "analyze_stamped_span.py": "654a032e427935aceff8e29ef4a229547891dff2ae24be45e10b63a3b042084d",
+        "ptp-switch-slave.cfg": "cbc303f301ae57afc323e9493bd90d168606975f261cadf5af3307a080d511e9"
+      },
+      "pcap_reanalysis_equal": true,
+      "formatter_equal": true,
+      "paired": 6313,
+      "live_interior": 6313,
+      "keyframes": 8,
+      "delay_ns": {
+        "n": 6313,
+        "negatives": 0,
+        "min": 3840.0,
+        "p50": 7168.0,
+        "p90": 9728.0,
+        "p99": 11264.0,
+        "max": 11776.0
+      },
+      "ptp": {
+        "slave_lines": 1,
+        "offset_ns_last": 148.0,
+        "offset_ns_n": 17,
+        "path_delay_ns_last": -231.0,
+        "path_delay_ns_n": 17
+      },
+      "pass_gates": {
+        "pair_complete": true,
+        "all_positive": true,
+        "max_under_1ms": true,
+        "typical_copy_plus4": true,
+        "asic_near_350mhz": true
+      },
+      "recovery_recheck": "PASS: switch PTP/SPAN/Keyframe disabled, .2 ping and hardware timestamping restored, .11 cleanup completion, trading SFC READY sfc"
+    },
+    {
+      "run": "20260913T103311Z-07-stamped-span-live",
+      "manifest_files": 38,
+      "root_sha256": "6690abc21338339b23146565a2d3dc4e501f8553aaa5990511f5affa98771d2b",
+      "phase": "COMPLETE",
+      "source_hashes": {
+        "12-stamped-span-live.sh": "91e0fe3cbe353ed6408f9c0eabd5c4d80a433400fe709d081238e2ebe8a2eec5",
+        "format_stamped_span_result.py": "08776a39feb0347924dca55212d261809c4f9e0f7bb28db709c91067dd86ac0e",
+        "analyze_stamped_span.py": "654a032e427935aceff8e29ef4a229547891dff2ae24be45e10b63a3b042084d",
+        "ptp-switch-slave.cfg": "cbc303f301ae57afc323e9493bd90d168606975f261cadf5af3307a080d511e9"
+      },
+      "pcap_reanalysis_equal": true,
+      "formatter_equal": true,
+      "paired": 3705,
+      "live_interior": 3705,
+      "keyframes": 8,
+      "delay_ns": {
+        "n": 3705,
+        "negatives": 0,
+        "min": 3328.0,
+        "p50": 7168.0,
+        "p90": 9984.0,
+        "p99": 11776.0,
+        "max": 12032.0
+      },
+      "ptp": {
+        "slave_lines": 1,
+        "offset_ns_last": 91.0,
+        "offset_ns_n": 18,
+        "path_delay_ns_last": -6.0,
+        "path_delay_ns_n": 18
+      },
+      "pass_gates": {
+        "pair_complete": true,
+        "all_positive": true,
+        "max_under_1ms": true,
+        "typical_copy_plus4": true,
+        "asic_near_350mhz": true
+      },
+      "recovery_recheck": "PASS: switch PTP/SPAN/Keyframe disabled, .2 ping and hardware timestamping restored, .11 cleanup completion, trading SFC READY sfc"
+    }
+  ],
+  "main_result_run": "20260913T103311Z-07-stamped-span-live",
+  "old_result_run": "20260903T085652Z-07-stamped-span-live",
+  "measurement_definition": "Hardware NIC RX timestamp minus reconstructed switch ingress timestamp; unchanged analysis definition",
+  "cause_of_old_new_difference": "Not established; no causal or accuracy-improvement claim",
+  "document_checks": {
+    "fences_before": 29,
+    "fences_after": 25,
+    "images": 23,
+    "unparsed_bold": 0,
+    "h1_h3_unchanged": true,
+    "other_sections_unchanged": true,
+    "result_matches_user_run": true
+  },
+  "figure": {
+    "path": "Documents/newDoc/images/course-visuals/06-diagrams/06-pcap-frame-matching.svg",
+    "sha256": "b571411cae6e01a437fc1d56dd95726a687063504b78cd7380b4e0fdf02c0018",
+    "size": [
+      1200,
+      750
+    ],
+    "data": "Explicitly illustrative; 501/502/503 IP IDs, 1001/1002/1003 message sequences",
+    "layout": "Equal left/right panels and three identical straight pairing arrows",
+    "arrow_head": [
+      12,
+      12
+    ],
+    "stroke": 2.5,
+    "target_gap": 12,
+    "full_view_800_1200": "PASS",
+    "arrows_at_2x": "PASS"
+  },
+  "checks": {
+    "whole_matching_and_result_sections_800px": "PASS",
+    "all_bold_markers_parse": "PASS",
+    "image_manifests": "PASS",
+    "image_manifest_counts": [
+      66,
+      269
+    ],
+    "user_run_manifest_files": [
+      38,
+      38
+    ],
+    "pcap_reanalysis_and_display": "PASS for both runs"
+  },
+  "sources": [
+    "https://www.rfc-editor.org/rfc/rfc768.html",
+    "https://www.rfc-editor.org/rfc/rfc6864.html",
+    "https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/moldudp64.pdf",
+    "apps/flle-trading-lab/src/nasdaq_protocol.hpp",
+    "Documents/newDoc/assets/06-arista-time/live-support/stamped-span/analyze_stamped_span.py"
+  ],
+  "this_turn_device_execution": false,
+  "source_script_changes_this_turn": false,
+  "archived_run_files_changed": false,
+  "pending": "Cause of historical versus latest absolute delay difference not investigated; no pending work for requested doc changes."
+}

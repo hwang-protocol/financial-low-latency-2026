@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="610" viewBox="0 0 1200 610" role="img" aria-labelledby="title desc">
+  <title id="title">raw sample、Prometheus和Grafana三层证据</title>
+  <desc id="desc">raw CSV保存逐笔证据，Prometheus按时间抓取聚合指标，Grafana用PromQL组织面板。箭头从下层指向上层，尖停在上一层框边。</desc>
+  <defs>
+    <marker id="up" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#64748b"/></marker>
+  </defs>
+  <rect x="18" y="18" width="1164" height="574" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="62" y="68" font-family="Arial,'Noto Sans SC',sans-serif" font-size="21" font-weight="700" fill="#475569">EVIDENCE LADDER</text>
+  <text x="62" y="104" font-family="Arial,'Noto Sans SC',sans-serif" font-size="32" font-weight="800" fill="#0f172a">看板像汽车仪表，原始样本才是维修记录</text>
+
+  <rect x="72" y="416" width="1056" height="124" rx="22" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+  <text x="130" y="464" font-family="Arial,'Noto Sans SC',sans-serif" font-size="25" font-weight="800" fill="#065f46">① C++ raw sample · 事实层</text>
+  <text x="130" y="508" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">client_order_id · warmup/measured · result · order_rtt_ns</text>
+  <text x="1088" y="488" text-anchor="end" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" font-weight="700" fill="#047857">可以重新排序和复算</text>
+
+  <rect x="168" y="264" width="864" height="116" rx="22" fill="#fff1f2" stroke="#e11d48" stroke-width="3"/>
+  <text x="220" y="312" font-family="Arial,sans-serif" font-size="25" font-weight="800" fill="#9f1239">② Prometheus · 时间序列层</text>
+  <text x="220" y="354" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">每秒 scrape /metrics · 保存值和时间 · PromQL 查询趋势</text>
+
+  <rect x="270" y="140" width="660" height="80" rx="20" fill="#111827" stroke="#f59e0b" stroke-width="3"/>
+  <text x="600" y="191" text-anchor="middle" font-family="Arial,sans-serif" font-size="26" font-weight="800" fill="#fbbf24">③ Grafana · 展示层</text>
+  <line x1="600" y1="416" x2="600" y2="396" stroke="#64748b" stroke-width="4" marker-end="url(#up)"/>
+  <line x1="600" y1="264" x2="600" y2="236" stroke="#64748b" stroke-width="4" marker-end="url(#up)"/>
+  <text x="1128" y="572" text-anchor="end" font-family="Arial,'Noto Sans SC',sans-serif" font-size="18" font-weight="700" fill="#475569">向上越来越好读，向下越来越接近原始事实</text>
+</svg>

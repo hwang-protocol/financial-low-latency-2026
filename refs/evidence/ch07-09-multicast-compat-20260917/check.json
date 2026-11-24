@@ -1,0 +1,98 @@
+{
+  "date": "2026-09-17",
+  "scope": "Chapter 7 exit-1 fix, live rerun and readable output; Chapters 8/9 preliminary A/B compatibility edits paused at user request",
+  "root_causes": [
+    "retained jump-host pointer referred to replaced 20260912 platform",
+    "current MULTICAST_A/B modes absent from filter-stage allowlists"
+  ],
+  "endpoints": {
+    "source": "20.1.1.1",
+    "A": "233.74.125.32:31032",
+    "B": "233.74.125.33:31033",
+    "filter_target": "A; unchanged"
+  },
+  "chapter7_live": {
+    "assistant_run": "20260917T073039.110571425Z-07-xdp-drop",
+    "assistant_exit_code": 0,
+    "assistant_drop_sequence": 647,
+    "user_repeat_run": "20260917T073502.386920713Z-07-xdp-drop",
+    "user_repeat_drop_sequence": 643,
+    "xdp_drop_packets_each": 1,
+    "native_xdp_jit": true,
+    "owned_xdp_detached": true,
+    "end_phase": "GAP_HELD",
+    "same_session_feed_gap_paused": true
+  },
+  "old_record": {
+    "archive": "Documents/reports/course-runs/20260914T042744.585711595Z-07-xdp-drop/platform-replaced-20260917T073039.098489068Z",
+    "archived_pointer_checksums_passed": 5,
+    "original_run_unchanged": true,
+    "not_marked_complete_by_new_platform": true
+  },
+  "output": {
+    "full_raw_json_preserved": true,
+    "feed_rendering": "Chinese aligned fields; session, mode, receiver, health, trading gate, delivered/expected/pending sequence and gap size",
+    "source_run": "20260917T073502.386920713Z-07-xdp-drop",
+    "rendered_existing_raw_only": true,
+    "new_live_injection_for_formatting": false
+  },
+  "local_tests": {
+    "xdp_foreground": 20,
+    "xdp_formatter": 5,
+    "xdp_session": 6,
+    "xdp_preparation": 6,
+    "filter_mode_compatibility": 4,
+    "offline_package_closure": 3,
+    "p4_stage_regression": "PASS with isolated fake device actions",
+    "rtl_stage_regression": "PASS with isolated fake device actions",
+    "rtl_real_cleanup_function": "10 mode/playback combinations, mocked transport"
+  },
+  "checks": {
+    "chapter": "07",
+    "green_cards": 6,
+    "shell_execution_cards": 5,
+    "manual_web_recovery": true,
+    "bash_blocks_checked": 9,
+    "fences": 18,
+    "local_links_checked": 24,
+    "html_balanced": true,
+    "doc_formatter_excerpts_match": true,
+    "archive_sha256_checks": {
+      "20260914T042744.585711595Z-07-xdp-drop": 30,
+      "20260917T073039.110571425Z-07-xdp-drop": 30,
+      "20260917T073502.386920713Z-07-xdp-drop": 30
+    },
+    "document_sha256": "adbea942c5dc7b44461fafe7c5271313c4103493b9ff5dd7c53a63405bd4e9b9"
+  },
+  "script_sha256": {
+    "Documents/newDoc/assets/07-xdp/live-support/run-xdp-inline-live.sh": "6b7cd909ad7b50e48545ae8972af3e23a2f063c063ed42475aacd85a57de02f5",
+    "Documents/newDoc/assets/07-xdp/live-support/run-xdp-receiver-live.sh": "5b52397aca79c32db9f432feb3c4bd64b1e3aca1297f8617197fa4404d9598a0",
+    "Documents/newDoc/assets/07-xdp/live-support/run-xdp-span-live.sh": "b65ee2c43cca920c0f5db19ed3487d8f5b3e0df071f218747160faa5f5881e4d",
+    "Documents/newDoc/assets/07-xdp/live-support/test_drop_restart.py": "fa25d85d77d9cd701c1d36796ed5a7ee27b8fd7ba1e977e47dceeef5455ce0f6",
+    "Documents/newDoc/assets/07-xdp/live-support/xdp-run-state.sh": "1606db508381afb03c88c8ffd38205b606fd56565f79d182ee051022950c5650",
+    "Documents/newDoc/assets/07-xdp/test-toolchain-repeat.py": "d52f76505910d5cdc4721555d38dddc703f79ef2f9c60883dc92b57f89d3cc9f",
+    "Documents/newDoc/assets/08-p4/live-support/run-trading-bmv2-live.sh": "95521c4544024cbe5ef5e52e9731dca0f24d75dc1d2e494842c6ce4ec35fc085",
+    "Documents/newDoc/assets/08-p4/live-support/run-trading-p4-drop-live.sh": "99590e07ef0b6e08203e768e9e3a51e31934e28e4a98137483884519e580fae5",
+    "Documents/newDoc/assets/08-p4/live-support/stage-actions.sh": "a95ead2f9b609f18bb29daf075630358014b39b3197ded40c21846e5498fe8fb",
+    "Documents/newDoc/assets/08-p4/live-support/stage-output.py": "71e5191550e7275a4808cf59c365632c408028da8bec33f5d35270fb97b4c2b9",
+    "Documents/newDoc/assets/08-p4/live-support/stage-session.py": "a217744830924289824efbb653867b77ebdc838222bfb1887928cdd72286950e",
+    "Documents/newDoc/assets/08-p4/live-support/test-stages.py": "db57610f2ac23aaef860e56555b4905194822f41e1e4e68155d418c357b6b6de",
+    "Documents/newDoc/assets/09-verilator/live-support/run-rtl-filter-live.sh": "b1eb521072bdf2cb3020ce37b396ef4439d445b3c8977f3fb9834f5fe42b0ef8",
+    "Documents/newDoc/assets/09-verilator/live-support/stage-actions.sh": "532a4089438974ed048c198ce85268fa34b4147c6f49996cd4dd91eaf5322773",
+    "Documents/newDoc/assets/09-verilator/live-support/stage-output.py": "2aed02cd1acd5de1f5f92fb5911d4522d42663d6b82b762dedaeddddd590f9a2",
+    "Documents/newDoc/assets/09-verilator/live-support/stage-session.py": "43f02d44f88e1c7000c3a90563f7c3ab907de1ace212041218fbd2f2a2382b2d",
+    "Documents/newDoc/assets/09-verilator/live-support/test-paused-recovery.py": "dbe4303939469e3b6899dfe3e014d2e8d42a17dbeecba39f0a24b38341e302a8",
+    "Documents/newDoc/assets/09-verilator/live-support/test-stages.py": "971ebca3d0c558e069923e5b9d0c251201e5212682573efce1402fb08cf18834",
+    "Documents/newDoc/assets/07-xdp/live-support/format-xdp-result.py": "3e57019886a7d0cbea44004a47774c6b90bab96c68ba9ab439a5af0e838df0ae",
+    "Documents/newDoc/assets/07-xdp/live-support/test-format-xdp-result.py": "f11560103d0be84cec94cee38db28a87899a29009890e2bd9122044822c661ab",
+    "Documents/newDoc/assets/common/test-filter-market-compat.py": "3fe42704911997879a1ca68bc6c251e4e0f4f76f4f7330c1973ac9eeef6ae4e5"
+  },
+  "limits": [
+    "No live P4 or RTL filter run performed this turn; review paused by latest user instruction.",
+    "Whole-course legacy card checker stops on Chapter 1 navigation mismatch and retains obsolete Chapter 7 inline/action-model assumptions; targeted current Chapter 7 card/source checks passed instead.",
+    "Live drop runs preceded output-only formatter edit; formatter replayed verified user raw records and full foreground fixture passed afterward."
+  ],
+  "pending_work": [
+    "Resume Chapters 8/9 review only when user returns to those chapters."
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "verified_at_utc": "2026-09-12T03:34:38.021579+00:00",
+  "user_run": "Documents/reports/course-runs/20260912T032538Z-03-live-order",
+  "failure": "Order and capture succeeded; decoder asserted exactly two established sessions from a pre-order snapshot that contained AUTO only.",
+  "source_cause": "trader.cpp::order_loop waits for queued work before connect_order_session; first MANUAL order creates its connection lazily.",
+  "fix": "Collect sessions after first_trade.py completes; decoder requires a MANUAL PID-to-port mapping without requiring AUTO to have connected.",
+  "original_classroom_sha256": "3ee6901bf657525493769748d2dfef4f981a15a1258154ce56cecc2d25d2acf3",
+  "original_pcap_sha256": "eed644e4380c41ccc624e7f8a715e2442f3009478b762941cc2662142154c42b",
+  "sessions_before_original": "auto_pid=19222\nmanual_pid=19228\n0      0      20.1.1.2:60753 20.1.1.1:43120 users:((\"flle-trader\",pid=19222,fd=6))\n",
+  "sessions_after_readonly_recovery": "auto_pid=19222\nmanual_pid=19228\n0      0      20.1.1.2:60753 20.1.1.1:43120 users:((\"flle-trader\",pid=19222,fd=6))\n0      0      20.1.1.2:37919 20.1.1.1:43120 users:((\"flle-trader\",pid=19228,fd=6))\n",
+  "recovery_provenance": {
+    "observed_at_utc": "2026-09-12T03:31:14.693289+00:00",
+    "note": "Post-failure read-only ss snapshot, then offline decoding of the original pcap. No new order or capture. Original sessions.txt and classroom.txt preserved.",
+    "ssh_command": [
+      "ssh",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "ConnectTimeout=5",
+      "root@10.1.1.2",
+      "printf 'auto_pid='; cat /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/trader-auto.pid; printf 'manual_pid='; cat /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/trader-manual.pid; ss -ntpH state established '( dport = :43120 )'"
+    ],
+    "original_pcap_sha256": "eed644e4380c41ccc624e7f8a715e2442f3009478b762941cc2662142154c42b"
+  },
+  "recovered_decode": [
+    "pcap_magic=d4c3b2a1 linktype=1 established_sessions=2 captured_payload_flows=1 auto_pid=19222 manual_pid=19228",
+    "manual_flow=20.1.1.2:37919->20.1.1.1:43120 soup_client=U soup_server=S",
+    "OUCH_O user_ref=2100000000 clordid=MANU2100000000 symbol=AAPL side=BUY quantity=1 limit_x10000=2960300",
+    "OUCH_A user_ref=2100000000 order_ref=104147 state=L",
+    "OUCH_E user_ref=2100000000 filled=1 fill_x10000=2910400 match=904147",
+    "identity=user_ref:O=A=E clordid:O=A verdict=LIVE_ORDER_FLOW_PASS",
+    "Frame 8: 116 bytes on wire, 116 bytes captured",
+    "Ethernet II, Src: 00:0f:53:d3:af:21, Dst: 00:0f:53:d3:af:20",
+    "Internet Protocol Version 4, Src: 20.1.1.2, Dst: 20.1.1.1",
+    "Transmission Control Protocol, Src Port: 37919, Dst Port: 43120",
+    "SoupBinTCP",
+    "    Packet Length: 48",
+    "    Packet Type: U (Unsequenced Data)",
+    "Nasdaq OUCH 5.0",
+    "    Type: O (Enter Order)",
+    "    UserRefNum: 2100000000",
+    "    Side: B",
+    "    Quantity: 1",
+    "    Symbol: AAPL",
+    "    Price: 2960300",
+    "    Time In Force: 3",
+    "    Display: Y",
+    "    Capacity: A",
+    "    InterMarket Sweep Eligibility: N",
+    "    CrossType: N",
+    "    ClOrdID: MANU2100000000",
+    "    Appendage Length: 0"
+  ],
+  "formatted_display": [
+    "pcap_magic=d4c3b2a1 linktype=1 established_sessions=2 captured_payload_flows=1 auto_pid=19222 manual_pid=19228",
+    "manual_flow=20.1.1.2:37919->20.1.1.1:43120 soup_client=U soup_server=S",
+    "",
+    "① O · 下单请求｜MANUAL → Exchange",
+    "  客户端编号 UserRefNum：2100000000",
+    "  股票 Symbol：AAPL  方向 Side：买入  数量 Quantity：1 股",
+    "  限价 Price：296.0300",
+    "  含义：申请按上述股票、方向、数量和限价下单。",
+    "",
+    "② A · 受理回报｜Exchange → MANUAL",
+    "  客户端编号 UserRefNum：2100000000",
+    "  订单引用号 Order Reference Number：104147",
+    "  含义：订单已受理；这条回报还不能证明成交。",
+    "",
+    "③ E · 成交回报｜Exchange → MANUAL",
+    "  客户端编号 UserRefNum：2100000000",
+    "  成交数量 Quantity：1 股  成交价格 Price：291.0400",
+    "  成交编号 Match Number：904147",
+    "  含义：这些股数已按上述价格成交。",
+    "identity=user_ref:O=A=E clordid:O=A verdict=LIVE_ORDER_FLOW_PASS",
+    "[就绪说明] LIVE_ORDER_FLOW_PASS 是解析器自拼的有限检查汇总，表示所选订单解析及内置检查走通；须核对本单 order_id、O/A/E 和 filled，不代表长期无丢包或所有订单均成功。"
+  ],
+  "order_confirmed": {
+    "client_order_id": 2100000000,
+    "symbol": "AAPL",
+    "side": "BUY",
+    "quantity": 1,
+    "filled_quantity": 1,
+    "limit_price_x10000": 2960300,
+    "fill_price_x10000": 2910400,
+    "result": "ORDER_EXECUTED"
+  },
+  "platform_readback": {
+    "profile": "SOFTWARE",
+    "market_mode": "UNICAST",
+    "feed_integrity": "HEALTHY",
+    "replay_status": "PLAYING"
+  },
+  "code": [
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/03-capture-live-order.sh",
+      "sha256": "d193244fb8a077baaacf947ec456cd31432c5c7224b02594244ce52934fac12b"
+    },
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/inspect_order_pcap.py",
+      "sha256": "7ed155e07ba6fde7c26f87415d67f40c2a1265a4c5ca95fcd8e96a9f7496d386"
+    },
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/classroom-output.py",
+      "sha256": "a554ca72d3029cdc0d879a224dc56bf2db1bfce07daf7bf4b457857b9ae45c54"
+    },
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/test-order-selection.py",
+      "sha256": "3de90e188b90bfec0bb19b03f188154de5c79c721e91ff6c6483c4f6724e18c6"
+    },
+    {
+      "path": "Documents/newDoc/assets/03-live-traffic/test-classroom-output.py",
+      "sha256": "78e262df6476aca3dc90ea369ae8e52f8f3e2fe6855244ecd6c89d0f8ec735c4"
+    }
+  ],
+  "tests": {
+    "test-order-selection.py": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.013s\n\nOK",
+    "test-document-format.py": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.055s\n\nOK"
+  },
+  "cold_start_fixture_before_after_verified": true,
+  "shell_fixture_matrix": [
+    {
+      "case": "01-success",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-capture",
+      "exit_code": 42,
+      "expected": 42,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-decode",
+      "exit_code": 44,
+      "expected": 44,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-readback",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-restore-get",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-capture-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-decode-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-initial-state",
+      "exit_code": 1,
+      "expected": 1,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-post-once",
+      "exit_code": 22,
+      "expected": 22,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "01-verify",
+      "exit_code": 45,
+      "expected": 45,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-success",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-capture",
+      "exit_code": 42,
+      "expected": 42,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-decode",
+      "exit_code": 44,
+      "expected": 44,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-readback",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-restore-get",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-capture-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-decode-restore",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-initial-state",
+      "exit_code": 1,
+      "expected": 1,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-post-once",
+      "exit_code": 22,
+      "expected": 22,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-igmp",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "02-mode",
+      "exit_code": 125,
+      "expected": 125,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-success",
+      "exit_code": 0,
+      "expected": 0,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-capture",
+      "exit_code": 1,
+      "expected": 1,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-decode",
+      "exit_code": 44,
+      "expected": 44,
+      "classroom_log_exact": true
+    },
+    {
+      "case": "03-trade",
+      "exit_code": 43,
+      "expected": 43,
+      "classroom_log_exact": true
+    }
+  ],
+  "script_lines": 36,
+  "script_embedded_byte_equal": true,
+  "gui_screenshot": {
+    "original_name": "screenshot_20260912_112345_20260912_112404_265317.png",
+    "path": "Documents/newDoc/images/course-visuals/03-diagrams/03-gui-manual-order.png",
+    "sha256": "a0b7822f2e40b410d3c4622fe11b421fca64956184b4d3ff909c3b1abb32cb33",
+    "dimensions": [
+      1984,
+      1012
+    ],
+    "pixels_unchanged": true,
+    "visual_widths_checked": [
+      800,
+      1200
+    ]
+  },
+  "actions": "Read-only ss and /api/state, offline re-decode, local edits and fixture checks. No new capture, order, service restart or RUN_ID.",
+  "pending": "No new end-to-end live order was submitted with the revised shell; user-run failure remains preserved."
+}

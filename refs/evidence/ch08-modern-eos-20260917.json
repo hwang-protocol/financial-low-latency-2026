@@ -1,0 +1,224 @@
+{
+  "date": "2026-09-17",
+  "scope": "Independent Chapter 08 FPGA draft migration to current 7135V/EOS, local RTL/management checks only",
+  "status": "DRAFT / PUBLIC_SOURCE_CHECKED / LOCAL_TESTED / NOT_HARDWARE_VERIFIED",
+  "target": {
+    "sku": "DCS-7135V-48Y-4QC",
+    "fpga": "AMD Versal HBM VH1542",
+    "board_standard": "bvl",
+    "os": "EOS 4.36 series; product minimum 4.36.0F",
+    "configuration_image": "PDI",
+    "hardware_owned": false
+  },
+  "official_sources": {
+    "hardware": "https://www.arista.com/assets/data/pdf/Datasheets/7135V-Datasheet.pdf",
+    "bvl": "https://www.arista.com/en/products/7135v-series",
+    "device_guide_login_required": "https://www.arista.com/en/support/toi/eos-4-36-0f/23975-dcs-7135v-48y-4qc-user-guide",
+    "eos_l1": "https://www.arista.com/en/um-eos/eos-7130-layer-1-commands",
+    "vivado_current_download": "https://www.amd.com/en/support/downloads/adaptive-socs-and-fpgas/development-tools/2026-1.html",
+    "device_image_command": "https://docs.amd.com/r/en-US/ug835-vivado-tcl-commands/write_device_image",
+    "pdi_content": "https://docs.amd.com/r/en-US/ug1304-versal-acap-ssdg/Creating-a-Boot-Image-PDI",
+    "source_detail": "Documents/newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md"
+  },
+  "openfdk": {
+    "revision": "13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d",
+    "remote_head_rechecked": true,
+    "public_board_directories": [
+      "eh_central",
+      "eh_leaf",
+      "l",
+      "lb2"
+    ],
+    "bvl_board_project_present": false,
+    "files": {
+      "resources/libapp/device.py": {
+        "sha256": "8b272206ceace98bfd44dd4ee09ca57e346880aed23c338010ff48e27d9896dd",
+        "bytes": 48294
+      },
+      "resources/libapp/cli.py": {
+        "sha256": "28f1cdfa342075e9f5345f65b644bdf3a51e4819e7aff20760d1d416f9651094",
+        "bytes": 9924
+      },
+      "resources/libapp/serial.py": {
+        "sha256": "301d6f67a44c3ed5a4954c0a5ccbb657c67b462a4d0892b994373f7da346677a",
+        "bytes": 1191
+      },
+      "resources/libapp/register_file.py": {
+        "sha256": "0c8ca2494107f52b0a3892fdac78523a07a2b54697f4028e4e53c17fdd2989fa",
+        "bytes": 11630
+      },
+      "resources/libapp/daemon.py": {
+        "sha256": "2a2380ab217e043dd0b4c5bd58c8b4694e877f51d221e4690eb121fd9cb24460",
+        "bytes": 3841
+      },
+      "resources/app.mk": {
+        "sha256": "51af7005d72701bfd0d3624ccafc3eeef505d6adcb0c4534603609cc2c8335cc",
+        "bytes": 12692
+      },
+      "resources/rpm.spec": {
+        "sha256": "520009a6a9f08e29d0b5a9ab53322277b53fcd322a72f199b43f7b91ab297be8",
+        "bytes": 2925
+      },
+      "resources/vivado.mk": {
+        "sha256": "52e1eed57c41102c0e5eed9a5405e0aff499b80b445f09e2f533a5e5bd54e98e",
+        "bytes": 6793
+      },
+      "examples/cliexample/src/eos/CliExampleCli.py": {
+        "sha256": "82160ac98c3e91fe1929bc53e6d4adce9c80a18eb04af0777223f7bb85f502f4",
+        "bytes": 2040
+      }
+    }
+  },
+  "verification": {
+    "rtl": {
+      "rerun": true,
+      "cases": 22,
+      "forwarded": 17,
+      "policy_drop": 2,
+      "error_discard": 3,
+      "byte_preservation": "PASS",
+      "one_shot": "PASS",
+      "backpressure": "PASS",
+      "registers": "PASS"
+    },
+    "management": {
+      "tests": 16,
+      "actual_upstream_RegisterFile_and_cli_helpers": true,
+      "hardware_and_eos_contexts_mocked": true,
+      "eossdk_executed": false
+    },
+    "packaging": {
+      "gnu_make": "4.3",
+      "staging_tar_entries": 83,
+      "consecutive_staging_passes": 2,
+      "cleanup_guard_negative_cases": 3,
+      "input": "explicit fixture text, NOT FPGA image",
+      "rpm_or_swix_built": false
+    },
+    "prior_generic_yosys_synthesis": "unchanged core; prior evidence retained, not rerun",
+    "document_checks": "ch08-modern-eos-20260917/document-checks.json",
+    "page_checks": "ch08-modern-eos-20260917/page-check.json"
+  },
+  "not_done": [
+    "Complete BVL FDK/authorized Ethernet IP obtained",
+    "BVL top, MAC/PCS/queue, register bus, clock/reset/CDC integration",
+    "FDK-certified Vivado version or license confirmed",
+    "Vivado/XSim execution",
+    "PDI/RPM/SWIX build",
+    "EOS installation/runtime execution",
+    "7135V L1 wiring and packet captures",
+    "Line-rate, latency or timing measurements"
+  ],
+  "live_platform_actions": false,
+  "new_run_id_created": false,
+  "git_history_written": false,
+  "protected_existing_files": 57,
+  "evidence_files": {
+    "ch08-modern-eos-20260917/core.stderr.log": {
+      "sha256": "fbc1c441d97e1abedb4f7046b4d58add8cc02dc8353f8d3b11e64c6143183472",
+      "bytes": 382
+    },
+    "ch08-modern-eos-20260917/core.stdout.log": {
+      "sha256": "afc59e36277c7edd03dd5203a9af141035dd4e47105e2a4e906d54d385c7051c",
+      "bytes": 181
+    },
+    "ch08-modern-eos-20260917/document-checks.json": {
+      "sha256": "55219b87948cbf08bbb9fa2da4e8e7e9d97e38eee81bb03f507ee081ed35e549",
+      "bytes": 4568
+    },
+    "ch08-modern-eos-20260917/final-integrity.json": {
+      "sha256": "80e1f5637ef231539181698835293137a28556ef3aa562c810c03b464bb9fdf2",
+      "bytes": 456
+    },
+    "ch08-modern-eos-20260917/management-verification.json": {
+      "sha256": "0d4d0b006af4b8bcda808798f36650123c896b60c9550c6a076aa67e579ba0d1",
+      "bytes": 3243
+    },
+    "ch08-modern-eos-20260917/management.stderr.log": {
+      "sha256": "3d20405a3a82bf748994f8c06b9aa52f0cf8010cb655e41359d06c6b0a6b3f11",
+      "bytes": 1364
+    },
+    "ch08-modern-eos-20260917/management.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "ch08-modern-eos-20260917/page-check.json": {
+      "sha256": "d30cd91ec5937aeb4d4b394f2463aed0fa5128e6758049b43e69c8d9c2955afe",
+      "bytes": 99
+    },
+    "ch08-modern-eos-20260917/previous-mos-source-review.md": {
+      "sha256": "a15edc10364e8b8c875df14d065d0d9908c627f7e3b8cec030aa7ba86a94d12c",
+      "bytes": 22832
+    },
+    "ch08-modern-eos-20260917/staging-cleanup-guards.json": {
+      "sha256": "591272f48a29d63b7e97a15b6b32bd9e75e7fc7d6e9df716852dc30052f6fcf4",
+      "bytes": 266
+    },
+    "ch08-modern-eos-20260917/staging-repeat-1.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "ch08-modern-eos-20260917/staging-repeat-1.stdout.log": {
+      "sha256": "0a61aa8daec656192ecd1ac8d21f85a2f6b26ac9ffe8ed18835d397478c877eb",
+      "bytes": 6051
+    },
+    "ch08-modern-eos-20260917/staging-repeat-2.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "ch08-modern-eos-20260917/staging-repeat-2.stdout.log": {
+      "sha256": "0a61aa8daec656192ecd1ac8d21f85a2f6b26ac9ffe8ed18835d397478c877eb",
+      "bytes": 6051
+    },
+    "ch08-modern-eos-20260917/staging-result.json": {
+      "sha256": "8c333179a204889c2205d788408b0825b1a7b0570458f553bfb3529f3f0feb90",
+      "bytes": 592
+    }
+  },
+  "deliverable_hashes": {
+    "Documents/newDoc/08-arista-fpga-market-filter-draft.md": "2fc31d1012554d319887920d22374d48b5f5fd0974c0d9e9e979086e9a4609c7",
+    "Documents/newDoc/assets/08-arista-fpga-draft/ADVANCED-TOOLS.md": "5144c34222806d3e8c73be1cccfd978d37467307143f6baaaf7b3c6bed727210",
+    "Documents/newDoc/assets/08-arista-fpga-draft/LICENSE-Arista-BSD-3-Clause.txt": "50b40d8ee91487d8c5d6f56e32de95dda0f4269576b97ad645f55134c5132688",
+    "Documents/newDoc/assets/08-arista-fpga-draft/README.md": "f95618e9e96fae5229eadfad525540f1f39fad5bc783bc9b9ff9b810ba16be62",
+    "Documents/newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md": "b4e7e4985bb72b984a28f99d86f566824888b884acfa8820ccf6b62ba5c8fdee",
+    "Documents/newDoc/assets/08-arista-fpga-draft/control_regs.sv": "c379e06994e702f86ebfd8fc53bb9f9a92dfc86217871b519e9b3c2d59fa77bf",
+    "Documents/newDoc/assets/08-arista-fpga-draft/drop_once.sv": "e4f1d052c8a7ead7a7fb4f8d3578f6bd4d06d7fc6b0046130621213f76dcdb0f",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/FlleFilter.yaml": "7c5c24cd9b5e29d469247808140dfc039cce3a958f4c2ee1715a2064ef0da6ed",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/FlleFilterCli.py": "7e4344a7158a70cdf143577db6d688492d0dda7db5db445509e3e8ff56ab9e6b",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/FlleFilterDaemon.py": "aa6ab31750c8db68d4c2d6fd4d726add0845748bbab8aa96658418de88843fe9",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/README.md": "2f228e0a0a9b9a280d94a4d812f5eedc8c8927c1464f4278b0bdf41ea0c1cca8",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/__init__.py": "c35b0c98cae103c308b78223559ae5c4e38935d5fd90c5626d07572a2738e0b3",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/filter_control.py": "6b13f4433a92bd5053a863f5456459bff777586c83ac3f31a250db417f8a36f8",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/filter_rpc.py": "8ec2c20f512e1b8e4020aea7d87fa9809365f029dd3b77932e928343aeb429a4",
+    "Documents/newDoc/assets/08-arista-fpga-draft/filter_tb.sv": "3d2a0c815ef1c42ab1b93e0a689354820908cc0acc8e2dcec4610d738d35262d",
+    "Documents/newDoc/assets/08-arista-fpga-draft/flle_filter_registers.csv": "164389456103557d895efc43efde31dd405af3af868e428fd9b9e90c9f15c7a4",
+    "Documents/newDoc/assets/08-arista-fpga-draft/frame_filter.sv": "4787a940bf8dba9456dd33c023227fd84f64bdecec8b084310855f2ca0483bed",
+    "Documents/newDoc/assets/08-arista-fpga-draft/local-tools-requirements.txt": "66d4186e09016d3620b63187a58255527d82f4c24c0ffbd4ca6ca3f442629233",
+    "Documents/newDoc/assets/08-arista-fpga-draft/nvda_match.sv": "8a4aa79b6cce5623a8676fcc8624cb87d2d64de6bf6088b31a414463474a93f6",
+    "Documents/newDoc/assets/08-arista-fpga-draft/package_eos.mk": "99bc6b1577ffebfaf5a703295db9c0936d1ffed53cb720f3f4037a13a223060c",
+    "Documents/newDoc/assets/08-arista-fpga-draft/simulate.sh": "e97a846f0538401fd7543063b281797a332808dc48b6d260e8f72b44a2c29eec",
+    "Documents/newDoc/assets/08-arista-fpga-draft/test_eos_control.py": "0253ee6c6e02d1fb57cfab68df1dc09b1e2a375a99598a7445448ccbefed5124",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00a-fpga-resources.png": "df1a990625feb958e7596f7c30ea0637aee4eaaa018e0fb98cbfdad4057892ef",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00a-fpga-resources.svg": "a72d9605e90e793143c249809c61e153fd5c577072a5977842dd4a2fb086c291",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00b-configure-circuit.png": "e2f35c4a4f57b1cf8df949c7eafe8f01fc0880acd5ede223c28ef2c775e33af9",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00b-configure-circuit.svg": "00e1163aa9fcfdd2d6f654d05bd31ca195f30b4be5662a75dcd7691503d75f21",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/01-packet-path.png": "db5a98a00835cba274a0e45669a49f073eaed9e035423c7c89b3d8fa5e468d9f",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/01-packet-path.svg": "70369d7c3928d94878d25d0ef5561a798fc14072237c01073808e3b6350d8795",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.png": "08908b9bf1cdf768b0e4e480b32bd42a5f7f03762bcaa1987f3c0a708a6a820e",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.svg": "62dee0e063ff7a7b82c7b8873e3606ba8cf58b6abd59d2ad9b3aa9eec04a7265",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02b-linux-build-checks.png": "139fed6de847d8ba6fee01e3ebec8df785ba5efaed7194ce4e4648e8ed5f6310",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02b-linux-build-checks.svg": "901b3fb62e1ce8158387f1b8cf3d84e364b889d377631ff8f232098b4ae73e45",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/03-fields-and-comparators.png": "fed358bfd78d33dbfe00ede97bd8942e981601482881bb9ddc7e91bd9c262050",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/03-fields-and-comparators.svg": "37bdd40f9b6a04fd6c3174dbdb452500f13d04b619422c30b34321301f513204",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.png": "551570977f5e039c0ad8c27c7ad5c2ac4497948e3fe8b1dfb1468963b024f114",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.svg": "52bfea508b69ac43c4bae2cce7b90e311cc3a84de4f78540bc885cbd3aeda05b",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/05-register-control.png": "bf28d5a24f1002e0b9fa123551769812c8f9bd02569936a311618292235d00ec",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/05-register-control.svg": "12f5dd82233502936e8c4c4a2704ffbae70d667190fffbbba81cb7901d2d691e",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/06-build-upload-load.png": "29185c92dc78a9eb4bf2ec3c351f9595c0c4dab1848156d4d00acaea8883226a",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/06-build-upload-load.svg": "3b01ea9dc18455b68c75e51cabc9b6362d8acff5eac2ad7fc004425482646d60",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/07-observe-filter.png": "5fefeb3b7bb39339477dd092a36468ad8b76155cee24260eab7346a782d4077f",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/07-observe-filter.svg": "2072da0fbe9565fd412dfe42adbd184f69575809ecf41728db68c8c2813c5142",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/README.md": "190c7977279b039f3cfa13b8b9c145cf5b664ef583d523f5e4dd8800e253010e",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/SHA256SUMS": "a15eae69873369cd6f790b15827065896996b16a50337ab1d2ad996966c7293b"
+  }
+}

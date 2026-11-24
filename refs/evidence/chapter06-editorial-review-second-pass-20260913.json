@@ -1,0 +1,76 @@
+{
+  "date": "2026-09-13",
+  "scope": "Second-pass corrections: separate DMF source scopes, target L1 query ports, distinguish current counts from historical records",
+  "document_checks": {
+    "whole_document_only_two_edits": true,
+    "fences": 27,
+    "fence_markers": {
+      "```": 19,
+      "~~~": 8
+    },
+    "unchanged_fences": 26,
+    "image_references": 23,
+    "unique_image_references": 23,
+    "chapter_diagram_references": 21,
+    "device_photos": 2,
+    "navigation_cards": 14,
+    "run_cards": [
+      "①",
+      "②",
+      "③",
+      "④",
+      "⑤"
+    ],
+    "bold_spans": 58,
+    "unparsed_bold": 0,
+    "headings_unchanged": true,
+    "measured_outputs_unchanged": true
+  },
+  "source_findings": {
+    "dmf_advanced_policy": {
+      "url": "https://www.arista.com/en/ug-dmf/dmf-advanced-policy-configuration",
+      "sections": [
+        "PTP Timestamping",
+        "Platform Compatibility"
+      ],
+      "claim": "Describes replacing source MAC with a 48-bit hardware timestamp and explicitly lists 7280R3. This page alone is not used to infer 7800R3 support or non-support."
+    },
+    "dmf_service_node": {
+      "url": "https://www.arista.com/en/ug-dmf/dmf-dmf-service-node-appliance",
+      "section": "Flow Diff Latency and Drop Analysis",
+      "claim": "Lists 7280R3 and 7800R3 for the PTP-dependent latency/drop analysis feature. Cited separately from the timestamp encoding/platform paragraph."
+    },
+    "l1_command": {
+      "url": "https://www.arista.com/en/um-eos/eos-7130-layer-1-commands",
+      "section": "show l1 source",
+      "claim": "Command Syntax and Examples explicitly support the unfiltered command. The lesson now supplies interface Ethernet2-4 to target its three outputs; this is not recorded as fixing mandatory missing syntax.",
+      "example_locator": "7130 Layer 1 Commands > show l1 source > Examples > first example",
+      "short_example": "switch# show l1 source"
+    }
+  },
+  "count_audit": {
+    "previous_review_already_recorded_current_counts": true,
+    "current_snapshot_added": "23 image references (21 chapter diagrams + 2 device photos), 27 fences (19 backtick + 8 tilde), 14 navigation cards, 5 run cards",
+    "historical_counts": "Kept accurate for their original revisions; wording changed to at that revision and linked to current status",
+    "retired_figure": "06-qos-trading-flow.svg is supplementary only, retained with unchanged SHA; retirement entry and inventory row already existed, clarified at directory top"
+  },
+  "checks": {
+    "dmf_and_l1_800px_render": "PASS",
+    "markdown_bold": "PASS",
+    "reverse_two_edits_recovers_previous_document": "PASS",
+    "all_outputs_unchanged": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "runtime_code_changes": false,
+  "new_device_run": false,
+  "image_bytes_changed": false,
+  "pending": "No live 7130 or DMF deployment tested; command and platform statements are official-source verification only",
+  "supersedes": "chapter06-editorial-review-20260913.json DMF source-scope wording and unfiltered L1 presentation; previous measurement/output verifications remain valid",
+  "user_review": {
+    "date": "2026-09-13",
+    "status": "PASS for chapter text, counts and governance",
+    "remaining_chapter_edits": 0,
+    "internal_source_clarification": "Added exact command-reference page and example locator to PIT-20260913-27; no chapter change",
+    "chapter_sha256": "b2200b2f9c549d02bbce8c0ad5de29c7b606c64832cbeb68747cb4d7f0e88bd5"
+  }
+}

@@ -1,0 +1,38 @@
+54c54
+<     if original not in ("MULTICAST_A", "MULTICAST_B", "DUAL", "MULTICAST", "UNICAST"):
+---
+>     if original not in ("UNICAST", "MULTICAST_B", "DUAL", "MULTICAST", "UNICAST"):
+56c56
+<     record = dict(original_mode=original, measurement_mode="MULTICAST_A", restored=False)
+---
+>     record = dict(original_mode=original, measurement_mode="UNICAST", restored=False)
+60,61c60,61
+<         print("===== 固定行情条件 =====\n测量期间只发 A 路组播，B 路关闭。", flush=True)
+<         set_market_mode(base_url, "MULTICAST_A")
+---
+>         print("===== 固定行情条件 =====\n测量期间固定为单播 UNICAST（AWS 无组播）。", flush=True)
+>         set_market_mode(base_url, "UNICAST")
+174c174
+<             ["ssh", f"root@{host}", "cat", "/sys/devices/system/cpu/online"],
+---
+>             ["cat", "/sys/devices/system/cpu/online"],
+198c198
+<         ["ssh", f"root@{host}", "bash", "-s"], input=script, text=True,
+---
+>         ["bash", "-s"], input=script, text=True,
+222c222
+<         ["ssh", f"root@{host}", "bash", "-s"], input=script, text=True,
+---
+>         ["bash", "-s"], input=script, text=True,
+643c643
+<     if before["market_mode"] != "MULTICAST_A":
+---
+>     if before["market_mode"] != "UNICAST":
+792c792
+<     if after["market_mode"] != "MULTICAST_A":
+---
+>     if after["market_mode"] != "UNICAST":
+987c987
+<         "market_schema": "udp-multicast-ab-v1", "market_mode": "MULTICAST_A",
+---
+>         "market_schema": "udp-multicast-ab-v1", "market_mode": "UNICAST",

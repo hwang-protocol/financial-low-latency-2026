@@ -1,0 +1,412 @@
+{
+  "date": "2026-09-15",
+  "status": "LOCAL_IMPLEMENTATION_AND_TESTS_PASS; LIVE_DEPLOYMENT_PENDING",
+  "scope": "Chapters 00–04 plus required native program, web and classroom scripts; no Ch05+ migration or v13 repack",
+  "network": {
+    "schema": "udp-multicast-ab-v1",
+    "a": "233.74.125.32:31032",
+    "b": "233.74.125.33:31033",
+    "default_mode": "MULTICAST_A",
+    "dual": "same encoded Mold datagram to both groups",
+    "physical_paths": "shared laboratory NIC and switch",
+    "legacy_unicast": "internal compatibility only"
+  },
+  "live_actions_this_task": [],
+  "native_tests": {
+    "command": "make test tools",
+    "python_tests": 223,
+    "cpp_selftest": "PASS",
+    "toolchain": "GCC/G++ 11 from cached Ubuntu packages; staged locally because host lacks installed g++/make",
+    "network_tests": "actual local loopback multicast Exchange A/B/DUAL and receiver input; no VM or switch",
+    "feed_test": "real Trader discards duplicate session/sequence and delivers recovered order once"
+  },
+  "additional_tests": {
+    "restore": {
+      "count": 6,
+      "result": "PASS",
+      "covers": "initial deployment, stage failures, new session reuse, legacy requires --upgrade-ab, explicit upgrade preserves old records"
+    },
+    "igmp": {
+      "count": 10,
+      "result": "PASS"
+    },
+    "ch03_classroom_scenarios": [
+      {
+        "case": "01-success",
+        "exit_code": 0,
+        "expected": 0,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-capture",
+        "exit_code": 42,
+        "expected": 42,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-decode",
+        "exit_code": 44,
+        "expected": 44,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-restore",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-readback",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-restore-get",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-capture-restore",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-decode-restore",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-initial-state",
+        "exit_code": 1,
+        "expected": 1,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-post-once",
+        "exit_code": 22,
+        "expected": 22,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "01-verify",
+        "exit_code": 45,
+        "expected": 45,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-success",
+        "exit_code": 0,
+        "expected": 0,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-capture",
+        "exit_code": 42,
+        "expected": 42,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-decode",
+        "exit_code": 44,
+        "expected": 44,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-restore",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-readback",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-restore-get",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-capture-restore",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-decode-restore",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-initial-state",
+        "exit_code": 1,
+        "expected": 1,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-post-once",
+        "exit_code": 22,
+        "expected": 22,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-igmp",
+        "exit_code": 0,
+        "expected": 0,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "02-mode",
+        "exit_code": 125,
+        "expected": 125,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "03-success",
+        "exit_code": 0,
+        "expected": 0,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "03-capture",
+        "exit_code": 1,
+        "expected": 1,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "03-decode",
+        "exit_code": 44,
+        "expected": 44,
+        "classroom_log_exact": true
+      },
+      {
+        "case": "03-trade",
+        "exit_code": 43,
+        "expected": 43,
+        "classroom_log_exact": true
+      }
+    ],
+    "pcap_negatives": {
+      "count": 7,
+      "result": "PASS",
+      "includes": "old unicast+multicast DUAL, changed session, wrong endpoint, different payloads, unrelated sequence, missing membership, delivery gaps"
+    },
+    "document_format": {
+      "count": 12,
+      "result": "PASS"
+    },
+    "order_selection": {
+      "count": 7,
+      "result": "PASS"
+    },
+    "controller_after_legacy_verification_change": {
+      "count": 16,
+      "result": "PASS"
+    }
+  },
+  "web": {
+    "market": [
+      {
+        "width": 390,
+        "checks": [
+          "three multicast choices",
+          "new Exchange enables controls",
+          "B endpoint visible",
+          "request MULTICAST_B",
+          "pending MULTICAST_B",
+          "no duplicate pending request MULTICAST_B",
+          "active MULTICAST_B",
+          "confirmed MULTICAST_B",
+          "request DUAL",
+          "pending DUAL",
+          "no duplicate pending request DUAL",
+          "active DUAL",
+          "confirmed DUAL",
+          "request MULTICAST_A",
+          "pending MULTICAST_A",
+          "no duplicate pending request MULTICAST_A",
+          "active MULTICAST_A",
+          "confirmed MULTICAST_A",
+          "failure keeps actual mode",
+          "old Exchange cannot activate new controls",
+          "button text fits",
+          "no horizontal overflow"
+        ]
+      },
+      {
+        "width": 460,
+        "checks": [
+          "three multicast choices",
+          "new Exchange enables controls",
+          "B endpoint visible",
+          "request MULTICAST_B",
+          "pending MULTICAST_B",
+          "no duplicate pending request MULTICAST_B",
+          "active MULTICAST_B",
+          "confirmed MULTICAST_B",
+          "request DUAL",
+          "pending DUAL",
+          "no duplicate pending request DUAL",
+          "active DUAL",
+          "confirmed DUAL",
+          "request MULTICAST_A",
+          "pending MULTICAST_A",
+          "no duplicate pending request MULTICAST_A",
+          "active MULTICAST_A",
+          "confirmed MULTICAST_A",
+          "failure keeps actual mode",
+          "old Exchange cannot activate new controls",
+          "button text fits",
+          "no horizontal overflow"
+        ]
+      }
+    ],
+    "manual_order_regression": {
+      "passed": true,
+      "checks": [
+        "upper submit visible with transport console enabled",
+        "quantity shown before submitting",
+        "direction selection does not place an order",
+        "upper submit sends exactly one 20-share Socket order",
+        "immediate pending feedback and buttons locked",
+        "polling and repeated clicks cannot duplicate pending request",
+        "acknowledgement uses submitted quantity and unlocks controls",
+        "stale polling cannot replace new receipt with previous rejected order",
+        "completion event immediately displays the new fill",
+        "polling confirms completed receipt",
+        "lower Socket button shares form and submission path",
+        "failure stays visible and permits correction",
+        "invalid quantity does not send a request",
+        "DPDK mode keeps upper control visible but prevents Socket orders",
+        "switching blocks both Socket controls",
+        "feed gap blocks both Socket controls",
+        "healthy SFC state restores both controls",
+        "ordinary mode still has a working submit control"
+      ]
+    },
+    "preview": "Documents/design/evidence/chapter00-04-ab-market-preview-20260915.png",
+    "preview_source": "real HTML/CSS/JS rendered with a local synthetic API fixture; not a live platform screenshot"
+  },
+  "document_checks": {
+    "documents": {
+      "00-cpu-cache-memory-os-basics.md": {
+        "fences": 2,
+        "images": 12
+      },
+      "01-financial-low-latency-architecture.md": {
+        "fences": 27,
+        "images": 11
+      },
+      "02-host-native-trading-system-baseline.md": {
+        "fences": 30,
+        "images": 7
+      },
+      "03-live-trading-traffic-and-protocols.md": {
+        "fences": 8,
+        "images": 9
+      },
+      "04-low-latency-software-design.md": {
+        "fences": 15,
+        "images": 10
+      }
+    },
+    "shells": [
+      "Documents/newDoc/assets/02-trading-baseline/02-first-trade.sh",
+      "Documents/newDoc/assets/02-trading-baseline/00c-igmp-configure.sh",
+      "Documents/newDoc/assets/02-trading-baseline/01c-check-multicast-feed.sh",
+      "Documents/newDoc/assets/02-trading-baseline/00a-runtime-prep.sh",
+      "Documents/newDoc/assets/02-trading-baseline/03-readonly-review.sh",
+      "Documents/newDoc/assets/02-trading-baseline/00b-dpdk-software-prep.sh",
+      "Documents/newDoc/assets/02-trading-baseline/01b-inspect-multicast.sh",
+      "Documents/newDoc/assets/02-trading-baseline/00b-iommu-prep.sh",
+      "Documents/newDoc/assets/02-trading-baseline/01a-join-multicast.sh",
+      "Documents/newDoc/assets/02-trading-baseline/01-restore-trading-lab.sh",
+      "Documents/newDoc/assets/03-live-traffic/02-compare-market-transports.sh",
+      "Documents/newDoc/assets/03-live-traffic/01-capture-live-market.sh",
+      "Documents/newDoc/assets/03-live-traffic/03-capture-live-order.sh",
+      "Documents/newDoc/assets/04-live-software/01-measure-deque-cv.sh",
+      "Documents/newDoc/assets/04-live-software/02-measure-fixed-cv.sh",
+      "Documents/newDoc/assets/04-live-software/04-measure-spsc-shared-cpu.sh",
+      "Documents/newDoc/assets/04-live-software/03-measure-spsc-spin.sh"
+    ],
+    "images": [
+      "01-diagrams SHA256 PASS",
+      "02-diagrams SHA256 PASS",
+      "03-diagrams SHA256 PASS"
+    ]
+  },
+  "visual_checks": [
+    {
+      "render": "01-traffic-flows-and-ports-800",
+      "text_nodes": 92,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "01-traffic-flows-and-ports-1200",
+      "text_nodes": 92,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "02-trading-lab-runtime-800",
+      "text_nodes": 61,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "02-trading-lab-runtime-1200",
+      "text_nodes": 61,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "03-market-transport-modes-800",
+      "text_nodes": 25,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "03-market-transport-modes-1200",
+      "text_nodes": 25,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "03-live-traffic-map-800",
+      "text_nodes": 19,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "03-live-traffic-map-1200",
+      "text_nodes": 19,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "03-message-and-receipt-800",
+      "text_nodes": 21,
+      "edge_text_intersections": 0
+    },
+    {
+      "render": "03-message-and-receipt-1200",
+      "text_nodes": 21,
+      "edge_text_intersections": 0
+    }
+  ],
+  "figure_sha256": {
+    "01-diagrams/01-traffic-flows-and-ports.svg": "648864a796cbf13b87bd99a7d2205642325cc6ac00b620af125c6fdede90dd42",
+    "02-diagrams/02-trading-lab-runtime.svg": "930184c7acbfc6f66d06e0d86ba2012afa0fbbb49b3c72ca09231df3887e8b3a",
+    "03-diagrams/03-market-transport-modes.svg": "bf80ba9ff8f8fbddff18f5a68e638a73244fcea1928793ed0adc47fb5a307cc6",
+    "03-diagrams/03-live-traffic-map.svg": "18c4559193eb2384b971535cbc3d65d12235418b4d142bf5d1c6215d032f0910",
+    "03-diagrams/03-message-and-receipt.svg": "d69b5b350952f9a1669b5b28a11df54360e060305b1bc1a18f34f60de8fd8bb1"
+  },
+  "pending": [
+    "User runs second-chapter restore with --upgrade-ab and refreshes browser",
+    "Verify two IGMP memberships, two switch dynamic Et2 entries and A/B packets on hardware",
+    "Run Ch03 modes and Ch04 measurements again; old raw records do not attest B or new performance",
+    "Ch05+ transport runtimes/profile transitions and filtering deferred; future filters A only, B disabled"
+  ],
+  "git_history_written": false
+}

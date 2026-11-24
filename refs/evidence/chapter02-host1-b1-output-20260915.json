@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-15",
+  "status": "USER_RUN_SOURCE_SHA_DOC_PREVIEW_PASS",
+  "run_id": "20260915T071220Z-02-guest-iommu-prep",
+  "source_files": [
+    "raw/after-boot.txt",
+    "raw/vfio.txt"
+  ],
+  "source_file_sha256": {
+    "raw/after-boot.txt": "bda27a04cfedb561bd0f3b7a81c5841dead9cb4987ec131fb62e8c7c71a1221a",
+    "raw/vfio.txt": "d1f726c51654a4150678b661fa7a0efda4a85c6264573011e5752fbdf2497fda",
+    "raw/result.txt": "c335acadac6d956f441ac6127c49d12e6dce809d76dd4dec4f9f1a732f46e986",
+    "run.env": "db3496be56fbe4bb6ea755e891531b888585ffc4fb82f1fdafb5710b8370960c",
+    "SHA256SUMS": "5ff4e7896627df6864b3f63e88be0f0d2c4005eb80da632af1853a38c4eca55b"
+  },
+  "run_manifest_checks": 8,
+  "host_displayed": "vm-2522-01 / Exchange .1",
+  "excerpt": "===== 查当前启动参数 =====\n[生效检查] 当前启动参数应同时包含 intel_iommu=on 和 iommu=pt。\n$ cat /proc/cmdline\nBOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt\n\n===== 加载 VFIO 支持 =====\n加载模块后核对安全模式；本步不把网卡交给 VFIO。\n$ modprobe vfio-pci\n\n===== 查 VFIO DMA 安全模式 =====\n[模式检查] N 表示保留 IOMMU 保护；脚本会自动核对。\n$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode\nN",
+  "excerpt_lines": 13,
+  "transformation": "Select three titled blocks from host1 sections of one RUN. Keep explanations/commands/results unchanged; omit repeated host headings, insert two empty separator lines.",
+  "omitted_from_prose": [
+    "host2",
+    "IOMMU group and membership",
+    "backup and next-boot configuration duplication"
+  ],
+  "limits": [
+    "Only local saved output was read; no remote command, install or reboot this turn.",
+    "B1 preparation result is not DPDK traffic or performance verification. B2 pending user."
+  ],
+  "checks": {
+    "fences": 32,
+    "bash_blocks": 11,
+    "navigation_cards": 10,
+    "local_references": 18,
+    "html_balanced": true,
+    "both_excerpts_ordered_raw_match": true,
+    "scripts_unchanged": true
+  },
+  "preview": {
+    "width": 940,
+    "image_sha256": "e9f200648ebf3ada0054a78f38ffa3d2391ea40229e38e45e28b7d08c95be1b5",
+    "visually_reviewed": true
+  },
+  "final_chapter_sha256": "d0bfe81be9441a6bf56ba7e43f42ea29f55d07685f6ca231cc58a476e5526447"
+}

@@ -1,0 +1,215 @@
+{
+  "recorded_at": "2026-09-15T10:04:40.220442+00:00",
+  "scope": "第02章两组订阅/交换机/同时抓包与截图；现役网页初始模式提示",
+  "platform_run": "20260915T094055Z-02-trading-platform",
+  "live_evidence": {
+    "join": "20260915T095417Z-02-igmp-join",
+    "switch": "20260915T095418Z-02-igmp-members",
+    "agent_capture": "20260915T095420Z-02-igmp-feed",
+    "user_capture_used_in_doc": "20260915T095834Z-02-igmp-feed",
+    "multicast_a": "233.74.125.32:31032",
+    "multicast_b": "233.74.125.33:31033",
+    "switch_members": "both VLAN20 / Dynamic / Et2",
+    "capture": "one tcpdump window, A=5 B=5 total=10",
+    "integrity": "HEALTHY",
+    "next_expected": 1716790,
+    "restored_mode": "MULTICAST_A"
+  },
+  "ui_live_update": {
+    "backup": "/var/tmp/flle-trading-lab-20260915T094055Z-02-trading-platform/web-updates/20260915T100107Z-ab-mode-ui",
+    "gateway": {
+      "pid": 14130,
+      "start_ticks": "8704003",
+      "boot_id": "b823d906-1952-479e-a383-27b9807714a4"
+    },
+    "sha256": {
+      "web/index.html": "9cb9d54a2dfca647f8ed91e6be13db43e5af5a66131fb196dc459f71895c400e",
+      "web/terminal.js": "740db84b985e5fe367abbef176a85d437964223ffa6a1dda4050fca683862183"
+    },
+    "source_check": "PASS",
+    "gateway_unchanged": true,
+    "run_id": "20260915T100107Z-ab-mode-ui",
+    "parent_run_id": "20260915T094055Z-02-trading-platform",
+    "http_sha256": "PASS",
+    "market_mode": "MULTICAST_A",
+    "market_network": {
+      "market_schema": "udp-multicast-ab-v1",
+      "market_group_a": "233.74.125.32",
+      "market_group_b": "233.74.125.33",
+      "market_port_a": 31032,
+      "market_port_b": 31033
+    },
+    "integrity": "HEALTHY"
+  },
+  "tests": {
+    "igmp": {
+      "passed": 11
+    },
+    "classroom_output": {
+      "passed": 6
+    },
+    "first_trade_display": {
+      "passed": 3
+    },
+    "browser": [
+      {
+        "width": 390,
+        "checks": [
+          "three multicast choices",
+          "new Exchange enables controls",
+          "A selected from actual state without clicking",
+          "initial mode explicitly displayed",
+          "metadata pending is explicit",
+          "metadata arrival selects A without a mode change",
+          "B endpoint visible",
+          "request MULTICAST_B",
+          "pending MULTICAST_B",
+          "no duplicate pending request MULTICAST_B",
+          "active MULTICAST_B",
+          "confirmed MULTICAST_B",
+          "request DUAL",
+          "pending DUAL",
+          "no duplicate pending request DUAL",
+          "active DUAL",
+          "confirmed DUAL",
+          "request MULTICAST_A",
+          "pending MULTICAST_A",
+          "no duplicate pending request MULTICAST_A",
+          "active MULTICAST_A",
+          "confirmed MULTICAST_A",
+          "failure keeps actual mode",
+          "old Exchange cannot activate new controls",
+          "button text fits",
+          "no horizontal overflow"
+        ]
+      },
+      {
+        "width": 460,
+        "checks": [
+          "three multicast choices",
+          "new Exchange enables controls",
+          "A selected from actual state without clicking",
+          "initial mode explicitly displayed",
+          "metadata pending is explicit",
+          "metadata arrival selects A without a mode change",
+          "B endpoint visible",
+          "request MULTICAST_B",
+          "pending MULTICAST_B",
+          "no duplicate pending request MULTICAST_B",
+          "active MULTICAST_B",
+          "confirmed MULTICAST_B",
+          "request DUAL",
+          "pending DUAL",
+          "no duplicate pending request DUAL",
+          "active DUAL",
+          "confirmed DUAL",
+          "request MULTICAST_A",
+          "pending MULTICAST_A",
+          "no duplicate pending request MULTICAST_A",
+          "active MULTICAST_A",
+          "confirmed MULTICAST_A",
+          "failure keeps actual mode",
+          "old Exchange cannot activate new controls",
+          "button text fits",
+          "no horizontal overflow"
+        ]
+      }
+    ],
+    "preparation_suite_before_capture_change": [
+      {
+        "script": "Documents/newDoc/assets/02-trading-baseline/test-classroom-output.py",
+        "exit_code": 0,
+        "tail": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.648s\n\nOK\n"
+      },
+      {
+        "script": "Documents/newDoc/assets/02-trading-baseline/test-dpdk-software-prep.py",
+        "exit_code": 0,
+        "tail": ".......\n----------------------------------------------------------------------\nRan 7 tests in 17.984s\n\nOK\n"
+      },
+      {
+        "script": "Documents/newDoc/assets/02-trading-baseline/test-first-trade-display.py",
+        "exit_code": 0,
+        "tail": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nOK\n"
+      },
+      {
+        "script": "Documents/newDoc/assets/02-trading-baseline/test-igmp-lessons.py",
+        "exit_code": 0,
+        "tail": "..........\n----------------------------------------------------------------------\nRan 10 tests in 3.848s\n\nOK\n"
+      },
+      {
+        "script": "Documents/newDoc/assets/02-trading-baseline/test-iommu-prep.py",
+        "exit_code": 0,
+        "tail": "02 IOMMU contract: PASS\n"
+      },
+      {
+        "script": "Documents/newDoc/assets/02-trading-baseline/test-preparation-contracts.py",
+        "exit_code": 0,
+        "tail": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.075s\n\nOK\n"
+      },
+      {
+        "script": "Documents/newDoc/assets/02-trading-baseline/test-sfkey-prep.py",
+        "exit_code": 0,
+        "tail": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.933s\n\nOK\n"
+      }
+    ],
+    "document_and_hash_checks": {
+      "document_links_html_and_excerpt": "PASS",
+      "screenshot_rename_embed_sha256": "PASS",
+      "run_manifest_entries_verified": {
+        "20260915T095417Z-02-igmp-join": 5,
+        "20260915T095418Z-02-igmp-members": 7,
+        "20260915T095420Z-02-igmp-feed": 10,
+        "20260915T095834Z-02-igmp-feed": 10
+      }
+    }
+  },
+  "screenshot": {
+    "original": "Documents/newDoc/screenshot_20260915_174342_20260915_174343_577922.png",
+    "renamed_to": "Documents/newDoc/images/course-visuals/02-diagrams/README.md",
+    "operation": "move original pixels, replace old overview embed; two SHA lists updated"
+  },
+  "not_revalidated": [
+    "从第01章干净快照完整顺刷",
+    "新版平台首单",
+    "第03章三模式实机去重比较",
+    "第04章新测量",
+    "第05章及以后迁移"
+  ],
+  "pending_files": [
+    "Documents/newDoc/02-host-native-trading-system-baseline.md",
+    "Documents/newDoc/assets/02-trading-baseline/00c-igmp-configure.sh",
+    "Documents/newDoc/assets/02-trading-baseline/inspect-igmp.py",
+    "Documents/newDoc/assets/02-trading-baseline/01a-join-multicast.sh",
+    "Documents/newDoc/assets/02-trading-baseline/01b-inspect-multicast.sh",
+    "Documents/newDoc/assets/02-trading-baseline/01c-check-multicast-feed.sh",
+    "Documents/newDoc/assets/02-trading-baseline/test-igmp-lessons.py",
+    "Documents/newDoc/assets/02-trading-baseline/README.md",
+    "Documents/newDoc/assets/02-trading-baseline/TEACHER-NOTES.md",
+    "Documents/newDoc/images/course-visuals/02-diagrams/02-ui-trading-terminal-ab.png",
+    "Documents/newDoc/images/course-visuals/02-diagrams/README.md",
+    "Documents/newDoc/images/course-visuals/02-diagrams/SHA256SUMS",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS",
+    "apps/flle-trading-lab/web/index.html",
+    "apps/flle-trading-lab/web/terminal.js",
+    "apps/flle-trading-lab/tests/market_modes_ui.py"
+  ],
+  "sha256": {
+    "Documents/newDoc/02-host-native-trading-system-baseline.md": "b430cf5dbc2668b32a4090fef597dd1f13d2b2e9363f1237042db6677e814457",
+    "Documents/newDoc/assets/02-trading-baseline/00c-igmp-configure.sh": "10bba33e656adbe68ed8b318fd071374cd43979aa7158895793de3911869307e",
+    "Documents/newDoc/assets/02-trading-baseline/inspect-igmp.py": "f23d509a5ea68b890b9b7906f2486c2e19ebf0637dcceff4cbf16138ac542f40",
+    "Documents/newDoc/assets/02-trading-baseline/01a-join-multicast.sh": "22812ed6cfaf73a551d93ca46cc81db0f16040acf9dac33bc7575c49c3397116",
+    "Documents/newDoc/assets/02-trading-baseline/01b-inspect-multicast.sh": "c2cae307a6e98228b979d007e47bf66aa9e2824b2ed9909f4cc4bca8b0ef83ce",
+    "Documents/newDoc/assets/02-trading-baseline/01c-check-multicast-feed.sh": "dcc48d8ee05e5a345e8d673843f6ed65bc98380df22f375379ae2526f314f2a3",
+    "Documents/newDoc/assets/02-trading-baseline/test-igmp-lessons.py": "75079d6a9b32f9860660ca8aa1be86163c71350076ceeab802d3fbe6dc0b8e03",
+    "Documents/newDoc/assets/02-trading-baseline/README.md": "69df8b81d684ecb4c539a8426f6a0eceea23bafeb3809226b9add7ea661a7831",
+    "Documents/newDoc/assets/02-trading-baseline/TEACHER-NOTES.md": "fb0b2cb83212bc2a91686a8802faf37e888a3e1eee89908b677a70e1832224e8",
+    "Documents/newDoc/images/course-visuals/02-diagrams/02-ui-trading-terminal-ab.png": "d73764618af13592515cf296cc1f1426ea3d3a66b877bcc139009861e294e8bb",
+    "Documents/newDoc/images/course-visuals/02-diagrams/README.md": "c9b5331da71c1a2954a7f1a831693f1e18b1313284ce7bc51184c69b1c153456",
+    "Documents/newDoc/images/course-visuals/02-diagrams/SHA256SUMS": "c047435d616f13f28c948d0c92918bae0e1fb6b2f7bf50bc27093f0d0e89320c",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": "3b4ebbca8ca5e74074627521c71f51443a32e60ff7802bd5f335626ddcecee95",
+    "apps/flle-trading-lab/web/index.html": "9cb9d54a2dfca647f8ed91e6be13db43e5af5a66131fb196dc459f71895c400e",
+    "apps/flle-trading-lab/web/terminal.js": "740db84b985e5fe367abbef176a85d437964223ffa6a1dda4050fca683862183",
+    "apps/flle-trading-lab/tests/market_modes_ui.py": "64b79ed4b2dffba34db1ce217c78f372990c11a1f42e9650b4d5ee68a903c997"
+  },
+  "suggested_commit": "docs(ch02): 更新AB双组播实测节选与网页截图"
+}

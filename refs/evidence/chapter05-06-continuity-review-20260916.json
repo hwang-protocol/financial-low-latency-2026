@@ -1,0 +1,427 @@
+{
+  "date": "2026-09-16",
+  "kind": "EDITORIAL_REVIEW_LOCAL_REGRESSION_LIVE_READONLY",
+  "scope": "第05/06章轻量顺稿；按用户后续要求贯通第00～06章 A/B 行情与第四章快照接续",
+  "snapshot_entry": [
+    "cd /financial-low-latency",
+    "bash Documents/newDoc/assets/02-trading-baseline/01-restore-trading-lab.sh"
+  ],
+  "entry_behavior": "默认入口核验并复用已有 A/B 平台，准备当前测试客户端、控制工作区、官方 LANZ 工具后再次核验；无需学生另选 --prepare-capabilities。普通入口与专用补齐分支均保留。",
+  "chapter_checks": {
+    "00": "CPU/内存原理及命令不依赖行情传输端点；未改",
+    "01": "流量图/表均为两组 UDP；订单仍 TCP；交换机配置检查回归通过",
+    "02": "同一接收器加两组并限定源；成员核验要求两组 Et2；双路十包检查与恢复保留；默认上线入口新增复用成功/补齐失败测试",
+    "03": "三模式抓包逐路对账、双路载荷一致、Session/loop 与去重增量防跨轮、失败恢复测试通过",
+    "04": "测量固定 MULTICAST_A 后恢复原模式；结束仍 SOFTWARE 配置",
+    "05": "保留 A/B Exchange；测试客户端不处理行情，正式测量窗口暂停回放；客户端/控制脚本准备前置到第二章；关键原码和28项最终读数保留",
+    "06": "PTP 分析由单播专用扩为 A/B 精确端点；抓包进程临时持有两个来源限定的组播订阅；QoS/LANZ隔离MAC背景流保留原单播头，非交易行情，不机械替换"
+  },
+  "documentation": {
+    "documents": [
+      {
+        "chapter": "00-cpu-cache-memory-os-basics.md",
+        "navigation": 10,
+        "images": 12,
+        "fences": 2,
+        "html_and_local_links": "PASS"
+      },
+      {
+        "chapter": "01-financial-low-latency-architecture.md",
+        "navigation": 9,
+        "images": 11,
+        "fences": 27,
+        "html_and_local_links": "PASS"
+      },
+      {
+        "chapter": "02-host-native-trading-system-baseline.md",
+        "navigation": 9,
+        "images": 7,
+        "fences": 32,
+        "html_and_local_links": "PASS"
+      },
+      {
+        "chapter": "03-live-trading-traffic-and-protocols.md",
+        "navigation": 3,
+        "images": 9,
+        "fences": 9,
+        "html_and_local_links": "PASS"
+      },
+      {
+        "chapter": "04-low-latency-software-design.md",
+        "navigation": 4,
+        "images": 10,
+        "fences": 15,
+        "html_and_local_links": "PASS"
+      },
+      {
+        "chapter": "05-openonload-tcpdirect-dpdk-kernel-bypass.md",
+        "navigation": 8,
+        "images": 11,
+        "fences": 26,
+        "html_and_local_links": "PASS"
+      },
+      {
+        "chapter": "06-arista-cut-through-ptp-time.md",
+        "navigation": 14,
+        "images": 24,
+        "fences": 31,
+        "html_and_local_links": "PASS"
+      }
+    ],
+    "sha_checks": [
+      {
+        "manifest": "Documents/newDoc/images/course-visuals/SHA256SUMS",
+        "entries": 286,
+        "result": "PASS"
+      },
+      {
+        "manifest": "Documents/newDoc/images/course-visuals/06-diagrams/SHA256SUMS",
+        "entries": 69,
+        "result": "PASS"
+      },
+      {
+        "manifest": "Documents/newDoc/assets/06-arista-time/LIVE-SUPPORT-SHA256SUMS",
+        "entries": 27,
+        "result": "PASS"
+      },
+      {
+        "manifest": "artifacts/GIT-BACKUP-SHA256SUMS",
+        "entries": 14,
+        "result": "PASS"
+      }
+    ],
+    "code_excerpts_preserved": true,
+    "comparison_values_preserved": true,
+    "shell_and_python_syntax": "PASS",
+    "chapter05_tool_line_counts": "PASS"
+  },
+  "local_test_suites": [
+    {
+      "test": "Documents/newDoc/assets/05-kernel-bypass/test-02b-guest-iommu-prep-static.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/05-kernel-bypass/test-lab-ready-report.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/05-kernel-bypass/test-order-comparison-reports.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/05-kernel-bypass/test-preflight-report.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/05-kernel-bypass/test-runtime-report.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/06-arista-time/test-native-port-recovery.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/06-arista-time/test-order-dscp-control.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_posix_qos_package.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_transport_start.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_transport_reuse.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_transport_lifecycle.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_transport_controller.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_measure_four_transports.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_analyze_four_transport_raw.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_lanz_display.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_gui_reset.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-classroom-output.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_course_capabilities.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/06-arista-time/test-official-lanz-reader.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/06-arista-time/test-stamped-span-inputs.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/06-arista-time/test-stamped-span-membership.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/01-architecture/test-switch-forwarding.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-dpdk-software-prep.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-first-trade-display.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-igmp-lessons.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-iommu-prep.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-mcfilter-display.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-preparation-contracts.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/02-trading-baseline/test-sfkey-prep.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/03-live-traffic/test-classroom-output.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/03-live-traffic/test-comparison-state.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/03-live-traffic/test-document-format.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/03-live-traffic/test-order-selection.py",
+      "returncode": 0
+    },
+    {
+      "test": "Documents/newDoc/assets/03-live-traffic/test-transport-pcaps.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_ab_multicast.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_receiver_verification.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_shared_feed_receiver.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_feed_integrity.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_fixed_market_mode.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_software_measurement_output.py",
+      "returncode": 0
+    },
+    {
+      "test": "apps/flle-trading-lab/tests/test_gateway.py",
+      "returncode": 0
+    }
+  ],
+  "fresh_native_build": {
+    "toolchain": "cached Ubuntu GCC 11, /tmp/ch03-build-tools",
+    "outputs": "/tmp/flle-review-ab-build; no VM deployment",
+    "command": "make -C apps/flle-trading-lab -j2 BUILD=/tmp/flle-review-ab-build all /tmp/flle-review-ab-build/flle-selftest (cached sysroot flags)",
+    "checks": [
+      {
+        "test": "fresh_cpp_selftest",
+        "returncode": 0,
+        "output": "SELFTEST PASS protocol=ITCH5/MoldUDP64+OUCH5/SoupBinTCP mold_messages=2 book=AAPL ouch=O/A/E/J\n"
+      },
+      {
+        "test": "test_ab_multicast.py",
+        "returncode": 0,
+        "output": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.632s\n\nOK\n"
+      },
+      {
+        "test": "test_shared_feed_receiver.py",
+        "returncode": 0,
+        "output": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.029s\n\nOK\n"
+      },
+      {
+        "test": "test_feed_integrity.py",
+        "returncode": 0,
+        "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.681s\n\nOK\n"
+      }
+    ],
+    "source_sha256": {
+      "apps/flle-trading-lab/src/book_checkpoint.cpp": "562483bb59cad1c1f5388382e445bc51be17f3b8276883231ef81cd43dbe6d7e",
+      "apps/flle-trading-lab/src/common.hpp": "b063b81dc6b583c1df5d0f547f7ddf67f2098d1134e2f10c15ee519ead7fdfdf",
+      "apps/flle-trading-lab/src/dpdk_trader.cpp": "75ecd9a2d70d1368290571df84eb0a7961f28dea06c01e4be497bd2c2ae75cbf",
+      "apps/flle-trading-lab/src/exchange.cpp": "f46f629816c78e49eac3c2fc4f90a8ffb31bf3ac7126de4163774c779fde0efe",
+      "apps/flle-trading-lab/src/feed_handler.hpp": "a820b4b039a9119c4ea355067910aa649b8fff99265eb26c3d2948d4394bf66b",
+      "apps/flle-trading-lab/src/feed_ipc.hpp": "89744a61697db66b989139ad210f2f5070029f368da333736f480f25792ccf19",
+      "apps/flle-trading-lab/src/feed_receiver.cpp": "b469aaa2acdb00c95a2c3606434cba1d842077e2bc10c1621bcb8faae3c5b3ac",
+      "apps/flle-trading-lab/src/itch_book.hpp": "192dbee129b28217d8740f8461ec0dfc7356beb94b804b1ad939173b48dd9b6b",
+      "apps/flle-trading-lab/src/itch_filter.cpp": "1d78be84e98613ebde65091dd9eff9961cef54712cd0c31bab93a34ec148fd34",
+      "apps/flle-trading-lab/src/market_config.hpp": "ec8006aaab1eb1f62cd46cf9429b983061df1889f6ca54cab2c918f2cec5f7df",
+      "apps/flle-trading-lab/src/nasdaq_protocol.hpp": "3f4f65a86ea2be9bee21006514d14b0dd67ff9115a3a0a19a9e5bdac485a7879",
+      "apps/flle-trading-lab/src/order_queue.hpp": "9bf66b40239654160d56019061ad998e0ea99e0d584edf0e38d36fa9b4433696",
+      "apps/flle-trading-lab/src/order_transport.hpp": "adbbd69f9c3fb3885d75a1cb719a367265f62a3df9ee31ea965b606d3d820193",
+      "apps/flle-trading-lab/src/posix_order_transport.cpp": "c31677b231d2a9f8644f6f916651a072d0bfba92f5b6f82c4b41bc2092879fc1",
+      "apps/flle-trading-lab/src/selftest.cpp": "5d9b5beef1a67df8d25c8ccc1bf566e579561b0db9829264e7745deefc5a6e83",
+      "apps/flle-trading-lab/src/tcpdirect_order_transport.cpp": "d304c7aa6ec5257b5e74603b21b1b50e15d7e4e6157795736845b495eebc94bb",
+      "apps/flle-trading-lab/src/trader.cpp": "3f41827e09c003b2d616fcb6cfbf3c00f40a71029c118b6db2c3cc7eef53218c"
+    },
+    "binary_sha256": {
+      "flle-exchange": "86c4c259a374a5d6623a30994c990ec578a0aab9eb473a591bc28ed77bc5b5a0",
+      "flle-feed-receiver": "9260cb4901b3da301ef7a588c897ee8255be9c84ea3725b118d555c57a96671f",
+      "flle-selftest": "8d9e4b189dd56846c03d67db0a67b485137ef9972a755b2236ff42598a3fa0db",
+      "flle-trader": "b2c49dbf99e276a8bd7e63f2c1384db25bb42b507e85170e10ce472563eb5d97"
+    }
+  },
+  "historical_pcap_reanalysis": {
+    "run": "Documents/reports/course-runs/20260913T103311Z-07-stamped-span-live",
+    "paired": 3705,
+    "all_analysis_fields_unchanged": true,
+    "pcaps": {
+      "copy.pcap": "765ad4723a5b78c3cb33197421f3636a97ee7b4d6b37c381e91f05e6151b431d",
+      "live.pcap": "28efbe33854a000908cea1dd6becf97ba805f3a69a52f5872c9d061f9b244996"
+    }
+  },
+  "live_readonly": {
+    "prerequisites": {
+      "run": "20260915T115124Z-02-trading-platform",
+      "checks": [
+        {
+          "host": "10.1.1.1",
+          "readonly_prerequisites": 0,
+          "error": ""
+        },
+        {
+          "host": "10.1.1.2",
+          "readonly_prerequisites": 0,
+          "error": ""
+        },
+        {
+          "host": "10.1.1.101",
+          "readonly_prerequisites": 0,
+          "error": ""
+        },
+        {
+          "host": "10.1.1.11",
+          "readonly_prerequisites": 0,
+          "error": ""
+        }
+      ]
+    },
+    "capabilities_before_changes": [
+      {
+        "check": "prepare-posix-qos.sh",
+        "returncode": 2,
+        "output": "posix_qos_archive=PASS default_dscp=0\n测试客户端尚未备齐。请在 .111 补跑：\nbash Documents/newDoc/assets/02-trading-baseline/01-restore-trading-lab.sh --prepare-capabilities\n"
+      },
+      {
+        "check": "prepare-lanz-reader.sh",
+        "returncode": 2,
+        "output": "LANZ 官方客户端未准备。请在 .111 补跑第二章上线入口并加 --prepare-capabilities。\n"
+      }
+    ],
+    "saved_receiver_record": {
+      "run": "20260915T115124Z-02-trading-platform",
+      "kind": "saved_receiver_READY_not_live_process",
+      "record": {
+        "market_schema": "udp-multicast-ab-v1",
+        "multicast": "233.74.125.32:31032",
+        "multicast_b": "233.74.125.33:31033",
+        "multicast_source": "20.1.1.1"
+      }
+    },
+    "switch": {
+      "file": "Documents/design/evidence/chapter05-06-continuity-review-20260916-switch.txt",
+      "sha256": "5849803967ae51779201666f6f883fa70ca408c17e97a796c1fb1aa0f3101481",
+      "vlan20_snooping": true,
+      "vlan20_pruning": true,
+      "vlan20_flooding": false,
+      "querier": "20.1.1.254 / v2 / Switch",
+      "current_groups": "empty; do not infer current receiver membership from archived chapter02 output"
+    }
+  },
+  "visuals": {
+    "files": [
+      "06-qos-port-roles.svg",
+      "06-pcap-frame-matching.svg",
+      "06-ptp-four-timestamps.svg"
+    ],
+    "viewed_widths": [
+      800,
+      1200
+    ],
+    "result": "PASS, text only; no geometry changes"
+  },
+  "limitations": [
+    "没有恢复 VM 快照或重建线上平台",
+    "没有重跑真实 QoS/LANZ/PTP 干扰与时间戳实验",
+    "本机合成 pcap 与回环组播不作为硬件延迟/交换机组播转发证据",
+    "新打标客户端与官方LANZ工具当前只读检查仍要求第二章上线入口补齐；旧性能结果未提升到新版"
+  ],
+  "changed_content_sha256": {
+    "Documents/design/evidence/chapter05-06-continuity-review-20260916-switch.txt": "5849803967ae51779201666f6f883fa70ca408c17e97a796c1fb1aa0f3101481",
+    "Documents/newDoc/02-host-native-trading-system-baseline.md": "937919ffb16cb2bbb748d66c6f220b3691ab519f1cb45be3921c5ef33923dcad",
+    "Documents/newDoc/05-openonload-tcpdirect-dpdk-kernel-bypass.md": "8eed337f5879065704743f368942b3793a584b636b390d84039f6bac9ae7bfa5",
+    "Documents/newDoc/06-arista-cut-through-ptp-time.md": "3204ffabf5c30ca653875c8c650f54a0c56becd1c4609eace0b146d3520fb3eb",
+    "Documents/newDoc/assets/02-trading-baseline/TEACHER-NOTES.md": "e9871a0514be23e9752066fff6d73fa597dd837e8013b9f9a964f010847843e7",
+    "Documents/newDoc/assets/02-trading-baseline/test-classroom-output.py": "bbc7adddad250dba6556a8b6c58cd5159b4249bd19c4021b913c65238d67b5dc",
+    "Documents/newDoc/assets/05-kernel-bypass/README.md": "f001a84fe55e63a9d56d3ce5273a02cb324766632f659b40e0d2e4339094bcf8",
+    "Documents/newDoc/assets/06-arista-time/12-stamped-span-live.sh": "a716b4bd7cf5c6eab5abdc940013273990e24d9c2d459bba8457aa22eea24c36",
+    "Documents/newDoc/assets/06-arista-time/13-trading-online-final.sh": "549768c88625e71d891aa08270059e07eb83e3e77065c3bb8186f1523815db35",
+    "Documents/newDoc/assets/06-arista-time/LIVE-SUPPORT-SHA256SUMS": "79f2487ea8be19989d1e8798fd6f2b8ca806a91fa84c9b037ed31380023470d2",
+    "Documents/newDoc/assets/06-arista-time/README.md": "5633dc7627276fe2cc0c963854f5b5f4c5a12ac2ee6cdc4927ff0602ff73886b",
+    "Documents/newDoc/assets/06-arista-time/live-support/stamped-span/analyze_stamped_span.py": "ba9081937301cbfe30145f1d9331ba15d1a1b8059e5df81051626c519fe78151",
+    "Documents/newDoc/assets/06-arista-time/live-support/stamped-span/capture_market.py": "aafae61aac16f9a915bfa1354cc03ff93586737d74ded7282f0c751b39c18376",
+    "Documents/newDoc/assets/06-arista-time/test-stamped-span-inputs.py": "cdab121d93708cdc7eb4d3d2639e2a44de70ace70d1b8705afa75e71564e2945",
+    "Documents/newDoc/assets/06-arista-time/test-stamped-span-membership.py": "3e7353108096ff3f313d48d7323a2ab3620c212654eb2048c1cd59096ba13540",
+    "Documents/newDoc/images/course-visuals/06-diagrams/06-pcap-frame-matching.svg": "2a99cf564ebbdfcc54706ed684421a6080afe932b1c17dc569cd569e0a6a3299",
+    "Documents/newDoc/images/course-visuals/06-diagrams/06-ptp-four-timestamps.svg": "0276e214fab2048a401afa37e59a8f4020f5f420ee8a687fcbf13a455d361f6f",
+    "Documents/newDoc/images/course-visuals/06-diagrams/06-qos-port-roles.svg": "b1ba203180467d54c919598b82e0136dcc445cc2a61c98608bbd59485182c390",
+    "Documents/newDoc/images/course-visuals/06-diagrams/README.md": "d65d7ad62eba7fa0f4c05318c73fc477ed8dcb9526ac0ea8871ff7f9717756a3",
+    "Documents/newDoc/images/course-visuals/06-diagrams/SHA256SUMS": "dd68331af39f9e5a770a2343bfffe350f73e43f963f63df914aded308fb35a08",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": "978d5dc78360d059d7039ac771d4d45296894b8ffb3bc23c0da5a5bbb0a041f3",
+    "apps/flle-trading-lab/scripts/prepare-lanz-reader.sh": "12703ab9a2e015e156637f13dbc229f5d4cfd207197ce1fe3c6f6411cf59b459",
+    "apps/flle-trading-lab/scripts/prepare-posix-qos.sh": "c0b450e546c71a28bfb794f3848f13a748f705f70e87440618e15d7359cf5125"
+  },
+  "review_base_commit": "7b9fccfeaecf1a361659f1285fa0e04e88460403"
+}

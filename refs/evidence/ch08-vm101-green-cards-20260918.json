@@ -1,0 +1,294 @@
+{
+  "date": "2026-09-18",
+  "status": "VM101 DEVELOPMENT VERIFIED; BOARD / PDI / SWIX / FPGA HARDWARE NOT VERIFIED",
+  "task": "Green cards from .101 snapshot baseline; .111 stores and distributes inputs and collects results",
+  "initial_inventory": {
+    "host": "10.1.1.101",
+    "hostname": "vm-monitor",
+    "os": "Ubuntu22.04 amd64",
+    "python": "3.10.6",
+    "iverilog": "not installed before first RUN",
+    "pip": "not installed before first RUN",
+    "venv_module": "present",
+    "known_course_services_running": [],
+    "memory": "15GiB",
+    "disk_free_before": "464GiB"
+  },
+  "runs": [
+    {
+      "RUN_ID": "20260918T002040Z-ch08-fpga-dev",
+      "artifacts": {
+        "inputs.tgz": {
+          "sha256": "d8198dfdda5560beadc3edea614a35ba5d7e977f914b420d3ccdd40bca08b7e4",
+          "bytes": 30344549
+        },
+        "results.tgz": {
+          "sha256": "4e98e9cd370720096154a7a9ad95bae92d75c0cbe51b7c3cbbd1c4b449ee0f6c",
+          "bytes": 811340
+        }
+      },
+      "simulation": "22 frames; 17 forwarded, 2 policy drops, 3 error discards; all behavioral checks PASS",
+      "management_tests": 16,
+      "generic_netlists": 2
+    },
+    {
+      "RUN_ID": "20260918T002743Z-ch08-fpga-dev",
+      "artifacts": {
+        "inputs.tgz": {
+          "sha256": "52c5639f24a15abe18620d7040aaf9102add2ec153d156a5f372f52e8999e4f2",
+          "bytes": 30344131
+        },
+        "results.tgz": {
+          "sha256": "8aaff1216bfda87ffcb072c63065a06c303977356ad9968b7093aec6f22a6f2b",
+          "bytes": 811282
+        }
+      },
+      "simulation": "22 frames; 17 forwarded, 2 policy drops, 3 error discards; all behavioral checks PASS",
+      "management_tests": 16,
+      "generic_netlists": 2
+    }
+  ],
+  "repeat_execution": [
+    {
+      "stage": "1.3-install.sh",
+      "exit": 0,
+      "elapsed_seconds": 4.774
+    },
+    {
+      "stage": "3.1-compile.sh",
+      "exit": 0,
+      "elapsed_seconds": 0.273
+    },
+    {
+      "stage": "3.2-simulate.sh",
+      "exit": 0,
+      "elapsed_seconds": 0.311
+    },
+    {
+      "stage": "3.3-management.sh",
+      "exit": 0,
+      "elapsed_seconds": 0.349
+    },
+    {
+      "stage": "3.4-synthesize.sh",
+      "exit": 0,
+      "elapsed_seconds": 22.2
+    },
+    {
+      "stage": "3.5-synthesize-registers.sh",
+      "exit": 0,
+      "elapsed_seconds": 0.416
+    }
+  ],
+  "document_checks": {
+    "green_cards": [
+      {
+        "title": "1.1 分发源码与离线工具",
+        "lines": 38
+      },
+      {
+        "title": "1.2 登录 .101",
+        "lines": 1
+      },
+      {
+        "title": "1.3 安装本轮开发工具",
+        "lines": 20
+      },
+      {
+        "title": "3.1 编译 RTL 与测试环境",
+        "lines": 13
+      },
+      {
+        "title": "3.2 运行功能仿真",
+        "lines": 7
+      },
+      {
+        "title": "3.3 测试管理逻辑",
+        "lines": 8
+      },
+      {
+        "title": "3.4 综合过滤数据通路",
+        "lines": 18
+      },
+      {
+        "title": "3.5 综合控制寄存器",
+        "lines": 16
+      },
+      {
+        "title": "3.6 保存本轮结果",
+        "lines": 20
+      }
+    ],
+    "green_blocks_equal_companion_files": 8,
+    "green_followed_by_output_explanation": true,
+    "navigation_cards": 8,
+    "images": 9,
+    "same_page_links": 30,
+    "local_links": 25,
+    "html_balanced": true,
+    "original_implementation_files_unchanged": 14,
+    "original_source_snippets_unchanged": 17,
+    "theory_before_navigation": true,
+    "eight_step_titles_match_figure_and_cards": true
+  },
+  "browser_checks": {
+    "images": 9,
+    "missing": [],
+    "width": 1185,
+    "clientWidth": 1185,
+    "brokenBold": false,
+    "anchorTargets": 30,
+    "allJumpsPassed": true,
+    "screenshotStep": "opening"
+  },
+  "figure_render": {
+    "800": {
+      "bad": [],
+      "fonts": true,
+      "width": 800
+    },
+    "1200": {
+      "bad": [],
+      "fonts": true,
+      "width": 1200
+    },
+    "1600": {
+      "bad": [],
+      "fonts": true,
+      "width": 1600
+    }
+  },
+  "manifests": {
+    "chapter_figures": {
+      "entries": 21,
+      "mismatches": []
+    },
+    "central_figures": {
+      "entries": 328,
+      "mismatches": []
+    },
+    "offline_cache": {
+      "entries": 12,
+      "mismatches": []
+    },
+    "openfdk_test_support": {
+      "entries": 6,
+      "mismatches": []
+    },
+    "new_artifact_entries": {
+      "entries": 15,
+      "mismatches": []
+    }
+  },
+  "displayed_management_excerpt_run": "20260918T002040Z-ch08-fpga-dev",
+  "snapshot_boundary": "No hypervisor restore was performed. First RUN started with the observed missing development tools; second RUN verified a new workspace and retained prior results. User restores .101 later.",
+  "limits": [
+    "Offline cache assumes the audited Ubuntu base libraries; not a complete arbitrary-OS dependency closure.",
+    "Public OpenFDK test support is not a complete BVL development package.",
+    "No Vivado/XSim build, licensed BVL integration, PDI or SWIX generation, EOS install, network traffic injection or FPGA test.",
+    "No Git commit/push/tag."
+  ],
+  "small_evidence": {
+    "repeat-3.5-synthesize-registers.sh.log": {
+      "bytes": 154,
+      "sha256": "06ff09456583f088eefc1d6187c8423505662c68a966648604fa9b1f7e33acfc"
+    },
+    "browser.log": {
+      "bytes": 300,
+      "sha256": "f1ff1ac0dbe6bc6243db51ebd045fd2ec08a52a69c808d0c38bfcf7b68b33744"
+    },
+    "repeat-collect.log": {
+      "bytes": 114,
+      "sha256": "314aa946c1defc0d2e4f62219ab9b3739185d06cad18be63badcbeb1e3e70460"
+    },
+    "repeat-execution.json": {
+      "bytes": 526,
+      "sha256": "36677c727928ccf4019ef0905eb6f6f2e5a544de1cfe52c1f713cb0d70b16277"
+    },
+    "checks.json": {
+      "bytes": 1079,
+      "sha256": "e0991ce8c6ad32386624575e6c7b27167d4336bc0e6fa99c139876b04b0ee054"
+    },
+    "page-check.json": {
+      "bytes": 178,
+      "sha256": "edcd356ea4e1987be8ba35ea256c5986abf5936da9e426ec7fedf41b7573ed90"
+    },
+    "repeat-3.1-compile.sh.log": {
+      "bytes": 398,
+      "sha256": "9517127e3e5f4238dff190c5f069ef490ff2f331278d283546ff6424985af9ef"
+    },
+    "wrong-host.json": {
+      "bytes": 147,
+      "sha256": "62d18d2cddc052411b40404ade216dfac98a33a64d8d7cf38bf356519fe1a6e0"
+    },
+    "simulate.log": {
+      "bytes": 563,
+      "sha256": "30a238d273a24a06c5fa1f464156fc136795b3807f75f42c52836978fd3f5fb2"
+    },
+    "synthesis-registers.log": {
+      "bytes": 154,
+      "sha256": "06ff09456583f088eefc1d6187c8423505662c68a966648604fa9b1f7e33acfc"
+    },
+    "repeat-3.4-synthesize.sh.log": {
+      "bytes": 152,
+      "sha256": "4fed8d29f52a7c18ba2f96d5e95dbcf38bf19608a53bc443b9f92217f2339443"
+    },
+    "repeat-1.3-install.sh.log": {
+      "bytes": 2886,
+      "sha256": "11094d99ef053b540343acf6c83d1bde9144acade5135b6cb81affa93cd49a10"
+    },
+    "install.log": {
+      "bytes": 2978,
+      "sha256": "44c95375d3df80dd09e0b3e27f3ba58bc77c7f1fe064a4c954d74c228875e25c"
+    },
+    "compile.log": {
+      "bytes": 398,
+      "sha256": "11dc4447b9809f0c9412116ca36b94767528875c827e719248363de82380194f"
+    },
+    "repeat-distribute.log": {
+      "bytes": 676,
+      "sha256": "d7bdfa9d298a19f9e66e636dcbcd0ec844951d0d8ef0a1dbaceab0222922408b"
+    },
+    "repeat-3.3-management.sh.log": {
+      "bytes": 1507,
+      "sha256": "ac40a49e0f928b08aad602e105fbfb4cca230ffb911c42f685d41d02b9707302"
+    },
+    "management.log": {
+      "bytes": 1507,
+      "sha256": "d44b114522665a483ebb0e77be86a0e9d1bfac8f31351f8818aa216bacdbb22e"
+    },
+    "collect.log": {
+      "bytes": 114,
+      "sha256": "c30e648499cac8efba63697aa842d2b546b5e9ab6f5004d76b6d0e4874dd536f"
+    },
+    "distribute.log": {
+      "bytes": 676,
+      "sha256": "65e0546c66132a845a4ad008b3c8cf98d88a4c415ea6f7ce8200565582bb2727"
+    },
+    "synthesis-filter.log": {
+      "bytes": 152,
+      "sha256": "4fed8d29f52a7c18ba2f96d5e95dbcf38bf19608a53bc443b9f92217f2339443"
+    },
+    "repeat-3.2-simulate.sh.log": {
+      "bytes": 563,
+      "sha256": "147f4b7caa224a67d48dfa59eac54ed2f3fc5a75b5057ac79cd343ee121562c8"
+    },
+    "render-checks.json": {
+      "bytes": 208,
+      "sha256": "fef61bdac45e31c5610ef90e31e74abcd0f5deccb951ccdfeba5ddf36e4d6f47"
+    }
+  },
+  "deliverables": {
+    "Documents/newDoc/08-arista-fpga-market-filter-draft.md": "7e4317832a037ca7605f926ef439bb31733cd085a8c4b5b5d8cbcd626c7af536",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.svg": "7fea9008e5c7794c27022a03c7053ca0a3d3f878b3e51b999bd2a46f70716f53",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.png": "fffb94532f16a6ca343b753a8221c1740a5e11b920d8d52756d2df317b27eb98",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/1.1-distribute.sh": "d035800b214cc15838705e4e0c8d691694e6501aa3d4d09c60a4ae6cbda689c1",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.6-collect.sh": "92d4432ae89ee04aecc4d08b632017b3d6a11d8a87f1599246a252b088c94af7",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/1.3-install.sh": "de11be4cf996229ccd044e4e2fd195dd48bd081f8452f13eadc823c6f89438f5",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.3-management.sh": "53b8422aaf6d3b28934d236e0f277f0eb9d2a3f52a1e636e610d3e3c29d4b9eb",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.4-synthesize.sh": "6f2cbf55e74b0e66fbdce550c8b72677472a583335d35d273d07996d795624a2",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.5-synthesize-registers.sh": "8e2c6c60c894c9489fbdb8201a0b00213a6f1f5a335063740f35047580aa933c",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.1-compile.sh": "d4762eb0302f4658516f0d261556980ed8927513e4aeaf5e67e71aab5ded4171",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.2-simulate.sh": "ac12bfe3426a90e98b8e6a242a4a32dc95233ddbfc9bb090f095fc06b36d75e7"
+  }
+}

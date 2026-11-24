@@ -1,0 +1,148 @@
+{
+  "checked_at_utc": "2026-09-12T12:59:39.124719+00:00",
+  "scope": "Preparation A script emits live grouped/annotated results and device separator; user explicitly authorized script modification",
+  "changes": [
+    "Seven numbered groups and field explanations printed by remote script",
+    "All observed values read at execution time; native extra lines and stderr retained",
+    "Onload user/kernel versions must be present and equal before READY",
+    "Two-host next-step guidance printed only after both hosts pass",
+    "72 equals signs separate the two host reports"
+  ],
+  "local_tests": {
+    "runner": "Documents/newDoc/assets/05-kernel-bypass/test-runtime-report.py",
+    "runner_sha256": "36507fa42a0521583fc04fe2ac35d07009957f328e175fb513fe99aca70bb91a",
+    "cases": [
+      {
+        "scenario": "success",
+        "exit_code": 0,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "version-mismatch",
+        "exit_code": 1,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "version-missing",
+        "exit_code": 1,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "sfc-mismatch",
+        "exit_code": 1,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "missing-onload",
+        "exit_code": 1,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "missing-sfc-char",
+        "exit_code": 1,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "wrong-owner",
+        "exit_code": 1,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "command-failed",
+        "exit_code": 7,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      },
+      {
+        "scenario": "extra-native-line",
+        "exit_code": 0,
+        "result": "PASS",
+        "receipt_sha_verified": true
+      }
+    ],
+    "separator_assertions": "Exactly one separator; host identities remain in separate sections, including second-host failure cases",
+    "execution": "Mocked SSH/device commands in temporary directories; no network access"
+  },
+  "live_run": {
+    "run_id": "20260912T125806.682397991Z-06-runtime-verify",
+    "exit_code": 0,
+    "hosts": [
+      "10.1.1.1",
+      "10.1.1.2"
+    ],
+    "both_runtime_ready": true,
+    "source_matches_current_script": true,
+    "raw_output": "\n# 1. 检查对象\nvm-2522-01                        # 本次检查的主机\n\n# 2. Onload 版本：用户态运行库与内核模块的版本标识应相同\nOnload 9f330e7                    # 用户态运行库\nKernel module: 9f330e7            # 配套的内核模块\n\n# 3. 构建信息\n# 版权归属\nCopyright (c) 2002-2026 Advanced Micro Devices, Inc.\n# 构建时间与构建类型：release 表示发布构建\nBuilt: Sep 10 2026 11:40:13 (release)\n# 编译时使用的配置头文件\nBuild profile header: <ci/internal/transport_config_opt_extra.h>\n\n# 4. sfc 驱动版本：当前已加载版本应与磁盘上的模块版本相同\nloaded_sfc=6.1.0.1009             # 当前内核已加载的 sfc 版本\nexpected_sfc=6.1.0.1009           # modinfo 查询到的磁盘模块版本\n\n# 5. Onload 控制入口：/dev/onload 用于管理 Onload 栈\n# ls -l 行首的 c 表示字符设备，供应用与驱动交互\ncrw-rw-rw- 1 root root 237, 0 Sep 12 07:51 /dev/onload\n\n# 6. 网卡资源入口：/dev/sfc_char 用于申请 VI 等网卡资源\n# VI（Virtual Interface，虚拟接口）包含用户态栈使用的收发队列和事件资源\ncrw-rw-rw- 1 root root 238, 0 Sep 12 07:51 /dev/sfc_char\n\n# 7. 检查结果\nruntime=READY                     # 本机运行时检查通过\n\n========================================================================\n\n# 1. 检查对象\nvm-2522-02                        # 本次检查的主机\n\n# 2. Onload 版本：用户态运行库与内核模块的版本标识应相同\nOnload 9f330e7                    # 用户态运行库\nKernel module: 9f330e7            # 配套的内核模块\n\n# 3. 构建信息\n# 版权归属\nCopyright (c) 2002-2026 Advanced Micro Devices, Inc.\n# 构建时间与构建类型：release 表示发布构建\nBuilt: Sep 10 2026 11:42:21 (release)\n# 编译时使用的配置头文件\nBuild profile header: <ci/internal/transport_config_opt_extra.h>\n\n# 4. sfc 驱动版本：当前已加载版本应与磁盘上的模块版本相同\nloaded_sfc=6.1.0.1009             # 当前内核已加载的 sfc 版本\nexpected_sfc=6.1.0.1009           # modinfo 查询到的磁盘模块版本\n\n# 5. Onload 控制入口：/dev/onload 用于管理 Onload 栈\n# ls -l 行首的 c 表示字符设备，供应用与驱动交互\ncrw-rw-rw- 1 root root 237, 0 Sep 12 08:17 /dev/onload\n\n# 6. 网卡资源入口：/dev/sfc_char 用于申请 VI 等网卡资源\n# VI（Virtual Interface，虚拟接口）包含用户态栈使用的收发队列和事件资源\ncrw-rw-rw- 1 root root 238, 0 Sep 12 07:51 /dev/sfc_char\n\n# 7. 检查结果\nruntime=READY                     # 本机运行时检查通过\n# 两端均为 runtime=READY，再进入准备 B 检查网卡隔离\n# 设备文件就绪说明控制入口可用；运行 ②、③再确认订单连接实际使用加速路径\n",
+    "raw_output_sha256": "870cb97b6ce37da0bd1270519b05200ffafd8814cdd8f041c069a6a7e43d4701",
+    "run_env": "RUN_ID=20260912T125806.682397991Z-06-runtime-verify\nEXIT_CODE=0\n",
+    "manifest": "870cb97b6ce37da0bd1270519b05200ffafd8814cdd8f041c069a6a7e43d4701  raw/result.txt\n2f8eeb0a45b4486d04056d5cac4c4e748133964b08fb3f1f8af33c335603a2de  run.env\n7eafb26e9f6e70a8a168ce27a0159ff2bc9518453cb5958a3971e33f88c8e00e  source.sh\n",
+    "manifest_verified": true,
+    "persistence": "Complete stdout and small audit fields embedded here because reports/ is ignored; no ignore rule changes",
+    "earlier_successful_run_before_separator": "20260912T125552.069897135Z-06-runtime-verify"
+  },
+  "document_checks": {
+    "display_is_two_literal_excerpts_from_live_output": true,
+    "other_fences_unchanged": 29,
+    "all_content_from_preparation_b_unchanged": true,
+    "commonmark_html": "PASS",
+    "local_links_checked": 14,
+    "navigation": "75 cards / 10 chapters PASS",
+    "images_unchanged": true,
+    "bash_syntax": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "status": "Preparation A live read-only PASS; no install, rebind, order or performance run; other chapter verification unchanged",
+  "previous_receipt": {
+    "path": "Documents/design/evidence/chapter05-runtime-annotations-20260912.json",
+    "sha256": "1657d4322ec2429959afa907eaf1bbd221b6da376e0c251f1ebe7cac6fceee73",
+    "retained": true
+  },
+  "pending_files": [
+    "Documents/00.DECISIONS.md",
+    "Documents/00.FREEZE-LEDGER.md",
+    "Documents/00.NEXT-AI-HANDOFF.md",
+    "Documents/00.PINS.md",
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md",
+    "Documents/design/evidence/chapter05-first-pass-20260912.json",
+    "Documents/design/evidence/chapter05-intro-table-20260912.json",
+    "Documents/design/evidence/chapter05-opening-terms-20260912.json",
+    "Documents/design/evidence/chapter05-review-fixes-20260912.json",
+    "Documents/design/evidence/chapter05-runtime-annotations-20260912.json",
+    "Documents/design/evidence/chapter05-runtime-script-20260912.json",
+    "Documents/newDoc/05-openonload-tcpdirect-dpdk-kernel-bypass.md",
+    "Documents/newDoc/assets/05-kernel-bypass/01c-verify-runtime.sh",
+    "Documents/newDoc/assets/05-kernel-bypass/README.md",
+    "Documents/newDoc/assets/05-kernel-bypass/test-runtime-report.py",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-order-timing-windows.svg",
+    "Documents/newDoc/images/course-visuals/05-diagrams/README.md",
+    "Documents/newDoc/images/course-visuals/05-diagrams/SHA256SUMS",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS"
+  ],
+  "sha256": {
+    "Documents/00.DECISIONS.md": "0d2a05f224f27f19bf2cefdd0f70eaa389a3606617a00e2d01917dea2a5bf602",
+    "Documents/00.FREEZE-LEDGER.md": "0f89b26f2a7d6a4869d610013b3b20106b1db4e656583325f752effadf26e119",
+    "Documents/00.NEXT-AI-HANDOFF.md": "0c4c24ebb3c1a72f9201fe817a21a6bd3a850cdb6a2abd1af7d6dca5eb6d8704",
+    "Documents/00.PINS.md": "a88d4853b407d208b1b8eb920ba46d1482459a66aa08e97810499e6a5c63e263",
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md": "83f2f607bc9ff1cb2a1698d7475d0b40dfa8e8006c4421cee962529f7e220d7e",
+    "Documents/design/evidence/chapter05-first-pass-20260912.json": "a3024d47c55c8d634fb1743f008b415f4e1553c308e38bb96e3d99002f444d7f",
+    "Documents/design/evidence/chapter05-intro-table-20260912.json": "f63b1a1cfdb2683c032cfba71edcbab3bfa23bfa09fab9ea1465227457927c97",
+    "Documents/design/evidence/chapter05-opening-terms-20260912.json": "07c5d51aa874ddd3c7a803bef4640ecc7de7757dc4e04ea623ee124d7bfc62f2",
+    "Documents/design/evidence/chapter05-review-fixes-20260912.json": "c4eb5a800fdcb931ef97a179f0c519d10d7c94f8ffa26f3536b072a133ae70e9",
+    "Documents/design/evidence/chapter05-runtime-annotations-20260912.json": "1657d4322ec2429959afa907eaf1bbd221b6da376e0c251f1ebe7cac6fceee73",
+    "Documents/newDoc/05-openonload-tcpdirect-dpdk-kernel-bypass.md": "de1ff515cd3218cf4438a8b8ced564c57db920d1155bf105ee5b2a7aaeab8bc0",
+    "Documents/newDoc/assets/05-kernel-bypass/01c-verify-runtime.sh": "7eafb26e9f6e70a8a168ce27a0159ff2bc9518453cb5958a3971e33f88c8e00e",
+    "Documents/newDoc/assets/05-kernel-bypass/README.md": "301cfdc86c602f7465666bec9ece0bc0414883979f32e3fe48721273074ff4fc",
+    "Documents/newDoc/assets/05-kernel-bypass/test-runtime-report.py": "36507fa42a0521583fc04fe2ac35d07009957f328e175fb513fe99aca70bb91a",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-order-timing-windows.svg": "91528d8be6b644563b8b0455026097b11b51e7cf41f63fa45f836765bd33cb00",
+    "Documents/newDoc/images/course-visuals/05-diagrams/README.md": "36131b5a4b7b461bd4f416da2e13ca384ff2314845cf1dd8075f48ef009745d8",
+    "Documents/newDoc/images/course-visuals/05-diagrams/SHA256SUMS": "f8d22356035c89b1428bde20730632650e95889059d59019102373922a0d3348",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": "564874b6990d12a30bda40548c670f7f837027acd3cc991490425d368023e013"
+  }
+}

@@ -1,0 +1,723 @@
+{
+  "analyzed_date": "2026-09-19",
+  "source": {
+    "path": "Documents/newDoc/open_nic_shell_timing_summary_routed.rpt",
+    "sha256": "55e1cddf43eb733eeb1703744a8f25884e590781800a95df1cbd5cfae31416d0",
+    "bytes": 7608683,
+    "lines": 57928,
+    "report_date": "2026-09-18 23:35:31 (timezone not stated in report)",
+    "tool": "Vivado 2026.1 build 6511674 win64",
+    "design": "open_nic_shell",
+    "state": "Routed",
+    "max_paths": 10,
+    "delete_original_requested": true,
+    "original_deleted_after_analysis": true
+  },
+  "design_summary": {
+    "WNS_ns": -1.723,
+    "TNS_ns": -864.191,
+    "setup_failing_endpoints": 3996,
+    "setup_total_endpoints": 391727,
+    "WHS_ns": 0.009,
+    "THS_ns": 0.0,
+    "hold_failing_endpoints": 0,
+    "hold_total_endpoints": 391217,
+    "WPWS_ns": 0.0,
+    "TPWS_ns": 0.0,
+    "pulse_width_failing_endpoints": 0,
+    "pulse_width_total_endpoints": 158064
+  },
+  "failing_groups": [
+    {
+      "kind": "intra",
+      "from": "axis_aclk_0",
+      "to": "axis_aclk_0",
+      "WNS_ns": -1.723,
+      "TNS_ns": -771.57,
+      "failing_endpoints": 2985
+    },
+    {
+      "kind": "intra",
+      "from": "txoutclk_out[0]",
+      "to": "txoutclk_out[0]",
+      "WNS_ns": -0.179,
+      "TNS_ns": -92.621,
+      "failing_endpoints": 1011
+    },
+    {
+      "kind": "inter",
+      "from": "clk_out1_qdma_subsystem_clk_div",
+      "to": "axis_aclk_0",
+      "WNS_ns": -0.322,
+      "TNS_ns": -9.722,
+      "failing_endpoints": 99
+    }
+  ],
+  "counting_note": "Do not add inter-clock counts to design total; one endpoint can occur in multiple groups. Report only prints limited representative paths; no attribution of all group endpoints to one source block.",
+  "representative_paths": {
+    "filter_checksum": {
+      "report_line": 2843,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[2]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.558ns  (logic 1.751ns (31.504%)  route 3.807ns (68.496%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.059ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    "network_reset": {
+      "report_line": 15468,
+      "status": "VIOLATED",
+      "slack_ns": -0.179,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[0][308]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.119ns  (logic 0.081ns (2.597%)  route 3.038ns (97.403%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.043ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    "qdma_control": {
+      "report_line": 20989,
+      "status": "VIOLATED",
+      "slack_ns": -0.322,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][2]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.495ns  (logic 1.279ns (28.457%)  route 3.216ns (71.544%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.381ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    }
+  },
+  "negative_path_summaries": [
+    {
+      "report_line": 2843,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[2]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.558ns  (logic 1.751ns (31.504%)  route 3.807ns (68.496%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.059ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 2958,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[30]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.558ns  (logic 1.751ns (31.504%)  route 3.807ns (68.496%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.059ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3073,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[60]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.558ns  (logic 1.751ns (31.504%)  route 3.807ns (68.496%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.059ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3188,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[62]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.558ns  (logic 1.751ns (31.504%)  route 3.807ns (68.496%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.059ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3303,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[27]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.556ns  (logic 1.751ns (31.516%)  route 3.805ns (68.485%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.061ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3418,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[28]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.556ns  (logic 1.751ns (31.516%)  route 3.805ns (68.485%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.061ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3533,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[29]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.556ns  (logic 1.751ns (31.516%)  route 3.805ns (68.485%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.061ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3648,
+      "status": "VIOLATED",
+      "slack_ns": -1.723,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/m_mold_seq_reg[46]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.556ns  (logic 1.751ns (31.516%)  route 3.805ns (68.485%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=2 LUT3=3 LUT4=1 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.061ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3763,
+      "status": "VIOLATED",
+      "slack_ns": -1.719,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/remaining_drops_reg[18]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.594ns  (logic 1.805ns (32.265%)  route 3.789ns (67.735%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=1 LUT3=3 LUT4=2 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.018ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 3878,
+      "status": "VIOLATED",
+      "slack_ns": -1.719,
+      "Source": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/data1_reg[232]/C",
+      "Destination": "box_250mhz_inst/p2p_250mhz_inst/genblk2[0].rx_filter_inst/filter_inst/core/remaining_drops_reg[19]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - axis_aclk_0 rise@0.000ns)",
+      "Data Path Delay": "5.595ns  (logic 1.805ns (32.259%)  route 3.790ns (67.741%))",
+      "Logic Levels": "19  (CARRY8=9 LUT2=1 LUT3=3 LUT4=2 LUT5=1 LUT6=3)",
+      "Clock Path Skew": "-0.018ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15468,
+      "status": "VIOLATED",
+      "slack_ns": -0.179,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[0][308]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.119ns  (logic 0.081ns (2.597%)  route 3.038ns (97.403%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.043ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15524,
+      "status": "VIOLATED",
+      "slack_ns": -0.179,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[0][481]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.119ns  (logic 0.081ns (2.597%)  route 3.038ns (97.403%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.043ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15580,
+      "status": "VIOLATED",
+      "slack_ns": -0.179,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[0][64]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.119ns  (logic 0.081ns (2.597%)  route 3.038ns (97.403%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.043ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15636,
+      "status": "VIOLATED",
+      "slack_ns": -0.179,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[1][328]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.119ns  (logic 0.081ns (2.597%)  route 3.038ns (97.403%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.043ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15692,
+      "status": "VIOLATED",
+      "slack_ns": -0.179,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[1][501]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.119ns  (logic 0.081ns (2.597%)  route 3.038ns (97.403%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.043ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15748,
+      "status": "VIOLATED",
+      "slack_ns": -0.179,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[1][50]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.119ns  (logic 0.081ns (2.597%)  route 3.038ns (97.403%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.043ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15804,
+      "status": "VIOLATED",
+      "slack_ns": -0.177,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[0][328]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.116ns  (logic 0.081ns (2.600%)  route 3.035ns (97.400%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.044ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15860,
+      "status": "VIOLATED",
+      "slack_ns": -0.177,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[0][501]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.116ns  (logic 0.081ns (2.600%)  route 3.035ns (97.400%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.044ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15916,
+      "status": "VIOLATED",
+      "slack_ns": -0.177,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[0][50]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.116ns  (logic 0.081ns (2.600%)  route 3.035ns (97.400%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.044ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 15972,
+      "status": "VIOLATED",
+      "slack_ns": -0.177,
+      "Source": "box_322mhz_inst/p2p_322mhz_inst/reset_inst/genblk2[1].reset_sync_inst/arststages_ff_reg[1]/C",
+      "Destination": "box_322mhz_inst/p2p_322mhz_inst/genblk1[0].tx_slice_1_inst/full_mode.axis_tdata_reg[1][308]/R",
+      "Path Group": "txoutclk_out[0]",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "3.103ns  (txoutclk_out[0] rise@3.103ns - txoutclk_out[0] rise@0.000ns)",
+      "Data Path Delay": "3.116ns  (logic 0.081ns (2.600%)  route 3.035ns (97.400%))",
+      "Logic Levels": "0",
+      "Clock Path Skew": "-0.044ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.046ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 20989,
+      "status": "VIOLATED",
+      "slack_ns": -0.322,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][2]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.495ns  (logic 1.279ns (28.457%)  route 3.216ns (71.544%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.381ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21079,
+      "status": "VIOLATED",
+      "slack_ns": -0.311,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][0]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.486ns  (logic 1.279ns (28.513%)  route 3.207ns (71.487%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.383ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21169,
+      "status": "VIOLATED",
+      "slack_ns": -0.254,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[88][3]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.421ns  (logic 1.207ns (27.301%)  route 3.214ns (72.699%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=2 LUT5=1 LUT6=1)",
+      "Clock Path Skew": "0.376ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21259,
+      "status": "VIOLATED",
+      "slack_ns": -0.251,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][5]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.435ns  (logic 1.279ns (28.840%)  route 3.156ns (71.160%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.392ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21349,
+      "status": "VIOLATED",
+      "slack_ns": -0.25,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][6]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.433ns  (logic 1.279ns (28.855%)  route 3.154ns (71.145%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.392ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21439,
+      "status": "VIOLATED",
+      "slack_ns": -0.244,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[113][3]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.420ns  (logic 1.120ns (25.341%)  route 3.300ns (74.659%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT4=1 LUT6=3)",
+      "Clock Path Skew": "0.385ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21529,
+      "status": "VIOLATED",
+      "slack_ns": -0.234,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[89][6]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.427ns  (logic 1.145ns (25.866%)  route 3.282ns (74.134%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.401ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21619,
+      "status": "VIOLATED",
+      "slack_ns": -0.227,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][3]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.392ns  (logic 1.279ns (29.119%)  route 3.113ns (70.881%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.373ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21709,
+      "status": "VIOLATED",
+      "slack_ns": -0.221,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][4]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.389ns  (logic 1.279ns (29.138%)  route 3.110ns (70.862%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.378ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    },
+    {
+      "report_line": 21799,
+      "status": "VIOLATED",
+      "slack_ns": -0.219,
+      "Source": "qdma_if[0].qdma_subsystem_inst/genblk1[0].func_inst/reg_inst/reg_qconf_reg[0]/C",
+      "Destination": "qdma_if[0].qdma_subsystem_inst/qdma_wrapper_inst/qdma_inst/inst/rtl_wrapper_inst/dma_wrapper/dma_top/dma_enable.multq_dma/multq_h2c_st_en.mdma_h2c_inst/h2c_data_aligner/u_st_shifter/gb_array_reg[100][7]/CE",
+      "Path Group": "axis_aclk_0",
+      "Path Type": "Setup (Max at Slow Process Corner)",
+      "Requirement": "4.000ns  (axis_aclk_0 rise@4.000ns - clk_out1_qdma_subsystem_clk_div rise@0.000ns)",
+      "Data Path Delay": "4.392ns  (logic 1.279ns (29.120%)  route 3.113ns (70.880%))",
+      "Logic Levels": "10  (CARRY8=3 LUT2=3 LUT3=1 LUT4=1 LUT6=2)",
+      "Clock Path Skew": "0.382ns (DCD - SCD + CPR)",
+      "Clock Uncertainty": "0.148ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE"
+    }
+  ],
+  "methodology_note": "Summary is based on most recent report_methodology run and may be stale, as report itself warns. TIMING-3/4/6/27 need object-level inspection.",
+  "source_comparison": {
+    "Documents/newDoc/assets/09-verilator/u250-gui/flle_rx_filter.sv": {
+      "sha256": "7cf8895fde96c5658a533ed65e02e870209542f86f88b03c7d87de09e7a493d2",
+      "bytes": 9857
+    },
+    "Documents/design/evidence/ch09-u250-checksum-pipeline-20260918/flle_rx_filter.before.sv": {
+      "sha256": "3e6a25211ed926bcc77e1330cf37129a06a2e21d6a16ab132d4f3315c9f9b145",
+      "bytes": 7768
+    }
+  },
+  "inference": "Worst path contains 9 CARRY8 and fold_sum_return[14] between data1_reg[232] and core/m_mold_seq_reg[2]/CE, inconsistent with intended checksum register boundaries. Suspect old design-source copy or stale synthesis/checkpoint; Windows source/build provenance remains unverified. Absence of new marker names in this limited report is supplementary evidence only.",
+  "report_summary_excerpts": [
+    {
+      "line": 3,
+      "text": "| Tool Version      : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026"
+    },
+    {
+      "line": 4,
+      "text": "| Date              : Fri Sep 18 23:35:31 2026"
+    },
+    {
+      "line": 5,
+      "text": "| Host              : qytang running 64-bit major release  (build 9200)"
+    },
+    {
+      "line": 6,
+      "text": "| Command           : report_timing_summary -max_paths 10 -routable_nets -report_unconstrained -file open_nic_shell_timing_summary_routed.rpt -pb open_nic_shell_timing_summary_routed.pb -rpx open_nic_shell_timing_summary_routed.rpx -warn_on_violation"
+    },
+    {
+      "line": 7,
+      "text": "| Design            : open_nic_shell"
+    },
+    {
+      "line": 8,
+      "text": "| Device            : xcu250-figd2104"
+    },
+    {
+      "line": 9,
+      "text": "| Speed File        : -2L  PRODUCTION 1.28 03-30-2022"
+    },
+    {
+      "line": 10,
+      "text": "| Design State      : Routed"
+    },
+    {
+      "line": 11,
+      "text": "| Temperature Grade : E"
+    },
+    {
+      "line": 17,
+      "text": "| Timer Settings"
+    },
+    {
+      "line": 18,
+      "text": "| --------------"
+    },
+    {
+      "line": 41,
+      "text": "| Report Methodology"
+    },
+    {
+      "line": 42,
+      "text": "| ------------------"
+    },
+    {
+      "line": 47,
+      "text": "TIMING-3   Critical Warning  Invalid primary clock on Clock Modifying Block      1"
+    },
+    {
+      "line": 48,
+      "text": "TIMING-4   Critical Warning  Invalid primary clock redefinition on a clock tree  1"
+    },
+    {
+      "line": 49,
+      "text": "TIMING-6   Critical Warning  No common primary clock between related clocks      2"
+    },
+    {
+      "line": 50,
+      "text": "TIMING-27  Critical Warning  Invalid primary clock on hierarchical pin           1"
+    },
+    {
+      "line": 51,
+      "text": "LUTAR-1    Warning           LUT drives async reset alert                        12"
+    },
+    {
+      "line": 52,
+      "text": "TIMING-16  Warning           Large setup violation                               191"
+    },
+    {
+      "line": 53,
+      "text": "TIMING-18  Warning           Missing input or output delay                       1"
+    },
+    {
+      "line": 54,
+      "text": "CLKC-11    Advisory          MMCME4 divide could be done by BUFG_GT              1"
+    },
+    {
+      "line": 55,
+      "text": "CLKC-30    Advisory          MMCME4 not driven by IO has BUFG in feedback loop   2"
+    },
+    {
+      "line": 56,
+      "text": "CLKC-56    Advisory          MMCME4 with global clock driver has no LOC          2"
+    },
+    {
+      "line": 57,
+      "text": "RTGT-1     Advisory          RAM retargeting possibility                         1"
+    },
+    {
+      "line": 150,
+      "text": "| Design Timing Summary"
+    },
+    {
+      "line": 151,
+      "text": "| ---------------------"
+    },
+    {
+      "line": 156,
+      "text": "-1.723     -864.191                   3996               391727        0.009        0.000                      0               391217        0.000        0.000                       0                158064"
+    },
+    {
+      "line": 163,
+      "text": "| Clock Summary"
+    },
+    {
+      "line": 164,
+      "text": "| -------------"
+    },
+    {
+      "line": 210,
+      "text": "| Intra Clock Table"
+    },
+    {
+      "line": 211,
+      "text": "| -----------------"
+    },
+    {
+      "line": 238,
+      "text": "| Inter Clock Table"
+    },
+    {
+      "line": 239,
+      "text": "| -----------------"
+    },
+    {
+      "line": 257,
+      "text": "| Other Path Groups Table"
+    },
+    {
+      "line": 258,
+      "text": "| -----------------------"
+    },
+    {
+      "line": 272,
+      "text": "| User Ignored Path Table"
+    },
+    {
+      "line": 273,
+      "text": "| -----------------------"
+    },
+    {
+      "line": 313,
+      "text": "| Unconstrained Path Table"
+    },
+    {
+      "line": 314,
+      "text": "| ------------------------"
+    },
+    {
+      "line": 324,
+      "text": "| Timing Details"
+    },
+    {
+      "line": 325,
+      "text": "| --------------"
+    },
+    {
+      "line": 2835,
+      "text": "Setup :         2985  Failing Endpoints,  Worst Slack       -1.723ns,  Total Violation     -771.570ns"
+    },
+    {
+      "line": 15460,
+      "text": "Setup :         1011  Failing Endpoints,  Worst Slack       -0.179ns,  Total Violation      -92.621ns"
+    },
+    {
+      "line": 20982,
+      "text": "Setup :           99  Failing Endpoints,  Worst Slack       -0.322ns,  Total Violation       -9.722ns"
+    }
+  ],
+  "hardware": "NOT_RUN",
+  "rtl_modified": false,
+  "new_build_or_simulation_started": false,
+  "validation": {
+    "report_read_and_parsed": true,
+    "sample_excerpts_exactly_matched_before_deletion": true,
+    "source_fingerprints_unchanged": true,
+    "original_no_longer_exists": true,
+    "full_report_copy_retained": false
+  }
+}

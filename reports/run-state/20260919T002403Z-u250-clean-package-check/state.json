@@ -1,0 +1,95 @@
+{
+  "run_id": "20260919T002403Z-u250-clean-package-check",
+  "started_at_utc": "2026-09-19T00:24:03.081645+00:00",
+  "kind": "local functional verification of prepared source copies",
+  "windows_build": "NOT_RUN",
+  "hardware": "NOT_RUN",
+  "tests": [
+    {
+      "name": "adapter",
+      "top": "flle_rx_filter_tb",
+      "cases": 29,
+      "compile_command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "flle_rx_filter_tb",
+        "-o",
+        "reports/run-state/20260919T002403Z-u250-clean-package-check/adapter.vvp",
+        "assets/09-verilator/u250-clean/src/market_filter.sv",
+        "assets/09-verilator/u250-clean/src/flle_rx_filter.sv",
+        "assets/09-verilator/u250-clean/src/flle_rx_port.sv",
+        "assets/09-verilator/u250-gui/flle_rx_filter_tb.sv"
+      ],
+      "compile_exit": 0,
+      "simulation_command": [
+        "vvp",
+        "reports/run-state/20260919T002403Z-u250-clean-package-check/adapter.vvp"
+      ],
+      "simulation_exit": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "control",
+      "top": "flle_rx_control_tb",
+      "cases": 12,
+      "compile_command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "flle_rx_control_tb",
+        "-o",
+        "reports/run-state/20260919T002403Z-u250-clean-package-check/control.vvp",
+        "assets/09-verilator/u250-clean/src/market_filter.sv",
+        "assets/09-verilator/u250-clean/src/flle_rx_filter.sv",
+        "assets/09-verilator/u250-clean/src/flle_rx_port.sv",
+        "assets/09-verilator/u250-clean/sim/flle_rx_control_tb.sv"
+      ],
+      "compile_exit": 0,
+      "simulation_command": [
+        "vvp",
+        "reports/run-state/20260919T002403Z-u250-clean-package-check/control.vvp"
+      ],
+      "simulation_exit": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "pipeline",
+      "top": "flle_rx_filter_tb",
+      "cases": 102,
+      "compile_command": [
+        "iverilog",
+        "-g2012",
+        "-s",
+        "flle_rx_filter_tb",
+        "-Pflle_rx_filter_tb.EXTRA_PIPELINE_TESTS=1",
+        "-o",
+        "reports/run-state/20260919T002403Z-u250-clean-package-check/pipeline.vvp",
+        "assets/09-verilator/u250-clean/src/market_filter.sv",
+        "assets/09-verilator/u250-clean/src/flle_rx_filter.sv",
+        "assets/09-verilator/u250-clean/src/flle_rx_port.sv",
+        "assets/09-verilator/u250-gui/flle_rx_filter_tb.sv"
+      ],
+      "compile_exit": 0,
+      "simulation_command": [
+        "vvp",
+        "reports/run-state/20260919T002403Z-u250-clean-package-check/pipeline.vvp"
+      ],
+      "simulation_exit": 0,
+      "result": "PASS"
+    }
+  ],
+  "completed_at_utc": "2026-09-19T00:24:04.729217+00:00",
+  "source_sha256": {
+    "src/market_filter.sv": "5cd5a34ab42b1607d85b45f575f9d7947b759646c541549fd6d95c7205fa8627",
+    "src/flle_rx_filter.sv": "7cf8895fde96c5658a533ed65e02e870209542f86f88b03c7d87de09e7a493d2",
+    "src/flle_rx_port.sv": "df09bb05e9738c0489f826f8090f893c412a16c1bf214a44ce2b7f2bc415631a",
+    "sim/flle_rx_control_tb.sv": "2448cfbc2834f68acf25a504db0aaf96bfaf219534a8df32d28bc026745fa316",
+    "plugin/p2p/p2p_250mhz.sv": "161ab420219292b66220c406872c875f4c171e93440e4335da8bee51ba173c82"
+  },
+  "additional_regression_testbench": {
+    "path": "assets/09-verilator/u250-gui/flle_rx_filter_tb.sv",
+    "sha256": "845f336d79bf7add7741119c4b2248acbf82346b0bd4dba78edd23ce19c05f3a",
+    "note": "Maintenance-only regression harness; not required by the Windows walkthrough."
+  }
+}

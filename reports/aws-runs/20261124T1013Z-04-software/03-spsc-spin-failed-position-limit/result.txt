@@ -1,0 +1,17 @@
+===== 固定行情条件 =====
+测量期间固定为单播 UNICAST（AWS 无组播）。
+market_mode=UNICAST
+===== 恢复测量前的行情模式 =====
+market_mode=UNICAST
+Traceback (most recent call last):
+  File "/home/ubuntu/flle/app/tests/software_measurement_aws.py", line 1051, in <module>
+    main()
+  File "/home/ubuntu/flle/app/tests/software_measurement_aws.py", line 638, in main
+    measure(args)
+  File "/home/ubuntu/flle/app/tests/software_measurement_aws.py", line 723, in measure
+    measured_manual, measured_control = capture_paired_phase(
+  File "/home/ubuntu/flle/app/tests/software_measurement_aws.py", line 307, in capture_paired_phase
+    response = send_command(
+  File "/home/ubuntu/flle/app/flle_trading/gateway.py", line 701, in send_command
+    raise ValueError(str(response["error"]))
+ValueError: position limit

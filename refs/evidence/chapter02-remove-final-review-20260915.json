@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-15",
+  "status": "DOC_PASS",
+  "request": "Remove redundant final platform/multicast review; finish chapter at first trade.",
+  "changes": [
+    "Delete run③ section including navigation, Bash and output",
+    "Nine steps with 3/5/1 grouping",
+    "Replace duplicate final acceptance table with one summary paragraph",
+    "Align supporting README and teacher scope; retain maintenance script and original logs"
+  ],
+  "checks": {
+    "navigation_count": 9,
+    "navigation_sequence": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "green_cards": 9,
+    "remaining_bash_blocks": 10,
+    "remaining_bash_syntax": "PASS",
+    "retained_bash_and_mermaid_unchanged": true,
+    "html_tags_balanced": true,
+    "markdown_render": "PASS",
+    "local_reference_count": 18,
+    "no_retired_step_references_in_chapter": true,
+    "diff_check": "PASS"
+  },
+  "chapter_sha256": "903792456da1e2919ba99d64294886bf73a5b76cd9c265870eb2d0ebc98ec39f",
+  "removed_section_and_old_summary": "## 运行 ③：复查平台与组播状态\n\n<div style=\"border:2px solid #4f46e5;background:#eef2ff;padding:10px 12px;border-radius:8px;margin:14px 0;\"><div style=\"font-weight:900;color:#312e81;margin-bottom:4px;\">导航卡 · 核对首笔成交</div><div style=\"font-weight:700;color:#312e81;margin-bottom:8px;\">范畴：现场只读　本步知识：确认交接时的平台、成员与行情健康　位置：全章第 10 / 10 项 · 本组第 2 / 2 项</div><span style=\"display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #a5b4fc;color:#312e81;font-weight:800;\">运行 ②：完成第一笔模拟交易</span><span style=\"display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;\">运行 ③：复查平台与组播状态</span></div>\n\n交接前复查平台进程、主机订阅、交换机成员与行情完整性。前面抓到包、完成成交属于当时的结果；继续回放后仍可能出现行情缺口。进程 `ONLINE` 时，也要确认当前行情为 `HEALTHY`、保护闸为 `OPEN`。\n\n<div style=\"border-left:6px solid #15803d;background:#dcfce7;padding:12px 16px;border-radius:8px;margin:14px 0;\"><span style=\"display:inline-block;padding:3px 12px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;\">需要运行 · 运行 ③</span> <span style=\"font-weight:700;color:#14532d;\">运行②完成后在管理机执行。可重复查看，不改设备配置、接收模式或策略，不提交新订单；命令失败时按终端提示检查。</span></div>\n\n```bash\n#!/usr/bin/env bash\nset -Eeuo pipefail\ncd /financial-low-latency\nTOOLS=Documents/newDoc/assets/02-trading-baseline\nsource Documents/reports/run-state/02-trading-baseline.env\nBASE_RUN_ID=\"$RUN_ID\"; API=\"${WEB_URL%/}\"\nRUN_ID=\"$(date -u +%Y%m%dT%H%M%SZ)-02-readonly-review\"\nOUT=\"Documents/reports/course-runs/$RUN_ID\"; mkdir -p \"$OUT/raw\"\nprintf 'RUN_ID=%s\\nBASE_RUN_ID=%s\\n' \"$RUN_ID\" \"$BASE_RUN_ID\" >\"$OUT/run.env\"\n{\n  printf '===== 复查平台进程与部署文件 =====\\n$ bash apps/flle-trading-lab/scripts/transport_labctl.sh verify %s\\n' \"$BASE_RUN_ID\"\n  if bash apps/flle-trading-lab/scripts/transport_labctl.sh verify \"$BASE_RUN_ID\" >\"$OUT/raw/platform.txt\" 2>&1; then rc=0; else rc=$?; fi\n  if test \"$rc\" -ne 0; then tail -n 20 \"$OUT/raw/platform.txt\"; exit \"$rc\"; fi\n  filter='/^[A-Za-z][A-Za-z0-9_-]*=/ && length($0)<=240 {print}'\n  printf '$ awk %q %q\\n' \"$filter\" \"$OUT/raw/platform.txt\"; awk \"$filter\" \"$OUT/raw/platform.txt\"\n  printf '===== 复查主机成员 =====\\n$ ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 ip maddr show dev ens64np1\\n'\n  ssh -o BatchMode=yes -o StrictHostKeyChecking=yes root@10.1.1.2 'ip maddr show dev ens64np1' | tee \"$OUT/raw/membership.txt\"\n  printf '===== 复查交换机成员 =====\\n$ python3 Documents/newDoc/assets/common/eos_cli.py --mode show --plan %s --output %s\\n' \"$TOOLS/igmp-show.plan\" \"$OUT/raw/switch.txt\"\n  if python3 Documents/newDoc/assets/common/eos_cli.py --mode show --plan \"$TOOLS/igmp-show.plan\" --output \"$OUT/raw/switch.txt\" >\"$OUT/raw/cli.txt\" 2>&1; then rc=0; else rc=$?; fi\n  if test \"$rc\" -ne 0; then cat \"$OUT/raw/cli.txt\"; exit \"$rc\"; fi\n  printf '$ python3 %s/inspect-igmp.py %s --members --display\\n' \"$TOOLS\" \"$OUT/raw/switch.txt\"\n  python3 \"$TOOLS/inspect-igmp.py\" \"$OUT/raw/switch.txt\" --members --display\n  printf '===== 查看此刻的行情完整性 =====\\nONLINE 只表示进程在线；继续下单前还要确认行情为 HEALTHY、保护闸为 OPEN。\\n$ curl -fsS --max-time 10 %q\\n' \"$API/api/state\"\n  curl -fsS --max-time 10 \"$API/api/state\" >\"$OUT/raw/state.json\"\n  summary='import json,sys; s=json.load(open(sys.argv[1])); f=s.get(\"feed\") or {}; print(\"market_mode=%s integrity=%s next_expected=%s trading_gate=%s\" % (s.get(\"market_mode\"),f.get(\"integrity\"),f.get(\"next_expected\"),f.get(\"trading_gate\")))'\n  printf '$ python3 -c %q %q\\n' \"$summary\" \"$OUT/raw/state.json\"; python3 -c \"$summary\" \"$OUT/raw/state.json\"\n} 2>&1 | tee \"$OUT/raw/classroom.txt\"\nsha256sum \"$TOOLS/03-readonly-review.sh\" \"$TOOLS/igmp-show.plan\" \"$TOOLS/inspect-igmp.py\" \"$OUT\"/raw/* \"$OUT/run.env\" >\"$OUT/SHA256SUMS\"\n```\n\n<div style=\"border-left:6px solid #7e22ce;background:#f3e8ff;padding:12px 16px;border-radius:8px;margin:14px 0;\"><span style=\"display:inline-block;padding:3px 12px;border-radius:6px;background:#7e22ce;color:#fff;font-weight:800;\">仅供展示 · 复查输出</span> <span style=\"font-weight:700;color:#581c87;\">交接检查的关键行节选：保留一个接收端进程、一个成员表项和当前行情状态，其余字段按前面各步的标准查看。</span></div>\n\n```text\ntrader-auto=ONLINE pid=23449\n20    233.74.125.32    Dynamic  -                      Et2\nmarket_mode=UNICAST integrity=HEALTHY next_expected=180912 trading_gate=OPEN\n```\n\n## 本章总结：对照输出逐项确认\n\n| 验收层 | 原始输出字段 | 学员判断标准 |\n| --- | --- | --- |\n| 平台进程与文件 | `exchange`、`trader-auto`、`trader-manual`、`gateway`，`deployed_sha256` | 本章默认运行配置下，进程为 `ONLINE`，部署文件为 `PASS` |\n| 主机订阅 | `ip maddr` 的 `inet` 行 | `ens64np1` 有 `233.74.125.32`；无 `users` 表示一个订阅，`users 2` 表示有两个 |\n| 交换机转发 | `pruning active`、`Flooding traffic to VLAN`、组成员行 | VLAN20 分别为 `True`、`False`，目标组为 `Dynamic`、端口为 Et2 |\n| 实际行情与当前健康 | 运行①C的报文源目地址；复查的 `integrity`、`trading_gate` | 当时收到发往 `233.74.125.32:31032` 的行情；当前还应为 `HEALTHY / OPEN`，出现 `GAP` 就暂停下单 |\n| 首单执行 | `source_advance_ns`、`result`、`filled`、`position_delta`、`history` | 当时回放推进；本单成交 1 股，持仓变化为 `+1/-1`，两端都有记录 |\n\n**本次验收证明什么：** 复查确认当前平台、成员和行情健康状态，不重新抓包或下单。已收包和已成交的证据保留在①C和②；历史成功不能代替此刻的 `HEALTHY / OPEN`。\n\n**验证范围：** 准备 A～C、部署、①A～①C、首单与运行③已在当前环境完整顺刷通过。额外以 30 倍速回放了 09:30～16:00 的 17036207 条行情，再以 1 倍速观察约 601 秒；两个客户端连续交付，未见 UDP 接收错误或本机分发队列超限、丢弃。本次是功能与有限持续运行验证，不代替 1 倍速运行完整 6.5 小时或后续固定条件下的性能比较。\n\n",
+  "no_device_actions": true,
+  "scripts_and_images_unchanged": true
+}

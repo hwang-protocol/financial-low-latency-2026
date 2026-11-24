@@ -1,0 +1,93 @@
+{
+  "date": "2026-09-13",
+  "scope": "QoS结果格式化、A/B订单路径补齐、实际最终终端对比打印",
+  "validation_kind": "既有实验数据离线重放与本地文档/SVG验证；不是本轮设备运行",
+  "source_run": "20260903T095143Z-07-qos-contention-live",
+  "source_root_sha256": "c86a2cad555d699ef12a03257cec9d3dac0932c28954781698c06b556c04e58d",
+  "sources": [
+    "Documents/reports/course-runs/20260903T095143Z-07-qos-contention-live/raw/result.txt",
+    "Documents/reports/course-runs/20260903T095143Z-07-qos-contention-live/result.json",
+    "Documents/newDoc/assets/06-arista-time/11-qos-real-order-contention-live.sh"
+  ],
+  "checks": {
+    "bash_syntax": "PASS",
+    "archived_data_formatter_replay": "PASS",
+    "old_machine_summary_byte_identical": "PASS",
+    "table_display_widths": "PASS",
+    "conclusion_variants": [
+      "tie",
+      "higher",
+      "zero"
+    ],
+    "measurement_and_recovery_code_unchanged": true,
+    "chapter_fences_remaining": 28,
+    "chapter_only_removed_fence": "旧六行结果摘要，改为中文表格",
+    "other_chapter_fences_unchanged": true,
+    "result_tables_rows_columns": [
+      [
+        3,
+        4
+      ],
+      [
+        7,
+        3
+      ]
+    ],
+    "result_arithmetic": "PASS",
+    "historical_raw_and_result_json_unchanged": true,
+    "live_experiment_executed": false,
+    "script_sha256": "19c1bd8cc5efb24a4f74d86e09c312e9a80c4282acb324f42284e3c88ec0c999"
+  },
+  "figure": {
+    "file": "Documents/newDoc/images/course-visuals/06-diagrams/06-qos-contention-paths.svg",
+    "sha256": "928ac7c536dbf750b9b144f8edd2cfb40cab27a81895a64866c41c72a6d29b92",
+    "preview_widths": [
+      800,
+      1200
+    ],
+    "text_nodes": 32,
+    "text_bounds": "PASS",
+    "all_six_arrow_tips_and_joins_reviewed_at_2x": true,
+    "target_gaps_px": [
+      12,
+      12,
+      12,
+      12,
+      12,
+      12
+    ]
+  },
+  "result_table_browser_preview": "1000px PASS",
+  "manifest_counts": {
+    "Documents/newDoc/images/course-visuals/06-diagrams/SHA256SUMS": 64,
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": 267
+  },
+  "formatted_output_offline_replay": [
+    "===== QoS 结果：Q1 与严格优先级 Q5 =====",
+    "",
+    "对比项                 | A 组：未标记，进 Q1       | B 组：DSCP 46，进 Q5",
+    "-----------------------+---------------------------+--------------------------",
+    "背景发包（帧）         | 15,000,000                | 15,000,000",
+    "成交订单（笔）         | 120                       | 120",
+    "订单 RTT p50（µs）     | 2,199.516                 | 107.044",
+    "订单 RTT p99（µs）     | 2,333.197                 | 190.867",
+    "",
+    "===== 队列核对 =====",
+    "Et1 计数增量           | A 组                      | B 组",
+    "-----------------------+---------------------------+--------------------------",
+    "Q1 发包（P1）          | +12,213,859               | +12,193,821",
+    "Q5 发包（P5）          | +0                        | +240",
+    "LANZ 事件              | +2                        | +1",
+    "",
+    "恢复检查：配置已恢复，恢复后 2 笔订单成交，AAPL 净持仓不变。",
+    "结果记录：Documents/reports/course-runs/20260903T095143Z-07-qos-contention-live",
+    "",
+    "===== 延迟差异 =====",
+    "p50：Q5 比 Q1 低 2,092.472 µs（95.13%）。",
+    "p99：Q5 比 Q1 低 2,142.330 µs（91.82%）。",
+    "p99 比值：Q1 / Q5 = 12.22 倍。",
+    "本次结果：订单进入严格优先级 Q5 后，p99 低于进入 Q1。"
+  ],
+  "concurrent_workspace_edit": "另有LANZ图文更新，未覆盖或纳入本次改动归属",
+  "remaining_validation": "新脚本整体未重跑实机；只验证显示层，测量和恢复逻辑逐字保持。"
+}

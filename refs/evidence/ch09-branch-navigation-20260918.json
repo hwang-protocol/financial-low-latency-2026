@@ -1,0 +1,1075 @@
+{
+  "date": "2026-09-18",
+  "scope": "documentation and native navigation figure only",
+  "steps": [
+    [
+      "1",
+      "编写过滤核心",
+      "共同步骤",
+      "源码展示",
+      "写出字段匹配、接收条件和一次额度"
+    ],
+    [
+      "2",
+      "本地编译与自测",
+      "共同步骤",
+      "离线编译",
+      "在开发机中检查同一份 RTL 的行为"
+    ],
+    [
+      "A1",
+      "准备 .2 的编译工具",
+      "仿真分支",
+      "工具准备",
+      "在接行情的主机备齐 Verilator、g++ 和 make"
+    ],
+    [
+      "A2",
+      "接入并正常放行",
+      "仿真分支",
+      "分步实验",
+      "在 .2 构建程序，接入行情并确认额度为 0"
+    ],
+    [
+      "A3",
+      "发令丢一次",
+      "仿真分支",
+      "分步实验",
+      "给模型一次额度，出现缺口后保留现场"
+    ],
+    [
+      "A4",
+      "核对丢包与缺口",
+      "仿真分支",
+      "分步实验",
+      "核对丢弃与缺失序号，撤出过滤但保留缺口"
+    ],
+    [
+      "A5",
+      "手工恢复行情",
+      "仿真分支",
+      "分步实验",
+      "在网页恢复，再只读核对新会话和订单簿"
+    ],
+    [
+      "B1",
+      "准备开发环境",
+      "真卡分支 · 准备与构建",
+      "工具准备",
+      "取得 V80 配套工具、许可与源码"
+    ],
+    [
+      "B2",
+      "初始化与识别卡",
+      "真卡分支 · 准备与构建",
+      "纸面推演",
+      "安装基础固件和管理工具，确认目标卡"
+    ],
+    [
+      "B3",
+      "接入板卡接口",
+      "真卡分支 · 准备与构建",
+      "源码展示",
+      "给同一过滤核心接上 PCIe 寄存器外壳"
+    ],
+    [
+      "B4",
+      "构建镜像",
+      "真卡分支 · 准备与构建",
+      "纸面推演",
+      "构建同一设计配套的启动与 PL 配置"
+    ],
+    [
+      "B5",
+      "复制与装载",
+      "真卡分支 · 装载与验证",
+      "纸面推演",
+      "复制文件、重新认卡，先启动再装入用户电路"
+    ],
+    [
+      "B6",
+      "验证卡上判决",
+      "真卡分支 · 装载与验证",
+      "纸面推演",
+      "经 PCIe 提交消息，核对一次丢弃与计数"
+    ],
+    [
+      "B7",
+      "接通真实网口",
+      "真卡分支 · 装载与验证",
+      "扩展设计",
+      "说明仍需适配的收包、缓存和 DMA 通路"
+    ]
+  ],
+  "navigation_cards": 14,
+  "groups": [
+    2,
+    5,
+    4,
+    3
+  ],
+  "images": 9,
+  "original_non_navigation_fences_preserved": 32,
+  "protected_assets_unchanged": 108,
+  "concurrent_ch08_edits_preserved": [
+    "Documents/newDoc/08-arista-fpga-market-filter-draft.md"
+  ],
+  "same_page_anchor_references": 82,
+  "local_asset_references": 15,
+  "lines_before": 903,
+  "lines_after": 897,
+  "html_and_bash_syntax": "PASS",
+  "svg_steps_match_titles": "PASS",
+  "source_sha256": "edd8fc4feff5699575b5c4da2a87c469da5fa8ee7db17a631a57480e3f584fa5",
+  "no_runtime_or_hardware_tests": true,
+  "browser": {
+    "800-chapter-map": {
+      "images": 9,
+      "missing": [],
+      "width": 785,
+      "clientWidth": 785,
+      "nav": [
+        {
+          "id": "1",
+          "rect": {
+            "x": 10,
+            "y": 3695.171875,
+            "width": 765,
+            "height": 160.75,
+            "top": 3695.171875,
+            "right": 775,
+            "bottom": 3855.921875,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "2",
+          "rect": {
+            "x": 10,
+            "y": 7669.03125,
+            "width": 765,
+            "height": 160.75,
+            "top": 7669.03125,
+            "right": 775,
+            "bottom": 7829.78125,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "A1",
+          "rect": {
+            "x": 10,
+            "y": 10915.234375,
+            "width": 765,
+            "height": 203.9375,
+            "top": 10915.234375,
+            "right": 775,
+            "bottom": 11119.171875,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "A2",
+          "rect": {
+            "x": 10,
+            "y": 13370.75,
+            "width": 765,
+            "height": 203.9375,
+            "top": 13370.75,
+            "right": 775,
+            "bottom": 13574.6875,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "A3",
+          "rect": {
+            "x": 10,
+            "y": 16322.921875,
+            "width": 765,
+            "height": 203.9375,
+            "top": 16322.921875,
+            "right": 775,
+            "bottom": 16526.859375,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "A4",
+          "rect": {
+            "x": 10,
+            "y": 18371.140625,
+            "width": 765,
+            "height": 203.9375,
+            "top": 18371.140625,
+            "right": 775,
+            "bottom": 18575.078125,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "A5",
+          "rect": {
+            "x": 10,
+            "y": 20113.328125,
+            "width": 765,
+            "height": 201.9375,
+            "top": 20113.328125,
+            "right": 775,
+            "bottom": 20315.265625,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "B1",
+          "rect": {
+            "x": 10,
+            "y": 20947.46875,
+            "width": 765,
+            "height": 160.75,
+            "top": 20947.46875,
+            "right": 775,
+            "bottom": 21108.21875,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "B2",
+          "rect": {
+            "x": 10,
+            "y": 22301.734375,
+            "width": 765,
+            "height": 160.75,
+            "top": 22301.734375,
+            "right": 775,
+            "bottom": 22462.484375,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "B3",
+          "rect": {
+            "x": 10,
+            "y": 23733.4375,
+            "width": 765,
+            "height": 160.75,
+            "top": 23733.4375,
+            "right": 775,
+            "bottom": 23894.1875,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "B4",
+          "rect": {
+            "x": 10,
+            "y": 26204.21875,
+            "width": 765,
+            "height": 160.75,
+            "top": 26204.21875,
+            "right": 775,
+            "bottom": 26364.96875,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "B5",
+          "rect": {
+            "x": 10,
+            "y": 27845.859375,
+            "width": 765,
+            "height": 160.75,
+            "top": 27845.859375,
+            "right": 775,
+            "bottom": 28006.609375,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "B6",
+          "rect": {
+            "x": 10,
+            "y": 29504.84375,
+            "width": 765,
+            "height": 160.75,
+            "top": 29504.84375,
+            "right": 775,
+            "bottom": 29665.59375,
+            "left": 10
+          },
+          "contentError": false
+        },
+        {
+          "id": "B7",
+          "rect": {
+            "x": 10,
+            "y": 31201.984375,
+            "width": 765,
+            "height": 160.75,
+            "top": 31201.984375,
+            "right": 775,
+            "bottom": 31362.734375,
+            "left": 10
+          },
+          "contentError": false
+        }
+      ],
+      "badLinks": [],
+      "brokenBold": false
+    },
+    "1200-step-a3": {
+      "images": 9,
+      "missing": [],
+      "width": 1185,
+      "clientWidth": 1185,
+      "nav": [
+        {
+          "id": "1",
+          "rect": {
+            "x": 92.5,
+            "y": 3628.34375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 3628.34375,
+            "right": 1092.5,
+            "bottom": 3761.90625,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "2",
+          "rect": {
+            "x": 92.5,
+            "y": 7317.953125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 7317.953125,
+            "right": 1092.5,
+            "bottom": 7451.515625,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A1",
+          "rect": {
+            "x": 92.5,
+            "y": 10527.125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 10527.125,
+            "right": 1092.5,
+            "bottom": 10660.6875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A2",
+          "rect": {
+            "x": 92.5,
+            "y": 12686.234375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 12686.234375,
+            "right": 1092.5,
+            "bottom": 12819.796875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A3",
+          "rect": {
+            "x": 92.5,
+            "y": 15446.59375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 15446.59375,
+            "right": 1092.5,
+            "bottom": 15580.15625,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A4",
+          "rect": {
+            "x": 92.5,
+            "y": 17364.140625,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 17364.140625,
+            "right": 1092.5,
+            "bottom": 17497.703125,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A5",
+          "rect": {
+            "x": 92.5,
+            "y": 19039.640625,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 19039.640625,
+            "right": 1092.5,
+            "bottom": 19173.203125,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B1",
+          "rect": {
+            "x": 92.5,
+            "y": 19751.03125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 19751.03125,
+            "right": 1092.5,
+            "bottom": 19884.59375,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B2",
+          "rect": {
+            "x": 92.5,
+            "y": 20947.234375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 20947.234375,
+            "right": 1092.5,
+            "bottom": 21080.796875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B3",
+          "rect": {
+            "x": 92.5,
+            "y": 22215.8125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 22215.8125,
+            "right": 1092.5,
+            "bottom": 22349.375,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B4",
+          "rect": {
+            "x": 92.5,
+            "y": 24551.421875,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 24551.421875,
+            "right": 1092.5,
+            "bottom": 24684.984375,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B5",
+          "rect": {
+            "x": 92.5,
+            "y": 26057.125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 26057.125,
+            "right": 1092.5,
+            "bottom": 26190.6875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B6",
+          "rect": {
+            "x": 92.5,
+            "y": 27607.359375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 27607.359375,
+            "right": 1092.5,
+            "bottom": 27740.921875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B7",
+          "rect": {
+            "x": 92.5,
+            "y": 29195.75,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 29195.75,
+            "right": 1092.5,
+            "bottom": 29329.3125,
+            "left": 92.5
+          },
+          "contentError": false
+        }
+      ],
+      "badLinks": [],
+      "brokenBold": false
+    },
+    "1200-step-b6": {
+      "images": 9,
+      "missing": [],
+      "width": 1185,
+      "clientWidth": 1185,
+      "nav": [
+        {
+          "id": "1",
+          "rect": {
+            "x": 92.5,
+            "y": 3628.34375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 3628.34375,
+            "right": 1092.5,
+            "bottom": 3761.90625,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "2",
+          "rect": {
+            "x": 92.5,
+            "y": 7317.953125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 7317.953125,
+            "right": 1092.5,
+            "bottom": 7451.515625,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A1",
+          "rect": {
+            "x": 92.5,
+            "y": 10527.125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 10527.125,
+            "right": 1092.5,
+            "bottom": 10660.6875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A2",
+          "rect": {
+            "x": 92.5,
+            "y": 12686.234375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 12686.234375,
+            "right": 1092.5,
+            "bottom": 12819.796875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A3",
+          "rect": {
+            "x": 92.5,
+            "y": 15446.59375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 15446.59375,
+            "right": 1092.5,
+            "bottom": 15580.15625,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A4",
+          "rect": {
+            "x": 92.5,
+            "y": 17364.140625,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 17364.140625,
+            "right": 1092.5,
+            "bottom": 17497.703125,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "A5",
+          "rect": {
+            "x": 92.5,
+            "y": 19039.640625,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 19039.640625,
+            "right": 1092.5,
+            "bottom": 19173.203125,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B1",
+          "rect": {
+            "x": 92.5,
+            "y": 19751.03125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 19751.03125,
+            "right": 1092.5,
+            "bottom": 19884.59375,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B2",
+          "rect": {
+            "x": 92.5,
+            "y": 20947.234375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 20947.234375,
+            "right": 1092.5,
+            "bottom": 21080.796875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B3",
+          "rect": {
+            "x": 92.5,
+            "y": 22215.8125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 22215.8125,
+            "right": 1092.5,
+            "bottom": 22349.375,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B4",
+          "rect": {
+            "x": 92.5,
+            "y": 24551.421875,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 24551.421875,
+            "right": 1092.5,
+            "bottom": 24684.984375,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B5",
+          "rect": {
+            "x": 92.5,
+            "y": 26057.125,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 26057.125,
+            "right": 1092.5,
+            "bottom": 26190.6875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B6",
+          "rect": {
+            "x": 92.5,
+            "y": 27607.359375,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 27607.359375,
+            "right": 1092.5,
+            "bottom": 27740.921875,
+            "left": 92.5
+          },
+          "contentError": false
+        },
+        {
+          "id": "B7",
+          "rect": {
+            "x": 92.5,
+            "y": 29195.75,
+            "width": 1000,
+            "height": 133.5625,
+            "top": 29195.75,
+            "right": 1092.5,
+            "bottom": 29329.3125,
+            "left": 92.5
+          },
+          "contentError": false
+        }
+      ],
+      "badLinks": [],
+      "brokenBold": false
+    }
+  },
+  "browser_visual_review": {
+    "mode": "Unmodified document section fragments; full-page DOM checked separately",
+    "reviewed": [
+      "800px chapter-map",
+      "1200px A3 navigation and figure",
+      "1200px B6 navigation and commands"
+    ],
+    "full_page_scroll_screenshot_used_as_evidence": false
+  },
+  "figure": {
+    "svg": "Documents/newDoc/images/course-visuals/09-diagrams/09-branch-navigation.svg",
+    "viewBox": [
+      0,
+      0,
+      1200,
+      1780
+    ],
+    "png": "Documents/newDoc/images/course-visuals/09-diagrams/09-branch-navigation.png",
+    "png_pixels": [
+      1600,
+      2373
+    ],
+    "sha256": {
+      "09-branch-navigation.svg": "cd67714d1ea85eb10e65bc363cfacba871d40045e26de317a8ae277ca0944119",
+      "09-branch-navigation.png": "cbb095f0b3225aad59aabaa0a352d98f943a9ee743e20324286255489371e67a"
+    },
+    "nodes": 16,
+    "workflow_arrows": 15,
+    "arrow_marker_dimensions": [
+      12,
+      12
+    ],
+    "marker_reference": [
+      0,
+      6
+    ],
+    "target_tip_gap_px": 12,
+    "text_bounds_and_fonts": {
+      "800": {
+        "bad": [],
+        "fonts": true,
+        "width": 800
+      },
+      "1200": {
+        "bad": [],
+        "fonts": true,
+        "width": 1200
+      },
+      "1600": {
+        "bad": [],
+        "fonts": true,
+        "width": 1600
+      }
+    },
+    "visual_review": [
+      "800px whole diagram after A5 manual-recovery correction",
+      "1200px whole diagram after A5 manual-recovery correction",
+      "arrow geometry unchanged: 12px marker and target gap"
+    ],
+    "a5_to_b1_arrow": false,
+    "right_branch_status": "尚未上板验证; B7 待适配",
+    "a5_restore_instruction": "网页手工恢复，再运行④验收"
+  },
+  "independent_review": {
+    "before_blocks": 32,
+    "after_blocks": 32,
+    "all_32_blocks_verbatim_preserved": true,
+    "only_block_moved": "printf 'block\\n' > /var/tmp/flle-market-filter.cmd",
+    "navigation_14_positions_and_groups_correct": true,
+    "broken_internal_refs": [],
+    "duplicate_ids": [],
+    "common_section_no_file_control_or_ttl": true,
+    "images_missing": [],
+    "manual_review": "Read full 897-line body and viewed final large PNG; no stale step references found. One recommended figure precision tweak: A5 subline should state manual webpage recovery before run IV verification. No repository changes or experiment execution.",
+    "a5_figure_followup": "Applied: 网页手工恢复，再运行④验收"
+  },
+  "manifest_checks": {
+    "Documents/newDoc/images/course-visuals/09-diagrams/SHA256SUMS": 24,
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": 23
+  },
+  "status": "DOC / FIGURE VERIFIED; hardware validation status unchanged",
+  "current_source_sha256": {
+    "Documents/newDoc/09-verilator-fpga-smartnic-simulation.md": "edd8fc4feff5699575b5c4da2a87c469da5fa8ee7db17a631a57480e3f584fa5",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-branch-navigation.svg": "cd67714d1ea85eb10e65bc363cfacba871d40045e26de317a8ae277ca0944119",
+    "Documents/newDoc/images/course-visuals/09-diagrams/09-branch-navigation.png": "cbb095f0b3225aad59aabaa0a352d98f943a9ee743e20324286255489371e67a",
+    "Documents/newDoc/images/course-visuals/09-diagrams/README.md": "9c125e4cdfc22042a1d1a65e461db4c785df824a48227f78ba7b9096cc38293e",
+    "Documents/newDoc/images/course-visuals/09-diagrams/SHA256SUMS": "92f74c0818ba0d647fd692581efdf4a4e0d7524d8beb2d41ff23094a2ae6bf47"
+  },
+  "protected_source_snapshot": {
+    "Documents/newDoc/assets/09-verilator/sim_main.cpp": "bbe1d30cab2abea0e31272980b34666ed2a5efb366efc254b2f3bd5e5e4be5f4",
+    "Documents/newDoc/assets/09-verilator/random_scoreboard.cpp": "331c3e8609e49fde8bf17e401b023dfb9813762553af0733b8165274e875667d",
+    "Documents/newDoc/assets/09-verilator/toolchain_smoke.cpp": "46368d469cc492ea6a675a31ebcfeb92c535074b9d8547af9e9b922421d44e26",
+    "Documents/newDoc/assets/09-verilator/08d-restore-rtl-filter.sh": "1725b0499215b43ba7ec1063dbe5cd25696e56df7df4f1c48a1d9f96fc5b24e3",
+    "Documents/newDoc/assets/09-verilator/offline-selftest.sh": "ccfadaa21697c0611344cae9061e4aafd0be87d19e911d4688468fa6bb50005f",
+    "Documents/newDoc/assets/09-verilator/market_filter.sv": "5cd5a34ab42b1607d85b45f575f9d7947b759646c541549fd6d95c7205fa8627",
+    "Documents/newDoc/assets/09-verilator/08c-verify-rtl-filter.sh": "3fdcbedd4d13881bdc110baf665e3d76562d22726a4f7bcb2ace0b66ea6f8254",
+    "Documents/newDoc/assets/09-verilator/itch_add_order_golden.txt": "cc8701513a6a56768ddf34d4a10e920fd297b9bf1b835956a57e8f7a83eb9c75",
+    "Documents/newDoc/assets/09-verilator/market_pipeline.sv": "56ce319687b81625c9104e73b8f2507f92798a098c7af5760a042f986e233ff0",
+    "Documents/newDoc/assets/09-verilator/00-verilator-toolchain-prep.sh": "4fd3e4c2dbea913cce0a2c75f61c39150a6870dd83732a44be5b7dcfc0d4c36d",
+    "Documents/newDoc/assets/09-verilator/reset_scoreboard.cpp": "82b95768f4e50ddb03d7f5b581f7647853dcb0f136c600b839ef875de7a805ec",
+    "Documents/newDoc/assets/09-verilator/06-assert-scoreboard-evidence.sh": "02c793ab4df080214f75c58c3c7b5a69f70b6b20d2a139b3b985d88d5d51d9a5",
+    "Documents/newDoc/assets/09-verilator/08-itch-pipeline-live.sh": "4ca98a4eb5e3e15c27bce69172da4a0806c5aba0a7badb72477d7e790bba4231",
+    "Documents/newDoc/assets/09-verilator/05-fifo-backpressure.sh": "888ce2265423a164ccee2dc6ad6763c0a6e3fe0e15e37f92a5080e3efbb81869",
+    "Documents/newDoc/assets/09-verilator/market_pipeline_assert.sv": "0c8c2a4fd3ffacf0d248d956d88788f81b502d049b725cb356c4ca103f296d16",
+    "Documents/newDoc/assets/09-verilator/audit_vcd.py": "d768bc34c58ef6f0bc1aee2a97082a4c590339c5d0674c330c3e576046293f06",
+    "Documents/newDoc/assets/09-verilator/HARDWARE-NOTES.md": "695731f579bfffbac7073861b6046aede3d2a9196b27cc8e8822e720b7c0de8e",
+    "Documents/newDoc/assets/09-verilator/08b-arm-rtl-filter.sh": "239a59e99a1b3f2b8ccc57e7292bf6a70f567a3d15bb251af698cff41d3903dd",
+    "Documents/newDoc/assets/09-verilator/08-rtl-filter-live.sh": "57eee2adbe1c10edcc9a5a190a6cd72eeb9ee3146cd2289a57b7a8ef98ddf489",
+    "Documents/newDoc/assets/09-verilator/04-vcd-wave-evidence.sh": "224c8f6b44e846727e8b71bdc7ece3179296915d71b819123aa1486ba896d401",
+    "Documents/newDoc/assets/09-verilator/toolchain_smoke.sv": "e14eb34d9bcc4199489d7503c155d3c515a69b9f3bde27b4105865d2c771dab3",
+    "Documents/newDoc/assets/09-verilator/01-verilator-toolchain.sh": "5eea0f33c75f107b4b667755d888b8073c57846a83771f1bb0c2fe674f1f59bd",
+    "Documents/newDoc/assets/09-verilator/08a-prepare-rtl-filter.sh": "57eee2adbe1c10edcc9a5a190a6cd72eeb9ee3146cd2289a57b7a8ef98ddf489",
+    "Documents/newDoc/assets/09-verilator/TEACHER-LIVE-NOTES.md": "b0503833d9b4eef1ff9820d6f880f266ba67e471100dc1f74ec36d6ddd9e6018",
+    "Documents/newDoc/assets/09-verilator/07-reset-boundary-evidence.sh": "26f9b02c96a5601e1096502143569a23b6a5457d2732a931a5809fc39b5198fb",
+    "Documents/newDoc/assets/09-verilator/02-ready-valid-handshake.sh": "901217f39db7c7e239db30c12be0fa6567ff8065dbd9464520aa980992916ba1",
+    "Documents/newDoc/assets/09-verilator/U250-LAB-STEPS.md": "d3d11e054627a2e2f196aadae4ff4e2fbaa68b2a0c447ec3981c71d5fd714d75",
+    "Documents/newDoc/assets/09-verilator/market_filter_tb.cpp": "c03638c5b8e10158264ee4672fa1ba42da3f0f6c4885e556c8b9b902f4ed57cd",
+    "Documents/newDoc/assets/09-verilator/03-market-pipeline-evidence.sh": "9b3d23d16cf90f060d5c9528da9b83f98aa9183eef29c7160b38316366c9a1fb",
+    "Documents/newDoc/assets/09-verilator/market_pipeline_reset.sv": "14809799a358ea6eb5425faad3d14be208ac350c5ea90af758058aa7667f809c",
+    "Documents/newDoc/assets/09-verilator/itch_pipeline_tb.cpp": "0bdf237a2018d5d3c28e4c45fac515ce59b6cab58263a19e6721845b8bc95f77",
+    "Documents/newDoc/assets/09-verilator/mold_filter_adapter.cpp": "9d5ff40e6db32b82e0754643ff6eef1a1e671f55629e8828056ec9a6344edc01",
+    "Documents/newDoc/assets/09-verilator/live-support/test-paused-recovery.py": "97b1d4b0b9b9ab9c3124730a3fb4f353c8c0581de8ce2a9487190cee558607a1",
+    "Documents/newDoc/assets/09-verilator/live-support/stage-output.py": "2aed02cd1acd5de1f5f92fb5911d4522d42663d6b82b762dedaeddddd590f9a2",
+    "Documents/newDoc/assets/09-verilator/live-support/classroom-output.py": "3b8ff88b17143e52622347120fac44aeec737aee4d3570964c490310475b388f",
+    "Documents/newDoc/assets/09-verilator/live-support/run-rtl-filter-live.sh": "b1eb521072bdf2cb3020ce37b396ef4439d445b3c8977f3fb9834f5fe42b0ef8",
+    "Documents/newDoc/assets/09-verilator/live-support/test-stages.py": "46039761c6587515e9b12d0a1dadb0282b158f025bce99f873689b1650c97f50",
+    "Documents/newDoc/assets/09-verilator/live-support/stage-session.py": "4c0fb9a2bd442d1f1415da50186329a93f523215ab10c0b9ff82a5e9d8f11539",
+    "Documents/newDoc/assets/09-verilator/live-support/stage-actions.sh": "0fabec0b0fbfae5081a472b105b04dc7702b220a51c470fdc6b3e23d0f7e84fc",
+    "Documents/newDoc/assets/09-verilator/live-support/remote-control.py": "bf5d2c7424d4f0c7e91053323eaf8cf29c68187e94a90f2116f523a69e87de52",
+    "Documents/newDoc/assets/09-verilator/live-support/__pycache__/classroom-output.cpython-310.pyc": "782333159f672fbcaba6568de49e9a1266b4fddadc757379735295412cc9c708",
+    "Documents/newDoc/assets/09-verilator/live-support/__pycache__/stage-session.cpython-310.pyc": "508568419ddb413a2541ec87e9f1e899d1a40433c30b5a26769bdc832d7a44b8",
+    "Documents/newDoc/assets/09-verilator/live-support/__pycache__/remote-control.cpython-310.pyc": "3991702d2d59079a23a95c6d02f53928b98e4ea721617104b1a25019c53ba12e",
+    "Documents/newDoc/assets/09-verilator/live-support/__pycache__/stage-output.cpython-310.pyc": "4671cdb6daacf03366710fec7f138d10ee4614418bcee440297f8764665e79cd",
+    "Documents/newDoc/assets/09-verilator/live-support/__pycache__/test-paused-recovery.cpython-310.pyc": "f51a7cc8a945ce442f39797365ba2aecbad6e42b526c31070a23d2c8d97795e4",
+    "Documents/newDoc/assets/09-verilator/live-support/__pycache__/test-stages.cpython-310.pyc": "def24a046b6e986ef6edf86168a3f8b2faff3cd58fcead3d4e3c0c4cca3276da",
+    "Documents/newDoc/assets/09-verilator/evidence/vcd-sha256.txt": "2f5184e0b6361c99ffde6eda3fdb793a1550aba135b07823424fb3d72d144462",
+    "Documents/newDoc/assets/09-verilator/evidence/vcd-audit.json": "420474c01e4178d0d1689bc647d0ecb728401ca7033b99a2eb9c3009ce626743",
+    "Documents/newDoc/assets/09-verilator/evidence/market_pipeline-run1.vcd": "5d587d271f57d7c707af64fcb4817856b29777c45cf33a81873f2532f4187e53",
+    "Documents/newDoc/assets/09-verilator/evidence/PROVENANCE.md": "acb0cca34f7723c884a15ecb1fdc0c1067e420c3a6073d0e3fd4c6ba63739435",
+    "Documents/newDoc/assets/09-verilator/evidence/reset-boundary.json": "3cd90542d709c08f3cb2f728892525635e619e178d270ef6dcab92b05d2f0efc",
+    "Documents/newDoc/assets/09-verilator/evidence/market-pipeline.log": "f5f372f3a18601d7047572e7b106ec74370de1c64cd6fe790ebc9cfeb4b3cea8",
+    "Documents/newDoc/assets/09-verilator/evidence/scoreboard-mutant.log": "d183a46cf00d14c51bc3654c832bf08cb6ecfbb813bdf4846fd5b4bc7fc7e4f3",
+    "Documents/newDoc/assets/09-verilator/evidence/assert-mutant.log": "bfc43a7c96f3d1f301b2a9275d75c4781f0e7929f0421f745a0d4b52cadb63d4",
+    "Documents/newDoc/assets/09-verilator/evidence/market_pipeline-run2.vcd": "5d587d271f57d7c707af64fcb4817856b29777c45cf33a81873f2532f4187e53",
+    "Documents/newDoc/assets/09-verilator/v80/filter_mmio.c": "8c0c2f98188bb8c281b3102ad43d714b9f3249967ea29918603accceceb7c6ec",
+    "Documents/newDoc/assets/09-verilator/v80/build_filter.tcl": "0363f15ef11cb926ec373a39cf5f1096c5aa26a4687fb0b7ff8a3f33033214a8",
+    "Documents/newDoc/assets/09-verilator/v80/test_market_filter_axil.sv": "770d8bf078219ec09fa2d8ff9e0b7a56c65bc04db3566796e8b67d988c90629d",
+    "Documents/newDoc/assets/09-verilator/v80/test_mmio_guards.py": "d84ed666fc344110ead11c2f7a04d5b271e2aa608200ea85dd0eedb481d68df6",
+    "Documents/newDoc/assets/09-verilator/v80/integrate_filter.tcl": "be857ff7b8d624116edddc90bac8490240212b9f3e10cab8ab2f5e8eabea821b",
+    "Documents/newDoc/assets/09-verilator/v80/run_local_tests.sh": "1b859f60022533d7de5c75f81c1856781ba031c0b9c5e517eef2d54f23a4f814",
+    "Documents/newDoc/assets/09-verilator/v80/check_build.tcl": "60b2320a56eec765af1938be89a1f9f984932227bc036eb3c624a0e8b3326aad",
+    "Documents/newDoc/assets/09-verilator/v80/market_filter_axil.sv": "1c700f8b4eeb7755c6db25b7013663fc96ba7914cc7ec82615a24688112e9eef",
+    "Documents/newDoc/assets/09-verilator/v80/README.md": "108a58fdab58b2fbfc6e6702f1875b5e19f20576687ce15772512973af899c9d",
+    "Documents/newDoc/assets/08-arista-fpga-draft/package_eos.mk": "99bc6b1577ffebfaf5a703295db9c0936d1ffed53cb720f3f4037a13a223060c",
+    "Documents/newDoc/assets/08-arista-fpga-draft/ADVANCED-TOOLS.md": "5144c34222806d3e8c73be1cccfd978d37467307143f6baaaf7b3c6bed727210",
+    "Documents/newDoc/assets/08-arista-fpga-draft/filter_tb.sv": "3d2a0c815ef1c42ab1b93e0a689354820908cc0acc8e2dcec4610d738d35262d",
+    "Documents/newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md": "63dfcd737b00323073be54c591f382f5ed3d9839bdb65ecd2680532fedd1b52e",
+    "Documents/newDoc/assets/08-arista-fpga-draft/LICENSE-Arista-BSD-3-Clause.txt": "50b40d8ee91487d8c5d6f56e32de95dda0f4269576b97ad645f55134c5132688",
+    "Documents/newDoc/assets/08-arista-fpga-draft/frame_filter.sv": "4787a940bf8dba9456dd33c023227fd84f64bdecec8b084310855f2ca0483bed",
+    "Documents/newDoc/assets/08-arista-fpga-draft/simulate.sh": "e97a846f0538401fd7543063b281797a332808dc48b6d260e8f72b44a2c29eec",
+    "Documents/newDoc/assets/08-arista-fpga-draft/flle_filter_registers.csv": "164389456103557d895efc43efde31dd405af3af868e428fd9b9e90c9f15c7a4",
+    "Documents/newDoc/assets/08-arista-fpga-draft/drop_once.sv": "e4f1d052c8a7ead7a7fb4f8d3578f6bd4d06d7fc6b0046130621213f76dcdb0f",
+    "Documents/newDoc/assets/08-arista-fpga-draft/nvda_match.sv": "8a4aa79b6cce5623a8676fcc8624cb87d2d64de6bf6088b31a414463474a93f6",
+    "Documents/newDoc/assets/08-arista-fpga-draft/test_eos_control.py": "0253ee6c6e02d1fb57cfab68df1dc09b1e2a375a99598a7445448ccbefed5124",
+    "Documents/newDoc/assets/08-arista-fpga-draft/README.md": "f95618e9e96fae5229eadfad525540f1f39fad5bc783bc9b9ff9b810ba16be62",
+    "Documents/newDoc/assets/08-arista-fpga-draft/control_regs.sv": "c379e06994e702f86ebfd8fc53bb9f9a92dfc86217871b519e9b3c2d59fa77bf",
+    "Documents/newDoc/assets/08-arista-fpga-draft/local-tools-requirements.txt": "66d4186e09016d3620b63187a58255527d82f4c24c0ffbd4ca6ca3f442629233",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/FlleFilter.yaml": "7c5c24cd9b5e29d469247808140dfc039cce3a958f4c2ee1715a2064ef0da6ed",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/FlleFilterDaemon.py": "aa6ab31750c8db68d4c2d6fd4d726add0845748bbab8aa96658418de88843fe9",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/FlleFilterCli.py": "7e4344a7158a70cdf143577db6d688492d0dda7db5db445509e3e8ff56ab9e6b",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/filter_control.py": "6b13f4433a92bd5053a863f5456459bff777586c83ac3f31a250db417f8a36f8",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/filter_rpc.py": "8ec2c20f512e1b8e4020aea7d87fa9809365f029dd3b77932e928343aeb429a4",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/README.md": "2f228e0a0a9b9a280d94a4d812f5eedc8c8927c1464f4278b0bdf41ea0c1cca8",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/__init__.py": "c35b0c98cae103c308b78223559ae5c4e38935d5fd90c5626d07572a2738e0b3",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.png": "23bb2c145a099655c3cee448b48e5f6410c7843cb7ec44810be2445628b73524",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00b-configure-circuit.svg": "00e1163aa9fcfdd2d6f654d05bd31ca195f30b4be5662a75dcd7691503d75f21",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/05-register-control.png": "bf28d5a24f1002e0b9fa123551769812c8f9bd02569936a311618292235d00ec",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/07-observe-filter.svg": "2072da0fbe9565fd412dfe42adbd184f69575809ecf41728db68c8c2813c5142",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00a-fpga-resources.svg": "a72d9605e90e793143c249809c61e153fd5c577072a5977842dd4a2fb086c291",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/06-build-upload-load.png": "29185c92dc78a9eb4bf2ec3c351f9595c0c4dab1848156d4d00acaea8883226a",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/03-fields-and-comparators.png": "fed358bfd78d33dbfe00ede97bd8942e981601482881bb9ddc7e91bd9c262050",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02b-linux-build-checks.png": "139fed6de847d8ba6fee01e3ebec8df785ba5efaed7194ce4e4648e8ed5f6310",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/06-build-upload-load.svg": "3b01ea9dc18455b68c75e51cabc9b6362d8acff5eac2ad7fc004425482646d60",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/05-register-control.svg": "12f5dd82233502936e8c4c4a2704ffbae70d667190fffbbba81cb7901d2d691e",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/07-observe-filter.png": "5fefeb3b7bb39339477dd092a36468ad8b76155cee24260eab7346a782d4077f",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.svg": "83a4b70214e0ebbd71a455e4b8e58da95eb716138f41ddf3e3094a79a970fcd5",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.png": "2eb288e94ef05cec251820d7b2047f7078be2242e50f16182f5c6e1f9989c006",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00a-fpga-resources.png": "df1a990625feb958e7596f7c30ea0637aee4eaaa018e0fb98cbfdad4057892ef",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00b-configure-circuit.png": "e2f35c4a4f57b1cf8df949c7eafe8f01fc0880acd5ede223c28ef2c775e33af9",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02b-linux-build-checks.svg": "901b3fb62e1ce8158387f1b8cf3d84e364b889d377631ff8f232098b4ae73e45",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/01-packet-path.svg": "70369d7c3928d94878d25d0ef5561a798fc14072237c01073808e3b6350d8795",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/SHA256SUMS": "761622c4c3e25afce53f97100798b54e6be7bab5dbe983937161e394d2389a7c",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/03-fields-and-comparators.svg": "37bdd40f9b6a04fd6c3174dbdb452500f13d04b619422c30b34321301f513204",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/01-packet-path.png": "db5a98a00835cba274a0e45669a49f073eaed9e035423c7c89b3d8fa5e468d9f",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/README.md": "f6704782e2cfd2506a52b1f14bf586001e623cd4d2f85c2105e7764ae8518c78",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.svg": "d481dc09bfcad32ffebb1c6555ab9ef3006b19e9b981c80d410637f6f47a25db",
+    "Documents/newDoc/08-arista-fpga-market-filter-draft.md": "15b9dbd3fc3ef778a3edb25b710e693c32fb811938327c240859bb63fdcaa60a",
+    "Documents/newDoc/07-ebpf-xdp-programmable-network.md": "c5dca6c855a28b95cea55f82625368f3a47fd00ff6c725bdbdf34b3a5d8c12f0"
+  },
+  "preserved_code_block_hashes": [
+    {
+      "language": "systemverilog",
+      "sha256": "99e3441cd0c8d6dc67f0dcf1130d5c719d067fbf42412626676332bfee86a83d"
+    },
+    {
+      "language": "systemverilog",
+      "sha256": "4bed07e3c2e85fc9cfdf409f7a71ddbabc3cc2532f57311ce362cab918580851"
+    },
+    {
+      "language": "bash",
+      "sha256": "1c8c36ee2485887d2d6cc88dba100f579ced090891dd96ee24e15a93b08f1a5b"
+    },
+    {
+      "language": "bash",
+      "sha256": "2f41d338e4e141e1d2974892f1aea65e20597b8f30f3465d5be134264562cd1f"
+    },
+    {
+      "language": "bash",
+      "sha256": "830de779a32dbbe6c69e038f5e14edf18dd82933ea4686e2996208702cb09686"
+    },
+    {
+      "language": "bash",
+      "sha256": "16198655a2143425095025f12fcf876d4e2e00eda47528378e4fcfb152794833"
+    },
+    {
+      "language": "text",
+      "sha256": "93a530c040403a36f7e34f4f6312c31c28d38f423f5d4d063ae92dd931a779e7"
+    },
+    {
+      "language": "cpp",
+      "sha256": "5a5b271865cd272c4db41a440696521453ae0f0946302d733f5830fa50010ee8"
+    },
+    {
+      "language": "bash",
+      "sha256": "4fd3e4c2dbea913cce0a2c75f61c39150a6870dd83732a44be5b7dcfc0d4c36d"
+    },
+    {
+      "language": "text",
+      "sha256": "7c1a922477bb14de29cc0bfd08215988f2ebfe2bfa07d48e5d7cddeecdb1f12f"
+    },
+    {
+      "language": "bash",
+      "sha256": "44361e6c7eb9c76fbce907ad44df1b831c3fe4e7b435e5dc397fcaa9da5c77e2"
+    },
+    {
+      "language": "text",
+      "sha256": "896a34f2a761fd0eb3ec93455ace9548f415d2e5bf6c6a817d5fdaf6206f7faf"
+    },
+    {
+      "language": "text",
+      "sha256": "a22a0547f7200db7d22084601288cb1cb322a6878e3110bb38b5fdb284eae526"
+    },
+    {
+      "language": "bash",
+      "sha256": "ab12a0a07bbc4bf690510be8f11838cceb5561908e4af58662e3326c9ad5674a"
+    },
+    {
+      "language": "text",
+      "sha256": "993f30b911d895027a240bf56820c555e7d495d51f8d21e0daf4430be2001470"
+    },
+    {
+      "language": "bash",
+      "sha256": "16cf01c6db78586ec479ee40a76bed12273e65c10be9008f46f18497413418e4"
+    },
+    {
+      "language": "text",
+      "sha256": "d38c216c6fb585364cf02a4e0089a3528ad4cd852571e278deb04963affc4312"
+    },
+    {
+      "language": "bash",
+      "sha256": "6a1468e5b2a36350db4f43a5057e75047861f5352011cc2f324ce6ef100da3b3"
+    },
+    {
+      "language": "bash",
+      "sha256": "2995e8839ec3973323304d9aad87b870935b80839a4968ffc452a4c25a500ce5"
+    },
+    {
+      "language": "bash",
+      "sha256": "5fb23894bf6f91dd741d1a5c1cf69a3cb178ebbcb580089c06a3235d0dac9c5f"
+    },
+    {
+      "language": "bash",
+      "sha256": "47b806c09d50616f88cbcd3c92134ccb9125d43a6da7ee93e7cff25e93547251"
+    },
+    {
+      "language": "systemverilog",
+      "sha256": "0d8cdace924635edb114b0c99773ff4b629e53119d3b610f253c76e2874dad4c"
+    },
+    {
+      "language": "bash",
+      "sha256": "0fbe4fac9bd44b35a1a6d748b93a508ea4bf7c790f5370586bbeb0ed3dc560f3"
+    },
+    {
+      "language": "bash",
+      "sha256": "5562c9a17e660712ae32e73cdb55332c3471864eff4ca824360797d545baafb9"
+    },
+    {
+      "language": "bash",
+      "sha256": "ae30f78361b05b706d25ed2e93a4e82d000be4b7a359687a0e1785cdda7e228b"
+    },
+    {
+      "language": "bash",
+      "sha256": "fcda8c1d3d6314eed319762ee4b86d543e616f79873cfa2731d9034c0fb58218"
+    },
+    {
+      "language": "bash",
+      "sha256": "380d0ad0506ec853244f70bf519d315da76b09377ad27d20b29558e8852682d9"
+    },
+    {
+      "language": "bash",
+      "sha256": "832eaa04faf36109e67c14364fc1decccac710696b7d08393cdc7a7b48f236d8"
+    },
+    {
+      "language": "bash",
+      "sha256": "63d7f7d0aec146eda61f69eae8263236218deb0764d4cd0d3576b5a6f8cfeba0"
+    },
+    {
+      "language": "bash",
+      "sha256": "25e3769659eefeaf4a80632a1fff5c7402471eb9b337c6cc98d963bc7ded6751"
+    },
+    {
+      "language": "bash",
+      "sha256": "fc67ea8b5517d22ff507678d9a18a199f40963862b2385b45ae8f95152d46878"
+    },
+    {
+      "language": "bash",
+      "sha256": "ca380d97a6d137a90b541c0fb6e61907fe64a7bce1d2e40261c5dc82431a215d"
+    }
+  ],
+  "suggested_commit_message": "docs(ch09): organize lesson around shared and branching workflows"
+}

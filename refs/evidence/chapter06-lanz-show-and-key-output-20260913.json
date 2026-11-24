@@ -1,0 +1,137 @@
+{
+  "date": "2026-09-13",
+  "requests": [
+    "Keep key QoS/LANZ output and explain readings; omit timer/hash/RUN noise",
+    "Include switch show results in overall LANZ script stdout",
+    "Audit bold rendering across chapter 06"
+  ],
+  "live_run": "20260913T094748Z-07-lanz-stream-ab",
+  "live_exit_code": 0,
+  "root_sha256": "e77c4971c8907c3461fa0f0f5abb03e1d9e49ea16f36d4eb443f346fb7e33f83",
+  "script_sha256": "fa77985a99e498870693646802801f4605393745fa08a0c4d8c65fcbb472bc5c",
+  "formatter_sha256": "4db5fdea791351968608a72f121769c8934440b891e9e2c05ee7d46f7b8aa0fe",
+  "live_result": {
+    "result": "PASS",
+    "evidence_kind": "fresh_live_stream",
+    "keep_trading": true,
+    "protocol_profile": "MOLDUDP64_ITCH_5_0_TO_TEST_MAC",
+    "no_event": {
+      "pps_per_ingress": 10000,
+      "et2_counts": {
+        "START": 0,
+        "UPDATE": 0,
+        "END": 0,
+        "POLLING": 0,
+        "OTHER": 0
+      }
+    },
+    "event": {
+      "pps_per_ingress": 25000,
+      "et2_counts": {
+        "START": 40,
+        "UPDATE": 0,
+        "END": 40,
+        "POLLING": 0,
+        "OTHER": 0
+      }
+    },
+    "final_panel_still_has_events": true,
+    "switch_restored": true,
+    "startup_unchanged": true,
+    "vm11_restored": true,
+    "collector_left_running": true
+  },
+  "receiver_cumulative_counts": {
+    "START": 164,
+    "UPDATE": 0,
+    "END": 164,
+    "POLLING": 0,
+    "OTHER": 0
+  },
+  "retained_et2_record_count": 80,
+  "switch_count": 164,
+  "latest_pair": [
+    {
+      "kind": "congestion",
+      "timestamp_us": 178929189088790,
+      "intf_name": "Ethernet2",
+      "switch_id": 0,
+      "port_id": 20,
+      "queue_size": 64,
+      "entry_type": "START",
+      "traffic_class": 1,
+      "time_of_max_qlen": 0,
+      "tx_latency": 7680,
+      "q_drop_count": 0
+    },
+    {
+      "kind": "congestion",
+      "timestamp_us": 178929189088793,
+      "intf_name": "Ethernet2",
+      "switch_id": 0,
+      "port_id": 20,
+      "queue_size": 64,
+      "entry_type": "END",
+      "traffic_class": 1,
+      "time_of_max_qlen": 0,
+      "tx_latency": 7680,
+      "q_drop_count": 0
+    }
+  ],
+  "switch_latest_event_duration_us": 29,
+  "original_user_output": {
+    "run": "20260913T093921Z-07-lanz-stream-ab",
+    "retained_counts": {
+      "START": 40,
+      "UPDATE": 0,
+      "END": 40,
+      "POLLING": 0,
+      "OTHER": 0
+    },
+    "cumulative_counts": {
+      "START": 163,
+      "UPDATE": 0,
+      "END": 163,
+      "POLLING": 0,
+      "OTHER": 0
+    },
+    "first_pair_queue_sizes": [
+      84,
+      84
+    ],
+    "last_pair_queue_sizes": [
+      64,
+      64
+    ],
+    "interpretation": "Original first START q84 and last END q64 refer to different events; END queue length is event maximum, not ending occupancy."
+  },
+  "switch_queries_in_stdout": [
+    "show queue-monitor length statistics",
+    "show queue-monitor length Ethernet 2",
+    "show queue-monitor streaming clients"
+  ],
+  "checks": {
+    "unit_tests": 2,
+    "bash_syntax": "PASS",
+    "live_sources_match_working_files": true,
+    "live_manifest_files_verified": 65,
+    "qos_excerpt_source_lines_match": true,
+    "lanz_excerpt_matches_live_display_exactly": true,
+    "headings_and_23_images_unchanged": true,
+    "code_fences_before": 29,
+    "code_fences_after": 28,
+    "whole_chapter_bold_spans": 37,
+    "unparsed_double_asterisks": 0,
+    "bold_sentence_visual_800px": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "source_links": [
+    "https://www.arista.com/en/um-eos/eos-latency-analyzer-lanz",
+    "https://raw.githubusercontent.com/aristanetworks/goarista/master/lanz/proto/lanz.proto"
+  ],
+  "notes": [
+    "Switch show queries were already archived by the script; the same live results are now exposed in stdout before final recovery confirmation.",
+    "No prior archived RUN or full user transcript changed.",
+    "Changes affect stdout formatting and event display selection; load, thresholds, acceptance and restoration logic are unchanged."
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "date": "2026-09-13",
+  "scope": "PTP mainline compression, multicast figure and final script output formatting",
+  "requests": [
+    "NTP/PTP difference → protocol and synchronization with commands → original/SPAN copy with Keyframe → matching and time subtraction → one final script with formatted output",
+    "Introduce Linux configuration and script excerpts at their relevant step",
+    "Explain 224.0.1.129 / UDP 319 and 320 with a figure"
+  ],
+  "metrics": {
+    "prose_before": 5389,
+    "prose_after": 2326,
+    "fences_before": 28,
+    "fences_after": 29,
+    "image_count": 22,
+    "bold_spans": 43,
+    "main_headings_and_navigation_unchanged": true,
+    "other_sections_unchanged_except_first_GNSS_definition": true,
+    "output_matches_formatter": true,
+    "source_excerpts_checked": true,
+    "reduction_percent": 56.8
+  },
+  "archived_pcap_recheck": {
+    "run": "20260903T085652Z-07-stamped-span-live",
+    "all_archived_analysis_fields_match": true,
+    "new_metadata_field": "market_source_port",
+    "verified_files": [
+      "raw/live.pcap",
+      "raw/copy.pcap",
+      "raw/ptp4l.log",
+      "raw/switch-ptp.txt",
+      "raw/switch-after.txt",
+      "derived/analysis.json",
+      "derived/ptp4l-summary.json"
+    ],
+    "paired": 15505,
+    "delay_ns": {
+      "n": 15505,
+      "negatives": 0,
+      "min": 12544.0,
+      "p50": 56832.0,
+      "p90": 94720.0,
+      "p99": 101376.0,
+      "max": 101888.0
+    },
+    "formatter_boundaries": "PASS (zero samples, missing readings, failed gates)",
+    "format_columns": "PASS (Unicode display widths)"
+  },
+  "source_facts": {
+    "transport": "UDPv4",
+    "domainNumber": 0,
+    "multicast_destination": "224.0.1.129",
+    "udp_319": [
+      "Sync",
+      "Delay_Req"
+    ],
+    "udp_320": [
+      "Announce",
+      "Follow_Up",
+      "Delay_Resp"
+    ],
+    "ptp4l_host": ".2",
+    "ptp4l_interface": "ens64np1",
+    "analysis_host": ".111",
+    "matching_key": [
+      "IP ID",
+      "UDP destination port",
+      "payload without trailer"
+    ],
+    "time_difference": "live.rx_ns - reconstructed switch ingress timestamp"
+  },
+  "script_changes": [
+    "Chinese progress and result-display.txt via format_stamped_span_result.py",
+    "Raw analyzer output and legacy result.txt retained in run archive",
+    "Normal stdout no longer prints RUN IDs, root hashes or internal machine summaries",
+    "Measurement, synchronization, pairing and restoration logic unchanged"
+  ],
+  "checks": {
+    "bash_syntax": "PASS",
+    "formatted_output_against_archived_data": "PASS",
+    "zero_samples_missing_readings_failed_gates": "PASS",
+    "unicode_table_alignment": "PASS",
+    "svg_800_1200_and_2x_arrows": "PASS",
+    "whole_sync_and_matching_sections_render_800px": "PASS",
+    "all_bold_markers_parse": "PASS",
+    "image_manifest_counts": [
+      65,
+      268
+    ],
+    "image_manifests": "PASS (65 local / 268 central)"
+  },
+  "figure": {
+    "path": "Documents/newDoc/images/course-visuals/06-diagrams/06-ptp-multicast-discovery.svg",
+    "sha256": "0027d07bcff540e335d80caa5c87ce39aaccc33fed5342f7ea0160a7bbbc29ba",
+    "dimensions": [
+      1200,
+      700
+    ],
+    "arrows": 5,
+    "arrow_head": [
+      12,
+      12
+    ],
+    "stroke": 2.5,
+    "target_gap": 12
+  },
+  "retired_from_main_text": [
+    "06-ntp-vs-ptp.png",
+    "06-ptp-how-it-works.png"
+  ],
+  "source_hashes": {
+    "Documents/newDoc/assets/06-arista-time/12-stamped-span-live.sh": "91e0fe3cbe353ed6408f9c0eabd5c4d80a433400fe709d081238e2ebe8a2eec5",
+    "Documents/newDoc/assets/06-arista-time/format_stamped_span_result.py": "08776a39feb0347924dca55212d261809c4f9e0f7bb28db709c91067dd86ac0e",
+    "Documents/newDoc/assets/06-arista-time/live-support/stamped-span/analyze_stamped_span.py": "654a032e427935aceff8e29ef4a229547891dff2ae24be45e10b63a3b042084d",
+    "Documents/newDoc/assets/06-arista-time/live-support/stamped-span/ptp-switch-slave.cfg": "cbc303f301ae57afc323e9493bd90d168606975f261cadf5af3307a080d511e9"
+  },
+  "sources": [
+    "https://linuxptp.nwtime.org/documentation/ptp4l/",
+    "https://www.arista.com/en/um-eos/eos-setting-the-ptp-mode",
+    "https://www.arista.com/en/um-eos/eos-enabling-ptp-on-an-interface",
+    "https://www.arista.com/assets/data/pdf/Whitepapers/ME-PTP-White-Paper.pdf",
+    "https://www.arista.com/assets/data/pdf/Whitepapers/Overview_Arista_Timestamps.pdf"
+  ],
+  "new_device_run": false,
+  "pending": "New complete device run of the presentation changes has not been performed; local formatter and archived pcap verification only."
+}

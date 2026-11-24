@@ -1,0 +1,21 @@
+# TRex v3.08 BCM57414 Dual-Port No-Flow-Stats Smoke Run State
+
+- `RUN_ID`: `20260721T032416Z`
+- `PURPOSE`: TRex v3.08 BCM57414 dual-port basic STL/UDP TX/RX without flow-stat rules
+- `PROFILE_ID`: `trex-v3.08-bcm57414-dual-uio-basic-port-delta-512x2`
+- `STARTED_AT_UTC`: `2026-07-21T03:24:16Z`
+- `FINISHED_AT_UTC`: `2026-07-21T03:29:27Z`
+- `RESULT_DIR`: `reports/20260721T032416Z-trex-bcm57414-dual-port-no-flow-stats-smoke/`
+- `STATUS`: `COMPLETED`
+- `RESULT`: `FAILED_FORWARD_RX_ACCEPTANCE`
+- `ACCEPTANCE`: `NOT_PASSED`
+- `FORWARD`: port0 TX 512 packets / 67584 bytes; port1 RX 282 packets / 37224 bytes; missing 230 packets / 44.92%; both-port ierrors/oerrors delta0
+- `REVERSE`: `NOT_TESTED`; stopped after forward acceptance failure
+- `PLAIN_STREAM`: add/start PASS; no stats clear/reset/xstats, flow-stat/PGID or latency rule in actual client
+- `PMD_LINK`: `PASS`; real `net_bnxt`, two ports UP at 10 Gb/s full-duplex
+- `FINAL_HEALTH`: `PASS`; recovery rc=0 and independent final-health rc=0
+- `MANAGEMENT_PROTECTION`: `PASS`; `ens33/0000:02:01.0/10.1.1.11` and default route via `10.1.1.254` unchanged
+- `DATA_FINAL`: both data BDFs `bnxt_en`, down, zero address, no master/XDP
+- `RUNTIME_FINAL`: hugepages=0; no UIO, TRex/Scapy/testpmd process, 4500/4501/4507 listener, deadman, workdir or runtime temp
+- `PIT`: `PIT-20260721-74`
+- `NEXT`: new RUN only—post-link settle + unmeasured warmup, then fresh ordinary-port baseline and identical finite burst; never overwrite this 512/282 result

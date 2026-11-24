@@ -1,0 +1,177 @@
+{
+  "checked_at_utc": "2026-09-12T13:18:43.451135+00:00",
+  "scope": "Preparation C: source/build/deploy explanation, RSS/IRQ purpose, two diagrams, concise actual script output, failure propagation",
+  "script_tests": [
+    {
+      "scenario": "baseline",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "scenario": "measurement",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "scenario": "archive-failure",
+      "exit_code": 2,
+      "status": "PASS"
+    },
+    {
+      "scenario": "contract-failure",
+      "exit_code": 3,
+      "status": "PASS"
+    },
+    {
+      "scenario": "native-failure",
+      "exit_code": 7,
+      "status": "PASS"
+    },
+    {
+      "scenario": "missing-row",
+      "exit_code": 1,
+      "status": "PASS"
+    },
+    {
+      "scenario": "duplicate-row",
+      "exit_code": 1,
+      "status": "PASS"
+    },
+    {
+      "scenario": "failed-row",
+      "exit_code": 1,
+      "status": "PASS"
+    },
+    {
+      "scenario": "unknown-rss",
+      "exit_code": 1,
+      "status": "PASS"
+    },
+    {
+      "scenario": "missing-field",
+      "exit_code": 1,
+      "status": "PASS"
+    }
+  ],
+  "live_preflight": {
+    "run_id": "20260912T130838.299593593Z-06-four-path-preflight",
+    "exit_code": 0,
+    "source_matches_current": true,
+    "raw_logs": {
+      "raw/result.txt": "准备 C：检查程序、行情与比较条件\n# 本步只检查，不重新编译、切换网卡或下单。\n\n[1/6] 运行包完整：PASS  # 三个客户端及配套文件与封存版本一致。\n[2/6] 源码与程序对应：PASS  # 包内程序有对应的源码和编译记录。\n[3/6] 行情可用：PASS  # AAPL,NVDA 的行情文件已就绪。\n[4/6] 编译工具可用：PASS  # 10.1.1.101 有 g++-11，恢复普通客户端时可用。\n[5/6] 收包配置符合要求：PASS  # Exchange .1 已固定到队列 1 / CPU 2。\n[6/6] 比较条件已核对：PASS  # 四路统一要求 DEQUE_CV，由准备 D 启用。\n\n# 六项全部通过，可以进入准备 D。\n# 完整校验值、字段和原生命令输出保存在下方 evidence 目录。\n",
+      "raw/archive.txt": "artifacts/blobs/x2522/ch06-four-path/v13/flle-ch06-four-path-v13-x86_64-jammy-runtime.tgz: OK\n",
+      "raw/code-contract.txt": "artifacts/blobs/x2522/ch06-four-path/v13/flle-ch06-four-path-v13-source.tgz: OK\nartifacts/blobs/x2522/ch06-four-path/v5/flle-ch06-four-path-v5-build-inputs-x86_64-jammy.tgz: OK\nartifacts/blobs/x2522/ch06-four-path/v13/BUILD-PROVENANCE.json: OK\nartifacts/blobs/x2522/ch06-four-path/v13/flle-ch06-four-path-v13-x86_64-jammy-runtime.tgz: OK\n===== source to binary provenance =====\nsource_archive_sha256=1cbae2786192ac16c39b1ebbdb7a19101b99a532430903839de39a8f0fa62bc7\nbuild_inputs_sha256=6caa8e25a4228751872b8b96ed1cff260532fd73ab4fcb14f1d85cb7e7baf451\nsource_binary_mapping=PASS compiled_outputs=8 packaged_controls=1 inherited_key_files=3\n\n===== four transport implementations from frozen source =====\n17:    fd_ = ::socket(AF_INET, SOCK_STREAM, 0);\n42:        ::connect(fd_, reinterpret_cast<sockaddr *>(&remote), sizeof(remote)) < 0) {\n49:  bool send_all(const void *data, std::size_t length) override {\n50:    return fd_ >= 0 && flle::send_all(fd_, data, length);\n53:  bool recv_all(void *data, std::size_t length) override {\n54:    return fd_ >= 0 && flle::recv_all(fd_, data, length);\n52:    if (zft_connect(handle, reinterpret_cast<sockaddr *>(&remote),\n75:      const auto result = zft_send_single(zocket_, cursor + sent,\n96:      zft_zc_recv(zocket_, &message.msg, 0);\n106:        zft_zc_recv_done(zocket_, &message.msg);\n121:                             ? zft_zc_recv_done(zocket_, &message.msg)\n122:                             : zft_zc_recv_done_some(zocket_, &message.msg,\n182:      check(zf_attr_set_int(attr_, \"ctpio\", 3),\n183:            \"zf_attr_set_int(ctpio)\");\n184:      check(zf_attr_set_str(attr_, \"ctpio_mode\", \"sf-np\"),\n185:            \"zf_attr_set_str(ctpio_mode)\");\n186:      check(zf_stack_alloc(attr_, &stack_), \"zf_stack_alloc\");\n245:    order_fd_ = ff_socket(AF_INET, SOCK_STREAM, 0);\n246:    if (order_fd_ < 0) throw std::runtime_error(\"ff_socket failed\");\n272:    const int result = ff_connect(order_fd_,\n276:      throw std::runtime_error(\"ff_connect failed: \" +\n312:      const auto sent = ff_send(order_fd_, tx_buffer_.data() + tx_offset_,\n329:      const auto received = ff_recv(order_fd_, chunk.data(), chunk.size(), 0);\n772:        << \"\\\"network_reactor\\\":\\\"FSTACK_POLL\\\",\\\"queue_capacity\\\":\"\n725:    const int port_stats_rc = rte_eth_stats_get(0, &port_stats);\n728:          \"rte_eth_stats_get(port=0) failed: rc=\" +\n754:        << \"\\\"dpdk_port_stats\\\":{\\\"port_id\\\":0,\\\"ipackets\\\":\"\n755:        << port_stats.ipackets << \",\\\"opackets\\\":\" << port_stats.opackets\n758:        << \",\\\"rx_nombuf\\\":\" << port_stats.rx_nombuf << \"},\"\nsrc/posix_order_transport.cpp:21:    if (::setsockopt(fd_, IPPROTO_TCP, TCP_NODELAY, &one, sizeof(one)) < 0) {\nsrc/posix_order_transport.cpp:27:    if (::getsockopt(fd_, IPPROTO_TCP, TCP_NODELAY, &observed,\nsrc/dpdk_trader.cpp:248:    if (ff_setsockopt(order_fd_, IPPROTO_TCP, TCP_NODELAY, &one,\nsrc/dpdk_trader.cpp:250:      throw std::runtime_error(\"ff_setsockopt(TCP_NODELAY) failed\");\nsrc/dpdk_trader.cpp:254:        ff_getsockopt(order_fd_, IPPROTO_TCP, TCP_NODELAY, &observed,\nsrc/dpdk_trader.cpp:258:          \"ff_getsockopt(TCP_NODELAY) verification failed: result=\" +\n\n===== common handoff and launch contract =====\nsrc/trader.cpp:52:  flle::OrderQueueMode order_queue{flle::OrderQueueMode::DequeCv};\nsrc/trader.cpp:53:  bool lock_order_queue{false};\nsrc/trader.cpp:93:  c.lock_order_queue =\nsrc/trader.cpp:1012:        << \"\\\",\\\"queue_locked\\\":\"\nsrc/trader.cpp:1013:        << (config_.lock_order_queue ? \"true\" : \"false\")\nsrc/trader.cpp:1057:      if (config_.lock_order_queue)\nsrc/trader.cpp:1060:      if (parts[1] == \"DEQUE_CV\") mode = flle::OrderQueueMode::DequeCv;\nsrc/dpdk_trader.cpp:99:        queue_(flle::OrderQueueMode::DequeCv) {\nsrc/dpdk_trader.cpp:771:        << \",\\\"queue_mode\\\":\\\"DEQUE_CV\\\",\\\"queue_locked\\\":true,\"\nsrc/common.hpp:61:inline std::optional<std::uint32_t> allocate_bounded_user_ref(\nsrc/trader.cpp:588:    return flle::allocate_bounded_user_ref(next_user_ref_, end);\nsrc/trader.cpp:988:        << \",\\\"user_ref_end_exclusive\\\":\"\nsrc/dpdk_trader.cpp:231:    return flle::allocate_bounded_user_ref(next_user_ref_, end);\nsrc/dpdk_trader.cpp:742:        << \",\\\"user_ref_end_exclusive\\\":\"\n1149:      --order-cpu 2\n1150:      --management-cpu 3\n2079:  common=\"--role MANUAL --data-ip 20.1.1.2 --exchange-data-ip 20.1.1.1 --management-ip 10.1.1.2 --telemetry-host $TELEMETRY_HOST --book-checkpoint $RUN_DIR/opening-book.checkpoint --market-receiver 0 --order-queue DEQUE_CV --lock-order-queue 1 --order-cpu 2 --management-cpu 3\"\n2081:    \"taskset -c 2,3 onload --profile=latency '$RUNTIME_ROOT/bin/flle-trader' $common --management-port 48123 --user-ref-base $onload_base --user-ref-span $namespace_span --clordid-prefix ONLD --order-transport-label OPENONLOAD\"\n2097:  common=\"--role MANUAL --data-ip 20.1.1.2 --exchange-data-ip 20.1.1.1 --management-ip 10.1.1.2 --telemetry-host $TELEMETRY_HOST --book-checkpoint $RUN_DIR/opening-book.checkpoint --market-receiver 0 --order-queue DEQUE_CV --lock-order-queue 1 --order-cpu 2 --management-cpu 3\"\n382:test \"$(grep -Ec '^#?file_prefix=' \"$CONFIG\")\" -eq 1\n383:sed -E \"s/^#?file_prefix=.*/file_prefix=$DPDK_FILE_PREFIX/\" \\\n385:grep -Fxq \"file_prefix=$DPDK_FILE_PREFIX\" \"$EFFECTIVE_CONFIG\"\n598:    echo \"file_prefix=$DPDK_FILE_PREFIX hugefile_leaks=${hugefile_leaks:-0} dpdk_runtime_leak=$dpdk_runtime_leak\"\n660:printf 'file_prefix=%s hugetlbfs_entries_baseline=%s\\n' \\\n743:  FLLE_DPDK_HELPER_CPU=3 FLLE_DPDK_HEARTBEAT=0 \\\n746:  taskset -c 2,3 \"$BINARY\" --conf \"$EFFECTIVE_CONFIG\" --proc-type=primary --proc-id=0 \\\n47:BALANCED_PHASE_ORDER = (\n324:    for round_number, order in enumerate(BALANCED_PHASE_ORDER, start=1):\n1363:def validate_and_summarize_submission_identity(\n1561:    design: tuple[tuple[str, ...], ...] = BALANCED_PHASE_ORDER,\n1676:        for round_number, order in enumerate(BALANCED_PHASE_ORDER, start=1)\n1687:    submission_identity = validate_and_summarize_submission_identity(rounds)\n1695:        submission_identity[\"total\"] != expected_submissions\n1696:        or submission_identity[\"unique\"] != expected_submissions\n1701:            f\"total={submission_identity['total']} \"\n1702:            f\"unique={submission_identity['unique']}\"\n1723:    return submission_identity, warmup_sample_identity, sample_identity\n1857:    ledger = dict(compact[\"exchange_ledger_gate\"])\n1860:    compact[\"exchange_ledger_gate\"] = ledger\n1885:    submission_identity = result[\"submission_identity\"]\n1888:    exchange_ledger_gate = result[\"exchange_ledger_gate\"]\n1892:            f\"submitted total=unique={submission_identity['total']}；\"\n1893:            f\"{len(submission_identity['per_round_ranges'])} 份结果均通过文件内与全局唯一性检查。\",\n1901:            f\"before={exchange_ledger_gate['before']}，\"\n1902:            f\"after={exchange_ledger_gate['after']}，\"\n1903:            f\"delta=expected={exchange_ledger_gate['delta']}；\"\n1972:    if args.rounds != len(BALANCED_PHASE_ORDER):\n1993:    expected_files = len(BALANCED_PHASE_ORDER) * len(TRANSPORT_ORDER)\n2015:        for round_number, order in enumerate(BALANCED_PHASE_ORDER, start=1):\n2057:                validate_and_summarize_submission_identity(results)\n2074:        exchange_ledger_gate = capture_exchange_ledger_growth(\n2081:            submission_identity,\n2125:        \"phase_order\": [list(row) for row in BALANCED_PHASE_ORDER],\n2163:        \"exchange_ledger_gate\": exchange_ledger_gate,\n2164:        \"exchange_replay_gate\": pause_contract,\n2165:        \"submission_identity\": submission_identity,\n2204:        f\"submitted total=unique={submission_identity['total']}；\"\n2205:        f\"result_files={len(submission_identity['per_round_ranges'])}\"\n2219:        f\"before={exchange_ledger_gate['before']} \"\n2220:        f\"after={exchange_ledger_gate['after']} \"\n2221:        f\"delta=expected={exchange_ledger_gate['delta']}\"\n\n===== packaged F-Stack tuning contract =====\nlcore_mask=4\nmemory=256\nidle_sleep=0\npkt_tx_delay=0\nallow=03:00.0\nhz=100\nnet.inet.tcp.sendspace=16384\nnet.inet.tcp.recvspace=8192\nnet.inet.tcp.delayed_ack=1\nfstack_config_contract=PASS\n",
+      "raw/preflight.txt": "control_assets=PASS replay_bytes=561727241 symbols=AAPL,NVDA\nbuilder_tools=PASS host=10.1.1.101 compiler=g++-11\nexchange_rss_preflight=PASS iface=ens64np0 entries=128 table=measure-all-1 queue=1 irq=33 requested_cpu=2 effective_cpu=2 irqbalance=inactive exchange_cpu=2\ntransport_preflight=PASS runtime_sha256=ed7a7b1aa05151165316db67c99910715d6c63ab9d5c7635c73c6bd4e9441573 queue=DEQUE_CV\n",
+      "run.env": "RUN_ID=20260912T130838.299593593Z-06-four-path-preflight\nEXIT_CODE=0\n",
+      "SHA256SUMS": "b4c4a3d3a2cbb33e706228860767c8d230f7c068b33e4a3ae916d10db4304183  raw/archive.txt\nc52a8e73c7ee54ff3689b82a5906b2384c769bcc9d4bddbe5c04f5f76e087cea  raw/code-contract.txt\n3246b6941863d639814296b34acca57c12f8a0a7c6a5581b8d4f44c0e0544fd7  raw/code-contract/build-provenance.json\na47ea5cb71819f7b4591fd0d719bcf4ee60a8554fb235486d79deb9f97ab3e9b  raw/code-contract/f-stack-x2522.ini\n824a0edb5d625763a87537b0a36fd76d5e1ae2cdfe7f19097ac6ce60b0f07b45  raw/code-contract/runtime-manifest.sha256\nb5abfdbe8b75ea3858c9fe9bfa67cdcc2079f59108b3372fdda06f06d47e5769  raw/preflight.txt\nece70ee561f91ede6e1f53f1ba2d0df6c015cfa1f3da9fdd117b606029381c85  raw/result.txt\n11dfe102e1edbec4d28003298446dc1f7d3ffe9146ca88aa1baa62aba259bb02  run.env\n19ab67050a79768ce2714f132c00769ff606dce55828e6776a245183e8b0b31a  source.sh\n"
+    },
+    "all_manifest_entries_verified": true,
+    "no_compile_deploy_rebind_order_or_sampling": true
+  },
+  "binary_locations": {
+    "platform_run_id": "20260912T001617Z-02-trading-platform",
+    "trader_host": "10.1.1.2",
+    "runtime_bin": "/var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/",
+    "archive_members": {
+      "flle-trader": "300d8cbee53fb10e755b964c78bdb384490e92d46703cc9ed384de0cb164879a",
+      "flle-trader-tcpdirect": "7d56864a454eee6556c7b9e93090229b08f6088abe798570327fa35dffa38ed5",
+      "flle-trader-dpdk": "687b5053827ff4deaa786440d80363ed7ce4009c80e38e813ab16de08441c52c"
+    },
+    "remote_sha256_output": "d2b59d5102ef27d313c4428c5435baa8b3e61799e7bfd3ff88cd156aa8167b2e  /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/flle-trader\n300d8cbee53fb10e755b964c78bdb384490e92d46703cc9ed384de0cb164879a  /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader\n7d56864a454eee6556c7b9e93090229b08f6088abe798570327fa35dffa38ed5  /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader-tcpdirect\n687b5053827ff4deaa786440d80363ed7ce4009c80e38e813ab16de08441c52c  /var/tmp/flle-trading-lab-20260912T001617Z-02-trading-platform/transport-runtime/flle-ch06-four-path/bin/flle-trader-dpdk\n",
+    "ordinary_flle_trader_sha256": "d2b59d5102ef27d313c4428c5435baa8b3e61799e7bfd3ff88cd156aa8167b2e",
+    "ordinary_and_packaged_binary_bytes_differ": true,
+    "identity_limit": "Both are project Socket clients; unequal bytes alone do not establish behavioral differences. Kernel and Onload use the same packaged file in Chapter 05.",
+    "build_sources": [
+      "apps/flle-trading-lab/scripts/platform-baseline.sh::platform_build_native",
+      "apps/flle-trading-lab/scripts/transport_labctl.sh::install_runtime_on_host",
+      "artifacts/blobs/x2522/ch06-four-path/v13/BUILD-PROVENANCE.json"
+    ],
+    "provenance_note": "v13 recorded on 2026-09-08; DPDK ELF inherited unchanged from v12, not all binaries rebuilt on this date"
+  },
+  "doc_checks": {
+    "changed_fences": 1,
+    "unchanged_fences": 29,
+    "live_output_matches_chapter": true,
+    "tables": 16,
+    "commonmark_html": "PASS",
+    "local_links_checked": 19,
+    "navigation": "75 cards / 10 chapters PASS",
+    "current_images": 12,
+    "image_manifest_counts": {
+      "Documents/newDoc/images/course-visuals/05-diagrams/SHA256SUMS": 59,
+      "Documents/newDoc/images/course-visuals/SHA256SUMS": 266
+    },
+    "previous_image_files_unchanged": true,
+    "git_diff_check": "PASS"
+  },
+  "visual_review": {
+    "new_images": [
+      "05-source-build-deploy.svg",
+      "05-exchange-receive-placement.svg"
+    ],
+    "whole_images_at_widths": [
+      800,
+      1200
+    ],
+    "arrows": "Shared 12x12 marker, refX=0, 3px butt stroke; tips >=12px outside target border; all six arrows inspected",
+    "archive_images_retained": 47
+  },
+  "rss_source": "https://docs.kernel.org/networking/scaling.html#rss-receive-side-scaling",
+  "previous_receipt": {
+    "path": "Documents/design/evidence/chapter05-runtime-script-20260912.json",
+    "sha256": "0c0d3a338edc53e52b86d7618b3bdd687d96b7d22a52844c09faf5c059b5ae64",
+    "retained": true
+  },
+  "status": "Preparation C live read-only PASS; other experiment status unchanged",
+  "pending_files": [
+    "Documents/00.DECISIONS.md",
+    "Documents/00.FREEZE-LEDGER.md",
+    "Documents/00.NEXT-AI-HANDOFF.md",
+    "Documents/00.PINS.md",
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md",
+    "Documents/design/evidence/chapter05-first-pass-20260912.json",
+    "Documents/design/evidence/chapter05-intro-table-20260912.json",
+    "Documents/design/evidence/chapter05-opening-terms-20260912.json",
+    "Documents/design/evidence/chapter05-preparation-clarity-20260912.json",
+    "Documents/design/evidence/chapter05-review-fixes-20260912.json",
+    "Documents/design/evidence/chapter05-runtime-annotations-20260912.json",
+    "Documents/design/evidence/chapter05-runtime-script-20260912.json",
+    "Documents/newDoc/05-openonload-tcpdirect-dpdk-kernel-bypass.md",
+    "Documents/newDoc/assets/05-kernel-bypass/01c-verify-runtime.sh",
+    "Documents/newDoc/assets/05-kernel-bypass/02-four-path-preflight.sh",
+    "Documents/newDoc/assets/05-kernel-bypass/README.md",
+    "Documents/newDoc/assets/05-kernel-bypass/test-preflight-report.py",
+    "Documents/newDoc/assets/05-kernel-bypass/test-runtime-report.py",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-exchange-receive-placement.svg",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-order-timing-windows.svg",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-source-build-deploy.svg",
+    "Documents/newDoc/images/course-visuals/05-diagrams/README.md",
+    "Documents/newDoc/images/course-visuals/05-diagrams/SHA256SUMS",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS"
+  ],
+  "sha256": {
+    "Documents/00.DECISIONS.md": "745d9054512ed128afa3fcc642a35b13772024f305139d0195bab5ed29fc4a97",
+    "Documents/00.FREEZE-LEDGER.md": "8819ad9a0eac975b27cb2cc342e2165396d1b0f329f3ef12249bfd10330d51c5",
+    "Documents/00.NEXT-AI-HANDOFF.md": "4abf25e9e71f1f6e7298bf98772d6d0e84954f4a98a1f61c637e8254474848cf",
+    "Documents/00.PINS.md": "18519fe2ac512e02c8c215c59cc762825de2d981496356b5584acd8f41be669c",
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md": "4afc6f5d66ca018b4bad83b306d63d759a94bcdc9186e460cc45151bd9fdcf4a",
+    "Documents/design/evidence/chapter05-first-pass-20260912.json": "a3024d47c55c8d634fb1743f008b415f4e1553c308e38bb96e3d99002f444d7f",
+    "Documents/design/evidence/chapter05-intro-table-20260912.json": "f63b1a1cfdb2683c032cfba71edcbab3bfa23bfa09fab9ea1465227457927c97",
+    "Documents/design/evidence/chapter05-opening-terms-20260912.json": "07c5d51aa874ddd3c7a803bef4640ecc7de7757dc4e04ea623ee124d7bfc62f2",
+    "Documents/design/evidence/chapter05-review-fixes-20260912.json": "c4eb5a800fdcb931ef97a179f0c519d10d7c94f8ffa26f3536b072a133ae70e9",
+    "Documents/design/evidence/chapter05-runtime-annotations-20260912.json": "1657d4322ec2429959afa907eaf1bbd221b6da376e0c251f1ebe7cac6fceee73",
+    "Documents/design/evidence/chapter05-runtime-script-20260912.json": "0c0d3a338edc53e52b86d7618b3bdd687d96b7d22a52844c09faf5c059b5ae64",
+    "Documents/newDoc/05-openonload-tcpdirect-dpdk-kernel-bypass.md": "e4160ac2d29ccc6455adaed2f6578197934431d5d5da32f990080544ea978514",
+    "Documents/newDoc/assets/05-kernel-bypass/01c-verify-runtime.sh": "7eafb26e9f6e70a8a168ce27a0159ff2bc9518453cb5958a3971e33f88c8e00e",
+    "Documents/newDoc/assets/05-kernel-bypass/02-four-path-preflight.sh": "19ab67050a79768ce2714f132c00769ff606dce55828e6776a245183e8b0b31a",
+    "Documents/newDoc/assets/05-kernel-bypass/README.md": "b310863d8fc426c376006671af910ccffe06f9e04e215ad9a8486e0c1b459679",
+    "Documents/newDoc/assets/05-kernel-bypass/test-preflight-report.py": "e336db9dbfc3b83c10b415f6052827ed698010ce12f2d1df58d20a3608a6f606",
+    "Documents/newDoc/assets/05-kernel-bypass/test-runtime-report.py": "36507fa42a0521583fc04fe2ac35d07009957f328e175fb513fe99aca70bb91a",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-exchange-receive-placement.svg": "629c9100e19b3da6cd612fa95bc4f2ec38318481224fa1cbf5c4a70a9d8c68b9",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-order-timing-windows.svg": "91528d8be6b644563b8b0455026097b11b51e7cf41f63fa45f836765bd33cb00",
+    "Documents/newDoc/images/course-visuals/05-diagrams/05-source-build-deploy.svg": "c7bb18dcf984ad413deb875d9aa836658623f3ee7eac6a69b399c7e7a277f304",
+    "Documents/newDoc/images/course-visuals/05-diagrams/README.md": "7565fa9b78190286c17be922f3a64720ee4a7818c034455c40196cfecbf0ea47",
+    "Documents/newDoc/images/course-visuals/05-diagrams/SHA256SUMS": "73e963a7094268c1571856bfa9bc0f02a9aa7de58cdb5b6fc0c836b86c7b3e2b",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": "966eb66b61af5f2a9fcfeddfff4032cdfc43ac96682c66755e9e7880da890319"
+  }
+}

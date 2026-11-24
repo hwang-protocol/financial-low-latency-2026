@@ -1,0 +1,61 @@
+{
+  "remote_directory": "/var/tmp/flle-build-validation-20260916T093456Z",
+  "archive_sha256": "159a7192c3881ffeaa18181a6ff49c3d66e3a019e31e6ee50f5022d7bc77b8d3",
+  "scope": "isolated builder validation; no trading deployment, device change or orders",
+  "results": [
+    {
+      "check": "management_tests",
+      "exit_code": 0,
+      "tail": [
+        "test_rss_receipt_reuse_reapply_and_drift_rejection (test_transport_start.TransportStartTest) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 238 tests in 8.617s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "check": "observer_make_clean_test_tools",
+      "exit_code": 0,
+      "tail": [
+        "test_reuse_native_exchange_and_verify_manifest_before_start (test_transport_start.TransportStartTest) ... ok",
+        "test_rss_receipt_reuse_reapply_and_drift_rejection (test_transport_start.TransportStartTest) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 238 tests in 7.048s",
+        "",
+        "OK (skipped=13)",
+        "g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-itch-filter src/itch_filter.cpp",
+        "g++-11 -Isrc -std=c++17 -O2 -g -Wall -Wextra -Wpedantic -pthread -o build/flle-book-checkpoint src/book_checkpoint.cpp"
+      ]
+    }
+  ],
+  "restore_wrapper_tests": {
+    "count": 11,
+    "result": "PASS",
+    "log": "restore-wrapper-tests.txt",
+    "cases_added": [
+      "pending cleanup succeeds before fresh deployment",
+      "pending cleanup failure retains state and stops deployment"
+    ]
+  },
+  "failed_deployment": {
+    "run": "20260916T093117Z-02-trading-platform",
+    "log": "Documents/reports/course-runs/20260916T093117Z-02-trading-platform/raw/03-deploy.txt",
+    "sha256": "40bda0e1b0b0b64557d8b887b0acd5154887de8d264fce14a82b4042b0e97fc5"
+  },
+  "management_sandbox_note": "First unprivileged full run had 14 socket-permission errors; rerun with local network permission passed all 238 tests. Full successful log is management-tests.txt.",
+  "modified_source_sha256": {
+    "Documents/00.DECISIONS.md": "f2300b6665655218b366f151e22bf82ae78824c76a9cf507345b9a336e0420d9",
+    "Documents/00.FREEZE-LEDGER.md": "c90d4fdaddb52c9437f36370fec357136db983d296b7466dc923f20d429c7854",
+    "Documents/00.NEXT-AI-HANDOFF.md": "1edbb3e0be15906521781190a7a3451144011707d3eddc37eb50fffdfe16a590",
+    "Documents/00.PINS.md": "41a60dbb808947e6233ae4c770c075567594b84c812df545c933257f3b088f54",
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md": "728559cef3f77c9981454b37e72b92a9ed46641910ae54cfe4b0eabd57c64021",
+    "Documents/newDoc/assets/02-trading-baseline/TEACHER-NOTES.md": "523fd7d2f3256851e77e89dfc1d4083e9732fb1846308c706d99de8097b1e62a",
+    "Documents/newDoc/assets/02-trading-baseline/test-classroom-output.py": "d0fb754ba264b16f7b63cf8e013c5ab17fdb9f5117b2a5bb41e2829df0357c7e",
+    "apps/flle-trading-lab/tests/test_course_capabilities.py": "e7ffc30f68940d1e7f5f0a331dec209df721f090de4b9b74a63eac5145e6fe54",
+    "apps/flle-trading-lab/tests/test_posix_qos_package.py": "09971c01ddf95c7eb7c891a53083e7a2f89a8e8ee4b8ada8106311964dc31957",
+    "apps/flle-trading-lab/tests/test_transport_lifecycle.py": "d3fe9ba7d569475f3cf54142c0a59c2be50246135e50f896441f27135693211a"
+  }
+}

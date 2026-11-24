@@ -1,0 +1,93 @@
+{
+  "date": "2026-09-12",
+  "scope": "继续处理用户提出的八处细节：准备D/运行②/收尾的实际打印名称统一为 Kernel Socket 与 Onload；用原历史值执行打印代码生成文档展示，未发单或切换。删除 POSIX 摘录中只隔空行的假省略；两个计时窗口升为独立公共说明；导航前导四部分名与表格一致；明确正式表来自2026-09-12采样并由format-comparison-report.py重新生成；收尾统一称恢复网页控制台；理解题增加到八题，恢复排名边界题；三份辅助C程序各占一行路径。",
+  "validation": {
+    "cpp_sources": [
+      {
+        "source": "posix_order_transport.cpp",
+        "exact_fragments": 3,
+        "lines": 22
+      },
+      {
+        "source": "tcpdirect_order_transport.cpp",
+        "exact_fragments": 4,
+        "lines": 20
+      },
+      {
+        "source": "dpdk_trader.cpp",
+        "exact_fragments": 5,
+        "lines": 12
+      }
+    ],
+    "navigation_rows_and_cards": 10,
+    "purple_cards": 27,
+    "local_links_and_images": 21,
+    "images": 11,
+    "comparison_values_unchanged": true,
+    "comparison_stdout_matches_document": true,
+    "archived_analysis_sha_checks": [
+      {
+        "directory": "Documents/reports/course-runs/20260912T134347Z-02-trading-platform/comparison-history/20260912T143120.386066472Z/four-path-comparison/balanced-analysis",
+        "files": 2,
+        "result": "PASS"
+      },
+      {
+        "directory": "Documents/reports/course-runs/20260912T134347Z-02-trading-platform/comparison-history/20260912T143120.386066472Z/four-path-comparison",
+        "files": 215,
+        "result": "PASS"
+      }
+    ],
+    "before_lines": 843,
+    "after_lines": 847,
+    "svg_files_modified": false,
+    "unchanged_commands_and_other_outputs_except_requested_display_names": true,
+    "comprehension_questions_and_answers": 8,
+    "common_timing_heading": "H2, outside preparation D",
+    "asset_rows_split": 3
+  },
+  "script_checks": [
+    {
+      "script": "03-four-path-lab-ready.sh",
+      "only_requested_print_text_changed": true,
+      "sha256": "7bd8709fc8b31943346d1d1200ba811df6a65294b9ae2f81e26f89ce610daf94"
+    },
+    {
+      "script": "05-onload-real-order.sh",
+      "only_requested_print_text_changed": true,
+      "sha256": "5c6c34d6d224662bdef8e150de99be644ae7df9491ffca83394f61946382c347"
+    },
+    {
+      "script": "09-four-path-handoff.sh",
+      "only_requested_print_text_changed": true,
+      "sha256": "ec4fbf4a19441af0f82180a836f45b5ebdac095ff9db79ffbbf704e13a9103eb"
+    }
+  ],
+  "regenerated_outputs": {
+    "03-four-path-lab-ready.sh": {
+      "source_evidence": "Documents/reports/course-runs/20260907T112313Z-02-trading-platform/profile-switches/20260907T114344.584957884Z",
+      "stdout": "准备 D：停掉普通客户端，换上测试客户端\n# 本步只换客户端，不下单。Exchange 和网页保持原进程。\n\n# 1. 沿用的平台\nplatform_run=20260907T112313Z-02-trading-platform\n# 第 02 章已经部署的交易平台，不另起一套系统。\n\n# 2. 切换结果\nresult=READY\n# 前三路测试客户端已就绪。\n\n# 3. 当前配置\nprofile=TRANSPORT\n# 已停掉普通 AUTO / MANUAL，换上路径测试客户端。\n\n# 4. 四路客户端\nclients=Kernel Socket, Onload, TCPDirect ONLINE; DPDK WAITING\n# 前三路在线；DPDK 等运行 ④ 再独占网卡。\n\n# 5. 订单队列\nqueue_mode=DEQUE_CV\n# 四路都用第 04 章的 deque + 互斥锁 + 条件变量。\n\n# 6. Exchange 与网页\nexchange_and_gui=UNCHANGED\n# 进程身份和文件清单与切换前一致。\n\n# 可以进入运行 ① 下单。\n# 完整校验记录保存在下方 evidence 目录。\nevidence=Documents/reports/course-runs/20260907T112313Z-02-trading-platform/profile-switches/20260907T114344.584957884Z\n",
+      "printing_only": true,
+      "values_unchanged": true
+    },
+    "05-onload-real-order.sh": {
+      "source_evidence": "Documents/reports/course-runs/20260912T134347Z-02-trading-platform/classroom-runs/20260912T141511.068802653Z-run02-onload",
+      "stdout": "===== 运行 ② · Onload 真单 =====\n# 1. 订单结果：Exchange 已确认成交。\ntask=用 Onload 发送一笔 AAPL 1 股可成交订单\nresult=ORDER_EXECUTED\nclient_order_id=2516000000  # 本笔订单编号，用于查找日志\n\n# 2. 实际收发路径：已通过脚本的连接与原始记录检查。\nengine=ONLOAD_USER_STACK  # Onload 用户态 TCP 栈收发\n\n# 3. 订单往返时间：调用发送前 → 收到最终结果；ns 为纳秒。\norder_rtt_ns=34552\n# 单笔会受当时的调度和缓存状态影响，不能据此给四路排快慢。\nscope=单笔路径验证；正式延迟比较看运行 ⑤\n\n# 本步通过；接着执行运行 ③。\n# 完整订单、路径记录及校验文件保存在：\nevidence=Documents/reports/course-runs/20260912T134347Z-02-trading-platform/classroom-runs/20260912T141511.068802653Z-run02-onload\n",
+      "printing_only": true,
+      "values_unchanged": true
+    },
+    "09-four-path-handoff.sh": {
+      "source_evidence": "Documents/reports/course-runs/20260912T134347Z-02-trading-platform",
+      "stdout": "===== 第 05 章 · 收尾检查 =====\n# 1. 网卡与客户端：已恢复本章常用的 SFC 模式。\ndata_plane=SFC/READY/sfc  # X2522 由 sfc 驱动管理\nclients=Kernel Socket, Onload, TCPDirect ONLINE  # 前三路在线\ndpdk=WAITING  # 等待切到 DPDK 模式，属于正常状态\n\n# 2. 网页与数据链路：页面可访问，Trader 到 Exchange 连通。\nweb=http://10.1.1.101:8088/ HTTP 200\ndata_link=ping 3/3  # 发出 3 个探测包，收到 3 个回复\n\n# 3. 本章收尾通过，保留控制台供后续使用。\nresult=READY\nnext=第 06 章\n# 完整检查记录保存在：\nevidence=Documents/reports/course-runs/20260912T134347Z-02-trading-platform\n",
+      "printing_only": true,
+      "values_unchanged": true
+    }
+  },
+  "tests": {
+    "preparation_d": "~~~~~~~~~~~~~~~~~~~~~准备 D 输出格式~~~~~~~~~~~~~~~~~~~~~\nPASS lab-ready report format and identity-drift rejection\n",
+    "output_reports": "test_incomplete_counts_receipts_or_source_checks_fail (__main__.ComparisonReports) ... ok\ntest_missing_cells_or_invalid_latency_fail (__main__.ComparisonReports) ... ok\ntest_table_uses_actual_statistics_and_converts_ns_to_us (__main__.ComparisonReports) ... ok\ntest_invalid_order_or_engine_never_prints_success (__main__.OrderReports) ... ok\ntest_real_inline_output_reads_receipt_values_and_explains_each_group (__main__.OrderReports) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.345s\n\nOK\n",
+    "script_contract": "...............................\n----------------------------------------------------------------------\nRan 31 tests in 0.048s\n\nOK\n"
+  },
+  "document_sha256": "c241d2d4bb7e784a16bf90230b9ae63ac0365c2cf8dc1edf0c47ed8625ce9444",
+  "images_changed": false,
+  "new_measurements_orders_or_mode_switches": false
+}

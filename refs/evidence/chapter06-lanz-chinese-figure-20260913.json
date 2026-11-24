@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-13",
+  "change": "原 PNG 保留左右对照，英文改中文；图注缩为一句带历史来源链接的话。",
+  "tool": "image_gen built-in edit",
+  "prompt": "Edit the provided course infographic PNG, preserving its overall landscape design and composition: navy title, green common-conditions strip, two equal-height equal-width side-by-side panels, left blue and right orange, three white rows inside each panel, small matching icons, green central badge, purple bottom strip. Make ALL explanatory wording concise Simplified Chinese, clear and large enough to read at 800px display width. Preserve the original facts and values. No new plots or arrows. Remove all original English prose and replace exactly with the following text. Only LANZ, Et2, S, E, and μs remain as technical symbols.\nTitle: “LANZ：无拥塞事件与有拥塞事件”\nGreen top strip: “端口、帧长、包数和阈值相同”\nLeft header on two lines: “每秒 1 万包” / “无拥塞事件”\nRight header on two lines: “每秒 2.5 万包” / “出现拥塞事件”\nCentral badge on three lines: “只改变” / “入口” / “发包速率”\nLeft first white row: “统计表：无接口记录”\nLeft second white row: “明细表：无事件记录”\nLeft third white row: “全局事件计数：0”\nRight first white row on two lines: “端口 Et2 · 流量类别 1” / “拥塞事件：164 次”\nRight second white row, retain S icon, text on two lines: “开始” / “队列长度：64 个缓冲段”\nRight third white row, retain E icon, text on two lines: “结束 · 持续 28 μs” / “最大队列长度：64 个缓冲段”\nBottom purple strip: “历史实验示例 · LANZ 记录队列拥塞”\nUse a clean Chinese sans serif font, generously sized, sharp readable exact characters. Keep panels perfectly symmetric and text free of overlaps, avoid crowded tiny footnotes. Approximately 16:9 landscape. This is a translation and concision edit, not a redesign.",
+  "asset": "Documents/newDoc/images/course-visuals/06-diagrams/06-15-lanz-noevent-vs-event.png",
+  "source_run": "20260903T060803Z-07-lanz-live-ab",
+  "source_files": [
+    "raw/switch-dual-10k-4096-post.txt",
+    "raw/switch-dual-25k-4096-post.txt"
+  ],
+  "verified_values": {
+    "no_event_global_count": 0,
+    "event_interface": "Et2",
+    "traffic_class": 1,
+    "count": 164,
+    "sample_start_segments": 64,
+    "sample_duration_us": 28,
+    "sample_max_segments": 64
+  },
+  "scope": "Only illustration and caption; no changes to experiment scripts or archived evidence.",
+  "checks": {
+    "native_and_800px_visual": "PASS; Chinese readable, no clipping or overlap, symmetric panels",
+    "arrows": "none",
+    "markdown_fences_unchanged": 28,
+    "image_references": 23,
+    "sha_manifests": [
+      64,
+      267
+    ],
+    "asset_sha256": "c6419dfdcebde43eda136028c062711355b41ba241eb32673b59dc398055628b"
+  }
+}

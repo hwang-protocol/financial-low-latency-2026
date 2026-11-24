@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="560" viewBox="0 0 1120 560">
+  <defs>
+    <marker id="arrow-blue" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-red" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#dc2626"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:26px;font-weight:900}.k{font-size:18px;font-weight:900}.s{font-size:15px;fill:#475569}.m{font-family:monospace;font-size:15px;font-weight:800}</style>
+  </defs>
+  <rect x="12" y="12" width="1096" height="536" rx="26" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="t h" x="52" y="62">宿主机把 CPU 留给 VM，Guest 还要给线程分座位</text>
+  <text class="t s" x="52" y="92">同一个 SPSC 忙轮询：隔离核只做订单交接；共享核还要处理 housekeeping。只改变座位，不改变订单。</text>
+
+  <rect x="54" y="135" width="238" height="240" rx="20" fill="#fef2f2"/>
+  <rect x="312" y="135" width="238" height="240" rx="20" fill="#f1f5f9"/>
+  <rect x="570" y="135" width="238" height="240" rx="20" fill="#ecfdf5"/>
+  <rect x="828" y="135" width="238" height="240" rx="20" fill="#eff6ff"/>
+  <text class="t k" x="82" y="177">CPU 0 · 共享</text>
+  <text class="t s" x="82" y="215">market / mgmt / main</text>
+  <text class="t s" x="82" y="246">部分 IRQ 与系统工作</text>
+  <rect x="82" y="280" width="180" height="54" rx="12" fill="#fee2e2"/>
+  <text class="t m" x="172" y="312" text-anchor="middle">错误：order 也来</text>
+  <rect x="82" y="280" width="180" height="54" rx="12" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+
+  <text class="t k" x="340" y="177">CPU 1 · 余量</text>
+  <text class="t s" x="340" y="215">当前实验不放 order</text>
+  <text class="t s" x="340" y="246">保留给系统与后续课程</text>
+
+  <text class="t k" x="598" y="177">CPU 2 · 隔离</text>
+  <text class="t s" x="598" y="215">MANUAL order thread</text>
+  <text class="t s" x="598" y="246">SPSC + PAUSE 忙轮询</text>
+  <rect x="598" y="280" width="180" height="54" rx="12" fill="#d1fae5"/>
+  <text class="t m" x="688" y="312" text-anchor="middle">正确：独占座位</text>
+  <rect x="598" y="280" width="180" height="54" rx="12" fill="none" stroke="#059669" stroke-width="1.5"/>
+
+  <text class="t k" x="856" y="177">CPU 3 · 对照</text>
+  <text class="t s" x="856" y="215">AUTO order thread</text>
+  <text class="t s" x="856" y="246">10 Hz 环境哨兵</text>
+  <rect x="856" y="280" width="180" height="54" rx="12" fill="#dbeafe"/>
+  <text class="t m" x="946" y="312" text-anchor="middle">隔壁病房的对照</text>
+  <rect x="856" y="280" width="180" height="54" rx="12" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+
+  <rect x="54" y="135" width="238" height="240" rx="20" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+  <rect x="312" y="135" width="238" height="240" rx="20" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <rect x="570" y="135" width="238" height="240" rx="20" fill="none" stroke="#059669" stroke-width="1.5"/>
+  <rect x="828" y="135" width="238" height="240" rx="20" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+
+  <path d="M172 395V425H688V391" fill="none" stroke="#dc2626" stroke-width="4" marker-end="url(#arrow-red)"/>
+  <text class="t s" x="430" y="455" text-anchor="middle">只移动同一个 order TID：shared CPU 0 → dedicated CPU 2</text>
+  <path d="M808 425H928V391" fill="none" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <text class="t s" x="931" y="455" text-anchor="middle">AUTO 不随处理变量移动</text>
+
+  <rect x="54" y="487" width="1012" height="38" rx="19" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text class="t" x="560" y="512" text-anchor="middle" font-size="15" font-weight="800">ESXi 前提：4 vCPU × 2300 MHz 全预留 + High；它不替代 Guest 内线程隔离</text>
+</svg>

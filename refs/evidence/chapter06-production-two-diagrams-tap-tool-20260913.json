@@ -1,0 +1,99 @@
+{
+  "date": "2026-09-13",
+  "scope": "Two separate production-deployment diagrams; concise TAP/TOOL command explanation",
+  "requests": [
+    "Explain official DMF and friend-recommended dedicated 7150 as separate cases and figures",
+    "Show multiple production capture points feeding one aggregator and analysis server",
+    "Focus on TAP/TOOL roles, group steering, timestamp placement and analysis; remove other exposition"
+  ],
+  "figures": [
+    {
+      "path": "Documents/newDoc/images/course-visuals/06-diagrams/06-dmf-multipoint-analysis.svg",
+      "sha256": "505787b15985463443a9c393a13a181b4af7ecc976296602978098f29b57e3ec",
+      "dimensions": [
+        1200,
+        590
+      ],
+      "arrows": 4,
+      "marker": [
+        12,
+        12
+      ],
+      "stroke": 2.5,
+      "target_gap": 12,
+      "full_views_800_1200_and_2x_arrows": "PASS"
+    },
+    {
+      "path": "Documents/newDoc/images/course-visuals/06-diagrams/06-tap-tool-multipoint.svg",
+      "sha256": "9d8f6f6bd7cf34d829e8a24a94c2280785440f0fe0aac9606d090674d9d09561",
+      "dimensions": [
+        1200,
+        690
+      ],
+      "arrows": 7,
+      "marker": [
+        12,
+        12
+      ],
+      "stroke": 2.5,
+      "target_gap": 12,
+      "full_views_800_1200_and_2x_arrows": "PASS"
+    }
+  ],
+  "document_checks": {
+    "section_prose_before": 2218,
+    "section_prose_after": 978,
+    "fences_before": 25,
+    "fences_after": 26,
+    "images_before": 23,
+    "images_after": 24,
+    "h1_h3_unchanged": true,
+    "unparsed_bold": 0,
+    "prose_reduction_percent": 55.9
+  },
+  "command_source_review": {
+    "switchport_mode_tap": "TAP ingress receives monitoring replicas",
+    "switchport_mode_tool": "TOOL egress sends replicas to analysis devices",
+    "tap_default_group_and_tool_group_set": "Same named aggregation group maps inputs to outputs",
+    "identity": "TAP identity 101/102/103; TOOL identity dot1q carries originating input in outer VLAN tag",
+    "mac_timestamp_before_fcs": "Configured on egress Et10; timestamp represents ingress arrival at TAP port, not egress time",
+    "mode_exclusive": "Dedicated aggregator only; disables normal switching",
+    "mode_exclusive_no_errdisable_Ethernet24": "Preserves previously configured dedicated PTP interface",
+    "show_tap_aggregation_groups": "Read-only membership display; no invented output",
+    "ptp_keyframe": "Previously explained mechanism; must target actual aggregator/server interfaces and addresses, no claim this is complete production deployment config"
+  },
+  "analysis_boundary": "Identify capture source before matching packet content; parse 7150 trailer and Keyframe; calibrate differential capture-path delay before attributing the time difference to production path",
+  "dmf_boundary": "Ingress/filter switches timestamp; Service Node Flow Diff matches and analyzes; Analytics Node displays. Device SKU comparison removed from teaching text.",
+  "retired_from_main": [
+    "06-official-realtime-vs-dedicated-tapagg.png",
+    "four-option comparison table",
+    "inline-original timestamping detour",
+    "Recorder Node detour",
+    "full Cboe case"
+  ],
+  "preserved_supplemental_case": "Moved verbatim to assets/06-arista-time/README.md#cboe-timestamp-case; design cross-reference updated",
+  "source_urls": [
+    "https://www.arista.com/en/um-eos/eos-test-access-point-aggregation",
+    "https://www.arista.com/en/ug-dmf/dmf-dmf-service-node-appliance",
+    "https://www.arista.com/ug-dmf/dmf-advanced-policy-configuration",
+    "https://www.arista.com/assets/data/pdf/Whitepapers/Overview_Arista_Timestamps.pdf"
+  ],
+  "image_manifests": {
+    "counts": [
+      68,
+      271
+    ],
+    "status": "PASS",
+    "old_combined_svg_png_unchanged": true
+  },
+  "checks": {
+    "full_sections_800px": "PASS",
+    "markdown_bold": "PASS",
+    "case_move_and_crosslink": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "new_device_run": false,
+  "runtime_code_changes": false,
+  "validation_level": "Official documentation, native SVG and local rendered prose checks only; dedicated 7150 multi-input data plane not tested",
+  "pending": "No second aggregator or DMF deployment exists in the course environment; production diagrams/config remain design examples."
+}

@@ -1,0 +1,59 @@
+{
+  "date": "2026-09-16",
+  "task": "Chapter 05 prepare D exit 1 recovery",
+  "platform_run": "20260915T115124Z-02-trading-platform",
+  "repair_report": "Documents/reports/course-runs/20260916T003725Z-ch05-ready-repair",
+  "successful_prepare_d_report": "Documents/reports/course-runs/20260915T115124Z-02-trading-platform/profile-switches/20260916T003839.599447523Z",
+  "original_failed_report": "Documents/reports/course-runs/20260915T115124Z-02-trading-platform/profile-switches/20260916T003141.779410520Z",
+  "diagnosis": [
+    "Retained RSS receipt required the applied state after restore had returned RSS/IRQ/irqbalance to the saved baseline.",
+    "TRANSPORT start expected the frozen v13 UNICAST Exchange while the platform deployed a native A/B Exchange.",
+    "Old failure log lacked a stage marker; it does not independently prove which exact command failed first."
+  ],
+  "changes": [
+    "Validate owned RSS state with restore before archiving old receipts and applying a new configuration. Reject unrelated drift.",
+    "Select and verify deployed native A/B Exchange when its deployment manifest exists; retain legacy fallback for old deployments. Separate Exchange-only network verification from feed receiver verification.",
+    "On failed start retain Exchange and gateway processes that were verified before the transition; report failing stage.",
+    "Prepare D reports stage, exit status, log tail and evidence directory on failure."
+  ],
+  "validation": {
+    "transport_unit_tests": 33,
+    "prepare_d_fixture": "PASS: normal output, identity drift rejection, failure stage/return code/log",
+    "bash_syntax": "PASS",
+    "git_diff_check": "PASS",
+    "live_recover_start_exit": 0,
+    "live_original_prepare_d_exit": 0,
+    "before_after_identity_and_manifests_equal": true,
+    "exchange_pid": 4225,
+    "gateway_pid": 2327,
+    "profile": "TRANSPORT",
+    "mode": "SFC",
+    "owner": "sfc",
+    "transition": "READY",
+    "clients": {
+      "Kernel Socket": "ONLINE",
+      "Onload": "ONLINE",
+      "TCPDirect": "ONLINE",
+      "DPDK": "WAITING"
+    },
+    "market_schema": "udp-multicast-ab-v1",
+    "market_mode": "MULTICAST_A"
+  },
+  "live_changes": [
+    "Old failed rollback had already stopped services; recovery start restarted them in the same RUN without reinstalling or compiling. The subsequent original prepare D entry preserved the recovered Exchange and gateway identities.",
+    "Patched transport_labctl.sh/platform-baseline.sh deployed to .2 control workspace and control MANIFEST regenerated. Prior logs/scripts preserved under per-host repair-backups/20260916T003725Z-ch05-ready-repair"
+  ],
+  "limits": [
+    "No test orders or formal latency measurement were submitted in this repair.",
+    "This is a TRANSPORT READY repeat-entry check, not a fresh SOFTWARE-to-TRANSPORT live transition test.",
+    "DPDK native receipt collection and raw-result analysis still have frozen-Exchange path/UNICAST checks; those require a separate compatibility update before DPDK order evidence or formal four-path comparison on the A/B platform.",
+    "Frozen v13 runtime package, prior reports and measured samples were not changed."
+  ],
+  "changed_file_sha256": {
+    "apps/flle-trading-lab/scripts/transport_labctl.sh": "aac800958620a80b117f88610c6b9792bf6c92e242220da6730332469e16fdf8",
+    "apps/flle-trading-lab/scripts/platform-baseline.sh": "8acd49decaec679224ec45492aeed514ef874b8ab6afab334f3ef22137d880e5",
+    "apps/flle-trading-lab/tests/test_transport_start.py": "3d9f4f96708a98a42c31991e45335f399b6896237e8ba4b631bfeb71c1d72d5b",
+    "Documents/newDoc/assets/05-kernel-bypass/03-four-path-lab-ready.sh": "19fe69cc9c3ac84ecf94728bf4924669049c6be21c08cff604cb14d15301b51f",
+    "Documents/newDoc/assets/05-kernel-bypass/test-lab-ready-report.py": "aae389e3902994fc8ee5531dea5ac22ebaf2eea0f338ced19d2cb4752e690272"
+  }
+}

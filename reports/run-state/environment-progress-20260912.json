@@ -1,0 +1,120 @@
+{
+  "observed_at_utc": "2026-09-12T00:14:24+00:00",
+  "kind": "READ_ONLY_PROGRESS_CHECK",
+  "source_host": "10.1.1.111",
+  "latest_replay_completed_through": "03",
+  "historical_replays": {
+    "00-03-fanout-replay.json": {
+      "run_id": "20260910T085246Z-00-03-fanout-replay",
+      "card_count": 21,
+      "by_chapter": {
+        "00": 1,
+        "01": 8,
+        "02": 9,
+        "03": 3
+      },
+      "statuses": {
+        "PASS": 21
+      },
+      "last_card": "03-03"
+    },
+    "full-course-replay.json": {
+      "run_id": "20260908T122503Z-00-10-snapshot-replay",
+      "card_count": 59,
+      "by_chapter": {
+        "00": 1,
+        "01": 8,
+        "02": 4,
+        "03": 5,
+        "04": 3,
+        "05": 5,
+        "06": 10,
+        "07": 5,
+        "08": 6,
+        "09": 7,
+        "10": 5
+      },
+      "statuses": {
+        "PASS": 58,
+        "PASS_AFTER_FIX": 1
+      },
+      "last_card": "10-05-1"
+    }
+  },
+  "recorded_latest_platform_run": "20260910T085337Z-02-trading-platform",
+  "live_status": "PLATFORM_OFFLINE",
+  "observations": {
+    "http_10_1_1_101_8088": {
+      "api_health": "ECONNREFUSED",
+      "api_state": "ECONNREFUSED"
+    },
+    "10.1.1.1": {
+      "hostname": "vm-2522-01",
+      "boot_time_cst": "2026-09-12T07:51:31+08:00",
+      "boot_id": "b824e5cf-1df6-4663-8b7a-7bf831e574ce",
+      "matching_course_processes": 0,
+      "matching_course_listeners": 0,
+      "onload_installed": true,
+      "dev_onload": true,
+      "data_driver": "sfc",
+      "latest_deployment_directory_retained": true
+    },
+    "10.1.1.2": {
+      "hostname": "vm-2522-02",
+      "boot_time_cst": "2026-09-12T07:51:35+08:00",
+      "boot_id": "cde0b1fc-7c02-4e71-aa04-99ad77b5cf9b",
+      "matching_course_processes": 0,
+      "matching_course_listeners": 0,
+      "onload_installed": true,
+      "dev_onload": true,
+      "data_driver": "sfc",
+      "latest_deployment_directory_retained": true
+    },
+    "10.1.1.101": {
+      "hostname": "vm-monitor",
+      "boot_time_cst": "2026-09-12T07:51:38+08:00",
+      "boot_id": "a51a7c8d-cc56-45f3-9339-ee0f763a1a24",
+      "matching_course_processes": 0,
+      "matching_course_listeners": 0,
+      "latest_deployment_directory_retained": true,
+      "docker_installed": true
+    },
+    "10.1.1.11": {
+      "hostname": "vm-broadcom-01",
+      "boot_id": "d08ec91c-d61b-4ec4-86bb-fd3b6f631a2b",
+      "data_driver": "bnxt_en",
+      "data_interfaces": [
+        "ens64f0np0 DOWN",
+        "ens64f1np1 DOWN"
+      ]
+    }
+  },
+  "methods": [
+    "Strict-host-key BatchMode SSH to all four VMs",
+    "Read /proc/uptime, /proc boot_id, known application process names and ss listeners",
+    "Read installed tool paths, /dev/onload, NIC driver symlinks and deployment directory entries",
+    "Read matching flle/trading systemd unit names: none on .1/.2/.101",
+    "Read labctl.sh startup implementation: nohup process startup",
+    "Read two persisted replay receipts and baseline environment pointer"
+  ],
+  "listener_ports_checked": [
+    8088,
+    43120,
+    42121,
+    31032,
+    48120,
+    48121,
+    48122,
+    48123,
+    48124,
+    48125,
+    48606
+  ],
+  "boundaries": [
+    "Boot times do not distinguish ordinary reboot from boot after snapshot restoration",
+    "Persisted deployment files do not prove every configuration remains valid",
+    "Current offline status does not invalidate historical successful runs",
+    "Later chapter03 script edits remain locally checked, not freshly replayed",
+    "No service start, stop, redeployment, order, reset, switch operation or experiment performed"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "date": "2026-09-15",
+  "status": "LOCAL_TEST_SOURCE_DOC_VISUAL_PASS; LIVE_INSTALL_PENDING_USER",
+  "scope": "Consolidate DPDK/F-Stack theory, source instructions, IOMMU preparation B1 and actual cached software installation B2 before trading restore. Clarify vfio-pci versus DPDK PMD.",
+  "authorization": "User requested two preparation runs, formatted output and no repeated DPDK/F-Stack installation during trading restore. User executes device changes; this turn made only a readonly NIC query remotely.",
+  "sequence": [
+    "A: Onload",
+    "B1: IOMMU/VFIO",
+    "B2: DPDK/F-Stack software",
+    "C: switch multicast",
+    "restore 01",
+    "join 01A",
+    "members 01B",
+    "capture 01C",
+    "first trade 02",
+    "review 03"
+  ],
+  "hardware_query": {
+    "host": "10.1.1.2",
+    "command": "LC_ALL=C lspci -nnk -s 0000:03:00.0",
+    "raw_stdout": "03:00.0 Ethernet controller [0200]: Solarflare Communications XtremeScale SFC9250 10/25/40/50/100G Ethernet Controller [1924:0b03] (rev 01)\n\tDeviceName: pciPassthru0\n\tSubsystem: Solarflare Communications XtremeScale X2522-25G Network Adapter [1924:8028]\n\tKernel driver in use: sfc\n\tKernel modules: sfc\n",
+    "sha256": "d85769a69e7a4128e07baa208514e5a4dbfbb13f23f56437fd2d87f4c6e4cf35",
+    "display": "Original lspci lines retained; headings and reading guide are explicitly teaching annotations. No hardware change."
+  },
+  "support_document": {
+    "url": "https://doc.dpdk.org/guides-21.11/nics/sfc_efx.html#supported-nics",
+    "section": "49.6 Supported NICs",
+    "exact_supported_model": "Solarflare X2522 Dual Port SFP28 10/25GbE Adapter",
+    "rst_url": "https://doc.dpdk.org/guides-21.11/_sources/nics/sfc_efx.rst.txt",
+    "rst_sha256": "a134f0ea2d33a0ecf97d8648134532a2d88a1f576fd4dd1782026aa093d8840c"
+  },
+  "software": {
+    "archive": "artifacts/blobs/x2522/ch05-four-path/v13/flle-ch05-four-path-v13-x86_64-jammy-runtime.tgz",
+    "archive_sha256": "0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00",
+    "dpdk_version": "21.11.9",
+    "f_stack_commit": "0abb713721a6a0ba95768acde052dbd3d2fdf3fe",
+    "prepared_directory": "/opt/flle/prepared-runtime/0e5d77fef1e4891b9f2220681c18162da6c605ea5619ea00e28022f23281dc00",
+    "linkage": "DPDK and F-Stack statically linked into flle-trader-dpdk; runtime ships 26 additional shared libraries. Static inspection sees ff_init, rte_eal_init and net_sfc_efx. No PMD start/traffic test this turn.",
+    "restore": "Check both caches before deployment; copy existing local software to unchanged per-RUN layout; no runtime archive SCP/extraction there. Fixed application binaries unchanged."
+  },
+  "source_examples": {
+    "dpdk_git_url": "https://dpdk.org/git/dpdk-stable",
+    "tag": "v21.11.9",
+    "verified_tag_ref_oid": "60ff9854942c097b4d7c5c7c0159eff1358e7894",
+    "f_stack_url": "https://github.com/F-Stack/f-stack",
+    "f_stack_source_archive": "artifacts/blobs/x2522/f-stack/0abb713-dpdk-24.11.6/f-stack-0abb713721a6-source.tgz",
+    "f_stack_source_sha256": "eb5845b48f67b1a719986aeff9c86fa61c1e7531d2c9b62871e4f6f008352e20",
+    "compatibility_patch": "apps/flle-trading-lab/third_party/fstack/dpdk-21.11-compat.patch",
+    "fixed_source_and_patch_check": "PASS: extracted fixed ff_dpdk_if.c; git apply --check successful",
+    "build_note": "Source demo builds DPDK with Meson/Ninja and F-Stack with Make. Existing runtime uses Ubuntu-built DPDK 21.11.9; demo is not a byte-identical rebuild claim. F-Stack install precreates directories and preserves PKG_CONFIG_PATH under sudo. No full source rebuild performed."
+  },
+  "mechanism_sources": [
+    "https://www.kernel.org/doc/html/v5.15/driver-api/vfio.html",
+    "https://doc.dpdk.org/guides-21.11/linux_gsg/linux_drivers.html",
+    "https://doc.dpdk.org/guides-21.11/linux_gsg/sys_reqs.html",
+    "https://doc.dpdk.org/guides-21.11/linux_gsg/build_dpdk.html"
+  ],
+  "checks": {
+    "software_preparation_tests": {
+      "count": 7,
+      "result": "PASS",
+      "seconds": 17.933,
+      "method": "Real frozen archive in temporary directories; fixture sysfs and lspci; mock SSH only for outer orchestration. No live NIC or installation.",
+      "coverage": [
+        "first install and reuse",
+        "session restore same SHA/layout",
+        "missing IOMMU",
+        "unsafe mode and shared group rejection",
+        "corrupt archive and corrupt installed binary rejection",
+        "missing shared library prevents publication",
+        "wrapper failure preserves return code/log SHA and stops next host",
+        "success checks both hosts",
+        "missing B2 prevents deployment"
+      ]
+    },
+    "classroom_output_tests": {
+      "count": 5,
+      "result": "PASS"
+    },
+    "preparation_contracts": {
+      "count": 3,
+      "result": "PASS"
+    },
+    "iommu_contract": "PASS",
+    "doc": {
+      "fences": 30,
+      "bash_blocks": 11,
+      "build_demo_blocks_checked": 5,
+      "navigation_cards": 10,
+      "local_references": 19,
+      "svg_manifest_counts": [
+        41,
+        282
+      ],
+      "html_tags_balanced": true,
+      "mermaid_blocks": 1
+    },
+    "visual": "Three section slices at 940 and 390px fit document width; referenced images loaded. Two diagram footer labels changed B to B1; geometry unchanged; 800/1200px rendered and text bounds checked; desktop and both 800px diagrams viewed."
+  },
+  "file_sha256": {
+    "Documents/newDoc/02-host-native-trading-system-baseline.md": "f55b6a1ef8a0d3f722a180ec61220949f976dfe376d79542ab31c055251bd300",
+    "Documents/newDoc/assets/02-trading-baseline/00b-dpdk-software-prep.sh": "19f71a9d10fb5e77052d2ceb0b107bfafb4a5169e9c370f718ef48aa6c175d19",
+    "Documents/newDoc/assets/02-trading-baseline/test-dpdk-software-prep.py": "37d3f8185feabd5cf11723c0fb86d336ca8101c08e4a7f7574596ad8f2787c4e",
+    "Documents/newDoc/assets/02-trading-baseline/01-restore-trading-lab.sh": "13ee03c4465405fb90792923b0c3c3aa19aa8c533022bfbd151619203c89f4b8",
+    "apps/flle-trading-lab/scripts/transport_labctl.sh": "c4c8461fd4e3e21b1cf0f870fdea38885c57acfef790e245ca3740a950f977a6"
+  },
+  "limits": [
+    "No new B1/B2 or trading restore executed on devices. User will execute prepared scripts.",
+    "No new trade, DPDK packet I/O, latency result or source full-build result claimed.",
+    "Existing historical Onload/trading logs retain their provenance. No Git history or remote write."
+  ]
+}

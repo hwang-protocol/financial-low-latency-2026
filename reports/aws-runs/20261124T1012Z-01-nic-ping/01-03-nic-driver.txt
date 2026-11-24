@@ -1,0 +1,70 @@
+Warning: Permanently added '18.178.170.156' (ED25519) to the list of known hosts.
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp39s0          UP             0a:ff:f4:5f:2b:61 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp39s0          UP             172.31.12.156/20 metric 100 fe80::8ff:f4ff:fe5f:2b61/64 
++ ip -br link
++ ip -br addr
++ ls -l /sys/class/net/enp39s0/device
+lrwxrwxrwx 1 root root 0 Nov 24 10:09 /sys/class/net/enp39s0/device -> ../../../0000:27:00.0
++ ethtool -i enp39s0
+driver: ena
+version: 6.8.0-1069-aws
+firmware-version: 
+expansion-rom-version: 
+bus-info: 0000:27:00.0
+supports-statistics: yes
+supports-test: no
+supports-eeprom-access: no
+supports-register-dump: no
+supports-priv-flags: no
++ lspci -nn
++ grep -i -E 'ether|ena'
+27:00.0 Ethernet controller [0200]: Amazon.com, Inc. Elastic Network Adapter (ENA) [1d0f:ec20]
+	Link detected: yes
+mtu 9001
++ ethtool enp39s0
++ grep -E 'Speed|Duplex|Link detected'
+netlink error: Operation not permitted
++ ip link show enp39s0
++ grep -o 'mtu [0-9]*'
++ ethtool -l enp39s0
+Channel parameters for enp39s0:
+Pre-set maximums:
+RX:		n/a
+TX:		n/a
+Other:		n/a
+Combined:	4
+Current hardware settings:
+RX:		n/a
+TX:		n/a
+Other:		n/a
+Combined:	4
+Ring parameters for enp39s0:
+Pre-set maximums:
+RX:		8192
+RX Mini:	n/a
+RX Jumbo:	n/a
+TX:		1024
+Current hardware settings:
+RX:		1024
+RX Mini:	n/a
+RX Jumbo:	n/a
+TX:		1024
+rx-checksumming: on
+tx-checksumming: on
+tcp-segmentation-offload: off
+generic-receive-offload: on
+large-receive-offload: off [fixed]
+Time stamping parameters for enp39s0:
+Capabilities:
+	software-transmit
+	software-receive
+	software-system-clock
+PTP Hardware Clock: none
+Hardware Transmit Timestamp Modes: none
+Hardware Receive Filter Modes: none
++ ethtool -g enp39s0
++ ethtool -k enp39s0
++ grep -E '^(rx-checksumming|tx-checksumming|tcp-segmentation-offload|generic-receive-offload|large-receive-offload)'
++ ethtool -T enp39s0

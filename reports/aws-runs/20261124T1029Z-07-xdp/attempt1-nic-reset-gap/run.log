@@ -1,0 +1,97 @@
+
+===== toolchain =====
+Ubuntu clang version 14.0.0-1ubuntu1.1
+bpftool v7.4.0
+ip utility, iproute2-5.15.0, libbpf 0.5.0
+
+===== build BPF object =====
+
+flle_xdp_mold_itch.o:	file format elf64-bpf
+
+Sections:
+Idx Name                   Size     VMA              Type
+  0                        00000000 0000000000000000 
+  1 .strtab                000001d5 0000000000000000 
+  2 .text                  00000000 0000000000000000 TEXT
+  3 xdp                    00000990 0000000000000000 TEXT
+  4 .relxdp                00000100 0000000000000000 
+  5 .maps                  00000060 0000000000000000 DATA
+  6 license                00000004 0000000000000000 DATA
+  7 .debug_loclists        000001d8 0000000000000000 DEBUG
+  8 .debug_abbrev          000001f1 0000000000000000 DEBUG
+  9 .debug_info            000006f3 0000000000000000 DEBUG
+ 10 .rel.debug_info        00000050 0000000000000000 
+ 11 .debug_str_offsets     00000228 0000000000000000 DEBUG
+ 12 .rel.debug_str_offsets 00000880 0000000000000000 
+ 13 .debug_str             00000578 0000000000000000 DEBUG
+ 14 .debug_addr            000000b0 0000000000000000 DEBUG
+ 15 .rel.debug_addr        00000150 0000000000000000 
+ 16 .BTF                   00000c5d 0000000000000000 
+ 17 .rel.BTF               00000040 0000000000000000 
+ 18 .BTF.ext               000008f0 0000000000000000 
+ 19 .rel.BTF.ext           000008c0 0000000000000000 
+ 20 .debug_frame           00000028 0000000000000000 DEBUG
+ 21 .rel.debug_frame       00000020 0000000000000000 
+ 22 .debug_line            000003cc 0000000000000000 DEBUG
+ 23 .rel.debug_line        000000e0 0000000000000000 
+ 24 .debug_line_str        000000af 0000000000000000 DEBUG
+ 25 .llvm_addrsig          00000005 0000000000000000 
+ 26 .symtab                00000378 0000000000000000 
+a1e09806da26195737dcc635da5b68eb74383e031c28e6ddfdaa65e4b5211404  flle_xdp_mold_itch.c
+bd091f140347df2ff03ccf31c0e297dfd51c1ecda4aa55b629e64346ed5af90c  flle_xdp_mold_itch.o
+original mtu=9001 combined_channels=4
+
+===== prepare ENA for native XDP (MTU <= 3498, half of the queues) =====
+Current hardware settings:
+RX:		n/a
+TX:		n/a
+Other:		n/a
+Combined:	2
+
+===== attach native XDP (xdpdrv) =====
+{"interface": "enp39s0", "ifindex": 2, "program_id": 66}
+xdp qdisc mq state UP mode DEFAULT group default qlen 1000
+prog/xdp id 66 tag 5ea12fda2767642b jited 
+66: xdp  name flle_xdp_mold_itch  tag 5ea12fda2767642b  gpl
+	loaded_at 2026-11-24T10:29:54+0000  uid 0
+	xlated 2544B  jited 1572B  memlock 4096B  map_ids 5,3,4
+	btf_id 45
+
+===== policy allow, observe 5 s =====
+policy_id=3 mode=allow remaining=0 ttl_seconds=0
+COURSE_UDP      total=    7766  delta=  7481
+MOLD_HEARTBEAT  total=       0  delta=     0
+AAPL_STOCK      total=     960  delta=   924
+NVDA_STOCK      total=    1550  delta=  1479
+OTHER_ITCH      total=    5256  delta=  5075
+SHORT_INPUT     total=       0  delta=     0
+POLICY_DROP     total=       0  delta=     0
+feed integrity=GAP next_expected=1930496 gaps=1 gate=INHIBITED_FEED_GAP
+
+===== policy block ONE NVDA Add Order =====
+policy_id=3 mode=block remaining=1 ttl_seconds=5.0
+{"session":"0612260001","market_mode":"UNICAST","trader_auto":"ONLINE","feed":{"session":"0612260001","next_expected":1930496,"last_delivered":1930495,"first_pending":1930497,"highest_received":1942216,"pending":6886,"duplicates":0,"gaps":1,"gap_messages":11516,"resync_required":true,"resync_reason":"GAP_LIMIT","pending_bytes":209096,"pending_limit":32768,"discarded_after_gap":4630,"gap_size":1,"gap_age_ms":8084,"path":"UNICAST","integrity":"GAP","trading_gate":"INHIBITED_FEED_GAP","availability":"ACTIVE"}}
+COURSE_UDP      total=    7837  delta=    71
+MOLD_HEARTBEAT  total=       0  delta=     0
+AAPL_STOCK      total=     976  delta=    16
+NVDA_STOCK      total=    1558  delta=     8
+OTHER_ITCH      total=    5303  delta=    47
+SHORT_INPUT     total=       0  delta=     0
+POLICY_DROP     total=       1  delta=     1
+
+===== match XDP audit against feed gap =====
+xdp drop_audit: {'first_drop_sequence': 1942276, 'first_drop_locate': 8095, 'drops': 1}
+feed gap: integrity=GAP next_expected=1930496 gap_size=1 pending=6886 trading_gate=INHIBITED_FEED_GAP
+verdict=MISMATCH
+
+===== detach (restore runs on exit) =====
+
+===== restore NIC =====
+owned_xdp=detached
+2: enp39s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9001 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 0a:ff:f4:5f:2b:61 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 128 maxmtu 9216 addrgenmode eui64 numtxqueues 4 numrxqueues 4 gso_max_size 65536 gso_max_segs 65535 parentbus pci parentdev 0000:27:00.0 
+Current hardware settings:
+RX:		n/a
+TX:		n/a
+Other:		n/a
+Combined:	4

@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-16",
+  "status": "DOC PASS / NO LIVE RUN",
+  "scope": "第五章准备D命令前解释AUTO停止、客户端行情接收关闭及统一测试条件",
+  "chapter": "Documents/newDoc/05-openonload-tcpdirect-dpdk-kernel-bypass.md",
+  "chapter_sha256": "4638359ccd7f988458d5e63b36c9f6db981a36a2c61c2f9375ff58d2e31e2897",
+  "source_basis": [
+    {
+      "file": "apps/flle-trading-lab/scripts/platform-baseline.sh",
+      "function": "platform_stop_software_clients",
+      "fact": "停止普通AUTO/MANUAL"
+    },
+    {
+      "file": "apps/flle-trading-lab/scripts/transport_labctl.sh",
+      "function": "start_sfc_clients / sfc / start_exchange",
+      "fact": "MANUAL、market-receiver 0、固定DEQUE_CV与CPU，停止普通接收器；Exchange仍以UNICAST和replay-speed 1发行情"
+    },
+    {
+      "file": "Documents/newDoc/04-low-latency-software-design.md",
+      "fact": "第04章保留AUTO陪跑，与第05章不同"
+    }
+  ],
+  "checks": {
+    "markdown_three_bold_points": "PASS",
+    "html_div_span_balance": "PASS",
+    "all_code_and_output_fences_unchanged": true,
+    "all_image_embeds_unchanged": true,
+    "git_diff_check": "PASS"
+  },
+  "limits": "未修改程序或脚本，未切换客户端，未停止Exchange行情发送，未修复既有第五章与A/B新版平台切换兼容性。前一轮Trader修复保持。",
+  "pending_files": [
+    "Documents/newDoc/05-openonload-tcpdirect-dpdk-kernel-bypass.md",
+    "Documents/newDoc/assets/05-kernel-bypass/README.md",
+    "Documents/00.DECISIONS.md",
+    "Documents/00.FREEZE-LEDGER.md",
+    "Documents/design/evidence/chapter05-test-client-purpose-20260916.json"
+  ],
+  "suggested_commit": "docs(ch05): explain controlled orders and disabled client feed processing"
+}

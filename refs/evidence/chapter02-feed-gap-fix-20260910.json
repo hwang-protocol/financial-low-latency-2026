@@ -1,0 +1,82 @@
+{
+  "date": "2026-09-10",
+  "evidence_level": "LIVE FUNCTIONAL PASS AND LOCAL REGRESSION",
+  "maintenance_run": "20260910T043407Z-02-feed-buffer-fix",
+  "maintenance_manifest_sha256": "02555418225278f1a5b26165e0b10b0f0c5418fde3e8cf0ce08ea63f91fbd2e6",
+  "maintenance_manifest_entries_verified": 27,
+  "platform_run": "20260910T043800Z-02-trading-platform",
+  "fault": {
+    "failed_run": "20260910T041850Z-02-igmp-feed",
+    "exit_code": 1,
+    "before_switch": "GAP / INHIBITED_FEED_GAP",
+    "five_packets_received": true,
+    "restored_mode": "UNICAST",
+    "recovery_run": "20260910T042523Z-02-igmp-recovery",
+    "reset_only_recurred": true,
+    "failed_next_expected": [367458, 367445],
+    "recurrence_unicast_socket_drops": 46,
+    "recurrence_multicast_socket_drops": 0,
+    "recurrence_udp_rcvbuf_errors": 46,
+    "cause_scope": "UDP receive buffer overflow observed; historical load/scheduling difference not established; missing sequences are not a one-to-one datagram drop count"
+  },
+  "fix": {
+    "source": "apps/flle-trading-lab/src/feed_receiver.cpp",
+    "source_sha256": "5978e2e1db8397325882151d011444de85fd3774f8310d18909874655972541b",
+    "per_socket_request_bytes": 4194304,
+    "both_live_socket_rcvbuf_bytes": 8388608,
+    "global_rmem_default_and_max_unchanged": 212992,
+    "initialization": "SO_RCVBUF; SO_RCVBUFFORCE only when capped; getsockopt verification; failure is explicit",
+    "unchanged": ["protocol", "source replay data", "strategy", "frozen acceleration runtime", "global sysctl"]
+  },
+  "full_chapter": {
+    "exit_code": 0,
+    "all_stages_exit_zero": ["stop_old", "prep_a", "prep_b", "prep_c", "restore", "healthy_start", "receiver_buffer", "join", "members", "multicast", "sustained", "multicast_after_burst", "first_trade", "readonly_review", "healthy_end", "udp_end"],
+    "preparation_b_rebooted_hosts": ["10.1.1.1", "10.1.1.2"],
+    "sustained_seconds": 519.97,
+    "sustained_last_next_expected": 1002609,
+    "sustained_integrity_and_gate": "HEALTHY / OPEN throughout sampled window",
+    "final_next_expected": 1036667,
+    "final_mode": "UNICAST",
+    "final_unicast_socket_drops": 0,
+    "final_multicast_socket_drops": 0,
+    "final_udp_rcvbuf_errors": 0,
+    "final_udp_in_errors": 0,
+    "multicast_after_sustained_run": "20260910T044818Z-02-igmp-feed",
+    "readonly_review_run": "20260910T044832Z-02-readonly-review",
+    "first_trade": {"order_id": 2100000000, "side": "BUY", "symbol": "AAPL", "filled": 1, "limit_price_x10000": 2988700, "fill_price_x10000": 2938700, "position_delta": 1, "order_rtt_ns": 58117, "history": "CLIENT_AND_EXCHANGE"}
+  },
+  "latest_native_command_display": {
+    "run": "20260910T045439Z-02-igmp-join",
+    "exit_code": 0,
+    "existing_receiver_reused": true,
+    "script_sha256": "2d8282e06a53daaa911c047d98a7d9d6dff7a28e853271decf546bbf73be1505",
+    "scope": "Full actual binary and Unix Socket paths, explicit IP/group/ports/enable/buffer arguments; equivalent expanded defaults, not a claim that controller argv explicitly contains every default"
+  },
+  "checks": {
+    "builder_tests_run": 193,
+    "builder_tests_passed": 184,
+    "builder_tests_skipped_missing_documents": 9,
+    "skipped_tests_rechecked_on_management_passed": 9,
+    "receiver_tests_passed": 5,
+    "igmp_tests_passed": 9,
+    "classroom_output_tests_passed": 5,
+    "preparation_contracts_passed": 3,
+    "iommu_contract": "PASS",
+    "navigation_cards": 79,
+    "bash_fences": 10,
+    "markdown_tables": 17,
+    "inline_assets_exact_match": 6,
+    "inline_asset_lines": [16, 23, 16, 49, 28, 32],
+    "real_output_excerpts": "Deployment, five packets, first trade and readonly review verified line-by-line in source order",
+    "child_manifests": "Latest join, multicast, readonly review and first trade verified",
+    "browser": "Read-only CDP navigation, no buttons clicked; 1440x1000 and 390x844 screenshots inspected; no runtime exceptions; matching manual order receipt present"
+  },
+  "limits": [
+    "No full 6.5-hour replay or indefinite stability claim",
+    "Integrated maintenance included host reboot; not an isolated-variable performance A/B",
+    "No new third-chapter or whole-course validation claim",
+    "Original preparation-A exit-127 failing command remains unidentified; current preparation A passed",
+    "Operational raw runs remain under ignored Documents/reports; this tracked summary does not substitute for all raw artifacts",
+    "Historical evidence records and manifests were not rewritten to pretend they used the new scripts"
+  ]
+}

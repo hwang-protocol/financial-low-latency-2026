@@ -1,0 +1,994 @@
+{
+  "date": "2026-09-10",
+  "status": "LOCAL_PASS_NOT_LIVE",
+  "scope": "One complete message per horizontal strip; six adjacent strips in one shared image.",
+  "supersedes_layout_only": "chapter03-field-reading-20260910.json",
+  "device_actions": [],
+  "new_run_id": null,
+  "source_hashes": {
+    "Documents/newDoc/03-live-trading-traffic-and-protocols.md": "0c4f14bb5e93213473171a57ae8fa1e4eb9043a4a45c09637ec9a64e53412d0e",
+    "Documents/newDoc/08-ebpf-xdp-programmable-network.md": "4613870308b29c8f1e0e0295ca0df581e5cb2978041a065300745f17c5b1d849",
+    "Documents/newDoc/09-p4-programmable-data-plane.md": "74b7ed10ad0c62abda8a5a00dc1bb0a5eac99b1fb27b35c018b5aea35e091aa4",
+    "Documents/newDoc/10-verilator-fpga-smartnic-simulation.md": "4a3a389ebb638f2700bf5a11b1862971b4715466e06ddc7c991a277b507081bd",
+    "Documents/newDoc/assets/03-live-traffic/test-document-format.py": "c8f66c9d49cf548b165266b618116278ac8d89991edca63748249a111f436609",
+    "Documents/newDoc/assets/03-live-traffic/README.md": "e4d6579ece7087114393ce4c6325d16ed6ae74657d3d0e4dcbe21e5af2e22ab2",
+    "Documents/newDoc/images/course-visuals/03-diagrams/03-itch-type-strips.svg": "5f528934a7848a4c2f149621431a9b5ff59e03d136d13f086dd008543e225af8",
+    "Documents/newDoc/images/course-visuals/03-diagrams/03-mold-envelope-strip.svg": "6cfa5666baab669b3e4db61a06336c63c68d414d3174e67edd4f6ee3c070133d",
+    "Documents/newDoc/images/course-visuals/03-diagrams/README.md": "f99b2fadfb0c840f7ce0b0260bb402ab1948d91a9f0583a86ca2c2ca2cfe2dec",
+    "Documents/newDoc/images/course-visuals/03-diagrams/SHA256SUMS": "cb9f7ff7b8b91d9a3c56f164df7ca42784c2ce46374b7617e363772d91b31167",
+    "Documents/newDoc/images/course-visuals/README.md": "f6775991755cf00c1923b980ec916d86a4429bd3ef0474cdb7f0f628670c27dc",
+    "Documents/newDoc/images/course-visuals/SHA256SUMS": "c6deb59682acaf6bd88251c58d8a16dee99136bc2bc464160fa4a5696f165ace",
+    "Documents/newDoc/images/course-visuals/08-diagrams/README.md": "53696ae7edfc3384d2d8ca54ed63caf200906c985738ecfc22922d5b02fd67a1",
+    "Documents/newDoc/images/course-visuals/09-diagrams/README.md": "684884a799cb5fba378207eb1f08cf37af8043bdd0ad05bcc111af18fc048424",
+    "Documents/newDoc/images/course-visuals/10-diagrams/README.md": "34f115c21c4211eb0794cd7dd2e93e6c8be6f8189f18d0410dabcb49c7ffa973",
+    "Documents/newDoc/TEACHER-FLOW-NOTES.md": "1c991912cd707373dc56de9880814e003886a051aa99e945b55b2a5f23c47ae4",
+    "Documents/00.DECISIONS.md": "c48f9f2529a208ef2ee6d5164b5ecef0b509654da6d2928ca5a17ef05e549e68",
+    "Documents/00.PINS.md": "b66865df67ee8ec039b82e19f277a9cb03ae151e95e8de2ca5fc64c5e54ef8ab",
+    "Documents/00.FREEZE-LEDGER.md": "a444a98221e72b5e08048fd27772469d3ec3fdaedc3531884c0bc7dde3c7a630",
+    "Documents/00.NEXT-AI-HANDOFF.md": "b5f9d4e2de04fce08495b8122aa0df90724ef075dd9eeb55225633cb4e9bd1fc",
+    "Documents/archive/98.INTERNAL-PITFALL-LOG.md": "b0fcaf2c5450271938013e0900a7453e000a91898776c210fdaab556761e3530",
+    "Documents/design/FLLE_Chapter03_Type_Strips_2026-09-10.md": "967f9e29f193164fc7d3fbe006d7863baa9d5a256cb6d607401611e0deb7e6c2",
+    "Documents/newDoc/assets/03-live-traffic/01-capture-live-market.sh": "6fdedcbcda65695539b5111c8c09472a3f38af8ac848e04878ab637e68f50f87",
+    "Documents/newDoc/assets/03-live-traffic/02-compare-market-transports.sh": "b92918d95e0a9ea525001b0174d8e59513239095bf303048662ae6f6f2ea9e0b",
+    "Documents/newDoc/assets/03-live-traffic/03-capture-live-order.sh": "1edbc2975c718e16ec1d232874364501c05f1fa4cd17edb483c3c55a5ab77c41",
+    "Documents/newDoc/assets/03-live-traffic/classroom-output.py": "460a7986967c87a8c1426bdf9ed3299d5ef8fe5fc12b5da79e432146cad0ed85",
+    "Documents/newDoc/assets/03-live-traffic/pcap_tools.py": "a6d8b37a730964f9412ae63de1cb5269602e91b1e61855389c7634a2a5aa7e66",
+    "Documents/newDoc/assets/03-live-traffic/inspect_market_pcap.py": "4b03244d0c38c867acc85a7619f80cdabcfb3376a73dde6a590d4fcf51b6aa3f",
+    "Documents/newDoc/assets/03-live-traffic/inspect_transport_pcaps.py": "b279f5de864c838d16bb0e29642f97dd2ae32c3b193970dd2409a295cbe11ef0",
+    "Documents/newDoc/assets/03-live-traffic/inspect_order_pcap.py": "9f1d9795f1000fe6efc0c6fb2baacbe0647c06919e3da892dd9e326d0534abab"
+  },
+  "layout": {
+    "comparison_canvas": [
+      1200,
+      1350
+    ],
+    "mold_canvas": [
+      1200,
+      460
+    ],
+    "field_height": 148,
+    "row_pitch": 190,
+    "widths_proportional_to_bytes": false,
+    "rows": [
+      {
+        "type": "A",
+        "bytes": 36,
+        "fields": [
+          {
+            "name": "Message Type",
+            "offset": 0,
+            "width": 1,
+            "rect": {
+              "x": 40,
+              "y": 144,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock Locate",
+            "offset": 1,
+            "width": 2,
+            "rect": {
+              "x": 110,
+              "y": 144,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Tracking Number",
+            "offset": 3,
+            "width": 2,
+            "rect": {
+              "x": 220,
+              "y": 144,
+              "width": 100,
+              "height": 148
+            }
+          },
+          {
+            "name": "Timestamp",
+            "offset": 5,
+            "width": 6,
+            "rect": {
+              "x": 320,
+              "y": 144,
+              "width": 120,
+              "height": 148
+            }
+          },
+          {
+            "name": "Order Reference Number",
+            "offset": 11,
+            "width": 8,
+            "rect": {
+              "x": 440,
+              "y": 144,
+              "width": 140,
+              "height": 148
+            }
+          },
+          {
+            "name": "Buy/Sell Indicator",
+            "offset": 19,
+            "width": 1,
+            "rect": {
+              "x": 580,
+              "y": 144,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Shares",
+            "offset": 20,
+            "width": 4,
+            "rect": {
+              "x": 650,
+              "y": 144,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock",
+            "offset": 24,
+            "width": 8,
+            "rect": {
+              "x": 760,
+              "y": 144,
+              "width": 150,
+              "height": 148
+            }
+          },
+          {
+            "name": "Price",
+            "offset": 32,
+            "width": 4,
+            "rect": {
+              "x": 910,
+              "y": 144,
+              "width": 110,
+              "height": 148
+            }
+          }
+        ]
+      },
+      {
+        "type": "F",
+        "bytes": 40,
+        "fields": [
+          {
+            "name": "Message Type",
+            "offset": 0,
+            "width": 1,
+            "rect": {
+              "x": 40,
+              "y": 334,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock Locate",
+            "offset": 1,
+            "width": 2,
+            "rect": {
+              "x": 110,
+              "y": 334,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Tracking Number",
+            "offset": 3,
+            "width": 2,
+            "rect": {
+              "x": 220,
+              "y": 334,
+              "width": 100,
+              "height": 148
+            }
+          },
+          {
+            "name": "Timestamp",
+            "offset": 5,
+            "width": 6,
+            "rect": {
+              "x": 320,
+              "y": 334,
+              "width": 120,
+              "height": 148
+            }
+          },
+          {
+            "name": "Order Reference Number",
+            "offset": 11,
+            "width": 8,
+            "rect": {
+              "x": 440,
+              "y": 334,
+              "width": 140,
+              "height": 148
+            }
+          },
+          {
+            "name": "Buy/Sell Indicator",
+            "offset": 19,
+            "width": 1,
+            "rect": {
+              "x": 580,
+              "y": 334,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Shares",
+            "offset": 20,
+            "width": 4,
+            "rect": {
+              "x": 650,
+              "y": 334,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock",
+            "offset": 24,
+            "width": 8,
+            "rect": {
+              "x": 760,
+              "y": 334,
+              "width": 150,
+              "height": 148
+            }
+          },
+          {
+            "name": "Price",
+            "offset": 32,
+            "width": 4,
+            "rect": {
+              "x": 910,
+              "y": 334,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Attribution",
+            "offset": 36,
+            "width": 4,
+            "rect": {
+              "x": 1020,
+              "y": 334,
+              "width": 140,
+              "height": 148
+            }
+          }
+        ]
+      },
+      {
+        "type": "E",
+        "bytes": 31,
+        "fields": [
+          {
+            "name": "Message Type",
+            "offset": 0,
+            "width": 1,
+            "rect": {
+              "x": 40,
+              "y": 524,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock Locate",
+            "offset": 1,
+            "width": 2,
+            "rect": {
+              "x": 110,
+              "y": 524,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Tracking Number",
+            "offset": 3,
+            "width": 2,
+            "rect": {
+              "x": 220,
+              "y": 524,
+              "width": 100,
+              "height": 148
+            }
+          },
+          {
+            "name": "Timestamp",
+            "offset": 5,
+            "width": 6,
+            "rect": {
+              "x": 320,
+              "y": 524,
+              "width": 120,
+              "height": 148
+            }
+          },
+          {
+            "name": "Order Reference Number",
+            "offset": 11,
+            "width": 8,
+            "rect": {
+              "x": 440,
+              "y": 524,
+              "width": 140,
+              "height": 148
+            }
+          },
+          {
+            "name": "Executed Shares",
+            "offset": 19,
+            "width": 4,
+            "rect": {
+              "x": 580,
+              "y": 524,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Match Number",
+            "offset": 23,
+            "width": 8,
+            "rect": {
+              "x": 690,
+              "y": 524,
+              "width": 140,
+              "height": 148
+            }
+          }
+        ]
+      },
+      {
+        "type": "D",
+        "bytes": 19,
+        "fields": [
+          {
+            "name": "Message Type",
+            "offset": 0,
+            "width": 1,
+            "rect": {
+              "x": 40,
+              "y": 714,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock Locate",
+            "offset": 1,
+            "width": 2,
+            "rect": {
+              "x": 110,
+              "y": 714,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Tracking Number",
+            "offset": 3,
+            "width": 2,
+            "rect": {
+              "x": 220,
+              "y": 714,
+              "width": 100,
+              "height": 148
+            }
+          },
+          {
+            "name": "Timestamp",
+            "offset": 5,
+            "width": 6,
+            "rect": {
+              "x": 320,
+              "y": 714,
+              "width": 120,
+              "height": 148
+            }
+          },
+          {
+            "name": "Order Reference Number",
+            "offset": 11,
+            "width": 8,
+            "rect": {
+              "x": 440,
+              "y": 714,
+              "width": 140,
+              "height": 148
+            }
+          }
+        ]
+      },
+      {
+        "type": "U",
+        "bytes": 35,
+        "fields": [
+          {
+            "name": "Message Type",
+            "offset": 0,
+            "width": 1,
+            "rect": {
+              "x": 40,
+              "y": 904,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock Locate",
+            "offset": 1,
+            "width": 2,
+            "rect": {
+              "x": 110,
+              "y": 904,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Tracking Number",
+            "offset": 3,
+            "width": 2,
+            "rect": {
+              "x": 220,
+              "y": 904,
+              "width": 100,
+              "height": 148
+            }
+          },
+          {
+            "name": "Timestamp",
+            "offset": 5,
+            "width": 6,
+            "rect": {
+              "x": 320,
+              "y": 904,
+              "width": 120,
+              "height": 148
+            }
+          },
+          {
+            "name": "Original Order Reference Number",
+            "offset": 11,
+            "width": 8,
+            "rect": {
+              "x": 440,
+              "y": 904,
+              "width": 140,
+              "height": 148
+            }
+          },
+          {
+            "name": "New Order Reference Number",
+            "offset": 19,
+            "width": 8,
+            "rect": {
+              "x": 580,
+              "y": 904,
+              "width": 140,
+              "height": 148
+            }
+          },
+          {
+            "name": "Shares",
+            "offset": 27,
+            "width": 4,
+            "rect": {
+              "x": 720,
+              "y": 904,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Price",
+            "offset": 31,
+            "width": 4,
+            "rect": {
+              "x": 830,
+              "y": 904,
+              "width": 110,
+              "height": 148
+            }
+          }
+        ]
+      },
+      {
+        "type": "P",
+        "bytes": 44,
+        "fields": [
+          {
+            "name": "Message Type",
+            "offset": 0,
+            "width": 1,
+            "rect": {
+              "x": 40,
+              "y": 1094,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock Locate",
+            "offset": 1,
+            "width": 2,
+            "rect": {
+              "x": 110,
+              "y": 1094,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Tracking Number",
+            "offset": 3,
+            "width": 2,
+            "rect": {
+              "x": 220,
+              "y": 1094,
+              "width": 100,
+              "height": 148
+            }
+          },
+          {
+            "name": "Timestamp",
+            "offset": 5,
+            "width": 6,
+            "rect": {
+              "x": 320,
+              "y": 1094,
+              "width": 120,
+              "height": 148
+            }
+          },
+          {
+            "name": "Order Reference Number",
+            "offset": 11,
+            "width": 8,
+            "rect": {
+              "x": 440,
+              "y": 1094,
+              "width": 140,
+              "height": 148
+            }
+          },
+          {
+            "name": "Buy/Sell Indicator",
+            "offset": 19,
+            "width": 1,
+            "rect": {
+              "x": 580,
+              "y": 1094,
+              "width": 70,
+              "height": 148
+            }
+          },
+          {
+            "name": "Shares",
+            "offset": 20,
+            "width": 4,
+            "rect": {
+              "x": 650,
+              "y": 1094,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Stock",
+            "offset": 24,
+            "width": 8,
+            "rect": {
+              "x": 760,
+              "y": 1094,
+              "width": 150,
+              "height": 148
+            }
+          },
+          {
+            "name": "Price",
+            "offset": 32,
+            "width": 4,
+            "rect": {
+              "x": 910,
+              "y": 1094,
+              "width": 110,
+              "height": 148
+            }
+          },
+          {
+            "name": "Match Number",
+            "offset": 36,
+            "width": 8,
+            "rect": {
+              "x": 1020,
+              "y": 1094,
+              "width": 140,
+              "height": 148
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "tests": {
+    "command": "env PYTHONPATH=/tmp/flle-review-python python3 Documents/newDoc/assets/03-live-traffic/test-document-format.py",
+    "passed": 9,
+    "failed": 0
+  },
+  "browser": {
+    "diagrams": [
+      {
+        "name": "03-itch-type-strips.svg",
+        "width": 1200,
+        "height": 1350,
+        "issues": [],
+        "arrows": 0,
+        "text_count": 199
+      },
+      {
+        "name": "03-itch-type-strips.svg",
+        "width": 800,
+        "height": 900,
+        "issues": [],
+        "arrows": 0,
+        "text_count": 199
+      },
+      {
+        "name": "03-mold-envelope-strip.svg",
+        "width": 1200,
+        "height": 460,
+        "issues": [],
+        "arrows": 0,
+        "text_count": 28
+      },
+      {
+        "name": "03-mold-envelope-strip.svg",
+        "width": 800,
+        "height": 307,
+        "issues": [],
+        "arrows": 0,
+        "text_count": 28
+      }
+    ],
+    "embedded": [
+      {
+        "chapter": "03-",
+        "width": 940,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 800
+        }
+      },
+      {
+        "chapter": "03-",
+        "width": 390,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 328
+        }
+      },
+      {
+        "chapter": "08-",
+        "width": 940,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 800
+        }
+      },
+      {
+        "chapter": "08-",
+        "width": 390,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 328
+        }
+      },
+      {
+        "chapter": "09-",
+        "width": 940,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 800
+        }
+      },
+      {
+        "chapter": "09-",
+        "width": 390,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 328
+        }
+      },
+      {
+        "chapter": "10-",
+        "width": 940,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 800
+        }
+      },
+      {
+        "chapter": "10-",
+        "width": 390,
+        "image": {
+          "complete": true,
+          "naturalWidth": 1200,
+          "width": 328
+        }
+      }
+    ],
+    "visually_inspected_widths": [
+      1200,
+      800
+    ],
+    "screenshot_storage": "Ephemeral local review files, not durable evidence attachments."
+  },
+  "markdown_browser": [
+    {
+      "width": 940,
+      "strong_count": 45,
+      "all_strong_weight_700": true,
+      "images": [
+        {
+          "src": "images/course-visuals/03-diagrams/03-protocol-and-envelope.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-message-and-receipt.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-mold-envelope-strip.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-itch-type-strips.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-market-transport-modes.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-ouch-request-receipts.svg",
+          "width": 1200,
+          "complete": true
+        }
+      ],
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "strong_count": 45,
+      "all_strong_weight_700": true,
+      "images": [
+        {
+          "src": "images/course-visuals/03-diagrams/03-protocol-and-envelope.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-message-and-receipt.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-mold-envelope-strip.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-itch-type-strips.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-market-transport-modes.svg",
+          "width": 1200,
+          "complete": true
+        },
+        {
+          "src": "images/course-visuals/03-diagrams/03-ouch-request-receipts.svg",
+          "width": 1200,
+          "complete": true
+        }
+      ],
+      "horizontal_overflow": false
+    }
+  ],
+  "document_audit": {
+    "documents": {
+      "00-cpu-cache-memory-os-basics.md": {
+        "bash_lines": [
+          30
+        ],
+        "tables": 15
+      },
+      "01-financial-low-latency-architecture.md": {
+        "bash_lines": [
+          43,
+          14,
+          49,
+          25,
+          28,
+          26,
+          43,
+          44
+        ],
+        "tables": 19
+      },
+      "02-host-native-trading-system-baseline.md": {
+        "bash_lines": [
+          1,
+          1,
+          16,
+          1,
+          23,
+          16,
+          49,
+          32,
+          28,
+          3
+        ],
+        "tables": 17
+      },
+      "03-live-trading-traffic-and-protocols.md": {
+        "bash_lines": [
+          42,
+          50,
+          36
+        ],
+        "tables": 10
+      }
+    },
+    "samples": {
+      "行情输出": {
+        "run": "20260910T085538Z-03-live-market",
+        "lines": 47,
+        "raw_ordered_exact": true,
+        "annotations": "Current display helper; the three mode expectations are updated explicitly"
+      },
+      "三模式输出": {
+        "run": "20260910T085544Z-03-market-paths",
+        "lines": 47,
+        "raw_ordered_exact": true,
+        "annotations": "Current display helper; the three mode expectations are updated explicitly"
+      },
+      "订单输出": {
+        "run": "20260910T085551Z-03-live-order",
+        "lines": 62,
+        "raw_ordered_exact": true,
+        "annotations": "Current display helper; the three mode expectations are updated explicitly"
+      },
+      "chapter02-02-01": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-02": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-03": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-04": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-05": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-06": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-07": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-08": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-02-09": {
+        "ordered_exact_ignoring_edge_whitespace": true
+      },
+      "chapter02-native-command-and-price": "PASS"
+    },
+    "navigation": {
+      "00-cpu-cache-memory-os-basics.md": 7,
+      "01-financial-low-latency-architecture.md": 8,
+      "02-host-native-trading-system-baseline.md": 9,
+      "03-live-trading-traffic-and-protocols.md": 3,
+      "04-tail-latency-and-observability.md": 4,
+      "05-low-latency-software-design.md": 5,
+      "06-openonload-tcpdirect-dpdk-kernel-bypass.md": 10,
+      "07-arista-cut-through-ptp-time.md": 10,
+      "08-ebpf-xdp-programmable-network.md": 7,
+      "09-p4-programmable-data-plane.md": 7,
+      "10-verilator-fpga-smartnic-simulation.md": 9
+    },
+    "checksums": {
+      "20260910T085538Z-03-live-market/SHA256SUMS": {
+        "immutable_files_verified": 8,
+        "source_changed_since_live": [
+          "Documents/newDoc/assets/03-live-traffic/01-capture-live-market.sh",
+          "Documents/newDoc/assets/03-live-traffic/market-mode.sh",
+          "Documents/newDoc/assets/03-live-traffic/classroom-output.py"
+        ]
+      },
+      "20260910T085538Z-03-live-market/CLASSROOM_SHA256SUMS": {
+        "immutable_files_verified": 2,
+        "source_changed_since_live": []
+      },
+      "20260910T085544Z-03-market-paths/SHA256SUMS": {
+        "immutable_files_verified": 17,
+        "source_changed_since_live": [
+          "Documents/newDoc/assets/03-live-traffic/02-compare-market-transports.sh",
+          "Documents/newDoc/assets/03-live-traffic/market-mode.sh",
+          "Documents/newDoc/assets/03-live-traffic/classroom-output.py"
+        ]
+      },
+      "20260910T085544Z-03-market-paths/CLASSROOM_SHA256SUMS": {
+        "immutable_files_verified": 2,
+        "source_changed_since_live": []
+      },
+      "20260910T085551Z-03-live-order/SHA256SUMS": {
+        "immutable_files_verified": 7,
+        "source_changed_since_live": [
+          "Documents/newDoc/assets/03-live-traffic/classroom-output.py"
+        ]
+      },
+      "20260910T085551Z-03-live-order/CLASSROOM_SHA256SUMS": {
+        "immutable_files_verified": 2,
+        "source_changed_since_live": []
+      },
+      "Documents/newDoc/images/course-visuals/03-diagrams": 55,
+      "Documents/newDoc/images/course-visuals": 229
+    },
+    "source_boundary": "Only Chapter 03 cards 1/2 changed since live replay; this is local validation, not live replay.",
+    "current_pcap_shared_fields_rtl": "PASS",
+    "asset_table_lines": {
+      "01-capture-live-market.sh": 42,
+      "02-compare-market-transports.sh": 50,
+      "03-capture-live-order.sh": 36,
+      "classroom-output.py": 124,
+      "pcap_tools.py": 139,
+      "inspect_market_pcap.py": 124,
+      "inspect_transport_pcaps.py": 67,
+      "inspect_order_pcap.py": 165
+    },
+    "retired_helper_bytes_preserved": true
+  },
+  "not_executed_this_round": [
+    "live chapter replay",
+    "27 classroom scenarios",
+    "application tests",
+    "device changes"
+  ],
+  "historical_svg_policy": "Previous seven field diagrams retained byte-for-byte, retired from active prose.",
+  "remaining": "Current capture entries still require live replay before upgrading their validation status."
+}

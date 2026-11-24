@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">真实交易热路径与旁路观测路径</title>
+  <desc id="desc">Exchange和Trader之间的行情与订单是C++热路径，Python Gateway、Prometheus与Grafana位于管理观测面，只读取旁路状态。Prometheus主动向Gateway抓取。</desc>
+  <defs>
+    <marker id="cyan" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#0891b2"/></marker>
+    <marker id="purple" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#7e22ce"/></marker>
+    <marker id="green" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#059669"/></marker>
+    <marker id="slate" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#64748b"/></marker>
+  </defs>
+  <rect x="18" y="18" width="1164" height="614" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="62" y="70" font-family="Arial,'Noto Sans SC',sans-serif" font-size="21" font-weight="700" fill="#475569">MEASURED PATH ≠ OBSERVATION PATH</text>
+  <text x="62" y="112" font-family="Arial,'Noto Sans SC',sans-serif" font-size="34" font-weight="800" fill="#0f172a">秒表留在 C++，仪表盘放在旁路</text>
+
+  <rect x="56" y="150" width="720" height="402" rx="24" fill="#fff" stroke="#10b981" stroke-width="3"/>
+  <text x="82" y="188" font-family="Arial,'Noto Sans SC',sans-serif" font-size="21" font-weight="800" fill="#047857">交易数据面 · C++</text>
+  <rect x="86" y="228" width="250" height="250" rx="20" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+  <text x="211" y="270" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="26" font-weight="800" fill="#9a3412">.1 Exchange</text>
+  <text x="112" y="320" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">历史 ITCH 回放</text>
+  <text x="112" y="357" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">纸面 OUCH 撮合</text>
+  <text x="112" y="394" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">Accepted / Executed</text>
+  <rect x="496" y="228" width="250" height="250" rx="20" fill="#ecfdf5" stroke="#059669" stroke-width="3"/>
+  <text x="621" y="270" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="26" font-weight="800" fill="#065f46">.2 Trader</text>
+  <text x="522" y="320" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">Feed + Strategy</text>
+  <text x="522" y="357" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">Risk + OMS</text>
+  <text x="522" y="394" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" fill="#334155">CLOCK_MONOTONIC</text>
+  <line x1="340" y1="298" x2="480" y2="298" stroke="#0891b2" stroke-width="5" marker-end="url(#cyan)"/>
+  <text x="416" y="283" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" font-weight="700" fill="#0e7490">ITCH 行情</text>
+  <line x1="492" y1="365" x2="352" y2="365" stroke="#7e22ce" stroke-width="5" marker-end="url(#purple)"/>
+  <text x="416" y="350" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" font-weight="700" fill="#6b21a8">OUCH O</text>
+  <line x1="340" y1="425" x2="480" y2="425" stroke="#059669" stroke-width="5" marker-end="url(#green)"/>
+  <text x="416" y="410" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" font-weight="700" fill="#047857">OUCH E / J</text>
+
+  <rect x="830" y="150" width="314" height="402" rx="24" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+  <text x="856" y="188" font-family="Arial,'Noto Sans SC',sans-serif" font-size="21" font-weight="800" fill="#1e40af">管理观测面 · .101</text>
+  <rect x="860" y="224" width="254" height="76" rx="14" fill="#fff" stroke="#94a3b8"/>
+  <text x="987" y="255" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="800" fill="#334155">Python Gateway</text>
+  <text x="987" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#64748b">/metrics · 只读旁路状态</text>
+  <rect x="860" y="340" width="254" height="76" rx="14" fill="#fff" stroke="#e11d48"/>
+  <text x="987" y="372" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="800" fill="#9f1239">Prometheus</text>
+  <text x="987" y="399" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="16" fill="#64748b">每 1 秒主动抓取</text>
+  <rect x="860" y="456" width="254" height="66" rx="14" fill="#111827" stroke="#f59e0b" stroke-width="2"/>
+  <text x="987" y="497" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="800" fill="#fbbf24">Grafana</text>
+  <line x1="776" y1="262" x2="844" y2="262" stroke="#64748b" stroke-width="4" stroke-dasharray="9 7" marker-end="url(#slate)"/>
+  <text x="800" y="248" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" font-weight="700" fill="#64748b">只读状态</text>
+  <line x1="987" y1="340" x2="987" y2="316" stroke="#64748b" stroke-width="4" marker-end="url(#slate)"/>
+  <text x="1020" y="326" font-family="Arial,'Noto Sans SC',sans-serif" font-size="15" font-weight="700" fill="#64748b">scrape</text>
+  <line x1="987" y1="416" x2="987" y2="440" stroke="#64748b" stroke-width="4" marker-end="url(#slate)"/>
+
+  <rect x="56" y="580" width="1088" height="34" rx="12" fill="#e2e8f0"/>
+  <text x="600" y="603" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" font-weight="700" fill="#334155">关闭网页或 Grafana 不会阻塞交易；正式性能结论仍以 C++ raw sample 为准</text>
+</svg>

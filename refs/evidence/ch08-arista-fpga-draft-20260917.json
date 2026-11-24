@@ -1,0 +1,705 @@
+{
+  "date": "2026-09-17",
+  "status": "DRAFT; DOC/SOURCE/LOCAL SIMULATION/GENERIC SYNTHESIS VERIFIED; BOARD IMPLEMENTATION NOT RUN",
+  "scope": "Independent chapter08 FPGA-switch draft; ten new SVG/PNG figures; full teaching core source; local Linux toolchain. Existing P4 and chapter07/09 files protected.",
+  "user_constraints": [
+    "No green cards or live course operations",
+    "Explain FPGA first; many diagrams; code and each Linux command explained",
+    "Hypothetical switch; no current GUI GAP, bridging, recovery or simulated deployment success",
+    "Use public sources and obtain available local tools autonomously; user has no vendor development environment"
+  ],
+  "local_environment": {
+    "os": "Ubuntu 22.04.5 LTS",
+    "iverilog_package": "11.0-1.1",
+    "iverilog_binary": "/usr/bin/iverilog",
+    "yosys": "0.69 (git sha1 9f75ca1f9)",
+    "yowasp_venv": "/opt/flle-fpga-tools/venv",
+    "requirements": "Documents/newDoc/assets/08-arista-fpga-draft/local-tools-requirements.txt",
+    "requirements_sha256": "66d4186e09016d3620b63187a58255527d82f4c24c0ffbd4ca6ca3f442629233",
+    "pip_check": "No broken requirements found.",
+    "pypa_get_pip": {
+      "url": "https://bootstrap.pypa.io/get-pip.py",
+      "local_path": "/opt/flle-fpga-tools/get-pip.py",
+      "sha256": "fb24e693bab954209a063d90953621412ccad4a500905a726286e038f508ddf6"
+    },
+    "packages": [
+      {
+        "name": "yowasp-yosys",
+        "version": "0.69.0.0.post1233",
+        "url": "https://files.pythonhosted.org/packages/44/b5/6a973c267caa54badbe99a996c9dcf4f17e06f1297430fb5d0e1f8d815a4/yowasp_yosys-0.69.0.0.post1233-py3-none-any.whl",
+        "hashes": {
+          "sha256": "59284760d6455b764fce5dcf296d2c183b05dc980f59092461deddc9caa09bdd"
+        }
+      },
+      {
+        "name": "yowasp-runtime",
+        "version": "1.96",
+        "url": "https://files.pythonhosted.org/packages/92/e2/4dd5c8392a3f085f5ba81b5a4ac5f59923a0c3b36a35351975d8d7de19c9/yowasp_runtime-1.96-py3-none-any.whl",
+        "hashes": {
+          "sha256": "4ff456a4a6dff9d689c7feac9f68fb1492bed4cf873450d7b41259fa31645783"
+        }
+      },
+      {
+        "name": "platformdirs",
+        "version": "4.11.9",
+        "url": "https://files.pythonhosted.org/packages/f3/94/803ba86705257d7eedddac4b02eb88a7483b1600e9200c1fefc6f1a9a3ff/platformdirs-4.11.9-py3-none-any.whl",
+        "hashes": {
+          "sha256": "0a3958f58a9e30321eaef0a424dd0b77cce242886b36b8aa992f9731ef2d59c1"
+        }
+      },
+      {
+        "name": "wasmtime",
+        "version": "47.0.1",
+        "url": "https://files.pythonhosted.org/packages/5e/ba/f321faaad1d616b94fe70a62ebb7e4054cfe41a6a46aa796ad2bb07fa08c/wasmtime-47.0.1-py3-none-manylinux1_x86_64.whl",
+        "hashes": {
+          "sha256": "9724600b036c6e95c4fe952e29fad83b4f02bdc11d23f25c4ee3ffff2c1d7257"
+        }
+      },
+      {
+        "name": "click",
+        "version": "8.5.0",
+        "url": "https://files.pythonhosted.org/packages/58/50/6c0d534c5f134586a8e1ba4e330569e32f057e33372ae556463212fb4cd3/click-8.5.0-py3-none-any.whl",
+        "hashes": {
+          "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360"
+        }
+      }
+    ]
+  },
+  "simulation": {
+    "exit_code": 0,
+    "cases": 22,
+    "forwarded": 17,
+    "policy_drop": 2,
+    "error_discard": 3,
+    "stdout": "cases=22 forwarded=17 policy_drop=2 error_discard=3\nbyte_preservation=PASS one_shot=PASS backpressure=PASS registers=PASS\nfunctional_simulation=PASS hardware_implementation=NOT_RUN\n",
+    "compile_stderr": "/financial-low-latency/Documents/newDoc/assets/08-arista-fpga-draft/control_regs.sv:22: sorry: constant selects in always_* processes are not currently supported (all bits will be included).\n/financial-low-latency/Documents/newDoc/assets/08-arista-fpga-draft/control_regs.sv:22: sorry: constant selects in always_* processes are not currently supported (all bits will be included).\n",
+    "negative_controls": [
+      {
+        "mutation": "credit_not_cleared",
+        "exit_code": 1,
+        "stdout": "FATAL: /tmp/flle-ch08-fpga-draft/negative/credit_not_cleared/filter_tb.sv:111: one-shot capture\n       Time: 1160000 Scope: filter_tb\n",
+        "stderr": ""
+      },
+      {
+        "mutation": "forwarded_byte_changed",
+        "exit_code": 1,
+        "stdout": "FATAL: /tmp/flle-ch08-fpga-draft/negative/forwarded_byte_changed/filter_tb.sv:86: case 0 byte 0 changed\n       Time: 300000 Scope: filter_tb.exchange\n",
+        "stderr": ""
+      }
+    ],
+    "not_exhaustive": true
+  },
+  "synthesis": {
+    "command": "read_verilog -sv <module files>; synth -top <frame_filter or control_regs> -noabc; check -assert; stat; write_json <relative output>",
+    "exit_codes": [
+      0,
+      0
+    ],
+    "structural_checks": "Found and reported 0 problems.",
+    "netlists": [
+      {
+        "path": "/opt/flle-fpga-tools/work/core-synthesis/frame-filter-netlist.json",
+        "sha256": "0d7ead9c4f914bdbd3bcede97379f5f6c107be532e3479cf57c61ddffa59035e",
+        "size": 24704972,
+        "modules": [
+          "drop_once",
+          "frame_filter",
+          "nvda_match"
+        ],
+        "creator": "Yosys 0.69 (git sha1 9f75ca1f9, Release, Clang /workspace/YoWASP/yosys/wasi-sdk-33.0-x86_64-linux/share/cmake/../..//bin/clang++ 22.1.0)"
+      },
+      {
+        "path": "/opt/flle-fpga-tools/work/core-synthesis/control-regs-netlist.json",
+        "sha256": "f1b6080af90a8d2c4e9a0b7e3915258345e20ced62d2a9a2f693b7270d76ee2b",
+        "size": 284241,
+        "modules": [
+          "control_regs"
+        ],
+        "creator": "Yosys 0.69 (git sha1 9f75ca1f9, Release, Clang /workspace/YoWASP/yosys/wasi-sdk-33.0-x86_64-linux/share/cmake/../..//bin/clang++ 22.1.0)"
+      }
+    ],
+    "limitations": "Generic gates/flip-flops only; no XCVU9P placement/routing/timing or bitstream"
+  },
+  "register_api": {
+    "register_library_revision": "13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d",
+    "csv_name_to_number": true,
+    "read_only_rejection": true,
+    "sequence_64bit": true,
+    "bus": "in-memory accessor; no device",
+    "calls": [
+      [
+        "read",
+        0
+      ],
+      [
+        "write",
+        1,
+        1
+      ],
+      [
+        "write",
+        1,
+        2
+      ],
+      [
+        "read",
+        7
+      ],
+      [
+        "read",
+        8
+      ]
+    ]
+  },
+  "checks": {
+    "markdown_fences": 41,
+    "snippet_matches": 16,
+    "nav_cards": 10,
+    "green_cards": 0,
+    "images": 11,
+    "local_references": 53,
+    "protected_files_unchanged": 57,
+    "html_tags_balanced": true,
+    "bash_syntax": true,
+    "python_syntax": true,
+    "figures": [
+      {
+        "file": "00a-fpga-resources",
+        "svg": [
+          1200,
+          920
+        ],
+        "png": [
+          1600,
+          1227
+        ],
+        "arrow_count": 3,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "00b-configure-circuit",
+        "svg": [
+          1200,
+          940
+        ],
+        "png": [
+          1600,
+          1253
+        ],
+        "arrow_count": 5,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "01-packet-path",
+        "svg": [
+          1200,
+          760
+        ],
+        "png": [
+          1600,
+          1013
+        ],
+        "arrow_count": 5,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "02-tools-and-sources",
+        "svg": [
+          1200,
+          880
+        ],
+        "png": [
+          1600,
+          1173
+        ],
+        "arrow_count": 6,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "02b-linux-build-checks",
+        "svg": [
+          1200,
+          865
+        ],
+        "png": [
+          1600,
+          1153
+        ],
+        "arrow_count": 4,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "03-fields-and-comparators",
+        "svg": [
+          1200,
+          990
+        ],
+        "png": [
+          1600,
+          1320
+        ],
+        "arrow_count": 5,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "04-buffer-and-drop",
+        "svg": [
+          1200,
+          950
+        ],
+        "png": [
+          1600,
+          1267
+        ],
+        "arrow_count": 5,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "05-register-control",
+        "svg": [
+          1200,
+          850
+        ],
+        "png": [
+          1600,
+          1133
+        ],
+        "arrow_count": 5,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "06-build-upload-load",
+        "svg": [
+          1200,
+          1070
+        ],
+        "png": [
+          1600,
+          1427
+        ],
+        "arrow_count": 7,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      },
+      {
+        "file": "07-observe-filter",
+        "svg": [
+          1200,
+          840
+        ],
+        "png": [
+          1600,
+          1120
+        ],
+        "arrow_count": 2,
+        "browser": {
+          "800": {
+            "bad": [],
+            "fonts": true,
+            "width": 800
+          },
+          "1200": {
+            "bad": [],
+            "fonts": true,
+            "width": 1200
+          },
+          "1600": {
+            "bad": [],
+            "fonts": true,
+            "width": 1600
+          }
+        },
+        "visual_review_widths": [
+          800,
+          1200
+        ]
+      }
+    ],
+    "hash_manifests": {
+      "local": 21,
+      "central": 319
+    },
+    "clean_venv_bootstrap": "PASS: fresh venv without ensurepip, official get-pip, pinned requirements, pip check, Yosys version",
+    "page_browser": {
+      "images": 11,
+      "missing": [],
+      "width": 1185,
+      "clientWidth": 1185,
+      "brokenBold": false
+    },
+    "markdown_browser_note": "Markdown/HTML and PNG assets rendered; Mermaid syntax kept as fenced block in this preview, IDE renderer handles Mermaid.",
+    "diff_check": true
+  },
+  "sources": {
+    "openfdk_revision": "13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d",
+    "openfdk_files": [
+      {
+        "path": "doc/developer-guide.md",
+        "sha256": "91fdc638e126f062650d6af644d772911f9b0cb49cf169bd4492c41145cffd8b",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/doc/developer-guide.md"
+      },
+      {
+        "path": "examples/nullverilog/LICENSE.md",
+        "sha256": "50b40d8ee91487d8c5d6f56e32de95dda0f4269576b97ad645f55134c5132688",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/LICENSE.md"
+      },
+      {
+        "path": "examples/nullverilog/Makefile",
+        "sha256": "60c169dbe8bea3bab49c40ec7417fd71485496bad244eaac0d29d13846e17ce5",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/Makefile"
+      },
+      {
+        "path": "examples/nullverilog/README.md",
+        "sha256": "4cb77c355712a58e92cc9f1145677e52f9774b59f556e4c38ff1e904238b98f2",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/README.md"
+      },
+      {
+        "path": "examples/nullverilog/src/app-cfg.json",
+        "sha256": "1da384def1bce7b1c37d293d3464c7378cb3724984bfdfd5b6f4096387ed2a74",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/app-cfg.json"
+      },
+      {
+        "path": "examples/nullverilog/src/example.py",
+        "sha256": "d841e2c05d1f21cf5355ab756bec7cccc6bc9a685d5d7411ca8a42c2f29c4ea6",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/example.py"
+      },
+      {
+        "path": "examples/nullverilog/src/nullverilog-lb2-cfg.json",
+        "sha256": "5b02b23f7941814e2605c56bde08e5f2fb596120a6ee11bf853df1df762b43f3",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/nullverilog-lb2-cfg.json"
+      },
+      {
+        "path": "examples/nullverilog/src/nullverilog-lb2-top.sv",
+        "sha256": "fad714ff50989ad5b294bad08ed0bd38bc78c1db066b223ff0fc453f98598bb7",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/nullverilog-lb2-top.sv"
+      },
+      {
+        "path": "examples/nullverilog/src/nullverilog_registers.csv",
+        "sha256": "ba880eb55d446a81ca7b20d748dc4089096aabf788f8c9397c6446d66f97bf05",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/nullverilog_registers.csv"
+      },
+      {
+        "path": "examples/nullverilog/src/nullverilog_registers.sv",
+        "sha256": "12dc5a8cd6cb7acec044f3482a3ff6380fd24863b19112a6df509fb49fbc51f9",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/examples/nullverilog/src/nullverilog_registers.sv"
+      },
+      {
+        "path": "resources/app.mk",
+        "sha256": "51af7005d72701bfd0d3624ccafc3eeef505d6adcb0c4534603609cc2c8335cc",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/app.mk"
+      },
+      {
+        "path": "resources/create_project.tcl",
+        "sha256": "c7ebac04cf35eb7957446e1543387df2e6297a5f0ba8a0260fcb2b6e1e2ff134",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/create_project.tcl"
+      },
+      {
+        "path": "resources/libapp/register_file.py",
+        "sha256": "0c8ca2494107f52b0a3892fdac78523a07a2b54697f4028e4e53c17fdd2989fa",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/libapp/register_file.py"
+      },
+      {
+        "path": "resources/vivado.mk",
+        "sha256": "52e1eed57c41102c0e5eed9a5405e0aff499b80b445f09e2f533a5e5bd54e98e",
+        "url": "https://github.com/aristanetworks/openfdk/blob/13a7aac5b0aaba1ed7bbeb04dd71c5b3bded6d9d/resources/vivado.mk"
+      }
+    ],
+    "review": "Documents/newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md",
+    "netnod_revision": "04c89fd2f2347843246ad825ace986db7408fe89"
+  },
+  "protected_files": {
+    "Documents/newDoc/07-ebpf-xdp-programmable-network.md": "c5dca6c855a28b95cea55f82625368f3a47fd00ff6c725bdbdf34b3a5d8c12f0",
+    "Documents/newDoc/08-p4-programmable-data-plane.md": "b96e69c24ea098758fbdd9d4e524acd4bef23cbbc5e99e34b252876c5edcf306",
+    "Documents/newDoc/09-verilator-fpga-smartnic-simulation.md": "239ae3daa0e7b6024a2d71b6011bdc2a1aaf6fe138c160a0ae9800f1e35752de",
+    "Documents/newDoc/assets/08-p4/minimal_exact.p4": "a752362fba2ea3b6c6cddcbdafaa306bd6dafb04083e56742da015b2454e7f37",
+    "Documents/newDoc/assets/08-p4/trading_bridge_itch_count.p4": "5c779dd0a6cb97f6f770411463582fa2896ac18d31a1a5285441b1acd2239589",
+    "Documents/newDoc/assets/08-p4/04-link-local-guard-evidence.sh": "8cbd98942ed70759de856a4192aa1afa095f113a4eb51dce9b34f785541a137a",
+    "Documents/newDoc/assets/08-p4/09-trading-bmv2-live.sh": "1883820197bc7d08f71081a82e8afd0ab4d0e270361a73084e5174ad5bde80ef",
+    "Documents/newDoc/assets/08-p4/p4-live-apply.plan": "8ea4bc9571cdee97b33413ddeb280f74701393a614f883c40b8f145a6af0a94a",
+    "Documents/newDoc/assets/08-p4/09b-inspect-p4-path.sh": "d7a2d3a689a1dfc96c887525674e7205ea990509b2178708d8deffef8ab3627b",
+    "Documents/newDoc/assets/08-p4/09d-restore-p4-path.sh": "b2c9c1f7bb53ee717b1bf4a0350e5311818ffa3c3ee16023362f02c986015021",
+    "Documents/newDoc/assets/08-p4/p4-trading-inspect.plan": "b2fceb0ee9fd841f140708f71f5475c2573eb46a7e075dde2b04b33bcc04aa7c",
+    "Documents/newDoc/assets/08-p4/p4-trading-restore-endpoints.plan": "4a29cf2b7b885d2351f18422f5b5659a2ddac017b85affe249d9daacad0bd5ea",
+    "Documents/newDoc/assets/08-p4/trading_bridge_nvda_drop.p4": "ab12c5c0be5ac0b285a6f465ae29bd1ed4df45100928d75aeb3a1ff9959b67c4",
+    "Documents/newDoc/assets/08-p4/07-symbol-compile-boundary.sh": "663e0a0be97be20ef868f269cda9296e8a804e29fd0835a8cc0d8eeb75d432a6",
+    "Documents/newDoc/assets/08-p4/05-dst-exact-evidence.sh": "045a955ec98390cfd98c8a70189a7184f121393d2d75b359d9f29596697f6ce9",
+    "Documents/newDoc/assets/08-p4/ARISTA-HARDWARE-NOTES.md": "667c6e422350aa6db48c5339c7287c784c9db4b3d2bc01d1da31f94d6ae44044",
+    "Documents/newDoc/assets/08-p4/p4-trading-isolate-tools.plan": "9300443bf65937679631ef6837c81633662d9d4e5dd5cc18f25f6e99cc61b555",
+    "Documents/newDoc/assets/08-p4/p4-live-restore.plan": "13399d643b83b362f6bd31ca8e3b22c32a45e02f61fb80f354d75997aec21c5d",
+    "Documents/newDoc/assets/08-p4/00-p4-toolchain-prep.sh": "5a65eb33a2237b093c301831bdeff10927726eb08606ed966957adb4ab2c6b19",
+    "Documents/newDoc/assets/08-p4/p4-live-show.plan": "0d0871b04b49a6da2fc50607f61b3e5d3f388c8ab0531927fbd5c376097fc9b6",
+    "Documents/newDoc/assets/08-p4/p4-trading-restore-final.plan": "1b6c2a2f07f28d5ea6bb7260425f9180cc6209d5b5d6469431bd2c3ca50581cc",
+    "Documents/newDoc/assets/08-p4/06-p4runtime-read-evidence.sh": "3877ae8ab8246b423240bb1c65927c91c02a818efe13bfdd4762c1935d98a37f",
+    "Documents/newDoc/assets/08-p4/09a-configure-p4-path.sh": "09177d897100ac954a8fac2cc448dbc06f46723bd5742e8f868769701c801474",
+    "Documents/newDoc/assets/08-p4/01-p4-toolchain.sh": "3cd0d21c80ed229dde6aa9a5ee34bdfdef532b68ca95a6bbba98d8c0bb7e5728",
+    "Documents/newDoc/assets/08-p4/TEACHER-LIVE-NOTES.md": "0941c0835a8dc01f6462ebe29680e1dcb6bcf491bb4124bcff00ae7927987d09",
+    "Documents/newDoc/assets/08-p4/p4-trading-cut-endpoints.plan": "4bbcb4ce76bb0939a83a958c873c2af586d4a4398eea42fdca216044961cb881",
+    "Documents/newDoc/assets/08-p4/p4-trading-show.plan": "51b0cf0874d0c88dd27d58afbf9e7dae6a3709212f5bae2d2af13849db39dfb6",
+    "Documents/newDoc/assets/08-p4/02-compile-minimal-exact.sh": "d683f668e2fe2c18b9fe33248f1846320e7c664f8e4c7d340a50c4062c588f0c",
+    "Documents/newDoc/assets/08-p4/symbol_exact.p4": "343e3cfb50d71039a63b328496e7808bbfecbec534d0714ffea50c58f119c4b4",
+    "Documents/newDoc/assets/08-p4/09-trading-p4-drop-live.sh": "d3c993e6b5ecac60c467a1cc2680e2710058b0ddbebf1b871865057861a4d144",
+    "Documents/newDoc/assets/08-p4/00b-bmv2-tool-prep.sh": "c66bf030ca8213e3635306665303377895d8a04e23300baa240e17f6086adb1b",
+    "Documents/newDoc/assets/08-p4/trading_l2_bridge.p4": "47f4e7f51fa2fa05338e8fb46faeda088d9eae5126491b08809373c5d012af3a",
+    "Documents/newDoc/assets/08-p4/03-match-action-model.sh": "56e4de550c1e71400415ac5af381bf61b3179c1a0e19c5b74b7c060ceaf36be5",
+    "Documents/newDoc/assets/08-p4/09c-drop-one-packet.sh": "c29bb2c7d23e32646776e797944dc606ff806416fc2b680acd2788f2150628a6",
+    "Documents/newDoc/assets/08-p4/08-compile-trading-bridge.sh": "614947412e783ffb06c48b93fe2ccf8ebe432309ada8e5ddd3d9e53bce68c5cd",
+    "Documents/newDoc/assets/08-p4/live-support/stage-output.py": "772e043cf3ba61ecb8fb7a9d9ac9ffaa2dc23bd3d5ddef0e0f48daa71369c287",
+    "Documents/newDoc/assets/08-p4/live-support/test-stages.py": "bea2d994eaf2606d509e3e01c06bf69a98c180052c8c27383d2fe8eb757eff1b",
+    "Documents/newDoc/assets/08-p4/live-support/stage-session.py": "4704854fd7ab5a8401eed605664476ee74a80a9258bf7a9cba92c2bb49f1c895",
+    "Documents/newDoc/assets/08-p4/live-support/run-trading-p4-drop-live.sh": "99590e07ef0b6e08203e768e9e3a51e31934e28e4a98137483884519e580fae5",
+    "Documents/newDoc/assets/08-p4/live-support/stage-actions.sh": "5f43d02d853c1d5773efd0de11dec93ffc33408326de64e2af51e42f51a0aa18",
+    "Documents/newDoc/assets/08-p4/live-support/run-trading-bmv2-live.sh": "95521c4544024cbe5ef5e52e9731dca0f24d75dc1d2e494842c6ce4ec35fc085",
+    "Documents/newDoc/assets/08-p4/live-support/deadman-restore.sh": "bc910055e97426f172e0f155c0bfe0b09df67fdcb3483815174f08a37f9ea140",
+    "Documents/newDoc/assets/08-p4/live-support/__pycache__/stage-session.cpython-310.pyc": "98d2c271755d9dc9f62f2a8e76eb12a5dbb9093a902963c8d98e19f2c52f46a3",
+    "Documents/newDoc/assets/08-p4/live-support/__pycache__/stage-output.cpython-310.pyc": "1dcd85f055b219df0b07ea14fd75cc510bee95e64d2f75a25528f6ba77136fe8",
+    "Documents/newDoc/assets/08-p4/live-support/__pycache__/test-stages.cpython-310.pyc": "0d742dc57e67b7b26ba8dcc1c9e404c4eb6d7cf5198e00715c90bc2f92966a1f",
+    "Documents/newDoc/assets/08-p4/evidence/linklocal-tcpdump.txt": "ee2691e23993a9776f886e261321fc85cef4159d4a26a490f512182ba0779393",
+    "Documents/newDoc/assets/08-p4/evidence/counter-miss-lr-before.txt": "b3a60a26827d2f54a91737b007c98d5cd4f89b65678a62dde43147f218d4b313",
+    "Documents/newDoc/assets/08-p4/evidence/p4runtime-rw.log": "6583daae428a40bde1564d234e87e919c3fe9ea4b7ce5f3e892594e3c46be0d2",
+    "Documents/newDoc/assets/08-p4/evidence/counter-hit-lr-before.txt": "60f36b2e1c4e5aede65a56a60ee239d1788d56d111abb387efe2c45d498ad348",
+    "Documents/newDoc/assets/08-p4/evidence/PROVENANCE.md": "1b245f2f172eec9b281392ef72e0e1462e042961f7334adcf30b083c8f35b045",
+    "Documents/newDoc/assets/08-p4/evidence/counter-hit-lr-after.txt": "a08f5f50ee6f01fedff2bccd177d87983f4dd54f890a81a5673152dc9dcaca80",
+    "Documents/newDoc/assets/08-p4/evidence/counter-miss-lr-after.txt": "c9b53b409c4bf4dce66ebde35b814f925a63ce442191ba0fe7bd102a85bb9716",
+    "Documents/newDoc/assets/08-p4/evidence/linklocal-eos-stp.txt": "59912ca9745915f002fb91e464ce029c82840ec1d3e437b2d1142d8048479d49",
+    "Documents/newDoc/assets/08-p4/rtl-layout-example/compare_serial.sv": "27aa848d69a29ad9446778efd2637ad37bfe0c1f323092c3fa1c988beee26769",
+    "Documents/newDoc/assets/08-p4/rtl-layout-example/compare_tb.sv": "84118ac20602844c264e7b854311717e378e5bde3962ec5db5a9e9d32d8d1f3c",
+    "Documents/newDoc/assets/08-p4/rtl-layout-example/compare_parallel.sv": "82b2bfc62627f56622504615aa99a543f272a117288f3358dc4d187149c35768",
+    "Documents/newDoc/assets/08-p4/rtl-layout-example/README.md": "dba1761cb6d4f3e7aba771c747cb1b9fa479fc9928549c44156d25a0a6c1a4d6"
+  },
+  "raw_logs": [
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/clean-bootstrap.log",
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/clean-pinned-install.log",
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/iverilog-compile.stderr",
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/iverilog-simulation.stdout",
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/negative.json",
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/register-api.json",
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/yosys-control-regs.log",
+    "Documents/design/evidence/ch08-arista-fpga-draft-20260917/yosys-frame-filter.log"
+  ],
+  "not_run": [
+    "Vivado / XSim",
+    "Full vendor FDK board adaptation",
+    "7130 build, bitstream generation, MOS install/load or packet capture",
+    "Any live trading system operation or latency measurement"
+  ],
+  "pending": [
+    "Licensed/matching full board development materials",
+    "MAC/PCS, buffering/CDC/register-bus board integration",
+    "Actual Vivado implementation and on-board acceptance"
+  ],
+  "file_hashes": {
+    "Documents/newDoc/08-arista-fpga-market-filter-draft.md": "75d8f6e9bdadfaebaee935b5afe6abd6a4e8a28bfb3d494db536b44ff7bfb494",
+    "Documents/newDoc/assets/08-arista-fpga-draft/LICENSE-Arista-BSD-3-Clause.txt": "50b40d8ee91487d8c5d6f56e32de95dda0f4269576b97ad645f55134c5132688",
+    "Documents/newDoc/assets/08-arista-fpga-draft/README.md": "00cdd08a4865ff95b181c206dd60680cb8ad72e96f3e4904bc28927dccaef042",
+    "Documents/newDoc/assets/08-arista-fpga-draft/SOURCE-REVIEW.md": "54d73c942b1b23ee0ecc83cdf2541a935b8fdbfe74ea0372be56c62a3b232dc6",
+    "Documents/newDoc/assets/08-arista-fpga-draft/control_regs.sv": "c379e06994e702f86ebfd8fc53bb9f9a92dfc86217871b519e9b3c2d59fa77bf",
+    "Documents/newDoc/assets/08-arista-fpga-draft/drop_once.sv": "e4f1d052c8a7ead7a7fb4f8d3578f6bd4d06d7fc6b0046130621213f76dcdb0f",
+    "Documents/newDoc/assets/08-arista-fpga-draft/example.py": "cf933e1049dabff184890878864f5878671fc2342aed3eb69cf420bd57e2fd63",
+    "Documents/newDoc/assets/08-arista-fpga-draft/filter_tb.sv": "3d2a0c815ef1c42ab1b93e0a689354820908cc0acc8e2dcec4610d738d35262d",
+    "Documents/newDoc/assets/08-arista-fpga-draft/flle_filter_registers.csv": "164389456103557d895efc43efde31dd405af3af868e428fd9b9e90c9f15c7a4",
+    "Documents/newDoc/assets/08-arista-fpga-draft/frame_filter.sv": "4787a940bf8dba9456dd33c023227fd84f64bdecec8b084310855f2ca0483bed",
+    "Documents/newDoc/assets/08-arista-fpga-draft/local-tools-requirements.txt": "66d4186e09016d3620b63187a58255527d82f4c24c0ffbd4ca6ca3f442629233",
+    "Documents/newDoc/assets/08-arista-fpga-draft/nvda_match.sv": "8a4aa79b6cce5623a8676fcc8624cb87d2d64de6bf6088b31a414463474a93f6",
+    "Documents/newDoc/assets/08-arista-fpga-draft/simulate.sh": "e97a846f0538401fd7543063b281797a332808dc48b6d260e8f72b44a2c29eec",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00a-fpga-resources.png": "2618a51b3786685e722170b6d9f3ab31b37e94f1c455fe358a43769b9a0221c7",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00a-fpga-resources.svg": "8ed32635833251e49699b3094657841a8315a55402aab327427d0287bd8f2cc0",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00b-configure-circuit.png": "053b69a965ee82f5e8f6cf7dc598615ddf2f15e7e2d0b77da7152ee7aee2d9c7",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/00b-configure-circuit.svg": "ff88186183943b871656f5f8a639d8929f66daf85df1f831b808ecf2318737db",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/01-packet-path.png": "19843fa3c2ec2f94b386a824a7cfb072a4c332900ec5c27ed816442cd2b4fd8e",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/01-packet-path.svg": "0e8625b975afeefc7d041895ebd8e535fa439a904c66cc12d2c18d8ba7367a46",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.png": "4f6d8aab571a4e4df03a07945bc0d76c3704449135620780e042c870f6e97b8e",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02-tools-and-sources.svg": "2a5b2ba45c513325ee2a7e38d9d99cdfbce139fb95225289d4b7ea1c7c96b41d",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02b-linux-build-checks.png": "614333dbc6eb50a72544ec6bb661b3c3dd9b85ce78be8e0d5b6ec424c25075a1",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/02b-linux-build-checks.svg": "fbde3a5fb8a4da2fdb31081cab155aee1eebbb5c537a78f19eeef8c6096433f8",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/03-fields-and-comparators.png": "fed358bfd78d33dbfe00ede97bd8942e981601482881bb9ddc7e91bd9c262050",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/03-fields-and-comparators.svg": "37bdd40f9b6a04fd6c3174dbdb452500f13d04b619422c30b34321301f513204",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.png": "551570977f5e039c0ad8c27c7ad5c2ac4497948e3fe8b1dfb1468963b024f114",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/04-buffer-and-drop.svg": "52bfea508b69ac43c4bae2cce7b90e311cc3a84de4f78540bc885cbd3aeda05b",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/05-register-control.png": "8f1a24129047a463d480ff4877b69bdf273b71455e6935032583896be1dba9e1",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/05-register-control.svg": "a684f900353644c69302fa9482dc18fac57889c2823d3e255b733fbf6791f915",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/06-build-upload-load.png": "1a03492317a191748f02a8472e392e6138b4bae7a4ce897f4e2fd2e9cd4d123a",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/06-build-upload-load.svg": "5e8e5ffd1912fe37be238e429084be1ca4f4a10a7ce8c361bd35a807ae6ee04b",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/07-observe-filter.png": "dd596e037924c656762d9656818a92eca831561024feef80b18a75936a9bda7a",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/07-observe-filter.svg": "012dca204844e343a428379ab72e69e90a3760868e273f4a2aaacd106645f9f7",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/README.md": "a79ceea14812ea98a9f2568533cfe5a04229a9dd8844642f1e0f27915cd0d5b2"
+  }
+}

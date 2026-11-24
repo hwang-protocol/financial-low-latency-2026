@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-15",
+  "status": "USER_RUN_SOURCE_SHA_DOC_PREVIEW_PASS",
+  "run_id": "20260915T071415Z-02-dpdk-software-prep",
+  "run_exit_code": 0,
+  "run_manifest_checks": 4,
+  "host_displayed": "vm-2522-01 / Exchange .1",
+  "source": "raw/10.1.1.1-software.txt",
+  "source_sha256": "21964770eee1e8a271590f6eac7553e64f10be0bb21ca7a5dae822e998bdfe0d",
+  "excerpt": "===== 查已安装软件的版本 =====\n[版本说明] 以下读取安装包的构建记录。\nDPDK: 21.11.9\nF-Stack: 0abb713721a6a0ba95768acde052dbd3d2fdf3fe\n\n===== 查运行程序文件 =====\n[文件说明] flle-trader-dpdk 是已编入 DPDK/F-Stack 的交易客户端；dpdk-devbind.py 用于后续切换网卡驱动。\n$ ls -lh bin/flle-trader-dpdk bin/dpdk-devbind.py\n-rwxr-xr-x 1 root root 29K Jan  1  1970 bin/dpdk-devbind.py\n-rwxr-xr-x 1 root root 36M Jan  1  1970 bin/flle-trader-dpdk\n$ test -x bin/flle-trader-dpdk && test -x bin/dpdk-devbind.py\n[文件检查] 两个程序均存在且可执行。\n\n===== 查客户端已包含两套库 =====\n[链接说明] ff_init 来自 F-Stack；rte_eal_init 来自 DPDK。以下读取程序符号，不启动程序。\nff_init\nrte_eal_init\n\n[PMD说明] 客户端中也包含 X2522 对应的 net_sfc_efx 驱动。\nnet_sfc_efx",
+  "excerpt_lines": 20,
+  "transformation": "Keep the version/files/linkage window; omit only long python3/cd/readelf/strings command lines. Preserve all remaining original explanation/command/output lines. Caption identifies omission.",
+  "omitted_from_prose": [
+    "distribution",
+    "long-path commands",
+    "host2",
+    "duplicate model/support listing",
+    "duplicate IOMMU/VFIO checks"
+  ],
+  "limits": [
+    "Local saved raw files only; no new remote action.",
+    "Software installation verification does not prove DPDK traffic, latency or new restore logic."
+  ],
+  "checks": {
+    "fences": 32,
+    "bash_blocks": 11,
+    "navigation_cards": 10,
+    "local_references": 18,
+    "html_balanced": true,
+    "both_excerpts_ordered_raw_match": true,
+    "scripts_unchanged": true
+  },
+  "preview": {
+    "width": 940,
+    "image_sha256": "d9b1ee8e51a173d24b65dbffb23ed28084976a0c26174ca15aac1accd3ebe64a",
+    "visually_reviewed": true
+  },
+  "final_chapter_sha256": "d0bfe81be9441a6bf56ba7e43f42ea29f55d07685f6ca231cc58a476e5526447"
+}

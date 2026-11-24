@@ -1,0 +1,328 @@
+{
+  "date": "2026-09-18",
+  "status": "DOC / AUTO SSH VM101 VERIFIED; DRAFT, NO PDI / SWIX / FPGA HARDWARE",
+  "changes": [
+    "All nine cards run from .111 and automatically SSH to .101, one action per card.",
+    "Formatted commands, native outputs, stage receipts and cumulative work archives saved on .111, including failures.",
+    "Only two SystemVerilog excerpts, seven lines total; original detailed step2 with 14 blocks retained as optional RTL-WALKTHROUGH.",
+    "Eight-step navigation retained; condensed tool sources/locations, build/package/install/load/connect/verify workflow.",
+    "Preserved concurrent chapter09 shared source and Verilator/C++ preparation."
+  ],
+  "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+  "run_state": "Documents/reports/run-state/ch08-auto-ssh-verification.env",
+  "default_user_state_preserved": true,
+  "default_remote_current_preserved": true,
+  "validation": {
+    "completed_stages": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "3.1",
+      "3.2",
+      "3.3",
+      "3.4",
+      "3.5",
+      "3.6"
+    ],
+    "simulation": {
+      "frames": 22,
+      "forwarded": 17,
+      "policy_drops": 2,
+      "error_discards": 3
+    },
+    "management_tests": 16,
+    "generic_netlists": 2,
+    "failure_tests": {
+      "missing_compile_sha256": 1,
+      "missing_local_state": 1
+    },
+    "failure_test_preflight_receipt": "Documents/reports/ch08-entry-errors/20260918T010725212203Z-1.2/receipt.json"
+  },
+  "receipts": [
+    {
+      "stage": "1.1",
+      "started_at_utc": "20260918T010327535016Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "operations/1.1-distribute.sh",
+      "stage_exit": 0,
+      "capture_exit": null,
+      "script_sha256": "f501331166a81ba93c8bfd49db5a4afa5bcf0f4b0c50da113cde995760707298",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010327535016Z-1.1/receipt.json"
+    },
+    {
+      "stage": "1.2",
+      "started_at_utc": "20260918T010358546602Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/1.2-check.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "c0d9404ec4e239026662f793b5f881d3a075fae5793562aa365fcdcd95d4591f",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010358546602Z-1.2/receipt.json"
+    },
+    {
+      "stage": "1.3",
+      "started_at_utc": "20260918T010359164284Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/1.3-install.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "4d9ceebb4fa62e25eaa5f83aa3b45cdc3dd90519ddefe486d9fb0cda8e392eab",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010359164284Z-1.3/receipt.json"
+    },
+    {
+      "stage": "3.1",
+      "started_at_utc": "20260918T010403573461Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/3.1-compile.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "d5a0fb7db953a1a4e2d3ab2b8b9937266054107b194c0714cebd2b0be3d7bb80",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010403573461Z-3.1/receipt.json"
+    },
+    {
+      "stage": "3.2",
+      "started_at_utc": "20260918T010404060145Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/3.2-simulate.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "32668e870253b2966df9b04479a9ba676d844a11af470992aa64b898e67f8032",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010404060145Z-3.2/receipt.json"
+    },
+    {
+      "stage": "3.3",
+      "started_at_utc": "20260918T010404727144Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/3.3-management.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "ff9fd73e1fe08939ddafff06f31d826c382ee37c84a9f0868a813b0b980acdc7",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010404727144Z-3.3/receipt.json"
+    },
+    {
+      "stage": "3.4",
+      "started_at_utc": "20260918T010405373484Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/3.4-synthesize.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "6ff1d8412ccb580ec9323d545225f66afa8bc31c3822c76d04fb38b4bcf57d37",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010405373484Z-3.4/receipt.json"
+    },
+    {
+      "stage": "3.5",
+      "started_at_utc": "20260918T010428398944Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/3.5-synthesize-registers.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "f9db3d050734006fb7777811118046349efe633ff456da5a481505cbe38349d9",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010428398944Z-3.5/receipt.json"
+    },
+    {
+      "stage": "3.6",
+      "started_at_utc": "20260918T010429236086Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "operations/3.6-collect.sh",
+      "stage_exit": 0,
+      "capture_exit": null,
+      "script_sha256": "05faaf208685647962815991510c40abe8ba606302370addd4862d3a85dae080",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010429236086Z-3.6/receipt.json"
+    },
+    {
+      "stage": "3.4",
+      "started_at_utc": "20260918T010711678065Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/3.4-synthesize.sh",
+      "stage_exit": 0,
+      "capture_exit": 0,
+      "script_sha256": "e84f1f17926ae43cabe659a9db103fd3a83ede256517e0b234e3ac9559f11a7d",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010711678065Z-3.4/receipt.json"
+    },
+    {
+      "stage": "3.2",
+      "started_at_utc": "20260918T011056868499Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "remote/3.2-simulate.sh",
+      "stage_exit": 1,
+      "capture_exit": 0,
+      "script_sha256": "32668e870253b2966df9b04479a9ba676d844a11af470992aa64b898e67f8032",
+      "exit_code": 1,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T011056868499Z-3.2/receipt.json"
+    },
+    {
+      "stage": "3.6",
+      "started_at_utc": "20260918T011128878543Z",
+      "state_file": "/financial-low-latency/Documents/reports/run-state/ch08-auto-ssh-verification.env",
+      "run_id": "20260918T010327535016Z-ch08-fpga-dev",
+      "script": "operations/3.6-collect.sh",
+      "stage_exit": 0,
+      "capture_exit": null,
+      "script_sha256": "05faaf208685647962815991510c40abe8ba606302370addd4862d3a85dae080",
+      "exit_code": 0,
+      "path": "Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T011128878543Z-3.6/receipt.json"
+    }
+  ],
+  "document_checks": {
+    "green_cards": 9,
+    "all_entries_on_vm111": true,
+    "code_examples": 2,
+    "code_example_lines": 7,
+    "navigation_cards": 8,
+    "images": 7,
+    "same_page_links": 30,
+    "local_links": 52,
+    "html_balanced": true,
+    "implementation_files_unchanged": 14,
+    "shell_scripts_syntax_checked": 18,
+    "chapter_lines": 691,
+    "manifest_results": [
+      {
+        "path": "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/SHA256SUMS",
+        "verified": 21
+      },
+      {
+        "path": "artifacts/blobs/ch08-fpga-dev/SHA256SUMS",
+        "verified": 12
+      }
+    ]
+  },
+  "browser_checks": {
+    "images": 7,
+    "missing": [],
+    "width": 1185,
+    "clientWidth": 1185,
+    "brokenBold": false,
+    "anchorTargets": 30,
+    "allJumpsPassed": true,
+    "screenshotStep": "opening"
+  },
+  "visual_review": [
+    "1200px tools/source section",
+    "1200px simplified source section",
+    "Full document seven images loaded and all 30 navigation links valid"
+  ],
+  "archives": {
+    "inputs.tgz": {
+      "bytes": 30463806,
+      "sha256": "b718ab96f0df6d35994fedbd924f5965f55697541a56226c7bfe55f203db5afb"
+    },
+    "results.tgz": {
+      "bytes": 812466,
+      "sha256": "fe3eaca36747cf9a559cfac47b3e0b9de3bf0f055a6c16d7f9d5902523f4507e"
+    }
+  },
+  "small_evidence": {
+    "1.1.log": {
+      "bytes": 9029,
+      "sha256": "dd00b306167ceb97a34206ff7566dfbdb0f5c72b74718ad3110f185252f848b0"
+    },
+    "1.2-check.log": {
+      "bytes": 5120,
+      "sha256": "27d3d7f5fd8e3b86eb20657fcddb5ce5a60cedcdbd09df59e2a7f1582eea501a"
+    },
+    "1.3-install.log": {
+      "bytes": 8468,
+      "sha256": "37c7662d31e1063c9ba647359aa6353aea7aad6c228b27c3be393bc9aa8352dd"
+    },
+    "3.1-compile.log": {
+      "bytes": 4810,
+      "sha256": "ec800587c3a099b5841e7b8fced70060bf6f3951604ab8eb2ad7e9b4b8590f51"
+    },
+    "3.2-simulate.log": {
+      "bytes": 3686,
+      "sha256": "4b3cb9c77b7a008bfa15e3cea40f4a07f0dd71f3e2f4794b875d0a7f8404efa0"
+    },
+    "3.3-management.log": {
+      "bytes": 4875,
+      "sha256": "10befa2365b1a79e1ed430da904b471fa30411cab9cd9bf45f61761cebd5c04d"
+    },
+    "3.4-final.log": {
+      "bytes": 4217,
+      "sha256": "3cf6b6fc027881a92ca2c0a3e2dc54fc8731876b5cb145e755a4140d7cfc44a5"
+    },
+    "3.5-synthesize-registers.log": {
+      "bytes": 4858,
+      "sha256": "29cd4ffaeddbaee084987df73a785d634e74c478a2c24cd7c4e6c8949d96e817"
+    },
+    "3.6-final.log": {
+      "bytes": 2892,
+      "sha256": "a3551ef2cb3bc3e85d726d4fc89182ccef92797ae647df411d34a22f2bdbbf25"
+    },
+    "checks.json": {
+      "bytes": 559,
+      "sha256": "0352f8a0270098008cd845f117e9a5b0cc820397203ee61a1baddd74b3a9225a"
+    },
+    "execution.json": {
+      "bytes": 606,
+      "sha256": "f95183ac48a3f6cf199dde1e33d23c2062a152d70800186bafac5f5d76aeb559"
+    },
+    "failure-and-state-check.json": {
+      "bytes": 119,
+      "sha256": "cc66555bbcbbd612959f649b1312651400888654bad793abfb261a64465fb9e8"
+    },
+    "missing-compile.log": {
+      "bytes": 2825,
+      "sha256": "b00c049bf9eaa3a465f1604f4c768a07f1c08f37c9f2dae6911541e3dee17904"
+    },
+    "page-check.json": {
+      "bytes": 178,
+      "sha256": "5538dbe17eea80c3622bf7a6b2c6af47db95eb6db244aabd940251acfb381fc6"
+    }
+  },
+  "deliverable_sha256": {
+    "Documents/newDoc/08-arista-fpga-market-filter-draft.md": "a91eba053d9eacc28ccd14165b7c0cf4f665bc0a5d6bf33ecff49172cb02b30a",
+    "Documents/newDoc/assets/08-arista-fpga-draft/README.md": "a6961fa797bdeba727e9d1bafaa00e3ea67a79e5b2744963b18df43dbc43032a",
+    "Documents/newDoc/assets/08-arista-fpga-draft/eos/README.md": "828a0da35ce485b2a40df291d9c894f3243acc68bc2c66751d4887d423a0515c",
+    "Documents/newDoc/assets/08-arista-fpga-draft/RTL-WALKTHROUGH.md": "c8aaa1d90ae41292af674f6843ab6612f84447a470ab5cc10cea646110c67925",
+    "Documents/newDoc/images/course-visuals/08-arista-fpga-draft/README.md": "de976a982bb47557dcddb0015acfd624fe9568eb6dc4c41262a4125d6c6635a1",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/1.1-distribute.sh": "87ec0feae33de2b057ca7d9dcabd314e6d517073c473c8baea584e42beab8033",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/1.2-check.sh": "64b3c7c2a4b9913b437c233106a0d574d11bc47484abb392c016e5afb24ac13b",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/1.3-install.sh": "5dc5ea7e9043c5b0c010f75fabf609e83869e01695af693170f3dab1b1ec1c23",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.1-compile.sh": "d83cf37e9200283d0d2a5c2f65b445141b0a6105ed468e426695f9f23b87c6d8",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.2-simulate.sh": "0c49a31d681c0968858399f31b26cd0734554f545044d4f669e38514088118eb",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.3-management.sh": "6eb263f553ccfbd839f832012a042eef388630f1b330d56e76caa356d0e2aee5",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.4-synthesize.sh": "4ca5d172d66ecbb05737d6f38002f282adbb9da4ae40bb5d7190b80087585c42",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.5-synthesize-registers.sh": "eb0629f463325402b617d658c33f7f6441370346bf2c3fcbcdf74d98aae1225f",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/3.6-collect.sh": "49c1e692d9fb81c4fbbeaa37998db083165a82b5584d033226064fdde812ef18",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/README.md": "81bc23bd0a04af5797e62895d7b741b0f582bc752a947b7697a93cfda58f0da4",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/operations/1.1-distribute.sh": "f501331166a81ba93c8bfd49db5a4afa5bcf0f4b0c50da113cde995760707298",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/operations/3.6-collect.sh": "05faaf208685647962815991510c40abe8ba606302370addd4862d3a85dae080",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/remote/1.2-check.sh": "c0d9404ec4e239026662f793b5f881d3a075fae5793562aa365fcdcd95d4591f",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/remote/1.3-install.sh": "4d9ceebb4fa62e25eaa5f83aa3b45cdc3dd90519ddefe486d9fb0cda8e392eab",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/remote/3.1-compile.sh": "d5a0fb7db953a1a4e2d3ab2b8b9937266054107b194c0714cebd2b0be3d7bb80",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/remote/3.2-simulate.sh": "32668e870253b2966df9b04479a9ba676d844a11af470992aa64b898e67f8032",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/remote/3.3-management.sh": "ff9fd73e1fe08939ddafff06f31d826c382ee37c84a9f0868a813b0b980acdc7",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/remote/3.4-synthesize.sh": "e84f1f17926ae43cabe659a9db103fd3a83ede256517e0b234e3ac9559f11a7d",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/remote/3.5-synthesize-registers.sh": "f9db3d050734006fb7777811118046349efe633ff456da5a481505cbe38349d9",
+    "Documents/newDoc/assets/08-arista-fpga-draft/classroom/stage-runner.py": "390bc78d088c46f994a7604845f5a0f3c960ab78b72e268cfc048780bd540dee"
+  },
+  "limits": [
+    "No snapshot restore performed; remote verification reused observed Ubuntu22.04 environment and created isolated run/workspace.",
+    "No Vivado installation, licensed BVL integration, PDI/SWIX generation, EOS deployment, live traffic or FPGA hardware verification.",
+    "Full Arista BVL package, supported tool version, device/IP licenses and workstation resources remain prerequisites for steps4-6.",
+    "Step7-8 require the target 7135V and its actual application port mapping.",
+    "No commit/push/tag."
+  ]
+}

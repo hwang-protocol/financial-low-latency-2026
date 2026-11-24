@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="580" viewBox="0 0 1200 580" role="img" aria-labelledby="title desc">
+  <title id="title">C++订单RTT测量合同</title>
+  <desc id="desc">订单在C++ Trader发送OUCH O时读取t0，收到最终E或J时读取t1；20个warmup样本保留但不进入200个measured样本的p50、p99和max。</desc>
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#2563eb"/></marker>
+  </defs>
+  <rect x="18" y="18" width="1164" height="544" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="62" y="70" font-family="Arial,'Noto Sans SC',sans-serif" font-size="21" font-weight="700" fill="#475569">HOST_NATIVE_ORDER_RTT_50HZ_V1</text>
+  <text x="62" y="112" font-family="Arial,'Noto Sans SC',sans-serif" font-size="34" font-weight="800" fill="#0f172a">一张秒表只回答一个问题</text>
+
+  <line x1="120" y1="230" x2="1070" y2="230" stroke="#2563eb" stroke-width="5" marker-end="url(#arrow)"/>
+  <circle cx="180" cy="230" r="18" fill="#7e22ce"/>
+  <circle cx="600" cy="230" r="14" fill="#f59e0b"/>
+  <circle cx="1010" cy="230" r="18" fill="#059669"/>
+  <text x="180" y="184" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="23" font-weight="800" fill="#6b21a8">t0</text>
+  <text x="180" y="278" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" font-weight="700" fill="#334155">Trader 发出 OUCH O</text>
+  <text x="600" y="184" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="23" font-weight="800" fill="#b45309">中间态</text>
+  <text x="600" y="278" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" font-weight="700" fill="#334155">收到 Accepted A</text>
+  <text x="1010" y="184" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="23" font-weight="800" fill="#047857">t1</text>
+  <text x="1010" y="278" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="19" font-weight="700" fill="#334155">收到最终 E 或 J</text>
+  <rect x="72" y="306" width="1056" height="80" rx="16" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="600" y="340" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="24" font-weight="800" fill="#1e3a8a">order_rtt_ns = t1 − t0</text>
+  <text x="600" y="372" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="20" font-weight="700" fill="#1e3a8a">同一 C++ CLOCK_MONOTONIC</text>
+
+  <rect x="72" y="410" width="220" height="90" rx="16" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="182" y="445" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#475569">20 次 warmup</text>
+  <text x="182" y="476" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" fill="#64748b">写进 CSV，不进摘要</text>
+  <rect x="330" y="410" width="300" height="90" rx="16" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+  <text x="480" y="445" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#065f46">200 次 measured</text>
+  <text x="480" y="476" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" fill="#047857">固定 20 ms 间隔 · 50 Hz</text>
+  <rect x="668" y="410" width="460" height="90" rx="16" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+  <text x="898" y="445" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="22" font-weight="800" fill="#6b21a8">raw CSV → 排序 → p50 / p99 / max</text>
+  <text x="898" y="476" text-anchor="middle" font-family="Arial,'Noto Sans SC',sans-serif" font-size="17" fill="#7e22ce">订单 ID、阶段、结果和原始纳秒值全部保留</text>
+</svg>
