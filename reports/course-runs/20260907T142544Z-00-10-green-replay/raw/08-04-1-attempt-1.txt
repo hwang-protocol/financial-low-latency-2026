@@ -1,0 +1,209 @@
+
+跳板机 / source-review
+===== 查源码指纹 =====
+[SHA-256] 对: 与本轮使用的源码一致  证: 后续审查针对同一份 C 文件
+$ sha256sum Documents/newDoc/assets/08-xdp/flle_xdp_mold_itch.c
+65ba51119ffa6ec2010f841475106c3227ef9457361c70eb41a59530acc5e7b7  Documents/newDoc/assets/08-xdp/flle_xdp_mold_itch.c
+
+跳板机 / source-review
+===== 查带行号的访问边界 =====
+[Parser] 对: 先证明 data_end 边界，再读取字段  证: 可以定位每次解引用前的检查
+$ nl -ba Documents/newDoc/assets/08-xdp/flle_xdp_mold_itch.c
+     1	#include <linux/bpf.h>
+     2	#include <linux/if_ether.h>
+     3	#include <linux/ip.h>
+     4	#include <linux/in.h>
+     5	#include <linux/udp.h>
+     6	
+     7	#include <bpf/bpf_endian.h>
+     8	#include <bpf/bpf_helpers.h>
+     9	
+    10	#define FEED_SOURCE 0x14010101U
+    11	#define FEED_GROUP  0xef140114U
+    12	#define FEED_PORT   42120
+    13	#define IPV4_FRAGMENT_MASK 0x3fff
+    14	#define ITCH_ADD_LEN 36
+    15	#define NVDA_LOCATE 8095
+    16	
+    17	enum counter_key {
+    18	    COURSE_UDP = 0,
+    19	    MOLD_HEARTBEAT,
+    20	    AAPL_STOCK,
+    21	    NVDA_STOCK,
+    22	    OTHER_ITCH,
+    23	    SHORT_INPUT,
+    24	    POLICY_DROP,
+    25	    COUNTER_MAX
+    26	};
+    27	
+    28	enum policy_mode {
+    29	    POLICY_ALLOW = 0,
+    30	    POLICY_BLOCK = 1
+    31	};
+    32	
+    33	struct mold_header {
+    34	    __u8 session[10];
+    35	    __be64 sequence;
+    36	    __be16 count;
+    37	} __attribute__((packed));
+    38	
+    39	struct policy_config {
+    40	    __u32 mode;
+    41	    __u32 target_stock_locate;
+    42	    __u64 remaining_drops;
+    43	    __u64 deadline_ns;
+    44	};
+    45	
+    46	struct drop_audit {
+    47	    __u64 first_drop_sequence;
+    48	    __u32 first_drop_locate;
+    49	    __u32 drops;
+    50	};
+    51	
+    52	struct {
+    53	    __uint(type, BPF_MAP_TYPE_PERCPU_ARRAY);
+    54	    __uint(max_entries, COUNTER_MAX);
+    55	    __type(key, __u32);
+    56	    __type(value, __u64);
+    57	} counters SEC(".maps");
+    58	
+    59	struct {
+    60	    __uint(type, BPF_MAP_TYPE_ARRAY);
+    61	    __uint(max_entries, 1);
+    62	    __type(key, __u32);
+    63	    __type(value, struct policy_config);
+    64	} policy SEC(".maps");
+    65	
+    66	struct {
+    67	    __uint(type, BPF_MAP_TYPE_ARRAY);
+    68	    __uint(max_entries, 1);
+    69	    __type(key, __u32);
+    70	    __type(value, struct drop_audit);
+    71	} drop_audit SEC(".maps");
+    72	
+    73	static __always_inline void count(__u32 key)
+    74	{
+    75	    __u64 *value = bpf_map_lookup_elem(&counters, &key);
+    76	    if (value)
+    77	        *value += 1;
+    78	}
+    79	
+    80	static __always_inline int is_symbol(const __u8 *s, const char *name)
+    81	{
+    82	    return s[0] == name[0] && s[1] == name[1] &&
+    83	           s[2] == name[2] && s[3] == name[3] &&
+    84	           s[4] == ' ' && s[5] == ' ' && s[6] == ' ' && s[7] == ' ';
+    85	}
+    86	
+    87	SEC("xdp")
+    88	int flle_xdp_mold_itch(struct xdp_md *ctx)
+    89	{
+    90	    void *data = (void *)(long)ctx->data;
+    91	    void *end = (void *)(long)ctx->data_end;
+    92	    struct ethhdr *eth = data;
+    93	    struct iphdr *ip;
+    94	    struct udphdr *udp;
+    95	    struct mold_header *mold;
+    96	    struct policy_config *cfg;
+    97	    struct drop_audit *audit;
+    98	    __u8 *lengthp, *itch, *stock;
+    99	    __u16 message_length, message_count, locate;
+   100	    __u32 zero = 0;
+   101	    __u64 now_ns, sequence, old_remaining;
+   102	
+   103	    if ((void *)(eth + 1) > end || eth->h_proto != bpf_htons(ETH_P_IP))
+   104	        return XDP_PASS;
+   105	    ip = (void *)(eth + 1);
+   106	    if ((void *)(ip + 1) > end || ip->version != 4 || ip->ihl != 5)
+   107	        return XDP_PASS;
+   108	    if (ip->protocol != IPPROTO_UDP ||
+   109	        (ip->frag_off & bpf_htons(IPV4_FRAGMENT_MASK)) != 0 ||
+   110	        ip->saddr != bpf_htonl(FEED_SOURCE) ||
+   111	        ip->daddr != bpf_htonl(FEED_GROUP))
+   112	        return XDP_PASS;
+   113	    udp = (void *)(ip + 1);
+   114	    if ((void *)(udp + 1) > end || udp->dest != bpf_htons(FEED_PORT))
+   115	        return XDP_PASS;
+   116	
+   117	    count(COURSE_UDP);
+   118	    mold = (void *)(udp + 1);
+   119	    if ((void *)(mold + 1) > end) {
+   120	        count(SHORT_INPUT);
+   121	        return XDP_PASS;
+   122	    }
+   123	    message_count = bpf_ntohs(mold->count);
+   124	    if (message_count == 0) {
+   125	        count(MOLD_HEARTBEAT);
+   126	        return XDP_PASS;
+   127	    }
+   128	    if (message_count != 1) {
+   129	        count(OTHER_ITCH);
+   130	        return XDP_PASS;
+   131	    }
+   132	
+   133	    lengthp = (void *)(mold + 1);
+   134	    if ((void *)(lengthp + 2) > end) {
+   135	        count(SHORT_INPUT);
+   136	        return XDP_PASS;
+   137	    }
+   138	    message_length = ((__u16)lengthp[0] << 8) | lengthp[1];
+   139	    itch = lengthp + 2;
+   140	    if (message_length != ITCH_ADD_LEN) {
+   141	        count(OTHER_ITCH);
+   142	        return XDP_PASS;
+   143	    }
+   144	    if ((void *)(itch + ITCH_ADD_LEN) > end) {
+   145	        count(SHORT_INPUT);
+   146	        return XDP_PASS;
+   147	    }
+   148	    if (itch[0] != 'A') {
+   149	        count(OTHER_ITCH);
+   150	        return XDP_PASS;
+   151	    }
+   152	    if ((void *)(itch + 3) > end) {
+   153	        count(SHORT_INPUT);
+   154	        return XDP_PASS;
+   155	    }
+   156	
+   157	    locate = ((__u16)itch[1] << 8) | itch[2];
+   158	    stock = itch + 24;
+   159	    if ((void *)(stock + 8) > end) {
+   160	        count(SHORT_INPUT);
+   161	        return XDP_PASS;
+   162	    }
+   163	    if (is_symbol(stock, "AAPL")) {
+   164	        count(AAPL_STOCK);
+   165	        return XDP_PASS;
+   166	    }
+   167	    if (!is_symbol(stock, "NVDA") || locate != NVDA_LOCATE) {
+   168	        count(OTHER_ITCH);
+   169	        return XDP_PASS;
+   170	    }
+   171	
+   172	    count(NVDA_STOCK);
+   173	    cfg = bpf_map_lookup_elem(&policy, &zero);
+   174	    if (!cfg || cfg->mode != POLICY_BLOCK || cfg->remaining_drops == 0)
+   175	        return XDP_PASS;
+   176	    now_ns = bpf_ktime_get_ns();
+   177	    if (cfg->deadline_ns && now_ns > cfg->deadline_ns)
+   178	        return XDP_PASS;
+   179	
+   180	    /* 本课策略只允许 1 -> 0。原子比较交换保证多队列并发时也只丢一次。 */
+   181	    old_remaining = __sync_val_compare_and_swap(&cfg->remaining_drops, 1, 0);
+   182	    if (old_remaining != 1)
+   183	        return XDP_PASS;
+   184	
+   185	    sequence = bpf_be64_to_cpu(mold->sequence);
+   186	    audit = bpf_map_lookup_elem(&drop_audit, &zero);
+   187	    if (audit) {
+   188	        if (!audit->first_drop_sequence)
+   189	            audit->first_drop_sequence = sequence;
+   190	        audit->first_drop_locate = locate;
+   191	        audit->drops += 1;
+   192	    }
+   193	    count(POLICY_DROP);
+   194	    return XDP_DROP;
+   195	}
+   196	
+   197	char LICENSE[] SEC("license") = "GPL";
+evidence=Documents/reports/course-runs/20260907T151627Z-08-xdp-bounds

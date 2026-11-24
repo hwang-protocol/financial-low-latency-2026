@@ -1,0 +1,39 @@
+<html><head><meta charset="utf-8"><style>body{max-width:1080px;margin:30px auto;padding:20px;background:#fff;color:#172033;font-family:Arial,sans-serif;line-height:1.65}table{border-collapse:collapse;width:100%}td,th{border:1px solid #cbd5e1;padding:8px;text-align:left}pre{background:#f1f5f9;padding:14px;overflow:auto}img{max-width:100%}h2{margin-top:34px}</style></head><body><h2>准备 A：安装运行依赖</h2>
+<div style="border:2px solid #4f46e5;background:#eef2ff;padding:10px 12px;border-radius:8px;margin:14px 0;"><div style="font-weight:900;color:#312e81;margin-bottom:4px;">导航卡 · 备齐运行环境</div><div style="font-weight:700;color:#312e81;margin-bottom:8px;">范畴：工具准备　本步知识：先备齐快速收发所需的运行库与模块　位置：全章第 1 / 4 项 · 本组第 1 / 2 项</div><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;">准备 A：安装运行依赖</span><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #a5b4fc;color:#312e81;font-weight:800;">准备 B：准备网卡隔离</span></div>
+<p>先把后续快速收发路径需要的运行库和网卡模块装好。Onload 是其中一套收发运行时，本章只准备它，第六章再讲怎样使用。首次安装会短暂重载数据口驱动；管理连接走独立管理网。</p>
+<div style="border-left:6px solid #15803d;background:#dcfce7;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;">需要运行 · 准备 A</span> <span style="font-weight:700;color:#14532d;">在持久管理机 .111 的仓库根目录以 root 执行；完成后再贴下一张卡。首次安装通常数分钟；已有依赖会先核验。</span></div>
+<pre><code class="language-bash">bash Documents/newDoc/assets/02-trading-baseline/00a-runtime-prep.sh
+</code></pre>
+<div style="border-left:6px solid #7e22ce;background:#f3e8ff;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#7e22ce;color:#fff;font-weight:800;">仅供展示 · 输出解读</span> <span style="font-weight:700;color:#581c87;">历史实测 20260907T131504Z-02-onload-runtime-prep 的版本检查节选（省略行末空白）；当前脚本保留这些检查，新快照首装输出待下一轮更新。</span></div>
+<pre><code class="language-text">===== 查 Onload 版本 =====
+[Onload版本] 对: Onload 9f330e7 与 Kernel module: 9f330e7 两行一致  证: 用户态与模块同一棵树
+$ onload --version
+Onload 9f330e7
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Sep  7 2026 18:38:09 (release)
+Build profile header: &lt;ci/internal/transport_config_opt_extra.h&gt;
+Kernel module: 9f330e7
+</code></pre>
+<p><strong>运行结果重点看：</strong> Onload 与 Kernel module 都是 9f330e7；完整回执还应有两个字符设备、sfc 驱动和正确数据口地址。</p>
+<div style="border-left:6px solid #0891b2;background:#cffafe;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#0891b2;color:#fff;font-weight:800;">关键现象</span> <span style="font-weight:700;color:#164e63;">运行依赖齐备，继续准备网卡隔离；此时还没有启动交易系统。</span></div>
+<h2>准备 B：准备网卡隔离</h2>
+<div style="border:2px solid #4f46e5;background:#eef2ff;padding:10px 12px;border-radius:8px;margin:14px 0;"><div style="font-weight:900;color:#312e81;margin-bottom:4px;">导航卡 · 备齐运行环境</div><div style="font-weight:700;color:#312e81;margin-bottom:8px;">范畴：工具准备　本步知识：先启用内存隔离，再部署交易系统　位置：全章第 2 / 4 项 · 本组第 2 / 2 项</div><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #a5b4fc;color:#312e81;font-weight:800;">准备 A：安装运行依赖</span><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;">准备 B：准备网卡隔离</span></div>
+<p>再准备网卡的内存隔离条件。IOMMU（输入输出内存管理单元）给网卡访问内存划定范围，后续 DPDK 路径才可以安全接管网卡。GRUB 保存 Linux 下次开机的参数；写好 intel_iommu=on 与 iommu=pt 后，需要重启才由内核启用。VFIO 是届时把设备交给用户态程序的内核接口；两者怎样配合，见<a href="06-openonload-tcpdirect-dpdk-kernel-bypass.md#%E5%87%86%E5%A4%87-b%E6%9F%A5%E7%9C%8B%E5%B7%B2%E7%94%9F%E6%95%88%E7%9A%84%E7%BD%91%E5%8D%A1%E9%9A%94%E7%A6%BB">第六章准备 B</a>。脚本只在参数未生效时重启对应的 .1/.2；现在尚未启动交易程序。</p>
+<div style="border-left:6px solid #15803d;background:#dcfce7;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;">需要运行 · 准备 B</span> <span style="font-weight:700;color:#14532d;">在 .111 仓库根目录以 root 执行。脚本先预检 .1/.2，只重启参数尚未生效的主机；首次通常数分钟，SSH 会短暂断开并自动等待恢复。两端当前启动参数、隔离组和 unsafe 模式均通过后，再启动交易系统。</span></div>
+<pre><code class="language-bash">bash Documents/newDoc/assets/02-trading-baseline/00b-iommu-prep.sh
+</code></pre>
+<div style="border-left:6px solid #7e22ce;background:#f3e8ff;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#7e22ce;color:#fff;font-weight:800;">仅供展示 · 输出解读</span> <span style="font-weight:700;color:#581c87;">历史实测 20260907T114316Z-02-guest-iommu-prep 的最终安全检查；这次参数已生效，未再次重启。首次配置还会先显示配置与重启后检查。</span></div>
+<pre><code class="language-text">vm-2522-01 / vfio
+===== 查 VFIO DMA 安全模式 =====
+[unsafe no-IOMMU] 对: N  证: VFIO 不允许绕过 IOMMU
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N
+vm-2522-02 / vfio
+===== 查 VFIO DMA 安全模式 =====
+[unsafe no-IOMMU] 对: N  证: VFIO 不允许绕过 IOMMU
+$ cat /sys/module/vfio/parameters/enable_unsafe_noiommu_mode
+N
+</code></pre>
+<p><strong>运行结果重点看：</strong> unsafe 为 N 表示未绕过 IOMMU；前面的当前 cmdline 必须含两项参数，group 7 内只有 X2522。</p>
+<div style="border-left:6px solid #0891b2;background:#cffafe;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#0891b2;color:#fff;font-weight:800;">关键现象</span> <span style="font-weight:700;color:#164e63;">两端隔离检查通过才进入部署；更换章节归属后的首装重启流程留待下一轮快照验证。</span></div>
+</body></html>

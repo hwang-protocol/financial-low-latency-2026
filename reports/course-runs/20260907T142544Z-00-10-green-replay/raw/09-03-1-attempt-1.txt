@@ -1,0 +1,34 @@
+
+Low-Latency-Ops / build
+===== 查编译三份 P4 程序 =====
+[p4c-bm2-ss] 对: 各生成 JSON 与 P4Info  证: --p4v 16 选择 P4-16；JSON 给 BMv2，P4Info 描述控制对象
+$ p4c-bm2-ss --p4v 16 --p4runtime-files <name>.p4info.txt -o <name>.json <name>.p4
+
+Low-Latency-Ops / build
+===== 查生成文件与大小 =====
+[制品] 对: 三份 JSON 和三份 P4Info  证: 确认文件落盘；大小不代表转发性能
+$ ls -lh trading_*
+-rw-r--r-- 1 root root  33K Sep  7 23:17 trading_bridge_itch_count.json
+-rw-r--r-- 1 root root 3.7K Sep  7 23:17 trading_bridge_itch_count.p4
+-rw-r--r-- 1 root root  982 Sep  7 23:17 trading_bridge_itch_count.p4info.txt
+-rw-r--r-- 1 root root  55K Sep  7 23:17 trading_bridge_nvda_drop.json
+-rw-r--r-- 1 root root 5.8K Sep  7 23:17 trading_bridge_nvda_drop.p4
+-rw-r--r-- 1 root root 2.5K Sep  7 23:17 trading_bridge_nvda_drop.p4info.txt
+-rw-r--r-- 1 root root  20K Sep  7 23:17 trading_l2_bridge.json
+-rw-r--r-- 1 root root 2.0K Sep  7 23:17 trading_l2_bridge.p4
+-rw-r--r-- 1 root root  828 Sep  7 23:17 trading_l2_bridge.p4info.txt
+
+Low-Latency-Ops / build
+===== 查P4 源码与制品指纹 =====
+[SHA-256] 对: 源码、JSON、P4Info 各有指纹  证: 核对编译、复制和后续加载是否使用同一制品
+$ sha256sum trading_*
+19e900a484996ee038b86fec7663da86d93067965d95967b1958d238a5678cc5  trading_bridge_itch_count.json
+2a96a3da2689375721bf363121a62a03e1e72e767ac1a215e03f51858357af36  trading_bridge_itch_count.p4
+2143289bfe2265d03e86fcd250c3015c06d1b869c25855729c4c1f70e8b83f4f  trading_bridge_itch_count.p4info.txt
+c9c1aaf2a91cff315b7b41f8a27cf81b0607cbb947a1431b5709d9fca0dc3dfb  trading_bridge_nvda_drop.json
+65f269f3730059e80b2193a1ff4bd010da9c4cb0d49f16dbf11750cec040b5b5  trading_bridge_nvda_drop.p4
+0143b108bd3440aa3f7a5b6cf08a273eaa8adc581034a58a8565fcf76178b6f2  trading_bridge_nvda_drop.p4info.txt
+46f1e3d5f3a7e7a858be9ab657117f971e555ba68fd62ba863542459e973da3f  trading_l2_bridge.json
+47f4e7f51fa2fa05338e8fb46faeda088d9eae5126491b08809373c5d012af3a  trading_l2_bridge.p4
+908c36a0510576cb7540d946d34bc76e13f44c686d2eca1b7388013ffd5f6012  trading_l2_bridge.p4info.txt
+evidence=Documents/reports/course-runs/20260907T151757Z-09-trading-bridge-compile

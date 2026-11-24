@@ -1,0 +1,81 @@
+<html><head><meta charset="utf-8"><style>body{max-width:1080px;margin:30px auto;padding:20px;background:#fff;color:#172033;font-family:Arial,sans-serif;line-height:1.65}table{border-collapse:collapse;width:100%}td,th{border:1px solid #cbd5e1;padding:8px;text-align:left}pre{background:#f1f5f9;padding:14px;overflow:auto}img{max-width:100%}h2{margin-top:34px}</style></head><body><h2>准备 B：查看已生效的网卡隔离</h2>
+<div style="border:2px solid #4f46e5;background:#eef2ff;padding:10px 12px;border-radius:8px;margin:14px 0;"><div style="font-weight:900;color:#312e81;margin-bottom:4px;">导航卡 · 准备快速通道与安全闸</div><div style="font-weight:700;color:#312e81;margin-bottom:8px;">范畴：工具准备　本步知识：核对第二章已生效的网卡隔离　位置：全章第 2 / 10 项 · 本组第 2 / 4 项</div><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #a5b4fc;color:#312e81;font-weight:800;">准备 A：查看已安装的运行时</span><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;">准备 B：查看已生效的网卡隔离</span><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #a5b4fc;color:#312e81;font-weight:800;">准备 C：核对四路径开工条件</span><span style="display:inline-block;margin:3px;padding:4px 10px;border-radius:6px;background:#f8fafc;border:1px solid #a5b4fc;color:#312e81;font-weight:800;">准备 D：固定路径测试配置</span></div>
+<h3>本步理论：为什么网卡接管需要内存围栏</h3>
+<p>第二章已经完成启用和按需重启；这里补齐它与 DPDK 的关系，然后只读检查当前状态。</p>
+<p>先把主机内存想成一座仓库：网卡的 DMA 像一辆不等 CPU 搬运、能直接进仓库装卸的叉车。它很快，但必须有地址围栏；IOMMU 负责翻译并检查 DMA 地址，VFIO 则在用户态接管设备时继续执行这道围栏。</p>
+<p>虚拟机设置里暴露给 Guest 的 I/O MMU 只是把“门框”暴露给 Guest。GRUB 是下次开机使用的启动清单：<code>intel_iommu=on</code> 要求 Linux 启用 Intel IOMMU，<code>iommu=pt</code> 让非 VFIO 设备默认使用恒等映射，并不等于关闭 IOMMU。执行 <code>update-grub</code> 后还要重启，参数才会出现在当前 <code>/proc/cmdline</code>，内核随后才建立 <code>/sys/kernel/iommu_groups/</code>。</p>
+<div style="border-left:6px solid #7e22ce;background:#f3e8ff;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#7e22ce;color:#fff;font-weight:800;">关键图 · 启动配置怎样变成 DMA 围栏</span> <span style="font-weight:700;color:#581c87;">上半段回答 GRUB 为什么必须重启，下半段回答 group、VFIO 与 IOMMU 怎样共同限制 X2522。</span></div>
+<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:10px;max-width:820px;margin:14px auto;">
+<img src="images/course-visuals/06-diagrams/06-guest-iommu-vfio-chain.svg" alt="ESXi I/O MMU、GRUB、Guest IOMMU group、VFIO 与 X2522 DMA 安全链" style="display:block;width:100%;max-width:800px;height:auto;margin:0 auto;border-radius:8px;background:#fff;">
+</div>
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>用人话说</th>
+<th>怎样对应本课</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ESXi I/O MMU</td>
+<td>给虚拟机装上可用的 DMA 门框</td>
+<td>它只提供能力，不能代替 Guest 内核启用 IOMMU</td>
+</tr>
+<tr>
+<td>GRUB</td>
+<td>保存“下次 Linux 开机带哪些参数”的清单</td>
+<td>第二章已写配置并按需重启；本步查看当前 cmdline</td>
+</tr>
+<tr>
+<td><code>intel_iommu=on</code></td>
+<td>打开 Guest 内的 DMA 地址翻译与检查</td>
+<td><code>/proc/cmdline</code> 中必须出现，sysfs 随后能给设备列出隔离组</td>
+</tr>
+<tr>
+<td><code>iommu=pt</code></td>
+<td>普通非 VFIO 设备优先走恒等映射</td>
+<td>它减少普通设备的映射转换工作，不会取消 VFIO 设备的地址围栏</td>
+</tr>
+<tr>
+<td>IOMMU group</td>
+<td>硬件能够安全一起交接的最小“钥匙串”</td>
+<td>本课固定快照检查编号 <code>7</code>，且组内只有 X2522 的 <code>0000:03:00.0</code></td>
+</tr>
+<tr>
+<td>VFIO</td>
+<td>把设备交给用户态，同时只开放已登记内存页</td>
+<td>DPDK 阶段由 <code>vfio-pci</code> 接管，并得到 IOMMU type 1，而不是 unsafe no-IOMMU</td>
+</tr>
+</tbody>
+</table>
+<p>因此，安全门闸不是“看到 group 7 就通过”，而是同时满足三件事：当前 cmdline 已启用 IOMMU、X2522 所在组没有夹带其他设备、VFIO 仍通过 IOMMU 工作。任何一项缺失都停止接管。</p>
+<p>在本课程里，第二章的隔离准备主要服务于后面的 <strong>DPDK + VFIO</strong> 阶段。它解决的是用户态接管网卡时的 DMA 安全和设备所有权，不是性能加速开关；Kernel Socket、OpenOnload 与 TCPDirect 阶段仍由 <code>sfc</code> 管理 X2522，不会因为打开 IOMMU 就自动变快。</p>
+<p>更准确地说，四路不是四条完全平行的线，而是分成两类所有权路线：前三路都保留 <code>owner=sfc</code>，只改变 TCP 栈、API 或用户态队列访问方式；DPDK 不仅换成 F-Stack 和 PMD，还要把同一个 PCI function 独占交给 <code>vfio-pci</code>。因此 DPDK 活跃时，前三个客户端必须暂停，不能让 <code>sfc</code> 与 <code>vfio-pci</code> 同时控制同一块 X2522。</p>
+<div style="border-left:6px solid #7e22ce;background:#f3e8ff;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#7e22ce;color:#fff;font-weight:800;">关键图 · 前三路与 DPDK 到底在哪里分开</span> <span style="font-weight:700;color:#581c87;">左边三路共享 `sfc` 所有权；右边 DPDK 走 F-Stack → PMD → VFIO/IOMMU 专线，并独占 X2522。</span></div>
+<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:10px;max-width:820px;margin:14px auto;">
+<img src="images/course-visuals/06-diagrams/06-sfc-vs-vfio-data-path.svg" alt="Kernel、OpenOnload、TCPDirect 共享 sfc 所有权，与 DPDK 通过 vfio-pci 和 IOMMU 独占 X2522 的路径对比" style="display:block;width:100%;max-width:800px;height:auto;margin:0 auto;border-radius:8px;background:#fff;">
+</div>
+<p>本卡不再修改 GRUB 或重启。两端隔离组和 unsafe 模式通过，运行④才允许交接网卡。</p>
+<div style="border-left:6px solid #15803d;background:#dcfce7;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#15803d;color:#fff;font-weight:800;">需要运行 · 准备 B</span> <span style="font-weight:700;color:#14532d;">在 .111 仓库根目录以 root 执行，只读核对第二章准备好的环境；两端都打印 READY 再继续。</span></div>
+<pre><code class="language-bash">bash Documents/newDoc/assets/06-kernel-bypass/02c-verify-iommu.sh
+</code></pre>
+<div style="border-left:6px solid #7e22ce;background:#f3e8ff;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#7e22ce;color:#fff;font-weight:800;">仅供展示 · 输出解读</span> <span style="font-weight:700;color:#581c87;">本轮只读核验 20260907T140922.856130001Z-06-iommu-verify，以下为两端实际输出。</span></div>
+<pre><code class="language-text">
+===== 已生效的网卡隔离 =====
+vm-2522-01
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+iommu_group=/sys/kernel/iommu_groups/7
+devices=0000:03:00.0
+isolation=READY
+
+===== 已生效的网卡隔离 =====
+vm-2522-02
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+iommu_group=/sys/kernel/iommu_groups/7
+devices=0000:03:00.0
+isolation=READY
+</code></pre>
+<p><strong>运行结果重点看：</strong> cmdline 中有两项启动参数，隔离组只有 0000:03:00.0；isolation=READY 还表示脚本已确认 unsafe 模式为 N。</p>
+<div style="border-left:6px solid #0891b2;background:#cffafe;padding:12px 16px;border-radius:8px;margin:14px 0;"><span style="display:inline-block;padding:3px 12px;border-radius:6px;background:#0891b2;color:#fff;font-weight:800;">关键现象</span> <span style="font-weight:700;color:#164e63;">隔离条件仍在，网卡当前仍由 sfc 管理；查看通过不会提前切到 DPDK。</span></div>
+</body></html>

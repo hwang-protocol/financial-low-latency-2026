@@ -1,0 +1,91 @@
+$ configure terminal
+configure terminal
+
+$ no platform fm6000 keyframe FLLETS
+no platform fm6000 keyframe FLLETS
+
+$ no monitor session FLLETS
+no monitor session FLLETS
+
+$ interface Ethernet11
+interface Ethernet11
+
+$ no mac timestamp
+no mac timestamp
+
+$ switchport access vlan 20
+switchport access vlan 20
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ interface Ethernet2
+interface Ethernet2
+
+$ default ptp enable
+default ptp enable
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ default ptp mode
+default ptp mode
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ no vlan 3101
+no vlan 3101
+
+$ end
+end
+
+$ show ptp
+show ptp | no-more
+PTP Mode: Disabled
+
+$ show monitor session
+show monitor session | no-more
+No sessions created
+
+
+$ show platform fm6000 keyframe
+show platform fm6000 keyframe | no-more
+No Keyframes configured
+
+$ show vlan id 20
+show vlan id 20 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2, Et12
+
+
+$ show running-config interfaces Ethernet11
+show running-config interfaces Ethernet11 | no-more
+interface Ethernet11
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2 | no-more
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show interfaces Ethernet1, Ethernet2, Ethernet11, Ethernet12 status
+show interfaces Ethernet1, Ethernet2, Ethernet11, Ethernet12 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+Et2               connected    20       full   10G    10GBASE-CR                      
+Et11              notconnect   20       full   10G    10GBASE-CR                      
+Et12              connected    20       full   10G    10GBASE-CR                      
+

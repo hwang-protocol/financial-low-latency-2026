@@ -1,0 +1,100 @@
+
+===== root@10.1.1.1 =====
+$ ethtool ens64np0
+Settings for ens64np0:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   1000baseT/Full
+	                        25000baseCR/Full
+	                        25000baseSR/Full
+	                        1000baseX/Full
+	                        10000baseCR/Full
+	                        10000baseSR/Full
+	                        10000baseLR/Full
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Supported FEC modes: Not reported
+	Advertised link modes:  1000baseT/Full
+	                        25000baseCR/Full
+	                        25000baseSR/Full
+	                        1000baseX/Full
+	                        10000baseCR/Full
+	                        10000baseSR/Full
+	                        10000baseLR/Full
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: Yes
+	Advertised FEC modes: Not reported
+	Link partner advertised link modes:  Not reported
+	Link partner advertised pause frame use: No
+	Link partner advertised auto-negotiation: No
+	Link partner advertised FEC modes: Not reported
+	Speed: 10000Mb/s
+	Duplex: Full
+	Auto-negotiation: on
+	Port: FIBRE
+	PHYAD: 255
+	Transceiver: internal
+	Supports Wake-on: d
+	Wake-on: d
+        Current message level: 0x000020f7 (8439)
+                               drv probe link ifdown ifup rx_err tx_err hw
+	Link detected: yes
+
+===== root@10.1.1.2 =====
+$ ethtool ens64np1
+Settings for ens64np1:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   1000baseT/Full
+	                        25000baseCR/Full
+	                        25000baseSR/Full
+	                        1000baseX/Full
+	                        10000baseCR/Full
+	                        10000baseSR/Full
+	                        10000baseLR/Full
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Supported FEC modes: Not reported
+	Advertised link modes:  1000baseT/Full
+	                        25000baseCR/Full
+	                        25000baseSR/Full
+	                        1000baseX/Full
+	                        10000baseCR/Full
+	                        10000baseSR/Full
+	                        10000baseLR/Full
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: Yes
+	Advertised FEC modes: Not reported
+	Link partner advertised link modes:  Not reported
+	Link partner advertised pause frame use: No
+	Link partner advertised auto-negotiation: No
+	Link partner advertised FEC modes: Not reported
+	Speed: 10000Mb/s
+	Duplex: Full
+	Auto-negotiation: on
+	Port: FIBRE
+	PHYAD: 255
+	Transceiver: internal
+	Supports Wake-on: d
+	Wake-on: d
+        Current message level: 0x000020f7 (8439)
+                               drv probe link ifdown ifup rx_err tx_err hw
+	Link detected: yes
+===== admin@10.1.1.253 · EOS link state =====
+$ show interfaces Ethernet1 status
+show interfaces Ethernet1 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet2 status
+show interfaces Ethernet2 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et2               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show vlan id 20
+show vlan id 20 | no-more
+VLAN  Name                             Status    Ports
+----- -------------------------------- --------- -------------------------------
+20    fll                              active    Cpu, Et1, Et2
+
+evidence=Documents/reports/course-runs/20260907T143208Z-01-link-pair

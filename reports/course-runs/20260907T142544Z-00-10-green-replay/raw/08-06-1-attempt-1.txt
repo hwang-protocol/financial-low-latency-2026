@@ -1,0 +1,69 @@
+
+vm-2522-02 / verify
+===== 查XDP 挂载身份 =====
+[ens64np1] 对: prog/xdp / jited / native  证: 本次程序确实挂在客户端驱动接收口
+$ ip -details link show dev ens64np1
+8: ens64np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 xdp qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:0f:53:d3:af:21 brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 68 maxmtu 9216 addrgenmode eui64 numtxqueues 255 numrxqueues 255 gso_max_size 65536 gso_max_segs 100 portid 000f53d3af21 parentbus pci parentdev 0000:03:00.0 
+    prog/xdp id 28 tag 2825c80b3631830d jited 
+
+vm-2522-02 / verify
+===== 查初始放行策略 =====
+[policy] 对: remaining_drops=0  证: 接流时先全部放行，再观察健康基线
+$ python3 set-xdp-policy.py allow 0 5 "$PROG_ID"
+policy_id=1 mode=allow remaining=0 ttl_seconds=0
+
+vm-2522-02 / verify
+===== 查行情放行基线 =====
+[Feed] 对: 新 Session / HEALTHY  证: 未武装时原行情可以穿过当前路径
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" HEALTHY --timeout 25 --session-not "$session_before"
+{"session":"0612260002","market_mode":"MULTICAST","trader_auto":"ONLINE","feed":{"session":"0612260002","next_expected":3,"last_delivered":2,"first_pending":0,"highest_received":2,"pending":0,"duplicates":0,"gaps":0,"gap_size":0,"gap_age_ms":0,"path":"MULTICAST","integrity":"HEALTHY","trading_gate":"OPEN"}}
+
+vm-2522-02 / verify
+===== 查行情缺口 =====
+[Feed] 对: GAP / gap_size=1 / 闸门关闭  证: 策略执行后接收器自己发现序号缺失
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" GAP --timeout 12
+{"session":"0612260002","market_mode":"MULTICAST","trader_auto":"ONLINE","feed":{"session":"0612260002","next_expected":590,"last_delivered":589,"first_pending":591,"highest_received":818,"pending":228,"duplicates":0,"gaps":0,"gap_size":1,"gap_age_ms":47,"path":"MULTICAST","integrity":"GAP","trading_gate":"INHIBITED_FEED_GAP"}}
+
+vm-2522-02 / verify
+===== 查缺口期间拒单 =====
+[订单 API] 对: HTTP 400 / FEED_NOT_HEALTHY  证: 行情不完整时交易闸门确实拒绝下单
+$ python3 "$COMMON/assert-feed-order-gate.py" "$API"
+{"http_status":400,"error":"FEED_NOT_HEALTHY"}
+
+vm-2522-02 / verify
+===== 查界面与 GAP 状态合同 =====
+[GUI] 对: 红条、灰簿、按钮合同通过  证: 页面源与 live 状态一致；不是浏览器截图
+$ python3 "$COMMON/assert-feed-gap-ui.py" "$API" "$OUT/raw"
+{"result":"PASS","live_feed_integrity":"GAP","banner_dom":true,"book_gray_css":true,"manual_order_disabled":true,"transport_orders_disabled":true}
+
+vm-2522-02 / verify
+===== 查被丢序号与 Feed 对账 =====
+[XDP audit] 对: 恰好一包 / Locate 8095 / Sequence 等于 next_expected  证: 计数与行情缺口指向同一条消息
+$ python3 - <counters.json> <drop-audit.json> <feed-gap.json>
+xdp_drop_packets=1 sequence=590 locate=8095
+
+vm-2522-02 / verify
+===== 查撤销策略后重放 =====
+[Feed] 对: 新 Session / HEALTHY  证: 关闭丢包后重建完整订单簿
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" HEALTHY --timeout 25 --session-not "$gap_session"
+{"session":"0612260003","market_mode":"MULTICAST","trader_auto":"ONLINE","feed":{"session":"0612260003","next_expected":3,"last_delivered":2,"first_pending":0,"highest_received":2,"pending":0,"duplicates":0,"gaps":0,"gap_size":0,"gap_age_ms":0,"path":"MULTICAST","integrity":"HEALTHY","trading_gate":"OPEN"}}
+
+vm-2522-02 / verify
+===== 查清理后的行情 =====
+[Feed] 对: 新 Session / HEALTHY  证: 卸载过滤层后原订阅路径恢复
+$ python3 "$COMMON/wait-feed-state.py" "$API/api/state" HEALTHY --timeout 25 --session-not "$final_old_session"
+{"session":"0612260005","market_mode":"UNICAST","trader_auto":"ONLINE","feed":{"session":"0612260005","next_expected":3,"last_delivered":2,"first_pending":0,"highest_received":2,"pending":0,"duplicates":0,"gaps":0,"gap_size":0,"gap_age_ms":0,"path":"UNICAST","integrity":"HEALTHY","trading_gate":"OPEN"}}
+
+vm-2522-02 / verify
+===== 查恢复后两笔订单 =====
+[OUCH] 对: 两笔成交 / AAPL 净持仓不变  证: 业务恢复覆盖真实协议下单与回执
+$ python3 "$COMMON/prove-trading-recovered.py" "$API" "$OUT/raw/post-restore-orders"
+{"result":"PASS","feed":{"session":"0612260005","next_expected":15564,"last_delivered":15563,"first_pending":0,"highest_received":15563,"pending":0,"duplicates":0,"gaps":0,"gap_size":0,"gap_age_ms":0,"path":"UNICAST","integrity":"HEALTHY","trading_gate":"OPEN"},"orders":[{"label":"reduce-risk","client_order_id":2112001345,"side":"SELL","result":"ORDER_EXECUTED","order_rtt_ns":103900},{"label":"restore-position","client_order_id":2112001346,"side":"BUY","result":"ORDER_EXECUTED","order_rtt_ns":89142}],"position_AAPL":[1,1]}
+===== 第 08 章 inline XDP 实验 =====
+result=PASS
+policy=NVDA Type A locate 8095 one-shot DROP
+feed=GAP -> replay -> HEALTHY
+order_gate=FEED_NOT_HEALTHY
+post_restore_orders=2/2 ORDER_EXECUTED; AAPL position unchanged
+evidence=/financial-low-latency/Documents/reports/course-runs/20260907T151628Z-08-xdp-receiver-live
