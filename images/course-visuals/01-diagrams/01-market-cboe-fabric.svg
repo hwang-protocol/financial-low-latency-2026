@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1400" viewBox="0 0 1200 1400" role="img" aria-labelledby="title desc"><title id="title">04 · Cboe NY5：BZX 股票的四层网络与业务出口</title><desc id="desc">按 Cboe Connectivity Manual 10.4.29、NY5 Expanded View 和四层设备表重绘。成组设备数量与层间职责来自公开资料；层间连线不指定未公开的逐端口矩阵。订单 TCP 到 BOE/FIX Gateway；内部单播连接撮合。Feed Servers 经 ToR 与三层网络向客户发送行情。DC Core 与 Environment Core 之间 optical TAP 将副本送往汇聚交换机，由汇聚交换机加时间戳并通过 PTP 同步。</desc><defs>
+<marker id="a-blue" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#2563eb"/></marker>
+<marker id="a-orange" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#b66a0b"/></marker>
+<marker id="a-purple" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#7e22ce"/></marker>
+<marker id="a-gray" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#64748b"/></marker>
+<marker id="a-green" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#15803d"/></marker>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;font-size:24px;fill:#172338}.head{font-size:32px;font-weight:700}.bold{font-weight:700}.muted{fill:#64748b}.flow{fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round}.small{font-size:24px}</style></defs>
+<rect width="1200" height="1400" fill="#f7f9fc"/>
+<text x="36" y="52" class="head">04 · Cboe NY5：BZX 股票的四层网络与业务出口</text>
+<text x="36" y="94" class="muted">公开架构重绘 · Connectivity Manual 10.4.29 / 2026-08-17</text>
+<rect x="40" y="128" width="1120" height="124" rx="13" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+<text x="60" y="165" class="bold">客户光纤交付口</text>
+<text x="60" y="206">NY4 / NY5 / NY6</text>
+<text x="454" y="165" class="bold">等光程单模光纤</text>
+<text x="454" y="206">LE Spool / Hub</text>
+<text x="867" y="165" class="bold">Cboe 接入交付</text>
+<text x="867" y="206">LOA 指定配线口</text>
+<path d="M310,187 H420" class="flow" stroke="#64748b"/>
+<path d="M733,187 H833" class="flow" stroke="#64748b"/>
+<path d="M1000,252 V287 H612 V326" class="flow" stroke="#64748b"/>
+<text x="40" y="297" style="fill:#2563eb">蓝：订单 TCP</text>
+<text x="240" y="297" style="fill:#b66a0b">橙：PITCH UDP</text>
+<text x="815" y="94" class="muted">灰：物理 / 内部连接</text>
+<rect x="360" y="326" width="480" height="108" rx="13" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+<text x="386" y="367" class="bold">Customer Access</text>
+<text x="386" y="407">10G：Primary / Secondary</text>
+<text x="40" y="365" class="bold">NY5：6 台 10G 接入交换机</text>
+<text x="40" y="405" class="muted">SW1,3,5 / SW2,4,6</text>
+<rect x="360" y="494" width="480" height="108" rx="13" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+<text x="386" y="535" class="bold">Data Center Core</text>
+<text x="386" y="575">BZX 使用 Core 3 / Core 4</text>
+<text x="40" y="533" class="bold">数据中心核心共 4 台</text>
+<text x="40" y="573" class="muted">BZX 跨其中 2 台</text>
+<rect x="360" y="662" width="480" height="108" rx="13" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+<text x="386" y="703" class="bold">Environment Core</text>
+<text x="386" y="743">BZX Equities：2 台</text>
+<text x="40" y="701" class="bold">业务环境专属核心</text>
+<text x="40" y="741" class="muted">各市场有自己的这一层</text>
+<rect x="360" y="830" width="480" height="108" rx="13" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+<text x="386" y="871" class="bold">Top of Rack · ToR</text>
+<text x="386" y="911">BZX Equities：4 台</text>
+<text x="40" y="869" class="bold">机架交换与服务器接入</text>
+<text x="40" y="909" class="muted">订单服务器双 ToR 主备连接</text>
+<path d="M490,446 V470" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M550,482 V458" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M716,482 V458" class="flow" stroke="#b66a0b" marker-end="url(#a-orange)"/>
+<path d="M490,614 V638" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M550,650 V626" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M716,650 V626" class="flow" stroke="#b66a0b" marker-end="url(#a-orange)"/>
+<path d="M490,782 V806" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M550,818 V794" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M716,818 V794" class="flow" stroke="#b66a0b" marker-end="url(#a-orange)"/>
+<text x="878" y="354" class="bold">10G → 100G 方向</text>
+<text x="878" y="391">Store-and-Forward</text>
+<text x="878" y="457" class="bold">接入 → 核心</text>
+<text x="878" y="492">表列 2×100G 上联</text>
+<text x="878" y="554" class="bold">核心 → 环境核心</text>
+<text x="878" y="589">4×100G Port-Channel</text>
+<rect x="876" y="626" width="286" height="68" rx="13" fill="#faf5ff" stroke="#7e22ce" stroke-width="1.6"/>
+<text x="895" y="669" class="bold" style="fill:#7e22ce">Optical TAP：取副本</text>
+<path d="M550,632 H844 V660 H852" class="flow" stroke="#7e22ce" marker-end="url(#a-purple)" stroke-dasharray="7 7"/>
+<rect x="876" y="750" width="286" height="126" rx="13" fill="#faf5ff" stroke="#7e22ce" stroke-width="1.6"/>
+<text x="895" y="787" class="bold" style="fill:#7e22ce">时间戳汇聚交换机</text>
+<text x="895" y="824">为报文添加时间戳头</text>
+<text x="895" y="859">GPS / PTP 同步</text>
+<path d="M1019,706 V726" class="flow" stroke="#7e22ce" marker-end="url(#a-purple)"/>
+<rect x="858" y="926" width="138" height="74" rx="13" fill="#faf5ff" stroke="#7e22ce" stroke-width="1.6"/>
+<text x="877" y="972" class="bold">Corvil</text>
+<rect x="1012" y="926" width="150" height="74" rx="13" fill="#faf5ff" stroke="#7e22ce" stroke-width="1.6"/>
+<text x="1034" y="957" class="bold">Cboe</text>
+<text x="1026" y="991">时间戳服务</text>
+<path d="M864,680 H850 V890 H927 V902" class="flow" stroke="#7e22ce" marker-end="url(#a-purple)"/>
+<path d="M1063,888 H1087 V902" class="flow" stroke="#7e22ce" marker-end="url(#a-purple)"/>
+<rect x="290" y="1010" width="360" height="113" rx="13" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6"/>
+<text x="312" y="1051" class="bold">BOE / FIX Gateway</text>
+<text x="312" y="1092">TCP 交易会话在此终止</text>
+<rect x="824" y="1010" width="338" height="113" rx="13" fill="#fff7ed" stroke="#b66a0b" stroke-width="1.6"/>
+<text x="844" y="1051" class="bold">Feed Servers</text>
+<text x="844" y="1092">向客户发布 PITCH</text>
+<path d="M490,950 V986" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M550,998 V962" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<path d="M812,1055 H785 V970 H716 V962" class="flow" stroke="#b66a0b" marker-end="url(#a-orange)"/>
+<rect x="350" y="1217" width="370" height="82" rx="13" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+<text x="375" y="1267" class="bold">Inside Switches</text>
+<rect x="40" y="1217" width="270" height="82" rx="13" fill="#fff" stroke="#64748b" stroke-width="1.6"/>
+<text x="59" y="1267" class="bold">Matching Engines</text>
+<path d="M490,1135 V1193" class="flow" stroke="#64748b" marker-end="url(#a-gray)"/>
+<path d="M550,1205 V1147" class="flow" stroke="#64748b" marker-end="url(#a-gray)"/>
+<path d="M338,1240 H334" class="flow" stroke="#64748b" marker-end="url(#a-gray)"/>
+<path d="M322,1276 H326" class="flow" stroke="#64748b" marker-end="url(#a-gray)"/>
+<path d="M732,1258 H997 V1147" class="flow" stroke="#64748b" marker-end="url(#a-gray)"/>
+<text x="41" y="1168" class="muted">撮合请求 / 回报：内部单播</text>
+<text x="748" y="1190" class="muted">市场事件 → Feed</text>
+<text x="40" y="1341" class="muted">光程均衡：客户交付口到 ToR 出口（网关 NIC 前）；采用 OBR 验证。</text>
+<text x="40" y="1378" class="muted">层间线表示公开连接关系；冗余端口对应、客户 BGP 策略与内部传输协议未公开。</text>
+</svg>

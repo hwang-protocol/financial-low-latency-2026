@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1000" viewBox="0 0 1200 1000" role="img" aria-labelledby="title desc">
+  <title id="title">准备 A：五步完成两台主机的运行环境</title>
+  <desc id="desc">先在管理机111校验归档，再按依赖安装、归档分发、目标机编译安装、运行环境检查的顺序处理1与2两台主机。五行从上到下，四个跨主机箭头分别表示依赖软件包、Onload源码归档、SSH发起安装、原始检查结果；虚线表示发起操作，实线表示材料或结果传送。公网下载为零，依赖和源码均来自课前缓存。</desc>
+  <defs>
+    <marker id="arrow-blue" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#2563a6"/></marker>
+    <marker id="arrow-green" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 12 6 0 12Z" fill="#16806a"/></marker>
+  </defs>
+  <rect width="1200" height="1000" fill="#fff"/>
+  <g font-family="Noto Sans CJK SC, sans-serif" fill="#243346" letter-spacing="0">
+    <text x="40" y="55" font-size="32" font-weight="700">准备 A：五步完成两台主机的运行环境</text>
+    <text x="40" y="102" font-size="23" fill="#52667c">从上往下读：①执行一次；②～⑤先处理 .1，再处理 .2。</text>
+    <text x="100" y="155" font-size="27" font-weight="700" fill="#2563a6">管理机 .111</text>
+    <text x="710" y="155" font-size="27" font-weight="700" fill="#16806a">当前目标机 .1 或 .2</text>
+    <path d="M100 171H1160" stroke="#d8e0e8"/>
+
+    <text x="38" y="247" font-size="32" fill="#2563a6">①</text>
+    <rect x="100" y="195" width="430" height="106" rx="8" fill="#eef5fc" stroke="#b8d0e9"/>
+    <text x="124" y="236" font-size="26" font-weight="700">校验本地 Onload 归档</text>
+    <text x="124" y="277" font-size="23">核对 SHA-256，确认固定版本</text>
+    <text x="710" y="233" font-size="23" fill="#52667c">.1：Exchange 交易所主机</text>
+    <text x="710" y="275" font-size="23" fill="#52667c">.2：Trader 交易客户端主机</text>
+
+    <text x="38" y="400" font-size="32" fill="#2563a6">②</text>
+    <rect x="100" y="343" width="430" height="116" rx="8" fill="#eef5fc" stroke="#b8d0e9"/>
+    <text x="124" y="383" font-size="26" font-weight="700">校验并按需分发依赖</text>
+    <text x="124" y="426" font-size="23">编译工具、内核头文件等缓存包</text>
+    <path d="M542 400H686" fill="none" stroke="#2563a6" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-blue)"/>
+    <text x="620" y="376" font-size="20" text-anchor="middle" fill="#2563a6">依赖软件包</text>
+    <rect x="710" y="343" width="450" height="116" rx="8" fill="#edf8f3" stroke="#b0d9ca"/>
+    <text x="734" y="383" font-size="26" font-weight="700">检查版本，缺少时安装</text>
+    <text x="734" y="426" font-size="23">结果：具备本机编译所需工具</text>
+
+    <text x="38" y="550" font-size="32" fill="#2563a6">③</text>
+    <rect x="100" y="501" width="430" height="106" rx="8" fill="#eef5fc" stroke="#b8d0e9"/>
+    <text x="124" y="542" font-size="26" font-weight="700">分发 Onload 源码归档</text>
+    <text x="124" y="583" font-size="23">用 scp 经管理网复制固定 .tgz</text>
+    <path d="M542 553H686" fill="none" stroke="#2563a6" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-blue)"/>
+    <text x="620" y="529" font-size="20" text-anchor="middle" fill="#2563a6">源码归档</text>
+    <rect x="710" y="501" width="450" height="106" rx="8" fill="#edf8f3" stroke="#b0d9ca"/>
+    <text x="734" y="542" font-size="26" font-weight="700">接收归档到临时目录</text>
+    <text x="734" y="583" font-size="23">结果：本机取得待安装的材料</text>
+
+    <text x="38" y="709" font-size="32" fill="#2563a6">④</text>
+    <rect x="100" y="649" width="430" height="134" rx="8" fill="#eef5fc" stroke="#b8d0e9"/>
+    <text x="124" y="689" font-size="26" font-weight="700">发起目标机安装</text>
+    <text x="124" y="731" font-size="23" fill="#52667c">编译实际发生在 .1 / .2 上</text>
+    <path d="M542 716H686" fill="none" stroke="#2563a6" stroke-width="2.5" stroke-dasharray="7 5" stroke-linecap="butt" marker-end="url(#arrow-blue)"/>
+    <text x="620" y="692" font-size="20" text-anchor="middle" fill="#2563a6">SSH 发起安装</text>
+    <rect x="710" y="649" width="450" height="134" rx="8" fill="#edf8f3" stroke="#b0d9ca"/>
+    <text x="734" y="687" font-size="26" font-weight="700">校验归档，按需编译安装</text>
+    <text x="734" y="728" font-size="23">准备运行库、模块和网口命名</text>
+    <text x="734" y="762" font-size="23">按需更新启动镜像、重载驱动</text>
+
+    <text x="38" y="884" font-size="32" fill="#2563a6">⑤</text>
+    <rect x="100" y="825" width="430" height="126" rx="8" fill="#eef5fc" stroke="#b8d0e9"/>
+    <text x="124" y="866" font-size="26" font-weight="700">保存日志，显示关键结果</text>
+    <text x="124" y="909" font-size="23">两台均完成后，继续准备 B</text>
+    <path d="M698 887H554" fill="none" stroke="#16806a" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-green)"/>
+    <text x="620" y="863" font-size="20" text-anchor="middle" fill="#16806a">原始检查结果</text>
+    <rect x="710" y="825" width="450" height="126" rx="8" fill="#edf8f3" stroke="#b0d9ca"/>
+    <text x="734" y="866" font-size="26" font-weight="700">核对当前运行环境</text>
+    <text x="734" y="907" font-size="23">版本、字符设备、sfc、数据口 IP</text>
+    <text x="100" y="987" font-size="21" fill="#52667c">全部材料来自 .111 课前缓存，公网下载 0 字节；某一步失败即停止，保留报错。</text>
+  </g>
+</svg>

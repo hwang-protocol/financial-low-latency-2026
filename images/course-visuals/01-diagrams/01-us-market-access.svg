@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" fill="#172338" role="img" aria-labelledby="title desc">
+  <title id="title">美国股票：客户经 Lime 接入 Cboe</title>
+  <desc id="desc">教学串联图。Secaucus 的客户托管程序经机房交叉连接接入 Lime，交易前检查通过的委托经获准市场连接到 Cboe BZX 的网关与撮合。市场行情由 Cboe 经独立获准行情连接返回客户，不画成经过 Lime 交易前检查。Lime 接入以 2022 年 TS+ 公开实现为例，不表示当前生产协议兼容性或某个客户实际接线。</desc>
+  <defs>
+    <marker id="arrow-blue" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-purple" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#7e22ce"/></marker>
+    <symbol id="server" viewBox="0 0 64 64"><rect x="12" y="5" width="40" height="54" rx="5"/><path d="M13 23h38M13 41h38M31 14h12M31 32h12M31 50h12"/><circle cx="22" cy="14" r="2"/><circle cx="22" cy="32" r="2"/><circle cx="22" cy="50" r="2"/></symbol>
+    <symbol id="gate" viewBox="0 0 64 64"><path d="M7 57V12h50v45M7 22h50M25 23v34M39 23v34M2 57h60"/></symbol>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; font-size:24px; }
+      .heading { font-size:32px; font-weight:700; }
+      .card-title { font-size:26px; font-weight:700; }
+      .muted { fill:#64748b; }
+      .flow { fill:none; stroke-width:2.5; stroke-linecap:butt; stroke-linejoin:round; }
+      .icon { fill:none; stroke-width:2.5; stroke-linecap:butt; stroke-linejoin:round; }
+    </style>
+  </defs>
+  <rect width="1200" height="680" fill="#f7f9fc"/>
+  <text x="36" y="52" class="heading">美国股票：客户经 Lime 接入 Cboe</text>
+  <text x="36" y="94" class="muted">订单先到券商接入，行情另走获准的数据连接。</text>
+
+  <text x="50" y="174" class="muted">客户位置：Secaucus</text>
+  <text x="570" y="174" fill="#2563eb">蓝：委托</text>
+  <text x="870" y="174" fill="#7e22ce">紫：市场行情</text>
+
+  <rect id="client-card" x="40" y="240" width="290" height="245" rx="15" fill="#fff" stroke="#2563eb" stroke-width="1.6"/>
+  <use href="#server" x="58" y="258" width="58" height="58" class="icon" stroke="#2563eb"/>
+  <text x="128" y="293" class="card-title" fill="#2563eb">客户托管程序</text>
+  <text x="62" y="350">产生委托 / 接收回报</text>
+  <path d="M62,385 H308" stroke="#dbe2ea" stroke-width="1.6"/>
+  <text x="62" y="443">接收市场行情</text>
+
+  <rect id="broker-card" x="455" y="240" width="290" height="245" rx="15" fill="#fff" stroke="#c76a08" stroke-width="1.6"/>
+  <use href="#gate" x="473" y="258" width="58" height="58" class="icon" stroke="#c76a08"/>
+  <text x="543" y="293" class="card-title" fill="#c76a08">Lime 接入</text>
+  <text x="477" y="350">交易前检查通过才转发</text>
+  <path d="M477,385 H723" stroke="#dbe2ea" stroke-width="1.6"/>
+  <text x="477" y="443" class="muted">例：TS+（2022）</text>
+
+  <rect id="exchange-card" x="870" y="240" width="290" height="245" rx="15" fill="#fff" stroke="#15803d" stroke-width="1.6"/>
+  <use href="#server" x="888" y="258" width="58" height="58" class="icon" stroke="#15803d"/>
+  <text x="958" y="293" class="card-title" fill="#15803d">Cboe BZX</text>
+  <text x="892" y="350">网关与撮合</text>
+  <path d="M892,385 H1138" stroke="#dbe2ea" stroke-width="1.6"/>
+  <text x="892" y="443">市场行情发布</text>
+
+  <path id="order-to-lime" class="flow" d="M342,345 H431" stroke="#2563eb" marker-end="url(#arrow-blue)" data-target="broker-card" data-tip="443,345" data-gap="12"/>
+  <text x="392.5" y="324" text-anchor="middle" fill="#2563eb">BOE/TCP</text>
+  <path id="order-to-cboe" class="flow" d="M757,345 H846" stroke="#2563eb" marker-end="url(#arrow-blue)" data-target="exchange-card" data-tip="858,345" data-gap="12"/>
+  <text x="807.5" y="324" text-anchor="middle" fill="#2563eb">委托</text>
+
+  <text x="392.5" y="535" text-anchor="middle" class="muted">机房 cross-connect</text>
+  <text x="807.5" y="535" text-anchor="middle" class="muted">获准的市场连接</text>
+  <text x="600" y="571" text-anchor="middle" fill="#7e22ce">获准的行情连接 · PITCH / UDP 组播</text>
+  <path id="market-to-client" class="flow" d="M1015,497 V584 H185 V509" stroke="#7e22ce" marker-end="url(#arrow-purple)" data-target="client-card" data-tip="185,497" data-gap="12"/>
+  <text x="36" y="610" class="muted">订单回报沿交易会话返回；市场行情单独接收。</text>
+  <text x="36" y="650" class="muted">教学串联：Lime 托管服务与 TS+ 2022 公开实现；并非客户生产接线图。</text>
+</svg>

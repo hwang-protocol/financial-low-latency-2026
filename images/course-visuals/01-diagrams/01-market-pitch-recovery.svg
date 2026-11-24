@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1400" viewBox="0 0 1200 1400" role="img" aria-labelledby="title desc"><title id="title">06 · Cboe BZX Unit 1：双路实时行情与独立补包</title><desc id="desc">公开生产地址摘自 Cboe Multicast PITCH Specification 2.41.77 的 BZX Address/Unit Distribution 与 Multicast Routing Parameters。ZA 和 ZB 的源值均为公开源前缀，非精确源主机。接收端双路按 Unit 与序号合并；缺包请求与确认走 TCP GRP，重放走独立 UDP 组播。示意序号不代表生产运行。</desc><defs>
+<marker id="a-blue" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#2563eb"/></marker>
+<marker id="a-orange" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#b66a0b"/></marker>
+<marker id="a-purple" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#7e22ce"/></marker>
+<marker id="a-gray" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#64748b"/></marker>
+<marker id="a-green" viewBox="0 -6 12 12" markerWidth="12" markerHeight="12" refX="0" refY="0" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,-6 L12,0 L0,6 Z" fill="#15803d"/></marker>
+<style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;font-size:24px;fill:#172338}.head{font-size:32px;font-weight:700}.bold{font-weight:700}.muted{fill:#64748b}.flow{fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round}.small{font-size:24px}</style></defs>
+<rect width="1200" height="1400" fill="#f7f9fc"/>
+<text x="36" y="52" class="head">06 · Cboe BZX Unit 1：双路实时行情与独立补包</text>
+<text x="36" y="94" class="muted">PITCH 2.41.77 / 2026-09-09 · 公开生产参数；序号 1001–1003 为教学示例</text>
+<rect x="40" y="128" width="534" height="248" rx="13" fill="#fff7ed" stroke="#b66a0b" stroke-width="1.6"/>
+<text x="60" y="168" class="bold" style="fill:#b66a0b">ZA · 主站 A / Gig-Shaped</text>
+<text x="60" y="209">源前缀：174.136.161.160/28</text>
+<text x="60" y="248">实时 G：224.0.130.128</text>
+<text x="60" y="287">补包 G：224.0.130.144</text>
+<text x="60" y="328">UDP：30001    RP：74.115.128.140</text>
+<text x="60" y="362" class="muted">源前缀不是单台源 S</text>
+<rect x="626" y="128" width="534" height="248" rx="13" fill="#fff7ed" stroke="#b66a0b" stroke-width="1.6"/>
+<text x="646" y="168" class="bold" style="fill:#b66a0b">ZB · 主站 B / Gig-Shaped</text>
+<text x="646" y="209">源前缀：174.136.161.192/28</text>
+<text x="646" y="248">实时 G：233.209.92.128</text>
+<text x="646" y="287">补包 G：233.209.92.144</text>
+<text x="646" y="328">UDP：30001    RP：74.115.128.142</text>
+<text x="646" y="362" class="muted">源前缀不是单台源 S</text>
+<rect x="254" y="465" width="692" height="178" rx="13" fill="#fff" stroke="#b66a0b" stroke-width="1.6"/>
+<text x="280" y="507" class="bold">客户 Feed Handler：双收、去重、检查连续性</text>
+<text x="280" y="549">一侧缺 1002：从另一侧取得同 Unit 的 1002</text>
+<text x="280" y="587">两侧都缺 1002：缓存 1003，请求缺失序号</text>
+<text x="280" y="624" class="muted">合并与序号判断发生在接收程序，交换机不代做。</text>
+<path d="M307,388 V413 H426 V441" class="flow" stroke="#b66a0b" marker-end="url(#a-orange)"/>
+<path d="M893,388 V413 H774 V441" class="flow" stroke="#b66a0b" marker-end="url(#a-orange)"/>
+<text x="35" y="423" style="fill:#b66a0b">实时 UDP</text>
+<text x="1000" y="423" style="fill:#b66a0b">实时 UDP</text>
+<path d="M958,553 H1090 V714 H974 V741" class="flow" stroke="#64748b" marker-end="url(#a-gray)"/>
+<text x="649" y="698" class="muted">缺口仍在 → 启动已开通的 GRP 会话</text>
+<rect x="40" y="765" width="412" height="166" rx="13" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6"/>
+<text x="62" y="806" class="bold">Cboe Gap Request Proxy</text>
+<text x="62" y="846">登录后接受 Unit / 起始序号 / 数量</text>
+<text x="62" y="885">GRP IP 与 TCP 端口按交付分配</text>
+<rect x="754" y="765" width="406" height="166" rx="13" fill="#eff6ff" stroke="#2563eb" stroke-width="1.6"/>
+<text x="776" y="806" class="bold">客户 GRP socket</text>
+<text x="776" y="846">例：Unit=1，Sequence=1002</text>
+<text x="776" y="885">Count=1；保留后续实时消息</text>
+<path d="M742,822 H476" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<text x="602" y="795" style="fill:#2563eb" text-anchor="middle">TCP 补包请求</text>
+<path d="M464,896 H730" class="flow" stroke="#2563eb" marker-end="url(#a-blue)"/>
+<text x="602" y="870" style="fill:#2563eb" text-anchor="middle">TCP 接受 / 拒绝</text>
+<rect x="40" y="1034" width="412" height="169" rx="13" fill="#fff7ed" stroke="#b66a0b" stroke-width="1.6"/>
+<text x="62" y="1074" class="bold">Cboe Gap Server</text>
+<text x="62" y="1116">ZA：224.0.130.144</text>
+<text x="62" y="1153">ZB：233.209.92.144</text>
+<text x="62" y="1187">对应 Feed / UDP 30001</text>
+<rect x="754" y="1034" width="406" height="169" rx="13" fill="#fff7ed" stroke="#b66a0b" stroke-width="1.6"/>
+<text x="776" y="1074" class="bold">客户补包组接收 socket</text>
+<text x="776" y="1116">须加入对应补包 G 并允许 UDP</text>
+<text x="776" y="1153">补齐 1002 后继续交付 1003</text>
+<text x="776" y="1187">与实时流按 Unit / 序号合并</text>
+<path d="M464,1122 H730" class="flow" stroke="#b66a0b" marker-end="url(#a-orange)"/>
+<text x="602" y="1092" style="fill:#b66a0b" text-anchor="middle">专用 UDP 组播</text>
+<text x="40" y="986" class="bold" style="fill:#7e22ce">接收顺序不固定：UDP 重放可以早于或晚于 TCP Accepted 到达。</text>
+<rect x="40" y="1234" width="1120" height="126" rx="13" fill="#faf5ff" stroke="#7e22ce" stroke-width="1.6"/>
+<text x="62" y="1274" style="fill:#7e22ce">GRP 是有限补包：请求受数量、速率与序号窗口限制；Accepted 不等于已补齐。</text>
+<text x="62" y="1312">盘中重建：Spin Server 以 TCP 返回当前簿；接收端缓存实时增量，Spin Finished 后接续。</text>
+<text x="62" y="1348" class="muted">实时组、补包组、TCP GRP、TCP Spin 分别交付和核验。</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title description">
+  <title id="title">中国股票：托管客户经券商接入交易所</title>
+  <desc id="description">中泰 XTP 与上交所资料串联的教学示意；非客户生产布线图。上方委托路径为客户托管程序经机房网络进入券商 XTP 交易服务，经过券商接入与检查，再通过局域接入或运营商专线抵达交易所接入与核心交易处理。下方行情路径经券商独立的行情接收与分发服务送往客户，不是订单回报；XTP 行情 TCP 或 UDP 的选择不证明 UDP 必为组播。办公室只经灰色虚线管理或查看客户托管程序，不是订单必经点。卡片表示责任与服务角色，不能读成三台独立生产机器；券商内部具体部署未公开。依据：中泰 SmartX 开发者指南 https://smarttest.ztqft.com/sdkDoc/introduction/1.0.0/guide/howTo_develop.html ；中泰官方 XTP_API_20250806_2.2.50.8 交易和行情 API 头文件 https://github.com/ztsec/xtp_api_python/tree/master/XTP_API_20250806_2.2.50.8/bin/include ；上交所技术交易局域接入 https://www.ssetech.com.cn/product/exchange/jyjyservice/ 、交易广域接入 https://www.ssetech.com.cn/product/exchange/SDH_MSTP/ 、行情广域接入 https://www.ssetech.com.cn/product/exchange/gsdmhqNetwork/ ；上交所交易接入技术实施指南总述 1.0 https://www.sse.com.cn/services/tradingtech/policy/c/10829610/files/85b8fa13dda7455a9aa3f6e390b08b3a.pdf 。核验日 2026-09-10。</desc>
+  <defs>
+    <marker id="arrow-blue" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-purple" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#7e22ce"/></marker>
+    <marker id="arrow-gray" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#64748b"/></marker>
+    <symbol id="server" viewBox="0 0 64 64"><rect x="12" y="5" width="40" height="54" rx="5"/><path d="M13 23h38M13 41h38M31 14h12M31 32h12M31 50h12"/><circle cx="22" cy="14" r="2"/><circle cx="22" cy="32" r="2"/><circle cx="22" cy="50" r="2"/></symbol>
+    <symbol id="gate" viewBox="0 0 64 64"><path d="M7 57V12h50v45M7 22h50M25 23v34M39 23v34M2 57h60"/></symbol>
+  </defs>
+  <style>
+    text { font-family:"Noto Sans CJK SC",sans-serif; font-size:24px; fill:#172338; }
+    .heading { font-size:32px; font-weight:700; }
+    .node-title { font-size:26px; font-weight:700; }
+    .subtle { fill:#64748b; }
+    .blue { fill:#2563eb; }
+    .purple { fill:#7e22ce; }
+    .orange { fill:#c76a08; }
+    .green { fill:#15803d; }
+    .line { fill:none; stroke-width:2.5; stroke-linecap:butt; stroke-linejoin:round; }
+    .icon { fill:none; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+  </style>
+  <rect width="1200" height="680" fill="#f7f9fc"/>
+  <text x="36" y="52" class="heading">中国股票：托管客户经券商接入交易所</text>
+  <text x="36" y="94" class="subtle">先看程序接入谁，再分清交易、行情和管理连接。</text>
+
+  <text x="50" y="174" class="subtle">办公室：管理 / 查看</text>
+  <path class="line" d="M185 190 V216" stroke="#64748b" stroke-dasharray="7 5" marker-end="url(#arrow-gray)"/>
+  <text x="570" y="174" class="blue">蓝：委托与申报</text>
+  <text x="870" y="174" class="purple">紫：市场行情</text>
+
+  <rect id="client" x="40" y="240" width="290" height="245" rx="15" fill="#fff" stroke="#2563eb" stroke-width="1.6"/>
+  <use href="#server" x="58" y="258" width="58" height="58" class="icon" stroke="#2563eb"/>
+  <text x="128" y="293" class="node-title blue">客户托管程序</text>
+  <text x="62" y="350">产生委托 / 接收回报</text>
+  <path d="M62 385 H308" stroke="#dbe2ea" stroke-width="1.6"/>
+  <text x="62" y="443">接收券商行情</text>
+
+  <rect id="broker" x="455" y="240" width="290" height="245" rx="15" fill="#fff" stroke="#c76a08" stroke-width="1.6"/>
+  <use href="#gate" x="473" y="258" width="58" height="58" class="icon" stroke="#c76a08"/>
+  <text x="543" y="293" class="node-title orange">券商接入与检查</text>
+  <text x="477" y="350">XTP 交易服务</text>
+  <path d="M477 385 H723" stroke="#dbe2ea" stroke-width="1.6"/>
+  <text x="477" y="443">独立行情接收与分发</text>
+
+  <rect id="exchange" x="870" y="240" width="290" height="245" rx="15" fill="#fff" stroke="#15803d" stroke-width="1.6"/>
+  <use href="#server" x="888" y="258" width="58" height="58" class="icon" stroke="#15803d"/>
+  <text x="958" y="293" class="node-title green">上交所</text>
+  <text x="892" y="350">交易接入与撮合</text>
+  <path d="M892 385 H1138" stroke="#dbe2ea" stroke-width="1.6"/>
+  <text x="892" y="443">市场行情发布</text>
+
+  <path class="line" d="M342 345 H431" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <text x="392" y="324" text-anchor="middle" class="blue">XTP/TCP</text>
+  <path class="line" d="M757 345 H846" stroke="#2563eb" marker-end="url(#arrow-blue)"/>
+  <text x="807" y="324" text-anchor="middle" class="blue">申报</text>
+  <path class="line" d="M858 440 H769" stroke="#7e22ce" marker-end="url(#arrow-purple)"/>
+  <text x="807" y="417" text-anchor="middle" class="purple">市场行情</text>
+  <path class="line" d="M443 440 H354" stroke="#7e22ce" marker-end="url(#arrow-purple)"/>
+  <text x="392" y="417" text-anchor="middle" class="purple">TCP/UDP</text>
+
+  <text x="392" y="533" text-anchor="middle" class="subtle">第一段：机房网络</text>
+  <text x="807" y="533" text-anchor="middle" class="subtle">交易接入：局域</text>
+  <text x="807" y="570" text-anchor="middle" class="subtle">或运营商专线</text>
+  <text x="36" y="610" class="subtle">订单回报沿交易会话返回；行情独立分发，UDP 不必然是组播。</text>
+  <text x="36" y="650" class="subtle">中泰 XTP 与上交所资料串联的教学示意；非客户生产布线图</text>
+</svg>

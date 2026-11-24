@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1450" viewBox="0 0 1200 1450" role="img" aria-labelledby="title desc">
+<title id="title">下单与行情：客户接口及 LDDS 接入</title>
+<desc id="desc">上方下单框为客户经券商下单。下方行情大框内分两层：第一层说明客户行情接口有UDP组播和TCP两种推送方式，以XTP-Pro的同机房生产UDP与公网测试TCP为例；第二层为LDDS独立接入示例：服务商VDE与DDS、SDS之间使用TCP，VSS连接VDE的实时和重建TCP端口。客户与上游分别举例，不据此认定中泰等服务商的上游采购。LDDS支持多套独立发布源、多路接入，每一路仍是TCP。</desc>
+<defs>
+<marker id="head-order" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#2563eb"/></marker>
+<marker id="head-quote" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#d97706"/></marker>
+<marker id="head-file" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#0d9488"/></marker>
+<marker id="head-unverified" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#64748b"/></marker>
+</defs>
+<rect width="1200" height="1450" fill="#ffffff"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" fill="#172338">
+<text id="text-1" x="30" y="48" font-size="34" font-weight="750" fill="#172338" text-anchor="start">下单与行情：客户接口及 LDDS 接入</text>
+<text id="text-2" x="30" y="90" font-size="25" font-weight="500" fill="#64748b" text-anchor="start">蓝线：TCP 接口；橙线：UDP 组播行情；灰线：申报与回报关系。</text>
+<rect x="25" y="115" width="1150" height="330" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text id="text-3" x="45" y="156" font-size="28" font-weight="700" fill="#2563eb" text-anchor="start">下单：客户委托券商，由券商向交易所申报</text>
+<rect x="75" y="180" width="42" height="54" rx="5" fill="#fff" stroke="#7e57a2" stroke-width="2"/>
+<rect x="82" y="189" width="28" height="8" rx="2" fill="#edf3ff" stroke="#7e57a2" stroke-width="2"/>
+<circle cx="105" cy="193" r="1.5" fill="#7e57a2"/>
+<rect x="82" y="204" width="28" height="8" rx="2" fill="#edf3ff" stroke="#7e57a2" stroke-width="2"/>
+<circle cx="105" cy="208" r="1.5" fill="#7e57a2"/>
+<rect x="82" y="219" width="28" height="8" rx="2" fill="#edf3ff" stroke="#7e57a2" stroke-width="2"/>
+<circle cx="105" cy="223" r="1.5" fill="#7e57a2"/>
+<text id="text-4" x="135" y="214" font-size="28" font-weight="700" fill="#633b91" text-anchor="start">客户</text>
+<rect x="505" y="190" width="48" height="36" rx="5" fill="#fff" stroke="#38628b" stroke-width="2"/>
+<path d="M520 190 V183 H538 V190 M505 205 H553" fill="none" stroke="#38628b" stroke-width="2"/>
+<rect x="526" y="202" width="7" height="8" rx="1" fill="#edf3ff" stroke="#38628b" stroke-width="2"/>
+<text id="text-5" x="570" y="214" font-size="28" font-weight="700" fill="#24558a" text-anchor="start">券商</text>
+<path d="M965 193 L991 179 L1017 193 Z M965 227 H1017" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<rect x="972" y="197" width="8" height="25" rx="1" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<rect x="987" y="197" width="8" height="25" rx="1" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<rect x="1002" y="197" width="8" height="25" rx="1" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<text id="text-6" x="1030" y="214" font-size="28" font-weight="700" fill="#286453" text-anchor="start">交易所</text>
+<rect x="50" y="267" width="235" height="105" rx="12" fill="#fff" stroke="#7e57a2" stroke-width="2"/>
+<text id="text-7" x="167.5" y="328.5" font-size="26" font-weight="600" fill="#172338" text-anchor="middle">客户交易程序</text>
+<rect x="480" y="267" width="300" height="105" rx="12" fill="#fff" stroke="#38628b" stroke-width="2"/>
+<text id="text-8" x="630.0" y="309.0" font-size="26" font-weight="600" fill="#172338" text-anchor="middle">券商交易系统</text>
+<text id="text-9" x="630.0" y="348.0" font-size="26" font-weight="600" fill="#172338" text-anchor="middle">检查委托并申报</text>
+<rect x="990" y="267" width="165" height="105" rx="12" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<text id="text-10" x="1072.5" y="309.0" font-size="26" font-weight="600" fill="#172338" text-anchor="middle">交易所</text>
+<text id="text-11" x="1072.5" y="348.0" font-size="26" font-weight="600" fill="#172338" text-anchor="middle">订单处理</text>
+<path id="customer-orders" d="M309 342 H456" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-order)" marker-start="url(#head-order)"/>
+<text id="text-12" x="382.5" y="276" font-size="22" font-weight="500" fill="#2563eb" text-anchor="middle">委托 / 回报</text>
+<text id="text-13" x="382.5" y="310" font-size="22" font-weight="500" fill="#2563eb" text-anchor="middle">XTP-Pro / TCP</text>
+<path id="market-orders" d="M804 319 H966" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-unverified)" marker-start="url(#head-unverified)"/>
+<text id="text-14" x="885.0" y="286" font-size="22" font-weight="500" fill="#64748b" text-anchor="middle">申报 / 市场回报</text>
+<text id="text-15" x="45" y="415" font-size="24" font-weight="500" fill="#64748b" text-anchor="start">双向箭头表示请求与应答；行情推送见下方“行情”框。</text>
+
+<g id="market-data-group">
+<rect id="market-data-frame" x="10" y="460" width="1180" height="970" rx="18" fill="#fffbeb" stroke="#d6b96e" stroke-width="2"/>
+<text id="market-data-heading" x="30" y="505" font-size="30" font-weight="750" fill="#92400e">行情</text>
+<text id="market-data-subheading" x="125" y="505" font-size="25" font-weight="500" fill="#64748b">向客户推送 · 接收上游与请求补发</text>
+<rect id="client-delivery-panel" x="25" y="528" width="1150" height="335" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text id="text-16" x="45" y="572" font-size="28" font-weight="700" fill="#172338" text-anchor="start">行情给客户：协议由服务商产品与环境确定</text>
+<rect id="quote-client" x="60" y="608" width="240" height="200" rx="12" fill="#f5efff" stroke="#b99ed8" stroke-width="2"/>
+<text id="text-17" x="180" y="689" font-size="26" font-weight="700" fill="#633b91" text-anchor="middle">客户行情程序</text>
+<text id="text-18" x="180" y="730" font-size="25" font-weight="500" fill="#633b91" text-anchor="middle">接收行情</text>
+<rect id="quote-vendor" x="870" y="608" width="270" height="200" rx="12" fill="#edf3ff" stroke="#a3bfdf" stroke-width="2"/>
+<text id="text-19" x="1005" y="689" font-size="27" font-weight="700" fill="#24558a" text-anchor="middle">行情服务商</text>
+<text id="text-20" x="1005" y="730" font-size="25" font-weight="500" fill="#24558a" text-anchor="middle">客户推送服务</text>
+<text id="text-21" x="579" y="617" font-size="27" font-weight="700" fill="#d97706" text-anchor="middle">UDP 组播</text>
+<text id="text-22" x="579" y="655" font-size="23" font-weight="500" fill="#64748b" text-anchor="middle">例：XTP-Pro 同机房生产</text>
+<path id="client-udp-delivery" d="M858 680 H324" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-quote)"/>
+<text id="text-23" x="579" y="717" font-size="27" font-weight="700" fill="#2563eb" text-anchor="middle">TCP</text>
+<text id="text-24" x="579" y="755" font-size="23" font-weight="500" fill="#64748b" text-anchor="middle">例：XTP-Pro 公网测试</text>
+<path id="client-tcp-delivery" d="M858 780 H324" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-order)"/>
+<text id="text-25" x="45" y="841" font-size="24" font-weight="500" fill="#64748b" text-anchor="start">以上以 XTP-Pro 为例：生产与测试分别使用不同接口。</text>
+<rect id="ldds-panel" x="25" y="880" width="1150" height="470" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text id="text-26" x="45" y="922" font-size="28" font-weight="700" fill="#172338" text-anchor="start">服务商接上游：LDDS 的实时与重建接口使用 TCP</text>
+<rect id="vendor-boundary" x="50" y="946" width="710" height="301" rx="12" fill="#edf3ff" stroke="#a3bfdf" stroke-width="2"/>
+<text id="text-27" x="405" y="980" font-size="25" font-weight="700" fill="#24558a" text-anchor="middle">服务商一侧 · VDE 与 VSS 在同一安全网络</text>
+<rect id="ldds-publisher" x="945" y="946" width="210" height="301" rx="12" fill="#edf8f4" stroke="#9cc6b6" stroke-width="2"/>
+<text id="text-28" x="1050" y="980" font-size="25" font-weight="700" fill="#286453" text-anchor="middle">上证信息</text>
+<rect id="vss" x="70" y="1023" width="235" height="165" rx="12" fill="#fff" stroke="#38628b" stroke-width="2"/>
+<text id="text-29" x="187.5" y="1067" font-size="26" font-weight="700" fill="#24558a" text-anchor="middle">VSS</text>
+<text id="text-30" x="187.5" y="1108" font-size="25" font-weight="600" fill="#172338" text-anchor="middle">信息商接收系统</text>
+<text id="text-31" x="187.5" y="1148" font-size="24" font-weight="500" fill="#172338" text-anchor="middle">接收 / 检查序号</text>
+<rect id="vde" x="500" y="1005" width="225" height="220" rx="12" fill="#fff" stroke="#38628b" stroke-width="2"/>
+<text id="text-32" x="612.5" y="1041" font-size="25" font-weight="700" fill="#24558a" text-anchor="middle">VDE 官方程序</text>
+<text id="text-33" x="612.5" y="1082" font-size="24" font-weight="500" fill="#24558a" text-anchor="middle">实时端口</text>
+<text id="text-34" x="612.5" y="1183" font-size="24" font-weight="500" fill="#24558a" text-anchor="middle">重建端口</text>
+<rect id="dds" x="965" y="1005" width="170" height="93" rx="12" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<text id="text-35" x="1050" y="1042" font-size="26" font-weight="700" fill="#286453" text-anchor="middle">DDS</text>
+<text id="text-36" x="1050" y="1080" font-size="25" font-weight="500" fill="#172338" text-anchor="middle">实时发布</text>
+<rect id="sds" x="965" y="1132" width="170" height="93" rx="12" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<text id="text-37" x="1050" y="1169" font-size="26" font-weight="700" fill="#286453" text-anchor="middle">SDS</text>
+<text id="text-38" x="1050" y="1207" font-size="24" font-weight="500" fill="#172338" text-anchor="middle">重建 / 认证</text>
+<path id="vde-vss-live" d="M476 1060 H329" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-order)" marker-start="url(#head-order)"/>
+<text id="text-39" x="402.5" y="1030" font-size="23" font-weight="500" fill="#2563eb" text-anchor="middle">TCP 实时</text>
+<path id="vde-vss-rebuild" d="M329 1155 H476" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-order)" marker-start="url(#head-order)"/>
+<text id="text-40" x="402.5" y="1125" font-size="23" font-weight="500" fill="#2563eb" text-anchor="middle">TCP 短连接</text>
+<path id="dds-vde" d="M941 1058 H749" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-order)" marker-start="url(#head-order)"/>
+<text id="text-41" x="845" y="1028" font-size="23" font-weight="500" fill="#2563eb" text-anchor="middle">TCP 长连接</text>
+<path id="sds-vde" d="M941 1178 H749" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-order)" marker-start="url(#head-order)"/>
+<text id="text-42" x="845" y="1148" font-size="23" font-weight="500" fill="#2563eb" text-anchor="middle">TCP 短连接</text>
+<text id="text-43" x="45" y="1283" font-size="24" font-weight="500" fill="#172338" text-anchor="start">实时：DDS → VDE 实时端口 → VSS。</text>
+<text id="text-44" x="45" y="1323" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">补发：VSS → VDE 重建端口 → SDS；结果沿原路返回。</text>
+<text id="text-45" x="30" y="1397" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">图示单路；LDDS 支持独立多路接入，各路仍为 TCP。</text>
+</g>
+</g></svg>

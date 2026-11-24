@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1220" viewBox="0 0 1200 1220" role="img" aria-labelledby="title desc"><title id="title">07 · 订单会话在哪里终止，断线后恢复什么</title><desc id="desc">Lime TS+ 1.8.0（2022）代理案例 + BZX 主备规则；布局为教学归纳</desc><defs>
+<marker id="ink" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#172b4d"/></marker>
+<marker id="muted" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#52647b"/></marker>
+<marker id="tcp" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#2563eb"/></marker>
+<marker id="udp" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#b66a0b"/></marker>
+<marker id="ctl" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#7e22ce"/></marker>
+<marker id="wire" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#64748b"/></marker>
+<marker id="green" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#15803d"/></marker>
+</defs><rect width="1200" height="100%" fill="white"/>
+<text x="36" y="48" font-family="Noto Sans CJK SC, sans-serif" font-size="32" font-weight="700" fill="#172b4d" text-anchor="start">07 · 订单会话在哪里终止，断线后恢复什么</text>
+<text x="36" y="88" font-family="Noto Sans CJK SC, sans-serif" font-size="23" font-weight="400" fill="#52647b" text-anchor="start">Lime TS+ 1.8.0（2022）代理案例 + BZX 主备规则；布局为教学归纳</text>
+<rect x="36" y="125" width="1128" height="470" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="56" y="162" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="start">订单主线 · 两段 TCP 分别终止；蓝色实箭头为应用消息方向</text>
+<rect x="65" y="205" width="275" height="160" rx="12" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="202.5" y="242" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="middle">客户策略主机</text>
+<text x="202.5" y="281" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">客户订单 ID</text>
+<text x="202.5" y="321" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">客户端会话状态</text>
+<rect x="465" y="205" width="280" height="160" rx="12" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="605.0" y="242" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="middle">Lime TS+ 代理</text>
+<text x="605.0" y="281" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">交易前检查</text>
+<text x="605.0" y="321" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">券商控制风险参数</text>
+<rect x="870" y="205" width="270" height="160" rx="12" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="1005.0" y="242" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="middle">Cboe 订单网关</text>
+<text x="1005.0" y="281" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">BOE 会话 / 序号</text>
+<text x="1005.0" y="321" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">订单接收与应答</text>
+<polyline points="352,255 441.0,255.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#tcp)"/>
+<polyline points="757,255 846.0,255.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#tcp)"/>
+<text x="397" y="210" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#2563eb" text-anchor="middle">TCP ①</text>
+<text x="804" y="210" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#2563eb" text-anchor="middle">TCP ②</text>
+<polyline points="465,321 364.0,321.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#tcp)"/>
+<polyline points="870,321 769.0,321.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#tcp)"/>
+<text x="397" y="406" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#2563eb" text-anchor="middle">处理回报</text>
+<text x="804" y="406" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#2563eb" text-anchor="middle">处理回报</text>
+<rect x="870" y="465" width="270" height="100" rx="12" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="1005.0" y="502" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="middle">撮合引擎</text>
+<text x="1005.0" y="541" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">处理订单状态</text>
+<polyline points="965,377 965.0,441.0" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#wire)"/>
+<polyline points="1045,465 1045.0,389.0" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#wire)"/>
+<text x="1090" y="418" font-family="Noto Sans CJK SC, sans-serif" font-size="23" font-weight="400" fill="#52647b" text-anchor="middle">内部消息</text>
+<text x="65" y="480" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="start">两段 TCP 分别保存连接状态；</text>
+<text x="65" y="530" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="start">应用恢复还要核对会话序号与未决订单。</text>
+<rect x="36" y="625" width="1128" height="415" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="56" y="662" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="start">多站点恢复 · 以 BZX 常规主站 / 备站运行规则说明</text>
+<rect x="65" y="705" width="480" height="180" rx="12" fill="white" stroke="#2563eb" stroke-width="2"/>
+<text x="305.0" y="742" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="middle">Secaucus 主站</text>
+<text x="305.0" y="781" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">正常受理订单</text>
+<text x="305.0" y="821" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">A/B 接入故障：确认会话状态</text>
+<text x="305.0" y="861" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">未决订单：按应用协议核对</text>
+<rect x="660" y="705" width="480" height="180" rx="12" fill="white" stroke="#7e22ce" stroke-width="2"/>
+<text x="900.0" y="742" font-family="Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#172b4d" text-anchor="middle">BZX 备站 · ORD1</text>
+<text x="900.0" y="781" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">可预连、收行情、维持心跳</text>
+<text x="900.0" y="821" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">市场宣布主站故障以前</text>
+<text x="900.0" y="861" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">备站拒绝订单</text>
+<polyline points="557,780 648,780" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="butt" stroke-dasharray="8 6"/>
+<text x="600" y="925" font-family="Noto Sans CJK SC, sans-serif" font-size="26" font-weight="700" fill="#172b4d" text-anchor="middle">链路恢复 → 路由可达 → 会话登录 / 回放 → 订单状态对账</text>
+<text x="600" y="973" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="middle">恢复顺序取决于券商和市场协议；BGP 收敛本身不完成订单恢复。</text>
+<rect x="36" y="1070" width="1128" height="133" rx="12" fill="#eef2ff" stroke="#c7d2fe" stroke-width="2"/>
+<text x="54" y="1106" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="start">超时只说明尚未收到结果，订单可能已到撮合；重发前须核对订单身份与回报。</text>
+<text x="54" y="1141" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="start">行情 ZA/ZB 合并的是同一消息副本；订单双发可能产生两笔真实委托。</text>
+<text x="54" y="1176" font-family="Noto Sans CJK SC, sans-serif" font-size="24" font-weight="400" fill="#172b4d" text-anchor="start">财务风控的控制权属于接入券商；部署在客户机房也不转移控制权。</text>
+</svg>

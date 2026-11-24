@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1320" viewBox="0 0 1200 1320" role="img" aria-labelledby="title desc">
+<title id="title">券商接入上交所：下单、行情与备用线路</title>
+<desc id="desc">市场侧接入示意。上方下单框：券商经交易线路申报并接收回报。中部行情框：UDP组播走独立行情线路；符合地面接入条件时，备用TCP点播行情借交易线路接收，须控制带宽，虚线不表示自动切换。下方说明交易线路的局域A/B双活与广域不同运营商、同城不同站点接入；A/B是路径冗余，不是TCP和UDP各一路。本图UDP广域产品为Level-1 FAST及期权，不是客户XTP-Pro接口或LDDS内部连接。</desc>
+<defs>
+<marker id="head-order" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#2563eb"/></marker>
+<marker id="head-quote" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#d97706"/></marker>
+<marker id="head-file" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#0d9488"/></marker>
+<marker id="head-unverified" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto-start-reverse" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#64748b"/></marker>
+</defs>
+<rect width="1200" height="1320" fill="#fff"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" fill="#172338">
+<text id="text-1" x="30" y="48" font-size="32" font-weight="750" fill="#172338" text-anchor="start">券商—上交所：下单与行情各走哪条线</text>
+<text id="text-2" x="30" y="90" font-size="24" font-weight="500" fill="#64748b" text-anchor="start">市场侧接入示例；客户接口与 LDDS 接入见前图。</text>
+<text id="text-3" x="180" y="145" font-size="27" font-weight="700" fill="#24558a" text-anchor="middle">券商运行中心</text>
+<text id="text-4" x="1020" y="145" font-size="27" font-weight="700" fill="#286453" text-anchor="middle">上交所侧</text>
+<rect id="orders-panel" x="25" y="172" width="1150" height="195" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text id="text-5" x="45" y="213" font-size="28" font-weight="700" fill="#2563eb" text-anchor="start">下单与回报</text>
+<rect id="broker-orders" x="60" y="245" width="240" height="90" rx="12" fill="#fff" stroke="#38628b" stroke-width="2"/>
+<rect id="market-orders" x="900" y="245" width="240" height="90" rx="12" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<text id="text-6" x="180" y="300" font-size="26" font-weight="600" fill="#172338" text-anchor="middle">交易接入系统</text>
+<text id="text-7" x="1020" y="300" font-size="26" font-weight="600" fill="#172338" text-anchor="middle">交易接入服务</text>
+<path id="order-flow" d="M324 290 H876" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-unverified)" marker-start="url(#head-unverified)"/>
+<text id="text-8" x="600" y="266" font-size="23" font-weight="500" fill="#64748b" text-anchor="middle">委托 / 订单回报</text>
+<text id="text-9" x="600" y="332" font-size="24" font-weight="500" fill="#64748b" text-anchor="middle">经交易线路</text>
+<g id="market-data-group">
+<rect id="market-data-frame" x="25" y="390" width="1150" height="420" rx="16" fill="#fffbeb" stroke="#d6b96e" stroke-width="2"/>
+<text id="text-10" x="45" y="432" font-size="28" font-weight="700" fill="#92400e" text-anchor="start">行情接收：UDP 实时行情与备用 TCP 行情</text>
+<rect id="broker-quotes" x="60" y="466" width="240" height="310" rx="12" fill="#fff" stroke="#38628b" stroke-width="2"/>
+<rect id="market-quotes" x="900" y="466" width="240" height="310" rx="12" fill="#fff" stroke="#43806a" stroke-width="2"/>
+<text id="text-11" x="180" y="510" font-size="26" font-weight="700" fill="#24558a" text-anchor="middle">行情接收系统</text>
+<text id="text-12" x="1020" y="510" font-size="26" font-weight="700" fill="#286453" text-anchor="middle">行情发布服务</text>
+<text id="text-13" x="180" y="585" font-size="24" font-weight="500" fill="#b86a0a" text-anchor="middle">UDP 组播接收</text>
+<text id="text-14" x="1020" y="585" font-size="24" font-weight="500" fill="#b86a0a" text-anchor="middle">UDP 组播接口</text>
+<path id="quote-udp-live" d="M888 578 H324" fill="none" stroke="#d97706" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-quote)"/>
+<text id="text-15" x="600" y="548" font-size="26" font-weight="700" fill="#d97706" text-anchor="middle">UDP 组播行情</text>
+<text id="text-16" x="600" y="616" font-size="24" font-weight="500" fill="#64748b" text-anchor="middle">经独立行情线路</text>
+<text id="text-17" x="180" y="724" font-size="24" font-weight="500" fill="#2563eb" text-anchor="middle">TCP 备用接收</text>
+<text id="text-18" x="1020" y="724" font-size="24" font-weight="500" fill="#2563eb" text-anchor="middle">TCP 点播接口</text>
+<path id="quote-tcp-backup" d="M888 717 H324" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" marker-end="url(#head-order)" stroke-dasharray="9 7"/>
+<text id="text-19" x="600" y="686" font-size="26" font-weight="700" fill="#2563eb" text-anchor="middle">备用 TCP 点播行情</text>
+<text id="text-20" x="600" y="755" font-size="23" font-weight="500" fill="#64748b" text-anchor="middle">借用交易线路 · 须控制带宽</text>
+</g>
+<text id="text-21" x="30" y="854" font-size="24" font-weight="600" fill="#633b91" text-anchor="start">备用前提：不同运营商接入同城两个站点，并满足地面接入要求。</text>
+<text id="text-22" x="30" y="896" font-size="24" font-weight="500" fill="#64748b" text-anchor="start">虚线表示备用行情；启用与切换方式按接收软件和接入方案确定。</text>
+<rect id="redundancy-panel" x="25" y="925" width="1150" height="240" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text id="text-23" x="45" y="966" font-size="28" font-weight="700" fill="#172338" text-anchor="start">交易线路的接入冗余</text>
+<rect id="lan" x="45" y="986" width="535" height="156" rx="12" fill="#fff" stroke="#93b4eb" stroke-width="2"/>
+<rect id="wan" x="610" y="986" width="545" height="156" rx="12" fill="#fff" stroke="#93b4eb" stroke-width="2"/>
+<text id="text-24" x="65" y="1023" font-size="26" font-weight="700" fill="#24558a" text-anchor="start">局域接入</text>
+<text id="text-25" x="65" y="1064" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">A/B 是两条接入路径，可双活</text>
+<text id="text-26" x="65" y="1103" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">按局域交易服务分配 IP 与端口</text>
+<text id="text-27" x="630" y="1023" font-size="26" font-weight="700" fill="#24558a" text-anchor="start">广域接入</text>
+<text id="text-28" x="630" y="1064" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">不同运营商 → 同城不同站点</text>
+<text id="text-29" x="630" y="1103" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">机构须具备互备运行中心</text>
+<text id="text-30" x="30" y="1205" font-size="24" font-weight="600" fill="#172338" text-anchor="start">A/B 表示线路冗余；UDP / TCP 表示传输协议。</text>
+<text id="text-31" x="30" y="1246" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">本图 UDP 广域产品：Level-1 FAST / 期权行情。</text>
+<text id="text-32" x="30" y="1286" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">市场通信网与机构其他网络、互联网隔离。</text>
+</g></svg>

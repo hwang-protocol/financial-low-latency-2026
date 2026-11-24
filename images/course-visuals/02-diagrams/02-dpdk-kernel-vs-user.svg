@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1010" viewBox="0 0 1200 1010" role="img" aria-labelledby="title desc">
+<title id="title">DPDK 切换前后：谁在处理报文</title><desc id="desc">从网卡到应用的接收路径和反向发送路径；实线蓝色为接收、橙色为发送，虚线为资源准备。图示本课X2522，TCP/IP由主机CPU执行。</desc>
+<defs><style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif;fill:#23354d} .edge{fill:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:round}</style>
+<marker id="cyan" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#087f9a"/></marker>
+<marker id="purple" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#7252b8"/></marker>
+<marker id="orange" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#b76521"/></marker>
+<marker id="green" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#247962"/></marker>
+<marker id="gray" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#70849a"/></marker>
+</defs>
+<rect width="1200" height="1010" rx="22" fill="#fff"/>
+<text x="32" y="50" font-size="31" style="fill:#23354d" font-weight="700" text-anchor="start">DPDK 切换前后：谁在处理报文</text>
+<text x="32" y="86" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">以 .2 的 X2522 数据口为例；线缆与交换机相同，改变的是主机内的软件路径。</text>
+<path class="edge" d="M40 118h32" stroke="#087f9a"/>
+<text x="84" y="125" font-size="19" style="fill:#087f9a" font-weight="600" text-anchor="start">接收 RX · 向上</text>
+<path class="edge" d="M322 118h32" stroke="#b76521"/>
+<text x="366" y="125" font-size="19" style="fill:#b76521" font-weight="600" text-anchor="start">发送 TX · 向下</text>
+<path class="edge" d="M610 118h32" stroke="#7252b8" stroke-dasharray="7 6"/>
+<text x="654" y="125" font-size="19" style="fill:#7252b8" font-weight="600" text-anchor="start">资源准备 · 虚线</text>
+<rect x="32" y="151" width="548" height="756" rx="18" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.6"/>
+<rect x="620" y="151" width="548" height="756" rx="18" fill="#f3faf7" stroke="#bad8cb" stroke-width="1.6"/>
+<text x="56" y="189" font-size="25" style="fill:#23354d" font-weight="700" text-anchor="start">切换前 · 普通 Socket</text>
+<text x="644" y="189" font-size="25" style="fill:#247962" font-weight="700" text-anchor="start">切换后 · DPDK + F-Stack</text>
+<rect x="76" y="222" width="460" height="93" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<g transform="translate(92 234)" fill="none" stroke="#087f9a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="34" height="24" rx="3"/><path d="M18 27v6M9 34h18M6 19l7-7 6 4 9-9"/></g>
+<text x="140" y="256" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">普通交易客户端</text>
+<text x="94" y="296" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">Socket API：send() / recv()</text>
+<rect x="664" y="222" width="460" height="93" rx="14" fill="#fff" stroke="#247962" stroke-width="1.6"/>
+<g transform="translate(680 234)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="34" height="24" rx="3"/><path d="M18 27v6M9 34h18M6 19l7-7 6 4 9-9"/></g>
+<text x="728" y="256" font-size="23" style="fill:#247962" font-weight="650" text-anchor="start">DPDK 交易客户端</text>
+<text x="682" y="296" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">F-Stack API：ff_send() / ff_recv()</text>
+<text x="55" y="343" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">用户态</text>
+<text x="55" y="389" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">内核态</text>
+<path class="edge" d="M48 361H564" stroke="#70849a" stroke-dasharray="7 6"/>
+<rect x="116" y="412" width="380" height="93" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<text x="134" y="446" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">Linux TCP/IP 协议栈</text>
+<text x="134" y="486" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">连接、确认、重传与数据交付</text>
+<path class="edge" d="M334 315V388" stroke="#b76521" marker-end="url(#orange)"/>
+<path class="edge" d="M278 412V339" stroke="#087f9a" marker-end="url(#cyan)"/>
+<rect x="116" y="589" width="380" height="95" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<text x="134" y="623" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">sfc 驱动与内核缓冲区</text>
+<text x="134" y="663" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">驱动推进网卡收发队列</text>
+<path class="edge" d="M334 505V565" stroke="#b76521" marker-end="url(#orange)"/>
+<path class="edge" d="M278 589V529" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="57" y="732" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">硬件</text>
+<rect x="76" y="774" width="460" height="101" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<g transform="translate(92 786)" fill="none" stroke="#087f9a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="32" height="13" rx="3"/><rect x="2" y="20" width="32" height="13" rx="3"/><path d="M9 7h1m7 0h10M9 26h1m7 0h10"/></g>
+<text x="140" y="808" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">X2522 网卡</text>
+<text x="94" y="848" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">普通队列 · 数据口归 sfc</text>
+<path class="edge" d="M334 684V750" stroke="#b76521" marker-end="url(#orange)"/>
+<path class="edge" d="M278 774V708" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="643" y="351" font-size="19" style="fill:#247962" font-weight="600" text-anchor="start">用户态</text>
+<rect x="664" y="385" width="460" height="93" rx="14" fill="#fff" stroke="#247962" stroke-width="1.6"/>
+<text x="682" y="419" font-size="23" style="fill:#247962" font-weight="650" text-anchor="start">F-Stack TCP/IP 协议栈</text>
+<text x="682" y="459" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">协议处理在应用进程内完成</text>
+<path class="edge" d="M922 315V361" stroke="#b76521" marker-end="url(#orange)"/>
+<path class="edge" d="M866 385V339" stroke="#087f9a" marker-end="url(#cyan)"/>
+<rect x="654" y="565" width="272" height="105" rx="14" fill="#fff" stroke="#247962" stroke-width="1.6"/>
+<text x="672" y="599" font-size="23" style="fill:#247962" font-weight="650" text-anchor="start">DPDK PMD</text>
+<text x="672" y="639" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">轮询队列、批量收发</text>
+<path class="edge" d="M818 478V541" stroke="#b76521" marker-end="url(#orange)"/>
+<path class="edge" d="M762 565V502" stroke="#087f9a" marker-end="url(#cyan)"/>
+<rect x="962" y="528" width="184" height="183" rx="12" fill="#f5f0fc" stroke="#cabce3" stroke-width="1.6"/>
+<text x="980" y="560" font-size="20" style="fill:#7252b8" font-weight="700" text-anchor="start">内核支持</text>
+<text x="980" y="597" font-size="19" style="fill:#7252b8" font-weight="400" text-anchor="start">vfio-pci</text>
+<text x="980" y="627" font-size="19" style="fill:#7252b8" font-weight="400" text-anchor="start">设备访问</text>
+<text x="980" y="657" font-size="19" style="fill:#7252b8" font-weight="400" text-anchor="start">DMA 映射</text>
+<path class="edge" d="M962 635H950" stroke="#7252b8" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="980" y="689" font-size="18" style="fill:#7252b8" font-weight="400" text-anchor="start">无 Linux 网口</text>
+<rect x="654" y="774" width="492" height="101" rx="14" fill="#fff" stroke="#247962" stroke-width="1.6"/>
+<g transform="translate(670 786)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="32" height="13" rx="3"/><rect x="2" y="20" width="32" height="13" rx="3"/><path d="M9 7h1m7 0h10M9 26h1m7 0h10"/></g>
+<text x="718" y="808" font-size="23" style="fill:#247962" font-weight="650" text-anchor="start">同一块 X2522 网卡</text>
+<text x="672" y="848" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">数据口归 vfio-pci；PMD 操作队列</text>
+<path class="edge" d="M818 670V750" stroke="#b76521" marker-end="url(#orange)"/>
+<path class="edge" d="M762 774V694" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="40" y="947" font-size="21" style="fill:#23354d" font-weight="600" text-anchor="start">准备 B1 只备齐 IOMMU / VFIO；真正改绑、切换和恢复由第 05 章完成。</text>
+<text x="40" y="981" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">独立管理口继续通信；本图是本课 X2522 的 VFIO 模式，其他网卡的驱动模型可能不同。</text>
+</svg>

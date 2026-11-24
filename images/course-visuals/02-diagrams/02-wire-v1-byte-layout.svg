@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 670" role="img" aria-labelledby="title desc">
+  <title id="title">wire-v1 的 52-byte 固定字段布局</title>
+  <desc id="desc">wire-v1 由 32-byte Header 和 20-byte Tick Body 组成。图中逐字段给出起止偏移、字段名与字节数，格子宽度与字节数成正比。</desc>
+  <defs>
+    <style>
+      .title{font:700 30px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0f172a}
+      .section{font:700 22px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0f172a}
+      .field{font:700 22px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0f172a}
+      .offset{font:600 21px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#334155}
+      .overview{font:700 24px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#fff}
+      .note{font:600 20px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+    </style>
+  </defs>
+  <rect width="1110" height="670" rx="18" fill="#fff"/>
+  <text x="555" y="46" text-anchor="middle" class="title">wire-v1：52 bytes 中每个偏移只有一种解释</text>
+
+  <rect x="90" y="76" width="571" height="58" rx="10" fill="#2563eb"/>
+  <rect x="661" y="76" width="357" height="58" rx="10" fill="#15803d"/>
+  <text x="375" y="114" text-anchor="middle" class="overview">Header · 32B · offset 0–31</text>
+  <text x="839" y="114" text-anchor="middle" class="overview" textLength="330" lengthAdjust="spacingAndGlyphs">Tick Body · 20B · offset 32–51</text>
+
+  <text x="90" y="178" class="section">Header：先验协议门禁，再定位消息身份</text>
+  <g stroke="#1d4ed8" stroke-width="2">
+    <rect x="90" y="196" width="58" height="118" fill="#dbeafe"/>
+    <rect x="148" y="196" width="29" height="118" fill="#dbeafe"/>
+    <rect x="177" y="196" width="29" height="118" fill="#dbeafe"/>
+    <rect x="206" y="196" width="58" height="118" fill="#dbeafe"/>
+    <rect x="264" y="196" width="58" height="118" fill="#dbeafe"/>
+    <rect x="322" y="196" width="116" height="118" fill="#dbeafe"/>
+    <rect x="438" y="196" width="232" height="118" fill="#bfdbfe"/>
+    <rect x="670" y="196" width="232" height="118" fill="#bfdbfe"/>
+    <rect x="902" y="196" width="116" height="118" fill="#bfdbfe"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="119" y="234" class="field" textLength="52" lengthAdjust="spacingAndGlyphs">magic</text><text x="119" y="265" class="offset" textLength="46" lengthAdjust="spacingAndGlyphs">0–1</text><text x="119" y="293" class="offset">2B</text>
+    <text x="162.5" y="234" class="field" textLength="25" lengthAdjust="spacingAndGlyphs">ver</text><text x="162.5" y="265" class="offset">2</text><text x="162.5" y="293" class="offset" textLength="25" lengthAdjust="spacingAndGlyphs">1B</text>
+    <text x="191.5" y="234" class="field" textLength="25" lengthAdjust="spacingAndGlyphs">type</text><text x="191.5" y="265" class="offset">3</text><text x="191.5" y="293" class="offset" textLength="25" lengthAdjust="spacingAndGlyphs">1B</text>
+    <text x="235" y="234" class="field" textLength="52" lengthAdjust="spacingAndGlyphs">reserved</text><text x="235" y="265" class="offset" textLength="46" lengthAdjust="spacingAndGlyphs">4–5</text><text x="235" y="293" class="offset">2B</text>
+    <text x="293" y="234" class="field" textLength="52" lengthAdjust="spacingAndGlyphs">H len</text><text x="293" y="265" class="offset" textLength="46" lengthAdjust="spacingAndGlyphs">6–7</text><text x="293" y="293" class="offset">2B</text>
+    <text x="380" y="234" class="field">B len</text><text x="380" y="265" class="offset">8–11</text><text x="380" y="293" class="offset">4B</text>
+    <text x="554" y="234" class="field">session ID</text><text x="554" y="265" class="offset">12–19</text><text x="554" y="293" class="offset">8B</text>
+    <text x="786" y="234" class="field">correlation ID</text><text x="786" y="265" class="offset">20–27</text><text x="786" y="293" class="offset">8B</text>
+    <text x="960" y="234" class="field">sequence</text><text x="960" y="265" class="offset">28–31</text><text x="960" y="293" class="offset">4B</text>
+  </g>
+
+  <text x="90" y="366" class="section">Tick Body：承载本课 AAPL 行情字段</text>
+  <g stroke="#15803d" stroke-width="2">
+    <rect x="90" y="384" width="58" height="118" fill="#dcfce7"/>
+    <rect x="148" y="384" width="116" height="118" fill="#dcfce7"/>
+    <rect x="264" y="384" width="58" height="118" fill="#dcfce7"/>
+    <rect x="322" y="384" width="116" height="118" fill="#bbf7d0"/>
+    <rect x="438" y="384" width="116" height="118" fill="#bbf7d0"/>
+    <rect x="554" y="384" width="116" height="118" fill="#bbf7d0"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="119" y="422" class="field" textLength="52" lengthAdjust="spacingAndGlyphs">magic</text><text x="119" y="453" class="offset" textLength="52" lengthAdjust="spacingAndGlyphs">32–33</text><text x="119" y="481" class="offset">2B</text>
+    <text x="206" y="422" class="field" textLength="104" lengthAdjust="spacingAndGlyphs">symbol · AAPL</text><text x="206" y="453" class="offset">34–37</text><text x="206" y="481" class="offset">4B</text>
+    <text x="293" y="422" class="field" textLength="52" lengthAdjust="spacingAndGlyphs">flags</text><text x="293" y="453" class="offset" textLength="52" lengthAdjust="spacingAndGlyphs">38–39</text><text x="293" y="481" class="offset">2B</text>
+    <text x="380" y="422" class="field">price</text><text x="380" y="453" class="offset">40–43</text><text x="380" y="481" class="offset">4B</text>
+    <text x="496" y="422" class="field">quantity</text><text x="496" y="453" class="offset">44–47</text><text x="496" y="481" class="offset">4B</text>
+    <text x="612" y="422" class="field">tick seq</text><text x="612" y="453" class="offset">48–51</text><text x="612" y="481" class="offset">4B</text>
+  </g>
+
+  <rect x="90" y="542" width="928" height="96" rx="12" fill="#f3e8ff" stroke="#7e22ce" stroke-width="2"/>
+  <text x="554" y="580" text-anchor="middle" class="note">发送端与接收端必须同时约定：字段顺序、宽度、偏移和字节序。</text>
+  <text x="554" y="616" text-anchor="middle" class="note">本课格式串中的 “!” 表示网络字节序（大端法）；Header 通过后才解释 Body。</text>
+</svg>

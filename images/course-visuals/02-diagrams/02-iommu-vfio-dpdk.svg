@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1080" viewBox="0 0 1200 1080" role="img" aria-labelledby="title desc">
+<title id="title">IOMMU：网卡只能 DMA 到获准的内存</title><desc id="desc">Guest视角：DPDK通过VFIO请求映射，内核配置IOMMU。网卡DMA地址经IOMMU转换和权限检查后才能访问缓冲区，未映射地址被阻止。VFIO是设备访问和映射接口，IOMMU是地址转换与保护机制。</desc>
+<defs><style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif;fill:#23354d} .edge{fill:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:round}</style>
+<marker id="cyan" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#087f9a"/></marker>
+<marker id="purple" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#7252b8"/></marker>
+<marker id="orange" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#b76521"/></marker>
+<marker id="green" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#247962"/></marker>
+<marker id="gray" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#70849a"/></marker>
+</defs>
+<rect width="1200" height="1080" rx="22" fill="#fff"/>
+<text x="32" y="50" font-size="31" style="fill:#23354d" font-weight="700" text-anchor="start">IOMMU：网卡只能 DMA 到获准的内存</text>
+<text x="32" y="87" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">VFIO 建立映射；IOMMU 做地址转换和权限检查；DPDK PMD 操作网卡队列。</text>
+<rect x="32" y="117" width="1136" height="277" rx="18" fill="#f8f5fd" stroke="#d4c7e7" stroke-width="1.6"/>
+<text x="55" y="157" font-size="25" style="fill:#7252b8" font-weight="700" text-anchor="start">① 准备阶段 · 建立 DMA 映射</text>
+<rect x="55" y="190" width="290" height="153" rx="14" fill="#fff" stroke="#7252b8" stroke-width="1.6"/>
+<g transform="translate(71 202)" fill="none" stroke="#7252b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="34" height="24" rx="3"/><path d="M18 27v6M9 34h18M6 19l7-7 6 4 9-9"/></g>
+<text x="119" y="224" font-size="23" style="fill:#7252b8" font-weight="650" text-anchor="start">DPDK 程序</text>
+<text x="73" y="264" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">申请收发缓冲区</text>
+<text x="73" y="292" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">提交地址、长度、读写权限</text>
+<rect x="443" y="190" width="306" height="153" rx="14" fill="#fff" stroke="#7252b8" stroke-width="1.6"/>
+<g transform="translate(459 202)" fill="none" stroke="#7252b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 1L33 7v11c0 8-7 14-15 17C10 32 3 26 3 18V7L18 1Z M10 18l6 6 12-14"/></g>
+<text x="507" y="224" font-size="23" style="fill:#7252b8" font-weight="650" text-anchor="start">VFIO · Linux 接口</text>
+<text x="461" y="264" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">内核固定并映射相关内存页</text>
+<text x="461" y="292" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">把映射交给 IOMMU</text>
+<rect x="848" y="190" width="296" height="153" rx="14" fill="#fff" stroke="#7252b8" stroke-width="1.6"/>
+<g transform="translate(864 202)" fill="none" stroke="#7252b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 5c-6-4-11-4-16-2v25c5-2 10-2 16 2 6-4 12-4 18-2V3c-6-2-12-2-18 2v25M6 9h6m-6 6h6m10-6h7m-7 6h7"/></g>
+<text x="912" y="224" font-size="23" style="fill:#7252b8" font-weight="650" text-anchor="start">IOMMU 映射表</text>
+<text x="866" y="264" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">设备可见地址 → 内存页</text>
+<text x="866" y="292" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">同时记录读写权限</text>
+<path class="edge" d="M345 273H419" stroke="#7252b8" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<path class="edge" d="M749 273H824" stroke="#7252b8" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="55" y="373" font-size="20" style="fill:#53667e" font-weight="400" text-anchor="start">建立映射是准备动作；VFIO 不逐包转发业务数据。</text>
+<rect x="32" y="421" width="1136" height="318" rx="18" fill="#f3faf7" stroke="#bedccd" stroke-width="1.6"/>
+<text x="55" y="462" font-size="25" style="fill:#247962" font-weight="700" text-anchor="start">② 收包阶段 · 网卡写入报文</text>
+<rect x="55" y="506" width="290" height="120" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<g transform="translate(71 518)" fill="none" stroke="#087f9a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="32" height="13" rx="3"/><rect x="2" y="20" width="32" height="13" rx="3"/><path d="M9 7h1m7 0h10M9 26h1m7 0h10"/></g>
+<text x="119" y="540" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">X2522 网卡</text>
+<text x="73" y="580" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">带着 DMA 地址发起写入</text>
+<rect x="443" y="506" width="306" height="120" rx="14" fill="#fff" stroke="#247962" stroke-width="1.6"/>
+<g transform="translate(459 518)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 1L33 7v11c0 8-7 14-15 17C10 32 3 26 3 18V7L18 1Z M10 18l6 6 12-14"/></g>
+<text x="507" y="540" font-size="23" style="fill:#247962" font-weight="650" text-anchor="start">IOMMU</text>
+<text x="461" y="580" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">查地址映射与写入权限</text>
+<rect x="848" y="506" width="296" height="95" rx="14" fill="#fff" stroke="#247962" stroke-width="1.6"/>
+<text x="866" y="540" font-size="23" style="fill:#247962" font-weight="650" text-anchor="start">获准的收包缓冲区</text>
+<text x="866" y="580" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">报文进入程序可用的内存</text>
+<path class="edge" d="M345 560H419" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="364" y="539" font-size="19" style="fill:#087f9a" font-weight="600" text-anchor="start">DMA</text>
+<path class="edge" d="M749 548H824" stroke="#247962" marker-end="url(#green)"/>
+<text x="764" y="529" font-size="18" style="fill:#247962" font-weight="600" text-anchor="start">合法</text>
+<rect x="848" y="647" width="296" height="63" rx="10" fill="#fff4ec" stroke="#dfb895" stroke-width="1.6"/>
+<text x="996" y="687" font-size="21" style="fill:#b76521" font-weight="600" text-anchor="middle">未映射 / 无权限：阻止</text>
+<path class="edge" d="M749 591H793V678H824" stroke="#b76521" marker-end="url(#orange)"/>
+<text x="470" y="675" font-size="20" style="fill:#b76521" font-weight="600" text-anchor="start">非法地址产生 IOMMU 故障</text>
+<text x="55" y="719" font-size="20" style="fill:#53667e" font-weight="400" text-anchor="start">合法映射确定“能访问哪块内存”；PMD 确定“读写哪个队列、提交哪些缓冲区”。</text>
+<rect x="32" y="765" width="1136" height="223" rx="18" fill="#f5f8fc" stroke="#c5d3e3" stroke-width="1.6"/>
+<text x="55" y="806" font-size="25" style="fill:#087f9a" font-weight="700" text-anchor="start">③ CPU 访问同一缓冲区 · 经过 MMU</text>
+<rect x="55" y="836" width="290" height="111" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<g transform="translate(71 848)" fill="none" stroke="#087f9a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="34" height="24" rx="3"/><path d="M18 27v6M9 34h18M6 19l7-7 6 4 9-9"/></g>
+<text x="119" y="870" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">CPU 执行程序</text>
+<text x="73" y="910" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">使用程序虚拟地址</text>
+<rect x="443" y="836" width="306" height="111" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<g transform="translate(459 848)" fill="none" stroke="#087f9a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 1L33 7v11c0 8-7 14-15 17C10 32 3 26 3 18V7L18 1Z M10 18l6 6 12-14"/></g>
+<text x="507" y="870" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">MMU</text>
+<text x="461" y="910" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">按进程页表转换、检查权限</text>
+<rect x="848" y="836" width="296" height="111" rx="14" fill="#fff" stroke="#087f9a" stroke-width="1.6"/>
+<text x="866" y="870" font-size="23" style="fill:#087f9a" font-weight="650" text-anchor="start">同一收发缓冲区</text>
+<text x="866" y="910" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">程序读取网卡写入的报文</text>
+<path class="edge" d="M345 893H419" stroke="#087f9a" marker-end="url(#cyan)"/>
+<path class="edge" d="M749 893H824" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="55" y="978" font-size="20" style="fill:#53667e" font-weight="400" text-anchor="start">CPU 访问用 MMU；设备 DMA 用 IOMMU。两者使用不同的地址映射。</text>
+<text x="40" y="1030" font-size="21" style="fill:#23354d" font-weight="600" text-anchor="start">本课检查隔离组只有目标 PCI 功能，才能独立交付该设备。</text>
+<text x="40" y="1064" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">图示 VM 内 Linux 的视角；底层 ESXi 直通隔离未展开。准备 B1 完成后，数据口仍归 sfc。</text>
+</svg>

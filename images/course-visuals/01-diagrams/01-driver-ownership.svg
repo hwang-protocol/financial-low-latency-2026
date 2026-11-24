@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+<title id="title">当前由谁管理这块网卡</title><desc id="desc">实线表示当前X2522、sfc驱动、网络接口和套接字接口之间的关系；虚线只指向第五部分用户态直接收发的学习入口。</desc>
+<defs><filter id="shadow" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#18354b" flood-opacity="0.07"/></filter>
+<symbol id="pin" viewBox="0 0 64 64"><path d="M32 57S12 39 12 24a20 20 0 0 1 40 0c0 15-20 33-20 33Z"/><circle cx="32" cy="24" r="7"/></symbol>
+<symbol id="tag" viewBox="0 0 64 64"><path d="M7 10h26l24 24-24 24L7 32Z"/><circle cx="20" cy="23" r="4"/><path d="m30 32 12 12m-5-19 12 12"/></symbol>
+<symbol id="gear" viewBox="0 0 64 64"><path d="M26 6h12l2 9 8-3 6 10-7 7 7 7-6 10-8-3-2 9H26l-2-9-8 3-6-10 7-7-7-7 6-10 8 3Z"/><circle cx="32" cy="29" r="9"/></symbol>
+<symbol id="port" viewBox="0 0 64 64"><rect x="9" y="8" width="46" height="48" rx="8"/><path d="M19 21h26v19h-7v7H26v-7h-7Zm6 1v8m7-8v8m7-8v8"/></symbol>
+<symbol id="mac" viewBox="0 0 64 64"><rect x="5" y="10" width="54" height="44" rx="7"/><path d="M15 20v24m6-24v24m8-24v24m5-24v24m8-24v24m7-24v24"/></symbol>
+<symbol id="network" viewBox="0 0 64 64"><circle cx="32" cy="15" r="9"/><rect x="6" y="43" width="16" height="13" rx="3"/><rect x="42" y="43" width="16" height="13" rx="3"/><path d="M32 24v9M14 43V33h36v10"/></symbol>
+<symbol id="socket" viewBox="0 0 64 64"><path d="m19 18-13 14 13 14m26-28 13 14-13 14M36 12 28 52"/></symbol>
+<symbol id="book" viewBox="0 0 64 64"><path d="M6 12h19l7 5 7-5h19v41H39l-7 5-7-5H6Zm26 5v41M14 24h10m-10 9h10m16-9h10m-10 9h10"/></symbol>
+</defs>
+<rect width="1200" height="780" fill="#f7f9fc"/>
+<g font-family="Noto Sans CJK SC, sans-serif" fill="#172338">
+<text x="40" y="56" font-size="34" fill="#172338" font-weight="700" text-anchor="start">当前由谁管理这块网卡</text>
+<text x="40" y="100" font-size="23" fill="#617389" font-weight="400" text-anchor="start">沿实线认识本章的驱动关系；虚线留作第五部分的学习入口。</text>
+<rect x="326" y="168" width="854" height="378" rx="22" fill="#edf3fb" stroke="#d0ddef" stroke-width="1.5" />
+<text x="352" y="214" font-size="25" fill="#2163a5" font-weight="700" text-anchor="start">本章 · 内核收发路径</text>
+<path d="M297 390 H338" fill="none" stroke="#417aa9" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M587 390 H613" fill="none" stroke="#417aa9" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M852 390 H878" fill="none" stroke="#417aa9" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<rect x="40" y="268" width="245" height="237" rx="18" fill="#fff" stroke="#bfd8d6" stroke-width="1.5" filter="url(#shadow)"/>
+<g transform="translate(94 290) scale(0.6)">
+<rect x="0" y="0" width="220" height="146" rx="12" fill="#e5f4f3" stroke="#438d88" stroke-width="1.5" />
+<path d="M25 32 H62 M133 32 H160" fill="none" stroke="#86b8b3" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M25 53 H62 M133 53 H160" fill="none" stroke="#86b8b3" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M25 74 H62 M133 74 H160" fill="none" stroke="#86b8b3" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M25 95 H62 M133 95 H160" fill="none" stroke="#86b8b3" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<rect x="42" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="60" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="78" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="96" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="114" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="132" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="150" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="168" y="136" width="11" height="20" rx="2" fill="#d9ad55" stroke="none" stroke-width="1.5" />
+<rect x="63" y="25" width="70" height="77" rx="9" fill="#175b60" stroke="#175b60" stroke-width="1.5" />
+<path d="M71 17 V25 M71 102 V112" fill="none" stroke="#438d88" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M88 17 V25 M88 102 V112" fill="none" stroke="#438d88" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M105 17 V25 M105 102 V112" fill="none" stroke="#438d88" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<path d="M122 17 V25 M122 102 V112" fill="none" stroke="#438d88" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<rect x="77" y="40" width="42" height="46" rx="5" fill="#d4eeea" stroke="none" stroke-width="1.5" />
+<rect x="158" y="20" width="50" height="94" rx="6" fill="#eef3f8" stroke="#7893a8" stroke-width="1.5" />
+<rect x="166" y="34" width="34" height="55" rx="3" fill="#283f52" stroke="none" stroke-width="1.5" />
+<path d="M172 102 H194" fill="none" stroke="#7893a8" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"/>
+<circle cx="13" cy="13" r="3" fill="#f7f9fc" stroke="#438d88"/>
+<circle cx="13" cy="131" r="3" fill="#f7f9fc" stroke="#438d88"/>
+</g>
+<text x="162.5" y="421" font-size="27" fill="#175b60" font-weight="700" text-anchor="middle">X2522 网卡</text>
+<text x="162.5" y="460" font-size="23" fill="#617389" font-weight="400" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">0000:03:00.0</text>
+<rect x="350" y="268" width="225" height="237" rx="18" fill="#fff" stroke="#d2deea" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="429.5" y="290" width="66" height="66" rx="18" fill="#eaf2fd" stroke="none" stroke-width="1.5" />
+<use href="#gear" x="437.5" y="298" width="50" height="50" fill="none" stroke="#2163a5" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="462.5" y="404" font-size="26" fill="#2163a5" font-weight="700" text-anchor="middle">sfc 驱动</text>
+<rect x="625" y="268" width="215" height="237" rx="18" fill="#fff" stroke="#d2deea" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="699.5" y="290" width="66" height="66" rx="18" fill="#eaf2fd" stroke="none" stroke-width="1.5" />
+<use href="#port" x="707.5" y="298" width="50" height="50" fill="none" stroke="#2163a5" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="732.5" y="404" font-size="26" fill="#2163a5" font-weight="700" text-anchor="middle">网络接口</text>
+<rect x="890" y="268" width="270" height="237" rx="18" fill="#fff" stroke="#d2deea" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="992.0" y="290" width="66" height="66" rx="18" fill="#f1ebfa" stroke="none" stroke-width="1.5" />
+<use href="#socket" x="1000.0" y="298" width="50" height="50" fill="none" stroke="#6d50a1" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1025.0" y="404" font-size="26" fill="#6d50a1" font-weight="700" text-anchor="middle">套接字（Socket）</text>
+<text x="462.5" y="447" font-size="22" fill="#617389" font-weight="400" text-anchor="middle">初始化、管理网卡</text>
+<text x="732.5" y="447" font-size="24" fill="#172338" font-weight="500" text-anchor="middle" font-family="DejaVu Sans Mono, monospace">ens64np0</text>
+<text x="1025" y="447" font-size="22" fill="#617389" font-weight="400" text-anchor="middle">内核网络栈提供</text>
+<text x="1025" y="480" font-size="22" fill="#617389" font-weight="400" text-anchor="middle">与程序交换数据</text>
+<path d="M162.5 517 V648 H406" fill="none" stroke="#c38a45" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="7 6"/>
+<rect x="420" y="584" width="740" height="132" rx="18" fill="#fff9ef" stroke="#e4cda9" stroke-width="1.5" />
+<rect x="441" y="614" width="62" height="62" rx="16" fill="#f8ebd7" stroke="none" stroke-width="1.5" />
+<use href="#book" x="450" y="623" width="44" height="44" fill="none" stroke="#a16a25" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="530" y="631" font-size="27" fill="#926024" font-weight="600" text-anchor="start">第五部分 · 用户态直接收发</text>
+<text x="530" y="674" font-size="23" fill="#806f59" font-weight="400" text-anchor="start">后续比较其他收发方式</text>
+</g></svg>

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">从快照恢复到首笔交易的固定流程</title>
+  <desc id="desc">四台远端恢复后，第一章物化基础环境和101构建工具；第二章从唯一持久的111管理机预检、构建、部署、启动、验收并完成首笔纸面交易。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#f0fdf4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.11"/>
+    </filter>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="12" viewBox="0 0 16 12" refX="1" refY="6" orient="auto" overflow="visible">
+      <path d="M0 1 L14 6 L0 11 Z" fill="#475569"/>
+    </marker>
+    <style>
+      text{font-family:Inter,"Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif}
+      .eyebrow{font-size:15px;font-weight:800;letter-spacing:1.4px;fill:#475569}
+      .title{font-size:28px;font-weight:900;fill:#0f172a}
+      .step{font-size:17px;font-weight:900}
+      .body{font-size:14px;font-weight:650;fill:#475569}
+      .num{font-size:16px;font-weight:900;fill:#fff}
+      .footer-title{font-size:17px;font-weight:900;fill:#0f172a}
+      .footer-body{font-size:14px;font-weight:650;fill:#334155}
+    </style>
+  </defs>
+  <rect width="1200" height="560" rx="30" fill="url(#bg)"/>
+  <text x="55" y="58" class="eyebrow">SNAPSHOT-TO-TRADE CONTRACT</text>
+  <text x="55" y="96" class="title">快照恢复后，第二章只走一条路</text>
+
+  <rect x="55" y="126" width="1090" height="78" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="82" y="157" class="step" fill="#1e3a8a">第一章交接</text>
+  <text x="82" y="185" class="body">四机 SSH；.1/.2 数据口与 VLAN20 可用；第一章已在 fresh .101 安装并验收编译工具。</text>
+  <rect x="900" y="144" width="214" height="42" rx="21" fill="#dbeafe"/>
+  <text x="1007" y="171" text-anchor="middle" class="step" fill="#1d4ed8">READY FOR CHAPTER 2</text>
+
+  <path d="M150 325H1050" fill="none" stroke="#94a3b8" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="55" y="250" width="190" height="150" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <circle cx="82" cy="278" r="17" fill="#2563eb"/><text x="82" y="284" text-anchor="middle" class="num">1</text>
+    <text x="110" y="285" class="step" fill="#1e40af">预检</text>
+    <text x="75" y="326" class="body">制品 SHA</text>
+    <text x="75" y="351" class="body">数据口与链路</text>
+    <text x="75" y="376" class="body">编译工具</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="280" y="250" width="190" height="150" rx="18" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+    <circle cx="307" cy="278" r="17" fill="#4f46e5"/><text x="307" y="284" text-anchor="middle" class="num">2</text>
+    <text x="335" y="285" class="step" fill="#3730a3">构建</text>
+    <text x="300" y="326" class="body">源码送到 .101</text>
+    <text x="300" y="351" class="body">g++-11 编译</text>
+    <text x="300" y="376" class="body">单元测试先通过</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="505" y="250" width="190" height="150" rx="18" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <circle cx="532" cy="278" r="17" fill="#ea580c"/><text x="532" y="284" text-anchor="middle" class="num">3</text>
+    <text x="560" y="285" class="step" fill="#9a3412">部署与启动</text>
+    <text x="525" y="326" class="body">Exchange → .1</text>
+    <text x="525" y="351" class="body">Trader → .2</text>
+    <text x="525" y="376" class="body">Gateway → .101</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="730" y="250" width="190" height="150" rx="18" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <circle cx="757" cy="278" r="17" fill="#16a34a"/><text x="757" y="284" text-anchor="middle" class="num">4</text>
+    <text x="785" y="285" class="step" fill="#166534">系统验收</text>
+    <text x="750" y="326" class="body">四项服务 ONLINE</text>
+    <text x="750" y="351" class="body">部署 SHA 一致</text>
+    <text x="750" y="376" class="body">网页健康接口可读</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="955" y="250" width="190" height="150" rx="18" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <circle cx="982" cy="278" r="17" fill="#0891b2"/><text x="982" y="284" text-anchor="middle" class="num">5</text>
+    <text x="1010" y="285" class="step" fill="#155e75">首笔交易</text>
+    <text x="975" y="326" class="body">历史行情持续回放</text>
+    <text x="975" y="351" class="body">并行提交 1 股 IOC</text>
+    <text x="975" y="376" class="body">核对本单成交记录</text>
+  </g>
+
+  <rect x="55" y="444" width="1090" height="72" rx="18" fill="#e2e8f0"/>
+  <text x="82" y="475" class="footer-title">第二章完成条件</text>
+  <text x="82" y="500" class="footer-body">恢复脚本可重复执行；浏览器能看到历史市场；在线 IOC 输出 ORDER_EXECUTED、filled=1，并留下可复算 RUN 证据。</text>
+</svg>

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1030" viewBox="0 0 1200 1030" role="img" aria-labelledby="title desc">
+<title id="title">三台设备，两种下单方式</title><desc id="desc">本章普通Socket配置的主要业务流。Exchange发布行情，共享接收器经Unix Socket交给AUTO和MANUAL。网页由监测VM的Gateway提供，经TCP控制两个Trader；各Trader通过自己的OUCH/SoupBinTCP会话向Exchange下单并接收回报。状态与盘口副本经UDP上报网页后台。</desc>
+<defs><style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif;fill:#23354d} .edge{fill:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:round}</style>
+<marker id="cyan" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#087f9a"/></marker>
+<marker id="purple" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#7252b8"/></marker>
+<marker id="orange" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#b76521"/></marker>
+<marker id="green" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#247962"/></marker>
+<marker id="gray" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#70849a"/></marker>
+</defs>
+<rect width="1200" height="1030" rx="22" fill="#fff"/>
+<text x="32" y="51" font-size="32" style="fill:#23354d" font-weight="700" text-anchor="start">三台设备，两种下单方式</text>
+<text x="32" y="87" font-size="22" style="fill:#53667e" font-weight="400" text-anchor="start">行情送到 .2；AUTO 按规则决定，MANUAL 按你的指令下单。</text>
+<path class="edge" d="M34 118h34" stroke="#087f9a"/>
+<text x="79" y="125" font-size="19" style="fill:#087f9a" font-weight="600" text-anchor="start">行情</text>
+<path class="edge" d="M233 118h34" stroke="#b76521"/>
+<text x="278" y="125" font-size="19" style="fill:#b76521" font-weight="600" text-anchor="start">订单与回报</text>
+<path class="edge" d="M489 118h34" stroke="#7252b8" stroke-dasharray="7 6"/>
+<text x="534" y="125" font-size="19" style="fill:#7252b8" font-weight="600" text-anchor="start">网页控制</text>
+<path class="edge" d="M738 118h34" stroke="#70849a"/>
+<text x="783" y="125" font-size="19" style="fill:#70849a" font-weight="600" text-anchor="start">状态上报</text>
+<text x="1168" y="125" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="end">普通 Socket 配置</text>
+<rect x="28" y="151" width="252" height="697" rx="18" fill="#fff8f1" stroke="#b76521" stroke-width="1.6"/>
+<g transform="translate(44 174)" fill="none" stroke="#b76521" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="32" height="13" rx="3"/><rect x="2" y="20" width="32" height="13" rx="3"/><path d="M9 7h1m7 0h10M9 26h1m7 0h10"/></g>
+<text x="91" y="193" font-size="23" style="fill:#b76521" font-weight="700" text-anchor="start">.1 Exchange</text>
+<text x="91" y="224" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">模拟交易所</text>
+<rect x="475" y="151" width="252" height="697" rx="18" fill="#f3faf7" stroke="#247962" stroke-width="1.6"/>
+<g transform="translate(491 174)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1" width="32" height="13" rx="3"/><rect x="2" y="20" width="32" height="13" rx="3"/><path d="M9 7h1m7 0h10M9 26h1m7 0h10"/></g>
+<text x="538" y="193" font-size="23" style="fill:#247962" font-weight="700" text-anchor="start">.2 Trader</text>
+<text x="538" y="224" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">两个独立 C++ 进程</text>
+<rect x="922" y="151" width="250" height="697" rx="18" fill="#f8f6fc" stroke="#7252b8" stroke-width="1.6"/>
+<g transform="translate(938 174)" fill="none" stroke="#7252b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="34" height="24" rx="3"/><path d="M18 27v6M9 34h18M6 19l7-7 6 4 9-9"/></g>
+<text x="985" y="193" font-size="23" style="fill:#7252b8" font-weight="700" text-anchor="start">.101 监测 VM</text>
+<text x="985" y="224" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">网页与状态汇总</text>
+<rect x="48" y="245" width="212" height="100" rx="14" fill="#fff" stroke="#e8cbae" stroke-width="1.6"/>
+<g transform="translate(63 264)" fill="none" stroke="#b76521" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 5c-6-4-11-4-16-2v25c5-2 10-2 16 2 6-4 12-4 18-2V3c-6-2-12-2-18 2v25M6 9h6m-6 6h6m10-6h7m-7 6h7"/></g>
+<text x="109" y="283" font-size="21" style="fill:#23354d" font-weight="650" text-anchor="start">回放历史行情</text>
+<text x="65" y="323" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">AAPL / NVDA</text>
+<rect x="48" y="432" width="212" height="137" rx="14" fill="#fff" stroke="#e8cbae" stroke-width="1.6"/>
+<text x="64" y="463" font-size="21" style="fill:#23354d" font-weight="650" text-anchor="start">接 AUTO 的订单</text>
+<text x="64" y="501" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">按抵达时盘口</text>
+<text x="64" y="533" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">模拟成交并回报</text>
+<rect x="48" y="637" width="212" height="137" rx="14" fill="#fff" stroke="#e8cbae" stroke-width="1.6"/>
+<text x="64" y="668" font-size="19" style="fill:#23354d" font-weight="650" text-anchor="start">接 MANUAL 的订单</text>
+<text x="64" y="706" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">按抵达时盘口</text>
+<text x="64" y="738" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">模拟成交并回报</text>
+<text x="154" y="813" font-size="19" style="fill:#b76521" font-weight="600" text-anchor="middle">同一服务 · 两条会话</text>
+<rect x="495" y="245" width="212" height="100" rx="14" fill="#fff" stroke="#badace" stroke-width="1.6"/>
+<text x="514" y="282" font-size="22" style="fill:#23354d" font-weight="650" text-anchor="start">共享行情接收器</text>
+<text x="514" y="323" font-size="20" style="fill:#53667e" font-weight="400" text-anchor="start">每个 Trader 一份</text>
+<path class="edge" d="M601 345V408" stroke="#087f9a" marker-end="url(#cyan)"/>
+<path class="edge" d="M684 345V361H715V601H602V613" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="500" y="378" font-size="17" style="fill:#087f9a" font-weight="600">本机分发</text>
+<text x="500" y="405" font-size="15" style="fill:#087f9a">Unix Socket</text>
+<rect x="495" y="432" width="212" height="137" rx="14" fill="#fff" stroke="#badace" stroke-width="1.6"/>
+<g transform="translate(510 451)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="30" height="23" rx="6"/><path d="M18 2v7M0 17v8m36-8v8M11 25h14"/><circle cx="11" cy="17" r="1.5"/><circle cx="25" cy="17" r="1.5"/></g>
+<text x="555" y="478" font-size="23" style="fill:#247962" font-weight="700" text-anchor="start">AUTO</text>
+<text x="632" y="478" font-size="18" style="fill:#247962" font-weight="600" text-anchor="start">自动</text>
+<text x="511" y="519" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">比较买一 / 卖一数量</text>
+<text x="511" y="548" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">满足策略条件才发单</text>
+<rect x="495" y="637" width="212" height="137" rx="14" fill="#fff" stroke="#badace" stroke-width="1.6"/>
+<g transform="translate(509 655)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5a3 3 0 0 1 6 0v12-5a3 3 0 0 1 6 0v5-2a3 3 0 0 1 6 0v3a3 3 0 0 1 6 0v8c0 5-4 8-9 8h-6c-3 0-5-2-7-4L5 20c-3-4 1-6 4-3l3 3Z"/></g>
+<text x="555" y="682" font-size="23" style="fill:#247962" font-weight="700" text-anchor="start">MANUAL</text>
+<text x="661" y="682" font-size="18" style="fill:#247962" font-weight="600" text-anchor="start">手动</text>
+<text x="511" y="719" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">接收手动指令</text>
+<text x="511" y="751" font-size="19" style="fill:#53667e" font-weight="400" text-anchor="start">检查、编码、发送</text>
+<text x="601" y="813" font-size="18" style="fill:#247962" font-weight="600" text-anchor="middle">各自维护订单簿和持仓</text>
+<path class="edge" d="M260 305H471" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="377" y="253" font-size="18" style="fill:#087f9a" font-weight="650" text-anchor="middle">ITCH / MoldUDP64</text>
+<text x="377" y="286" font-size="18" style="fill:#087f9a" font-weight="400" text-anchor="middle">A 路 · UDP 组播</text>
+<path class="edge" d="M260 342H471" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="377" y="330" font-size="18" style="fill:#087f9a" text-anchor="middle">B 路 · UDP 组播</text>
+<path class="edge" d="M495 482H284" stroke="#b76521" marker-end="url(#orange)"/>
+<text x="377" y="463" font-size="21" style="fill:#b76521" font-weight="650" text-anchor="middle">下单 · OUCH</text>
+<path class="edge" d="M260 545H471" stroke="#b76521" marker-end="url(#orange)"/>
+<text x="377" y="531" font-size="18" style="fill:#b76521" font-weight="400" text-anchor="middle">受理 / 成交 / 拒绝</text>
+<text x="377" y="571" font-size="16" style="fill:#53667e" font-weight="400" text-anchor="middle">SoupBinTCP / TCP 43120</text>
+<path class="edge" d="M495 687H284" stroke="#b76521" marker-end="url(#orange)"/>
+<text x="377" y="668" font-size="21" style="fill:#b76521" font-weight="650" text-anchor="middle">下单 · OUCH</text>
+<path class="edge" d="M260 750H471" stroke="#b76521" marker-end="url(#orange)"/>
+<text x="377" y="736" font-size="18" style="fill:#b76521" font-weight="400" text-anchor="middle">受理 / 成交 / 拒绝</text>
+<text x="377" y="776" font-size="16" style="fill:#53667e" font-weight="400" text-anchor="middle">SoupBinTCP / TCP 43120</text>
+<rect x="942" y="245" width="210" height="529" rx="14" fill="#fff" stroke="#cfc3e4" stroke-width="1.6"/>
+<rect x="956" y="261" width="182" height="116" rx="8" fill="#f7f9fd" stroke="#cfd7e3" stroke-width="1.6"/>
+<path class="edge" d="M956 285H1138" stroke="#70849a"/>
+<g fill="#b9c7d8"><circle cx="967" cy="273" r="3"/><circle cx="977" cy="273" r="3"/><circle cx="987" cy="273" r="3"/></g>
+<path class="edge" d="M969 341L991 322L1010 332L1030 306" stroke="#087f9a"/>
+<rect x="1050" y="302" width="75" height="54" rx="6" fill="#eee8f7" stroke="#d7c9ea" stroke-width="1.6"/>
+<text x="1087" y="337" font-size="20" style="fill:#7252b8" font-weight="650" text-anchor="middle">下单</text>
+<text x="1047" y="410" font-size="19" style="fill:#7252b8" font-weight="600" text-anchor="middle">浏览器访问 :8088</text>
+<text x="1047" y="443" font-size="20" style="fill:#53667e" font-weight="400" text-anchor="middle">HTTP / JSON</text>
+<text x="1047" y="483" font-size="27" style="fill:#7252b8" font-weight="700" text-anchor="middle">Gateway</text>
+<text x="1047" y="522" font-size="21" style="fill:#7252b8" font-weight="400" text-anchor="middle">网页后台</text>
+<text x="964" y="575" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">提供看盘页面</text>
+<text x="964" y="608" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">转交开关与下单指令</text>
+<text x="964" y="641" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="start">汇总盘口和成交记录</text>
+<rect x="958" y="701" width="178" height="49" rx="9" fill="#f2eef9" stroke="#d9cdee" stroke-width="1.6"/>
+<text x="1047" y="733" font-size="17" style="fill:#7252b8" font-weight="650" text-anchor="middle">点击后交给 .2 发单</text>
+<path class="edge" d="M942 494H731" stroke="#7252b8" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="823" y="447" font-size="21" style="fill:#7252b8" font-weight="650" text-anchor="middle">策略开关</text>
+<text x="823" y="480" font-size="19" style="fill:#7252b8" font-weight="400" text-anchor="middle">TCP 48121</text>
+<path class="edge" d="M942 705H731" stroke="#7252b8" stroke-dasharray="7 6" marker-end="url(#purple)"/>
+<text x="823" y="659" font-size="21" style="fill:#7252b8" font-weight="650" text-anchor="middle">手动下单指令</text>
+<text x="823" y="692" font-size="19" style="fill:#7252b8" font-weight="400" text-anchor="middle">TCP 48122</text>
+<path class="edge" d="M154 848V896H992V798" stroke="#70849a" marker-end="url(#gray)"/>
+<text x="315" y="882" font-size="20" style="fill:#70849a" font-weight="600" text-anchor="start">Exchange 成交等事件副本</text>
+<path class="edge" d="M601 848V884C619 884 619 908 601 908V946H1092V798" stroke="#70849a" marker-end="url(#gray)"/>
+<text x="621" y="930" font-size="20" style="fill:#70849a" font-weight="600" text-anchor="start">Trader 盘口与订单事件副本</text>
+<text x="33" y="989" font-size="21" style="fill:#70849a" font-weight="600" text-anchor="start">上报：JSON / UDP 46120 → .101 Gateway</text>
+<text x="1168" y="989" font-size="18" style="fill:#53667e" font-weight="400" text-anchor="end">箭头表示应用流向；网卡与交换机见第 01 章。</text>
+</svg>

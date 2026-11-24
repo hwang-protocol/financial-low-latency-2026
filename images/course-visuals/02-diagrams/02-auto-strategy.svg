@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="970" viewBox="0 0 1200 970" role="img" aria-labelledby="title desc">
+<title id="title">AUTO 如何决定下单</title><desc id="desc">默认策略按买一和卖一数量计算不平衡度I。I大于等于0.35考虑买入，小于等于负0.35考虑卖出，其余等待。策略开启、行情健康、同股间隔至少5秒且含在途订单的新仓位绝对值不超过200股时，才按对手价提交25股IOC。例子是教学算例，不是实测。</desc>
+<defs><style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif;fill:#23354d} .edge{fill:none;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:round}</style>
+<marker id="cyan" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#087f9a"/></marker>
+<marker id="purple" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#7252b8"/></marker>
+<marker id="orange" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#b76521"/></marker>
+<marker id="green" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#247962"/></marker>
+<marker id="gray" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" markerUnits="userSpaceOnUse" overflow="visible"><path d="M0,-6 L12,0 L0,6 Z" fill="#70849a"/></marker>
+</defs>
+<rect width="1200" height="970" rx="22" fill="#fff"/>
+<text x="32" y="51" font-size="32" style="fill:#23354d" font-weight="700" text-anchor="start">AUTO 如何决定下单</text>
+<text x="32" y="86" font-size="22" style="fill:#53667e" font-weight="400" text-anchor="start">默认课堂策略 · AAPL、NVDA 各自判断 · 由 .2 上的 C++ 程序执行</text>
+<rect x="32" y="125" width="350" height="251" rx="14" fill="#f3faf7" stroke="#bbd8cd" stroke-width="1.6"/>
+<g transform="translate(53 147)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 5c-6-4-11-4-16-2v25c5-2 10-2 16 2 6-4 12-4 18-2V3c-6-2-12-2-18 2v25M6 9h6m-6 6h6m10-6h7m-7 6h7"/></g>
+<text x="103" y="175" font-size="24" style="fill:#247962" font-weight="700" text-anchor="start">① 行情更新后读盘口</text>
+<text x="53" y="217" font-size="21" style="fill:#23354d" font-weight="400" text-anchor="start">只取最优一档的挂单数量：</text>
+<text x="53" y="259" font-size="21" style="fill:#23354d" font-weight="600" text-anchor="start">买一（最高买价）：Qb 股</text>
+<text x="53" y="294" font-size="21" style="fill:#23354d" font-weight="600" text-anchor="start">卖一（最低卖价）：Qa 股</text>
+<text x="53" y="347" font-size="20" style="fill:#53667e" font-weight="400" text-anchor="start">盘口就绪，买卖两边都有报价</text>
+<path class="edge" d="M382 254H423" stroke="#087f9a" marker-end="url(#cyan)"/>
+<rect x="447" y="125" width="721" height="251" rx="14" fill="#f5f9fc" stroke="#c2d8e5" stroke-width="1.6"/>
+<text x="469" y="172" font-size="24" style="fill:#087f9a" font-weight="700" text-anchor="start">② 计算数量不平衡度 I</text>
+<text x="808" y="224" font-size="30" style="fill:#23354d" font-weight="600" text-anchor="middle">I = (Qb − Qa) / (Qb + Qa)</text>
+<rect x="469" y="257" width="214" height="90" rx="10" fill="#e8f5ee" stroke="#e8f5ee" stroke-width="1.6"/>
+<text x="576.0" y="292" font-size="20" style="fill:#247962" font-weight="650" text-anchor="middle">I ≥ +0.35</text>
+<text x="576.0" y="324" font-size="21" style="fill:#247962" font-weight="400" text-anchor="middle">考虑买入</text>
+<rect x="701" y="257" width="214" height="90" rx="10" fill="#fff0e5" stroke="#fff0e5" stroke-width="1.6"/>
+<text x="808.0" y="292" font-size="20" style="fill:#b76521" font-weight="650" text-anchor="middle">I ≤ −0.35</text>
+<text x="808.0" y="324" font-size="21" style="fill:#b76521" font-weight="400" text-anchor="middle">考虑卖出</text>
+<rect x="933" y="257" width="213" height="90" rx="10" fill="#edf1f6" stroke="#edf1f6" stroke-width="1.6"/>
+<text x="1039.5" y="292" font-size="20" style="fill:#70849a" font-weight="650" text-anchor="middle">−0.35 &lt; I &lt; +0.35</text>
+<text x="1039.5" y="324" font-size="21" style="fill:#70849a" font-weight="400" text-anchor="middle">等待新行情</text>
+<path class="edge" d="M802 376V410" stroke="#087f9a" marker-end="url(#cyan)"/>
+<text x="820" y="402" font-size="20" style="fill:#087f9a" font-weight="400" text-anchor="start">出现买 / 卖信号后，还要检查</text>
+<rect x="32" y="434" width="1136" height="194" rx="14" fill="#faf9fe" stroke="#d6ccea" stroke-width="1.6"/>
+<g transform="translate(52 452)" fill="none" stroke="#7252b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 1L33 7v11c0 8-7 14-15 17C10 32 3 26 3 18V7L18 1Z M10 18l6 6 12-14"/></g>
+<text x="104" y="480" font-size="24" style="fill:#7252b8" font-weight="700" text-anchor="start">③ 三项条件同时满足，才尝试下单</text>
+<text x="59" y="531" font-size="22" style="fill:#23354d" font-weight="600" text-anchor="start">策略已开启</text>
+<text x="59" y="567" font-size="22" style="fill:#23354d" font-weight="600" text-anchor="start">行情 HEALTHY</text>
+<g transform="translate(366 519)" fill="none" stroke="#7252b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="16"/><path d="M18 7v12l8 5"/></g>
+<text x="416" y="531" font-size="22" style="fill:#23354d" font-weight="600" text-anchor="start">同一股票距上次动作</text>
+<text x="416" y="567" font-size="22" style="fill:#23354d" font-weight="600" text-anchor="start">至少 5 秒</text>
+<g transform="translate(805 519)" fill="none" stroke="#7252b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3v29M8 33h20M3 11h30M8 11L2 24h12L8 11m20 0-6 13h12l-6-13"/></g>
+<text x="855" y="531" font-size="22" style="fill:#23354d" font-weight="600" text-anchor="start">新仓位绝对值</text>
+<text x="855" y="567" font-size="22" style="fill:#23354d" font-weight="600" text-anchor="start">不超过 200 股</text>
+<text x="59" y="609" font-size="20" style="fill:#53667e" font-weight="400" text-anchor="start">新仓位 = 已成交持仓 + 在途订单的净数量 + 本单方向数量（买 +25，卖 −25）</text>
+<path class="edge" d="M316 628V684" stroke="#247962" marker-end="url(#green)"/>
+<text x="332" y="664" font-size="20" style="fill:#247962" font-weight="600" text-anchor="start">全部满足</text>
+<path class="edge" d="M1002 628V684" stroke="#70849a" marker-end="url(#gray)"/>
+<text x="1020" y="664" font-size="20" style="fill:#70849a" font-weight="600" text-anchor="start">任一不满足</text>
+<rect x="32" y="708" width="742" height="108" rx="14" fill="#eef8f2" stroke="#b9d8c6" stroke-width="1.6"/>
+<g transform="translate(52 732)" fill="none" stroke="#247962" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="30" height="23" rx="6"/><path d="M18 2v7M0 17v8m36-8v8M11 25h14"/><circle cx="11" cy="17" r="1.5"/><circle cx="25" cy="17" r="1.5"/></g>
+<text x="104" y="748" font-size="25" style="fill:#247962" font-weight="700" text-anchor="start">④ 发出 25 股 IOC 限价单</text>
+<text x="104" y="787" font-size="22" style="fill:#23354d" font-weight="400" text-anchor="start">买入限价 = 当前卖一价；卖出限价 = 当前买一价。</text>
+<rect x="839" y="708" width="329" height="108" rx="14" fill="#f3f5f8" stroke="#d1d9e3" stroke-width="1.6"/>
+<text x="1003" y="751" font-size="25" style="fill:#70849a" font-weight="700" text-anchor="middle">本次不下单</text>
+<text x="1003" y="790" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="middle">等待后续行情再判断</text>
+<rect x="32" y="848" width="1136" height="89" rx="14" fill="#fffbf2" stroke="#e6d7b9" stroke-width="1.6"/>
+<text x="53" y="882" font-size="20" style="fill:#b76521" font-weight="700" text-anchor="start">教学算例</text>
+<text x="177" y="882" font-size="23" style="fill:#23354d" font-weight="550" text-anchor="start">买一 900 股，卖一 300 股：I = (900 − 300) / (900 + 300) = 0.50</text>
+<text x="177" y="916" font-size="21" style="fill:#53667e" font-weight="400" text-anchor="start">产生买入信号；③通过后才买 25 股。IOC 表示立即尝试成交，余量取消。</text>
+</svg>

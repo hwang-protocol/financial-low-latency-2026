@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">AAPL 简化订单簿中的 Best Bid、Best Ask、Spread、L1 与 L2</title>
+  <desc id="desc">左侧为三档买价，右侧为三档卖价。最高买价一百点零零，最低卖价一百点零二，价差为零点零二。最优一档构成 L1，全部三档构成本图的 L2。</desc>
+  <defs>
+    <style>
+      .title{font:700 32px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#0f172a}
+      .head{font:700 23px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#fff}
+      .label{font:700 20px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#334155}
+      .value{font:700 26px ui-monospace,SFMono-Regular,Consolas,monospace;fill:#0f172a}
+      .note{font:600 19px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .small{font:600 17px system-ui,-apple-system,"Segoe UI",sans-serif;fill:#475569}
+      .spread{fill:#581c87}
+    </style>
+  </defs>
+  <rect width="1200" height="620" rx="18" fill="#fff"/>
+  <text x="600" y="48" text-anchor="middle" class="title">AAPL 简化订单簿：先读最优一档，再看更深档位</text>
+
+  <rect x="80" y="92" width="420" height="58" rx="10" fill="#15803d"/>
+  <text x="290" y="129" text-anchor="middle" class="head">BID · 买方挂单（价格从高到低）</text>
+  <rect x="700" y="92" width="420" height="58" rx="10" fill="#dc2626"/>
+  <text x="910" y="129" text-anchor="middle" class="head">ASK · 卖方挂单（价格从低到高）</text>
+
+  <text x="185" y="184" text-anchor="middle" class="label">价格</text>
+  <text x="395" y="184" text-anchor="middle" class="label">数量</text>
+  <text x="805" y="184" text-anchor="middle" class="label">价格</text>
+  <text x="1015" y="184" text-anchor="middle" class="label">数量</text>
+
+  <rect x="80" y="200" width="420" height="82" rx="8" fill="#dcfce7" stroke="#15803d" stroke-width="4"/>
+  <rect x="700" y="200" width="420" height="82" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="4"/>
+  <line x1="290" y1="200" x2="290" y2="282" stroke="#86efac" stroke-width="2"/>
+  <line x1="910" y1="200" x2="910" y2="282" stroke="#fca5a5" stroke-width="2"/>
+  <text x="185" y="251" text-anchor="middle" class="value">100.00</text>
+  <text x="395" y="251" text-anchor="middle" class="value">300</text>
+  <text x="805" y="251" text-anchor="middle" class="value">100.02</text>
+  <text x="1015" y="251" text-anchor="middle" class="value">200</text>
+
+  <g fill="#f8fafc" stroke="#cbd5e1" stroke-width="2">
+    <rect x="80" y="296" width="420" height="72" rx="8"/>
+    <rect x="80" y="382" width="420" height="72" rx="8"/>
+    <rect x="700" y="296" width="420" height="72" rx="8"/>
+    <rect x="700" y="382" width="420" height="72" rx="8"/>
+  </g>
+  <g stroke="#cbd5e1" stroke-width="2">
+    <line x1="290" y1="296" x2="290" y2="368"/>
+    <line x1="290" y1="382" x2="290" y2="454"/>
+    <line x1="910" y1="296" x2="910" y2="368"/>
+    <line x1="910" y1="382" x2="910" y2="454"/>
+  </g>
+  <g class="value" text-anchor="middle">
+    <text x="185" y="341">99.99</text><text x="395" y="341">600</text>
+    <text x="185" y="427">99.98</text><text x="395" y="427">400</text>
+    <text x="805" y="341">100.03</text><text x="1015" y="341">250</text>
+    <text x="805" y="427">100.04</text><text x="1015" y="427">500</text>
+  </g>
+
+  <rect x="516" y="204" width="168" height="160" rx="14" fill="#f3e8ff" stroke="#7e22ce" stroke-width="3"/>
+  <text x="600" y="241" text-anchor="middle" class="label spread">Spread</text>
+  <text x="600" y="282" text-anchor="middle" class="value spread">100.02</text>
+  <text x="600" y="313" text-anchor="middle" class="value spread">− 100.00</text>
+  <line x1="548" y1="326" x2="652" y2="326" stroke="#7e22ce" stroke-width="2"/>
+  <text x="600" y="352" text-anchor="middle" class="value spread">= 0.02</text>
+
+  <rect x="80" y="486" width="1040" height="88" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="600" y="522" text-anchor="middle" class="note">L1：只看绿色与红色高亮的最优买卖一档</text>
+  <text x="600" y="553" text-anchor="middle" class="note">L2：继续看本图其余价格档，了解更深的可见数量</text>
+</svg>

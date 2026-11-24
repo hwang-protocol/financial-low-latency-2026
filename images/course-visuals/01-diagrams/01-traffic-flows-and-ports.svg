@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2320" viewBox="0 0 1200 2320" role="img" aria-labelledby="title desc">
+<title id="title">FLLE 流量与端口：谁发起、传什么、走 TCP 还是 UDP</title>
+<desc id="desc">按课堂阅读顺序编号：先数据面下单与行情，再浏览器、数据面切换和进程命令，然后 SSH，最后是 LANZ 队列事件与 UDP 进度上报。蓝色箭头表示TCP，橙色表示UDP，每条箭头同时标注文字协议和端口。Trader 经 43120 向 Exchange 下单；Exchange 用 A/B 两路 UDP 组播发行情。浏览器访问 .101 的 8088/8089；网页后台先请求 .2:48606 切换，再向 48120～48125 发进程命令。.111 经 SSH/22 登录。LANZ 由 .101 连接交换机 50001；交易程序向 .101:46120 上报进度。监听端口固定，客户端临时端口不编造。</desc>
+<defs><style>text{font-family:'Noto Sans CJK SC','Microsoft YaHei',Arial,sans-serif}use{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
+<symbol id="i-terminal" viewBox="0 0 48 48"><rect x="3" y="7" width="42" height="33" rx="6" fill="#eef2ff"/><path d="m12 18 7 6-7 6m13 0h10M3 14h42"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 48 48"><rect x="3" y="5" width="42" height="30" rx="5" fill="#eef2ff"/><path d="M17 43h14m-7-8v8M10 27l8-8 8 5 12-12"/></symbol>
+<symbol id="i-server" viewBox="0 0 48 48"><rect x="6" y="3" width="36" height="42" rx="6" fill="#eef2ff"/><path d="M6 17h36M6 31h36M13 10h2m5 0h14M13 24h2m5 0h14M13 38h2m5 0h14"/></symbol>
+<symbol id="i-nic" viewBox="0 0 48 48"><rect x="5" y="9" width="35" height="27" rx="4" fill="#e5f7f8"/><path d="M40 5v38M12 36v5m6-5v5m6-5v5m6-5v5"/><rect x="12" y="16" width="13" height="12" rx="2"/><path d="M30 17h5m-5 6h5m-5 6h5"/></symbol>
+<symbol id="i-switch" viewBox="0 0 48 48"><rect x="2" y="10" width="44" height="28" rx="6" fill="#e5f7f8"/><path d="M9 17h30"/><rect x="8" y="24" width="7" height="7"/><rect x="20" y="24" width="7" height="7"/><rect x="32" y="24" width="7" height="7"/></symbol>
+<symbol id="i-chip" viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="28" rx="5" fill="#f3edff"/><rect x="17" y="17" width="14" height="14" rx="2"/><path d="M17 3v7m7-7v7m7-7v7M17 38v7m7-7v7m7-7v7M3 17h7m-7 7h7m-7 7h7m28-14h7m-7 7h7m-7 7h7"/></symbol>
+<symbol id="i-network" viewBox="0 0 48 48"><rect x="17" y="3" width="14" height="12" rx="3" fill="#eef2ff"/><path d="M24 15v11M8 32v-6h32v6"/><rect x="2" y="32" width="12" height="12" rx="3"/><rect x="18" y="32" width="12" height="12" rx="3"/><rect x="34" y="32" width="12" height="12" rx="3"/></symbol>
+<symbol id="i-clock" viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="#e5f7f8"/><path d="M24 11v14l9 5"/></symbol>
+<symbol id="i-file" viewBox="0 0 48 48"><path d="M10 3h19l10 10v32H10Z" fill="#eef2ff"/><path d="M29 3v11h10M17 23h15m-15 8h15m-15 7h9"/></symbol>
+
+<marker id="arrow-tcp" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto"><path d="M0 -6 L12 0 L0 6 Z" fill="#2563eb"/></marker>
+<marker id="arrow-udp" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto"><path d="M0 -6 L12 0 L0 6 Z" fill="#b66a0b"/></marker>
+</defs>
+<rect x="0" y="0" width="1200" height="2320" rx="0" fill="#f8fafc" stroke="#f8fafc" stroke-width="1.5"/>
+<text x="40" y="42" font-size="21" fill="#6366a0" font-weight="700" text-anchor="start">COMMUNICATION MAP</text>
+<text x="40" y="88" font-size="36" fill="#172554" font-weight="800" text-anchor="start">谁在和谁通信，端口在哪里？</text>
+<text x="40" y="128" font-size="22" fill="#2563eb" font-weight="700" text-anchor="start">蓝色 TCP：连接中的请求 / 回执 / 数据</text>
+<text x="660" y="128" font-size="22" fill="#b66a0b" font-weight="700" text-anchor="start">橙色 UDP：独立发送的数据报</text>
+<rect x="30" y="165" width="1140" height="228" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="200" font-size="25" fill="#172554" font-weight="700" text-anchor="start">① Trader 下单并接收回执</text>
+<text x="1145" y="198" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">数据面 · 20.1.1.0/24</text>
+<rect x="845" y="231" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="860" y="245" width="34" height="34" color="#5262ac"/>
+<text x="905" y="270" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.2 Trader</text>
+<text x="862" y="307" font-size="21" fill="#475569" font-weight="400" text-anchor="start">20.1.1.2</text>
+<text x="862" y="336" font-size="21" fill="#475569" font-weight="400" text-anchor="start">发起订单会话</text>
+<rect x="55" y="231" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="70" y="245" width="34" height="34" color="#5262ac"/>
+<text x="115" y="270" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.1 Exchange</text>
+<text x="72" y="307" font-size="21" fill="#475569" font-weight="400" text-anchor="start">20.1.1.1:43120</text>
+<text x="72" y="336" font-size="21" fill="#475569" font-weight="400" text-anchor="start">接收订单、返回处理结果</text>
+<path d="M833 279 H379" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="①a" data-tip-x="367" data-target-edge="355"/>
+<text x="600" y="262" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">①a OUCH/SoupBinTCP · TCP目标43120</text>
+<path d="M367 353 H821" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="①b" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="336" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">①b 订单回执/TCP · 源43120</text>
+<rect x="30" y="413" width="1140" height="281" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="448" font-size="25" fill="#172554" font-weight="700" text-anchor="start">② Exchange 发布行情</text>
+<text x="1145" y="446" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">数据面 · 20.1.1.0/24</text>
+<rect x="55" y="480" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="70" y="494" width="34" height="34" color="#5262ac"/>
+<text x="115" y="519" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.1 Exchange</text>
+<text x="72" y="556" font-size="21" fill="#475569" font-weight="400" text-anchor="start">20.1.1.1</text>
+<text x="72" y="585" font-size="21" fill="#475569" font-weight="400" text-anchor="start">ITCH / MoldUDP64 发布</text>
+<rect x="845" y="480" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="860" y="494" width="34" height="34" color="#5262ac"/>
+<text x="905" y="519" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.2 Trader</text>
+<text x="862" y="556" font-size="21" fill="#475569" font-weight="400" text-anchor="start">20.1.1.2</text>
+<text x="862" y="585" font-size="21" fill="#475569" font-weight="400" text-anchor="start">Socket 接收器经数据口加组</text>
+<path d="M367 513 H821" fill="none" stroke="#b66a0b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-udp)" data-flow-id="②a" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="496" font-size="22" fill="#b66a0b" font-weight="600" text-anchor="middle">②a A 路 UDP · 233.74.125.32:31032</text>
+<path d="M367 587 H821" fill="none" stroke="#b66a0b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-udp)" data-flow-id="②b" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="570" font-size="22" fill="#b66a0b" font-weight="600" text-anchor="middle">②b B 路 UDP · 233.74.125.33:31033</text>
+<text x="600" y="651" font-size="21" fill="#64748b" font-weight="400" text-anchor="middle">一个普通 Socket 接收进程，向本机 AUTO / MANUAL 分发完整行情。</text>
+<text x="600" y="680" font-size="21" fill="#64748b" font-weight="400" text-anchor="middle">本机使用 Unix Socket，无 IP/端口；交换机根据 IGMP 成员表转发组播。</text>
+<rect x="30" y="714" width="1140" height="260" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="749" font-size="25" fill="#172554" font-weight="700" text-anchor="start">③ 浏览器查看交易与 LANZ</text>
+<text x="1145" y="747" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">管理面 · 10.1.1.0/24</text>
+<rect x="55" y="784" width="300" height="164" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-monitor" x="70" y="798" width="34" height="34" color="#5262ac"/>
+<text x="115" y="823" font-size="20" fill="#172554" font-weight="700" text-anchor="start">Win2019 · 浏览器</text>
+<text x="72" y="860" font-size="21" fill="#475569" font-weight="400" text-anchor="start">浏览器 · 源IP按实际地址</text>
+<text x="72" y="889" font-size="21" fill="#475569" font-weight="400" text-anchor="start">经管理网访问 .101</text>
+<rect x="845" y="770" width="300" height="188" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-monitor" x="860" y="784" width="34" height="34" color="#5262ac"/>
+<text x="905" y="809" font-size="23" fill="#172554" font-weight="700" text-anchor="start">监测 VM · .101</text>
+<text x="862" y="846" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.101</text>
+<text x="862" y="875" font-size="21" fill="#475569" font-weight="400" text-anchor="start">8088：交易网页 / API</text>
+<text x="862" y="933" font-size="21" fill="#475569" font-weight="400" text-anchor="start">8089：LANZ JSON 查询</text>
+<path d="M367 834 H821" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="③a" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="817" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">③a HTTP/TCP · 目标8088/8089</text>
+<path d="M833 914 H379" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="③b" data-tip-x="367" data-target-edge="355"/>
+<text x="600" y="897" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">③b HTTP/TCP · 返回页面或JSON</text>
+<rect x="30" y="994" width="1140" height="220" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="1029" font-size="25" fill="#172554" font-weight="700" text-anchor="start">④ 网页请求数据面切换</text>
+<text x="1145" y="1027" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">管理面 · 10.1.1.0/24</text>
+<rect x="55" y="1054" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-monitor" x="70" y="1068" width="34" height="34" color="#5262ac"/>
+<text x="115" y="1093" font-size="23" fill="#172554" font-weight="700" text-anchor="start">监测 VM · .101</text>
+<text x="72" y="1130" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.101</text>
+<text x="72" y="1159" font-size="21" fill="#475569" font-weight="400" text-anchor="start">网页后台（Gateway）</text>
+<rect x="845" y="1054" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="860" y="1068" width="34" height="34" color="#5262ac"/>
+<text x="905" y="1093" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.2 Trader</text>
+<text x="862" y="1130" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.2:48606</text>
+<text x="862" y="1159" font-size="21" fill="#475569" font-weight="400" text-anchor="start">本机执行 DPDK / SFC</text>
+<path d="M367 1117 H821" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="④a" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="1100" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">④a HTTP/TCP · 目标48606</text>
+<path d="M833 1182 H379" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="④b" data-tip-x="367" data-target-edge="355"/>
+<text x="600" y="1165" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">④b HTTP响应/TCP · 源48606</text>
+<rect x="30" y="1234" width="1140" height="234" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="1269" font-size="25" fill="#172554" font-weight="700" text-anchor="start">⑤ 网页后台查询 / 控制交易进程</text>
+<text x="1145" y="1267" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">管理面 · 10.1.1.0/24</text>
+<rect x="845" y="1302" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-monitor" x="860" y="1316" width="34" height="34" color="#5262ac"/>
+<text x="905" y="1341" font-size="23" fill="#172554" font-weight="700" text-anchor="start">监测 VM · .101</text>
+<text x="862" y="1378" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.101</text>
+<text x="862" y="1407" font-size="21" fill="#475569" font-weight="400" text-anchor="start">网页后台发送控制命令</text>
+<rect x="55" y="1292" width="300" height="161" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="70" y="1306" width="34" height="34" color="#5262ac"/>
+<text x="115" y="1331" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.1 / .2 管理接口</text>
+<text x="72" y="1368" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.1:48120</text>
+<text x="72" y="1397" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.2:48121～48125</text>
+<text x="72" y="1426" font-size="21" fill="#475569" font-weight="400" text-anchor="start">各客户端按配置启用</text>
+<path d="M833 1353 H379" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="⑤a" data-tip-x="367" data-target-edge="355"/>
+<text x="600" y="1336" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">⑤a TCP · 目标48120/48121～48125</text>
+<path d="M367 1424 H821" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="⑤b" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="1407" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">⑤b TCP · 同连接返回命令结果</text>
+<rect x="30" y="1488" width="1140" height="218" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="1523" font-size="25" fill="#172554" font-weight="700" text-anchor="start">⑥ 登录与文件分发</text>
+<text x="1145" y="1521" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">管理面 · 10.1.1.0/24</text>
+<rect x="55" y="1547" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-terminal" x="70" y="1561" width="34" height="34" color="#5262ac"/>
+<text x="115" y="1586" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.111 管理终端</text>
+<text x="72" y="1623" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.111</text>
+<text x="72" y="1652" font-size="21" fill="#475569" font-weight="400" text-anchor="start">运行课程脚本</text>
+<rect x="845" y="1547" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="860" y="1561" width="34" height="34" color="#5262ac"/>
+<text x="905" y="1586" font-size="23" fill="#172554" font-weight="700" text-anchor="start">VM / Arista 管理口</text>
+<text x="862" y="1623" font-size="21" fill="#475569" font-weight="400" text-anchor="start">VM：.1 / .2 / .11 / .101</text>
+<text x="862" y="1652" font-size="21" fill="#475569" font-weight="400" text-anchor="start">交换机：.253</text>
+<path d="M367 1615 H821" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="⑥a" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="1598" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">⑥a SSH/TCP · 目标22</text>
+<text x="600" y="1656" font-size="21" fill="#475569" font-weight="400" text-anchor="middle">SSH 登录；SCP 文件传输也使用 SSH</text>
+<rect x="30" y="1726" width="1140" height="273" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="1761" font-size="25" fill="#172554" font-weight="700" text-anchor="start">⑦ 采集交换机的 LANZ 队列事件</text>
+<text x="1145" y="1759" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">管理面 · 10.1.1.0/24</text>
+<rect x="55" y="1796" width="300" height="158" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-monitor" x="70" y="1810" width="34" height="34" color="#5262ac"/>
+<text x="115" y="1835" font-size="23" fill="#172554" font-weight="700" text-anchor="start">监测 VM · .101</text>
+<text x="72" y="1872" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.101</text>
+<text x="72" y="1901" font-size="21" fill="#475569" font-weight="400" text-anchor="start">LANZ 采集器</text>
+<text x="72" y="1930" font-size="21" fill="#475569" font-weight="400" text-anchor="start">本地端口由系统临时分配</text>
+<rect x="845" y="1796" width="300" height="158" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-switch" x="860" y="1810" width="34" height="34" color="#5262ac"/>
+<text x="905" y="1835" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.253 Arista 交换机</text>
+<text x="862" y="1872" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.253:50001</text>
+<text x="862" y="1901" font-size="21" fill="#475569" font-weight="400" text-anchor="start">Management1 上的服务</text>
+<path d="M367 1850 H821" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="⑦a" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="1833" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">⑦a TCP建连 · 目标50001</text>
+<path d="M833 1919 H379" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-tcp)" data-flow-id="⑦b" data-tip-x="367" data-target-edge="355"/>
+<text x="600" y="1902" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">⑦b LANZ/TCP · 源50001</text>
+<text x="600" y="1977" font-size="21" fill="#475569" font-weight="500" text-anchor="middle">上、下两根箭头属于同一条 TCP 连接；队列事件由交换机发给采集器。</text>
+<rect x="30" y="2019" width="1140" height="215" rx="16" fill="#f0f4fa" stroke="#d7e0eb" stroke-width="1.5"/>
+<text x="54" y="2054" font-size="25" fill="#172554" font-weight="700" text-anchor="start">⑧ 交易程序上报业务事件</text>
+<text x="1145" y="2052" font-size="21" fill="#64748b" font-weight="500" text-anchor="end">管理面 · 10.1.1.0/24</text>
+<rect x="55" y="2078" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-server" x="70" y="2092" width="34" height="34" color="#5262ac"/>
+<text x="115" y="2117" font-size="23" fill="#172554" font-weight="700" text-anchor="start">.1 / .2 交易程序</text>
+<text x="72" y="2154" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.1 / 10.1.1.2</text>
+<text x="72" y="2183" font-size="21" fill="#475569" font-weight="400" text-anchor="start">Exchange / Trader</text>
+<rect x="845" y="2078" width="300" height="142" rx="16" fill="#fff" stroke="#d7e0eb" stroke-width="1.5"/>
+<use href="#i-monitor" x="860" y="2092" width="34" height="34" color="#5262ac"/>
+<text x="905" y="2117" font-size="23" fill="#172554" font-weight="700" text-anchor="start">监测 VM · .101</text>
+<text x="862" y="2154" font-size="21" fill="#475569" font-weight="400" text-anchor="start">10.1.1.101:46120</text>
+<text x="862" y="2183" font-size="21" fill="#475569" font-weight="400" text-anchor="start">网页后台接收 UDP 事件</text>
+<path d="M367 2148 H821" fill="none" stroke="#b66a0b" stroke-width="2.5" stroke-linecap="butt" marker-end="url(#arrow-udp)" data-flow-id="⑧a" data-tip-x="833" data-target-edge="845"/>
+<text x="600" y="2131" font-size="22" fill="#b66a0b" font-weight="600" text-anchor="middle">⑧a UDP · 目标46120</text>
+<text x="600" y="2187" font-size="22" fill="#9b5b0b" font-weight="500" text-anchor="middle">重放状态 / 客户端交易事件（JSON）</text>
+<text x="40" y="2270" font-size="22" fill="#475569" font-weight="500" text-anchor="start">端口读法：目标端口属于接收服务；回程中的“源端口”属于原服务端。</text>
+<text x="40" y="2305" font-size="21" fill="#64748b" font-weight="400" text-anchor="start">客户端临时端口不固定。图中箭头说明消息方向，不代表新增物理线；启用状态以当次实验为准。</text>
+</svg>

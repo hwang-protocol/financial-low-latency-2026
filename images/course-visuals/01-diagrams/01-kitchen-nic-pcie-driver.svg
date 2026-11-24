@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1040" viewBox="0 0 1200 1040" role="img" aria-labelledby="title desc">
+<title id="title">从收货口到主厨：网卡、PCIe 与驱动的分工</title>
+<desc id="desc">厨房类比的一台接收主机。主机外的交换机把报文送到数据口。网卡框内标出PCIe设备身份，包括设备地址与型号；PCIe是网卡连接主机的总线。主机内，驱动先准备接收缓冲区，再把设备可访问的地址登记给网卡；紫色虚线表示准备关系。网卡像收货口的自动搬运车，经PCIe用DMA把报文写入主内存，CPU随后读取数据执行处理；绿色实线表示数据方向。驱动也是CPU执行的软件，不是独立硬件。底部把图中对象对应到本章三项检查：接线与接口名、PCIe设备身份、当前驱动。本图是职责示意，省略中断、协议栈、缓存和地址映射细节，不是完整收包流水线或真实机器布局。</desc>
+<defs>
+ <linearGradient id="paper" x2="0" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#f4f7fb"/></linearGradient>
+ <linearGradient id="teal-panel" x2="0" y2="1"><stop stop-color="#f0fcf8"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+ <linearGradient id="violet-panel" x2="0" y2="1"><stop stop-color="#faf5ff"/><stop offset="1" stop-color="#f5f0fc"/></linearGradient>
+ <marker id="data-head" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#0d8a72"/></marker>
+ <marker id="prep-head" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0 -6 L12 0 L0 6Z" fill="#8b5cb6"/></marker>
+ <symbol id="crate-icon" viewBox="0 0 80 70"><path d="M8 18 39 5 72 18 72 52 40 66 8 52Z" fill="#efcb83" stroke="#a5732d" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 18 40 31 72 18M40 31V66M22 12 55 25V39L45 43V29" fill="none" stroke="#a5732d" stroke-width="2.5"/><path d="M19 34 29 38M19 42 29 46" stroke="#b9863a" stroke-width="2.5"/></symbol>
+ <symbol id="switch-icon" viewBox="0 0 160 120"><rect x="10" y="28" width="140" height="67" rx="8" fill="#f3f8fd" stroke="#527391" stroke-width="3"/><path d="M24 43H136" stroke="#b1c5d8" stroke-width="2.5"/><g fill="#527391"><rect x="24" y="62" width="19" height="18" rx="2"/><rect x="54" y="62" width="19" height="18" rx="2"/><rect x="84" y="62" width="19" height="18" rx="2"/><rect x="114" y="62" width="19" height="18" rx="2"/></g><g fill="#76c4a7"><circle cx="33.5" cy="53" r="3"/><circle cx="63.5" cy="53" r="3"/><circle cx="93.5" cy="53" r="3"/><circle cx="123.5" cy="53" r="3"/></g></symbol>
+ <symbol id="dock-robot-icon" viewBox="0 0 220 170"><ellipse cx="117" cy="155" rx="99" ry="9" fill="#d5e9e5"/><path d="M17 140V29L63 12 109 29V140" fill="#e5f5ee" stroke="#438f78" stroke-width="3" stroke-linejoin="round"/><path d="M31 139V43H96V139" fill="#fff" stroke="#438f78" stroke-width="3"/><path d="M34 53H93M34 65H93M34 77H93" stroke="#a7cdbd" stroke-width="3"/><rect x="44" y="90" width="40" height="36" rx="3" fill="#d2e4ef" stroke="#527391" stroke-width="2.5"/><path d="M50 91V103H78V91M54 126V118M63 126V118M72 126V118" stroke="#527391" fill="none" stroke-width="2.5"/>
+ <path d="M101 129H196L204 144H92Z" fill="#83bfb0" stroke="#377d6b" stroke-width="3"/><circle cx="111" cy="148" r="10" fill="#355867"/><circle cx="184" cy="148" r="10" fill="#355867"/><circle cx="111" cy="148" r="4" fill="#b9d3d9"/><circle cx="184" cy="148" r="4" fill="#b9d3d9"/><rect x="125" y="113" width="24" height="17" rx="4" fill="#438f78"/><path d="M137 113V96L164 74 151 57" fill="none" stroke="#377d6b" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="137" cy="98" r="6" fill="#c3e2d5"/><circle cx="164" cy="74" r="6" fill="#c3e2d5"/><path d="M145 60 135 46 143 39M155 53 160 38 152 31" fill="none" stroke="#377d6b" stroke-width="4" stroke-linecap="round"/>
+ <use href="#crate-icon" x="161" y="80" width="51" height="47"/><use href="#crate-icon" x="109" y="16" width="46" height="44"/>
+ </symbol>
+ <symbol id="shelf-icon" viewBox="0 0 210 170"><ellipse cx="106" cy="155" rx="88" ry="9" fill="#dfdeee"/><rect x="25" y="19" width="160" height="131" rx="5" fill="#f4f0fa" stroke="#786a9f" stroke-width="3"/><path d="M20 61H190M20 109H190M25 150V160M185 150V160" stroke="#786a9f" stroke-width="5" stroke-linecap="round"/><use href="#crate-icon" x="38" y="22" width="48" height="40"/><use href="#crate-icon" x="109" y="22" width="48" height="40"/><rect x="43" y="75" width="58" height="24" rx="4" fill="#fff" stroke="#ac92c9" stroke-width="2" stroke-dasharray="5 4"/><path d="M65 86H78M71.5 80V92" stroke="#ac92c9" stroke-width="2"/><use href="#crate-icon" x="123" y="69" width="44" height="39"/><rect x="45" y="120" width="116" height="20" rx="3" fill="#d7d1e5"/><path d="M53 123V136M64 123V136M75 123V136M86 123V136M97 123V136M108 123V136M119 123V136M130 123V136M141 123V136M152 123V136" stroke="#aa97be" stroke-width="2"/></symbol>
+ <symbol id="chef-icon" viewBox="0 0 160 190"><ellipse cx="81" cy="178" rx="70" ry="8" fill="#e0e8ee"/><path d="M36 153V111Q43 89 80 89Q117 89 124 111V153" fill="#fff" stroke="#51728a" stroke-width="3"/><path d="M60 94 80 112 100 94M80 112V145" stroke="#51728a" stroke-width="2.5" fill="none"/><circle cx="68" cy="125" r="2.5" fill="#51728a"/><circle cx="92" cy="125" r="2.5" fill="#51728a"/><ellipse cx="80" cy="64" rx="29" ry="34" fill="#f5d6b4" stroke="#ab8b6d" stroke-width="2.5"/><path d="M59 53V40H105V54" fill="#876950"/><path d="M52 45Q33 28 48 16Q58 7 68 15Q76 -1 91 10Q102 1 115 15Q128 27 111 45V53H52Z" fill="#fff" stroke="#51728a" stroke-width="3"/><path d="M54 43H109" stroke="#bdced8" stroke-width="3"/><circle cx="69" cy="64" r="2.5" fill="#493d39"/><circle cx="91" cy="64" r="2.5" fill="#493d39"/><path d="M70 80Q80 88 91 80" stroke="#ad7b62" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+ <path d="M41 115 27 142 61 153M119 115 133 142 100 153" fill="#fff" stroke="#51728a" stroke-width="3" stroke-linejoin="round"/><path d="M61 153 73 153M100 153 88 153" stroke="#d1a881" stroke-width="10" stroke-linecap="round"/><rect x="16" y="157" width="128" height="14" rx="4" fill="#bc9970" stroke="#987650" stroke-width="2"/><path d="M28 171V185M132 171V185" stroke="#987650" stroke-width="5"/><ellipse cx="78" cy="154" rx="15" ry="4" fill="#83b99d"/>
+ </symbol>
+ <symbol id="clipboard-icon" viewBox="0 0 90 110"><rect x="13" y="12" width="66" height="89" rx="8" fill="#fff" stroke="#8b5cb6" stroke-width="3"/><rect x="31" y="5" width="30" height="16" rx="5" fill="#ded0ec" stroke="#8b5cb6" stroke-width="2.5"/><g fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M25 38 29 42 36 33M25 59 29 63 36 54M25 80 29 84 36 75" stroke="#57a38c"/><path d="M45 39H65M45 60H65M45 81H65" stroke="#b59acb"/></g></symbol>
+ <symbol id="cpu-icon" viewBox="0 0 64 64"><path d="M20 3V13M32 3V13M44 3V13M20 51V61M32 51V61M44 51V61M3 20H13M3 32H13M3 44H13M51 20H61M51 32H61M51 44H61" stroke="#7291a7" stroke-width="3"/><rect x="13" y="13" width="38" height="38" rx="6" fill="#51728a"/><rect x="21" y="21" width="22" height="22" rx="3" fill="#d2e3eb"/></symbol>
+ <symbol id="cable-icon" viewBox="0 0 64 64"><path d="M15 9V27Q15 43 32 43H46V58" fill="none" stroke="#438f78" stroke-width="5"/><rect x="7" y="5" width="17" height="21" rx="3" fill="#d5eadf" stroke="#438f78" stroke-width="2.5"/><rect x="37" y="43" width="18" height="17" rx="3" fill="#d5eadf" stroke="#438f78" stroke-width="2.5"/></symbol>
+ <symbol id="identity-icon" viewBox="0 0 72 64"><rect x="5" y="11" width="62" height="43" rx="5" fill="#e2eaf4" stroke="#6586ab" stroke-width="2.5"/><rect x="13" y="21" width="19" height="22" rx="3" fill="#a8c3dc"/><path d="M41 24H58M41 33H58M41 42H51" stroke="#6586ab" stroke-width="3"/></symbol>
+</defs>
+<rect width="1200" height="1040" fill="url(#paper)"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" fill="#20364a">
+
+<text id="text-1" x="36" y="52" font-size="32" font-weight="750" fill="#20364a" text-anchor="start">从收货口到主厨：网卡、PCIe 与驱动的分工</text>
+<text id="text-2" x="36" y="94" font-size="24" font-weight="500" fill="#64748b" text-anchor="start">先备好存放位置，再由网卡搬运，最后由 CPU 读取和处理。</text>
+<rect id="host" x="240" y="145" width="936" height="657" rx="22" fill="#ffffff" stroke="#d5e0eb" stroke-width="2"/>
+<text id="text-3" x="267" y="189" font-size="27" font-weight="700" fill="#3d647e" text-anchor="start">一台接收主机</text>
+<text id="text-4" x="267" y="232" font-size="22" font-weight="500" fill="#8194a5" text-anchor="start">厨房里的设备与分工</text>
+<rect id="driver" x="540" y="215" width="365" height="150" rx="16" fill="url(#violet-panel)" stroke="#c9b1dd" stroke-width="2"/>
+<use href="#clipboard-icon" x="558" y="235" width="80" height="100"/>
+<text id="text-5" x="652" y="257" font-size="25" font-weight="700" fill="#744991" text-anchor="start">安排搬运 · 驱动</text>
+<text id="text-6" x="652" y="298" font-size="21" font-weight="500" fill="#744991" text-anchor="start">先备空间，再登记位置</text>
+<text id="text-7" x="652" y="337" font-size="21" font-weight="500" fill="#8b73a0" text-anchor="start">由 CPU 执行的软件</text>
+<rect id="network" x="32" y="420" width="180" height="280" rx="16" fill="#f0f5fb" stroke="#b9cce0" stroke-width="2"/>
+<rect id="nic" x="278" y="420" width="230" height="320" rx="16" fill="url(#teal-panel)" stroke="#abd2c2" stroke-width="2"/>
+<rect id="ram" x="646" y="420" width="230" height="280" rx="16" fill="#faf7ff" stroke="#cdbfe0" stroke-width="2"/>
+<rect id="cpu" x="956" y="420" width="200" height="280" rx="16" fill="#f1f6fa" stroke="#b9cfdd" stroke-width="2"/>
+<text id="text-8" x="40" y="389" font-size="22" font-weight="600" fill="#7890a4" text-anchor="start">主机外</text>
+<use href="#switch-icon" x="48" y="456" width="148" height="126"/>
+<use href="#dock-robot-icon" x="285" y="438" width="216" height="170"/>
+<use href="#shelf-icon" x="654" y="444" width="214" height="166"/>
+<use href="#chef-icon" x="991" y="433" width="140" height="174"/>
+<use href="#cpu-icon" x="1093" y="564" width="47" height="47"/>
+<text id="text-9" x="122" y="631" font-size="27" font-weight="700" fill="#527391" text-anchor="middle">交换机</text>
+<text id="text-10" x="122" y="670" font-size="22" font-weight="500" fill="#527391" text-anchor="middle">同一 VLAN</text>
+<text id="text-11" x="393" y="631" font-size="23" font-weight="700" fill="#327e67" text-anchor="middle">收货口与搬运设备</text>
+<text id="text-12" x="393" y="670" font-size="23" font-weight="500" fill="#327e67" text-anchor="middle">数据口 / 网卡 NIC</text>
+<path d="M295 691H491" stroke="#d1e5dd" stroke-width="2"/>
+<text id="text-13" x="393" y="719" font-size="21" font-weight="500" fill="#54799c" text-anchor="middle">PCIe 身份：地址 / 型号</text>
+<text id="text-14" x="761" y="631" font-size="27" font-weight="700" fill="#786a9f" text-anchor="middle">存货区</text>
+<text id="text-15" x="761" y="670" font-size="22" font-weight="500" fill="#786a9f" text-anchor="middle">主内存 / 接收缓冲区</text>
+<text id="text-16" x="1056" y="631" font-size="27" font-weight="700" fill="#51728a" text-anchor="middle">主厨</text>
+<text id="text-17" x="1056" y="670" font-size="22" font-weight="500" fill="#51728a" text-anchor="middle">CPU 执行代码</text>
+<path id="prepare-ram" d="M761 377 V396" fill="none" stroke="#8b5cb6" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#prep-head)" stroke-dasharray="7 6" data-source="driver" data-target="ram" data-tip="761,408"/>
+<text id="text-18" x="789" y="398" font-size="21" font-weight="500" fill="#8b5cb6" text-anchor="start">① 备空位</text>
+<path id="register-nic" d="M528 282 H393 V396" fill="none" stroke="#8b5cb6" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#prep-head)" stroke-dasharray="7 6" data-source="driver" data-target="nic" data-tip="393,408"/>
+<text id="text-19" x="408" y="392" font-size="21" font-weight="500" fill="#8b5cb6" text-anchor="start">② 登记地址</text>
+<path id="packet-to-nic" d="M224 557 H254" fill="none" stroke="#0d8a72" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#data-head)" data-source="network" data-target="nic" data-tip="266,557"/>
+<text id="text-20" x="245" y="600" font-size="20" font-weight="500" fill="#0d8a72" text-anchor="middle">送达</text>
+<path id="dma-to-ram" d="M520 557 H622" fill="none" stroke="#0d8a72" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#data-head)" data-source="nic" data-target="ram" data-tip="634,557"/>
+<text id="text-21" x="577" y="520" font-size="24" font-weight="700" fill="#0d8a72" text-anchor="middle">PCIe</text>
+<text id="text-22" x="577" y="600" font-size="21" font-weight="500" fill="#0d8a72" text-anchor="middle">DMA 写入</text>
+<path id="cpu-reads" d="M888 557 H932" fill="none" stroke="#0d8a72" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#data-head)" data-source="ram" data-target="cpu" data-tip="944,557"/>
+<text id="text-23" x="916" y="600" font-size="20" font-weight="500" fill="#0d8a72" text-anchor="middle">读取</text>
+<path d="M279 770H316" stroke="#8b5cb6" stroke-width="3" stroke-dasharray="7 6"/><path d="M555 770H592" stroke="#0d8a72" stroke-width="3"/>
+<text id="text-24" x="329" y="778" font-size="22" font-weight="500" fill="#8b5cb6" text-anchor="start">准备空间与地址</text>
+<text id="text-25" x="605" y="778" font-size="22" font-weight="500" fill="#0d8a72" text-anchor="start">报文 / 数据的方向</text>
+<rect id="chapter-checks" x="32" y="830" width="1144" height="143" rx="16" fill="#edf3f8" stroke="#d2dfeb" stroke-width="2"/>
+<text id="text-26" x="54" y="868" font-size="25" font-weight="700" fill="#3d647e" text-anchor="start">本章沿着这条路核对</text>
+<use href="#cable-icon" x="54" y="892" width="53" height="53"/>
+<text id="text-27" x="123" y="928" font-size="24" font-weight="600" fill="#3b755f" text-anchor="start">接线与接口名</text>
+<use href="#identity-icon" x="430" y="892" width="59" height="53"/>
+<text id="text-28" x="507" y="928" font-size="24" font-weight="600" fill="#54799c" text-anchor="start">PCIe 设备身份</text>
+<use href="#clipboard-icon" x="850" y="885" width="47" height="62"/>
+<text id="text-29" x="914" y="928" font-size="24" font-weight="600" fill="#805599" text-anchor="start">当前驱动</text>
+<text id="text-30" x="36" y="1008" font-size="23" font-weight="500" fill="#64748b" text-anchor="start">网卡把报文写入内存后，后续处理仍由 CPU 执行。</text>
+</g></svg>
