@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="610" viewBox="0 0 1200 610" role="img" aria-labelledby="title desc">
+<title id="title">交换机应用打包：准备文件、厂商规则生成RPM、官方工具封装SWIX</title>
+<desc id="desc">在完整FDK配套的Linux环境中，将PDI与管理文件通过app.mk和rpmbuild生成RPM与扩展清单，再用swi-tools create封成SWIX，交给EOS安装。</desc>
+<defs><marker id="a" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12Z" fill="#64748b"/></marker></defs>
+<rect width="1200" height="610" rx="16" fill="#f8fafc"/>
+<g font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" fill="#0f172a">
+<text x="30" y="45" font-size="30" font-weight="800">打包只看三件事：输入文件 → 官方工具 → 交付包</text>
+<text x="30" y="83" font-size="23" fill="#475569">在配套 Linux 开发机上完成；完整 FDK 的版本与依赖要求优先。</text>
+<rect x="30" y="120" width="340" height="320" rx="14" fill="#e0f2fe" stroke="#94a3b8"/>
+<text x="48" y="162" font-size="26" font-weight="800">① 准备文件</text>
+<text x="48" y="207" font-size="23">电路镜像：.pdi</text>
+<text x="48" y="245" font-size="23">端口定义：JSON</text>
+<text x="48" y="283" font-size="23">寄存器表：CSV</text>
+<text x="48" y="321" font-size="23">EOS 管理代码与命令定义</text>
+<text x="48" y="359" font-size="23">厂商运行库 libapp</text>
+<text x="48" y="397" font-size="23">应用设置 app-settings.mk</text>
+<rect x="430" y="120" width="340" height="320" rx="14" fill="#eef2ff" stroke="#94a3b8"/>
+<text x="448" y="162" font-size="26" font-weight="800">② 厂商规则生成 RPM</text>
+<text x="448" y="207" font-size="23">工具：make + rpmbuild</text>
+<text x="448" y="245" font-size="23">规则：FDK 的 app.mk</text>
+<text x="448" y="283" font-size="23"></text>
+<text x="448" y="321" font-size="23">产物一：应用软件包 .rpm</text>
+<text x="448" y="359" font-size="23">产物二：扩展清单</text>
+<text x="448" y="397" font-size="23">manifest.yaml</text>
+<rect x="830" y="120" width="340" height="320" rx="14" fill="#dcfce7" stroke="#94a3b8"/>
+<text x="848" y="162" font-size="26" font-weight="800">③ 官方工具封成 SWIX</text>
+<text x="848" y="207" font-size="23">工具：swi-tools create</text>
+<text x="848" y="245" font-size="23">输入：RPM + manifest</text>
+<text x="848" y="283" font-size="23"></text>
+<text x="848" y="321" font-size="23">产物：EOS 软件扩展包</text>
+<text x="848" y="359" font-size="23">.swix</text>
+<text x="848" y="397" font-size="23">下一步：上传并安装到 EOS</text>
+<path d="M378 275 H406" stroke="#64748b" stroke-width="2" stroke-linecap="butt" fill="none" marker-end="url(#a)"/>
+<path d="M778 275 H806" stroke="#64748b" stroke-width="2" stroke-linecap="butt" fill="none" marker-end="url(#a)"/>
+<rect x="30" y="468" width="1140" height="110" rx="12" fill="white" stroke="#cbd5e1"/>
+<text x="50" y="505" font-size="24" font-weight="700">工具来源：Arista FDK 提供 app.mk / libapp；Arista swi-tools 仓库提供封包工具。</text>
+<text x="50" y="549" font-size="25" font-weight="700" fill="#166534">本例最终文件：flle_filter-0.2.0.swix　→　后面按 EOS 命令逐步操作</text>
+</g></svg>

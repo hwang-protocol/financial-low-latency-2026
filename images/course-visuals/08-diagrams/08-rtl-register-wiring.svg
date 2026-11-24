@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1080" viewBox="0 0 1200 1080" role="img" aria-labelledby="title desc">
+<title id="title">同一组 A/B 检查：代码怎样改变寄存器和连线</title>
+<desc id="desc">按教学 SystemVerilog 展开的数据通路，非布局布线结果。修改前 a 先比较后进入 a_ok_q 寄存器，b 先进入 b_q 寄存器，b_q 再比较后与 a_ok_q 合并并进入 hit 寄存器。修改后删除两个中间寄存器，当前 a 和 b 分别比较后直接合并，仍由 hit 寄存器保存。所有寄存器接同一时钟，省略时钟线。</desc>
+<defs>
+<marker id="blue" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#2563eb"/></marker>
+<marker id="green" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#15803d"/></marker>
+</defs><g font-family="Noto Sans CJK SC, sans-serif">
+<rect x="0" y="0" width="1200" height="1080" rx="0" fill="white" stroke="white" stroke-width="0"/>
+<text x="38" y="48" font-size="34" fill="#172554" font-weight="700" text-anchor="start">代码一改，哪条连线变了？</text>
+<text x="40" y="91" font-size="22" fill="#2563eb" font-weight="600" text-anchor="start">蓝框：比较逻辑</text>
+<text x="290" y="91" font-size="22" fill="#c2410c" font-weight="600" text-anchor="start">橙框：将移除的寄存器</text>
+<text x="625" y="91" font-size="22" fill="#475569" font-weight="600" text-anchor="start">灰框：保留的输出寄存器</text>
+<text x="982" y="91" font-size="22" fill="#15803d" font-weight="600" text-anchor="start">绿线：新版连接</text>
+<rect x="28" y="122" width="1144" height="412" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="52" y="167" font-size="28" fill="#172554" font-weight="700" text-anchor="start">修改前 · A 先比较，B 下一拍比较</text>
+<text x="55" y="213" font-size="21" fill="#64748b" font-weight="400" text-anchor="start">当前输入</text>
+<g class="node">
+<rect x="55" y="240" width="80" height="76" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="95.0" y="274" font-size="23" fill="#94a3b8" font-weight="700" text-anchor="middle">字段</text>
+<text x="95.0" y="302" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">a</text>
+</g>
+<g class="node">
+<rect x="55" y="370" width="80" height="76" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="95.0" y="404" font-size="23" fill="#94a3b8" font-weight="700" text-anchor="middle">字段</text>
+<text x="95.0" y="432" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">b</text>
+</g>
+<g class="node">
+<rect x="190" y="230" width="140" height="90" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="260.0" y="264" font-size="23" fill="#2563eb" font-weight="700" text-anchor="middle">比较 A</text>
+<text x="260.0" y="296" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">a == 10</text>
+</g>
+<g class="node">
+<rect x="395" y="230" width="150" height="90" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+<text x="470.0" y="264" font-size="23" fill="#ea580c" font-weight="700" text-anchor="middle">寄存器①</text>
+<text x="470.0" y="296" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">a_ok_q</text>
+<path d="M408,320 v-12 l10,6 l-10,6" fill="none" stroke="#ea580c" stroke-width="2"/>
+</g>
+<g class="node">
+<rect x="395" y="360" width="150" height="90" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+<text x="470.0" y="394" font-size="23" fill="#ea580c" font-weight="700" text-anchor="middle">寄存器②</text>
+<text x="470.0" y="426" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">b_q</text>
+<path d="M408,450 v-12 l10,6 l-10,6" fill="none" stroke="#ea580c" stroke-width="2"/>
+</g>
+<g class="node">
+<rect x="605" y="360" width="140" height="90" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="675.0" y="394" font-size="23" fill="#2563eb" font-weight="700" text-anchor="middle">比较 B</text>
+<text x="675.0" y="426" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">b_q == 20</text>
+</g>
+<g class="node">
+<rect x="805" y="285" width="105" height="94" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+<text x="857.5" y="319" font-size="23" fill="#7c3aed" font-weight="700" text-anchor="middle">两者成立</text>
+<text x="857.5" y="351" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">&amp;&amp;</text>
+</g>
+<g class="node">
+<rect x="970" y="287" width="150" height="90" rx="12" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="1045.0" y="321" font-size="23" fill="#64748b" font-weight="700" text-anchor="middle">输出寄存器</text>
+<text x="1045.0" y="353" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">hit</text>
+<path d="M983,377 v-12 l10,6 l-10,6" fill="none" stroke="#64748b" stroke-width="2"/>
+</g>
+<polyline points="135,278 166,278" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<polyline points="330,275 371,275" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<polyline points="135,408 371,408" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<polyline points="545,405 581,405" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<polyline points="545,275 765,275 765,309 781,309" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<polyline points="745,405 765,405 765,355 781,355" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<polyline points="910,332 946,332" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<text x="649" y="256" font-size="21" fill="#2563eb" font-weight="500" text-anchor="middle">保存的 A 判定</text>
+<text x="261" y="389" font-size="21" fill="#2563eb" font-weight="500" text-anchor="middle">b 先保存</text>
+<text x="53" y="500" font-size="24" fill="#9a3412" font-weight="600" text-anchor="start">同一组输入：第 1 个上升沿存入①②，第 2 个上升沿存入 hit。</text>
+<rect x="28" y="554" width="1144" height="412" rx="12" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="2"/>
+<text x="52" y="599" font-size="28" fill="#172554" font-weight="700" text-anchor="start">修改后 · A、B 直接比较，合并后再保存</text>
+<text x="55" y="645" font-size="21" fill="#64748b" font-weight="400" text-anchor="start">当前输入</text>
+<g class="node">
+<rect x="55" y="672" width="80" height="76" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="95.0" y="706" font-size="23" fill="#94a3b8" font-weight="700" text-anchor="middle">字段</text>
+<text x="95.0" y="734" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">a</text>
+</g>
+<g class="node">
+<rect x="55" y="802" width="80" height="76" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="95.0" y="836" font-size="23" fill="#94a3b8" font-weight="700" text-anchor="middle">字段</text>
+<text x="95.0" y="864" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">b</text>
+</g>
+<g class="node">
+<rect x="190" y="662" width="140" height="90" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="260.0" y="696" font-size="23" fill="#2563eb" font-weight="700" text-anchor="middle">比较 A</text>
+<text x="260.0" y="728" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">a == 10</text>
+</g>
+<g class="node">
+<rect x="190" y="792" width="140" height="90" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="260.0" y="826" font-size="23" fill="#2563eb" font-weight="700" text-anchor="middle">比较 B</text>
+<text x="260.0" y="858" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">b == 20</text>
+</g>
+<g class="node">
+<rect x="805" y="717" width="105" height="94" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+<text x="857.5" y="751" font-size="23" fill="#7c3aed" font-weight="700" text-anchor="middle">两者成立</text>
+<text x="857.5" y="783" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">&amp;&amp;</text>
+</g>
+<g class="node">
+<rect x="970" y="719" width="150" height="90" rx="12" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<text x="1045.0" y="753" font-size="23" fill="#64748b" font-weight="700" text-anchor="middle">输出寄存器</text>
+<text x="1045.0" y="785" font-size="24" fill="#172554" font-weight="600" text-anchor="middle">hit</text>
+<path d="M983,809 v-12 l10,6 l-10,6" fill="none" stroke="#64748b" stroke-width="2"/>
+</g>
+<polyline points="135,710 166,710" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<polyline points="135,840 166,840" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<polyline points="330,707 765,707 765,741 781,741" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<polyline points="330,837 765,837 765,787 781,787" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<polyline points="910,764 946,764" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<text x="537" y="687" font-size="22" fill="#15803d" font-weight="500" text-anchor="middle">a_ok：当前 a 的判定</text>
+<text x="537" y="876" font-size="22" fill="#15803d" font-weight="500" text-anchor="middle">b_ok：当前 b 的判定</text>
+<rect x="392" y="746" width="343" height="51" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="563" y="780" font-size="21" fill="#9a3412" font-weight="600" text-anchor="middle">①②已移除，结果直接连到 &amp;&amp;</text>
+<text x="53" y="932" font-size="24" fill="#166534" font-weight="600" text-anchor="start">同一组输入：两项比较同时工作，第 1 个上升沿就存入 hit。</text>
+<text x="40" y="1008" font-size="22" fill="#475569" font-weight="400" text-anchor="start">图中只画数据线；所有寄存器同接 clk，并在每个上升沿一起更新。</text>
+<text x="40" y="1046" font-size="21" fill="#64748b" font-weight="400" text-anchor="start">这是 RTL 逻辑连线，不是芯片物理布局；综合可能合并逻辑，实际映射以网表为准。</text>
+</g></svg>

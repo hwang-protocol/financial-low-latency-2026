@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="570" viewBox="0 0 1200 570">
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#2563eb"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:28px;font-weight:900}.k{font-size:19px;font-weight:900}.s{font-size:15px;fill:#475569}.p{font-size:14px;font-weight:800}</style>
+  </defs>
+  <rect x="12" y="12" width="1176" height="546" rx="26" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="54" y="62">7150 的 before-fcs：把“何时进入交换机”带到抓包工具</text>
+  <text class="t s" x="54" y="91">时间在 ingress 记录，在启用时间戳的 egress 口写入副本。</text>
+
+  <rect x="62" y="142" width="174" height="86" rx="16" fill="#ecfeff" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="149" y="177" text-anchor="middle">Ingress MAC</text>
+  <text class="t s" x="149" y="204" text-anchor="middle">最后一字节到达时记时</text>
+  <path d="M236 185H296" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="318" y="130" width="820" height="110" rx="18" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <rect x="338" y="153" width="180" height="64" rx="10" fill="#dbeafe"/>
+  <text class="t p" x="428" y="191" text-anchor="middle">Ethernet Header</text>
+  <rect x="518" y="153" width="336" height="64" rx="10" fill="#ecfeff"/>
+  <text class="t p" x="686" y="191" text-anchor="middle">Payload / 原始报文</text>
+  <rect x="854" y="153" width="144" height="64" rx="10" fill="#f3e8ff"/>
+  <text class="t p" x="926" y="179" text-anchor="middle">4 B 字段</text>
+  <text class="t s" x="926" y="202" text-anchor="middle">31-bit ASIC time</text>
+  <rect x="998" y="153" width="120" height="64" rx="10" fill="#dcfce7"/>
+  <text class="t p" x="1058" y="179" text-anchor="middle">新 FCS</text>
+  <text class="t s" x="1058" y="202" text-anchor="middle">重新计算</text>
+
+  <rect x="62" y="290" width="324" height="174" rx="18" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <rect x="62" y="290" width="324" height="42" rx="18" fill="#f3e8ff"/><path d="M62 311h324v21H62z" fill="#f3e8ff"/>
+  <text class="t k" x="84" y="319">Timestamp</text>
+  <text class="t s" x="84" y="360">350 MHz 计数器：每 tick ≈ 2.857 ns</text>
+  <text class="t s" x="84" y="388">帧内取低 31 bit，约每 6.135 秒回卷</text>
+  <text class="t s" x="84" y="416">按 2^31 取模，才可还原相邻间隔</text>
+  <text class="t s" x="84" y="444">精确回到首 bit 时还要扣 ingress 序列化</text>
+
+  <rect x="438" y="290" width="324" height="174" rx="18" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <rect x="438" y="290" width="324" height="42" rx="18" fill="#cffafe"/><path d="M438 311h324v21H438z" fill="#cffafe"/>
+  <text class="t k" x="460" y="319">Keyframe</text>
+  <text class="t s" x="460" y="360">周期性发送完整 ASIC time 与 UTC 映射</text>
+  <text class="t s" x="460" y="388">带设备、源口等解释上下文</text>
+  <text class="t s" x="460" y="416">PTP 或本地时钟决定 UTC 的可信程度</text>
+  <text class="t s" x="460" y="444">映射 UTC 时同时解析时间戳与 Keyframe</text>
+
+  <rect x="814" y="290" width="324" height="174" rx="18" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <rect x="814" y="290" width="324" height="42" rx="18" fill="#dcfce7"/><path d="M814 311h324v21H814z" fill="#dcfce7"/>
+  <text class="t k" x="836" y="319">Capture Tool</text>
+  <text class="t s" x="836" y="360">普通网卡也能收到并解析帧内时间戳</text>
+  <text class="t s" x="836" y="388">所以 `.11` 无 PHC 不妨碍做顺序 / 缺口审计</text>
+  <text class="t s" x="836" y="416">若还要量“交换机→网卡”最后一跳</text>
+  <text class="t s" x="836" y="444">才需要分析网卡 HW RX + 同一时间基准</text>
+
+  <path d="M386 377H422" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <path d="M762 377H798" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <rect x="216" y="500" width="768" height="34" rx="17" fill="#e2e8f0"/>
+  <text class="t p" x="600" y="523" text-anchor="middle">帧内交换机时间戳 ≠ 分析网卡自身时间戳；前者已足够回答“包何时到观察点”</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img">
+  <title>BPF map：内核里的一张共享表</title>
+  <desc>控制程序把规则写进表，XDP 程序按表处理每个包并记回账本</desc>
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-purple" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#6d28d9"/>
+    </marker>
+  </defs>
+  <style>
+    text{font-family:'Noto Sans CJK SC',sans-serif;fill:#0f172a}
+    .title{font-size:34px;font-weight:700}
+    .sub{font-size:22px;fill:#475569}
+    .label{font-size:25px;font-weight:700}
+    .body{font-size:23px}
+    .small{font-size:21px;fill:#475569}
+    .band{font-size:21px;font-weight:700;fill:#475569}
+    .cell{font-size:22px}
+  </style>
+  <rect width="1200" height="680" rx="20" fill="#fff"/>
+  <text x="40" y="52" class="title">BPF map：内核里的一张共享表</text>
+  <text x="40" y="90" class="sub">控制程序写表，XDP 程序按表处理每个包</text>
+
+  <text x="40" y="132" class="band">用户态</text>
+  <text x="450" y="132" class="band">内核</text>
+
+  <rect x="40" y="148" width="300" height="170" rx="12" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="60" y="186" class="label">控制程序</text>
+  <text x="60" y="226" class="body">把今天的规则写进表</text>
+  <text x="60" y="262" class="body">再读回处理结果</text>
+
+  <rect x="450" y="148" width="430" height="170" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="470" y="186" class="label">BPF map · 共享表</text>
+  <rect x="470" y="202" width="390" height="96" rx="8" fill="#fff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="486" y="236" class="cell">规则　　丢掉 1 条 NVDA 加单</text>
+  <text x="486" y="274" class="cell">账本　　已经丢掉 0 条</text>
+
+  <path d="M340 198L450 198" fill="none" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow-purple)"/>
+  <path d="M450 258L340 258" fill="none" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow-purple)"/>
+
+  <rect x="40" y="410" width="260" height="128" rx="12" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="60" y="448" class="label">网卡收包</text>
+  <text x="60" y="484" class="body">DMA 写入主机内存</text>
+  <text x="60" y="517" class="body">包从这里进入</text>
+
+  <rect x="380" y="410" width="360" height="128" rx="12" fill="#e0f2fe" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="400" y="448" class="label">XDP 程序</text>
+  <text x="400" y="484" class="body">看字段，对照表里的规则</text>
+  <text x="400" y="517" class="body">处理完后记回账本</text>
+
+  <rect x="820" y="392" width="330" height="70" rx="12" fill="#dcfce7" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="840" y="438" class="label">放行 · 交给后面</text>
+  <rect x="820" y="480" width="330" height="70" rx="12" fill="#fee2e2" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="840" y="526" class="label">丢掉 · 账本加 1</text>
+
+  <path d="M300 474L380 474" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="318" y="460" class="small">包</text>
+  <path d="M740 438L820 427" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M740 498L820 515" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <path d="M665 318L665 410" fill="none" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrow-purple)"/>
+  <text x="680" y="372" class="small">查规则 / 记账本</text>
+
+  <text x="40" y="595" class="small">紫色虚线：控制程序和 XDP 程序都来读写这张表。</text>
+  <text x="40" y="632" class="small">实线：网卡把包交给 XDP 程序，程序按表里的规则处理。</text>
+</svg>

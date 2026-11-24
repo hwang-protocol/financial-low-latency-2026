@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850" role="img" aria-labelledby="title desc">
+<title id="title">软件模拟卡与真 FPGA 卡：过滤位置和订阅不同</title>
+<desc id="desc">三行分别是第七章 native XDP 实测、第九章 CPU RTL 模型实测，以及未实测的真 FPGA 网卡设计。XDP 在驱动中，模型在套接字后，真卡在 DMA 前。软件模型接收组播后向统一接收器本机单播交付；接收器经Unix Socket送Guardian。XDP和真卡路径由统一接收器订阅组播。</desc>
+<defs><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto"><path d="M0 -6L12 0L0 6Z" fill="#64748b"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC',sans-serif;fill:#0f172a}.title{font-size:34px;font-weight:700}.label{font-size:26px;font-weight:700}.body{font-size:24px}.note{font-size:22px;fill:#475569}.box{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}.cpu{fill:#e0f2fe;stroke:#0284c7;stroke-width:2}.fpga{fill:#fff7ed;stroke:#ea580c;stroke-width:2}.arrow{stroke:#64748b;stroke-width:2.5;stroke-linecap:butt;marker-end:url(#arrow)}</style>
+<rect width="1200" height="850" rx="20" fill="#fff"/>
+<text x="40" y="58" class="title">同一包行情，检验员站在哪里？</text>
+<text x="40" y="99" class="note">三条路径分别使用，不叠加；行情均来自 .1，下面展开 .2 的收包过程。</text>
+<text x="40" y="155" class="label">08 · native XDP〔软件实测〕</text>
+<rect x="40" y="178" width="240" height="95" rx="12" class="box"/><text x="62" y="216" class="label">普通网卡 / DMA</text><text x="62" y="252" class="note">帧已搬入主机内存</text>
+<path d="M292 225H306" class="arrow"/>
+<rect x="330" y="178" width="240" height="95" rx="12" class="cpu"/><text x="352" y="216" class="label">XDP 判断</text><text x="352" y="252" class="note">驱动内 · CPU 执行</text>
+<path d="M582 225H596" class="arrow"/>
+<rect x="620" y="178" width="240" height="95" rx="12" class="box"/><text x="642" y="216" class="label">Linux 协议栈</text><text x="642" y="252" class="note">UDP socket</text>
+<path d="M872 225H886" class="arrow"/>
+<rect x="910" y="178" width="250" height="95" rx="12" class="box"/><text x="932" y="216" class="label" style="font-size:22px">接收器 / Guardian</text><text x="932" y="252" class="note" style="font-size:20px">收组播 31032 · 本机IPC</text>
+<text x="40" y="313" class="body">像在仓库收货口验货：应用订阅不改，放行才进协议栈。</text>
+<text x="40" y="383" class="label">10 · Verilator 模型〔软件实测〕</text>
+<rect x="40" y="406" width="240" height="95" rx="12" class="box"/><text x="62" y="444" class="label">普通网卡</text><text x="62" y="480" class="note">Linux → UDP socket</text>
+<path d="M292 453H306" class="arrow"/>
+<rect x="330" y="406" width="240" height="95" rx="12" class="cpu"/><text x="352" y="444" class="label">adapter + RTL</text><text x="352" y="480" class="note">套接字后 · CPU 执行</text>
+<path d="M582 453H596" class="arrow"/>
+<rect x="620" y="406" width="240" height="95" rx="12" class="box"/><text x="642" y="444" class="label">PASS 才转发</text><text x="642" y="480" class="note">本机单播 · 42121</text>
+<path d="M872 453H886" class="arrow"/>
+<rect x="910" y="406" width="250" height="95" rx="12" class="box"/><text x="932" y="444" class="label" style="font-size:22px">接收器 / Guardian</text><text x="932" y="480" class="note" style="font-size:20px">接收器仅收单播 42121</text>
+<text x="40" y="541" class="body">像应用门前加收发室：组播先进模型，再单播交付，不能让原包绕过。</text>
+<text x="40" y="611" class="label">真 FPGA 网卡〔设计／未实测〕</text>
+<rect x="40" y="634" width="240" height="95" rx="12" class="fpga"/><text x="62" y="672" class="label">FPGA 判断</text><text x="62" y="708" class="note">网线入口 · 卡内硬件</text>
+<path d="M292 681H306" class="arrow"/>
+<rect x="330" y="634" width="240" height="95" rx="12" class="box"/><text x="352" y="672" class="label">DMA / onic 驱动</text><text x="352" y="708" class="note">只接收 PASS 帧</text>
+<path d="M582 681H596" class="arrow"/>
+<rect x="620" y="634" width="240" height="95" rx="12" class="box"/><text x="642" y="672" class="label">Linux 协议栈</text><text x="642" y="708" class="note">UDP socket</text>
+<path d="M872 681H886" class="arrow"/>
+<rect x="910" y="634" width="250" height="95" rx="12" class="box"/><text x="932" y="672" class="label" style="font-size:22px">接收器 / Guardian</text><text x="932" y="708" class="note" style="font-size:20px">收组播 31032 · 本机IPC</text>
+<text x="40" y="769" class="body">像在卸货前验货：不需要 adapter，也不把组播改成单播。</text>
+<text x="40" y="817" class="note">蓝框：已验证的 CPU 过滤位置。橙框：拟建硬件位置；不是延迟或线速证据。</text>
+</svg>

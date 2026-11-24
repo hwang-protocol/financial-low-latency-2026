@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">LANZ：事件推送与网页取数</title>
+  <desc id="desc">交换机在管理口 TCP 50001 等待采集器连接，随后沿同一连接向 .101 推送队列事件。浏览器与 .101 有两条独立的请求返回路径：8088 返回网页及脚本，8089 返回事件 JSON。两条折返线均从浏览器出发，绕到 .101 服务旁，再返回浏览器。</desc>
+  <defs>
+    <marker id="arrow-event" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0 -6 L12 0 L0 6 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-web" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0 -6 L12 0 L0 6 Z" fill="#7e22ce"/></marker>
+    <marker id="arrow-json" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 -6 12 12" refX="0" refY="0" orient="auto" overflow="visible"><path d="M0 -6 L12 0 L0 6 Z" fill="#0891b2"/></marker>
+    <style>
+      text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .title{font-size:30px;font-weight:900}
+      .heading{font-size:22px;font-weight:800}
+      .body{font-size:19px;fill:#334155}
+      .small{font-size:17px;fill:#475569}
+      .flow{fill:none;stroke-width:2.5;stroke-linecap:butt}
+      .web{fill:#7e22ce;font-size:19px;font-weight:800}
+      .json{fill:#087e93;font-size:19px;font-weight:800}
+    </style>
+  </defs>
+  <rect x="12" y="12" width="1176" height="676" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="title" x="40" y="60">LANZ：事件推送与网页取数</text>
+  <text class="body" x="40" y="97">交换机推送事件；浏览器分别请求网页与 JSON。</text>
+  <rect x="40" y="144" width="270" height="410" rx="20" fill="#fff" stroke="#2563eb" stroke-width="2.5"/>
+  <text class="heading" x="175" y="184" text-anchor="middle">7150 交换机</text>
+  <text class="small" x="175" y="216" text-anchor="middle">10.1.1.253</text>
+  <text class="heading" x="175" y="279" text-anchor="middle">Et2 出口队列</text>
+  <text class="body" x="175" y="313" text-anchor="middle">超过阈值，记录事件</text>
+  <rect x="60" y="382" width="230" height="128" rx="14" fill="#eff6ff" stroke="#93c5fd"/>
+  <text class="heading" x="175" y="417" text-anchor="middle">TCP 50001</text>
+  <text class="body" x="175" y="449" text-anchor="middle">交换机管理口</text>
+  <text class="small" x="175" y="481" text-anchor="middle">等待采集器连接</text>
+  <rect x="475" y="144" width="310" height="410" rx="20" fill="#fff" stroke="#0891b2" stroke-width="2.5"/>
+  <text class="heading" x="630" y="184" text-anchor="middle">监测主机 .101</text>
+  <rect x="495" y="210" width="270" height="114" rx="14" fill="#f3e8ff" stroke="#c084fc"/>
+  <text class="heading" x="630" y="250" text-anchor="middle">8088 · 网页服务</text>
+  <text class="body" x="630" y="290" text-anchor="middle">返回网页及脚本</text>
+  <rect x="495" y="382" width="270" height="140" rx="14" fill="#ecfeff" stroke="#67e8f9"/>
+  <text class="heading" x="630" y="417" text-anchor="middle">LANZ 采集器 · 8089</text>
+  <text class="body" x="630" y="453" text-anchor="middle">接收事件，提供 JSON</text>
+  <text class="small" x="630" y="495" text-anchor="middle">记录存入内存与 JSON 文件</text>
+  <rect x="1020" y="144" width="140" height="410" rx="20" fill="#fff" stroke="#64748b" stroke-width="2.5"/>
+  <text class="heading" x="1090" y="184" text-anchor="middle">浏览器</text>
+  <text class="body" x="1090" y="252" text-anchor="middle">打开 8088</text>
+  <text class="body" x="1090" y="284" text-anchor="middle">显示网页</text>
+  <text class="body" x="1090" y="435" text-anchor="middle">定时取数据</text>
+  <text class="body" x="1090" y="467" text-anchor="middle">更新底栏</text>
+  <path class="flow" stroke="#2563eb" marker-end="url(#arrow-event)" d="M322 450 H451"/>
+  <text x="392" y="427" text-anchor="middle" font-size="19" font-weight="800" style="fill:#2563eb">推送队列事件</text>
+  <text class="small" x="392" y="481" text-anchor="middle">S / U / E</text>
+  <!-- 从浏览器出发，绕到服务旁，再沿下行返回；圆点为请求起点。 -->
+  <circle cx="1008" cy="228" r="4" fill="#7e22ce"/>
+  <path class="flow" stroke="#7e22ce" marker-end="url(#arrow-web)" d="M1008 228 H825 Q797 228 797 256 V270 Q797 298 825 298 H996"/>
+  <text class="web" x="905" y="215" text-anchor="middle">请求网页</text>
+  <text class="web" x="905" y="327" text-anchor="middle">返回网页</text>
+  <circle cx="1008" cy="413" r="4" fill="#0891b2"/>
+  <path class="flow" stroke="#0891b2" marker-end="url(#arrow-json)" d="M1008 413 H825 Q797 413 797 441 V455 Q797 483 825 483 H996"/>
+  <text class="json" x="905" y="400" text-anchor="middle">请求 JSON</text>
+  <text class="json" x="905" y="512" text-anchor="middle">返回 JSON</text>
+  <rect x="40" y="581" width="1120" height="76" rx="16" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text class="heading" x="600" y="613" text-anchor="middle">采集器先连交换机的 50001，交换机沿同一连接推送事件。</text>
+  <text class="small" x="600" y="642" text-anchor="middle">右侧两条折返线：上行请求，下行返回。</text>
+</svg>

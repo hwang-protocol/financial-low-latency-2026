@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1380" viewBox="0 0 1200 1380" role="img" aria-labelledby="title desc">
+<title id="title">交换机里的 FPGA：三个真实应用</title><desc id="desc">上：Enyx nxLink Secure 在 Arista 7130 上为专用微波与光纤冗余路径提供报文仲裁与去重；微波争取低时延，光纤保障连续性。中：德交所用 7130 MetaWatch 对监测副本加时间戳并汇聚。下：Netnod 把 NTP/NTS 服务做到 7130 FPGA，图示普通 NTP 请求与回复。均根据原始案例简化。</desc>
+<style>text{font-family:"Noto Sans CJK SC",sans-serif}</style><defs>
+<marker id="slate" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#64748b"/></marker>
+<marker id="blue" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#2563eb"/></marker>
+<marker id="orange" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#ea580c"/></marker>
+<marker id="green" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#15803d"/></marker>
+<marker id="purple" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#7c3aed"/></marker>
+</defs>
+<rect x="0" y="0" width="1200" height="1380" rx="22" fill="white" stroke="none" stroke-width="2"/>
+<text x="36" y="54" font-size="36" fill="#0f172a" font-weight="800" text-anchor="start">交换机里的 FPGA：三个真实应用</text>
+<text x="36" y="95" font-size="25" fill="#64748b" font-weight="400" text-anchor="start">交易链路选择  ·  交易所报文监测  ·  硬件报时</text>
+<rect x="24" y="124" width="1152" height="360" rx="20" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+<rect x="48" y="146" width="42" height="42" rx="13" fill="#2563eb" stroke="none" stroke-width="2"/>
+<text x="69" y="176" font-size="26" fill="white" font-weight="700" text-anchor="middle">1</text>
+<text x="106" y="176" font-size="29" fill="#172554" font-weight="700" text-anchor="start">Enyx · nxLink：给交易流量选路</text>
+<rect x="986" y="151" width="164" height="32" rx="16" fill="white" stroke="#bfdbfe" stroke-width="2"/>
+<text x="1068" y="174" font-size="20" fill="#2563eb" font-weight="700" text-anchor="middle">厂商部署案例</text>
+<text x="50" y="216" font-size="24" fill="#334155" font-weight="400" text-anchor="start">跨城交易：专用微波争取低时延，光纤冗余保障连续性。</text>
+<g class="node">
+<rect x="56" y="248" width="265" height="74" rx="14" fill="white" stroke="#93c5fd" stroke-width="2"/>
+<text x="188.5" y="294" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">专用微波</text>
+</g>
+<g class="node">
+<rect x="56" y="350" width="265" height="74" rx="14" fill="white" stroke="#93c5fd" stroke-width="2"/>
+<text x="188.5" y="396" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">光纤冗余</text>
+</g>
+<g class="node">
+<rect x="463" y="269" width="324" height="156" rx="14" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+<text x="625.0" y="309" font-size="26" fill="#1e40af" font-weight="700" text-anchor="middle">Arista 7130 · FPGA</text>
+<text x="625.0" y="349" font-size="25" fill="#1e40af" font-weight="700" text-anchor="middle">nxLink Secure</text>
+<text x="625.0" y="390" font-size="24" fill="#1e40af" font-weight="400" text-anchor="middle">报文仲裁与去重</text>
+</g>
+<g class="node">
+<rect x="923" y="305" width="222" height="84" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1034.0" y="345" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">交易网络</text>
+<text x="1034.0" y="376" font-size="22" fill="#334155" font-weight="400" text-anchor="middle">接收选出的报文</text>
+</g>
+<path d="M333 285 H393 V316 H439" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M333 387 H393 V380 H439" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M799 347 H899" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<text x="50" y="461" font-size="23" fill="#334155" font-weight="400" text-anchor="start">同一报文可走两条路径，接收端仲裁去重，向交易网络交付一份。</text>
+<rect x="24" y="508" width="1152" height="410" rx="20" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
+<rect x="48" y="530" width="42" height="42" rx="13" fill="#ea580c" stroke="none" stroke-width="2"/>
+<text x="69" y="560" font-size="26" fill="white" font-weight="700" text-anchor="middle">2</text>
+<text x="106" y="560" font-size="29" fill="#172554" font-weight="700" text-anchor="start">德交所 · MetaWatch：看清报文先后</text>
+<rect x="986" y="535" width="164" height="32" rx="16" fill="white" stroke="#fed7aa" stroke-width="2"/>
+<text x="1068" y="558" font-size="20" fill="#ea580c" font-weight="700" text-anchor="middle">交易所部署</text>
+<text x="50" y="600" font-size="24" fill="#334155" font-weight="400" text-anchor="start">在交易网络旁采集报文，分析先后顺序和网络时延。</text>
+<g class="node">
+<rect x="56" y="632" width="258" height="74" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="185.0" y="678" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">交易参与者</text>
+</g>
+<g class="node">
+<rect x="909" y="632" width="236" height="74" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1027.0" y="678" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">交易所网关</text>
+</g>
+<path d="M326 669 H885" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#slate)"/>
+<text x="600" y="651" font-size="23" fill="#475569" font-weight="400" text-anchor="middle">业务报文继续传送</text>
+<circle cx="600" cy="669" r="5" fill="#ea580c"/>
+<path d="M600 674 V734" fill="none" stroke="#ea580c" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#orange)"/>
+<text x="620" y="735" font-size="22" fill="#c2410c" font-weight="400" text-anchor="start">报文副本</text>
+<g class="node">
+<rect x="431" y="758" width="334" height="94" rx="14" fill="#ffedd5" stroke="#fb923c" stroke-width="2"/>
+<text x="598.0" y="795" font-size="25" fill="#9a3412" font-weight="700" text-anchor="middle">7130 FPGA / MetaWatch</text>
+<text x="598.0" y="832" font-size="24" fill="#9a3412" font-weight="400" text-anchor="middle">加时间戳 · 缓冲汇聚</text>
+</g>
+<g class="node">
+<rect x="909" y="758" width="236" height="94" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1027.0" y="797" font-size="26" fill="#334155" font-weight="700" text-anchor="middle">采集与分析</text>
+<text x="1027.0" y="831" font-size="22" fill="#334155" font-weight="400" text-anchor="middle">顺序 / 网络时延</text>
+</g>
+<path d="M777 805 H885" fill="none" stroke="#ea580c" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#orange)"/>
+<text x="50" y="893" font-size="23" fill="#334155" font-weight="400" text-anchor="start">FPGA 处理监测副本；这些记录帮助交易所核对网络行为。</text>
+<rect x="24" y="942" width="1152" height="372" rx="20" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="2"/>
+<rect x="48" y="964" width="42" height="42" rx="13" fill="#15803d" stroke="none" stroke-width="2"/>
+<text x="69" y="994" font-size="26" fill="white" font-weight="700" text-anchor="middle">3</text>
+<text x="106" y="994" font-size="29" fill="#172554" font-weight="700" text-anchor="start">Netnod：让 FPGA 直接回答时间</text>
+<rect x="986" y="969" width="164" height="32" rx="16" fill="white" stroke="#bbf7d0" stroke-width="2"/>
+<text x="1068" y="992" font-size="20" fill="#15803d" font-weight="700" text-anchor="middle">公共服务部署</text>
+<text x="50" y="1034" font-size="24" fill="#334155" font-weight="400" text-anchor="start">公开部署的 NTP/NTS 时间服务；这里画普通 NTP 查询。</text>
+<g class="node">
+<rect x="56" y="1094" width="270" height="110" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="191.0" y="1139" font-size="28" fill="#334155" font-weight="700" text-anchor="middle">NTP 客户端</text>
+<text x="191.0" y="1177" font-size="24" fill="#334155" font-weight="400" text-anchor="middle">主机查询时间</text>
+</g>
+<g class="node">
+<rect x="469" y="1084" width="322" height="130" rx="14" fill="#dcfce7" stroke="#4ade80" stroke-width="2"/>
+<text x="630.0" y="1125" font-size="28" fill="#166534" font-weight="700" text-anchor="middle">7130 FPGA</text>
+<text x="630.0" y="1158" font-size="24" fill="#166534" font-weight="400" text-anchor="middle">解析请求 · 填时间戳</text>
+<text x="630.0" y="1195" font-size="24" fill="#166534" font-weight="400" text-anchor="middle">生成 NTP 回复</text>
+</g>
+<g class="node">
+<rect x="934" y="1094" width="212" height="110" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1040.0" y="1139" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">参考时钟</text>
+<text x="1040.0" y="1177" font-size="23" fill="#334155" font-weight="400" text-anchor="middle">提供时间基准</text>
+</g>
+<path d="M338 1123 H445" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M457 1179 H350" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<text x="392" y="1105" font-size="22" fill="#166534" font-weight="600" text-anchor="middle">请求</text>
+<text x="392" y="1210" font-size="22" fill="#166534" font-weight="600" text-anchor="middle">回复</text>
+<path d="M922 1149 H815" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<text x="50" y="1288" font-size="23" fill="#334155" font-weight="400" text-anchor="start">前面展开的 Netnod 工程，就是把报时服务做成交换机内的硬件应用。</text>
+<text x="36" y="1355" font-size="22" fill="#64748b" font-weight="400" text-anchor="start">机制示意 · 原始出处见正文 · 不代表本课实测性能</text>
+</svg>

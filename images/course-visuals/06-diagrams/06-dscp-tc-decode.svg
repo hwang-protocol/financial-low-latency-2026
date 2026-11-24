@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780">
+  <title>DSCP 默认映射：二进制分组与 TC 对齐</title>
+  <desc>7150 的 FM6000 默认 DSCP 到 TC 映射。每行八个 DSCP 值，用六位二进制展示完整范围，旁列十进制范围和 TC。0到7对应TC1，8到15对应TC0，其余八值分组依次对应TC2到TC7；本课101110即46，属于40到47，进入TC5和Q5。</desc>
+  <defs><style>
+    text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+    .heading{font-size:30px;font-weight:800}
+    .body{font-size:22px;fill:#334155}
+    .label{font-size:24px;font-weight:700}
+    .small{font-size:20px;fill:#475569}
+    .number{font-size:32px;font-weight:800}
+    .binary{font-family:"DejaVu Sans Mono",monospace;font-size:26px}
+  </style></defs>
+  <rect x="12" y="12" width="1176" height="756" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="heading" x="48" y="60">7150 的默认 DSCP → TC 映射</text>
+  <text class="body" x="48" y="98">每 8 个连续 DSCP 值对应一个 TC；本课沿用 FM6000 默认映射。</text>
+  <text class="label" x="315" y="148" text-anchor="middle">DSCP 范围（二进制）</text>
+  <text class="label" x="731" y="148" text-anchor="middle">同一范围（十进制）</text>
+  <text class="label" x="1040" y="148" text-anchor="middle">内部分类</text>
+  <rect x="48" y="168" width="1104" height="48" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="binary" x="315" y="201" text-anchor="middle">000000 ～ 000111</text>
+  <text class="label" x="731" y="201" text-anchor="middle">0～7</text>
+  <text class="label" x="1040" y="201" text-anchor="middle">TC1</text>
+  <rect x="48" y="222" width="1104" height="48" rx="10" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="binary" x="315" y="255" text-anchor="middle">001000 ～ 001111</text>
+  <text class="label" x="731" y="255" text-anchor="middle">8～15</text>
+  <text class="label" x="1040" y="255" text-anchor="middle">TC0</text>
+  <rect x="48" y="276" width="1104" height="48" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="binary" x="315" y="309" text-anchor="middle">010000 ～ 010111</text>
+  <text class="label" x="731" y="309" text-anchor="middle">16～23</text>
+  <text class="label" x="1040" y="309" text-anchor="middle">TC2</text>
+  <rect x="48" y="330" width="1104" height="48" rx="10" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="binary" x="315" y="363" text-anchor="middle">011000 ～ 011111</text>
+  <text class="label" x="731" y="363" text-anchor="middle">24～31</text>
+  <text class="label" x="1040" y="363" text-anchor="middle">TC3</text>
+  <rect x="48" y="384" width="1104" height="48" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="binary" x="315" y="417" text-anchor="middle">100000 ～ 100111</text>
+  <text class="label" x="731" y="417" text-anchor="middle">32～39</text>
+  <text class="label" x="1040" y="417" text-anchor="middle">TC4</text>
+  <rect x="48" y="438" width="1104" height="48" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text class="binary" x="315" y="471" text-anchor="middle">101000 ～ 101111</text>
+  <text class="label" x="731" y="471" text-anchor="middle">40～47</text>
+  <text class="label" x="1040" y="471" text-anchor="middle">TC5</text>
+  <rect x="48" y="492" width="1104" height="48" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="binary" x="315" y="525" text-anchor="middle">110000 ～ 110111</text>
+  <text class="label" x="731" y="525" text-anchor="middle">48～55</text>
+  <text class="label" x="1040" y="525" text-anchor="middle">TC6</text>
+  <rect x="48" y="546" width="1104" height="48" rx="10" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="binary" x="315" y="579" text-anchor="middle">111000 ～ 111111</text>
+  <text class="label" x="731" y="579" text-anchor="middle">56～63</text>
+  <text class="label" x="1040" y="579" text-anchor="middle">TC7</text>
+  <rect x="48" y="636" width="1104" height="106" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text class="label" x="72" y="678">本课订单：101110（二进制）= 46（十进制）</text>
+  <text class="label" x="72" y="719">按默认映射进入 TC5，再进入出口 Q5。</text>
+</svg>

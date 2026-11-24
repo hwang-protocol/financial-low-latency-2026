@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000">
+  <title>当前实验怎样从两个抓包点得到入口到网卡的延时</title>
+  <desc>第一层用 PTP 让 7150 与交易网卡 PHC 的时间可比较。第二层把同一行情帧分成原帧与镜像副本，分别得到交换机入口戳和交易网卡硬件接收戳。第三层把 copy.pcap 与 live.pcap 收回管理机，利用 Keyframe 还原入口时刻，剪掉副本末尾四字节，按 IP ID、目的端口和 UDP 载荷配对，再计算 T_rx 减 T_in。</desc>
+  <defs>
+    <marker id="arrow-indigo" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#4f46e5"/>
+    </marker>
+    <marker id="arrow-green" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#15803d"/>
+    </marker>
+    <marker id="arrow-cyan" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#0891b2"/>
+    </marker>
+    <marker id="arrow-orange" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#ea580c"/>
+    </marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .mono{font-family:"Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#334155;font-weight:650}
+      .white{fill:#ffffff}
+      .muted{fill:#475569}
+      .tiny{font-size:17px}
+      .small{font-size:19px}
+      .body{font-size:21px}
+      .label{font-size:23px;font-weight:900}
+      .title{font-size:30px;font-weight:900}
+    </style>
+  </defs>
+
+  <rect x="10" y="10" width="1380" height="980" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t title" x="40" y="54">当前实验：两个抓包点，怎样算出同一帧的路径时间</text>
+  <text class="t muted body" x="40" y="86">交易业务保持在线；脚本抓完两份 pcap 后再汇聚计算，所以这是离线结果，不是实时仪表盘。</text>
+
+  <rect x="34" y="108" width="1332" height="160" rx="18" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.5"/>
+  <rect x="52" y="124" width="150" height="34" rx="17" fill="#4f46e5"/>
+  <text class="t white" x="127" y="147" text-anchor="middle" font-size="18" font-weight="900">① 先把钟对上</text>
+
+  <rect x="230" y="140" width="360" height="96" rx="15" fill="#ffffff" stroke="#4f46e5" stroke-width="2"/>
+  <text class="t label" x="254" y="174">7150 · PTP Master</text>
+  <text class="t muted small" x="254" y="207">交换机时间 + ASIC 短计数的 Keyframe</text>
+
+  <path d="M604 180 H806" stroke="#4f46e5" stroke-width="3" marker-end="url(#arrow-indigo)"/>
+  <text class="t" x="705" y="165" text-anchor="middle" font-size="18" font-weight="900" fill="#4338ca">PTP</text>
+  <text class="t muted tiny" x="705" y="208" text-anchor="middle">让两端时间可比较</text>
+
+  <rect x="820" y="140" width="360" height="96" rx="15" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text class="t label" x="844" y="174">.2 Trader · X2522 PHC</text>
+  <text class="t muted small" x="844" y="207">ptp4l 持续调整网卡硬件钟</text>
+
+  <rect x="1194" y="140" width="146" height="96" rx="15" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text class="t" x="1267" y="175" text-anchor="middle" font-size="19" font-weight="900">.11</text>
+  <text class="t muted tiny" x="1267" y="202" text-anchor="middle">不参与对表</text>
+  <text class="t muted tiny" x="1267" y="224" text-anchor="middle">只收副本</text>
+
+  <rect x="34" y="288" width="1332" height="336" rx="18" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <rect x="52" y="304" width="186" height="34" rx="17" fill="#15803d"/>
+  <text class="t white" x="145" y="327" text-anchor="middle" font-size="18" font-weight="900">② 同一帧分成两路</text>
+
+  <rect x="52" y="382" width="190" height="104" rx="15" fill="#ffffff" stroke="#64748b" stroke-width="2"/>
+  <text class="t label" x="147" y="421" text-anchor="middle">.1 Exchange</text>
+  <text class="t muted small" x="147" y="455" text-anchor="middle">发真实 UDP 行情</text>
+
+  <path d="M250 434 H302" stroke="#15803d" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <text class="t" x="276" y="414" text-anchor="middle" font-size="17" font-weight="900" fill="#166534">Et1</text>
+
+  <rect x="316" y="354" width="416" height="162" rx="17" fill="#ffffff" stroke="#15803d" stroke-width="2"/>
+  <text class="t label" x="340" y="390">7150 · 分叉点</text>
+  <circle cx="342" cy="434" r="8" fill="#e11d48"/>
+  <text class="t body" x="360" y="441">戳 1：T<tspan baseline-shift="sub" font-size="14">in</tspan> = Et1 入向帧尾到达</text>
+  <text class="t muted small" x="340" y="475">原帧去 Et2；Et1 rx 另复制到 Et11</text>
+  <text class="t muted tiny" x="340" y="501">T_in 只写进镜像副本，业务原帧不改</text>
+
+  <path d="M740 434 H990" stroke="#15803d" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <text class="t" x="865" y="414" text-anchor="middle" font-size="17" font-weight="900" fill="#166534">Et2 · 业务原帧</text>
+
+  <rect x="1004" y="354" width="330" height="162" rx="17" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <text class="t label" x="1028" y="390">.2 Trader · 抓原帧</text>
+  <circle cx="1030" cy="434" r="8" fill="#e11d48"/>
+  <text class="t body" x="1048" y="441">戳 2：T<tspan baseline-shift="sub" font-size="14">rx</tspan> = NIC 硬件 RX</text>
+  <text class="mono small" x="1028" y="475">live.pcap</text>
+  <text class="t muted tiny" x="1140" y="475">pcap 记录时间就是 T_rx</text>
+
+  <path d="M520 522 V555 H746" stroke="#0891b2" stroke-width="3" fill="none" marker-end="url(#arrow-cyan)"/>
+  <text class="t" x="624" y="545" text-anchor="middle" font-size="17" font-weight="900" fill="#0e7490">Et11 · 带戳副本</text>
+  <path d="M650 516 V579 H746" stroke="#64748b" stroke-width="2" stroke-dasharray="7 6" fill="none" marker-end="url(#arrow-cyan)"/>
+  <text class="t muted tiny" x="664" y="600" text-anchor="middle">Keyframe 同路送出</text>
+
+  <rect x="760" y="530" width="574" height="72" rx="14" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text class="t label" x="784" y="560">.11 · 抓副本</text>
+  <text class="mono small" x="784" y="588">copy.pcap = 原帧内容 + 末尾 4 B T_in + Keyframe</text>
+
+  <rect x="34" y="646" width="1332" height="310" rx="18" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+  <rect x="52" y="662" width="210" height="34" rx="17" fill="#ea580c"/>
+  <text class="t white" x="157" y="685" text-anchor="middle" font-size="18" font-weight="900">③ 抓完再汇聚计算</text>
+
+  <rect x="52" y="724" width="270" height="142" rx="15" fill="#ffffff" stroke="#fb923c" stroke-width="1.8"/>
+  <text class="t label" x="76" y="758">A · 收回两份文件</text>
+  <text class="mono small" x="76" y="793">.11 → copy.pcap</text>
+  <text class="mono small" x="76" y="824">.2  → live.pcap</text>
+  <text class="t muted tiny" x="76" y="851">停止抓包后 scp 到管理机</text>
+
+  <path d="M330 795 H354" stroke="#ea580c" stroke-width="3" marker-end="url(#arrow-orange)"/>
+
+  <rect x="368" y="724" width="274" height="142" rx="15" fill="#ffffff" stroke="#fb923c" stroke-width="1.8"/>
+  <text class="t label" x="392" y="758">B · 还原并剪裁</text>
+  <text class="t small" x="392" y="793">trailer + Keyframe → T<tspan baseline-shift="sub" font-size="13">in</tspan></text>
+  <text class="t small" x="392" y="824">再剪掉副本末尾 4 B</text>
+  <text class="t muted tiny" x="392" y="851">留下与原帧相同的内容</text>
+
+  <path d="M650 795 H674" stroke="#ea580c" stroke-width="3" marker-end="url(#arrow-orange)"/>
+
+  <rect x="688" y="724" width="318" height="142" rx="15" fill="#ffffff" stroke="#fb923c" stroke-width="1.8"/>
+  <text class="t label" x="712" y="758">C · 找到同一帧</text>
+  <text class="mono small" x="712" y="795">IP ID + dport + UDP payload</text>
+  <text class="t small" x="712" y="826">唯一命中才配成一对</text>
+  <text class="t muted tiny" x="712" y="851">缺失或重复都单独计数</text>
+
+  <path d="M1014 795 H1038" stroke="#ea580c" stroke-width="3" marker-end="url(#arrow-orange)"/>
+
+  <rect x="1052" y="724" width="282" height="142" rx="15" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text class="t label" x="1076" y="758">D · 相减并统计</text>
+  <text class="t" x="1193" y="807" text-anchor="middle" font-size="27" font-weight="900" fill="#14532d">Δt = T<tspan baseline-shift="sub" font-size="17">rx</tspan> − T<tspan baseline-shift="sub" font-size="17">in</tspan></text>
+  <text class="t muted small" x="1193" y="842" text-anchor="middle">得到 p50 / p99 分布</text>
+
+  <rect x="222" y="888" width="956" height="44" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.2"/>
+  <text class="t" x="700" y="916" text-anchor="middle" font-size="18" font-weight="900" fill="#334155">关键边界：.11 自己的抓包时钟只用于挑最近的 Keyframe；最终从不拿它去减 .2 的时间。</text>
+</svg>

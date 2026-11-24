@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+<title id="title">核对过滤日志与接收日志，确认丢弃的是同一条消息</title>
+<desc id="desc">这是一张核对方法示意图，不是本次实测结果。.1重放序号101、102、103的行情，假设其中102命中NVDA过滤规则且有一次额度；.2的mold_filter_adapter依据模型判决丢弃102，只转发101和103给行情接收程序Feed Guardian。过滤日志的丢弃序号与接收日志的缺失序号应一致，数量均为一。</desc>
+<defs><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="0" refY="9" orient="auto"><path d="M0 0L18 9L0 18Z" fill="context-stroke"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC',sans-serif;fill:#0f172a}.title{font-size:32px;font-weight:700}.head{font-size:27px;font-weight:700}.body{font-size:24px}.small{font-size:21px;fill:#475569}.bold{font-weight:700}.purple{fill:#6b21a8}.red{fill:#b91c1c}.green{fill:#15803d}.line{fill:none;stroke-width:2.5;stroke-linecap:butt;marker-end:url(#arrow)}</style>
+<rect width="1200" height="650" rx="20" fill="#f8fafc"/>
+<text x="40" y="50" class="title">过滤程序丢了哪条，接收端就应该缺哪条</text>
+<text x="40" y="89" class="body">序号仅作示意：假设 102 命中 NVDA 规则，且此时有一次丢包额度。</text>
+<rect x="410" y="135" width="750" height="325" rx="16" fill="#eef2ff" stroke="#c7d2fe" stroke-width="2"/>
+<text x="435" y="178" class="head">.2：过滤程序与行情接收程序</text>
+<rect x="40" y="220" width="290" height="205" rx="12" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="60" y="261" class="head">行情发送端 .1</text>
+<text x="60" y="305" class="body">重放真实行情</text>
+<text x="60" y="354" class="body bold">101、102、103</text>
+<text x="60" y="397" class="small">消息带有连续序号</text>
+<rect x="450" y="220" width="290" height="205" rx="12" fill="#fff" stroke="#c084fc" stroke-width="2"/>
+<text x="470" y="261" class="head purple">过滤程序</text>
+<text x="470" y="305" class="small">mold_filter_adapter</text>
+<text x="470" y="354" class="body bold red">丢弃目标消息 102</text>
+<text x="470" y="397" class="small">按 RTL 模型判决执行</text>
+<rect x="840" y="220" width="290" height="205" rx="12" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="860" y="261" class="head">行情接收程序</text>
+<text x="860" y="305" class="small">Feed Guardian</text>
+<text x="860" y="354" class="body">收到 101、103</text>
+<text x="860" y="397" class="body bold red">发现缺少 102</text>
+<path d="M330 332H420" class="line" stroke="#2563eb"/>
+<path d="M740 332H810" class="line" stroke="#2563eb"/>
+<rect x="40" y="495" width="1120" height="110" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+<text x="65" y="535" class="head green">核对：丢弃序号 = 缺失序号，丢弃数量 = 缺失数量 = 1</text>
+<text x="65" y="577" class="body">示意中两端都指向 102。日志中的 GAP，就是接收程序发现行情缺失。</text>
+<text x="40" y="636" class="small">本图只解释核对方法；真正运行时，以过滤日志和接收日志的实际读数为准。</text>
+</svg>

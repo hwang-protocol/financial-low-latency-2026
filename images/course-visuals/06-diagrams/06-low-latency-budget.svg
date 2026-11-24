@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">一条链路的五项耗时与优化方向</title>
+  <desc id="desc">五栏并列说明序列化、信号编解码与纠错、介质传播、固定转发和出口排队。每栏向下连接对应优化方向，箭头不表示报文依次经过五个阶段。350纳秒不是单独查表耗时。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#eff6ff"/></linearGradient>
+    <marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 -6 12 12" refX="0" refY="0" markerWidth="12" markerHeight="12" orient="auto" overflow="visible"><path d="M0 -6L12 0L0 6Z" fill="#0f766e"/></marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .heading{font-size:34px;font-weight:800}.subtitle{font-size:22px;fill:#475569}
+      .label{font-size:22px;font-weight:800}.body{font-size:21px}.small{font-size:19px;fill:#475569}
+      .flow{stroke:#0f766e;stroke-width:2.5;stroke-linecap:butt;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1200" height="700" rx="26" fill="url(#bg)"/>
+  <text class="t heading" x="48" y="60">一条链路的五项耗时</text>
+  <text class="t subtitle" x="48" y="98">同一帧长、路径与配置：前四项相对固定，排队是主要变动项。</text>
+  <g data-card="48">
+    <rect x="48" y="136" width="194" height="226" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="48" y="136" width="194" height="48" rx="18" fill="#e0f2fe"/>
+    <text class="t label" x="145" y="168" text-anchor="middle" style="fill:#075985">① 序列化</text>
+    <text class="t body" x="145" y="230" text-anchor="middle">把整帧逐位发出</text>
+    <text class="t body" x="145" y="268" text-anchor="middle">长帧占线更久</text>
+    <rect x="60" y="307" width="170" height="34" rx="8" fill="#e0f2fe"/>
+    <text class="t small" x="145" y="331" text-anchor="middle">相对固定</text>
+    <path class="flow" d="M145 374V414"/>
+    <rect x="48" y="438" width="194" height="94" rx="14" fill="#e0f2fe"/>
+    <text class="t body" x="145" y="477" text-anchor="middle">提高线速</text>
+    <text class="t small" x="145" y="508" text-anchor="middle">减少发送比特</text>
+  </g>
+  <g data-card="278">
+    <rect x="278" y="136" width="194" height="226" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="278" y="136" width="194" height="48" rx="18" fill="#f5f3ff"/>
+    <text class="t label" x="375" y="159" text-anchor="middle" style="fill:#5b21b6"><tspan x="375">② 信号编解码</tspan><tspan x="375" dy="24">与纠错</tspan></text>
+    <text class="t body" x="375" y="230" text-anchor="middle">信号的编码与解码</text>
+    <text class="t body" x="375" y="268" text-anchor="middle">FEC 纠错也耗时</text>
+    <rect x="290" y="307" width="170" height="34" rx="8" fill="#f5f3ff"/>
+    <text class="t small" x="375" y="331" text-anchor="middle">相对固定</text>
+    <path class="flow" d="M375 374V414"/>
+    <rect x="278" y="438" width="194" height="94" rx="14" fill="#f5f3ff"/>
+    <text class="t body" x="375" y="477" text-anchor="middle">选择低延迟方案</text>
+    <text class="t small" x="375" y="508" text-anchor="middle">减少信号处理耗时</text>
+  </g>
+  <g data-card="508">
+    <rect x="508" y="136" width="194" height="226" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="508" y="136" width="194" height="48" rx="18" fill="#ecfdf5"/>
+    <text class="t label" x="605" y="168" text-anchor="middle" style="fill:#166534">③ 介质传播</text>
+    <text class="t body" x="605" y="230" text-anchor="middle">信号沿线缆传播</text>
+    <text class="t body" x="605" y="268" text-anchor="middle">光纤约 5 ns/m</text>
+    <rect x="520" y="307" width="170" height="34" rx="8" fill="#ecfdf5"/>
+    <text class="t small" x="605" y="331" text-anchor="middle">相对固定</text>
+    <path class="flow" d="M605 374V414"/>
+    <rect x="508" y="438" width="194" height="94" rx="14" fill="#ecfdf5"/>
+    <text class="t body" x="605" y="477" text-anchor="middle">缩短传输距离</text>
+    <text class="t small" x="605" y="508" text-anchor="middle">减少绕行光程</text>
+  </g>
+  <g data-card="738">
+    <rect x="738" y="136" width="194" height="226" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+    <rect x="738" y="136" width="194" height="48" rx="18" fill="#fff7ed"/>
+    <text class="t label" x="835" y="168" text-anchor="middle" style="fill:#9a3412">④ 固定转发</text>
+    <text class="t body" x="835" y="230" text-anchor="middle">解析、查表、转发</text>
+    <text class="t body" x="835" y="268" text-anchor="middle">芯片流水线处理</text>
+    <rect x="750" y="307" width="170" height="34" rx="8" fill="#fff7ed"/>
+    <text class="t small" x="835" y="331" text-anchor="middle">相对固定</text>
+    <path class="flow" d="M835 374V414"/>
+    <rect x="738" y="438" width="194" height="94" rx="14" fill="#fff7ed"/>
+    <text class="t body" x="835" y="477" text-anchor="middle">选择低延迟芯片</text>
+    <text class="t small" x="835" y="508" text-anchor="middle">提前启动转发</text>
+  </g>
+  <g data-card="968">
+    <rect x="968" y="136" width="184" height="226" rx="18" fill="#fff" stroke="#e11d48" stroke-width="2"/>
+    <rect x="968" y="136" width="184" height="48" rx="18" fill="#ffe4e6"/>
+    <text class="t label" x="1060" y="168" text-anchor="middle" style="fill:#9f1239">⑤ 出口排队</text>
+    <text class="t body" x="1060" y="230" text-anchor="middle">等待出口空闲</text>
+    <text class="t body" x="1060" y="268" text-anchor="middle">突发流量增加等待</text>
+    <rect x="980" y="307" width="160" height="34" rx="8" fill="#ffe4e6"/>
+    <text class="t small" x="1060" y="331" text-anchor="middle" style="fill:#9f1239;font-weight:800;">主要变动项</text>
+    <path class="flow" d="M1060 374V414"/>
+    <rect x="968" y="438" width="184" height="94" rx="14" fill="#ffe4e6"/>
+    <text class="t body" x="1060" y="477" text-anchor="middle">减少出口争用</text>
+    <text class="t small" x="1060" y="508" text-anchor="middle">配置队列优先级</text>
+  </g>
+  <rect x="48" y="574" width="1104" height="94" rx="16" fill="#0f2742"/>
+  <text class="t" x="76" y="612" style="font-size:23px;font-weight:800;fill:#fff">突发流量争用出口，排队等待拉长尾部延迟。</text>
+  <text class="t" x="76" y="645" style="font-size:22px;fill:#dbeafe">看 p99 捕捉尾部延迟，用 LANZ 观察出口队列。</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <title>7150 PTP versus Linux X2522 hardware timestamp</title>
+  <desc>Left: 7150 uses ptp mode boundary and Et2 ptp enable; mac timestamp writes ingress time into a mirrored copy. Right: Linux X2522 exposes hardware-transmit, hardware-receive and PHC 0. .1 and .2 share one dual-port card.</desc>
+  <defs>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .h{font-size:26px;font-weight:900}
+      .sub{font-size:15px;fill:#475569}
+      .label{font-size:16px;font-weight:900}
+      .body{font-size:15px;fill:#334155}
+      .small{font-size:14px;fill:#475569}
+      .white{fill:#ffffff}
+    </style>
+  </defs>
+
+  <rect x="12" y="12" width="1176" height="676" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="40" y="50">要比的是交换机和 Linux，不是两台主机互比</text>
+  <text class="t sub" x="40" y="76">左边是 7150 的 PTP / ASIC 戳；右边是 X2522 的 PHC。.1 和 .2 是同一块双口卡。</text>
+
+  <rect x="40" y="108" width="520" height="420" rx="20" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+  <rect x="58" y="124" width="200" height="30" rx="15" fill="#2563eb"/>
+  <text class="t white" x="158" y="145" text-anchor="middle" font-size="15" font-weight="900">7150 · EOS</text>
+  <text class="t label" x="58" y="186">对时命令</text>
+  <text class="t body" x="58" y="214">ptp mode boundary</text>
+  <text class="t body" x="58" y="238">interface Ethernet2</text>
+  <text class="t body" x="58" y="262">ptp enable</text>
+  <text class="t small" x="58" y="290">官方入口：Setting the PTP Mode</text>
+  <text class="t label" x="58" y="332">打戳命令（另一件事）</text>
+  <text class="t body" x="58" y="360">mac timestamp before-fcs</text>
+  <text class="t small" x="58" y="386">写进镜像副本，不是 /dev/ptp0</text>
+  <text class="t small" x="58" y="414">当前 running-config 没开 PTP</text>
+  <text class="t small" x="58" y="438">show ptp → PTP Mode: Disabled</text>
+  <text class="t small" x="58" y="500">实验三才真正下这些命令</text>
+
+  <rect x="640" y="108" width="520" height="420" rx="20" fill="#ffffff" stroke="#0891b2" stroke-width="2.5"/>
+  <rect x="658" y="124" width="220" height="30" rx="15" fill="#0891b2"/>
+  <text class="t white" x="768" y="145" text-anchor="middle" font-size="15" font-weight="900">Linux · X2522</text>
+  <text class="t label" x="658" y="186">只读这一口就够</text>
+  <text class="t body" x="658" y="214">.2 ens64np1</text>
+  <text class="t body" x="658" y="238">ethtool -T</text>
+  <text class="t body" x="658" y="276">hardware-transmit</text>
+  <text class="t body" x="658" y="300">hardware-receive</text>
+  <text class="t body" x="658" y="324">PTP Hardware Clock: 0</text>
+  <text class="t small" x="658" y="360">这是网卡 PHC，给帧盖 TX/RX 戳</text>
+  <text class="t small" x="658" y="386">.1 ens64np0 是同一块卡的另一口</text>
+  <text class="t small" x="658" y="414">再查一遍 .1，不会多出一只独立钟</text>
+  <text class="t small" x="658" y="500">有 PHC ≠ 已经和 7150 对上表</text>
+
+  <rect x="40" y="552" width="1120" height="112" rx="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="1.5"/>
+  <text class="t label" x="600" y="592" text-anchor="middle">两套能力，两套命令</text>
+  <text class="t body" x="600" y="622" text-anchor="middle">7150 用 EOS 的 ptp mode / ptp enable；Linux 用 ethtool -T 看 PHC。</text>
+  <text class="t small" x="600" y="648" text-anchor="middle">本步只确认“会不会”，对表留给后面的 PTP 实验。</text>
+</svg>

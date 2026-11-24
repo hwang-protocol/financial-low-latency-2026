@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1750" viewBox="0 0 1200 1750" role="img" aria-labelledby="title desc"><title id="title">从安装 App 到配置 FPGA 电路</title><desc id="desc">开发机将硬件代码编译为bit并与Python管理代码打包。install app把文件安装到7130存储中；app ntps下no shutdown调用program_fpga与load_image，由厂商接口装载bit配置FPGA。图中展示收发缓存、协议解析、NTP时间戳回复、时钟、寄存器和NTS认证电路；仅主路径画普通NTP请求。CPU管理与FPGA数据路径分开，未指定底层配置总线。</desc><defs>
+<marker id="purple" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#7c3aed"/></marker>
+<marker id="blue" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#0284c7"/></marker>
+<marker id="green" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#059669"/></marker>
+<marker id="orange" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#d97706"/></marker>
+<marker id="gray" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#64748b"/></marker>
+</defs><rect width="1200" height="1750" rx="24" fill="#fff"/><g font-family="Noto Sans CJK SC, sans-serif">
+<text x="600" y="48" text-anchor="middle" font-size="32" fill="#0f172a" font-weight="700">安装的是包，加载到 FPGA 的是电路配置</text>
+<rect x="25" y="78" width="1150" height="288" rx="20" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="52" y="113" text-anchor="start" font-size="25" fill="#334155" font-weight="700">开发机：硬件代码编译成 .bit，管理代码随包交付</text>
+<g transform="translate(71 151)" stroke="#7c3aed" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5 1h29l12 12v43H5Z M34 1v13h12 M14 27h23 M14 37h23 M14 47h16"/>
+</g>
+<text x="160" y="177" text-anchor="start" font-size="23" fill="#334155" font-weight="700">硬件代码 + FDK</text>
+<text x="160" y="207" text-anchor="start" font-size="20" fill="#334155" font-weight="400">Verilog / VHDL</text>
+<path d="M352 180H408" fill="none" stroke="#7c3aed" stroke-width="3.5" marker-end="url(#purple)"/>
+<rect x="425" y="147" width="175" height="75" rx="14" fill="#ede9fe" stroke="#c4b5fd" stroke-width="2"/>
+<text x="512" y="179" text-anchor="middle" font-size="25" fill="#6d28d9" font-weight="700">Vivado</text>
+<text x="512" y="207" text-anchor="middle" font-size="19" fill="#334155" font-weight="400">编译硬件设计</text>
+<path d="M607 180H791" fill="none" stroke="#7c3aed" stroke-width="3.5" marker-end="url(#purple)"/>
+<g transform="translate(71 269)" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="3" width="58" height="48" rx="6"/><path d="M10 17l10 9-10 9M28 36h17"/>
+</g>
+<text x="160" y="294" text-anchor="start" font-size="23" fill="#075985" font-weight="700">src/example.py</text>
+<text x="160" y="325" text-anchor="start" font-size="20" fill="#334155" font-weight="400">提供 CLI、装载与配置功能</text>
+<path d="M466 299H791" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#blue)"/>
+<rect x="805" y="130" width="335" height="212" rx="14" fill="#fff" stroke="#a78bfa" stroke-width="2"/>
+<text x="972" y="166" text-anchor="middle" font-size="25" fill="#5b21b6" font-weight="700">ntps-4.0.0.swix</text>
+<g transform="translate(826 186)" stroke="#7c3aed" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5 1h29l12 12v43H5Z M34 1v13h12 M14 27h23 M14 37h23 M14 47h16"/>
+</g>
+<text x="900" y="215" text-anchor="start" font-size="23" fill="#6d28d9" font-weight="700">ntps-lb2.bit</text>
+<text x="900" y="242" text-anchor="start" font-size="20" fill="#334155" font-weight="400">硬件镜像</text>
+<g transform="translate(826 263)" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5 1h29l12 12v43H5Z M34 1v13h12 M14 27h23 M14 37h23 M14 47h16"/>
+</g>
+<text x="900" y="291" text-anchor="start" font-size="23" fill="#075985" font-weight="700">example.py 等</text>
+<text x="900" y="319" text-anchor="start" font-size="19" fill="#334155" font-weight="400">管理程序与配套文件</text>
+<text x="52" y="354" text-anchor="start" font-size="18" fill="#64748b" font-weight="400">工程目录：FPGA/targets/ntps_arista/（相对下载的项目根目录）</text>
+<rect x="184" y="413" width="991" height="1113" rx="22" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="212" y="450" text-anchor="start" font-size="24" fill="#334155" font-weight="700">Arista 7130-48LB：同一台设备，CPU 和 FPGA 各有职责</text>
+<path d="M972 346V481" fill="none" stroke="#7c3aed" stroke-width="3.5" marker-end="url(#purple)"/>
+<rect x="480" y="375" width="490" height="34" rx="3" fill="#fff" stroke="#fff" stroke-width="2"/>
+<text x="725" y="400" text-anchor="middle" font-size="21" fill="#6d28d9" font-weight="700">① MOS：install app ntps-4.0.0.swix</text>
+<rect x="219" y="489" width="540" height="384" rx="16" fill="#eff6ff" stroke="#7dd3fc" stroke-width="2"/>
+<text x="489" y="526" text-anchor="middle" font-size="25" fill="#075985" font-weight="700">交换机 CPU：MOS + Python</text>
+<rect x="240" y="545" width="179" height="123" rx="14" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<g transform="translate(257 556)" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="3" width="58" height="48" rx="6"/><path d="M10 17l10 9-10 9M28 36h17"/>
+</g>
+<text x="329" y="633" text-anchor="middle" font-size="22" fill="#075985" font-weight="700">app ntps</text>
+<text x="329" y="660" text-anchor="middle" font-size="22" fill="#075985" font-weight="700">no shutdown</text>
+<path d="M423 605H450" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#blue)"/>
+<rect x="460" y="545" width="279" height="179" rx="14" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="600" y="579" text-anchor="middle" font-size="21" fill="#075985" font-weight="700">example.py 接到命令</text>
+<text x="600" y="614" text-anchor="middle" font-size="22" fill="#334155" font-weight="400">no_shutdown()</text>
+<text x="600" y="649" text-anchor="middle" font-size="22" fill="#334155" font-weight="400">→ program_fpga()</text>
+<text x="600" y="682" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">按本机板标准 lb2 选择</text>
+<text x="600" y="713" text-anchor="middle" font-size="21" fill="#6d28d9" font-weight="700">fpga/ntps-lb2.bit</text>
+<text x="329" y="708" text-anchor="middle" font-size="18" fill="#075985" font-weight="700">MOS：app ntps 模式</text>
+<text x="329" y="739" text-anchor="middle" font-size="18" fill="#334155" font-weight="400">通过 SSH 登录后执行</text>
+<path d="M600 729V775" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#blue)"/>
+<rect x="239" y="782" width="500" height="69" rx="14" fill="#ede9fe" stroke="#c4b5fd" stroke-width="2"/>
+<text x="489" y="811" text-anchor="middle" font-size="23" fill="#5b21b6" font-weight="700">self.fpga.load_image(bit)</text>
+<text x="489" y="839" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">调用 FDK / MOS 提供的装载接口</text>
+<rect x="800" y="489" width="345" height="255" rx="14" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+<g transform="translate(818 509)" stroke="#64748b" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 15Q29-4 54 15v34Q29 67 4 49Z M4 15q25 19 50 0 M4 32q25 19 50 0"/>
+</g>
+<text x="1000" y="535" text-anchor="middle" font-size="23" fill="#334155" font-weight="700">设备存储：安装目录</text>
+<text x="982" y="577" text-anchor="middle" font-size="19" fill="#334155" font-weight="400">appdir = 管理程序所在目录</text>
+<text x="982" y="614" text-anchor="middle" font-size="23" fill="#075985" font-weight="700">example.py</text>
+<text x="982" y="650" text-anchor="middle" font-size="23" fill="#6d28d9" font-weight="700">fpga/ntps-lb2.bit</text>
+<text x="982" y="687" text-anchor="middle" font-size="19" fill="#334155" font-weight="400">另含 CLI 依赖、寄存器表等</text>
+<text x="982" y="724" text-anchor="middle" font-size="19" fill="#334155" font-weight="400">此时文件已安装，镜像等待装载</text>
+<path d="M801 551H767" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#blue)"/>
+<text x="783" y="585" text-anchor="middle" font-size="16" fill="#075985" font-weight="400">调用</text>
+<path d="M973 749V815H747" fill="none" stroke="#7c3aed" stroke-width="3.5" marker-end="url(#purple)"/>
+<text x="973" y="792" text-anchor="middle" font-size="21" fill="#6d28d9" font-weight="700">读取镜像文件</text>
+<path d="M489 855V1009" fill="none" stroke="#7c3aed" stroke-width="3.5" marker-end="url(#purple)"/>
+<text x="783" y="982" text-anchor="middle" font-size="22" fill="#6d28d9" font-weight="700">② 装载镜像：配置 FPGA 的逻辑资源和连接</text>
+<rect x="800" y="846" width="345" height="102" rx="14" fill="#eff6ff" stroke="#7dd3fc" stroke-width="2"/>
+<text x="972" y="873" text-anchor="middle" font-size="20" fill="#075985" font-weight="700">③ MOS：interface et1 模式</text>
+<text x="972" y="904" text-anchor="middle" font-size="18" fill="#334155" font-weight="400">destination ap1 → 信号送入 FPGA</text>
+<text x="972" y="933" text-anchor="middle" font-size="18" fill="#334155" font-weight="400">source ap1 ← 取回 FPGA 输出</text>
+<g transform="translate(0 135)">
+<rect x="219" y="885" width="925" height="470" rx="18" fill="#faf5ff" stroke="#a78bfa" stroke-width="2"/>
+<path d="M210 911h9M1144 911h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 938h9M1144 938h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 965h9M1144 965h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 992h9M1144 992h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1019h9M1144 1019h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1046h9M1144 1046h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1073h9M1144 1073h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1100h9M1144 1100h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1127h9M1144 1127h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1154h9M1144 1154h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1181h9M1144 1181h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1208h9M1144 1208h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1235h9M1144 1235h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1262h9M1144 1262h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1289h9M1144 1289h9" stroke="#8b5cf6" stroke-width="3"/>
+<path d="M210 1316h9M1144 1316h9" stroke="#8b5cf6" stroke-width="3"/>
+<text x="682" y="924" text-anchor="middle" font-size="26" fill="#5b21b6" font-weight="700">FPGA：同一个镜像形成下面这些处理电路</text>
+<rect x="241" y="964" width="265" height="130" rx="14" fill="#fff" stroke="#ddd6fe" stroke-width="2"/>
+<g transform="translate(258 981)" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 8h50v39H4Z M15 47v8h29v-8 M15 20v10M24 20v10M34 20v10M43 20v10"/>
+</g>
+<text x="328" y="1004" text-anchor="start" font-size="23" fill="#0284c7" font-weight="700">10G 收发 / 缓存</text>
+<text x="373.5" y="1065" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">收进原始帧，保存待处理数据</text>
+<rect x="548" y="964" width="265" height="130" rx="14" fill="#fff" stroke="#ddd6fe" stroke-width="2"/>
+<g transform="translate(565 981)" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="24" cy="24" r="20"/><path d="M39 39l18 18M15 24h18M24 15v18"/>
+</g>
+<text x="635" y="1004" text-anchor="start" font-size="23" fill="#0284c7" font-weight="700">解析与校验</text>
+<text x="680.5" y="1065" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">读 Ethernet / IP / UDP / NTP</text>
+<rect x="855" y="964" width="265" height="130" rx="14" fill="#fff" stroke="#ddd6fe" stroke-width="2"/>
+<g transform="translate(872 981)" stroke="#059669" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M5 3h44v43H5Z M13 14h28M13 24h20M56 36v20H25l9-9M25 56l9 8"/>
+</g>
+<text x="942" y="1004" text-anchor="start" font-size="23" fill="#059669" font-weight="700">时间戳与回复</text>
+<text x="987.5" y="1065" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">记录时间，生成 NTP 回复</text>
+<path d="M512 1025H540" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#blue)"/>
+<path d="M819 1025H847" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#blue)"/>
+<path d="M982 1100V1132H375V1101" fill="none" stroke="#059669" stroke-width="3.5" marker-end="url(#green)"/>
+<text x="683" y="1160" text-anchor="middle" font-size="20" fill="#166534" font-weight="400">回复回到收发电路，再从同一个端口发出</text>
+<rect x="241" y="1181" width="265" height="119" rx="14" fill="#fff" stroke="#ddd6fe" stroke-width="2"/>
+<g transform="translate(258 1198)" stroke="#d97706" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="29" cy="29" r="26"/><path d="M29 11v18l16 9"/>
+</g>
+<text x="328" y="1221" text-anchor="start" font-size="23" fill="#d97706" font-weight="700">时钟同步 / 计时</text>
+<text x="373.5" y="1282" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">tscore + NTP 时钟</text>
+<rect x="548" y="1181" width="265" height="119" rx="14" fill="#fff" stroke="#ddd6fe" stroke-width="2"/>
+<g transform="translate(565 1198)" stroke="#7c3aed" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="1" y="3" width="55" height="13" rx="3"/><path d="M12 9h9M34 9h12"/>
+<rect x="1" y="21" width="55" height="13" rx="3"/><path d="M12 27h9M34 27h12"/>
+<rect x="1" y="39" width="55" height="13" rx="3"/><path d="M12 45h9M34 45h12"/>
+</g>
+<text x="635" y="1221" text-anchor="start" font-size="23" fill="#7c3aed" font-weight="700">配置 / 计数寄存器</text>
+<text x="680.5" y="1282" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">保存服务 IP、参数与状态</text>
+<rect x="855" y="1181" width="265" height="119" rx="14" fill="#fff" stroke="#ddd6fe" stroke-width="2"/>
+<g transform="translate(872 1198)" stroke="#7c3aed" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="7" y="24" width="45" height="32" rx="6"/><path d="M17 24V14a12 12 0 0 1 24 0v10M29 36v10"/>
+</g>
+<text x="942" y="1221" text-anchor="start" font-size="23" fill="#7c3aed" font-weight="700">NTS 认证电路</text>
+<text x="987.5" y="1282" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">处理带认证保护的请求</text>
+<text x="682" y="1335" text-anchor="middle" font-size="20" fill="#64748b" font-weight="400">同一镜像还包含 NTS 功能；图上主路径只展开普通 NTP 查询。</text>
+<rect x="25" y="985" width="117" height="81" rx="10" fill="#eff6ff" stroke="#7dd3fc" stroke-width="2"/>
+<g transform="translate(54 997)" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="0" y="3" width="58" height="48" rx="6"/><path d="M10 17l10 9-10 9M28 36h17"/>
+</g>
+<text x="84" y="1100" text-anchor="middle" font-size="21" fill="#075985" font-weight="700">测试主机</text>
+<text x="84" y="1128" text-anchor="middle" font-size="20" fill="#334155" font-weight="400">查询时间</text>
+<path d="M148 1015H233" fill="none" stroke="#0284c7" stroke-width="3.5" marker-end="url(#blue)"/>
+<path d="M237 1064H149" fill="none" stroke="#059669" stroke-width="3.5" marker-end="url(#green)"/>
+<text x="185" y="976" text-anchor="middle" font-size="18" fill="#334155" font-weight="700">Et1 ↔ ap1</text>
+<text x="82" y="950" text-anchor="middle" font-size="20" fill="#075985" font-weight="700">④ NTP 查询</text>
+<text x="682" y="1378" text-anchor="middle" font-size="20" fill="#475569" font-weight="400">接线：destination ap1 送入 FPGA；source ap1 取回 FPGA 输出</text>
+</g>
+<g transform="translate(0 155)">
+<rect x="25" y="1420" width="1150" height="97" rx="16" fill="#f0fdfa" stroke="#99f6e4" stroke-width="2"/>
+<g transform="translate(49 1440)" stroke="#059669" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="1" y="3" width="55" height="13" rx="3"/><path d="M12 9h9M34 9h12"/>
+<rect x="1" y="21" width="55" height="13" rx="3"/><path d="M12 27h9M34 27h12"/>
+<rect x="1" y="39" width="55" height="13" rx="3"/><path d="M12 45h9M34 45h12"/>
+</g>
+<text x="342" y="1460" text-anchor="middle" font-size="23" fill="#166534" font-weight="700">装载后：同步时钟、写入服务 IP</text>
+<text x="342" y="1494" text-anchor="middle" font-size="21" fill="#334155" font-weight="400">管理程序通过寄存器配置电路</text>
+<g transform="translate(617 1440)" stroke="#7c3aed" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="8" y="8" width="42" height="42" rx="5"/><rect x="18" y="18" width="22" height="22" rx="3"/>
+<path d="M16 0v8M16 50v8M0 16h8M50 16h8"/>
+<path d="M29 0v8M29 50v8M0 29h8M50 29h8"/>
+<path d="M42 0v8M42 50v8M0 42h8M50 42h8"/>
+</g>
+<text x="925" y="1460" text-anchor="middle" font-size="23" fill="#5b21b6" font-weight="700">改处理逻辑：重新编译并装载 .bit</text>
+<text x="925" y="1494" text-anchor="middle" font-size="21" fill="#334155" font-weight="400">让 FPGA 实现修改后的电路</text>
+<text x="600" y="1546" text-anchor="middle" font-size="21" fill="#475569" font-weight="400">本课 BMv2 在 CPU 执行 JSON；此案例由 FPGA 电路处理报文。</text>
+<text x="600" y="1571" text-anchor="middle" font-size="18" fill="#64748b" font-weight="400">功能与调用关系示意，非芯片布局；PPS 接入、底层配置总线等省略，本课未上板复现。</text>
+</g></g></svg>

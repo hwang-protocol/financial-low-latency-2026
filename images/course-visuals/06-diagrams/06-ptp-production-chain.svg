@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
+  <title id="title">生产 PTP 时间链</title>
+  <desc id="desc">从 GNSS 或 UTC 参考到 Grandmaster、交换机、NIC PHC、系统时钟和应用日志，并区分 TC 与 BC。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#faf5ff"/><stop offset="1" stop-color="#eff6ff"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7c3aed"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:34px;font-weight:800}.sub{font-size:18px;fill:#475569}.node{fill:#fff;stroke:#8b5cf6;stroke-width:2}.ch{font-size:22px;font-weight:800}.body{font-size:17px}.small{font-size:15px;fill:#475569}.link{stroke:#7c3aed;stroke-width:4;fill:none;marker-end:url(#a)}.dash{stroke:#0ea5e9;stroke-width:3;stroke-dasharray:9 7;fill:none;marker-end:url(#a)}</style>
+  </defs>
+  <rect width="1200" height="690" rx="26" fill="url(#bg)"/>
+  <text class="t h" x="48" y="60">生产对时不是“开一个 PTP”：它是一条信任链</text>
+  <text class="t sub" x="48" y="92">每一段都要回答：谁是源、钟在哪、怎样传、失锁后怎么办、应用最终读哪只钟。</text>
+
+  <rect class="node" x="48" y="145" width="190" height="142" rx="17"/>
+  <text class="t ch" x="77" y="185">UTC 参考</text>
+  <text class="t body" x="77" y="220">GNSS / 1PPS</text>
+  <text class="t small" x="77" y="251">提供溯源与频率基准</text>
+  <path class="link" d="M240 216H285"/>
+
+  <rect class="node" x="290" y="145" width="190" height="142" rx="17"/>
+  <text class="t ch" x="315" y="185">Grandmaster</text>
+  <text class="t body" x="315" y="220">BMCA / Profile</text>
+  <text class="t small" x="315" y="251">失源后进入 holdover</text>
+  <path class="link" d="M482 216H527"/>
+
+  <rect class="node" x="532" y="125" width="240" height="182" rx="17"/>
+  <text class="t ch" x="557" y="166">网络中的 PTP 设备</text>
+  <rect x="557" y="185" width="88" height="36" rx="18" fill="#ede9fe"/><text class="t body" x="584" y="209" fill="#5b21b6">TC</text>
+  <text class="t small" x="655" y="208">累加 residence</text>
+  <rect x="557" y="235" width="88" height="36" rx="18" fill="#dbeafe"/><text class="t body" x="584" y="259" fill="#1d4ed8">BC</text>
+  <text class="t small" x="655" y="258">收钟后再生下游时钟</text>
+  <path class="link" d="M774 216H819"/>
+
+  <rect class="node" x="824" y="145" width="150" height="142" rx="17"/>
+  <text class="t ch" x="852" y="185">NIC PHC</text>
+  <text class="t body" x="852" y="220">ptp4l</text>
+  <text class="t small" x="852" y="251">线缆附近的硬件钟</text>
+  <path class="link" d="M976 216H1021"/>
+
+  <rect class="node" x="1026" y="145" width="126" height="142" rx="17"/>
+  <text class="t ch" x="1043" y="185">系统时钟</text>
+  <text class="t body" x="1043" y="220">phc2sys</text>
+  <text class="t small" x="1043" y="251">CLOCK_REALTIME</text>
+
+  <path class="dash" d="M1088 290V360"/>
+  <rect x="914" y="365" width="238" height="94" rx="16" fill="#ecfeff" stroke="#0ea5e9" stroke-width="2"/>
+  <text class="t ch" x="940" y="402">应用与日志</text>
+  <text class="t body" x="940" y="435">订单、行情、审计时间戳</text>
+
+  <rect x="48" y="345" width="810" height="114" rx="16" fill="#fff" stroke="#c4b5fd" stroke-width="2"/>
+  <text class="t ch" x="73" y="382">四个常被漏掉的工程问题</text>
+  <text class="t body" x="73" y="416">① 主备 GM 与 BMCA　② Holdover 能撑多久　③ 上下行不对称 / 线缆校准　④ UTC↔TAI 与闰秒口径</text>
+  <text class="t small" x="73" y="444">只有 correctionField 非零，并不能证明整条链已具备 UTC 合规性。</text>
+
+  <rect x="48" y="495" width="1104" height="145" rx="18" fill="#0f2742"/>
+  <text x="76" y="532" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="21" font-weight="800" fill="#fff">本实验做到哪里？</text>
+  <text x="76" y="568" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="17" fill="#dbeafe">X2522 PHC + ptp4l master/slave + 7150 E2E TC：证明相对对时、状态收敛与 residence correction。</text>
+  <text x="76" y="601" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="17" fill="#fde68a">没有 GNSS/外部 GM，也没有运行 phc2sys：不能宣称 UTC 溯源、长期精度或应用日志已经校准。</text>
+</svg>

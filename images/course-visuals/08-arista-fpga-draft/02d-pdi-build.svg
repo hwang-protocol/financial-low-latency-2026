@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1450" viewBox="0 0 1200 1450" role="img" aria-labelledby="title desc"><title id="title">第5步：构建、检查，再输出PDI</title><desc id="desc">第4步完整BVL工程作为输入。5.1运行综合，5.2检查综合设计，5.3运行实现完成布局布线，5.4检查时序、设计规则和跨时钟报告，5.5由已实现设计输出PDI。点击Write Device Image完成最后的输出动作；工程有问题时修改并重新构建。此图为待执行流程。</desc><defs><marker id="arrow" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#475569"/></marker></defs><rect width="1200" height="1450" fill="white"/><g font-family="Noto Sans CJK SC, sans-serif" fill="#172554">
+<text x="40" y="52" font-size="34" fill="#172554" font-weight="700">第5步：构建、检查，再输出 PDI</text>
+<text x="40" y="96" font-size="24" fill="#172554" font-weight="400">输入：第4步接好的完整 BVL 工程　｜　执行工具：开发机上的 Vivado</text>
+<text x="40" y="132" font-size="23" fill="#475569" font-weight="400">把整套设计落实到指定芯片：形成电路 → 审查 → 安排位置和线路 → 验收</text>
+<g class="node"><rect x="40" y="170" width="1120" height="185" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="65" y="213" font-size="28" fill="#2563eb" font-weight="700">5.1 运行综合 · Run Synthesis</text>
+<text x="65" y="254" font-size="23" fill="#172554" font-weight="400">Vivado读取源码、厂商模块与约束，生成目标器件的逻辑电路。</text>
+<text x="65" y="292" font-size="23" fill="#172554" font-weight="400">查看综合日志；修正缺失模块、语法或 IP 依赖等错误。</text>
+<text x="65" y="330" font-size="23" fill="#2563eb" font-weight="700">得到：综合设计与日志，交给5.2检查。</text>
+</g>
+<path d="M600,355 L600,391" data-target="600,415" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<g class="node"><rect x="40" y="415" width="1120" height="185" rx="14" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+<text x="65" y="458" font-size="28" fill="#c2410c" font-weight="700">5.2 检查综合设计 · Open Synthesized Design</text>
+<text x="65" y="499" font-size="23" fill="#172554" font-weight="400">展开模块层级和连接，查看过滤、额度、控制接口及资源使用。</text>
+<text x="65" y="537" font-size="23" fill="#172554" font-weight="400">核对意外锁存、关键连接缺失，以及重要逻辑被优化掉的原因。</text>
+<text x="65" y="575" font-size="23" fill="#c2410c" font-weight="700">检查通过后，使用这份综合设计继续5.3。</text>
+</g>
+<path d="M600,600 L600,636" data-target="600,660" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<g class="node"><rect x="40" y="660" width="1120" height="185" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="65" y="703" font-size="28" fill="#2563eb" font-weight="700">5.3 运行实现 · Run Implementation</text>
+<text x="65" y="744" font-size="23" fill="#172554" font-weight="400">Vivado优化电路，在芯片资源中安排位置，并连接实际布线路径。</text>
+<text x="65" y="782" font-size="23" fill="#172554" font-weight="400">查看实现运行状态与日志，处理资源、约束或布线问题。</text>
+<text x="65" y="820" font-size="23" fill="#2563eb" font-weight="700">得到：已布局布线的实现设计，交给5.4检查。</text>
+</g>
+<path d="M600,845 L600,881" data-target="600,905" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<g class="node"><rect x="40" y="905" width="1120" height="185" rx="14" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+<text x="65" y="948" font-size="28" fill="#c2410c" font-weight="700">5.4 检查实现设计 · Open Implemented Design</text>
+<text x="65" y="989" font-size="23" fill="#172554" font-weight="400">Timing Summary查时间要求；DRC查设计规则；CDC查跨时钟结构。</text>
+<text x="65" y="1027" font-size="23" fill="#172554" font-weight="400">核对建立/保持时间、完整约束，处理阻断错误与跨时钟风险。</text>
+<text x="65" y="1065" font-size="23" fill="#c2410c" font-weight="700">检查通过后，交给5.5输出镜像。</text>
+</g>
+<path d="M600,1090 L600,1126" data-target="600,1150" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+<g class="node"><rect x="40" y="1150" width="1120" height="185" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="65" y="1193" font-size="28" fill="#2563eb" font-weight="700">5.5 输出器件镜像 · Write Device Image</text>
+<text x="65" y="1234" font-size="23" fill="#172554" font-weight="400">输入：已经实现完成、检查通过的设计。</text>
+<text x="65" y="1272" font-size="23" fill="#172554" font-weight="400">点击 Write Device Image，等待工具生成 .pdi 文件。</text>
+<text x="65" y="1310" font-size="23" fill="#2563eb" font-weight="700">得到：.pdi 器件镜像；第6步与管理程序一起打包。</text>
+</g>
+<text x="40" y="1390" font-size="23" fill="#475569" font-weight="400">发现问题：按日志或报告修改源码、接口或约束，再重新综合 / 实现并复查。</text>
+<text x="40" y="1430" font-size="22" fill="#475569" font-weight="400">待执行流程：需第4步工程和配套工具；各步日志与报告在实际构建时生成。</text>
+</g></svg>

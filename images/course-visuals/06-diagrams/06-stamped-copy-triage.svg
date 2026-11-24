@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="730" viewBox="0 0 1200 730">
+  <defs>
+    <marker id="redArrow" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#dc2626"/></marker>
+    <marker id="greenArrow" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#16a34a"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:28px;font-weight:900}.k{font-size:18px;font-weight:900}.s{font-size:14px;fill:#475569}.p{font-size:14px;font-weight:800}</style>
+  </defs>
+  <rect x="12" y="12" width="1176" height="706" rx="26" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="54" y="62">带戳副本：先证明“包到过哪里”，再判断丢包或抖动在哪一段</text>
+  <text class="t s" x="54" y="91">红线是生产数据，绿线是只读副本；旁路设备不回 ACK、不参与交易。</text>
+
+  <rect x="52" y="145" width="154" height="82" rx="16" fill="#fff7ed" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="129" y="178" text-anchor="middle">上游行情源</text>
+  <text class="t s" x="129" y="204" text-anchor="middle">Feed / Broker</text>
+  <rect x="292" y="133" width="196" height="106" rx="18" fill="#7f1d1d" stroke="#450a0a" stroke-width="2"/>
+  <text x="390" y="174" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="19" font-weight="900" fill="#fff">生产交换机</text>
+  <text x="390" y="203" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="800" fill="#fecaca">正常转发 + mirror copy</text>
+  <rect x="574" y="145" width="154" height="82" rx="16" fill="#fff7ed" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="651" y="178" text-anchor="middle">交易网卡</text>
+  <text class="t s" x="651" y="204" text-anchor="middle">Live RX</text>
+  <rect x="812" y="145" width="154" height="82" rx="16" fill="#fff7ed" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="889" y="178" text-anchor="middle">交易应用</text>
+  <text class="t s" x="889" y="204" text-anchor="middle">Sequence / Gap</text>
+  <path d="M206 186H276" stroke="#dc2626" stroke-width="4" marker-end="url(#redArrow)"/>
+  <path d="M488 186H558" stroke="#dc2626" stroke-width="4" marker-end="url(#redArrow)"/>
+  <path d="M728 186H796" stroke="#dc2626" stroke-width="4" marker-end="url(#redArrow)"/>
+  <text x="508" y="169" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="13" font-weight="900" fill="#991b1b">生产路径</text>
+
+  <rect x="292" y="300" width="196" height="112" rx="18" fill="#14532d" stroke="#052e16" stroke-width="2"/>
+  <text x="390" y="338" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="19" font-weight="900" fill="#fff">7150 观测交换机</text>
+  <text x="390" y="367" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="800" fill="#bbf7d0">TAP ingress：记录 T_in</text>
+  <text x="390" y="392" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="800" fill="#bbf7d0">TOOL egress：写入副本</text>
+  <rect x="574" y="315" width="154" height="82" rx="16" fill="#f0fdf4" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="651" y="348" text-anchor="middle">旁路抓包机</text>
+  <text class="t s" x="651" y="374" text-anchor="middle">解析 T_in / 序列号</text>
+  <path d="M390 239V284" stroke="#16a34a" stroke-width="4" marker-end="url(#greenArrow)"/>
+  <path d="M488 356H558" stroke="#16a34a" stroke-width="4" marker-end="url(#greenArrow)"/>
+  <text x="414" y="272" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="13" font-weight="900" fill="#166534">镜像副本</text>
+
+  <rect x="52" y="472" width="252" height="126" rx="18" fill="#f0fdf4" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="178" y="507" text-anchor="middle">副本有，Live 没有</text>
+  <text class="t s" x="178" y="538" text-anchor="middle">帧已到镜像观察点</text>
+  <text class="t s" x="178" y="563" text-anchor="middle">查分叉后：出口 / 线缆 / 网卡 / 主机</text>
+  <rect x="334" y="472" width="252" height="126" rx="18" fill="#fff7ed" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="460" y="507" text-anchor="middle">两边都没有</text>
+  <text class="t s" x="460" y="538" text-anchor="middle">可能在上游，也可能观测链丢了</text>
+  <text class="t s" x="460" y="563" text-anchor="middle">先用源口计数 / 镜像完整性复核</text>
+  <rect x="616" y="472" width="252" height="126" rx="18" fill="#eff6ff" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="742" y="507" text-anchor="middle">副本节奏稳，Live 抖</text>
+  <text class="t s" x="742" y="538" text-anchor="middle">上游到观察点较稳定</text>
+  <text class="t s" x="742" y="563" text-anchor="middle">重点查生产出口与主机接收路径</text>
+  <rect x="898" y="472" width="252" height="126" rx="18" fill="#faf5ff" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t k" x="1024" y="507" text-anchor="middle">多个 Feed 比到达先后</text>
+  <text class="t s" x="1024" y="538" text-anchor="middle">先按报文身份 / 序列对齐</text>
+  <text class="t s" x="1024" y="563" text-anchor="middle">切源还需健康门、滞回和回退</text>
+
+  <rect x="108" y="635" width="984" height="48" rx="24" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+  <text class="t p" x="600" y="665" text-anchor="middle" fill="#991b1b">镜像副本是证据，不是真值：复制口拥塞、过滤规则、抓包丢包和时间基准都必须一起验</text>
+</svg>

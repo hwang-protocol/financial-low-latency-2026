@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="860" viewBox="0 0 1200 860" role="img" aria-labelledby="title desc">
+<title id="title">芯片、设备与工具：AMD/Xilinx、Alveo U250 和 Arista 7135V</title>
+<desc id="desc">AMD提供UltraScale+与Versal芯片。AMD的Alveo U250板卡使用UltraScale+，Arista的7135V交换机使用Versal HBM。两条路线使用AMD Vivado和各自配套工程构建，分别生成本例的bit与pdi配置文件。硬件图标为功能示意。</desc>
+<defs>
+  <linearGradient id="chip-bg" x2="1" y2="1"><stop stop-color="#1e3a8a"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+  <linearGradient id="board-bg" x2="1" y2="1"><stop stop-color="#0f766e"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
+  <linearGradient id="screen-bg" x2="1" y2="1"><stop stop-color="#312e81"/><stop offset="1" stop-color="#6366f1"/></linearGradient>
+  <filter id="shadow" x="-15%" y="-20%" width="135%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#334155" flood-opacity="0.07"/></filter>
+  <marker id="blue-arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#2563eb"/></marker>
+  <marker id="teal-arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#0d9488"/></marker>
+  <marker id="purple-arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L12 6L0 12Z" fill="#7c3aed"/></marker>
+  <symbol id="chip" viewBox="0 0 100 100">
+    <path d="M25 5V18M42 5V18M59 5V18M76 5V18M25 82V95M42 82V95M59 82V95M76 82V95M5 25H18M5 42H18M5 59H18M5 76H18M82 25H95M82 42H95M82 59H95M82 76H95" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+    <rect x="16" y="16" width="68" height="68" rx="10" fill="url(#chip-bg)"/>
+    <rect x="28" y="28" width="44" height="44" rx="5" fill="none" stroke="#93c5fd" stroke-width="2"/>
+    <path d="M39 38H47V46H39ZM54 38H62V46H54ZM39 54H47V62H39ZM54 54H62V62H54Z" fill="#dbeafe"/>
+  </symbol>
+  <symbol id="card" viewBox="0 0 190 120">
+    <rect x="10" y="14" width="166" height="83" rx="8" fill="url(#board-bg)"/>
+    <path d="M29 30H56V44H77M29 78H50V65H76M115 38H145V29H157M116 66H145V78H157" fill="none" stroke="#5eead4" stroke-width="2"/>
+    <rect x="69" y="29" width="53" height="51" rx="5" fill="#172554"/>
+    <path d="M80 39H111M80 47H111M80 55H111M80 63H111M80 71H111" stroke="#64748b" stroke-width="3"/>
+    <rect x="28" y="96" width="106" height="12" rx="2" fill="#eab54e"/>
+    <path d="M37 97V108M48 97V108M59 97V108M70 97V108M81 97V108M92 97V108M103 97V108M114 97V108M125 97V108" stroke="#fef3c7" stroke-width="2"/>
+    <rect x="169" y="6" width="12" height="105" rx="3" fill="#94a3b8"/>
+    <rect x="162" y="25" width="23" height="22" rx="2" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+    <rect x="162" y="57" width="23" height="22" rx="2" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+    <rect x="29" y="40" width="14" height="23" rx="2" fill="#0f172a"/>
+    <circle cx="149" cy="58" r="4" fill="#a7f3d0"/>
+  </symbol>
+  <symbol id="switch" viewBox="0 0 190 120">
+    <path d="M10 35L35 16H157L180 35Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="9" y="35" width="172" height="64" rx="7" fill="#334155"/>
+    <rect x="0" y="48" width="12" height="36" rx="3" fill="#94a3b8"/><rect x="178" y="48" width="12" height="36" rx="3" fill="#94a3b8"/>
+    <g fill="#0f172a" stroke="#94a3b8" stroke-width="1.3"><rect x="23" y="49" width="23" height="15" rx="2"/><rect x="51" y="49" width="23" height="15" rx="2"/><rect x="79" y="49" width="23" height="15" rx="2"/><rect x="107" y="49" width="23" height="15" rx="2"/><rect x="23" y="72" width="23" height="15" rx="2"/><rect x="51" y="72" width="23" height="15" rx="2"/><rect x="79" y="72" width="23" height="15" rx="2"/><rect x="107" y="72" width="23" height="15" rx="2"/></g>
+    <g fill="#2dd4bf"><circle cx="150" cy="53" r="3"/><circle cx="162" cy="53" r="3"/><circle cx="150" cy="65" r="3"/><circle cx="162" cy="65" r="3"/></g>
+    <path d="M143 79H168M143 85H168" stroke="#94a3b8" stroke-width="2"/>
+    <path d="M52 27H139" stroke="#94a3b8" stroke-width="3" stroke-dasharray="3 4"/>
+  </symbol>
+  <symbol id="laptop" viewBox="0 0 150 110">
+    <rect x="15" y="6" width="120" height="80" rx="7" fill="#475569"/>
+    <rect x="22" y="13" width="106" height="64" rx="3" fill="url(#screen-bg)"/>
+    <path d="M51 32L38 44L51 56M98 32L111 44L98 56M84 26L67 62" fill="none" stroke="#e0e7ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M15 86H135L148 100H2Z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="2"/>
+    <path d="M61 87H91L95 93H57Z" fill="#94a3b8"/>
+  </symbol>
+  <symbol id="file" viewBox="0 0 60 76">
+    <path d="M7 2H38L54 18V71H7Z" fill="#fff" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M38 2V19H54" fill="#eef2ff" stroke="currentColor" stroke-width="2.5"/>
+    <rect x="17" y="31" width="26" height="25" rx="4" fill="currentColor" opacity=".12"/>
+    <path d="M24 36V51M30 36V51M36 36V51M21 40H39M21 47H39" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+</defs>
+<style>
+text{font-family:"Noto Sans CJK SC",sans-serif;fill:#243650}.title{font-size:34px;font-weight:800}.head{font-size:27px;font-weight:750}.body{font-size:23px}.small{font-size:21px;fill:#52657f}.arrow{fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round}.blue{fill:#2563eb}.teal{fill:#0d9488}.purple{fill:#6d28d9}
+</style>
+<rect width="1200" height="860" rx="20" fill="#fff"/>
+<text x="40" y="56" class="title">芯片、设备、工具：谁负责哪一层？</text>
+<text x="40" y="98" class="body" fill="#52657f">先认识两种设备，再看同一套开发工具怎样为它们构建电路。</text>
+
+<rect x="40" y="130" width="370" height="425" rx="20" fill="#eff6ff" stroke="#dbeafe" stroke-width="2"/>
+<rect x="590" y="130" width="570" height="425" rx="20" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+<text x="65" y="172" class="head blue">AMD / Xilinx 提供芯片</text>
+<text x="615" y="172" class="head">设备厂商把芯片做成产品</text>
+
+<g class="node">
+  <rect x="60" y="202" width="330" height="145" rx="15" fill="#fff" filter="url(#shadow)"/>
+  <use href="#chip" x="76" y="226" width="92" height="92"/>
+  <text x="185" y="257" class="head">UltraScale+</text>
+  <text x="185" y="298" class="body">FPGA 芯片</text>
+</g>
+<g class="node">
+  <rect x="60" y="382" width="330" height="145" rx="15" fill="#fff" filter="url(#shadow)"/>
+  <use href="#chip" x="76" y="406" width="92" height="92"/>
+  <text x="185" y="436" class="head">Versal HBM</text>
+  <text x="185" y="477" class="body">VH1542 芯片</text>
+</g>
+
+<path d="M422 275H566" class="arrow" stroke="#2563eb" marker-end="url(#blue-arrow)"/>
+<text x="497" y="256" text-anchor="middle" class="small blue">用于</text>
+<path d="M422 455H566" class="arrow" stroke="#0d9488" marker-end="url(#teal-arrow)"/>
+<text x="497" y="436" text-anchor="middle" class="small teal">用于</text>
+
+<g class="node">
+  <rect x="610" y="202" width="530" height="145" rx="15" fill="#fff" filter="url(#shadow)"/>
+  <use href="#card" x="624" y="224" width="163" height="103"/>
+  <text x="808" y="248" class="head blue">AMD Alveo U250</text>
+  <text x="808" y="285" class="body">插入服务器的板卡</text>
+  <text x="808" y="318" class="small">本章第一条实作路线</text>
+</g>
+<g class="node">
+  <rect x="610" y="382" width="530" height="145" rx="15" fill="#fff" filter="url(#shadow)"/>
+  <use href="#switch" x="624" y="404" width="163" height="103"/>
+  <text x="808" y="428" class="head teal">Arista 7135V</text>
+  <text x="808" y="465" class="body">带 FPGA 的交换机</text>
+  <text x="808" y="498" class="small">第二条路线：适配与部署</text>
+</g>
+
+<rect x="40" y="589" width="1120" height="207" rx="20" fill="#f5f3ff" stroke="#ddd6fe" stroke-width="2"/>
+<text x="65" y="631" class="head purple">AMD Vivado：两条路线的开发工具</text>
+<use href="#laptop" x="64" y="657" width="138" height="102"/>
+<text x="228" y="690" class="head">源码 + 配套工程</text>
+<text x="228" y="730" class="body">仿真、综合、布局布线</text>
+<path d="M535 709H626" class="arrow" stroke="#7c3aed" marker-end="url(#purple-arrow)"/>
+<text x="580" y="686" class="small purple" text-anchor="middle">生成</text>
+<g class="node">
+  <rect x="650" y="653" width="485" height="112" rx="14" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+  <use href="#file" x="667" y="672" width="57" height="73" color="#2563eb"/>
+  <text x="738" y="700" class="head blue">.bit</text>
+  <text x="738" y="738" class="small">U250</text>
+  <path d="M870 673V746" stroke="#e2e8f0" stroke-width="2"/>
+  <use href="#file" x="894" y="672" width="57" height="73" color="#0d9488"/>
+  <text x="966" y="700" class="head teal">.pdi</text>
+  <text x="966" y="738" class="small">7135V</text>
+</g>
+<text x="40" y="835" class="small">各设备分别使用配套工程，生成各自的配置文件。</text>
+<text x="1160" y="835" class="small" text-anchor="end">图标为功能示意</text>
+</svg>

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1880" viewBox="0 0 1200 1880" role="img" aria-labelledby="title desc">
+<title id="title">第09章导航：同一份过滤核心，分成 Linux 仿真和 V80 真卡两条路线</title>
+<desc id="desc">沿用第08章1.1—1.3准备：.111保存两章源码与缓存，.101作为共用开发机。共同1讲解market_filter.sv，共同2在.101用Verilator和g++编译与自测，绿色表示可实作。之后分为A路在交易客户端.2上接入真实行情的Linux仿真实验，以及B路AMD Alveo V80真卡流程。B3寄存器仿真可在.101完成；B6的C工具可本地测试，PCIe读写需要真卡。A路仍为A1—A5，B路仍为B1—B7，总计14步。B路尚未上板验证，B7网口通路待适配。箭头表示工作顺序，不表示报文路径、已完成状态或分支间的设备依赖。</desc>
+<defs>
+<marker id="arrow" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#475569"/></marker>
+</defs>
+<style>
+text { font-family:"Noto Sans CJK SC",sans-serif; fill:#172554; }
+.title { font-size:32px; font-weight:700; }
+.head { font-size:28px; font-weight:700; }
+.body { font-size:23px; }
+.small { font-size:22px; fill:#64748b; }
+.arrow { fill:none; stroke:#475569; stroke-width:3; stroke-linecap:butt; stroke-linejoin:round; marker-end:url(#arrow); }
+</style>
+<rect width="1200" height="1880" fill="white"/>
+<text x="40" y="51" class="title">第09章大导航：同一份代码，两条实践路线</text>
+<text x="40" y="90" class="body">共同代码在 .101 开发；A 路真实行情实验在 .2 运行，B 路部署需要 V80。</text>
+
+<rect x="40" y="116" width="1120" height="80" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="60" y="147" class="body" font-weight="700">沿用第08章 1.1—1.3：两章共用准备，不另编号</text>
+<text x="60" y="180" class="body">.111 保存源码与缓存 → .101 开发</text>
+<g transform="translate(0 100)">
+<g class="node" data-step="1"><rect x="40" y="132" width="510" height="128" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="295" y="170" class="head" text-anchor="middle" style="fill:#2563eb">1 源码解说</text>
+<text x="295" y="210" class="body" text-anchor="middle">SystemVerilog：market_filter.sv</text>
+<text x="295" y="244" class="body" text-anchor="middle">写明匹配规则、一次额度和计数</text>
+</g>
+<g class="node" data-step="2"><rect x="650" y="132" width="510" height="128" rx="12" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+<text x="905" y="170" class="head" text-anchor="middle" style="fill:#15803d">2 在 .101 编译与自测</text>
+<text x="905" y="210" class="body" text-anchor="middle">Verilator + g++ 生成模拟程序</text>
+<text x="905" y="244" class="body" text-anchor="middle">可实作：用测试消息检查判断结果</text>
+</g>
+<path d="M550 196 H626" class="arrow" data-target="2"/>
+<path d="M905 260 V292 H295 V308" class="arrow" data-target="branch-a"/>
+<path d="M905 260 V308" class="arrow" data-target="branch-b"/>
+<g class="node" data-step="branch-a"><rect x="40" y="332" width="510" height="88" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="295" y="369" font-size="25" font-weight="700" text-anchor="middle" style="fill:#0f766e">A 仿真分支 · Linux 模拟程序</text>
+<text x="295" y="402" font-size="22" text-anchor="middle">课堂分步运行 · 在交易客户端 .2 上执行</text></g>
+<path d="M295 420 V446" class="arrow" data-target="A1"/>
+<g class="node" data-step="branch-b"><rect x="650" y="332" width="510" height="88" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="905" y="369" font-size="25" font-weight="700" text-anchor="middle" style="fill:#7e22ce">B 真卡分支 · AMD Alveo V80</text>
+<text x="905" y="402" font-size="22" text-anchor="middle">真卡流程展示 · 尚未上板验证</text></g>
+<path d="M905 420 V446" class="arrow" data-target="B1"/>
+<g class="node" data-step="A1"><rect x="40" y="470" width="510" height="136" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="295" y="508" class="head" text-anchor="middle" style="fill:#0f766e">A1 准备 .2 的编译工具</text>
+<text x="295" y="548" class="body" text-anchor="middle">准备 A · 从 .111 缓存安装</text>
+<text x="295" y="582" class="body" text-anchor="middle">备齐 Verilator、g++ 与编译材料</text>
+</g>
+<path d="M295 606 V624" class="arrow" data-target="A2"/>
+<g class="node" data-step="A2"><rect x="40" y="648" width="510" height="136" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="295" y="686" class="head" text-anchor="middle" style="fill:#0f766e">A2 接入并正常放行</text>
+<text x="295" y="726" class="body" text-anchor="middle">运行 ① · 编译并启动模拟程序</text>
+<text x="295" y="760" class="body" text-anchor="middle">先确认行情和网页订单簿正常</text>
+</g>
+<path d="M295 784 V802" class="arrow" data-target="A3"/>
+<g class="node" data-step="A3"><rect x="40" y="826" width="510" height="136" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="295" y="864" class="head" text-anchor="middle" style="fill:#0f766e">A3 发令丢一次</text>
+<text x="295" y="904" class="body" text-anchor="middle">运行 ② · 写入一次丢弃额度</text>
+<text x="295" y="938" class="body" text-anchor="middle">命中目标行情后，额度减为零</text>
+</g>
+<path d="M295 962 V980" class="arrow" data-target="A4"/>
+<g class="node" data-step="A4"><rect x="40" y="1004" width="510" height="136" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="295" y="1042" class="head" text-anchor="middle" style="fill:#0f766e">A4 核对丢包与缺口</text>
+<text x="295" y="1082" class="body" text-anchor="middle">运行 ③ · 查看计数和缺口证据</text>
+<text x="295" y="1116" class="body" text-anchor="middle">保留现场，解释这次过滤的结果</text>
+</g>
+<path d="M295 1140 V1158" class="arrow" data-target="A5"/>
+<g class="node" data-step="A5"><rect x="40" y="1182" width="510" height="136" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="295" y="1220" class="head" text-anchor="middle" style="fill:#0f766e">A5 手工恢复行情</text>
+<text x="295" y="1260" class="body" text-anchor="middle">网页手工恢复，再运行④验收</text>
+<text x="295" y="1294" class="body" text-anchor="middle">确认五档订单簿继续更新</text>
+</g>
+<g class="node" data-step="B1"><rect x="650" y="470" width="510" height="136" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="905" y="508" class="head" text-anchor="middle" style="fill:#7e22ce">B1 准备开发环境</text>
+<text x="905" y="548" class="body" text-anchor="middle">Vivado / Vitis + AMR 3.0</text>
+<text x="905" y="582" class="body" text-anchor="middle">固定 V80 对应版本与许可</text>
+</g>
+<path d="M905 606 V624" class="arrow" data-target="B2"/>
+<g class="node" data-step="B2"><rect x="650" y="648" width="510" height="136" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="905" y="686" class="head" text-anchor="middle" style="fill:#7e22ce">B2 初始化与识别卡</text>
+<text x="905" y="726" class="body" text-anchor="middle">安装 AMR 管理环境</text>
+<text x="905" y="760" class="body" text-anchor="middle">核对卡的身份及在主机中的位置</text>
+</g>
+<path d="M905 784 V802" class="arrow" data-target="B3"/>
+<g class="node" data-step="B3"><rect x="650" y="826" width="510" height="144" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="905" y="864" class="head" text-anchor="middle" style="fill:#7e22ce">B3 接入板卡接口</text>
+<text x="905" y="899" font-size="22" text-anchor="middle">把同一份 RTL 接到测试寄存器</text>
+<text x="905" y="929" font-size="22" text-anchor="middle">连接时钟、复位与消息输入</text>
+<text x="905" y="958" font-size="22" text-anchor="middle">寄存器仿真可在 .101 做</text>
+</g>
+<path d="M905 970 V980" class="arrow" data-target="B4"/>
+<g class="node" data-step="B4"><rect x="650" y="1004" width="510" height="136" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="905" y="1042" class="head" text-anchor="middle" style="fill:#7e22ce">B4 构建镜像</text>
+<text x="905" y="1082" class="body" text-anchor="middle">Vivado 构建电路，Vitis 编译固件</text>
+<text x="905" y="1116" class="body" text-anchor="middle">得到配套的 Boot + PLD 镜像</text>
+</g>
+<path d="M905 1140 V1158" class="arrow" data-target="B5"/>
+<g class="node" data-step="B5"><rect x="650" y="1182" width="510" height="136" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="905" y="1220" class="head" text-anchor="middle" style="fill:#7e22ce">B5 复制与装载</text>
+<text x="905" y="1260" class="body" text-anchor="middle">复制到装有 V80 的主机</text>
+<text x="905" y="1294" class="body" text-anchor="middle">先启动 Boot 底座，再装载 PLD</text>
+</g>
+<path d="M905 1318 V1336" class="arrow" data-target="B6"/>
+<g class="node" data-step="B6"><rect x="650" y="1360" width="510" height="144" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="905" y="1398" class="head" text-anchor="middle" style="fill:#7e22ce">B6 验证卡上判决</text>
+<text x="905" y="1433" font-size="22" text-anchor="middle">经 PCIe 写入测试消息并读回判决</text>
+<text x="905" y="1463" font-size="22" text-anchor="middle">C 工具本地可测；PCIe 读写需真卡</text>
+<text x="905" y="1492" font-size="22" text-anchor="middle">此步不经网口，不是真实行情丢包</text>
+</g>
+<path d="M905 1504 V1514" class="arrow" data-target="B7"/>
+<g class="node" data-step="B7"><rect x="650" y="1538" width="510" height="136" rx="12" fill="#fff7ed" stroke="#c2410c" stroke-width="2" stroke-dasharray="9 6"/>
+<text x="905" y="1576" class="head" text-anchor="middle" style="fill:#c2410c">B7 接通真实网口</text>
+<text x="905" y="1616" class="body" text-anchor="middle">待适配：网口收发、解析与主机通路</text>
+<text x="905" y="1650" class="body" text-anchor="middle">完成后才能验证真实行情过滤</text>
+</g>
+<text x="295" y="1454" font-size="27" font-weight="700" text-anchor="middle" style="fill:#475569">课堂先左后右</text>
+<text x="295" y="1496" class="body" text-anchor="middle">先完成 A 路实验并恢复行情，</text>
+<text x="295" y="1532" class="body" text-anchor="middle">再沿 B 路讲解真卡部署。</text>
+<text x="40" y="1734" class="small">箭头表示工作顺序，不表示报文路径或已完成状态；两条分支共用同一份过滤核心。</text>
+</g>
+</svg>

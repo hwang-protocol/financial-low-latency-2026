@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#2563eb"/></marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .h{font-size:29px;font-weight:900}.k{font-size:20px;font-weight:900}.s{font-size:15px;fill:#475569}.p{font-size:14px;font-weight:800}
+    </style>
+  </defs>
+  <rect x="12" y="12" width="1176" height="626" rx="26" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="54" y="62">7150 在低延迟网络里，不只是“转发得快”</text>
+  <text class="t s" x="54" y="91">网络工程师要同时管业务转发路径、拥塞证据和共同时间基准。</text>
+
+  <rect x="460" y="230" width="280" height="160" rx="24" fill="#0f2f4d" stroke="#0f172a" stroke-width="2"/>
+  <text x="600" y="282" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="28" font-weight="900" fill="#fff">Arista 7150</text>
+  <text x="600" y="317" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="17" font-weight="800" fill="#67e8f9">低延迟转发 + 精确观测</text>
+  <rect x="505" y="344" width="190" height="28" rx="14" fill="#164e63"/>
+  <text x="600" y="364" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="800" fill="#cffafe">同一 ASIC，两类责任</text>
+
+  <g>
+    <rect x="54" y="132" width="300" height="112" rx="17" fill="#eff6ff" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="54" y="132" width="300" height="34" rx="17" fill="#dbeafe"/><path d="M54 149h300v17H54z" fill="#dbeafe"/>
+    <text class="t k" x="76" y="159">Cut-through</text>
+    <text class="t s" x="76" y="193">读够转发头就启动出口</text>
+    <text class="t s" x="76" y="218">省等待整帧，不消灭排队</text>
+  </g>
+  <g>
+    <rect x="54" y="270" width="300" height="112" rx="17" fill="#fff7ed" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="54" y="270" width="300" height="34" rx="17" fill="#ffedd5"/><path d="M54 287h300v17H54z" fill="#ffedd5"/>
+    <text class="t k" x="76" y="297">序列化与速率边界</text>
+    <text class="t s" x="76" y="331">每一 bit 仍要按端口线速发完</text>
+    <text class="t s" x="76" y="356">降速出口与 fan-in 会形成队列</text>
+  </g>
+  <g>
+    <rect x="54" y="408" width="300" height="112" rx="17" fill="#f0fdf4" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="54" y="408" width="300" height="34" rx="17" fill="#dcfce7"/><path d="M54 425h300v17H54z" fill="#dcfce7"/>
+    <text class="t k" x="76" y="435">共享缓冲与 LANZ</text>
+    <text class="t s" x="76" y="469">看短时队列深度与 S / U / E</text>
+    <text class="t s" x="76" y="494">回答“何时排过队”，不是时延</text>
+  </g>
+
+  <g>
+    <rect x="846" y="132" width="300" height="112" rx="17" fill="#faf5ff" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="846" y="132" width="300" height="34" rx="17" fill="#f3e8ff"/><path d="M846 149h300v17H846z" fill="#f3e8ff"/>
+    <text class="t k" x="868" y="159">Hardware Timestamp</text>
+    <text class="t s" x="868" y="193">在靠近线的位置给帧记时</text>
+    <text class="t s" x="868" y="218">缩小软件调度带来的歧义</text>
+  </g>
+  <g>
+    <rect x="846" y="270" width="300" height="112" rx="17" fill="#ecfeff" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="846" y="270" width="300" height="34" rx="17" fill="#cffafe"/><path d="M846 287h300v17H846z" fill="#cffafe"/>
+    <text class="t k" x="868" y="297">PTP TC / BC</text>
+    <text class="t s" x="868" y="331">TC 记驻留时间；BC 分段对时</text>
+    <text class="t s" x="868" y="356">目标是让不同观察点可以比较</text>
+  </g>
+  <g>
+    <rect x="846" y="408" width="300" height="112" rx="17" fill="#fff7ed" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="846" y="408" width="300" height="34" rx="17" fill="#ffedd5"/><path d="M846 425h300v17H846z" fill="#ffedd5"/>
+    <text class="t k" x="868" y="435">SPAN / TAP / TOOL</text>
+    <text class="t s" x="868" y="469">复制、过滤、聚合、打戳后送工具</text>
+    <text class="t s" x="868" y="494">回答“包到过哪里、何时到”</text>
+  </g>
+
+  <path d="M354 188H428" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <path d="M354 326H428" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <path d="M354 464H428" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <path d="M772 188H814" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <path d="M772 326H814" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <path d="M772 464H814" fill="none" stroke="#2563eb" stroke-width="3.5" marker-end="url(#arrow)"/>
+
+  <rect x="188" y="558" width="824" height="48" rx="24" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+  <text class="t p" x="600" y="588" text-anchor="middle">转发路径决定“能多快” · 队列与时间证据决定“慢在哪里、先后是否可信”</text>
+</svg>

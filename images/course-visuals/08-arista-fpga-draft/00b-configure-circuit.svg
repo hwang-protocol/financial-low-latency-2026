@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="940" viewBox="0 0 1200 940" role="img"><title>源码 → Vivado 构建 → .pdi → 装入 FPGA</title><defs>
+<marker id="m2563eb" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#2563eb"/></marker>
+<marker id="m7e22ce" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#7e22ce"/></marker>
+<marker id="mc2410c" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#c2410c"/></marker>
+<marker id="m475569" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#475569"/></marker>
+</defs><g font-family="Noto Sans CJK SC, sans-serif">
+<rect width="1200" height="940" fill="white"/>
+<text x="36" y="51" font-size="32" fill="#172554" font-weight="700" text-anchor="start">源码 → Vivado 构建 → .pdi → 装入 FPGA</text>
+<rect x="40" y="120" width="1120" height="270" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="60" y="157" font-size="25" fill="#172554" font-weight="700" text-anchor="start">开发机：针对具体的 FPGA 芯片和板卡构建</text>
+<g class="node">
+<rect x="65" y="202" width="270" height="140" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="200.0" y="238" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">SystemVerilog 源码</text>
+<text x="200.0" y="271" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">本课的 RTL 代码</text>
+<text x="200.0" y="300" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">类比：用 C++ 写程序</text>
+</g>
+<g class="node">
+<rect x="465" y="202" width="270" height="140" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600.0" y="238" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">Vivado 构建</text>
+<text x="600.0" y="271" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">作用类似 GCC 编译工具</text>
+<text x="600.0" y="300" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">把电路设计做成配置文件</text>
+</g>
+<g class="node">
+<rect x="865" y="202" width="270" height="140" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="1000.0" y="238" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">.pdi 配置文件</text>
+<text x="1000.0" y="271" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">类比：编译后的程序文件</text>
+<text x="1000.0" y="300" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">实际用来配置 FPGA</text>
+</g>
+<text x="65" y="373" font-size="21" fill="#172554">Vivado 内部：把代码变成电路 → 安排位置 → 接好线路</text>
+<polyline points="335,272 441.0,272.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<polyline points="735,272 841.0,272.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<rect x="40" y="472" width="1120" height="340" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="60" y="509" font-size="25" fill="#172554" font-weight="700" text-anchor="start">FPGA：配置后成为报文处理电路</text>
+<polyline points="1000,342 1000,425 20,425 20,637 41.0,637.0" fill="none" stroke="#7e22ce" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m7e22ce)" stroke-dasharray="8 6"/>
+<g class="node">
+<rect x="65" y="562" width="270" height="150" rx="11" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="200.0" y="598" font-size="25" fill="#7e22ce" font-weight="700" text-anchor="middle">装载 .pdi</text>
+<text x="200.0" y="631" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">设备管理程序写入配置</text>
+<text x="200.0" y="660" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">让逻辑与连接生效</text>
+</g>
+<g class="node">
+<rect x="465" y="562" width="270" height="150" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600.0" y="598" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">电路处理报文</text>
+<text x="600.0" y="631" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">读取字段、比较条件</text>
+<text x="600.0" y="660" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">控制这一帧的去留</text>
+</g>
+<g class="node">
+<rect x="865" y="562" width="270" height="150" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="1000.0" y="598" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">寄存器与缓存</text>
+<text x="1000.0" y="631" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">记住额度、计数和序号</text>
+<text x="1000.0" y="660" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">暂存报文，等待发送</text>
+</g>
+<polyline points="335,637 441.0,637.0" fill="none" stroke="#7e22ce" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m7e22ce)"/>
+<polyline points="735,637 841.0,637.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<text x="65" y="778" font-size="21" fill="#172554" font-weight="400" text-anchor="start">PDI 用于器件启动与配置；下方示意本课报文由配置后的电路处理。</text>
+<text x="40" y="872" font-size="22" fill="#172554" font-weight="400" text-anchor="start">改电路逻辑：重建并装载 .pdi；只改一次额度：写寄存器。</text>
+<text x="36" y="915" font-size="19" fill="#64748b" font-weight="400" text-anchor="start">构建需要板卡引脚、时钟等信息；板级工程的准备见第⑦项。</text>
+</g></svg>

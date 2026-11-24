@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1060" viewBox="0 0 1400 1060">
+  <title>Arista 官方实时分析与专职 7150 Tap Aggregation 方案</title>
+  <desc>上半区展示多个 TAP 或 SPAN 观察点的副本进入 DANZ Monitoring Fabric 时打 PTP 时间戳，由 Service Node 在有限窗口内匹配同一包、计算延时和丢包，并经 IPFIX 送 Analytics，Recorder 可选留存。下半区展示生产交换机 SPAN 或链路 TAP 把副本送入专职 7150，在 TAP 入口打戳、经 TOOL 口送分析网卡；该差值测量监控链，不自动等于生产业务链延时。</desc>
+  <defs>
+    <marker id="arr-green" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#15803d"/>
+    </marker>
+    <marker id="arr-indigo" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#4f46e5"/>
+    </marker>
+    <marker id="arr-cyan" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#0891b2"/>
+    </marker>
+    <marker id="arr-orange" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="15" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#ea580c"/>
+    </marker>
+    <style>
+      .t{font-family:"Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .white{fill:#ffffff}
+      .muted{fill:#475569}
+      .tiny{font-size:17px}
+      .small{font-size:19px}
+      .body{font-size:21px}
+      .label{font-size:23px;font-weight:900}
+      .title{font-size:30px;font-weight:900}
+    </style>
+  </defs>
+
+  <rect x="10" y="10" width="1380" height="1040" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t title" x="40" y="54">两种旁路架构：官方实时系统，和朋友的专职 7150</text>
+  <text class="t muted body" x="40" y="86">共同点：都只处理 TAP / SPAN 副本，不改生产原帧。区别在于谁负责多点匹配、计算和留存。</text>
+
+  <!-- Official DMF -->
+  <rect x="30" y="108" width="1340" height="404" rx="20" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.5"/>
+  <rect x="50" y="124" width="264" height="36" rx="18" fill="#4f46e5"/>
+  <text class="t white" x="182" y="149" text-anchor="middle" font-size="19" font-weight="900">A · 官方 DMF 实时 Flow Diff</text>
+
+  <rect x="354" y="136" width="268" height="48" rx="24" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text class="t" x="488" y="167" text-anchor="middle" font-size="19" font-weight="900" fill="#5b21b6">PTP 共同时间基准</text>
+  <path d="M432 188 V218" stroke="#7c3aed" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arr-indigo)"/>
+  <path d="M556 188 V348" stroke="#7c3aed" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arr-indigo)"/>
+
+  <rect x="54" y="218" width="224" height="96" rx="15" fill="#ffffff" stroke="#64748b" stroke-width="1.7"/>
+  <text class="t label" x="166" y="255" text-anchor="middle">观察点 A 的副本</text>
+  <text class="t muted small" x="166" y="287" text-anchor="middle">来自 TAP / SPAN</text>
+
+  <rect x="54" y="350" width="224" height="96" rx="15" fill="#ffffff" stroke="#64748b" stroke-width="1.7"/>
+  <text class="t label" x="166" y="387" text-anchor="middle">观察点 B 的副本</text>
+  <text class="t muted small" x="166" y="419" text-anchor="middle">同一业务的下游点</text>
+
+  <path d="M286 266 H338" stroke="#0891b2" stroke-width="3" marker-end="url(#arr-cyan)"/>
+  <path d="M286 398 H338" stroke="#0891b2" stroke-width="3" marker-end="url(#arr-cyan)"/>
+
+  <rect x="352" y="218" width="270" height="96" rx="15" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <circle cx="378" cy="251" r="8" fill="#e11d48"/>
+  <text class="t label" x="397" y="259">监控 Fabric 入口</text>
+  <text class="t body" x="376" y="291">打戳 T<tspan baseline-shift="sub" font-size="14">A</tspan> + 观察点 ID</text>
+
+  <rect x="352" y="350" width="270" height="96" rx="15" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <circle cx="378" cy="383" r="8" fill="#e11d48"/>
+  <text class="t label" x="397" y="391">监控 Fabric 入口</text>
+  <text class="t body" x="376" y="423">打戳 T<tspan baseline-shift="sub" font-size="14">B</tspan> + 观察点 ID</text>
+
+  <path d="M632 266 H674" stroke="#4f46e5" stroke-width="3" marker-end="url(#arr-indigo)"/>
+  <path d="M632 398 H674" stroke="#4f46e5" stroke-width="3" marker-end="url(#arr-indigo)"/>
+
+  <rect x="688" y="210" width="336" height="244" rx="18" fill="#ffffff" stroke="#4f46e5" stroke-width="2"/>
+  <text class="t label" x="712" y="250">DMF Service Node</text>
+  <rect x="712" y="272" width="288" height="42" rx="10" fill="#eef2ff"/>
+  <text class="t body" x="856" y="299" text-anchor="middle">有限窗口内匹配同一包</text>
+  <text class="t body" x="712" y="343">① 同时出现：延时 = T<tspan baseline-shift="sub" font-size="14">B</tspan> − T<tspan baseline-shift="sub" font-size="14">A</tspan></text>
+  <text class="t body" x="712" y="378">② 只在一处出现：记为丢包</text>
+  <text class="t body" x="712" y="413">③ 按流累计 min / mean / max</text>
+  <text class="t muted tiny" x="712" y="440">边收边算，不必等待 pcap 落盘</text>
+
+  <path d="M1034 275 H1074" stroke="#15803d" stroke-width="3" marker-end="url(#arr-green)"/>
+  <text class="t" x="1054" y="258" text-anchor="middle" font-size="16" font-weight="900" fill="#166534">IPFIX</text>
+  <rect x="1088" y="202" width="244" height="126" rx="16" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text class="t label" x="1210" y="241" text-anchor="middle">Analytics Node</text>
+  <text class="t small" x="1210" y="275" text-anchor="middle">流 + 观察点 + 统计值</text>
+  <text class="t muted tiny" x="1210" y="304" text-anchor="middle">仪表盘 / 告警 / 趋势</text>
+
+  <path d="M1034 399 H1074" stroke="#ea580c" stroke-width="3" marker-end="url(#arr-orange)"/>
+  <text class="t" x="1054" y="382" text-anchor="middle" font-size="16" font-weight="900" fill="#9a3412">可选</text>
+  <rect x="1088" y="350" width="244" height="104" rx="16" fill="#fff7ed" stroke="#ea580c" stroke-width="1.8"/>
+  <text class="t label" x="1210" y="387" text-anchor="middle">Recorder Node</text>
+  <text class="t small" x="1210" y="420" text-anchor="middle">pcap 记录 / 查询 / 回放</text>
+  <text class="t muted tiny" x="1210" y="445" text-anchor="middle">不是实时计算必经点</text>
+
+  <rect x="322" y="466" width="756" height="30" rx="15" fill="#dbeafe"/>
+  <text class="t" x="700" y="487" text-anchor="middle" font-size="17" font-weight="900" fill="#1e3a8a">结果在监控平面实时汇总；生产业务原帧仍沿自己的链路转发</text>
+
+  <!-- Dedicated TapAgg -->
+  <rect x="30" y="532" width="1340" height="498" rx="20" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+  <rect x="50" y="548" width="286" height="36" rx="18" fill="#15803d"/>
+  <text class="t white" x="193" y="573" text-anchor="middle" font-size="19" font-weight="900">B · 朋友的专职 7150 方案</text>
+
+  <text class="t" x="700" y="612" text-anchor="middle" font-size="18" font-weight="900" fill="#166534">生产业务原帧：不经过分析设备</text>
+  <rect x="54" y="640" width="178" height="88" rx="15" fill="#ffffff" stroke="#64748b" stroke-width="1.7"/>
+  <text class="t label" x="143" y="676" text-anchor="middle">Exchange</text>
+  <text class="t muted small" x="143" y="706" text-anchor="middle">业务发送端</text>
+
+  <path d="M240 684 H292" stroke="#15803d" stroke-width="3" marker-end="url(#arr-green)"/>
+  <rect x="306" y="624" width="268" height="120" rx="16" fill="#ffffff" stroke="#15803d" stroke-width="2"/>
+  <text class="t label" x="440" y="663" text-anchor="middle">生产交换机</text>
+  <text class="t small" x="440" y="696" text-anchor="middle">原帧照常转发</text>
+  <text class="t muted tiny" x="440" y="724" text-anchor="middle">另从 SPAN 输出一份副本</text>
+
+  <path d="M584 684 H1100" stroke="#15803d" stroke-width="3" marker-end="url(#arr-green)"/>
+  <circle cx="760" cy="684" r="8" fill="#ea580c"/>
+  <text class="t" x="760" y="663" text-anchor="middle" font-size="17" font-weight="900" fill="#9a3412">也可由物理 TAP 分光</text>
+
+  <rect x="1114" y="640" width="218" height="88" rx="15" fill="#ffffff" stroke="#15803d" stroke-width="2"/>
+  <text class="t label" x="1223" y="676" text-anchor="middle">Trader</text>
+  <text class="t muted small" x="1223" y="706" text-anchor="middle">生产接收端</text>
+
+  <path d="M440 752 V770 H520 V792" stroke="#ea580c" stroke-width="3" fill="none" marker-end="url(#arr-orange)"/>
+  <text class="t" x="476" y="766" font-size="17" font-weight="900" fill="#9a3412">SPAN 副本</text>
+  <path d="M760 696 V770 H680 V792" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="7 6" fill="none" marker-end="url(#arr-orange)"/>
+  <text class="t" x="776" y="750" font-size="17" font-weight="900" fill="#9a3412">物理 TAP 副本</text>
+
+  <rect x="54" y="804" width="280" height="142" rx="16" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text class="t label" x="78" y="841">它和官方的关系</text>
+  <text class="t small" x="78" y="877">✓ 接近官方 Tap Aggregation</text>
+  <text class="t small" x="78" y="908">✓ 隔离生产、可接多源多工具</text>
+  <text class="t muted tiny" x="78" y="934">≠ DMF Service Node 成品 Flow Diff</text>
+
+  <rect x="366" y="804" width="468" height="142" rx="17" fill="#ffffff" stroke="#0891b2" stroke-width="2"/>
+  <rect x="488" y="792" width="64" height="24" rx="7" fill="#ea580c"/>
+  <text class="t white" x="520" y="809" text-anchor="middle" font-size="14" font-weight="900">TAP 1</text>
+  <rect x="648" y="792" width="64" height="24" rx="7" fill="#ea580c"/>
+  <text class="t white" x="680" y="809" text-anchor="middle" font-size="14" font-weight="900">TAP 2</text>
+  <text class="t label" x="390" y="841">专职 7150 · Tap Aggregation</text>
+  <circle cx="392" cy="878" r="8" fill="#e11d48"/>
+  <text class="t body" x="411" y="885">T<tspan baseline-shift="sub" font-size="14">tap</tspan>：副本到达 TAP 入口时打戳</text>
+  <text class="t small" x="390" y="918">过滤 / 复制 / 汇聚 → TOOL 口</text>
+  <text class="t muted tiny" x="390" y="941">时间戳位置晚于第一台生产交换机入口</text>
+
+  <path d="M844 875 H924" stroke="#0891b2" stroke-width="3" marker-end="url(#arr-cyan)"/>
+  <text class="t" x="884" y="856" text-anchor="middle" font-size="17" font-weight="900" fill="#0e7490">TOOL</text>
+
+  <rect x="938" y="804" width="394" height="142" rx="17" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text class="t label" x="962" y="841">分析服务器 / 网卡</text>
+  <circle cx="964" cy="878" r="8" fill="#e11d48"/>
+  <text class="t body" x="983" y="885">T<tspan baseline-shift="sub" font-size="14">tool-rx</tspan>：分析网卡硬件 RX 戳</text>
+  <text class="t small" x="962" y="918">实时工具分析，或保存 pcap</text>
+  <text class="t muted tiny" x="962" y="941">也可把副本分发给多个工具</text>
+
+  <rect x="244" y="970" width="912" height="42" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="1.3"/>
+  <text class="t" x="700" y="997" text-anchor="middle" font-size="18" font-weight="900" fill="#9a3412">T_tool-rx − T_tap 量到监控链；要量生产链，必须在两个业务观察点取戳并统一时间基准。</text>
+</svg>

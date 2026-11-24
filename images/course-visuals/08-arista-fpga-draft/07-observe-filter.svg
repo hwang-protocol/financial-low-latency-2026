@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="840" viewBox="0 0 1200 840" role="img"><title>只丢一次：输入三帧，为什么输出两帧</title><defs>
+<marker id="m2563eb" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#2563eb"/></marker>
+<marker id="m7e22ce" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#7e22ce"/></marker>
+<marker id="mc2410c" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#c2410c"/></marker>
+<marker id="m475569" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#475569"/></marker>
+</defs><g font-family="Noto Sans CJK SC, sans-serif">
+<rect width="1200" height="840" fill="white"/>
+<text x="36" y="51" font-size="32" fill="#172554" font-weight="700" text-anchor="start">只丢一次：输入三帧，为什么输出两帧</text>
+<text x="40" y="102" font-size="22" fill="#172554" font-weight="400" text-anchor="start">先 arm，再低速逐帧输入；初始计数为0，S 与 S＋1 匹配 NVDA。</text>
+<g class="node">
+<rect x="40" y="160" width="330" height="170" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="205.0" y="196" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">输入三帧</text>
+<text x="205.0" y="229" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S−1：普通帧</text>
+<text x="205.0" y="258" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S：NVDA 匹配帧</text>
+<text x="205.0" y="287" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S＋1：NVDA 匹配帧</text>
+</g>
+<g class="node">
+<rect x="435" y="160" width="330" height="170" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600.0" y="196" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">FPGA 逐帧裁决</text>
+<text x="600.0" y="229" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S−1：不消耗额度</text>
+<text x="600.0" y="258" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S：丢弃，额度清零</text>
+<text x="600.0" y="287" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S＋1：无额度，放行</text>
+</g>
+<g class="node">
+<rect x="830" y="160" width="330" height="170" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="995.0" y="196" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">输出两帧</text>
+<text x="995.0" y="229" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S−1：内容保持</text>
+<text x="995.0" y="258" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S：整帧未发出</text>
+<text x="995.0" y="287" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">S＋1：内容保持</text>
+</g>
+<polyline points="370,245 411.0,245.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<polyline points="765,245 806.0,245.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<rect x="40" y="395" width="1120" height="300" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="60" y="432" font-size="25" fill="#172554" font-weight="700" text-anchor="start">这三帧处理结束后，读取电路状态</text>
+<g class="node">
+<rect x="65" y="482" width="280" height="145" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="205.0" y="518" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">收发计数</text>
+<text x="205.0" y="551" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">rx_count = 3</text>
+<text x="205.0" y="580" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">tx_count = 2</text>
+</g>
+<g class="node">
+<rect x="460" y="482" width="280" height="145" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600.0" y="518" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">丢弃计数</text>
+<text x="600.0" y="551" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">drop_count = 1</text>
+<text x="600.0" y="580" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">error_count = 0</text>
+</g>
+<g class="node">
+<rect x="855" y="482" width="280" height="145" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="995.0" y="518" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">一次额度与记录</text>
+<text x="995.0" y="551" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">armed = 0</text>
+<text x="995.0" y="580" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">last_sequence = S</text>
+</g>
+<text x="65" y="671" font-size="22" fill="#172554" font-weight="400" text-anchor="start">disarm 也能显式撤销额度；后续报文继续正常通过。</text>
+<text x="40" y="755" font-size="22" fill="#172554" font-weight="400" text-anchor="start">每帧处理完再送下一帧；表中数值由 RTL 推导，不是上板抓包。</text>
+<text x="36" y="815" font-size="19" fill="#64748b" font-weight="400" text-anchor="start">实物验证须比对入口、出口和寄存器；性能验证另行测量端口间时延。</text>
+</g></svg>

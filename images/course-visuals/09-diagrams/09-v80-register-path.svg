@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1090" viewBox="0 0 1200 1090">
+<defs><marker id="a" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#64748b"/></marker></defs>
+<style>text{font-family:"Noto Sans CJK SC",sans-serif;fill:#172554}.title{font-size:32px;font-weight:800}.body{font-size:25px}.small{font-size:22px}.head{font-size:27px;font-weight:700}.arrow{fill:none;stroke:#64748b;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;marker-end:url(#a)}</style>
+<rect width="1200" height="1090" rx="18" fill="#f8fafc"/>
+<text x="45" y="55" class="title" text-anchor="start">先从主机送一条测试消息，验证卡上判断</text>
+<text x="45" y="95" class="small" text-anchor="start">设计示意｜PF0 负责管理，PF1 提供本课寄存器窗口；两者不要选错</text>
+<g class="node"><rect x="45" y="145" width="440" height="155" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+<text x="265.0" y="186" class="head" text-anchor="middle">Linux 主机</text>
+<text x="265.0" y="225" class="small" text-anchor="middle">ami_tool：枚举、查状态、装载 PDI</text>
+<text x="265.0" y="260" class="small" text-anchor="middle">flle-v80-mmio：读写本课寄存器</text>
+</g>
+<g class="node"><rect x="690" y="145" width="465" height="155" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+<text x="922.5" y="186" class="head" text-anchor="middle">Alveo V80</text>
+<text x="922.5" y="225" class="small" text-anchor="middle">PF0：AMI 管理功能</text>
+<text x="922.5" y="260" class="small" text-anchor="middle">PF1：用户逻辑的 PCIe 访问窗口</text>
+</g>
+<path d="M485 218 H666" class="arrow"/>
+<text x="575" y="192" class="small" text-anchor="middle">PCIe</text>
+<path d="M922 300 V356" class="arrow"/>
+<g class="node"><rect x="200" y="380" width="800" height="175" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+<text x="600.0" y="421" class="head" text-anchor="middle">PF1 BAR2 + 0x20000：本课测试寄存器</text>
+<text x="600.0" y="460" class="small" text-anchor="middle">写入 36 字节 ITCH、64 位序号和一次额度</text>
+<text x="600.0" y="495" class="small" text-anchor="middle">发出一次提交 → 保存判决和计数</text>
+<text x="600.0" y="530" class="small" text-anchor="middle">BAR 是主机访问卡上数据的一段地址窗口</text>
+</g>
+<path d="M450 555 V616" class="arrow"/>
+<g class="node"><rect x="200" y="640" width="800" height="130" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+<text x="600.0" y="681" class="head" text-anchor="middle">同一份 market_filter.sv</text>
+<text x="600.0" y="720" class="small" text-anchor="middle">输入消息 → 比较字段 → 放行 / 丢弃；命中后额度归零</text>
+</g>
+<path d="M800 640 V579" class="arrow"/>
+<text x="825" y="603" class="small" text-anchor="start">读回结果</text>
+<g class="node"><rect x="45" y="830" width="1110" height="170" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+<text x="600.0" y="871" class="head" text-anchor="middle">接通网口时，外围还需要这些电路</text>
+<text x="600.0" y="910" class="small" text-anchor="middle">Ethernet MAC / 帧缓存与解析 → 同一判断核心 → 放行帧进入 DMA</text>
+<text x="600.0" y="945" class="small" text-anchor="middle">DMA 将报文搬进主机内存；网卡驱动再把它交给 Linux</text>
+<text x="600.0" y="980" class="small" text-anchor="middle">公开 V80 base 没有这条网口通路，本课 PCIe 测试不冒充线侧收包。</text>
+</g>
+</svg>

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1380" viewBox="0 0 1200 1380" role="img" aria-labelledby="title desc">
+<title id="title">FPGA 网卡：三个真实应用</title><desc id="desc">上：Exegy/Enyx nxFeed 在 FPGA 网卡上处理 A/B 行情，通过 PCIe 交给本机策略。中：Algo-Logic CME Tick-to-Trade 商用方案用带网口的 Alveo U50，处理行情、触发并发出订单。下：微软 NSDI 2018 公开的 Azure FPGA SmartNIC，把已配置流的网络策略卸载到硬件，宿主机软件处理新流和更新规则。</desc>
+<style>text{font-family:"Noto Sans CJK SC",sans-serif}</style><defs>
+<marker id="slate" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#64748b"/></marker>
+<marker id="blue" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#2563eb"/></marker>
+<marker id="orange" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#ea580c"/></marker>
+<marker id="green" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#15803d"/></marker>
+<marker id="purple" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#7c3aed"/></marker>
+</defs>
+<rect x="0" y="0" width="1200" height="1380" rx="22" fill="white" stroke="none" stroke-width="2"/>
+<text x="36" y="54" font-size="36" fill="#0f172a" font-weight="800" text-anchor="start">FPGA 网卡：三个真实应用</text>
+<text x="36" y="95" font-size="25" fill="#64748b" font-weight="400" text-anchor="start">行情处理  ·  卡上触发交易  ·  云网络卸载</text>
+<rect x="24" y="124" width="1152" height="350" rx="20" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+<rect x="48" y="146" width="42" height="42" rx="13" fill="#2563eb" stroke="none" stroke-width="2"/>
+<text x="69" y="176" font-size="26" fill="white" font-weight="700" text-anchor="middle">1</text>
+<text x="106" y="176" font-size="29" fill="#172554" font-weight="700" text-anchor="start">Exegy / Enyx · nxFeed：先处理行情</text>
+<rect x="986" y="151" width="164" height="32" rx="16" fill="white" stroke="#bfdbfe" stroke-width="2"/>
+<text x="1068" y="174" font-size="20" fill="#2563eb" font-weight="700" text-anchor="middle">公开商用方案</text>
+<text x="50" y="216" font-size="24" fill="#334155" font-weight="400" text-anchor="start">交易策略需要行情；协议解析、筛选和建簿先交给 FPGA。</text>
+<g class="node">
+<rect x="56" y="249" width="220" height="68" rx="14" fill="white" stroke="#93c5fd" stroke-width="2"/>
+<text x="166.0" y="292" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">行情 A 路</text>
+</g>
+<g class="node">
+<rect x="56" y="339" width="220" height="68" rx="14" fill="white" stroke="#93c5fd" stroke-width="2"/>
+<text x="166.0" y="382" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">行情 B 路</text>
+</g>
+<g class="node">
+<rect x="401" y="258" width="416" height="148" rx="14" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+<text x="609.0" y="297" font-size="28" fill="#1e40af" font-weight="700" text-anchor="middle">FPGA 网卡 · nxFeed</text>
+<text x="609.0" y="339" font-size="24" fill="#1e40af" font-weight="400" text-anchor="middle">A/B 选取 · 解析 / 统一格式</text>
+<text x="609.0" y="378" font-size="24" fill="#1e40af" font-weight="400" text-anchor="middle">按证券过滤 · 建订单簿</text>
+</g>
+<g class="node">
+<rect x="944" y="287" width="202" height="90" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1045.0" y="326" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">交易应用</text>
+<text x="1045.0" y="359" font-size="22" fill="#334155" font-weight="400" text-anchor="middle">CPU 上的策略</text>
+</g>
+<path d="M288 283 H341 V303 H377" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M288 373 H341 V365 H377" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<path d="M829 332 H920" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#blue)"/>
+<text x="880" y="308" font-size="22" fill="#2563eb" font-weight="600" text-anchor="middle">PCIe</text>
+<text x="50" y="450" font-size="23" fill="#334155" font-weight="400" text-anchor="start">把处理好的行情交给本机策略，减少主机逐包解析工作。</text>
+<rect x="24" y="498" width="1152" height="348" rx="20" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
+<rect x="48" y="520" width="42" height="42" rx="13" fill="#ea580c" stroke="none" stroke-width="2"/>
+<text x="69" y="550" font-size="26" fill="white" font-weight="700" text-anchor="middle">2</text>
+<text x="106" y="550" font-size="29" fill="#172554" font-weight="700" text-anchor="start">Algo-Logic · U50：在卡上触发交易</text>
+<rect x="986" y="525" width="164" height="32" rx="16" fill="white" stroke="#fed7aa" stroke-width="2"/>
+<text x="1068" y="548" font-size="20" fill="#ea580c" font-weight="700" text-anchor="middle">公开商用方案</text>
+<text x="50" y="590" font-size="24" fill="#334155" font-weight="400" text-anchor="start">CME 期货行情进入，卡上逻辑触发并发出订单。</text>
+<text x="603" y="624" font-size="24" fill="#9a3412" font-weight="700" text-anchor="middle">Alveo U50 · 带网口的 FPGA 卡</text>
+<g class="node">
+<rect x="56" y="653" width="225" height="100" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="168.5" y="695" font-size="28" fill="#334155" font-weight="700" text-anchor="middle">CME 行情</text>
+<text x="168.5" y="731" font-size="24" fill="#334155" font-weight="400" text-anchor="middle">以太网输入</text>
+</g>
+<g class="node">
+<rect x="395" y="640" width="416" height="135" rx="14" fill="#ffedd5" stroke="#fb923c" stroke-width="2"/>
+<text x="603.0" y="674" font-size="25" fill="#9a3412" font-weight="700" text-anchor="middle">读行情 · 更新订单簿</text>
+<text x="603.0" y="714" font-size="25" fill="#9a3412" font-weight="700" text-anchor="middle">按条件触发</text>
+<text x="603.0" y="754" font-size="25" fill="#9a3412" font-weight="700" text-anchor="middle">编码订单 · 从网口发出</text>
+</g>
+<g class="node">
+<rect x="947" y="653" width="198" height="100" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1046.0" y="695" font-size="28" fill="#334155" font-weight="700" text-anchor="middle">交易所</text>
+<text x="1046.0" y="731" font-size="24" fill="#334155" font-weight="400" text-anchor="middle">接收订单</text>
+</g>
+<path d="M293 703 H371" fill="none" stroke="#ea580c" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#orange)"/>
+<path d="M823 703 H923" fill="none" stroke="#ea580c" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#orange)"/>
+<text x="50" y="820" font-size="23" fill="#334155" font-weight="400" text-anchor="start">Tick-to-Trade：从收到行情到发出订单；主机通过 API 配置系统。</text>
+<rect x="24" y="870" width="1152" height="444" rx="20" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="2"/>
+<rect x="48" y="892" width="42" height="42" rx="13" fill="#15803d" stroke="none" stroke-width="2"/>
+<text x="69" y="922" font-size="26" fill="white" font-weight="700" text-anchor="middle">3</text>
+<text x="106" y="922" font-size="29" fill="#172554" font-weight="700" text-anchor="start">Microsoft Azure：卸载虚拟网络处理</text>
+<rect x="986" y="897" width="164" height="32" rx="16" fill="white" stroke="#bbf7d0" stroke-width="2"/>
+<text x="1068" y="920" font-size="20" fill="#15803d" font-weight="700" text-anchor="middle">云平台部署</text>
+<text x="50" y="962" font-size="24" fill="#334155" font-weight="400" text-anchor="start">把虚拟网络的逐包处理从宿主机 CPU 搬到硬件。</text>
+<g class="node">
+<rect x="56" y="1032" width="245" height="110" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="178.5" y="1074" font-size="28" fill="#334155" font-weight="700" text-anchor="middle">网络报文</text>
+<text x="178.5" y="1112" font-size="22" fill="#334155" font-weight="400" text-anchor="middle">已配置流的快路径</text>
+</g>
+<g class="node">
+<rect x="441" y="1008" width="330" height="138" rx="14" fill="#dcfce7" stroke="#4ade80" stroke-width="2"/>
+<text x="606.0" y="1045" font-size="28" fill="#166534" font-weight="700" text-anchor="middle">FPGA SmartNIC</text>
+<text x="606.0" y="1086" font-size="24" fill="#166534" font-weight="400" text-anchor="middle">隧道 / 地址转换</text>
+<text x="606.0" y="1123" font-size="24" fill="#166534" font-weight="400" text-anchor="middle">访问控制等网络策略</text>
+</g>
+<g class="node">
+<rect x="927" y="1032" width="217" height="110" rx="14" fill="white" stroke="#cbd5e1" stroke-width="2"/>
+<text x="1035.5" y="1074" font-size="27" fill="#334155" font-weight="700" text-anchor="middle">虚拟机 VM</text>
+<text x="1035.5" y="1112" font-size="24" fill="#334155" font-weight="400" text-anchor="middle">运行应用</text>
+</g>
+<path d="M313 1087 H417" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<path d="M783 1087 H903" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#green)"/>
+<text x="850" y="1063" font-size="22" fill="#15803d" font-weight="600" text-anchor="middle">经 NIC</text>
+<g class="node">
+<rect x="441" y="1200" width="330" height="72" rx="14" fill="white" stroke="#86efac" stroke-width="2"/>
+<text x="606.0" y="1234" font-size="24" fill="#166534" font-weight="700" text-anchor="middle">宿主机软件</text>
+<text x="606.0" y="1262" font-size="22" fill="#166534" font-weight="400" text-anchor="middle">处理新流 · 更新规则</text>
+</g>
+<path d="M606 1188 V1170" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#green)"/>
+<text x="800" y="1245" font-size="23" fill="#166534" font-weight="400" text-anchor="start">为快路径配置动作</text>
+<text x="50" y="1294" font-size="23" fill="#334155" font-weight="400" text-anchor="start">微软 NSDI 2018 公开部署论文；图示当年的 FPGA 架构。</text>
+<text x="36" y="1355" font-size="22" fill="#64748b" font-weight="400" text-anchor="start">机制示意 · 原始出处见正文 · 不代表本课实测性能</text>
+</svg>

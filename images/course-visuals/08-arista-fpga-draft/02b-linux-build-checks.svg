@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1800" viewBox="0 0 1200 1800" role="img" aria-labelledby="title desc"><title id="title">3.1—3.5：电路怎么测试，额度由谁发出</title><desc id="desc">3.1编译四份电路源码和测试台，输出filter.vvp。3.2由测试台自己发额度并验证实际策略丢弃；3.3另行测试Python管理程序与模拟设备。真机上Python经BVL管理接口访问control_regs，后者发出arm信号，由drop_once保存一次额度。3.4和3.5分别综合过滤及控制接口源码。虚线表示仿真与综合使用同一份电路源码；板级构建继续使用这些源码生成PDI。</desc><defs><marker id="arrow" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#475569"/></marker></defs><rect width="1200" height="1800" fill="white"/><g font-family="Noto Sans CJK SC, sans-serif" fill="#172554">
+<text x="40" y="52" font-size="34" fill="#172554" font-weight="700">3.1—3.5：电路怎么测试，额度由谁发出</text>
+<text x="40" y="94" font-size="24" fill="#172554" font-weight="400">先分别检查电路和管理程序；真机上，两者再通过寄存器接口配合。</text>
+<text x="40" y="132" font-size="23" fill="#475569" font-weight="400">实线：输入或发令方向　　虚线：仿真与综合使用同一份电路源码</text>
+<g class="node" data-stage="3.1">
+<rect x="40" y="160" width="1120" height="246" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="65" y="205" font-size="28" fill="#2563eb" font-weight="700">3.1 编译仿真试验台：电路源码中已经包含过滤策略</text>
+<text x="65" y="252" font-size="24" fill="#172554" font-weight="400">frame_filter.sv（过滤通路）</text>
+<text x="625" y="252" font-size="24" fill="#172554" font-weight="400">drop_once.sv（一次额度）</text>
+<text x="65" y="289" font-size="24" fill="#172554" font-weight="400">nvda_match.sv（字段匹配）</text>
+<text x="625" y="289" font-size="24" fill="#172554" font-weight="400">control_regs.sv（控制接口）</text>
+<text x="65" y="336" font-size="24" fill="#172554" font-weight="400">加上 filter_tb.sv（测试台），交给 Icarus / iverilog 编译。</text>
+<text x="65" y="381" font-size="25" fill="#2563eb" font-weight="700">输出：filter.vvp（包含过滤电路与测试台的仿真程序）</text>
+</g>
+<path d="M310,406 L310,452" data-target="310,476" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="647" y="450" font-size="23" fill="#7c3aed" font-weight="400">独立运行的一套 Python 测试</text>
+<g class="node" data-stage="3.2">
+<rect x="65" y="476" width="510" height="320" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="87" y="524" font-size="27" fill="#2563eb" font-weight="700">3.2 运行电路行为测试</text>
+<text x="87" y="568" font-size="23" fill="#172554" font-weight="400">输入：filter.vvp</text>
+<text x="87" y="602" font-size="23" fill="#172554" font-weight="400">发令者：filter_tb.sv（测试台）</text>
+<text x="87" y="636" font-size="23" fill="#172554" font-weight="400">先查无额度放行，再发额度查丢弃</text>
+<text x="87" y="670" font-size="23" fill="#172554" font-weight="400">测试台自己发额度，仿真实际丢2帧</text>
+<path d="M85,708 H555" stroke="#2563eb" stroke-width="1"/>
+<text x="87" y="742" font-size="24" fill="#2563eb" font-weight="700">simulation.log</text>
+<text x="87" y="773" font-size="21" fill="#172554" font-weight="400">22 帧：17 转发 + 2 策略丢弃 + 3 错误</text>
+</g>
+<g class="node" data-stage="3.3">
+<rect x="625" y="476" width="510" height="320" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+<text x="647" y="524" font-size="27" fill="#7c3aed" font-weight="700">3.3 单测管理“发令枪”</text>
+<text x="647" y="568" font-size="23" fill="#172554" font-weight="400">filter_control.py（管理发令程序）</text>
+<text x="647" y="602" font-size="23" fill="#172554" font-weight="400">工具：Python unittest</text>
+<text x="647" y="636" font-size="23" fill="#172554" font-weight="400">向 FakeHardware（模拟设备）发令</text>
+<text x="647" y="670" font-size="23" fill="#172554" font-weight="400">核对命令、重复请求和装载等待</text>
+<path d="M645,708 H1115" stroke="#7c3aed" stroke-width="1"/>
+<text x="647" y="742" font-size="24" fill="#7c3aed" font-weight="700">management.log</text>
+<text x="647" y="773" font-size="21" fill="#172554" font-weight="400">16 项测试：单独验证 Python 管理程序</text>
+</g>
+<rect x="40" y="850" width="1120" height="255" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="65" y="895" font-size="27" fill="#172554" font-weight="700">真机上的发令路径（第7—8步部署后）</text>
+<g class="node">
+<rect x="65" y="925" width="310" height="110" rx="14" fill="#ffffff" stroke="#64748b" stroke-width="2"/>
+<text x="85" y="967" font-size="26" fill="#172554" font-weight="700">filter_control.py</text>
+<text x="85" y="1009" font-size="23" fill="#172554" font-weight="400">Python 管理程序（CPU）</text>
+</g>
+<g class="node">
+<rect x="445" y="925" width="310" height="110" rx="14" fill="#ffffff" stroke="#64748b" stroke-width="2"/>
+<text x="465" y="967" font-size="26" fill="#172554" font-weight="700">control_regs.sv</text>
+<text x="465" y="1009" font-size="23" fill="#172554" font-weight="400">命令变成 arm / disarm</text>
+</g>
+<g class="node">
+<rect x="825" y="925" width="310" height="110" rx="14" fill="#ffffff" stroke="#64748b" stroke-width="2"/>
+<text x="845" y="967" font-size="26" fill="#172554" font-weight="700">drop_once.sv</text>
+<text x="845" y="1009" font-size="23" fill="#172554" font-weight="400">保存、消耗一次额度</text>
+</g>
+<path d="M375,980 L421,980" data-target="445,980" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M755,980 L801,980" data-target="825,980" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="65" y="1080" font-size="23" fill="#172554" font-weight="400">经BVL管理接口写入寄存器；匹配＋额度 → 策略丢弃一次，额度归零。</text>
+<rect x="40" y="1130" width="1120" height="354" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="65" y="1169" font-size="25" fill="#172554" font-weight="700">从同一份 .sv 源码，分别生成两部分的通用接线图</text>
+<g class="node" data-stage="3.4">
+<rect x="65" y="1190" width="510" height="270" rx="14" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+<text x="87" y="1238" font-size="27" fill="#c2410c" font-weight="700">3.4 综合过滤电路</text>
+<text x="87" y="1282" font-size="23" fill="#172554" font-weight="400">frame_filter.sv + nvda_match.sv</text>
+<text x="87" y="1316" font-size="23" fill="#172554" font-weight="400">+ drop_once.sv（过滤与额度电路）</text>
+<text x="87" y="1350" font-size="23" fill="#172554" font-weight="400">工具：Yosys</text>
+<path d="M85,1372 H555" stroke="#c2410c" stroke-width="1"/>
+<text x="87" y="1406" font-size="24" fill="#c2410c" font-weight="700">frame-filter-netlist.json</text>
+<text x="87" y="1437" font-size="21" fill="#172554" font-weight="400">通用逻辑连接关系；第5步再针对芯片构建</text>
+</g>
+<g class="node" data-stage="3.5">
+<rect x="625" y="1190" width="510" height="270" rx="14" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+<text x="647" y="1238" font-size="27" fill="#c2410c" font-weight="700">3.5 综合控制接口电路</text>
+<text x="647" y="1282" font-size="23" fill="#172554" font-weight="400">control_regs.sv（硬件寄存器接口）</text>
+<text x="647" y="1316" font-size="23" fill="#172554" font-weight="400">接收发令，向过滤电路发出 arm 信号</text>
+<text x="647" y="1350" font-size="23" fill="#172554" font-weight="400">工具：Yosys</text>
+<path d="M645,1372 H1115" stroke="#c2410c" stroke-width="1"/>
+<text x="647" y="1406" font-size="24" fill="#c2410c" font-weight="700">control-regs-netlist.json</text>
+<text x="647" y="1437" font-size="21" fill="#172554" font-weight="400">硬件寄存器接口：接收命令、返回状态</text>
+</g>
+<path d="M40,300 L20,300 L20,1325 L41,1325" data-target="65,1325" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="9 7" stroke-dashoffset="10"/>
+<path d="M1160,300 L1180,300 L1180,1325 L1159,1325" data-target="1135,1325" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)" stroke-dasharray="9 7" stroke-dashoffset="10"/>
+<path d="M600,1484 L600,1506" data-target="600,1530" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<g class="node">
+<rect x="40" y="1530" width="1120" height="220" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="65" y="1574" font-size="27" fill="#2563eb" font-weight="700">第4—5步：在开发机接板卡工程、构建器件镜像</text>
+<text x="65" y="1614" font-size="23" fill="#172554" font-weight="400">输入：已验证的 .sv 源码 + 完整 BVL 工程、配套 Vivado 与许可</text>
+<text x="65" y="1651" font-size="23" fill="#172554" font-weight="400">Vivado：资源映射 → 布局 → 布线 → 生成 .pdi</text>
+<text x="65" y="1688" font-size="23">JSON 用于检查逻辑连接；.pdi 用于配置 FPGA 中的电路。</text>
+<text x="65" y="1725" font-size="23">构建在开发机上完成；第7—8步连接真机，装载并实测。</text>
+</g>
+<text x="40" y="1788" font-size="22" fill="#475569" font-weight="400">每一步的完整文本日志自动保存在 .111，便于课后复查。</text>
+</g></svg>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="990" viewBox="0 0 1200 990" role="img"><title>代码怎样找到 NVDA：从字节位置到比较电路</title><defs>
+<marker id="m2563eb" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#2563eb"/></marker>
+<marker id="m7e22ce" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#7e22ce"/></marker>
+<marker id="mc2410c" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#c2410c"/></marker>
+<marker id="m475569" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#475569"/></marker>
+</defs><g font-family="Noto Sans CJK SC, sans-serif">
+<rect width="1200" height="990" fill="white"/>
+<text x="36" y="51" font-size="32" fill="#172554" font-weight="700" text-anchor="start">代码怎样找到 NVDA：从字节位置到比较电路</text>
+<text x="40" y="102" font-size="21" fill="#172554" font-weight="400" text-anchor="start">固定教学格式：无 VLAN，IPv4 无选项，一包一条 Type A；共 100 字节（不含 FCS）。</text>
+<g class="node">
+<rect x="40" y="140" width="170" height="100" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="125.0" y="176" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">Ethernet</text>
+<text x="125.0" y="209" font-size="22" fill="#172554" font-weight="400" text-anchor="middle">0–13</text>
+</g>
+<g class="node">
+<rect x="224" y="140" width="180" height="100" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="314.0" y="176" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">IPv4</text>
+<text x="314.0" y="209" font-size="22" fill="#172554" font-weight="400" text-anchor="middle">14–33</text>
+</g>
+<g class="node">
+<rect x="418" y="140" width="140" height="100" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="488.0" y="176" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">UDP</text>
+<text x="488.0" y="209" font-size="22" fill="#172554" font-weight="400" text-anchor="middle">34–41</text>
+</g>
+<g class="node">
+<rect x="572" y="140" width="235" height="100" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="689.5" y="176" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">MoldUDP64</text>
+<text x="689.5" y="209" font-size="22" fill="#172554" font-weight="400" text-anchor="middle">42–61</text>
+</g>
+<g class="node">
+<rect x="821" y="140" width="135" height="100" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="888.5" y="176" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">长度</text>
+<text x="888.5" y="209" font-size="22" fill="#172554" font-weight="400" text-anchor="middle">62–63</text>
+</g>
+<g class="node">
+<rect x="970" y="140" width="190" height="100" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="1065.0" y="176" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">ITCH</text>
+<text x="1065.0" y="209" font-size="22" fill="#172554" font-weight="400" text-anchor="middle">64–99</text>
+</g>
+<rect x="40" y="282" width="1120" height="165" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="60" y="319" font-size="25" fill="#172554" font-weight="700" text-anchor="start">octet(prefix, n)：取出第 n 个网络字节</text>
+<g class="node">
+<rect x="65" y="343" width="280" height="76" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="205.0" y="379" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">prefix[n*8 +: 8]</text>
+</g>
+<g class="node">
+<rect x="460" y="343" width="280" height="76" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="600.0" y="379" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">{高字节, 低字节}</text>
+</g>
+<g class="node">
+<rect x="855" y="343" width="280" height="76" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="995.0" y="379" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">还原网络序数值</text>
+</g>
+<polyline points="345,380 436.0,380.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<polyline points="740,380 831.0,380.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<g class="node">
+<rect x="40" y="505" width="345" height="112" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="212.5" y="541" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">消息类型</text>
+<text x="212.5" y="574" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">字节 64 == 0x41（A）</text>
+</g>
+<g class="node">
+<rect x="40" y="652" width="345" height="112" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="212.5" y="688" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">证券索引</text>
+<text x="212.5" y="721" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">字节 65–66 == 8095</text>
+</g>
+<g class="node">
+<rect x="40" y="799" width="345" height="112" rx="11" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="212.5" y="835" font-size="25" fill="#2563eb" font-weight="700" text-anchor="middle">股票代码</text>
+<text x="212.5" y="868" font-size="19" fill="#172554" font-weight="400" text-anchor="middle">字节 88–95 == NVDA＋4空格</text>
+</g>
+<g class="node">
+<rect x="825" y="605" width="330" height="152" rx="11" fill="#f3e8ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="990.0" y="641" font-size="25" fill="#7e22ce" font-weight="700" text-anchor="middle">三个字段同时成立</text>
+<text x="990.0" y="674" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">再合并地址 / 长度检查</text>
+<text x="990.0" y="703" font-size="21" fill="#172554" font-weight="400" text-anchor="middle">得到 match_nvda</text>
+</g>
+<polyline points="385,562 640,562 640,641 801.0,641.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<polyline points="385,707 801.0,707.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<polyline points="385,853 695,853 695,749 801.0,749.0" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#m2563eb)"/>
+<text x="800" y="821" font-size="23" fill="#172554" font-weight="400" text-anchor="start">序号：字节 52–59</text>
+<text x="800" y="858" font-size="21" fill="#172554" font-weight="400" text-anchor="start">记录丢包，不参与股票匹配。</text>
+<text x="36" y="965" font-size="19" fill="#64748b" font-weight="400" text-anchor="start">数字是本课固定封装下的帧内字节偏移；换 VLAN、IP 选项或多消息包需重新解析。</text>
+</g></svg>

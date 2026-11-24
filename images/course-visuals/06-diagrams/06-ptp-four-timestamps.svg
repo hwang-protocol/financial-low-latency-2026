@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">四个时刻怎样算出钟差</title>
+  <desc id="desc">IEEE 1588 工作组示例。Follow_Up 虚线到达后，学员右边标出已有 t2=4050 ns 和 t1=1000 ns。Delay_Resp 虚线到达后，学员右边标出已有 t3=305000 ns 和 t4=302050 ns。底栏用公式算出路延 50 ns、钟差 3000 ns。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 12 12">
+      <path d="M0 0 L12 6 L0 12 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill:#0f172a; }
+      .title { font-size:30px; font-weight:900; }
+      .sub { font-size:20px; fill:#475569; }
+      .heading { font-size:24px; font-weight:800; }
+      .body { font-size:21px; }
+      .muted { font-size:18px; fill:#475569; }
+      .msg { font-size:20px; font-weight:700; text-anchor:middle; }
+      .flow { fill:none; stroke:#334155; stroke-width:2.5; stroke-linecap:butt; marker-end:url(#arrow); }
+      .note-flow { fill:none; stroke:#334155; stroke-width:2.5; stroke-linecap:butt; stroke-dasharray:8 6; marker-end:url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="800" rx="20" fill="#fff"/>
+  <text class="title" x="600" y="40" text-anchor="middle">四个时刻怎样算出钟差</text>
+  <text class="sub" x="600" y="70" text-anchor="middle">IEEE 1588 工作组示例 · 虚线到达后，右边标出学员已经拥有的数</text>
+
+  <rect x="40" y="82" width="1120" height="40" rx="12" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text class="body" x="600" y="109" text-anchor="middle">Announce · UDP 320 · 裁判举牌：这场用我的表</text>
+
+  <rect x="40" y="136" width="268" height="410" rx="16" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text class="heading" x="174" y="168" text-anchor="middle">7150 裁判</text>
+  <text class="muted" x="174" y="192" text-anchor="middle">Master 的表</text>
+
+  <rect x="892" y="136" width="268" height="410" rx="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text class="heading" x="1026" y="168" text-anchor="middle">.2 学员</text>
+  <text class="muted" x="1026" y="192" text-anchor="middle">Slave 的表</text>
+
+  <rect x="56" y="208" width="236" height="68" rx="12" fill="#fff" stroke="#2563eb"/>
+  <text class="heading" x="174" y="236" text-anchor="middle">t1 = 1000 ns</text>
+  <text class="muted" x="174" y="262" text-anchor="middle">开枪记下</text>
+
+  <rect x="908" y="208" width="236" height="68" rx="12" fill="#fff" stroke="#0891b2"/>
+  <text class="heading" x="1026" y="236" text-anchor="middle">t2 = 4050 ns</text>
+  <text class="muted" x="1026" y="262" text-anchor="middle">听见记下</text>
+
+  <path class="flow" d="M320 242 H868"/>
+  <text class="msg" x="600" y="228">Sync · UDP 319 · 发令枪响</text>
+
+  <rect x="908" y="288" width="236" height="68" rx="12" fill="#fef9c3" stroke="#ca8a04"/>
+  <text class="heading" x="1026" y="316" text-anchor="middle">已有 t2、t1</text>
+  <text class="muted" x="1026" y="342" text-anchor="middle">4050 ns · 1000 ns</text>
+
+  <path class="note-flow" d="M320 322 H868"/>
+  <text class="msg" x="600" y="308">Follow_Up · UDP 320 · 纸条送来 t1</text>
+
+  <rect x="56" y="368" width="236" height="68" rx="12" fill="#fff" stroke="#2563eb"/>
+  <text class="heading" x="174" y="396" text-anchor="middle">t4 = 302050 ns</text>
+  <text class="muted" x="174" y="422" text-anchor="middle">听见记下</text>
+
+  <rect x="908" y="368" width="236" height="68" rx="12" fill="#fff" stroke="#0891b2"/>
+  <text class="heading" x="1026" y="396" text-anchor="middle">t3 = 305000 ns</text>
+  <text class="muted" x="1026" y="422" text-anchor="middle">回喊记下</text>
+
+  <path class="flow" d="M880 402 H332"/>
+  <text class="msg" x="600" y="388">Delay_Req · UDP 319 · 学员回喊</text>
+
+  <rect x="908" y="448" width="236" height="68" rx="12" fill="#fef9c3" stroke="#ca8a04"/>
+  <text class="heading" x="1026" y="476" text-anchor="middle">已有 t3、t4</text>
+  <text class="muted" x="1026" y="502" text-anchor="middle">305000 ns · 302050 ns</text>
+
+  <path class="note-flow" d="M320 482 H868"/>
+  <text class="msg" x="600" y="468">Delay_Resp · UDP 320 · 纸条送来 t4</text>
+
+  <rect x="40" y="560" width="1120" height="220" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="heading" x="60" y="598">四个时刻已知，假设去、回程路延相等</text>
+  <text class="body" x="60" y="638">路延 = [(t2 - t1) + (t4 - t3)] / 2 = [3050 + (-2950)] / 2 = 50 ns</text>
+  <text class="body" x="60" y="678">钟差 = (t2 - t1) - 路延 = 3050 - 50 = 3000 ns</text>
+  <text class="body" x="60" y="718">例子中学员的表快 3000 ns；ptp4l 据钟差持续校准网卡 PHC。</text>
+  <text class="muted" x="60" y="756">实线是枪响和回喊；虚线是纸条。黄色框是纸条到达后学员已经拥有的数。</text>
+</svg>

@@ -1,0 +1,27 @@
+%% 第08章导航。组间纵向、组内横向；虚线表示迁移到另一设备平台。
+%% SVG 由 Mermaid 10.9.3 渲染；导出时统一箭头并保留框外间隙。
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Noto Sans CJK SC, sans-serif","fontSize":"20px","primaryColor":"#eef2ff","primaryBorderColor":"#4f46e5","primaryTextColor":"#312e81","lineColor":"#64748b","clusterBkg":"#f8fafc","clusterBorder":"#cbd5e1"},"flowchart":{"htmlLabels":false,"curve":"linear","nodeSpacing":24,"rankSpacing":48,"padding":18}}}%%
+flowchart TB
+  subgraph G1["认识电路与设备"]
+    direction LR
+    N11["1.1 认识FPGA<br/>判断与状态"] --> N12["1.2 选择设备<br/>芯片与工具"]
+  end
+  subgraph G2["准备开发工具"]
+    direction LR
+    N21["2.1 安装Vivado<br/>备齐工具"] --> N22["2.2 导入许可<br/>工具与IP"] --> N23["2.3 确认环境<br/>进入欢迎页"]
+  end
+  subgraph G3["U250：接入与构建"]
+    direction LR
+    N31["3.1 创建工程<br/>取得基础连接"] --> N32["3.2 接入代码<br/>串起过滤模块"] --> N33["3.3 运行仿真<br/>核对处理行为"] --> N34["3.4 综合电路<br/>生成电路网表"]
+  end
+  subgraph G4["U250：实现与验证"]
+    direction LR
+    N35["3.5 实现与检查<br/>布局布线时序"] --> N36["3.6 生成配置<br/>取得.bit文件"] --> N37["3.7 连接板卡<br/>装载FPGA"] --> N38["3.8 验证与恢复<br/>报文计数对账"]
+  end
+  subgraph G5["交换机：适配与部署"]
+    direction LR
+    N41["4.1 比较平台<br/>换接口与产物"] --> N42["4.2 接入厂商工程<br/>连接业务模块"] --> N43["4.3 生成应用包<br/>.pdi到.swix"] --> N44["4.4 装载与接线<br/>接通网口路径"] --> N45["4.5 验证与恢复<br/>核对一次丢包"]
+  end
+  G1 --> G2 --> G3 --> G4 -.-> G5
+  classDef task fill:#eef2ff,stroke:#4f46e5,stroke-width:1.6px,color:#312e81
+  class N11,N12,N21,N22,N23,N31,N32,N33,N34,N35,N36,N37,N38,N41,N42,N43,N44,N45 task

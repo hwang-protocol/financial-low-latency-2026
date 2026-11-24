@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="590" viewBox="0 0 1200 590" role="img" aria-labelledby="title desc">
+<title id="title">官方 DMF：多点打戳，集中分析</title><desc id="desc">官方方案示意。生产观察点 A 和 B 的副本进入已通过 PTP 对时的 DMF 入口交换机，记录入口时间和来源。带戳副本送到 Service Node，由 Flow Diff 匹配同一包并计算差值，Analytics Node 展示延迟和丢包统计。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 12 12"><path d="M0 0 L12 6 L0 12 Z" fill="#334155"/></marker><style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a;text-anchor:middle;}.flow{fill:none;stroke:#334155;stroke-width:2.5;stroke-linecap:butt;marker-end:url(#arrow);}</style></defs>
+<rect width="1200" height="590" rx="20" fill="#fff"/>
+<text x="600" y="52" font-size="33" font-weight="800" style="fill:#0f172a">官方 DMF：多点打戳，集中分析</text>
+<text x="600" y="96" font-size="22" font-weight="400" style="fill:#475569">生产观察点取副本 → 监控入口打戳 → 服务节点配对计算</text>
+<rect x="35" y="192" width="245" height="86" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="157.5" y="227" font-size="25" font-weight="800" style="fill:#0f172a">生产观察点 A</text>
+<text x="157.5" y="258" font-size="20" font-weight="400" style="fill:#475569">SPAN / 物理 TAP 副本</text>
+<path class="flow" d="M292 235 H366"/>
+<rect x="35" y="372" width="245" height="86" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="157.5" y="407" font-size="25" font-weight="800" style="fill:#0f172a">生产观察点 B</text>
+<text x="157.5" y="438" font-size="20" font-weight="400" style="fill:#475569">同一业务的下游观察点</text>
+<path class="flow" d="M292 415 H366"/>
+<rect x="390" y="169" width="300" height="305" rx="14" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+<text x="540" y="209" font-size="27" font-weight="800" style="fill:#0f172a">DMF 入口交换机</text>
+<text x="540" y="258" font-size="23" font-weight="400" style="fill:#0f172a">记录 T_A + 来源 A</text>
+<text x="540" y="339" font-size="23" font-weight="400" style="fill:#0f172a">记录 T_B + 来源 B</text>
+<text x="540" y="432" font-size="22" font-weight="400" style="fill:#475569">由 PTP 统一时间基准</text>
+<path class="flow" d="M702 239 H846"/>
+<text x="774" y="212" font-size="21" font-weight="400" style="fill:#475569">带戳副本</text>
+<rect x="870" y="169" width="295" height="151" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="1017.5" y="207" font-size="27" font-weight="800" style="fill:#0f172a">Service Node</text>
+<text x="1017.5" y="250" font-size="22" font-weight="400" style="fill:#0f172a">Flow Diff 匹配同一包</text>
+<text x="1017.5" y="292" font-size="24" font-weight="800" style="fill:#0f172a">计算 T_B − T_A</text>
+<path class="flow" d="M1017.5 332 V368"/>
+<text x="1100" y="357" font-size="20" font-weight="400" style="fill:#475569">统计结果</text>
+<rect x="870" y="392" width="295" height="106" rx="14" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+<text x="1017.5" y="431" font-size="26" font-weight="800" style="fill:#0f172a">Analytics Node</text>
+<text x="1017.5" y="474" font-size="22" font-weight="400" style="fill:#0f172a">展示延迟与丢包统计</text>
+<text x="600" y="556" font-size="21" font-weight="400" style="fill:#475569">图中线路传送监控副本；业务原帧沿生产网络转发。</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">交换机延迟的四种 bit 边界</title>
+  <desc id="desc">用输入首尾 bit 与输出首尾 bit 定义 FIFO、FILO、LILO、LIFO，并说明 cut-through 的起步时刻与整帧可比口径。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#ecfeff"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0891b2"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:34px;font-weight:850}.sub{font-size:18px;fill:#475569}.label{font-size:18px;font-weight:800}.body{font-size:17px}.small{font-size:15px;fill:#475569}.rail{stroke:#94a3b8;stroke-width:4}.tick{stroke:#334155;stroke-width:3}.span{stroke:#0891b2;stroke-width:5;fill:none;marker-end:url(#arrow)}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}</style>
+  </defs>
+  <rect width="1200" height="720" rx="26" fill="url(#bg)"/>
+  <text class="t h" x="48" y="60">先问“从哪一 bit 到哪一 bit”，再谈 350 ns</text>
+  <text class="t sub" x="48" y="94">同一台交换机，起止点不同，数字回答的问题就不同；未写口径的延迟不能直接比较。</text>
+
+  <rect class="card" x="48" y="128" width="1104" height="258" rx="18"/>
+  <text class="t label" x="76" y="166">一帧穿过被测设备（DUT）的四个事件</text>
+  <line class="rail" x1="110" y1="238" x2="1090" y2="238"/>
+  <line class="tick" x1="170" y1="216" x2="170" y2="260"/><text class="t body" x="170" y="198" text-anchor="middle">输入首 bit</text><text class="t small" x="170" y="284" text-anchor="middle">FI</text>
+  <line class="tick" x1="430" y1="216" x2="430" y2="260"/><text class="t body" x="430" y="198" text-anchor="middle">输出首 bit</text><text class="t small" x="430" y="284" text-anchor="middle">FO</text>
+  <line class="tick" x1="735" y1="216" x2="735" y2="260"/><text class="t body" x="735" y="198" text-anchor="middle">输入尾 bit</text><text class="t small" x="735" y="284" text-anchor="middle">LI</text>
+  <line class="tick" x1="1030" y1="216" x2="1030" y2="260"/><text class="t body" x="1030" y="198" text-anchor="middle">输出尾 bit</text><text class="t small" x="1030" y="284" text-anchor="middle">LO</text>
+  <path class="span" d="M170 306H430"/><text class="t label" x="300" y="334" text-anchor="middle" fill="#0e7490">FIFO：看何时开始出</text>
+  <path class="span" d="M170 350H1030"/><text class="t label" x="720" y="378" text-anchor="middle" fill="#0e7490">FILO：看整帧何时出完</text>
+
+  <rect x="48" y="398" width="535" height="238" rx="18" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text class="t label" x="76" y="438" fill="#155e75">读 cut-through 的“起步优势”</text>
+  <text class="t body" x="76" y="478">FIFO：输入首 bit → 输出首 bit</text>
+  <text class="t body" x="76" y="512">适合问：交换机读到足够帧头后，多快开始发送？</text>
+  <text class="t small" x="76" y="552">它不含整帧序列化完成时间；FPGA 能边收边处理时尤其有意义。</text>
+  <rect x="76" y="577" width="475" height="38" rx="10" fill="#cffafe"/><text class="t label" x="313" y="603" text-anchor="middle" fill="#155e75">开始发得早 ≠ 整帧已经离开</text>
+
+  <rect x="617" y="398" width="535" height="238" rx="18" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+  <text class="t label" x="645" y="438" fill="#5b21b6">跨设备做“整帧可比”</text>
+  <text class="t body" x="645" y="478">RFC 8238：数据中心基准比较使用 FILO</text>
+  <text class="t body" x="645" y="512">输入首 bit → 输出尾 bit，包含 DUT + 整帧序列化。</text>
+  <text class="t small" x="645" y="552">必须同时固定帧长，并在报告中写明事件组合。</text>
+  <rect x="645" y="577" width="475" height="38" rx="10" fill="#ede9fe"/><text class="t label" x="882" y="603" text-anchor="middle" fill="#5b21b6">LIFO 可能为负，不用于横向比较</text>
+
+  <rect x="48" y="662" width="1104" height="36" rx="10" fill="#0f2742"/>
+  <text x="600" y="687" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="17" font-weight="800" fill="#fff">面试收口：厂商值、测试仪值、订单 RTT 只有起止点相同，才是同一把尺。</text>
+</svg>

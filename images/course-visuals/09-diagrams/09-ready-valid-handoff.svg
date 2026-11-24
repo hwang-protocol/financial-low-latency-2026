@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1450" viewBox="0 0 1200 1450" role="img" aria-labelledby="title desc">
+<title id="title">C++ 收发原始报文，RTL 模型提供判决并保存额度</title>
+<desc id="desc">当前软件仿真的同一个程序里，原始报文从手写C++接收进入缓冲区，按模型返回的判决发送或丢弃。模型读取36字节消息副本和序号，不转发原始报文。复位结束后，只有valid和ready同时为1，才在时钟上升沿接受消息、保存判决和更新模型内部的remaining_drops与drop_count。ready直接由是否写配置决定，不是由时钟沿更新的寄存器。</desc>
+<defs><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="0" refY="9" orient="auto-start-reverse"><path d="M0 0L18 9L0 18Z" fill="context-stroke"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC',sans-serif;fill:#0f172a}.title{font-size:32px;font-weight:700}.head{font-size:27px;font-weight:700}.body{font-size:24px}.small{font-size:21px;fill:#475569}.bold{font-weight:700}.purple{fill:#6b21a8}.blue{fill:#1d4ed8}.orange{fill:#b45309}.red{fill:#b91c1c}.green{fill:#15803d}.line{fill:none;stroke-width:2.5;stroke-linecap:butt;marker-end:url(#arrow)}</style>
+<rect width="1200" height="1450" rx="20" fill="#f8fafc"/>
+<text x="40" y="50" class="title">原始报文由 C++ 收发，RTL 模型负责判断</text>
+<text x="40" y="89" class="body">蓝色看报文去向，紫色看判决与额度，橙色看何时更新。</text>
+<rect x="30" y="115" width="1140" height="1270" rx="18" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="55" y="151" class="small">当前软件仿真：.2 上同一个程序，内部只有一个过滤模型对象。</text>
+
+<rect x="55" y="175" width="1090" height="270" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="78" y="218" class="head blue">手写 C++ 收发代码：原始报文一直保存在这里</text>
+<rect x="75" y="260" width="210" height="145" rx="10" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="94" y="300" class="body bold">① 接收网络报文</text>
+<text x="94" y="344" class="body">recvfrom</text>
+<text x="94" y="381" class="small">检查来源与格式</text>
+<rect x="350" y="260" width="350" height="145" rx="10" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="373" y="300" class="body bold">② 缓冲区保存原始报文</text>
+<text x="373" y="342" class="body">复制消息内容给模型判断</text>
+<text x="373" y="380" class="small">等待判决后，再执行右侧动作</text>
+<rect x="785" y="260" width="340" height="145" rx="10" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="805" y="300" class="body bold">③ 按判决处理原始报文</text>
+<text x="805" y="344" class="body green">放行：sendto 发出原报文</text>
+<text x="805" y="381" class="body red">丢弃：跳过发送</text>
+<path d="M285 330H320" class="line" stroke="#2563eb"/>
+<path d="M700 330H755" class="line" stroke="#2563eb"/>
+
+<path d="M445 405V620" class="line" stroke="#2563eb"/>
+<text x="115" y="494" class="body blue">消息与其它输入</text>
+<text x="115" y="532" class="small">36 字节消息副本 + 包序号</text>
+<text x="115" y="568" class="small">配置 + 模拟 clk</text>
+<text x="95" y="607" class="body blue">C++ 设置 s_valid = 1</text>
+<text x="465" y="598" class="small">原始报文仍留在上方缓冲区</text>
+<path d="M965 650V435" class="line" stroke="#7e22ce"/>
+<text x="705" y="494" class="body purple">模型只返回判决</text>
+<text x="705" y="532" class="small">drop_valid：丢弃</text>
+<text x="705" y="568" class="small">m_valid：放行</text>
+
+<rect x="55" y="650" width="1060" height="695" rx="14" fill="#f3e8ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="110" y="694" class="head purple">RTL 生成的 C++ 模型：读取消息副本、判断、保存状态</text>
+<text x="110" y="730" class="small">原始报文不经模型转发；以下为复位结束后的消息接收条件。</text>
+
+<rect x="110" y="765" width="270" height="120" rx="10" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="128" y="800" class="body bold blue">s_valid = 1</text>
+<text x="128" y="837" class="body">输入中有待处理消息</text>
+<text x="128" y="869" class="small">来自上方 C++ 收发代码</text>
+<path d="M380 405V425H75V825H80" class="line" stroke="#2563eb"/>
+
+<rect x="440" y="765" width="270" height="120" rx="10" fill="#fff" stroke="#c084fc" stroke-width="2"/>
+<text x="458" y="800" class="body bold purple">s_ready = 1</text>
+<text x="458" y="837" class="body">模型准备好接收</text>
+<text x="458" y="869" class="small">设置额度时暂不接收</text>
+
+<rect x="770" y="765" width="320" height="120" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="788" y="800" class="body bold orange">clk：等待上升沿</text>
+<text x="788" y="837" class="body">时钟从 0 变成 1 的瞬间</text>
+<text x="788" y="869" class="small">由手写 C++ 模拟这个变化</text>
+
+<path d="M245 885V930" class="line" stroke="#2563eb"/>
+<path d="M575 885V930" class="line" stroke="#7e22ce"/>
+<path d="M930 885V930" class="line" stroke="#d97706"/>
+<rect x="220" y="960" width="760" height="75" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="2"/>
+<text x="243" y="1006" class="head">上升沿到来，且 valid = 1、ready = 1：接受消息</text>
+<path d="M600 1035V1070" class="line" stroke="#d97706"/>
+
+<rect x="110" y="1100" width="980" height="195" rx="12" fill="#fff" stroke="#c084fc" stroke-width="2"/>
+<text x="135" y="1140" class="body bold purple">在这个上升沿保存判决，并更新模型内部的丢包变量</text>
+<rect x="135" y="1160" width="430" height="110" rx="8" fill="#faf5ff"/>
+<text x="153" y="1193" class="body bold">remaining_drops：还能丢几条</text>
+<text x="153" y="1232" class="body">第一次命中：1 → 0</text>
+<text x="153" y="1261" class="small">后续消息读到 0，模型判为放行</text>
+<rect x="605" y="1160" width="460" height="110" rx="8" fill="#faf5ff"/>
+<text x="623" y="1193" class="body bold">drop_count：已经丢了几条</text>
+<text x="623" y="1232" class="body">第一次命中：累计数加 1</text>
+<text x="623" y="1261" class="small">这里输出丢弃判决，上方 C++ 执行</text>
+<text x="110" y="1328" class="small">示例：已给一次额度、字段匹配，期间不再配置；这些变量由 market_filter.sv 定义。</text>
+<text x="55" y="1374" class="small">图示格式符合要求的报文；其它收到的报文由 C++ 直接转发。</text>
+<text x="40" y="1425" class="small">软件模拟时钟不代表 FPGA 的实测速度。本图只展开当前软件仿真，真卡还需要报文收发电路。</text>
+</svg>

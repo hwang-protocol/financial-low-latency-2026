@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">PTP 如何从交换机到达 .2</title>
+  <desc id="desc">本课使用 UDP IPv4 组播 224.0.1.129，PTP 域号为 0。7150 的 Ethernet2 启用 PTP 并成为 Master 后，向 .2 ens64np1 发送 Announce、Sync 和 Follow_Up；.2 的 ptp4l 加入组播组，发送 Delay_Req，交换机回应 Delay_Resp。Sync 和 Delay_Req 使用 UDP 319，其余三种消息使用 UDP 320。所有箭头的目的 IP 都是组播地址。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 12 12">
+      <path d="M0 0 L12 6 L0 12 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill:#0f172a; }
+      .heading { font-size:26px; font-weight:800; }
+      .body { font-size:22px; }
+      .small { font-size:20px; fill:#475569; }
+      .message { font-size:22px; font-weight:700; text-anchor:middle; }
+      .flow { fill:none; stroke:#334155; stroke-width:2.5; stroke-linecap:butt; marker-end:url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="700" rx="20" fill="#fff"/>
+  <text x="600" y="55" text-anchor="middle" font-size="32" font-weight="900">PTP 如何从交换机到达 .2</text>
+  <text class="body" x="600" y="94" text-anchor="middle">本课：UDP/IPv4 组播 · 两端 PTP 域号均为 0</text>
+
+  <rect x="32" y="137" width="270" height="450" rx="20" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text class="heading" x="167" y="179" text-anchor="middle">7150 交换机</text>
+  <text class="body" x="167" y="213" text-anchor="middle">本地 Master</text>
+  <rect x="50" y="232" width="252" height="331" rx="14" fill="#fff" stroke="#93c5fd"/>
+  <text class="heading" x="176" y="276" text-anchor="middle">Ethernet2</text>
+  <text class="body" x="176" y="314" text-anchor="middle">ptp enable</text>
+  <text class="small" x="176" y="351" text-anchor="middle">此端口启用 PTP</text>
+  <text class="body" x="176" y="418" text-anchor="middle">周期发送通告与同步</text>
+  <text class="body" x="176" y="458" text-anchor="middle">回应延迟请求</text>
+
+  <rect x="898" y="137" width="270" height="450" rx="20" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text class="heading" x="1033" y="179" text-anchor="middle">Trader 主机 .2</text>
+  <text class="body" x="1033" y="213" text-anchor="middle">跟随端 Slave</text>
+  <rect x="898" y="232" width="252" height="331" rx="14" fill="#fff" stroke="#67e8f9"/>
+  <text class="heading" x="1024" y="276" text-anchor="middle">ens64np1</text>
+  <text class="small" x="1024" y="313" text-anchor="middle">接口地址：20.1.1.2</text>
+  <text class="body" x="1024" y="371" text-anchor="middle">ptp4l 加入组播组</text>
+  <text class="body" x="1024" y="411" text-anchor="middle">选源并交换对时报文</text>
+  <text class="body" x="1024" y="466" text-anchor="middle">校准 X2522 网卡时钟</text>
+
+  <rect x="334" y="150" width="532" height="66" rx="14" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="600" y="178" text-anchor="middle" font-size="19" fill="#475569">下方所有报文的目的 IP</text>
+  <text class="heading" x="600" y="205" text-anchor="middle">224.0.1.129</text>
+
+  <text class="message" x="600" y="253">Announce：时间源通告 · UDP 320</text>
+  <path class="flow" d="M314 272 H874"/>
+  <text class="message" x="600" y="317">Sync：同步消息 · UDP 319</text>
+  <path class="flow" d="M314 336 H874"/>
+  <text class="message" x="600" y="381">Follow_Up：补充发送时刻 · UDP 320</text>
+  <path class="flow" d="M314 400 H874"/>
+  <text class="message" x="600" y="445">Delay_Req：延迟请求 · UDP 319</text>
+  <path class="flow" d="M886 464 H326"/>
+  <text class="message" x="600" y="509">Delay_Resp：延迟应答 · UDP 320</text>
+  <path class="flow" d="M314 528 H874"/>
+
+  <rect x="32" y="616" width="1136" height="54" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text class="body" x="600" y="651" text-anchor="middle">组播组是目的地址；无需在 ptp4l 命令里填写交换机的单播 IP。</text>
+</svg>

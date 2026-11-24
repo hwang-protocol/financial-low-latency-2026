@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1310" viewBox="0 0 1200 1310" role="img" aria-labelledby="title desc">
+<title id="title">第08章八步导航：从源码到过滤电路</title>
+<desc id="desc">1准备环境，2编写源码，3仿真验证，4接入板卡工程，5构建PDI，6打包SWIX，7安装装载与接线，8验证过滤。以软件开发、测试、编译、打包和部署为类比。SystemVerilog设计电路，Python管理电路，Vivado生成PDI，SWIX包安装后由Python装载PDI。最后连接数据口，核对过滤效果并停用。箭头表示学习和工作顺序，不表示网络报文路径。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L12 6 L0 12 Z" fill="#475569"/></marker></defs>
+<g font-family="Noto Sans CJK SC, sans-serif"><rect width="1200" height="1310" fill="white"/>
+<text x="40" y="51" font-size="32" fill="#172554" font-weight="700" text-anchor="start">第08章大导航：从源码到过滤电路</text>
+<text x="40" y="90" font-size="23" fill="#172554" font-weight="400" text-anchor="start">类比开发软件：准备 → 编写 → 测试 → 适配 → 构建 → 打包 → 部署 → 验收</text>
+<text x="40" y="145" font-size="24" fill="#172554" font-weight="700" text-anchor="start">1—6：在 .101 开发机上准备、验证和构建</text>
+<g class="node" data-step="1"><rect x="40" y="180" width="500" height="170" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="290" y="218" font-size="28" fill="#2563eb" font-weight="700" text-anchor="middle">1 准备环境</text>
+<text x="290" y="257" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">准备 .101，认识目标交换机</text>
+<text x="290" y="289" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">备齐 Icarus、Vivado 和 Arista FDK</text>
+<text x="290" y="321" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">FDK 是这块板的配套开发材料</text>
+</g>
+<g class="node" data-step="2"><rect x="660" y="180" width="500" height="170" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="910" y="218" font-size="28" fill="#2563eb" font-weight="700" text-anchor="middle">2 编写源码</text>
+<text x="910" y="257" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">SystemVerilog .sv：描述过滤电路</text>
+<text x="910" y="289" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">Python .py：编写装载与管理程序</text>
+<text x="910" y="321" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">类比：编写业务代码与管理代码</text>
+</g>
+<polyline points="540,265 636,265" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="910,350 910,385 290,385 290,396" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<g class="node" data-step="3"><rect x="40" y="420" width="500" height="170" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="290" y="458" font-size="28" fill="#2563eb" font-weight="700" text-anchor="middle">3 仿真验证</text>
+<text x="290" y="497" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">Icarus 仿真，Yosys 通用综合</text>
+<text x="290" y="529" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">用测试数据核对输出与状态</text>
+<text x="290" y="561" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">类比：先跑软件单元测试</text>
+</g>
+<g class="node" data-step="4"><rect x="660" y="420" width="500" height="170" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="910" y="458" font-size="28" fill="#2563eb" font-weight="700" text-anchor="middle">4 接入板卡工程</text>
+<text x="910" y="497" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">在 FDK 参考工程中接入本课源码</text>
+<text x="910" y="529" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">接好网口、时钟和控制接口</text>
+<text x="910" y="561" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">让过滤设计适合这块具体的板卡</text>
+</g>
+<polyline points="540,505 636,505" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="910,590 910,625 290,625 290,636" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<g class="node" data-step="5"><rect x="40" y="660" width="500" height="170" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="290" y="698" font-size="28" fill="#2563eb" font-weight="700" text-anchor="middle">5 构建 PDI</text>
+<text x="290" y="737" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">Vivado：综合 → 布局 → 布线</text>
+<text x="290" y="769" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">得到 .pdi 器件启动与配置文件</text>
+<text x="290" y="801" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">类比：编译工具生成目标产物</text>
+</g>
+<g class="node" data-step="6"><rect x="660" y="660" width="500" height="170" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="910" y="698" font-size="28" fill="#7e22ce" font-weight="700" text-anchor="middle">6 打包 SWIX</text>
+<text x="910" y="737" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">将 .pdi、Python 程序等文件收齐</text>
+<text x="910" y="769" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">用配套打包工具生成 .swix</text>
+<text x="910" y="801" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">类比：把交付文件做成安装包</text>
+</g>
+<polyline points="540,745 636,745" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="910,830 910,885 290,885 290,1006" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="660" y="955" font-size="24" fill="#172554" font-weight="700" text-anchor="start">7—8：在隔离交换机台架上部署与验收</text>
+<g class="node" data-step="7"><rect x="40" y="1030" width="500" height="190" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+<text x="290" y="1068" font-size="28" fill="#7e22ce" font-weight="700" text-anchor="middle">7 安装装载与接线</text>
+<text x="290" y="1107" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">上传 .swix，由 EOS 安装文件</text>
+<text x="290" y="1139" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">命令启动 Python，再装载 .pdi</text>
+<text x="290" y="1171" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">等镜像就绪，接通实际数据口</text>
+</g>
+<g class="node" data-step="8"><rect x="660" y="1030" width="500" height="190" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="910" y="1068" font-size="28" fill="#0f766e" font-weight="700" text-anchor="middle">8 验证过滤</text>
+<text x="910" y="1107" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">先核对正常转发，再发一次额度</text>
+<text x="910" y="1139" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">比对入口、出口和寄存器计数</text>
+<text x="910" y="1171" font-size="23" fill="#172554" font-weight="400" text-anchor="middle">恢复原路径，再停用本课应用</text>
+</g>
+<polyline points="540,1125 636,1125" fill="none" stroke="#475569" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="40" y="1260" font-size="21" fill="#64748b" font-weight="400" text-anchor="start">比喻对应开发流程；实际处理报文的是 FPGA 电路，Python 在管理 CPU 上运行。</text>
+<text x="40" y="1293" font-size="20" fill="#64748b" font-weight="400" text-anchor="start">1—3 可在 .101 实作；4—6 还需 BVL 工程与工具许可，7—8 需要实机。</text>
+</g></svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="670" viewBox="0 0 1200 670">
+  <defs>
+    <marker id="blueArrow" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#2563eb"/></marker>
+    <marker id="greenArrow" markerUnits="userSpaceOnUse" viewBox="0 0 20 15" refX="1" refY="7.5" markerWidth="20" markerHeight="15" orient="auto" overflow="visible"><path d="M0 1.5 L17 7.5 L0 13.5 Z" fill="#16a34a"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:28px;font-weight:900}.k{font-size:19px;font-weight:900}.s{font-size:15px;fill:#475569}.p{font-size:14px;font-weight:800}</style>
+  </defs>
+  <rect x="12" y="12" width="1176" height="646" rx="26" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="54" y="62">两种部署都能“复制并打戳”，但交换机角色完全不同</text>
+  <text class="t s" x="54" y="91">生产 SPAN 保留正常转发；独立 TAP Aggregator 把整台设备变成观测网络。</text>
+
+  <rect x="46" y="122" width="532" height="462" rx="22" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <rect x="46" y="122" width="532" height="62" rx="22" fill="#dbeafe"/><path d="M46 153h532v31H46z" fill="#dbeafe"/>
+  <rect x="68" y="139" width="110" height="28" rx="14" fill="#2563eb"/>
+  <text x="123" y="159" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="900" fill="#fff">模式 A</text>
+  <text class="t k" x="194" y="159">生产交换机上的 SPAN</text>
+
+  <rect x="78" y="232" width="108" height="68" rx="13" fill="#ecfeff" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t p" x="132" y="261" text-anchor="middle">交易源</text><text class="t s" x="132" y="283" text-anchor="middle">Source</text>
+  <rect x="238" y="216" width="142" height="100" rx="16" fill="#0f2f4d" stroke="#0f172a" stroke-width="2"/>
+  <text x="309" y="252" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="18" font-weight="900" fill="#fff">7150 Fabric</text>
+  <text x="309" y="278" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="800" fill="#67e8f9">正常 L2 / L3 继续</text>
+  <rect x="432" y="232" width="108" height="68" rx="13" fill="#ecfeff" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t p" x="486" y="261" text-anchor="middle">交易主机</text><text class="t s" x="486" y="283" text-anchor="middle">Live</text>
+  <path d="M186 266H222" stroke="#2563eb" stroke-width="4" marker-end="url(#blueArrow)"/>
+  <path d="M380 266H416" stroke="#2563eb" stroke-width="4" marker-end="url(#blueArrow)"/>
+
+  <rect x="256" y="380" width="106" height="64" rx="13" fill="#f0fdf4" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t p" x="309" y="407" text-anchor="middle">镜像目的口</text><text class="t s" x="309" y="429" text-anchor="middle">打 ingress 戳</text>
+  <rect x="432" y="380" width="108" height="64" rx="13" fill="#f0fdf4" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t p" x="486" y="407" text-anchor="middle">分析工具</text><text class="t s" x="486" y="429" text-anchor="middle">只收副本</text>
+  <path d="M309 316V364" stroke="#16a34a" stroke-width="4" marker-end="url(#greenArrow)"/>
+  <path d="M362 412H416" stroke="#16a34a" stroke-width="4" marker-end="url(#greenArrow)"/>
+  <text class="t s" x="86" y="493">关键命令族</text>
+  <text class="t p" x="86" y="520">monitor session … source / destination</text>
+  <text class="t p" x="86" y="548">interface &lt;mirror-destination&gt; · mac timestamp before-fcs</text>
+
+  <rect x="622" y="122" width="532" height="462" rx="22" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+  <rect x="622" y="122" width="532" height="62" rx="22" fill="#ffedd5"/><path d="M622 153h532v31H622z" fill="#ffedd5"/>
+  <rect x="644" y="139" width="110" height="28" rx="14" fill="#ea580c"/>
+  <text x="699" y="159" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="900" fill="#fff">模式 B</text>
+  <text class="t k" x="770" y="159">独立 TAP / TOOL Aggregator</text>
+
+  <rect x="652" y="232" width="112" height="68" rx="13" fill="#ecfeff" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t p" x="708" y="261" text-anchor="middle">SPAN / TAP</text><text class="t s" x="708" y="283" text-anchor="middle">只送观测流</text>
+  <rect x="816" y="208" width="170" height="116" rx="16" fill="#0f2f4d" stroke="#0f172a" stroke-width="2"/>
+  <text x="901" y="244" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="18" font-weight="900" fill="#fff">7150 TAP Agg</text>
+  <text x="901" y="272" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="14" font-weight="800" fill="#fdba74">TAP → group → TOOL</text>
+  <text x="901" y="298" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="13" font-weight="800" fill="#fff">过滤 · 聚合 · 复制</text>
+  <rect x="1038" y="232" width="86" height="68" rx="13" fill="#f0fdf4" stroke="#94a3b8" stroke-width="2"/>
+  <text class="t p" x="1081" y="261" text-anchor="middle">工具</text><text class="t s" x="1081" y="283" text-anchor="middle">Capture</text>
+  <path d="M764 266H800" stroke="#16a34a" stroke-width="4" marker-end="url(#greenArrow)"/>
+  <path d="M986 266H1022" stroke="#16a34a" stroke-width="4" marker-end="url(#greenArrow)"/>
+
+  <rect x="684" y="372" width="404" height="82" rx="16" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+  <text class="t k" x="886" y="405" text-anchor="middle" fill="#991b1b">mode exclusive</text>
+  <text class="t s" x="886" y="432" text-anchor="middle">正常 switching / routing 关闭，不能串在生产二层里</text>
+  <text class="t s" x="662" y="493">端口方向</text>
+  <text class="t p" x="662" y="520">TAP port：只接收被观测流量</text>
+  <text class="t p" x="662" y="548">TOOL port：只把副本送往分析设备</text>
+
+  <rect x="214" y="610" width="772" height="32" rx="16" fill="#e2e8f0"/>
+  <text class="t p" x="600" y="632" text-anchor="middle">同一台 7150 二选一：生产交换模式可做 SPAN；exclusive TAP aggregation 不做普通转发</text>
+</svg>

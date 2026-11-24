@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920" role="img" aria-labelledby="title desc">
+<title id="title">AF_XDP：同一个行情包，谁来处理网络协议头</title>
+<desc id="desc">同一类以太网IPv4UDP行情包分两种接收方案比较。本课XDP PASS交Linux网络栈，应用通过普通UDP socket得到MoldUDP64 ITCH载荷；AF_XDP方案以XDP REDIRECT把以太帧送到应用可读内存，适配后的应用自己处理网络协议头及行情。二者不是同时复制，本课未启用AF_XDP。</desc>
+<style>text{font-family:'Noto Sans CJK SC',sans-serif;font-size:24px;fill:#172554}.title{font-size:35px;font-weight:700}.head{font-size:28px;font-weight:700}.small{font-size:22px}.bold{font-weight:700}.muted{fill:#475569}.green{fill:#166534}.purple{fill:#6b21a8}</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#64748b"/></marker></defs>
+<rect width="1200" height="920" rx="20" fill="#fff"/>
+
+<text x="40" y="57" class="title">同一个行情包，谁来处理网络协议头？</text>
+<text x="600" y="105" class="small muted" text-anchor="middle">先看收到的包：外面是网络协议头，里面是行情内容</text>
+<rect x="220" y="128" width="160" height="62" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+<text x="300.0" y="168" class="small bold" text-anchor="middle">以太网头</text>
+<rect x="380" y="128" width="135" height="62" rx="12" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+<text x="447.5" y="168" class="small bold" text-anchor="middle">IP 头</text>
+<rect x="515" y="128" width="135" height="62" rx="12" fill="#cffafe" stroke="#22d3ee" stroke-width="2"/>
+<text x="582.5" y="168" class="small bold" text-anchor="middle">UDP 头</text>
+<rect x="650" y="128" width="330" height="62" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+<text x="815.0" y="168" class="small bold" text-anchor="middle">MoldUDP64 + ITCH 行情</text>
+<text x="600" y="229" class="small muted" text-anchor="middle">下面是两种接收方式的对照</text>
+<rect x="40" y="257" width="540" height="574" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+<rect x="620" y="257" width="540" height="574" rx="12" fill="#faf5ff" stroke="#d8b4fe" stroke-width="2"/>
+<text x="310" y="301" class="head green" text-anchor="middle">本课：Linux 帮应用处理</text>
+<text x="890" y="301" class="head purple" text-anchor="middle">AF_XDP：应用自己处理</text>
+<rect x="150" y="328" width="320" height="66" rx="12" fill="#fff" stroke="#86efac" stroke-width="2"/>
+<text x="310" y="371" class="bold green" text-anchor="middle">XDP 返回 PASS</text>
+<rect x="730" y="328" width="320" height="66" rx="12" fill="#fff" stroke="#d8b4fe" stroke-width="2"/>
+<text x="890" y="371" class="bold purple" text-anchor="middle">XDP 返回 REDIRECT</text>
+<path d="M310 394 V429" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M890 394 V429" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="80" y="434" width="460" height="96" rx="12" fill="#fff" stroke="#86efac" stroke-width="2"/>
+<text x="310" y="475" class="head" text-anchor="middle">Linux 网络协议栈</text>
+<text x="310" y="510" class="small" text-anchor="middle">处理以太网 / IP / UDP 等封装</text>
+<rect x="660" y="434" width="460" height="96" rx="12" fill="#fff" stroke="#d8b4fe" stroke-width="2"/>
+<text x="890" y="475" class="head" text-anchor="middle">AF_XDP 收包接口</text>
+<text x="890" y="510" class="small" text-anchor="middle">把完整报文送到应用可读的内存</text>
+<path d="M310 530 V569" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M890 530 V569" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="65" y="574" width="490" height="234" rx="12" fill="#fff" stroke="#86efac" stroke-width="2"/>
+<text x="310" y="616" class="head" text-anchor="middle">普通行情程序</text>
+<text x="310" y="655" class="small" text-anchor="middle">通过 UDP socket 拿到：</text>
+<rect x="90" y="674" width="440" height="60" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+<text x="310" y="713" class="bold" text-anchor="middle">MoldUDP64 + ITCH 行情</text>
+<text x="310" y="773" class="small green" text-anchor="middle">应用从这里开始读行情</text>
+<rect x="645" y="574" width="490" height="234" rx="12" fill="#fff" stroke="#d8b4fe" stroke-width="2"/>
+<text x="890" y="616" class="head" text-anchor="middle">适配 AF_XDP 的行情程序</text>
+<text x="890" y="655" class="small" text-anchor="middle">通过 AF_XDP 拿到：</text>
+<rect x="666" y="674" width="113" height="60" rx="12" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+<text x="722.5" y="713" class="small bold" text-anchor="middle">以太网头</text>
+<rect x="779" y="674" width="85" height="60" rx="12" fill="#dbeafe" stroke="#60a5fa" stroke-width="2"/>
+<text x="821.5" y="713" class="small bold" text-anchor="middle">IP头</text>
+<rect x="864" y="674" width="106" height="60" rx="12" fill="#cffafe" stroke="#22d3ee" stroke-width="2"/>
+<text x="917.0" y="713" class="small bold" text-anchor="middle">UDP头</text>
+<rect x="970" y="674" width="144" height="60" rx="12" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+<text x="1042.0" y="713" class="small bold" text-anchor="middle">行情内容</text>
+<text x="890" y="773" class="small purple" text-anchor="middle">应用先读网络头，再读行情</text>
+<text x="600" y="872" class="bold" text-anchor="middle">AF_XDP 的作用：换一种交包方式，减少普通网络协议栈的处理。</text>
+<text x="600" y="908" class="small muted" text-anchor="middle">本课使用左边；右边需要适配应用，仅作概念介绍，未测试性能或零拷贝。</text>
+</svg>

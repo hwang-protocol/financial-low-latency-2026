@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">Layer 1 cross-connect 与普通包交换对比</title>
+  <desc id="desc">对比固定比特路径的 Layer 1 交换和需要解析、查表、排队的 Layer 2/3 cut-through 交换。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#f0fdf4"/></linearGradient>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#16a34a"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#2563eb"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:34px;font-weight:800}.sub{font-size:18px;fill:#475569}.panel{fill:#fff;stroke-width:2}.ch{font-size:25px;font-weight:800}.body{font-size:17px}.small{font-size:15px;fill:#475569}.g{stroke:#16a34a;stroke-width:5;fill:none;marker-end:url(#g)}.b{stroke:#2563eb;stroke-width:5;fill:none;marker-end:url(#b)}.box{stroke-width:2}</style>
+  </defs>
+  <rect width="1200" height="620" rx="26" fill="url(#bg)"/>
+  <text class="t h" x="48" y="60">再往下一层：L1 cross-connect 为什么更快，也为什么不能替代交换机</text>
+  <text class="t sub" x="48" y="92">一个像“电子跳线架”，一个像“会看地址、会排队的分拨站”。</text>
+
+  <rect class="panel" x="48" y="130" width="520" height="390" rx="20" stroke="#16a34a"/>
+  <rect x="48" y="130" width="520" height="60" rx="20" fill="#dcfce7"/><text class="t ch" x="74" y="169" fill="#166534">Layer 1 cross-connect（如 7130）</text>
+  <rect class="box" x="86" y="235" width="100" height="58" rx="10" fill="#ecfdf5" stroke="#22c55e"/><text class="t body" x="114" y="270">Feed</text>
+  <path class="g" d="M190 264H285"/>
+  <rect class="box" x="295" y="218" width="130" height="92" rx="14" fill="#bbf7d0" stroke="#16a34a"/><text class="t body" x="322" y="254">Crosspoint</text><text class="t small" x="318" y="282">固定比特路径</text>
+  <path class="g" d="M430 264H498"/><text class="t body" x="458" y="247">1:N</text>
+  <text class="t body" x="82" y="356">✓ 无包缓存 / 无队列，时延与抖动极小</text>
+  <text class="t body" x="82" y="390">✓ 行情复制、远程跳线、TAP、媒体转换</text>
+  <text class="t body" x="82" y="424">✗ 不替你做普通 L2/L3 查表与拥塞仲裁</text>
+  <text class="t small" x="82" y="469">典型配置思想：destination 从某个 source 取信号</text>
+  <rect x="82" y="480" width="438" height="48" rx="9" fill="#f0fdf4"/><text class="t small" x="99" y="510">interface Ethernet2 → l1 source interface Ethernet1</text>
+
+  <rect class="panel" x="632" y="130" width="520" height="390" rx="20" stroke="#2563eb"/>
+  <rect x="632" y="130" width="520" height="60" rx="20" fill="#dbeafe"/><text class="t ch" x="658" y="169" fill="#1e3a8a">Packet switch（本课 7150）</text>
+  <rect class="box" x="670" y="235" width="90" height="58" rx="10" fill="#eff6ff" stroke="#3b82f6"/><text class="t body" x="694" y="270">Frame</text>
+  <path class="b" d="M765 264H826"/>
+  <rect class="box" x="835" y="215" width="150" height="98" rx="14" fill="#bfdbfe" stroke="#2563eb"/><text class="t body" x="866" y="251">Parse / FDB</text><text class="t small" x="861" y="281">Queue / QoS</text>
+  <path class="b" d="M990 264H1060"/>
+  <text class="t body" x="666" y="356">✓ VLAN、组播、ACL、QoS、动态转发</text>
+  <text class="t body" x="666" y="390">✓ 多入口争用一个出口时能够缓存与调度</text>
+  <text class="t body" x="666" y="424">✗ 即使 cut-through，仍有解析、序列化与队列</text>
+  <text class="t small" x="666" y="469">适合：需要网络语义与故障域管理的生产 Fabric</text>
+  <rect x="666" y="480" width="438" height="48" rx="9" fill="#eff6ff"/><text class="t small" x="684" y="510">show switch forwarding-mode / show queue-monitor length</text>
+
+  <rect x="48" y="550" width="1104" height="38" rx="10" fill="#0f2742"/><text x="600" y="576" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="17" font-weight="700" fill="#fff">选型不是“谁更快”：固定拓扑的行情扇出偏爱 L1；需要地址学习、策略与汇聚时仍要 packet switch。</text>
+</svg>

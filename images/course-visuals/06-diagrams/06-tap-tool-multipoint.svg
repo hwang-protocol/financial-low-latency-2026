@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
+<title id="title">专职 7150：TAP 收副本，TOOL 送服务器</title><desc id="desc">生产部署设计。三个生产采集点分别将副本送到专职 7150 的 TAP Et1、Et2、Et3。TAP 入口记录时间，来源标签 101、102、103 区分采集点。ANALYZE 组将三个入口连到 TOOL Et10；出口附加入口短戳，将带戳副本和 Keyframe 送到同一台分析服务器。服务器解析来源与时间，配对同一包并相减。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 12 12"><path d="M0 0 L12 6 L0 12 Z" fill="#334155"/></marker><style>text{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a;text-anchor:middle;}.flow{fill:none;stroke:#334155;stroke-width:2.5;stroke-linecap:butt;marker-end:url(#arrow);}</style></defs>
+<rect width="1200" height="690" rx="20" fill="#fff"/>
+<text x="600" y="52" font-size="32" font-weight="800" style="fill:#0f172a">专职 7150：TAP 收副本，TOOL 送服务器</text>
+<text x="600" y="96" font-size="22" font-weight="400" style="fill:#475569">设计示意 · 多个生产采集点汇入同一台分析服务器</text>
+<rect x="390" y="145" width="400" height="449" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+<text x="590" y="184" font-size="27" font-weight="800" style="fill:#0f172a">专职 7150</text>
+<text x="590" y="219" font-size="21" font-weight="400" style="fill:#475569">入口记录时刻；PTP 口为 Et24</text>
+<rect x="35" y="256" width="245" height="78" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="157.5" y="287" font-size="25" font-weight="800" style="fill:#0f172a">生产采集点 A</text>
+<text x="157.5" y="318" font-size="20" font-weight="400" style="fill:#475569">SPAN / 物理 TAP 副本</text>
+<path class="flow" d="M292 295 H366"/>
+<rect x="410" y="256" width="150" height="78" rx="10" fill="#dcfce7" stroke="#86efac" stroke-width="2"/>
+<text x="485" y="287" font-size="23" font-weight="800" style="fill:#0f172a">TAP · Et1</text>
+<text x="485" y="317" font-size="20" font-weight="400" style="fill:#0f172a">来源 101 / T_A</text>
+<path class="flow" d="M572 295 H606"/>
+<rect x="35" y="366" width="245" height="78" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="157.5" y="397" font-size="25" font-weight="800" style="fill:#0f172a">生产采集点 B</text>
+<text x="157.5" y="428" font-size="20" font-weight="400" style="fill:#475569">SPAN / 物理 TAP 副本</text>
+<path class="flow" d="M292 405 H366"/>
+<rect x="410" y="366" width="150" height="78" rx="10" fill="#dcfce7" stroke="#86efac" stroke-width="2"/>
+<text x="485" y="397" font-size="23" font-weight="800" style="fill:#0f172a">TAP · Et2</text>
+<text x="485" y="427" font-size="20" font-weight="400" style="fill:#0f172a">来源 102 / T_B</text>
+<path class="flow" d="M572 405 H606"/>
+<rect x="35" y="476" width="245" height="78" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+<text x="157.5" y="507" font-size="25" font-weight="800" style="fill:#0f172a">生产采集点 C</text>
+<text x="157.5" y="538" font-size="20" font-weight="400" style="fill:#475569">SPAN / 物理 TAP 副本</text>
+<path class="flow" d="M292 515 H366"/>
+<rect x="410" y="476" width="150" height="78" rx="10" fill="#dcfce7" stroke="#86efac" stroke-width="2"/>
+<text x="485" y="507" font-size="23" font-weight="800" style="fill:#0f172a">TAP · Et3</text>
+<text x="485" y="537" font-size="20" font-weight="400" style="fill:#0f172a">来源 103 / T_C</text>
+<path class="flow" d="M572 515 H606"/>
+<rect x="630" y="256" width="140" height="298" rx="14" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+<text x="700" y="292" font-size="18" font-weight="800" style="fill:#0f172a">组 ANALYZE</text>
+<text x="700" y="361" font-size="27" font-weight="800" style="fill:#0f172a">TOOL</text>
+<text x="700" y="402" font-size="26" font-weight="800" style="fill:#0f172a">Et10</text>
+<text x="700" y="481" font-size="21" font-weight="400" style="fill:#0f172a">附加入口戳</text>
+<path class="flow" d="M802 405 H866"/>
+<text x="840" y="339" font-size="19" font-weight="400" style="fill:#475569">带戳副本</text>
+<text x="840" y="367" font-size="18" font-weight="400" style="fill:#475569">Keyframe</text>
+<rect x="890" y="277" width="275" height="255" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="1027.5" y="320" font-size="26" font-weight="800" style="fill:#0f172a">统一分析服务器</text>
+<text x="1027.5" y="371" font-size="21" font-weight="400" style="fill:#0f172a">按来源区分 A / B / C</text>
+<text x="1027.5" y="421" font-size="22" font-weight="400" style="fill:#0f172a">按内容匹配同一包</text>
+<text x="1027.5" y="485" font-size="25" font-weight="800" style="fill:#0f172a">比较 T_B − T_A</text>
+<text x="600" y="643" font-size="23" font-weight="800" style="fill:#0f172a">TAP 和 TOOL 加入同一个组，就建立了副本的转发路径。</text>
+</svg>

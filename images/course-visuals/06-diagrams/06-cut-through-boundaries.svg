@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Cut-through 的收益与四个边界</title>
+  <desc id="desc">空闲同速出口时提前发送；出口忙、速率转换和坏帧使收益受限或带来风险。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#eff6ff"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0891b2"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:34px;font-weight:800}.sub{font-size:18px;fill:#475569}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}.ch{font-size:24px;font-weight:800}.body{font-size:17px}.small{font-size:15px;fill:#475569}.flow{stroke:#0891b2;stroke-width:2.5;fill:none;marker-end:url(#a)}.warn{stroke:#ea580c;stroke-width:3;fill:none}</style>
+  </defs>
+  <rect width="1200" height="650" rx="26" fill="url(#bg)"/>
+  <text class="t h" x="50" y="62">Cut-through 不是“永远零等待”</text>
+  <text class="t sub" x="50" y="94">它只把“可以开始发”的时刻提前；出口能力、队列和帧完整性仍然存在。</text>
+
+  <rect class="card" x="50" y="130" width="530" height="210" rx="18"/>
+  <rect x="50" y="130" width="530" height="48" rx="18" fill="#ecfeff"/><text class="t ch" x="74" y="163" fill="#155e75">① 同速 + 空闲出口：收益最清楚</text>
+  <rect x="80" y="218" width="120" height="54" rx="10" fill="#cffafe"/><text class="t body" x="107" y="251">Ingress</text>
+  <path class="flow" d="M205 245H391"/><rect x="405" y="218" width="120" height="54" rx="10" fill="#dcfce7"/><text class="t body" x="440" y="251">Egress</text>
+  <text class="t small" x="80" y="306">读到足够的帧头后即可启动出口，不必等完整帧。</text>
+
+  <rect class="card" x="620" y="130" width="530" height="210" rx="18"/>
+  <rect x="620" y="130" width="530" height="48" rx="18" fill="#fff7ed"/><text class="t ch" x="644" y="163" fill="#9a3412">② 出口正忙：仍要排队</text>
+  <rect x="650" y="218" width="86" height="54" rx="10" fill="#cffafe"/><text class="t body" x="665" y="251">新帧</text>
+  <rect x="770" y="215" width="52" height="60" rx="7" fill="#fed7aa"/><rect x="828" y="215" width="52" height="60" rx="7" fill="#fdba74"/><rect x="886" y="215" width="52" height="60" rx="7" fill="#fb923c"/>
+  <path class="warn" d="M943 245H1012"/><rect x="1020" y="218" width="92" height="54" rx="10" fill="#ffedd5"/><text class="t body" x="1042" y="251">10G</text>
+  <text class="t small" x="650" y="306">Cut-through 不会让两帧同时占用一条串行出口。</text>
+
+  <rect class="card" x="50" y="375" width="530" height="210" rx="18"/>
+  <rect x="50" y="375" width="530" height="48" rx="18" fill="#fff7ed"/><text class="t ch" x="74" y="408" fill="#9a3412">③ 10G → 1G：帧尾会在缓存积压</text>
+  <rect x="80" y="463" width="110" height="54" rx="10" fill="#cffafe"/><text class="t body" x="112" y="496">10G</text><path class="flow" d="M195 490H330"/>
+  <rect x="345" y="450" width="100" height="80" rx="12" fill="#ffedd5" stroke="#fb923c" stroke-width="2"/><text class="t body" x="369" y="485">Buffer</text><text class="t small" x="372" y="512">积压</text>
+  <path class="warn" d="M450 490H490"/><rect x="495" y="463" width="55" height="54" rx="10" fill="#fee2e2"/><text class="t body" x="508" y="496">1G</text>
+  <text class="t small" x="80" y="557">入口比出口快，等待来自带宽差，而不是转发模式名字。</text>
+
+  <rect class="card" x="620" y="375" width="530" height="210" rx="18"/>
+  <rect x="620" y="375" width="530" height="48" rx="18" fill="#fee2e2"/><text class="t ch" x="644" y="408" fill="#991b1b">④ FCS 最后才到：坏帧可能已开出</text>
+  <rect x="650" y="462" width="360" height="52" rx="9" fill="#e0f2fe"/>
+  <rect x="650" y="462" width="120" height="52" rx="9" fill="#bae6fd"/><text class="t body" x="681" y="495">Header</text>
+  <text class="t body" x="816" y="495">Payload</text>
+  <rect x="965" y="462" width="45" height="52" rx="7" fill="#fecaca"/><text class="t body" x="975" y="495">FCS</text>
+  <path class="warn" d="M1018 488H1096"/><text class="t small" x="650" y="557">完整性结果晚于转发决定；具体平台可能丢弃或标坏，不能假设下游看不到。</text>
+
+  <rect x="50" y="607" width="1100" height="30" rx="8" fill="#0f2742"/><text x="600" y="628" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="16" font-weight="700" fill="#fff">面试一句话：Cut-through 只优化“固定起步等待”，序列化、出口争用、速率适配和坏帧传播这四条边界照样存在。</text>
+</svg>

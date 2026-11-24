@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">交易所机房的等长光纤</title>
+  <desc id="desc">近端机柜通过额外盘纤，与远端机柜形成相同总光程，说明传播延迟既是物理下限也是公平性变量。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#fff7ed"/></linearGradient>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#0891b2"/></marker>
+    <style>.t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}.h{font-size:34px;font-weight:850}.sub{font-size:18px;fill:#475569}.ch{font-size:22px;font-weight:850}.body{font-size:17px}.small{font-size:15px;fill:#475569}.box{fill:#fff;stroke:#cbd5e1;stroke-width:2}.fiber{stroke:#0891b2;stroke-width:6;fill:none;marker-end:url(#a)}.spool{stroke:#7c3aed;stroke-width:6;fill:none}</style>
+  </defs>
+  <rect width="1200" height="650" rx="26" fill="url(#bg)"/>
+  <text class="t h" x="48" y="60">机柜离网关更近，不应天然获得时间优势</text>
+  <text class="t sub" x="48" y="94">光纤传播约 5 ns/m 单程；几十米就是百纳秒量级，已经和一台 cut-through 交换机同量级。</text>
+
+  <rect x="480" y="128" width="240" height="110" rx="18" fill="#0f2742"/>
+  <text x="600" y="170" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="23" font-weight="850" fill="#fff">交易所 Latency Hub</text>
+  <text x="600" y="204" text-anchor="middle" font-family="Noto Sans CJK SC,Microsoft YaHei,sans-serif" font-size="17" fill="#bae6fd">通往 Gateway / Feed</text>
+
+  <rect class="box" x="70" y="405" width="260" height="116" rx="18"/>
+  <text class="t ch" x="200" y="447" text-anchor="middle">近端参与者机柜</text>
+  <text class="t body" x="200" y="481" text-anchor="middle">物理距离短</text>
+  <text class="t small" x="200" y="508" text-anchor="middle">补一段盘纤</text>
+  <path class="fiber" d="M200 405V338H438"/>
+  <path class="spool" d="M438 338c-68-62 68-62 0 0c68 62-68 62 0 0c68-62-68-62 0 0"/>
+  <path class="fiber" d="M438 338H590V244"/>
+  <text class="t body" x="328" y="302" fill="#0e7490">短跳线 + 受控 fiber spool</text>
+
+  <rect class="box" x="870" y="405" width="260" height="116" rx="18"/>
+  <text class="t ch" x="1000" y="447" text-anchor="middle">远端参与者机柜</text>
+  <text class="t body" x="1000" y="481" text-anchor="middle">物理距离长</text>
+  <text class="t small" x="1000" y="508" text-anchor="middle">走直接工程光路</text>
+  <path class="fiber" d="M1000 405V338H610V244"/>
+  <text class="t body" x="821" y="302" fill="#0e7490">较长的直接光路</text>
+
+  <rect x="70" y="551" width="1060" height="62" rx="13" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+  <text class="t ch" x="96" y="581" fill="#166534">工程目标：总 optical length 在容差内相等</text>
+  <text class="t small" x="96" y="603">交易所会用 OBR 等方法验光程；“故意绕远”不是浪费，而是把物理距离变成可审计的公平性合同。</text>
+</svg>

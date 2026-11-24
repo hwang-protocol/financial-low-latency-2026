@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1530" viewBox="0 0 1200 1530" role="img" aria-labelledby="title desc">
+<title id="title">先审程序能否运行，再由程序决定包去留</title>
+<desc id="desc">Linux内置Verifier在每次加载时审核程序安全，通过是加载的必要条件，拒绝是程序加载失败。挂载后XDP逐包检查内存边界及本课格式，再比较证券字段与一次性开关。解析失败或非目标一律PASS，唯一额度有效时DROP一个包。</desc>
+<style>text{font-family:'Noto Sans CJK SC',sans-serif;fill:#172554;font-size:24px}.title{font-size:34px;font-weight:700}.head{font-size:28px;font-weight:700}.bold{font-weight:700}.small{font-size:22px}.muted{fill:#475569}.red{fill:#9f1239}.green{fill:#166534}</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/></marker></defs>
+<rect width="1200" height="1530" rx="20" fill="#fff"/>
+
+<text x="40" y="55" class="title">先审程序能否运行，再由程序决定包去留</text>
+<text x="40" y="105" class="head">① 加载时：Linux 自带 Verifier 审核程序，必须通过</text>
+<rect x="40" y="132" width="240" height="118" rx="14" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+<text x="160" y="179" class="" text-anchor="middle">编译好的</text>
+<text x="160" y="216" class="bold" text-anchor="middle">XDP 程序</text>
+<path d="M 280 191 H 335" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="340" y="132" width="465" height="118" rx="14" fill="#eef2ff" stroke="#818cf8" stroke-width="2"/>
+<text x="572" y="178" class="bold" text-anchor="middle">Verifier：能否证明程序安全？</text>
+<text x="572" y="215" class="small" text-anchor="middle">包括：会不会越界读取内存</text>
+<path d="M 805 170 H 880 V 158 H 918" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 805 215 H 880 V 258 H 918" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="923" y="123" width="237" height="72" rx="14" fill="#f0fdf4" stroke="#4ade80" stroke-width="2"/>
+<text x="1041" y="167" class="small bold green" text-anchor="middle">通过 → 继续加载</text>
+<rect x="923" y="219" width="237" height="80" rx="14" fill="#fff1f2" stroke="#fb7185" stroke-width="2"/>
+<text x="1041" y="252" class="small bold red" text-anchor="middle">不通过 → 拒绝加载</text>
+<text x="1041" y="281" class="small red" text-anchor="middle">程序不能运行</text>
+<text x="40" y="291" class="small muted">它审核代码的安全性；“NVDA 才丢”由课程程序指定。</text>
+<path d="M 40 332 H 1160" stroke="#cbd5e1" stroke-width="2"/>
+<text x="40" y="382" class="head">② 成功加载并挂载后：XDP 程序对每个收到的包作判断</text>
+
+<rect x="40" y="414" width="760" height="298" rx="14" fill="#eff6ff" stroke="#60a5fa" stroke-width="2"/>
+<text x="65" y="455" class="bold" xml:space="preserve">先读懂包：每层先看字节够不够，再看范围与格式</text>
+<text x="65" y="490" class="small" xml:space="preserve">本课 UDP 行情 · count = 1 · length = 36；下面摘录字节检查：</text>
+<rect x="60" y="509" width="720" height="137" rx="14" fill="#fff" stroke="#bfdbfe" stroke-width="2"/>
+<text x="78" y="538" class="small" xml:space="preserve">if ((void *)(itch + ITCH_ADD_LEN) &gt; end) {</text>
+<text x="78" y="568" class="small" xml:space="preserve">    count(SHORT_INPUT);</text>
+<text x="78" y="598" class="small" xml:space="preserve">    return XDP_PASS;</text>
+<text x="78" y="628" class="small" xml:space="preserve">}</text>
+<text x="65" y="680" class="small" xml:space="preserve">意思：从消息起点读 36 B 会越过尾界，就计数并放行。</text>
+<path d="M 800 555 H 932" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="858" y="528" class="small" xml:space="preserve" text-anchor="middle">不足 / 不符</text>
+<path d="M 420 712 V 768" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="444" y="748" class="small" xml:space="preserve">能继续解析</text>
+<rect x="40" y="773" width="760" height="213" rx="14" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+<text x="65" y="814" class="bold" xml:space="preserve">再匹配：只选 Type A + Locate 8095 + 完整 NVDA</text>
+<text x="65" y="850" class="small" xml:space="preserve">C 条件摘录：下面任意一项成立，就 PASS（不匹配）。</text>
+<rect x="60" y="865" width="720" height="101" rx="14" fill="#fff" stroke="#fed7aa" stroke-width="2"/>
+<text x="78" y="893" class="small" xml:space="preserve">itch[0] != &#x27;A&#x27;</text>
+<text x="78" y="922" class="small" xml:space="preserve">!is_symbol(stock, &quot;NVDA&quot;)</text>
+<text x="78" y="951" class="small" xml:space="preserve">locate != NVDA_LOCATE</text>
+<text x="505" y="893" class="small muted">不是 A</text>
+<text x="505" y="922" class="small muted">不是 NVDA + 4 空格</text>
+<text x="505" y="951" class="small muted">编号不是 8095</text>
+<path d="M 800 885 H 883 V 598 H 932" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="842" y="863" class="small" xml:space="preserve" text-anchor="middle">不匹配</text>
+<path d="M 420 986 V 1040" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="444" y="1022" class="small" xml:space="preserve">全部匹配</text>
+<rect x="40" y="1045" width="760" height="232" rx="14" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+<text x="65" y="1086" class="bold" xml:space="preserve">最后看开关：BLOCK、未过期、拿到唯一一次额度</text>
+<text x="65" y="1122" class="small" xml:space="preserve">C 摘录：尝试把额度从 1 改为 0 后，再确认是否成功。</text>
+<rect x="60" y="1137" width="720" height="78" rx="14" fill="#fff" stroke="#fed7aa" stroke-width="2"/>
+<text x="78" y="1169" class="small" xml:space="preserve">if (old_remaining != 1)</text>
+<text x="78" y="1199" class="small" xml:space="preserve">    return XDP_PASS;</text>
+<text x="65" y="1251" class="small" xml:space="preserve">old_remaining 是取额度前读到的值；不是 1 就放行。</text>
+<path d="M 800 1160 H 883 V 636 H 932" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="842" y="1138" class="small" xml:space="preserve" text-anchor="middle">不满足</text>
+<rect x="937" y="518" width="223" height="171" rx="14" fill="#f0fdf4" stroke="#4ade80" stroke-width="2"/>
+<text x="1048" y="562" class="head green" xml:space="preserve" text-anchor="middle">PASS</text>
+<text x="1048" y="604" class="bold green" xml:space="preserve" text-anchor="middle">交回 Linux</text>
+<text x="1048" y="644" class="small green" xml:space="preserve" text-anchor="middle">继续处理这个包</text>
+<path d="M 420 1277 V 1330" fill="none" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="444" y="1313" class="small" xml:space="preserve">全部满足</text>
+<rect x="190" y="1335" width="460" height="100" rx="14" fill="#fff1f2" stroke="#fb7185" stroke-width="2"/>
+<text x="420" y="1376" class="head red" xml:space="preserve" text-anchor="middle">DROP：只丢这一个包</text>
+<text x="420" y="1413" class="small red" xml:space="preserve" text-anchor="middle">return XDP_DROP;</text>
+<text x="40" y="1475" class="small muted" xml:space="preserve">代码词典：itch = 消息起点；end = data_end 尾界；ITCH_ADD_LEN = 36。</text>
+<text x="40" y="1510" class="small muted" xml:space="preserve">NVDA_LOCATE = 8095；is_symbol 比较全部 8 B（含空格）；!= 表示“不等于”。</text>
+</svg>

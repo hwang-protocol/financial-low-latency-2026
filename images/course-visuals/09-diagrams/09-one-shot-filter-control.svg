@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1020" viewBox="0 0 1200 1020" role="img" aria-labelledby="title desc">
+<title id="title">启动过滤进程、写入控制文件、读取block后丢一次行情</title>
+<desc id="desc">分步脚本通过SSH在.2启动mold_filter_adapter，再将block写入/var/tmp/flle-market-filter.cmd。这个已运行进程中的C++收发代码读取文件，给同一进程中的RTL生成模型设置一次丢包额度。下方依次展示默认放行、读到指令后在有效期内丢掉首条匹配NVDA行情、后续继续放行。原始报文由C++收发代码处理。</desc>
+<defs><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="0" refY="9" orient="auto"><path d="M0 0L18 9L0 18Z" fill="context-stroke"/></marker></defs>
+<style>text{font-family:'Noto Sans CJK SC',sans-serif;fill:#0f172a}.title{font-size:32px;font-weight:700}.head{font-size:28px;font-weight:700}.body{font-size:24px}.small{font-size:21px;fill:#475569}.bold{font-weight:700}.purple{fill:#6b21a8}.green{fill:#15803d}.red{fill:#b91c1c}.line{fill:none;stroke-width:2.5;stroke-linecap:butt;marker-end:url(#arrow)}</style>
+<rect width="1200" height="1020" rx="20" fill="#f8fafc"/>
+<text x="40" y="50" class="title">先启动过滤程序，再通过文件给它发指令</text>
+<text x="40" y="88" class="body">本课的“发令”：写入 block，收发代码读到后，给模型一次丢包机会。</text>
+<rect x="40" y="115" width="1120" height="335" rx="12" fill="#eef2ff" stroke="#c7d2fe" stroke-width="2"/>
+<text x="385" y="148" class="body bold">启动过滤程序，默认正常转发</text>
+<rect x="60" y="230" width="280" height="175" rx="12" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="80" y="267" class="head">分步脚本</text>
+<text x="80" y="306" class="small">通过 SSH 在 .2 上操作</text>
+<text x="80" y="346" class="body">运行①：启动程序</text>
+<text x="80" y="383" class="body">运行②：写入 block</text>
+<rect x="430" y="230" width="350" height="175" rx="12" fill="#fff" stroke="#c084fc" stroke-width="2"/>
+<text x="450" y="267" class="body bold purple">.2 上的控制文件</text>
+<text x="450" y="305" class="body">/var/tmp/</text>
+<text x="450" y="340" class="body">flle-market-filter.cmd</text>
+<text x="450" y="383" class="body bold purple">文件内容：block</text>
+<rect x="865" y="230" width="275" height="175" rx="12" fill="#fff" stroke="#93c5fd" stroke-width="2"/>
+<text x="880" y="267" class="body bold">mold_filter_adapter</text>
+<text x="880" y="306" class="small">.2 上已运行的过滤进程</text>
+<text x="880" y="346" class="small">C++ 收发代码读取文件</text>
+<text x="880" y="383" class="small">再给进程内的模型设置额度</text>
+<path d="M190 230V172H1002V200" class="line" stroke="#2563eb"/>
+<text x="347" y="308" class="small">写入</text>
+<path d="M340 330H400" class="line" stroke="#2563eb"/>
+<text x="788" y="308" class="small">读取</text>
+<path d="M780 330H835" class="line" stroke="#7e22ce"/>
+<text x="65" y="434" class="small">程序只有一个：手写收发代码和 RTL 生成的模型一起编译、一起运行。</text>
+<path d="M1002 405V495H600V520" class="line" stroke="#7e22ce"/>
+<text x="652" y="480" class="body purple">给模型一次丢包机会</text>
+
+<rect x="40" y="550" width="320" height="365" rx="14" fill="#fff" stroke="#86efac" stroke-width="2"/>
+<text x="62" y="597" class="head green">程序刚运行</text>
+<text x="62" y="642" class="body">所有行情照常通过</text>
+<rect x="110" y="710" width="180" height="55" rx="8" fill="#f3e8ff" stroke="#c084fc" stroke-width="2"/>
+<text x="151" y="746" class="body bold purple">NVDA</text>
+<path d="M200 765V793" class="line" stroke="#15803d"/>
+<rect x="95" y="823" width="210" height="50" rx="8" fill="#dcfce7"/>
+<text x="143" y="857" class="body bold green">正常放行</text>
+<text x="62" y="897" class="small">尚未开放丢包机会</text>
+
+<rect x="440" y="550" width="320" height="365" rx="14" fill="#fff" stroke="#fca5a5" stroke-width="2"/>
+<text x="462" y="597" class="head red">读到 block 后</text>
+<text x="462" y="642" class="body">拦下第一条匹配行情</text>
+<text x="462" y="678" class="small">在本次指令有效期间</text>
+<rect x="510" y="710" width="180" height="55" rx="8" fill="#f3e8ff" stroke="#c084fc" stroke-width="2"/>
+<text x="551" y="746" class="body bold purple">NVDA</text>
+<path d="M600 765V793" class="line" stroke="#b91c1c"/>
+<rect x="495" y="823" width="210" height="50" rx="8" fill="#fee2e2"/>
+<text x="543" y="857" class="body bold red">丢弃一次</text>
+<text x="462" y="897" class="small">用掉这一次丢包机会</text>
+
+<rect x="840" y="550" width="320" height="365" rx="14" fill="#fff" stroke="#86efac" stroke-width="2"/>
+<text x="862" y="597" class="head green">已经丢过一次</text>
+<text x="862" y="642" class="body">后续行情继续通过</text>
+<rect x="910" y="710" width="180" height="55" rx="8" fill="#f3e8ff" stroke="#c084fc" stroke-width="2"/>
+<text x="951" y="746" class="body bold purple">NVDA</text>
+<path d="M1000 765V793" class="line" stroke="#15803d"/>
+<rect x="895" y="823" width="210" height="50" rx="8" fill="#dcfce7"/>
+<text x="943" y="857" class="body bold green">正常放行</text>
+<text x="862" y="897" class="small">本次丢包机会已经用完</text>
+
+<text x="368" y="670" class="small">block</text>
+<path d="M360 690H410" class="line" stroke="#7e22ce"/>
+<text x="768" y="670" class="small">丢包后</text>
+<path d="M760 690H810" class="line" stroke="#7e22ce"/>
+
+<text x="40" y="960" class="body bold">图中 NVDA 指匹配既定规则的行情；不匹配的消息始终放行。</text>
+<text x="40" y="998" class="small">配套程序还会自动撤销未命中的过期指令；具体参数见配套说明。</text>
+</svg>

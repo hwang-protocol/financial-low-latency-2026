@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">把过滤电路接入 7135V 配套工程</title>
+  <desc id="desc">7135V 的 BVL 配套工程提供网口、管理接口、时钟复位和器件约束。课程提供 frame_filter.sv、nvda_match.sv、drop_once.sv 和 control_regs.sv。接入时分别连接报文、控制、时钟复位三组接口，核对工程后交给 Vivado 仿真、综合与实现。这是工程接入示意。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" viewBox="0 0 12 12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#475569"/></marker>
+    <style>
+      text { font-family: 'Noto Sans CJK SC', sans-serif; fill: #172554; }
+      .title { font-size: 32px; font-weight: 800; }
+      .heading { font-size: 26px; font-weight: 700; }
+      .label { font-size: 24px; font-weight: 700; }
+      .body { font-size: 22px; }
+      .small { font-size: 20px; }
+      .arrow { fill: none; stroke: #475569; stroke-width: 3; stroke-linecap: butt; stroke-linejoin: round; marker-end: url(#arrow); }
+      .icon { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect width="1200" height="1200" fill="#fff"/>
+  <text x="40" y="50" class="title">把过滤电路接入 7135V 配套工程</text>
+  <text x="40" y="88" class="body">像把分拣机构装上机器底座：接传送带、控制面板，再接节拍与复位。</text>
+
+  <rect x="40" y="120" width="1120" height="210" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="65" y="144" width="510" height="162" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <g class="icon" color="#2563eb"><rect x="86" y="167" width="35" height="32" rx="4"/><path d="M92,160v7 M104,160v7 M116,160v7 M92,199v7 M104,199v7 M116,199v7 M79,173h7 M79,191h7 M121,173h7 M121,191h7"/></g>
+  <text x="145" y="192" class="heading" style="fill:#2563eb">厂商：BVL 板卡工程</text>
+  <text x="85" y="235" class="body">网口模块、管理接口、时钟与引脚约束</text>
+  <text x="85" y="275" class="body">器件启动设计、配套工具与工程入口</text>
+
+  <rect x="625" y="144" width="510" height="162" rx="12" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+  <g class="icon" color="#4f46e5"><path d="M648,164h24l12,12v31h-36z M672,164v12h12 M657,188l-5,5 5,5 M675,188l5,5 -5,5"/></g>
+  <text x="700" y="192" class="heading" style="fill:#4f46e5">课程：四份电路源码</text>
+  <text x="645" y="235" class="body">frame_filter.sv ＋ nvda_match.sv</text>
+  <text x="645" y="275" class="body">drop_once.sv ＋ control_regs.sv</text>
+  <path d="M600,330 L600,361" class="arrow" data-target="600,385"/>
+
+  <rect x="40" y="385" width="1120" height="600" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="65" y="427" class="heading">在应用顶层接好三组接口</text>
+
+  <text x="65" y="467" class="body" style="fill:#2563eb">报文：从入口接收，经过过滤，再送到出口</text>
+  <rect x="65" y="487" width="310" height="112" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="83" y="523" class="label" style="fill:#2563eb">网口接收模块</text>
+  <text x="83" y="554" class="body">接收帧 → 输入适配</text>
+  <text x="83" y="583" class="small">配套网口模块提供收包能力</text>
+  <rect x="445" y="487" width="310" height="112" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="463" y="523" class="label" style="fill:#2563eb">frame_filter.sv</text>
+  <text x="463" y="554" class="body">nvda_match：识别行情</text>
+  <text x="463" y="583" class="small">drop_once：保存一次额度</text>
+  <rect x="825" y="487" width="310" height="112" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="843" y="523" class="label" style="fill:#2563eb">网口发送模块</text>
+  <text x="843" y="554" class="body">输出适配 → 发送帧</text>
+  <text x="843" y="583" class="small">按网口要求送出放行的报文</text>
+  <path d="M375,543 L421,543" class="arrow" data-target="445,543"/>
+  <path d="M755,543 L801,543" class="arrow" data-target="825,543"/>
+
+  <text x="65" y="641" class="body" style="fill:#7e22ce">控制：命令向右传递，状态与计数向左返回</text>
+  <rect x="65" y="661" width="310" height="112" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+  <text x="83" y="697" class="label" style="fill:#7e22ce">BVL 管理接口</text>
+  <text x="83" y="728" class="body">接收管理 CPU 的读写</text>
+  <text x="83" y="757" class="small">连接配套的控制总线</text>
+  <rect x="445" y="661" width="310" height="112" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+  <text x="463" y="697" class="label" style="fill:#7e22ce">control_regs.sv</text>
+  <text x="463" y="728" class="body">写入：授权 / 撤销</text>
+  <text x="463" y="757" class="small">读回：额度、计数与序号</text>
+  <rect x="825" y="661" width="310" height="112" rx="12" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+  <text x="843" y="697" class="label" style="fill:#7e22ce">过滤电路中的状态</text>
+  <text x="843" y="728" class="body">drop_once.sv 保存额度</text>
+  <text x="843" y="757" class="small">frame_filter.sv 提供计数</text>
+  <path d="M375,701 L421,701" class="arrow" data-target="445,701"/>
+  <path d="M445,743 L399,743" class="arrow" data-target="375,743"/>
+  <path d="M755,701 L801,701" class="arrow" data-target="825,701"/>
+  <path d="M825,743 L779,743" class="arrow" data-target="755,743"/>
+
+  <text x="65" y="815" class="body" style="fill:#c2410c">时钟与复位：提供工作节拍，让各模块可靠地交接和启动</text>
+  <rect x="65" y="835" width="310" height="112" rx="12" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="83" y="871" class="label" style="fill:#c2410c">板级时钟与复位</text>
+  <text x="83" y="907" class="body">来自配套参考工程</text>
+  <rect x="445" y="835" width="310" height="112" rx="12" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="463" y="871" class="label" style="fill:#c2410c">时钟与复位适配</text>
+  <text x="463" y="907" class="body">处理不同时钟域的交接</text>
+  <rect x="825" y="835" width="310" height="112" rx="12" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+  <text x="843" y="871" class="label" style="fill:#c2410c">连接课程模块</text>
+  <text x="843" y="907" class="body">frame_filter.sv</text>
+  <text x="843" y="933" class="small">control_regs.sv</text>
+  <path d="M375,891 L421,891" class="arrow" data-target="445,891"/>
+  <path d="M755,891 L801,891" class="arrow" data-target="825,891"/>
+  <path d="M600,985 L600,1016" class="arrow" data-target="600,1040"/>
+
+  <rect x="40" y="1040" width="1120" height="113" rx="14" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="65" y="1080" class="heading" style="fill:#4f46e5">核对完整工程，再交给 Vivado 构建</text>
+  <text x="65" y="1124" class="body">模块与连接 ＋ 器件与约束 ＋ 配套工具和许可 → 仿真、综合、实现</text>
+  <text x="40" y="1185" class="small" style="fill:#475569">7135V / BVL 工程接入示意；具体接口与时钟要求以配套开发包为准。</text>
+</svg>

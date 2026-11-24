@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <title>NTP versus classroom PTP</title>
+  <desc>Left: NTP client reaches a remote NTP server over UDP 123 with software timestamps, usually traceable to UTC. Right: this lesson uses the 7150 as a local Master and .2 PHC as Slave over UDP 319/320 with hardware timestamps. After alignment, packet timestamps can be subtracted to measure path time.</desc>
+  <defs>
+    <marker id="arr-orange" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="16" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-blue" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="16" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .h{font-size:26px;font-weight:900}
+      .sub{font-size:15px;fill:#475569}
+      .label{font-size:16px;font-weight:900}
+      .body{font-size:15px;fill:#334155}
+      .small{font-size:14px;fill:#475569}
+      .white{fill:#ffffff}
+    </style>
+  </defs>
+
+  <rect x="12" y="12" width="1176" height="676" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="40" y="50">NTP 和 PTP 干的是同一件事：对表</text>
+  <text class="t sub" x="40" y="76">都是一台报时、一台跟着调。不一样的是找谁对、戳盖在哪、本课有没有墙上的 UTC。</text>
+
+  <rect x="40" y="104" width="520" height="400" rx="20" fill="#ffffff" stroke="#ea580c" stroke-width="2.5"/>
+  <rect x="58" y="120" width="168" height="30" rx="15" fill="#ea580c"/>
+  <text class="t white" x="142" y="141" text-anchor="middle" font-size="15" font-weight="900">NTP · RFC 5905</text>
+  <rect x="70" y="168" width="200" height="88" rx="14" fill="#fff7ed" stroke="#ea580c"/>
+  <text class="t label" x="170" y="204" text-anchor="middle">你的主机</text>
+  <text class="t small" x="170" y="228" text-anchor="middle">系统钟 · 软件盖戳</text>
+  <path d="M270 212 H330" stroke="#ea580c" stroke-width="3" marker-end="url(#arr-orange)"/>
+  <rect x="330" y="168" width="200" height="88" rx="14" fill="#fff7ed" stroke="#ea580c"/>
+  <text class="t label" x="430" y="204" text-anchor="middle">NTP 服务器</text>
+  <text class="t small" x="430" y="228" text-anchor="middle">云端或机房</text>
+  <text class="t body" x="70" y="292">UDP 端口 123</text>
+  <text class="t body" x="70" y="320">客户端去问远端现在几点</text>
+  <text class="t body" x="70" y="348">戳多半在内核里盖</text>
+  <text class="t small" x="70" y="384">通常能追到 UTC</text>
+  <text class="t small" x="70" y="408">误差常见在毫秒级</text>
+  <text class="t small" x="70" y="476">日常上网对时就是这条路</text>
+
+  <rect x="640" y="104" width="520" height="400" rx="20" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+  <rect x="658" y="120" width="220" height="30" rx="15" fill="#2563eb"/>
+  <text class="t white" x="768" y="141" text-anchor="middle" font-size="15" font-weight="900">本课 PTP · IEEE 1588</text>
+  <rect x="670" y="168" width="200" height="88" rx="14" fill="#eff6ff" stroke="#2563eb"/>
+  <text class="t label" x="770" y="204" text-anchor="middle">7150 Master</text>
+  <text class="t small" x="770" y="228" text-anchor="middle">本地 GM · Et2</text>
+  <path d="M870 212 H930" stroke="#2563eb" stroke-width="3" marker-end="url(#arr-blue)"/>
+  <rect x="930" y="168" width="200" height="88" rx="14" fill="#ecfeff" stroke="#0891b2"/>
+  <text class="t label" x="1030" y="204" text-anchor="middle">.2 Slave</text>
+  <text class="t small" x="1030" y="228" text-anchor="middle">X2522 PHC</text>
+  <text class="t body" x="670" y="292">UDP 端口 319 / 320</text>
+  <text class="t body" x="670" y="320">交换机报时，网卡跟着调</text>
+  <text class="t body" x="670" y="348">戳由网卡硬件盖</text>
+  <text class="t small" x="670" y="384">本课没有 GNSS / 云端</text>
+  <text class="t small" x="670" y="408">对的是彼此，不是墙上钟</text>
+  <text class="t small" x="670" y="476">实验三才真正开 Master / Slave</text>
+
+  <rect x="40" y="528" width="1120" height="136" rx="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="1.5"/>
+  <text class="t label" x="600" y="568" text-anchor="middle">对完表之后才能相减</text>
+  <text class="t body" x="600" y="598" text-anchor="middle">PTP 不是只激活一个开关。报文真的在飞，Slave 会把 PHC 调过去。</text>
+  <text class="t body" x="600" y="626" text-anchor="middle">钟对齐以后，7150 入口戳和 .2 硬件 RX 戳才能相减，看的是路上花了多久。</text>
+  <text class="t small" x="600" y="650" text-anchor="middle">生产上 PTP 也可以追 UTC，后面「生产时间链」那张图再讲 GNSS → GM。</text>
+</svg>

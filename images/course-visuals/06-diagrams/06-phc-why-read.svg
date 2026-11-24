@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+  <title>Why this step only reads the NIC clock</title>
+  <desc>Run 3 only opens /dev/ptp0 and reads the X2522 PHC once. Experiment 3 later compares the 7150 ingress stamp with the .2 hardware RX stamp after PTP alignment.</desc>
+  <defs>
+    <marker id="arr-green" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="16" refY="6" markerWidth="12" markerHeight="10" orient="auto">
+      <path d="M0 1 L16 6 L0 11 Z" fill="#15803d"/>
+    </marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Noto Sans SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .white{fill:#ffffff}
+    </style>
+  </defs>
+  <rect x="12" y="12" width="1176" height="536" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t" x="40" y="52" font-size="26" font-weight="900">这一步只读网卡上的钟</text>
+  <text class="t" x="40" y="80" font-size="16" fill="#475569">实验三要比的是 7150 入口时刻和 .2 网卡收到时刻。后一个时刻就出在这只钟上。</text>
+
+  <rect x="40" y="108" width="520" height="328" rx="20" fill="#ffffff" stroke="#4f46e5" stroke-width="2.5"/>
+  <rect x="58" y="124" width="132" height="30" rx="15" fill="#4f46e5"/>
+  <text class="t white" x="124" y="145" text-anchor="middle" font-size="15" font-weight="900">运行 ③</text>
+  <rect x="70" y="176" width="460" height="100" rx="14" fill="#eef2ff" stroke="#4f46e5"/>
+  <text class="t" x="300" y="216" text-anchor="middle" font-size="20" font-weight="900">X2522 网卡上的钟</text>
+  <text class="t" x="300" y="248" text-anchor="middle" font-size="16" fill="#475569">Linux 叫它 PHC，入口是 /dev/ptp0</text>
+  <text class="t" x="300" y="316" text-anchor="middle" font-size="17" fill="#334155">phc_ctl 读一次：钟在，能读</text>
+  <text class="t" x="300" y="350" text-anchor="middle" font-size="16" fill="#334155">还没有对表，本步不动交换机</text>
+  <text class="t" x="300" y="400" text-anchor="middle" font-size="15" fill="#64748b">.1 和 .2 是同一块双口卡的两个口</text>
+
+  <path d="M560 272 H640" stroke="#15803d" stroke-width="4" marker-end="url(#arr-green)"/>
+
+  <rect x="640" y="108" width="520" height="328" rx="20" fill="#ffffff" stroke="#15803d" stroke-width="2.5"/>
+  <rect x="658" y="124" width="132" height="30" rx="15" fill="#15803d"/>
+  <text class="t white" x="724" y="145" text-anchor="middle" font-size="15" font-weight="900">实验三</text>
+  <rect x="670" y="176" width="460" height="100" rx="14" fill="#dcfce7" stroke="#15803d"/>
+  <text class="t" x="900" y="216" text-anchor="middle" font-size="20" font-weight="900">7150 入口戳  −  .2 网卡戳</text>
+  <text class="t" x="900" y="248" text-anchor="middle" font-size="16" fill="#475569">对完表之后，相减看路上花了多久</text>
+  <text class="t" x="900" y="316" text-anchor="middle" font-size="17" fill="#334155">真正对比的是两块芯片</text>
+  <text class="t" x="900" y="350" text-anchor="middle" font-size="16" fill="#334155">7150 的钟 和  .2 这只网卡钟</text>
+  <text class="t" x="900" y="400" text-anchor="middle" font-size="15" fill="#64748b">对表方法下一节再讲</text>
+
+  <rect x="40" y="456" width="1120" height="68" rx="14" fill="#eef2ff" stroke="#4f46e5"/>
+  <text class="t" x="600" y="498" text-anchor="middle" font-size="17" fill="#334155">读出来是哪一年都可以。本步只证明能打开这只钟，不拿两次读数相减。</text>
+</svg>

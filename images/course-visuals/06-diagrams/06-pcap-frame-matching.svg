@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+  <title id="title">用包的内容匹配两份抓包</title>
+  <desc id="desc">示意数据。左右分别为 .2 的 live.pcap 原帧和 .11 的 copy.pcap 副本；副本先取出末尾四字节短时间戳。三组包的 UDP 目的端口均为 31032，IP ID 分别为 501、502、503，UDP 载荷包含会话 A、行情消息序号 1001、1002、1003 和不同的行情内容。按 IP ID、UDP 目的端口和完整 UDP 载荷全部一致且唯一命中进行配对。箭头表示同一帧的匹配关系。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto" markerUnits="userSpaceOnUse" viewBox="0 0 12 12">
+      <path d="M0 0 L12 6 L0 12 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text { font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif; fill:#0f172a; }
+      .head { font-size:27px; font-weight:800; text-anchor:middle; }
+      .field { font-size:23px; font-weight:700; text-anchor:middle; }
+      .payload { font-size:20px; text-anchor:middle; }
+      .note { font-size:21px; text-anchor:middle; fill:#475569; }
+      .flow { fill:none; stroke:#334155; stroke-width:2.5; stroke-linecap:butt; marker-end:url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="750" rx="20" fill="#fff"/>
+  <text x="600" y="57" text-anchor="middle" font-size="32" font-weight="900">用包的内容匹配两份抓包</text>
+  <text class="note" x="600" y="99">示意数据 · A 路 UDP 组播行情，源 / 目的端口保持相同</text>
+
+  <rect x="40" y="142" width="470" height="446" rx="20" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text class="head" x="275" y="185">live.pcap · .2 原帧</text>
+  <text class="note" x="275" y="220">保存原帧及网卡 RX 时间</text>
+  <rect x="690" y="142" width="470" height="446" rx="20" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <text class="head" x="925" y="185">copy.pcap · .11 副本</text>
+  <text class="note" x="925" y="220">先取出副本末尾的 4 字节短戳</text>
+
+  <rect x="60" y="248" width="430" height="84" rx="12" fill="#fff" stroke="#93c5fd"/>
+  <text class="field" x="275" y="280">IP ID 501　|　目的端口 31032</text>
+  <text class="payload" x="275" y="313">UDP 内容：会话 A · 序号 1001 · 行情甲</text>
+  <rect x="710" y="248" width="430" height="84" rx="12" fill="#fff" stroke="#67e8f9"/>
+  <text class="field" x="925" y="280">IP ID 501　|　目的端口 31032</text>
+  <text class="payload" x="925" y="313">UDP 内容：会话 A · 序号 1001 · 行情甲</text>
+
+  <rect x="60" y="358" width="430" height="84" rx="12" fill="#fff" stroke="#93c5fd"/>
+  <text class="field" x="275" y="390">IP ID 502　|　目的端口 31032</text>
+  <text class="payload" x="275" y="423">UDP 内容：会话 A · 序号 1002 · 行情乙</text>
+  <rect x="710" y="358" width="430" height="84" rx="12" fill="#fff" stroke="#67e8f9"/>
+  <text class="field" x="925" y="390">IP ID 502　|　目的端口 31032</text>
+  <text class="payload" x="925" y="423">UDP 内容：会话 A · 序号 1002 · 行情乙</text>
+
+  <rect x="60" y="468" width="430" height="84" rx="12" fill="#fff" stroke="#93c5fd"/>
+  <text class="field" x="275" y="500">IP ID 503　|　目的端口 31032</text>
+  <text class="payload" x="275" y="533">UDP 内容：会话 A · 序号 1003 · 行情丙</text>
+  <rect x="710" y="468" width="430" height="84" rx="12" fill="#fff" stroke="#67e8f9"/>
+  <text class="field" x="925" y="500">IP ID 503　|　目的端口 31032</text>
+  <text class="payload" x="925" y="533">UDP 内容：会话 A · 序号 1003 · 行情丙</text>
+
+  <text class="note" x="600" y="278">同一帧</text>
+  <path class="flow" d="M522 302 H666"/>
+  <text class="note" x="600" y="388">同一帧</text>
+  <path class="flow" d="M522 412 H666"/>
+  <text class="note" x="600" y="498">同一帧</text>
+  <path class="flow" d="M522 522 H666"/>
+
+  <rect x="40" y="618" width="1120" height="97" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="600" y="654" text-anchor="middle" font-size="25" font-weight="800">实际匹配：IP ID + UDP 目的端口 + 完整 UDP 内容</text>
+  <text class="note" x="600" y="691">图中序号来自行情协议；三项全部一致且只有一个候选，才配对。</text>
+</svg>

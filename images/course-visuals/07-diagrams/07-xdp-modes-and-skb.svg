@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1100" viewBox="0 0 1200 1100" role="img" aria-labelledby="title desc">
+  <title id="title">先看普通收包，再看 XDP 加在哪里</title>
+  <desc id="desc">正常接收无需XDP程序；最上行是未挂载时的普通收包，下面三行才是主动挂载的独立模式选择。本课 Native XDP：X2522 收包，DMA 写入主机内存，主机 CPU 在 sfc 驱动内执行 XDP；PASS 后建立 skb 并继续交给本机行情程序，DROP 就地丢弃。Generic XDP 在主机 CPU 上已有 skb 后执行。Offloaded XDP 在支持卸载的网卡内执行，放行后才交给主机。skb 是 Linux 的包处理记录，关联报文数据缓冲区。</desc>
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#475569"/></marker>
+    <marker id="red-arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b91c1c"/></marker>
+  </defs>
+  <style>
+    text{font-family:'Noto Sans SC','Noto Sans CJK SC',sans-serif;fill:#0f172a;font-weight:500}
+    .title{font-size:34px;font-weight:700}.heading{font-size:28px;font-weight:700}
+    .label{font-size:25px;font-weight:700}.body{font-size:23px}.note{font-size:22px;fill:#475569}
+    .flow{fill:none;stroke:#475569;stroke-width:2.5;marker-end:url(#arrow)}
+    .drop{fill:none;stroke:#b91c1c;stroke-width:2.5;marker-end:url(#red-arrow)}
+  </style>
+  <rect width="1200" height="1100" rx="20" fill="#fff"/>
+  <text x="35" y="52" class="title">先看普通收包，再看 XDP 加在哪里</text>
+  <text x="35" y="90" class="body">正常联网无需 XDP；要加自定义过滤时，才选择下面的挂载位置。</text>
+
+  <!-- Ordinary Linux receive baseline: no XDP program is attached. -->
+  <rect x="25" y="115" width="1150" height="150" rx="16" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+  <text x="45" y="151" class="heading">正常基线 · 普通收包（未挂载 XDP 程序）</text>
+  <rect x="45" y="175" width="240" height="55" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="86" y="211" class="label">网卡收到报文</text>
+  <path d="M285 203H480" class="flow"/>
+  <text x="303" y="191" class="note">DMA 写入内存</text>
+  <rect x="480" y="175" width="290" height="55" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="505" y="211" class="label">CPU：驱动建立 skb</text>
+  <path d="M770 203H850" class="flow"/>
+  <rect x="850" y="175" width="300" height="55" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="877" y="211" class="label">IP / UDP → 本机应用</text>
+  <text x="45" y="254" class="note">skb 是包的处理记录；这里没有执行任何 XDP 程序。</text>
+
+  <g transform="translate(0 180)">
+  <!-- Native: course path, with separate NIC and host CPU containers. -->
+  <rect x="25" y="115" width="1150" height="295" rx="16" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+  <text x="45" y="154" class="heading">主动加过滤 · 本课选 Native XDP（驱动入口）</text>
+  <rect x="45" y="180" width="240" height="125" rx="12" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="65" y="217" class="label">.2 的 X2522 网卡</text>
+  <text x="65" y="251" class="body">ens64np1 收包</text>
+  <text x="65" y="283" class="note">网卡负责搬运报文</text>
+  <rect x="390" y="180" width="760" height="170" rx="12" fill="#fff" stroke="#94a3b8"/>
+  <text x="410" y="213" class="label">.2 主机内存 / CPU</text>
+  <path d="M285 265H410" class="flow"/>
+  <text x="305" y="233" class="note">DMA</text>
+  <text x="300" y="299" class="note">写入内存</text>
+  <rect x="410" y="230" width="225" height="82" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="430" y="264" class="label">Native XDP</text>
+  <text x="430" y="295" class="body">CPU 在 sfc 内执行</text>
+  <path d="M635 265H735" class="flow"/>
+  <text x="652" y="251" class="note">PASS</text>
+  <rect x="735" y="230" width="155" height="82" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="751" y="264" class="label">建立 skb</text>
+  <text x="751" y="295" class="note">配处理记录</text>
+  <path d="M890 265H940" class="flow"/>
+  <rect x="940" y="230" width="190" height="82" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="955" y="264" class="label">IP / UDP</text>
+  <text x="955" y="295" class="body">→ 本机行情程序</text>
+  <path d="M522 312V376H615" class="drop"/>
+  <text x="628" y="384" class="body" style="fill:#b91c1c">DROP：就地丢弃，省去右侧处理</text>
+  <text x="45" y="384" class="body">关键先后：先 XDP，放行后才建 skb。</text>
+
+  <!-- Generic: skb before XDP. -->
+  <rect x="25" y="435" width="1150" height="210" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="45" y="474" class="heading">另一种挂载 · Generic XDP（通用入口）</text>
+  <rect x="45" y="500" width="240" height="110" rx="12" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="65" y="542" class="label">网卡收包</text>
+  <text x="65" y="581" class="body">报文搬到主机内存</text>
+  <rect x="390" y="490" width="760" height="135" rx="12" fill="#fff" stroke="#94a3b8"/>
+  <text x="410" y="521" class="label">主机内存 / CPU</text>
+  <path d="M285 570H410" class="flow"/>
+  <text x="305" y="551" class="note">DMA</text>
+  <rect x="410" y="537" width="185" height="70" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="429" y="580" class="label">先建立 skb</text>
+  <path d="M595 570H645" class="flow"/>
+  <rect x="645" y="537" width="235" height="70" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="662" y="567" class="label">Generic XDP</text>
+  <text x="662" y="597" class="note">CPU 在通用路径执行</text>
+  <path d="M880 570H980" class="flow"/>
+  <text x="897" y="556" class="note">PASS</text>
+  <rect x="980" y="537" width="150" height="70" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="998" y="567" class="body">协议栈</text>
+  <text x="998" y="597" class="note">→ 本机应用</text>
+
+  <!-- Offload: XDP inside the NIC, pass toward host DMA. -->
+  <rect x="25" y="670" width="1150" height="210" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="45" y="709" class="heading">硬件扩展 · Offloaded XDP（本课卡与驱动组合不支持）</text>
+  <rect x="45" y="735" width="300" height="125" rx="12" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="65" y="768" class="label">支持卸载的网卡收包</text>
+  <rect x="65" y="783" width="260" height="60" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="80" y="821" class="label">XDP 在网卡内部执行</text>
+  <text x="386" y="791" class="body">PASS → DMA 到内存</text>
+  <rect x="635" y="735" width="515" height="125" rx="12" fill="#fff" stroke="#94a3b8"/>
+  <text x="655" y="768" class="label">主机内存 / CPU</text>
+  <path d="M345 811H655" class="flow"/>
+  <rect x="655" y="783" width="185" height="60" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="675" y="821" class="label">驱动建立 skb</text>
+  <path d="M840 811H890" class="flow"/>
+  <rect x="890" y="783" width="240" height="60" rx="10" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="906" y="821" class="body">协议栈 → 本机应用</text>
+  <text x="35" y="910" class="note">Native 需要驱动支持；Generic 使用内核通用入口。两者都要先挂载程序。</text>
+  </g>
+</svg>

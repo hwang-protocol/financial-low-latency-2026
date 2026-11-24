@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">
+  <title>DSCP 46 到 TX queue 要走完五个动作</title>
+  <desc>本课订单由主机按五元组写入 DSCP 46，Ethernet2 入口信任 DSCP，FM6000 默认把 40 到 47 映到 Traffic Class 5，再把 Traffic Class 5 映到 TX queue 5，Ethernet1 对 queue 5 显式使用 strict priority。只配置 strict 不会让报文自动进入该队列。</desc>
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 0 16 12" refX="1" refY="6" markerWidth="16" markerHeight="12" orient="auto" overflow="visible">
+      <path d="M0 1 L14 6 L0 11 Z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#0f172a}
+      .h{font-size:29px;font-weight:900}
+      .sub{font-size:16px;fill:#475569}
+      .step{font-size:17px;font-weight:900}
+      .body{font-size:14px;fill:#334155}
+      .small{font-size:13px;fill:#475569}
+      .mono{font-size:15px;font-weight:900}
+      .white{font-family:"Noto Sans CJK SC","Microsoft YaHei",sans-serif;fill:#fff;font-size:14px;font-weight:900}
+    </style>
+  </defs>
+
+  <rect x="12" y="12" width="1176" height="626" rx="24" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="t h" x="48" y="54">DSCP 46 到 TX queue：要走完五个动作</text>
+  <text class="t sub" x="48" y="83">标记在 IP 头里，TC 是芯片内部分类，TX queue 是出口资源；三者不是同一个字段。</text>
+
+  <rect x="48" y="105" width="1104" height="42" rx="12" fill="#eef2ff" stroke="#818cf8"/>
+  <text class="t step" x="600" y="132" text-anchor="middle" fill="#3730a3">本课订单方向　.2 Trader → Et2 → FM6000 → Et1 → .1 Exchange</text>
+
+  <rect x="48" y="174" width="202" height="226" rx="17" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <circle cx="76" cy="202" r="16" fill="#ea580c"/>
+  <text class="white" x="76" y="207" text-anchor="middle">1</text>
+  <text class="t step" x="102" y="208">主机写标记</text>
+  <text class="t body" x="68" y="248">只匹配当前订单五元组</text>
+  <rect x="68" y="267" width="162" height="48" rx="10" fill="#fff" stroke="#fdba74"/>
+  <text class="t mono" x="149" y="288" text-anchor="middle">iptables</text>
+  <text class="t body" x="149" y="307" text-anchor="middle">DSCP 46</text>
+  <text class="t small" x="68" y="342">线上证据</text>
+  <text class="t mono" x="68" y="369">TOS 0xb8</text>
+  <text class="t small" x="68" y="389">OUCH 本身不带 QoS 策略</text>
+
+  <path d="M250 287 H268" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="276" y="174" width="202" height="226" rx="17" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <circle cx="304" cy="202" r="16" fill="#2563eb"/>
+  <text class="white" x="304" y="207" text-anchor="middle">2</text>
+  <text class="t step" x="330" y="208">Et2 读标记</text>
+  <rect x="296" y="238" width="162" height="48" rx="10" fill="#fff" stroke="#93c5fd"/>
+  <text class="t mono" x="377" y="268" text-anchor="middle">qos trust dscp</text>
+  <text class="t body" x="296" y="318">受控入口才直接信任</text>
+  <text class="t body" x="296" y="344">本课 access 帧无 PCP</text>
+  <text class="t small" x="296" y="374">本机激活读数</text>
+  <text class="t mono" x="296" y="394">Trust Mode: DSCP</text>
+
+  <path d="M478 287 H496" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="504" y="174" width="202" height="226" rx="17" fill="#faf5ff" stroke="#7c3aed" stroke-width="2"/>
+  <circle cx="532" cy="202" r="16" fill="#7c3aed"/>
+  <text class="white" x="532" y="207" text-anchor="middle">3</text>
+  <text class="t step" x="558" y="208">DSCP → TC</text>
+  <text class="t small" x="524" y="248">FM6000 默认映射</text>
+  <rect x="524" y="267" width="162" height="54" rx="10" fill="#fff" stroke="#c4b5fd"/>
+  <text class="t mono" x="605" y="300" text-anchor="middle">40–47 → TC5</text>
+  <text class="t body" x="524" y="350">46 落在 40～47</text>
+  <text class="t body" x="524" y="376">TC 只存在于芯片内部</text>
+
+  <path d="M706 287 H724" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="732" y="174" width="202" height="226" rx="17" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+  <circle cx="760" cy="202" r="16" fill="#0891b2"/>
+  <text class="white" x="760" y="207" text-anchor="middle">4</text>
+  <text class="t step" x="786" y="208">TC → 出口队列</text>
+  <text class="t small" x="752" y="248">FM6000 默认映射</text>
+  <rect x="752" y="267" width="162" height="54" rx="10" fill="#fff" stroke="#67e8f9"/>
+  <text class="t mono" x="833" y="300" text-anchor="middle">TC5 → TX queue 5</text>
+  <text class="t body" x="752" y="350">本机默认是 1:1</text>
+  <text class="t body" x="752" y="376">进 Q5 不等于已设 strict</text>
+
+  <path d="M934 287 H952" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="960" y="174" width="192" height="226" rx="17" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5"/>
+  <circle cx="988" cy="202" r="16" fill="#ea580c"/>
+  <text class="white" x="988" y="207" text-anchor="middle">5</text>
+  <text class="t step" x="1014" y="208">Et1 调度</text>
+  <rect x="980" y="238" width="152" height="48" rx="10" fill="#fff" stroke="#fdba74"/>
+  <text class="t mono" x="1056" y="268" text-anchor="middle">Q5 priority strict</text>
+  <text class="t body" x="980" y="318">Q5 先于 RR 组出队</text>
+  <text class="t body" x="980" y="344">Q3～Q0 为 RR</text>
+  <text class="t small" x="980" y="374">调度只发生在</text>
+  <text class="t mono" x="980" y="394">出口 Ethernet1</text>
+
+  <rect x="48" y="428" width="1104" height="82" rx="16" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text class="t step" x="72" y="458" fill="#991b1b">关键边界：strict 只改变“已经进入 Q5 的包怎么排”，不会替你完成入口分类。</text>
+  <text class="t body" x="72" y="486">若 Et2 仍按 CoS 信任且帧未打 802.1Q tag：Default COS 0 → TC1 → Q1；即使 Q5 是 strict，订单也不会自动跳过去。</text>
+
+  <rect x="48" y="532" width="1104" height="76" rx="16" fill="#ecfdf5" stroke="#16a34a" stroke-width="1.5"/>
+  <text class="t step" x="72" y="561" fill="#166534">三层出处要分开</text>
+  <text class="t body" x="72" y="588">DSCP 46 = EF 是 IETF 码点；46→TC5→Q5 是本机 FM6000 默认表；Q5 显式 strict 是本课策略与实机配置。</text>
+</svg>

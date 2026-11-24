@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="790" viewBox="0 0 1200 790" role="img"><title>把功能写进 FPGA：生成镜像，再选择装载方式</title><desc>设计流程 · 文件拷贝、FPGA 临时配置、Flash 持久化是三件不同的事</desc><defs><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="10" refX="10" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#475569"/></marker></defs><style>text{font-family:'Noto Sans CJK SC',sans-serif;fill:#0f172a}.title{font-size:34px;font-weight:700}.sub{font-size:22px;fill:#475569}.label{font-size:25px;font-weight:700}.body{font-size:23px}.small{font-size:21px;fill:#475569}</style><rect width="1200" height="790" rx="20" fill="#fff"/><text x="40" y="55" class="title">把功能写进 FPGA：生成镜像，再选择装载方式</text><text x="40" y="94" class="sub">设计流程 · 文件拷贝、FPGA 临时配置、Flash 持久化是三件不同的事</text>
+<rect x="40" y="140" width="335" height="145" rx="12" fill="#eef2ff" stroke="#cbd5e1" stroke-width="1.5"/><text x="60" y="177" class="label">① RTL + 板级工程</text>
+<text x="60" y="213" class="body">BSP：芯片、引脚与时钟</text>
+<text x="60" y="246" class="body">Shell：MAC / PCIe / DMA</text>
+<text x="60" y="279" class="body">约束 + 仿真输入</text>
+<rect x="430" y="140" width="335" height="145" rx="12" fill="#eef2ff" stroke="#cbd5e1" stroke-width="1.5"/><text x="450" y="177" class="label">② 综合 + 布局布线</text>
+<text x="450" y="213" class="body">映射 LUT / FF / BRAM</text>
+<text x="450" y="246" class="body">检查资源、CDC 与时序</text>
+<text x="450" y="279" class="body">目标时钟下路径必须收敛</text>
+<rect x="820" y="140" width="335" height="145" rx="12" fill="#eef2ff" stroke="#cbd5e1" stroke-width="1.5"/><text x="840" y="177" class="label">③ .bit + 报告</text>
+<text x="840" y="213" class="body">器件匹配的配置比特流</text>
+<text x="840" y="246" class="body">板卡 / 源码 / 镜像 SHA</text>
+<text x="840" y="279" class="body">有 ILA 时保留 .ltx</text>
+<path d="M375 210L430 210" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M765 210L820 210" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="40" y="390" width="500" height="160" rx="12" fill="#e0f2fe" stroke="#cbd5e1" stroke-width="1.5"/><text x="60" y="427" class="label">开发：JTAG → FPGA 配置存储</text>
+<text x="60" y="463" class="body">Hardware Manager 选择精确目标</text>
+<text x="60" y="496" class="body">Program Device 装载 .bit</text>
+<text x="60" y="529" class="body">立即生效；断电后本次配置丢失</text>
+<rect x="650" y="390" width="505" height="160" rx="12" fill="#fff7ed" stroke="#cbd5e1" stroke-width="1.5"/><text x="670" y="427" class="label">持久：配置镜像 → 板上 Flash</text>
+<text x="670" y="463" class="body">按板手册生成 .mcs / .bin</text>
+<text x="670" y="496" class="body">Erase / Program / Verify 精确区域</text>
+<text x="670" y="529" class="body">重启后由启动逻辑加载 FPGA</text>
+<path d="M990 285L990 335L290 335L290 390" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M990 335L990 390" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="40" y="620" width="1115" height="113" rx="12" fill="#dcfce7" stroke="#cbd5e1" stroke-width="1.5"/><text x="60" y="657" class="label">④ 读回身份 → 默认 PASS → 武装一次 → 对齐 GAP → 恢复</text>
+<text x="60" y="693" class="body">先完成临时装载与回退验收；持久化另验启动选择、恢复镜像与冷启动行为。</text>
+</svg>
