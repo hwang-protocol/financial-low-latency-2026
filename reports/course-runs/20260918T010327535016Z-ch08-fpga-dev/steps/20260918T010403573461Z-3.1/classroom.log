@@ -1,0 +1,55 @@
+Low-Latency-Ops / 第 3.1 步 · 编译 RTL 与测试环境
+===== 本步开始：自动执行并保存输出 =====
+[执行位置] 对: 操作终端 .111，开发机 .101  证: 下面保留命令及原始返回
+本步记录目录: /financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010403573461Z-3.1
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 bash -s -- /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/dev.env
+
+vm-monitor / 3.1 编译仿真程序
+===== 查执行主机与本轮目录 =====
+[开发机] 对: 管理地址为 10.1.1.101；目录与本轮 RUN_ID 一致  证: 保护安装和生成文件的目标位置
+$ ip -4 -o address show
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+2: ens33    inet 10.1.1.101/24 brd 10.1.1.255 scope global ens33\       valid_lft forever preferred_lft forever
+3: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+$ cat /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/dev.env
+RUN_ID=20260918T010327535016Z-ch08-fpga-dev
+FLLE_DEV=/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev
+FLLE_CORE=/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core
+CH09_SRC=/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/ch09
+RESULT_DIR=/financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev
+STARTED_AT_UTC=2026-09-18T01:03:40Z
+PURPOSE=ch08-fpga-development
+PROFILE_ID=vm101-ubuntu22.04-offline
+STATUS=ACTIVE
+
+vm-monitor / 3.1 编译仿真程序
+===== 把电路源码与测试台编成仿真程序 =====
+[iverilog] 对: 编译无错误退出，并产生 filter.vvp  证: -g2012 启用 SystemVerilog；-s 指定测试台入口
+$ iverilog -g2012 -s filter_tb -o filter.vvp /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/nvda_match.sv /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/drop_once.sv /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/frame_filter.sv /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/control_regs.sv /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/filter_tb.sv > /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/work/simulation/compile.log 2>&1
+$ cat compile.log
+/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/control_regs.sv:22: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/control_regs.sv:22: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+
+vm-monitor / 3.1 编译仿真程序
+===== 查仿真程序与源码指纹 =====
+[编译产物] 对: filter.vvp 为本轮生成的非空文件；源码与产物各有 SHA-256  证: 下一步用同一份程序和源码执行测试
+$ ls -l filter.vvp
+-rwxr-xr-x 1 root root 91930 Sep 18 09:04 filter.vvp
+$ sha256sum filter.vvp /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/*.sv > compile.sha256
+$ cat compile.sha256
+0d61c27baf18c07b4988a61d3e6649125a4ab322597901b29889a8f0dba5ee1b  filter.vvp
+c379e06994e702f86ebfd8fc53bb9f9a92dfc86217871b519e9b3c2d59fa77bf  /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/control_regs.sv
+e4f1d052c8a7ead7a7fb4f8d3578f6bd4d06d7fc6b0046130621213f76dcdb0f  /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/drop_once.sv
+3d2a0c815ef1c42ab1b93e0a689354820908cc0acc8e2dcec4610d738d35262d  /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/filter_tb.sv
+4787a940bf8dba9456dd33c023227fd84f64bdecec8b084310855f2ca0483bed  /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/frame_filter.sv
+8a4aa79b6cce5623a8676fcc8624cb87d2d64de6bf6088b31a414463474a93f6  /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core/nvda_match.sv
+
+[下一步] 运行 3.2，让 vvp 执行 filter.vvp。
+===== 保存开发机工作记录到 .111 =====
+[结果留存] 对: 收回截至本步的 work 目录  证: 即使本步失败也尝试保存日志
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 'set -eu; cd /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev; if test -d work; then tar -czf - work; else tar -czf - --files-from /dev/null; fi' > remote-work.tgz
+已保存开发机累计工作文件: /financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010403573461Z-3.1/remote-work.tgz
+===== 本步结束 =====
+步骤退出码: 0; 结果收回退出码: 0
+本步执行完成；核对以上返回后，再执行下一张卡。
+终端完整记录: /financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010403573461Z-3.1/classroom.log

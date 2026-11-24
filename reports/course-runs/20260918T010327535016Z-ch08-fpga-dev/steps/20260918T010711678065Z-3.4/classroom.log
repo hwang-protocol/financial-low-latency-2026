@@ -1,0 +1,73 @@
+Low-Latency-Ops / 第 3.4 步 · 综合过滤数据通路
+===== 本步开始：自动执行并保存输出 =====
+[执行位置] 对: 操作终端 .111，开发机 .101  证: 下面保留命令及原始返回
+本步记录目录: /financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010711678065Z-3.4
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 bash -s -- /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/dev.env
+
+vm-monitor / 3.4 综合过滤电路
+===== 查执行主机与本轮目录 =====
+[开发机] 对: 管理地址为 10.1.1.101；目录与本轮 RUN_ID 一致  证: 保护安装和生成文件的目标位置
+$ ip -4 -o address show
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+2: ens33    inet 10.1.1.101/24 brd 10.1.1.255 scope global ens33\       valid_lft forever preferred_lft forever
+3: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+$ cat /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/dev.env
+RUN_ID=20260918T010327535016Z-ch08-fpga-dev
+FLLE_DEV=/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev
+FLLE_CORE=/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/core
+CH09_SRC=/opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/ch09
+RESULT_DIR=/financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev
+STARTED_AT_UTC=2026-09-18T01:03:40Z
+PURPOSE=ch08-fpga-development
+PROFILE_ID=vm101-ubuntu22.04-offline
+STATUS=ACTIVE
+
+vm-monitor / 3.4 综合过滤电路
+===== 把过滤电路描述综合成通用网表 =====
+[Yosys] 对: 查看 check 的实际问题数和 stat 的电路统计  证: 网表描述逻辑单元与连接；本步尚未映射到具体 FPGA
+$ /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/venv/bin/yowasp-yosys -Q -T -p $'\n  read_verilog -sv nvda_match.sv drop_once.sv frame_filter.sv;\n  synth -top frame_filter -noabc;\n  check -assert;\n  stat;\n  write_json frame-filter-netlist.json\n' > /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev/work/core-synthesis/frame-filter-synthesis.log 2>&1
+$ grep Found\ and\ reported frame-filter-synthesis.log
+Found and reported 0 problems.
+Found and reported 0 problems.
+Found and reported 0 problems.
+$ tail -n 20 frame-filter-synthesis.log
+       36 ports
+     1397 port bits
+        - memories
+        - memory bits
+        - processes
+    45606 cells
+     1756   $_AND_
+    18432   $_DFFE_PP_
+        3   $_DFF_P_
+    22764   $_MUX_
+      193   $_NOT_
+     1205   $_OR_
+     1037   $_SDFFE_PP0P_
+        8   $_SDFF_PP0_
+      208   $_XOR_
+        2 submodules
+        1   drop_once
+        1   nvda_match
+
+7. Executing JSON backend.
+
+vm-monitor / 3.4 综合过滤电路
+===== 查过滤网表文件与指纹 =====
+[JSON 网表] 对: 生成 frame-filter-netlist.json 并记录 SHA-256  证: 保存本次通用综合产物，供后续检查或比较
+$ ls -lh frame-filter-netlist.json
+-rw-r--r-- 1 root root 24M Sep 18 09:07 frame-filter-netlist.json
+$ sha256sum frame-filter-netlist.json > frame-filter-netlist.sha256
+$ cat frame-filter-netlist.sha256
+0d7ead9c4f914bdbd3bcede97379f5f6c107be532e3479cf57c61ddffa59035e  frame-filter-netlist.json
+
+[下一步] 3.5 使用本步已复制到 core-synthesis 的源码，综合寄存器电路。
+===== 保存开发机工作记录到 .111 =====
+[结果留存] 对: 收回截至本步的 work 目录  证: 即使本步失败也尝试保存日志
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 'set -eu; cd /opt/flle-ch08-dev/20260918T010327535016Z-ch08-fpga-dev; if test -d work; then tar -czf - work; else tar -czf - --files-from /dev/null; fi' > remote-work.tgz
+已保存开发机累计工作文件: /financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010711678065Z-3.4/remote-work.tgz
+===== 本步结束 =====
+步骤退出码: 0
+结果收回退出码: 0
+本步执行完成；核对以上返回后，再执行下一张卡。
+终端完整记录: /financial-low-latency/Documents/reports/course-runs/20260918T010327535016Z-ch08-fpga-dev/steps/20260918T010711678065Z-3.4/classroom.log

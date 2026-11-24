@@ -1,0 +1,80 @@
+Low-Latency-Ops / 第 1.1 步 · 分发源码与准备共享工具
+===== 本步开始：自动执行并保存输出 =====
+[执行位置] 对: 操作终端 .111，开发机 .101  证: 下面保留命令及原始返回
+本步记录目录: /financial-low-latency/Documents/reports/course-runs/20260918T010424840327Z-ch08-fpga-dev/steps/20260918T010424840327Z-1.1
+$ bash /financial-low-latency/Documents/newDoc/assets/08-arista-fpga-draft/classroom/operations/1.1-distribute.sh
+
+===== 校验 .111 的离线材料 =====
+[安装材料] 对: 所有摘要为 OK  证: 清单和安装包与课前固定版本一致
+SHA256SUMS: OK
+$ sha256sum -c SHA256SUMS
+deb/iverilog_11.0-1.1_amd64.deb: OK
+requirements.txt: OK
+wheels/click-8.5.0-py3-none-any.whl: OK
+wheels/packaging-26.3-py3-none-any.whl: OK
+wheels/pip-25.2-py3-none-any.whl: OK
+wheels/platformdirs-4.11.9-py3-none-any.whl: OK
+wheels/setuptools-84.0.0-py3-none-any.whl: OK
+wheels/six-1.17.0-py2.py3-none-any.whl: OK
+wheels/wasmtime-47.0.1-py3-none-manylinux1_x86_64.whl: OK
+wheels/wheel-0.48.0-py3-none-any.whl: OK
+wheels/yowasp_runtime-1.96-py3-none-any.whl: OK
+wheels/yowasp_yosys-0.69.0.0.post1233-py3-none-any.whl: OK
+
+===== 在 .101 建立本轮开发目录 =====
+[目标环境] 对: Ubuntu 22.04 / amd64，地址 .101  证: 系统、地址和新目录实际返回
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 bash -s -- /opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev
+$ hostname
+vm-monitor
+$ ip -4 -o address show
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+2: ens33    inet 10.1.1.101/24 brd 10.1.1.255 scope global ens33\       valid_lft forever preferred_lft forever
+3: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+os=ubuntu version=22.04 architecture=amd64
+$ ls -ld /opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev
+drwxr-xr-x 2 root root 4096 Sep 18 09:04 /opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev
+
+===== 从已有缓存安装共享编译工具 =====
+[下一章工具] 对: Verilator、g++、make 可用  证: 离线安装器实际检查与安装返回
+$ python3 /financial-low-latency/Documents/newDoc/assets/common/install-offline-packages.py 10.1.1.101 verilator
+离线工具：verilator；.111 缓存校验 63 个包通过。
+10.1.1.101 工具版本已齐全；无需安装，公网下载 0 字节。
+
+===== 复制源码和安装包，保存输入归档 =====
+[本轮输入] 对: core / ch09 / tools 三个目录  证: 归档文件清单与摘要
+$ cp -a /financial-low-latency/Documents/newDoc/assets/08-arista-fpga-draft /financial-low-latency/Documents/reports/course-runs/20260918T010424840327Z-ch08-fpga-dev/core
+$ cp -a /financial-low-latency/Documents/newDoc/assets/09-verilator /financial-low-latency/Documents/reports/course-runs/20260918T010424840327Z-ch08-fpga-dev/ch09
+$ cp -a /financial-low-latency/artifacts/blobs/ch08-fpga-dev /financial-low-latency/Documents/reports/course-runs/20260918T010424840327Z-ch08-fpga-dev/tools
+$ tar --exclude=__pycache__ -czf inputs.tgz core tools ch09
+$ cat inputs.sha256
+34765403303327f0df9a867b8da07844128d118f814f86b1fcf0efd1320a4550  inputs.tgz
+$ cat dev.env
+RUN_ID=20260918T010424840327Z-ch08-fpga-dev
+FLLE_DEV=/opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev
+FLLE_CORE=/opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev/core
+CH09_SRC=/opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev/ch09
+RESULT_DIR=/financial-low-latency/Documents/reports/course-runs/20260918T010424840327Z-ch08-fpga-dev
+STARTED_AT_UTC=2026-09-18T01:04:27Z
+PURPOSE=ch08-fpga-development
+PROFILE_ID=vm101-ubuntu22.04-offline
+STATUS=ACTIVE
+
+===== 传到 .101，再次校验并解压 =====
+[开发机副本] 对: inputs.tgz 校验 OK，源码和工具目录存在  证: 远端校验及目录清单
+$ scp -o BatchMode=yes -o ConnectTimeout=10 inputs.tgz inputs.sha256 dev.env root@10.1.1.101:/opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev/
+$ ssh -o BatchMode=yes -o ConnectTimeout=10 root@10.1.1.101 bash -s -- /opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev 0
+$ sha256sum -c inputs.sha256
+inputs.tgz: OK
+$ tar -xzf inputs.tgz
+$ ls -ld core ch09 tools
+drwxr-xr-x 6 root root 4096 Sep 18 08:59 ch09
+drwxr-xr-x 5 root root 4096 Sep 18 08:18 core
+drwxr-xr-x 4 root root 4096 Sep 18 08:18 tools
+$ cp dev.env /financial-low-latency/Documents/reports/run-state/ch09-shared-foundation.env
+development_host=10.1.1.101
+RUN_ID=20260918T010424840327Z-ch08-fpga-dev
+workspace=/opt/flle-ch08-dev/20260918T010424840327Z-ch08-fpga-dev
+===== 本步结束 =====
+步骤退出码: 0; 结果收回退出码: None
+本步执行完成；核对以上返回后，再执行下一张卡。
+终端完整记录: /financial-low-latency/Documents/reports/course-runs/20260918T010424840327Z-ch08-fpga-dev/steps/20260918T010424840327Z-1.1/classroom.log
