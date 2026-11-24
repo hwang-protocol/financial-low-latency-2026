@@ -1,0 +1,16 @@
+===== 教师现场 C2 · 真实订单共享出口 QoS A/B =====
+result=PASS
+platform=DCS-7150S-24-F / EOS 4.23.16M-2GB / FM6000
+background=Et11+Et12 untagged 1514B -> static test MAC -> Et1 -> TC1/Q1
+background_configured=500000 pps/ingress x2 for 4s
+background_actual_packets=4000002 / 4000000
+baseline=unmarked orders in Q1; executed=24; p50/p99=2164090/2199703 ns
+baseline_queue=P1 +3253878; P5 +0; LANZ +1
+tagged=DSCP46 -> TC5 -> Q5 explicit priority strict; executed=24; p50/p99=68812/102074 ns
+tagged_queue=P1 +3252646; P5 +48; LANZ +1
+p99_improvement_ratio=21.55x
+host_restore=iptables mangle table byte-identical
+switch_restore=temporary static MAC, LANZ and QoS removed; startup unchanged; Management1 connected
+post_restore_orders=2/2 ORDER_EXECUTED; AAPL position unchanged
+save_config=NO
+evidence=Documents/reports/course-runs/20260903T081514Z-07-qos-contention-live

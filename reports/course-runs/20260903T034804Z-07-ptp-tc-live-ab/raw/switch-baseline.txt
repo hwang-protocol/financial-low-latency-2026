@@ -1,0 +1,28 @@
+$ show clock
+show clock | no-more
+Thu Sep  3 03:30:23 2026
+Timezone: UTC
+Clock source: local
+
+$ show running-config | include ^ptp|ptp enable
+show running-config | include ^ptp|ptp enable | no-more
+
+$ show startup-config | include ^ptp|ptp enable
+show startup-config | include ^ptp|ptp enable | no-more
+
+$ show ptp
+show ptp | no-more
+PTP is not configured
+
+$ show interfaces Ethernet1, Ethernet2 status
+show interfaces Ethernet1, Ethernet2 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+Et2               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet1, Ethernet2 counters errors
+show interfaces Ethernet1, Ethernet2 counters errors | no-more
+Port               FCS    Align   Symbol       Rx    Runts   Giants       Tx
+Et1                  0        0        0        0        0        0        0
+Et2                  0        0        0        2        2        0        0

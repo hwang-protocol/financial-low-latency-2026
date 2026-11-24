@@ -1,0 +1,24 @@
+$ hostname
+vm-2522-01
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+$ find /var/backups -name flle-ch06-grub.*
+<none>
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+$ readlink -f .../iommu_group
+/sys/kernel/iommu_groups/7
+$ ls .../iommu_group/devices
+0000:03:00.0
+$ hostname
+vm-2522-02
+$ grep ^GRUB_CMDLINE_LINUX= /etc/default/grub
+GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
+$ find /var/backups -name flle-ch06-grub.*
+<none>
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+$ readlink -f .../iommu_group
+/sys/kernel/iommu_groups/7
+$ ls .../iommu_group/devices
+0000:03:00.0

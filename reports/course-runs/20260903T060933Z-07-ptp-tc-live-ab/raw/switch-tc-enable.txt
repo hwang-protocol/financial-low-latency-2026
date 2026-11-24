@@ -1,0 +1,55 @@
+$ show clock
+show clock | no-more
+Thu Sep  3 05:52:43 2026
+Timezone: UTC
+Clock source: local
+
+$ configure terminal
+configure terminal
+
+$ ptp mode e2etransparent
+ptp mode e2etransparent
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ interface Ethernet1
+interface Ethernet1
+
+$ ptp enable
+ptp enable
+
+$ end
+end
+
+$ configure terminal
+configure terminal
+
+$ interface Ethernet2
+interface Ethernet2
+
+$ ptp enable
+ptp enable
+
+$ end
+end
+
+$ show clock
+show clock | no-more
+Thu Sep  3 05:52:43 2026
+Timezone: UTC
+Clock source: local
+
+$ show running-config | include ^ptp|ptp enable
+show running-config | include ^ptp|ptp enable | no-more
+ptp mode e2etransparent
+
+$ show startup-config | include ^ptp|ptp enable
+show startup-config | include ^ptp|ptp enable | no-more
+
+$ show ptp
+show ptp | no-more
+PTP Mode: Disabled

@@ -1,0 +1,133 @@
+$ terminal length 0
+terminal length 0
+Pagination disabled.
+
+$ configure terminal
+configure terminal
+
+$ interface Ethernet3
+interface Ethernet3
+
+$ tx-queue 7
+tx-queue 7
+
+$ priority strict
+priority strict
+
+$ tx-queue 3
+tx-queue 3
+
+$ no priority
+no priority
+
+$ bandwidth percent 40
+bandwidth percent 40
+
+$ show active
+show active
+interface Ethernet3
+   tx-queue 3
+      no priority
+      bandwidth percent 40
+
+$ end
+end
+
+$ show qos interfaces Ethernet3
+show qos interfaces Ethernet3
+Ethernet3:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3     40 / 40      - / -          ( - )   RR / RR  
+   2     20 / -       - / -          ( - )   RR / SP  
+   1     20 / -       - / -          ( - )   RR / SP  
+   0     20 / -       - / -          ( - )   RR / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show running-config interfaces Ethernet3
+show running-config interfaces Ethernet3
+interface Ethernet3
+   tx-queue 3
+      no priority
+      bandwidth percent 40
+
+$ configure terminal
+configure terminal
+
+$ interface Ethernet3
+interface Ethernet3
+
+$ tx-queue 7
+tx-queue 7
+
+$ default priority
+default priority
+
+$ tx-queue 3
+tx-queue 3
+
+$ default bandwidth percent
+default bandwidth percent
+
+$ default priority
+default priority
+
+$ end
+end
+
+$ show running-config interfaces Ethernet3
+show running-config interfaces Ethernet3
+interface Ethernet3
+
+$ show startup-config interfaces Ethernet3
+show startup-config interfaces Ethernet3
+interface Ethernet3
+
+$ show qos interfaces Ethernet3
+show qos interfaces Ethernet3
+Ethernet3:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+

@@ -1,0 +1,31 @@
+===== 查 SFC 模式 =====
+[控制面] 对: mode=SFC transition=READY owner=sfc  证: 出站闸还在 sfc
+$ labctl status
+started mode=SFC transition=READY owner=sfc
+===== 查四路 =====
+[四路] 对: socket/onload/tcpdirect=ONLINE，dpdk=WAITING  证: 四个下单方案都在现场，随时能下单
+$ curl /api/transport-lab
+socket=ONLINE
+onload=ONLINE
+tcpdirect=ONLINE
+dpdk=WAITING
+===== 查三条客户端 =====
+[SFC客户端] 对: socket/onload/tcpdirect 都是 ONLINE  证: 可以 curl 下 Socket 单
+$ curl /api/transport-lab
+sfc_clients socket=ONLINE onload=ONLINE tcpdirect=ONLINE
+===== 查 Socket 下单回执 =====
+[回执] 对: ok=true 且 transport=SOCKET  证: Gateway 接下了这一笔
+$ curl POST /api/order
+{"ok":true,"client_order_id":2100000003,"transport":"SOCKET"}
+===== 查数据面 =====
+[数据面] 对: mode=SFC transition=READY owner=sfc  证: 下单后出站闸没变
+$ curl /api/transport-lab
+data_plane mode=SFC transition=READY owner=sfc
+===== 查 Socket 成交 =====
+[成交] 对: orders 与 fills 比下单前各多 1  证: 收到 Executed，不是只入队
+$ curl /api/transport-lab
+kernel_final orders=4 fills=4 queue=DEQUE_CV engine=KERNEL_SOCKET
+===== 查 GUI 地址 =====
+[GUI] 对: http://10.1.1.101:8088/  证: 浏览器看同一套四路
+$ echo GUI
+GUI=http://10.1.1.101:8088/

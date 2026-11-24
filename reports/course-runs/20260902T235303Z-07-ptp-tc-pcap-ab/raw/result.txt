@@ -1,0 +1,15 @@
+$ sha256sum -c PTP-AB-SHA256SUMS
+Documents/newDoc/assets/07-arista-time/ptp-baseline-client-20260721.pcap: OK
+Documents/newDoc/assets/07-arista-time/ptp-tc-client-20260721.pcap: OK
+
+===== TC OFF · baseline samples =====
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, v1 compat : no, msg type : follow up msg, length : 44, domain : 24, reserved1 : 0, Flags [none], NS correction : 0, sub NS correction : 0, reserved2 : 0, clock identity : 0xf53fffed3af20, port id : 1, seq id : 24, control : 2 (peer delay req msg), log message interval : 0, preciseOriginTimeStamp : 62198 seconds, 949559920 nanoseconds
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, v1 compat : no, msg type : delay resp msg, length : 54, domain : 24, reserved1 : 0, Flags [none], NS correction : 0, sub NS correction : 0, reserved2 : 0, clock identity : 0xf53fffed3af20, port id : 1, seq id : 0, control : 3 (peer delay resp msg), log message interval : 0, receiveTimeStamp : 62202 seconds, 185408881 nanoseconds, port identity : 0xf53fffed3af21, port id : 1
+
+===== TC ON · E2E Transparent Clock samples =====
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, v1 compat : no, msg type : follow up msg, length : 44, domain : 24, reserved1 : 0, Flags [none], NS correction : 0, sub NS correction : 23592900, reserved2 : 0, clock identity : 0xf53fffed3af20, port id : 1, seq id : 0, control : 2 (peer delay req msg), log message interval : 0, preciseOriginTimeStamp : 62505 seconds, 742898407 nanoseconds
+IP 20.1.1.1.320 > 224.0.1.129.320: PTPv2, v1 compat : no, msg type : delay resp msg, length : 54, domain : 24, reserved1 : 0, Flags [none], NS correction : 0, sub NS correction : 23780200, reserved2 : 0, clock identity : 0xf53fffed3af20, port id : 1, seq id : 0, control : 3 (peer delay resp msg), log message interval : 0, receiveTimeStamp : 62506 seconds, 897202868 nanoseconds, port identity : 0xf53fffed3af21, port id : 1
+
+full_scan baseline follow_up_zero=42/42 delay_resp_zero=38/38
+full_scan tc follow_up_nonzero=66/66 delay_resp_nonzero=66/66 correction_subns_range=23218400..23967400
+effect=PASS baseline_all_zero=yes tc_all_nonzero=yes

@@ -1,0 +1,16 @@
+===== 实验一 · 在线真实订单共享出口 QoS A/B =====
+result=PASS
+platform=DCS-7150S-24-F / EOS 4.23.16M-2GB / FM6000
+background=MoldUDP64/ITCH5 controlled load, Et11+Et12 untagged 1514B -> isolated test MAC -> Et1 -> TC1/Q1
+background_configured=500000 pps/ingress x2 for 15s
+background_actual_packets=15000000 / 15000000
+baseline=unmarked orders in Q1; executed=120; p50/p99=2199516/2333197 ns
+baseline_queue=P1 +12213859; P5 +0; LANZ +2
+tagged=DSCP46 -> TC5 -> Q5 explicit priority strict; executed=120; p50/p99=107044/190867 ns
+tagged_queue=P1 +12193821; P5 +240; LANZ +1
+p99_improvement_ratio=12.22x
+host_restore=iptables mangle table byte-identical
+switch_restore=temporary static MAC, LANZ and QoS removed; startup unchanged; Management1 connected
+post_restore_orders=2/2 ORDER_EXECUTED; AAPL position unchanged
+save_config=NO
+evidence=Documents/reports/course-runs/20260903T095143Z-07-qos-contention-live

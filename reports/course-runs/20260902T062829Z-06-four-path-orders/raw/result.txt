@@ -1,0 +1,13 @@
+===== 查已有四路 =====
+[现场] 对: SFC/READY/sfc 且三条客户端 ONLINE  证: 复用当前 RUN，不另起抢端口
+$ ch06-four-path.env
+20260902T062829Z-06-four-path-orders already READY; reuse this RUN
+started mode=SFC transition=READY owner=sfc
+sfc_clients socket=ONLINE onload=ONLINE tcpdirect=ONLINE
+
+===== Kernel Socket baseline order =====
+{"ok":true,"client_order_id":2100000001,"transport":"SOCKET"}
+data_plane mode=SFC transition=READY owner=sfc
+kernel_final orders=2 fills=2 queue=DEQUE_CV engine=KERNEL_SOCKET
+
+GUI=http://10.1.1.101:8088/

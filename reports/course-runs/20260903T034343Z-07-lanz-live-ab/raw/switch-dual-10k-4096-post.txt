@@ -1,0 +1,66 @@
+$ show clock
+show clock | no-more
+Thu Sep  3 03:26:46 2026
+Timezone: UTC
+Clock source: local
+
+$ show queue-monitor length statistics
+show queue-monitor length statistics | no-more
+
+Report generated at 2026-09-03 03:26:46
+Interface      Traffic Class  Count          
+-----------------------------------------------------------------
+
+Global Hit Count = 0
+
+$ show queue-monitor length Ethernet 2
+show queue-monitor length Ethernet 2 | no-more
+
+Report generated at 2026-09-03 03:26:46
+S-Start, U-Update, E-End, TC-Traffic Class
+GH-High, GU-Update, GL-Low
+Segment size for S, U and E congestion records is 480 bytes
+Segment size for GL, GU and GH congestion records is 160 bytes
+* Max queue length during period of congestion
++ Period of congestion exceeded counter
+--------------------------------------------------------------------------------
+Type    Time                   Intf    Congestion     Queue       Time of Max
+                               (TC)    duration       length      Queue length
+                                       (usecs)        (segments)  relative to
+                                                                  congestion
+                                                                  start
+                                                                  (usecs)
+--------------------------------------------------------------------------------
+
+$ show queue-monitor length drops
+show queue-monitor length drops | no-more
+
+Report generated at 2026-09-03 03:26:47
+Time                                    Interface      TX Drops
+-----------------------------------------------------------------
+
+$ show interfaces Ethernet2 counters
+show interfaces Ethernet2 counters | no-more
+Port                           InOctets     InUcastPkts     InMcastPkts     InBcastPkts
+Et2                           143918695         1428625            2097             549
+
+Port                          OutOctets    OutUcastPkts    OutMcastPkts    OutBcastPkts
+Et2                         43091329182       305988034       130740452            3690
+
+$ show interfaces Ethernet2 counters errors
+show interfaces Ethernet2 counters errors | no-more
+Port               FCS    Align   Symbol       Rx    Runts   Giants       Tx
+Et2                  0        0        0        2        2        0        0
+
+$ show interfaces Ethernet2 counters discards
+show interfaces Ethernet2 counters discards | no-more
+Port          InDiscards    OutDiscards 
+---------- ---------------- ----------- 
+Et2                    0              0 
+
+
+$ show platform fm6000 danz-processor | include Lanz is|Written records|Read records|Failed transfers
+show platform fm6000 danz-processor | include Lanz is|Written records|Read records|Failed transfers | no-more
+Lanz is ENABLED
+   Written records: 0
+   Read records: 0

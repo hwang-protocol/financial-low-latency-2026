@@ -1,0 +1,36 @@
+fll-arista / 10k
+===== 查10k LANZ统计 =====
+[statistics] 对: 表头之下没有 Et2 行  证: 本轮未跨当前高阈值
+$ show queue-monitor length statistics
+
+Report generated at 2026-09-03 05:51:08
+Interface      Traffic Class  Count          
+-----------------------------------------------------------------
+
+Global Hit Count = 0
+
+fll-arista / 25k
+===== 查25k LANZ统计 =====
+[Et2] 对: Et2 / 1 / 正计数  证: 25k 档跨过了当前阈值
+$ show queue-monitor length statistics
+
+Report generated at 2026-09-03 05:51:20
+Interface      Traffic Class  Count          
+-----------------------------------------------------------------
+Et2             1               164            
+
+Global Hit Count = 0
+
+===== 查25k Et2队列事件 =====
+[Et2] 对: 成对的 S/E 行  证: 能看到短队列的开始和结束；完整表在 raw
+$ show queue-monitor length Ethernet 2
+ E   0:00:08.09896 ago         Et2(1)    28            64*         0             
+ S   0:00:08.09899 ago         Et2(1)    N/A           64          N/A           
+===== 查恢复 =====
+[status] 对: queue-monitor length disabled  证: running-config 已撤，startup 未写
+$ show queue-monitor length status
+queue-monitor length disabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+evidence=Documents/reports/course-runs/20260903T060803Z-07-lanz-live-ab

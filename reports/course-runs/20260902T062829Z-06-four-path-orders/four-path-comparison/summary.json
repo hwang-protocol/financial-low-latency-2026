@@ -1,0 +1,2122 @@
+{
+  "schema": "flle.ch06-four-order-paths.v13",
+  "run_id": "20260902T062829Z-06-four-path-orders",
+  "created_utc": "2026-09-02T07:54:21Z",
+  "phase_order": [
+    [
+      "SOCKET",
+      "OPENONLOAD",
+      "DPDK",
+      "TCPDIRECT"
+    ],
+    [
+      "OPENONLOAD",
+      "TCPDIRECT",
+      "SOCKET",
+      "DPDK"
+    ],
+    [
+      "TCPDIRECT",
+      "DPDK",
+      "OPENONLOAD",
+      "SOCKET"
+    ],
+    [
+      "DPDK",
+      "SOCKET",
+      "TCPDIRECT",
+      "OPENONLOAD"
+    ]
+  ],
+  "limitations": [
+    "DPDK owns the X2522 through vfio-pci and cannot be interleaved per order with the three sfc paths; the controller switches mode when DPDK reaches its balanced position.",
+    "The 12 distinct ordered predecessor pairs occur once on within-round edges. The three cross-round edges necessarily repeat existing pairs, so the complete sequence guarantees only that all 12 possible predecessors occur at least once.",
+    "Each transport cell begins with configured warmup orders to reduce carryover before measured submissions; this does not claim to eliminate carryover.",
+    "The first warmup establishes traffic, then a PID-bound path witness is captured; the remaining warmups separate that heavyweight probe from measured submissions.",
+    "Before the first formal cell, TCP connection attempts to the Gateway and transport-controller endpoints both returned ABSENT; formal mode changes invoke the fixed local control script directly.",
+    "During the sfc phase all three clients and their Exchange sessions remain online; the two paths not being sampled sleep on DEQUE_CV.",
+    "During the DPDK phase the sfc clients are stopped and the DPDK client runs exclusively.",
+    "DEQUE_CV fixes the application handoff; TCPDirect and F-Stack still poll their network reactors.",
+    "OpenOnload uses --profile=latency, so its result combines the accelerated user-space path with profile polling.",
+    "The formal window pauses Exchange replay at one verified source timestamp under a renewed ten-minute lease; all 16 cells share that fixed book, explicit cleanup restores PLAYING, and lease expiry is the process-kill fallback."
+  ],
+  "runtime_contract": {
+    "application_handoff": "DEQUE_CV",
+    "data_cpu": 2,
+    "management_cpu": 3,
+    "dpdk_bridge_cpu": 3,
+    "fstack_idle_sleep_us": 0,
+    "fstack_pkt_tx_delay_us": 0,
+    "sfc_hugepages_2mb": 128,
+    "dpdk_hugepages_2mb": 256,
+    "onload_profile": "latency",
+    "order_design": "POSITION_AND_WITHIN_ROUND_FIRST_ORDER_PREDECESSOR_BALANCED_4X4",
+    "round_aggregation": "DESCRIPTIVE_MEDIAN_OF_4_ROUND_STATISTICS_HALF_UP_TO_INTEGER_NS",
+    "order_balance": {
+      "rounds": 4,
+      "position_balance": [
+        {
+          "transport": "SOCKET",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "OPENONLOAD",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "TCPDIRECT",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        },
+        {
+          "transport": "DPDK",
+          "position_counts": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 1
+          }
+        }
+      ],
+      "within_round_first_order_predecessor_balance": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 1
+        }
+      ],
+      "cross_round_boundaries": [
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD"
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT"
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK"
+        }
+      ],
+      "complete_sequence_predecessor_coverage": [
+        {
+          "predecessor": "SOCKET",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "SOCKET",
+          "current": "DPDK",
+          "count": 2
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "TCPDIRECT",
+          "count": 1
+        },
+        {
+          "predecessor": "OPENONLOAD",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "OPENONLOAD",
+          "count": 2
+        },
+        {
+          "predecessor": "TCPDIRECT",
+          "current": "DPDK",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "SOCKET",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "OPENONLOAD",
+          "count": 1
+        },
+        {
+          "predecessor": "DPDK",
+          "current": "TCPDIRECT",
+          "count": 2
+        }
+      ]
+    },
+    "final_data_plane_mode": "SFC",
+    "observer_absence_before_measurement": [
+      {
+        "host": "10.1.1.101",
+        "port": 8088,
+        "state": "ABSENT"
+      },
+      {
+        "host": "10.1.1.111",
+        "port": 48606,
+        "state": "ABSENT"
+      }
+    ],
+    "native_path_receipts": "PRE_AND_POST_NATIVE_ORIGINALS_OUTSIDE_TIMER",
+    "exchange_book_contract": "REPLAY_PAUSED_AT_STABLE_SOURCE_TIMESTAMP_AND_RESTORED",
+    "exchange_pause_lease_ms": 600000,
+    "exchange_pause_failure_recovery": "PYTHON_FINALLY_PLUS_OUTER_RECONCILE_PLUS_BOUNDED_EXCHANGE_LEASE"
+  },
+  "parameters": {
+    "warmup_per_round": 100,
+    "samples_per_round": 1000,
+    "rounds": 4
+  },
+  "exchange_ledger_gate": {
+    "host": "10.1.1.1",
+    "port": 48120,
+    "before": 8,
+    "after": 17608,
+    "delta": 17600,
+    "expected": 17600,
+    "replay_loop": 1,
+    "session": "0612260001"
+  },
+  "exchange_replay_gate": {
+    "before": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "UNICAST",
+      "session": "0612260001",
+      "replay_status": "PLAYING",
+      "replay_pause_lease_ms": 0,
+      "replay_pause_lease_remaining_ms": 0,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 38915571629610,
+      "source_clock": "10:48:35.571629610",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 8,
+      "paper_ledger": [
+        {
+          "client_order_id": 2100000000,
+          "clordid": "SOCK2100000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2958600
+        },
+        {
+          "client_order_id": 2100000001,
+          "clordid": "SOCK2100000001",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2961700
+        },
+        {
+          "client_order_id": 2100000002,
+          "clordid": "SOCK2100000002",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2919000
+        },
+        {
+          "client_order_id": 2100000003,
+          "clordid": "SOCK2100000003",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2916100
+        },
+        {
+          "client_order_id": 2100000004,
+          "clordid": "SOCK2100000004",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912800
+        },
+        {
+          "client_order_id": 2500000000,
+          "clordid": "ONLD2500000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912700
+        },
+        {
+          "client_order_id": 2900000000,
+          "clordid": "TCPD2900000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2913400
+        },
+        {
+          "client_order_id": 3900000000,
+          "clordid": "DPDK3900000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2907900
+        }
+      ],
+      "replay_progress": 0.20152,
+      "remaining_source_ns": 18684428370390,
+      "estimated_remaining_wall_ns": 18684428370390,
+      "market_sequence": 5718514,
+      "replay_messages": 5718514
+    },
+    "paused_first": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "UNICAST",
+      "session": "0612260001",
+      "replay_status": "PAUSED",
+      "replay_pause_lease_ms": 600000,
+      "replay_pause_lease_remaining_ms": 599999,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 38915571629610,
+      "source_clock": "10:48:35.571629610",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 8,
+      "paper_ledger": [
+        {
+          "client_order_id": 2100000000,
+          "clordid": "SOCK2100000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2958600
+        },
+        {
+          "client_order_id": 2100000001,
+          "clordid": "SOCK2100000001",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2961700
+        },
+        {
+          "client_order_id": 2100000002,
+          "clordid": "SOCK2100000002",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2919000
+        },
+        {
+          "client_order_id": 2100000003,
+          "clordid": "SOCK2100000003",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2916100
+        },
+        {
+          "client_order_id": 2100000004,
+          "clordid": "SOCK2100000004",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912800
+        },
+        {
+          "client_order_id": 2500000000,
+          "clordid": "ONLD2500000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912700
+        },
+        {
+          "client_order_id": 2900000000,
+          "clordid": "TCPD2900000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2913400
+        },
+        {
+          "client_order_id": 3900000000,
+          "clordid": "DPDK3900000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2907900
+        }
+      ],
+      "replay_progress": 0.20152,
+      "remaining_source_ns": 18684428370390,
+      "estimated_remaining_wall_ns": 18684428370390,
+      "market_sequence": 5718514,
+      "replay_messages": 5718514
+    },
+    "paused_stable": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "UNICAST",
+      "session": "0612260001",
+      "replay_status": "PAUSED",
+      "replay_pause_lease_ms": 600000,
+      "replay_pause_lease_remaining_ms": 599899,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 38915571629610,
+      "source_clock": "10:48:35.571629610",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 8,
+      "paper_ledger": [
+        {
+          "client_order_id": 2100000000,
+          "clordid": "SOCK2100000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2958600
+        },
+        {
+          "client_order_id": 2100000001,
+          "clordid": "SOCK2100000001",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2961700
+        },
+        {
+          "client_order_id": 2100000002,
+          "clordid": "SOCK2100000002",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2919000
+        },
+        {
+          "client_order_id": 2100000003,
+          "clordid": "SOCK2100000003",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2916100
+        },
+        {
+          "client_order_id": 2100000004,
+          "clordid": "SOCK2100000004",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912800
+        },
+        {
+          "client_order_id": 2500000000,
+          "clordid": "ONLD2500000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2912700
+        },
+        {
+          "client_order_id": 2900000000,
+          "clordid": "TCPD2900000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2913400
+        },
+        {
+          "client_order_id": 3900000000,
+          "clordid": "DPDK3900000000",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2907900
+        }
+      ],
+      "replay_progress": 0.20152,
+      "remaining_source_ns": 18684428370390,
+      "estimated_remaining_wall_ns": 18684428370390,
+      "market_sequence": 5718514,
+      "replay_messages": 5718514
+    },
+    "stable_fields": [
+      "session",
+      "replay_loop",
+      "source_timestamp_ns",
+      "replay_messages",
+      "market_sequence"
+    ],
+    "pause_lease_ms": 600000,
+    "lease_renewals": [
+      {
+        "checkpoint": "before-initial-sfc",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p1-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p2-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p3-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r1-p3-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r1-p4-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r1-p4-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p1-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p2-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p3-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r2-p4-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r2-p4-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p1-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r3-p1-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p2-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r3-p2-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p3-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r3-p3-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r3-p4-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p1-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r4-p1-dpdk",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p2-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "after-switch-r4-p2-socket",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p3-tcpdirect",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-r4-p4-openonload",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      },
+      {
+        "checkpoint": "before-final-ledger",
+        "session": "0612260001",
+        "replay_loop": 1,
+        "source_timestamp_ns": 38915571629610,
+        "replay_messages": 5718514,
+        "market_sequence": 5718514,
+        "replay_status": "PAUSED",
+        "pause_lease_ms": 600000,
+        "remaining_ms": 599999
+      }
+    ],
+    "restored": {
+      "status": "ONLINE",
+      "protocol": "ITCH_5.0_OVER_MOLDUDP64",
+      "order_protocol": "OUCH_5.0_OVER_SOUPBINTCP",
+      "source": "NASDAQ_PUBLIC_ITCH_SAMPLE",
+      "historical_market": true,
+      "paper_execution": true,
+      "market_date": "2026-06-12",
+      "market_mode": "UNICAST",
+      "session": "0612260001",
+      "replay_status": "PLAYING",
+      "replay_pause_lease_ms": 0,
+      "replay_pause_lease_remaining_ms": 0,
+      "replay_speed": 1,
+      "replay_loop": 1,
+      "source_timestamp_ns": 38915571629610,
+      "source_clock": "10:48:35.571629610",
+      "first_source_timestamp_ns": 34200000000000,
+      "last_source_timestamp_ns": 57600000000000,
+      "first_source_clock": "09:30:00.000000000",
+      "last_source_clock": "16:00:00.000000000",
+      "replay_window": "REGULAR_SESSION",
+      "paper_ledger_entries": 17608,
+      "paper_ledger": [
+        {
+          "client_order_id": 2510001060,
+          "clordid": "MNLD2510001060",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001061,
+          "clordid": "MNLD2510001061",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001062,
+          "clordid": "MNLD2510001062",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001063,
+          "clordid": "MNLD2510001063",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001064,
+          "clordid": "MNLD2510001064",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001065,
+          "clordid": "MNLD2510001065",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001066,
+          "clordid": "MNLD2510001066",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001067,
+          "clordid": "MNLD2510001067",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001068,
+          "clordid": "MNLD2510001068",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001069,
+          "clordid": "MNLD2510001069",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001070,
+          "clordid": "MNLD2510001070",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001071,
+          "clordid": "MNLD2510001071",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001072,
+          "clordid": "MNLD2510001072",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001073,
+          "clordid": "MNLD2510001073",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001074,
+          "clordid": "MNLD2510001074",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001075,
+          "clordid": "MNLD2510001075",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001076,
+          "clordid": "MNLD2510001076",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001077,
+          "clordid": "MNLD2510001077",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001078,
+          "clordid": "MNLD2510001078",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001079,
+          "clordid": "MNLD2510001079",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001080,
+          "clordid": "MNLD2510001080",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001081,
+          "clordid": "MNLD2510001081",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001082,
+          "clordid": "MNLD2510001082",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001083,
+          "clordid": "MNLD2510001083",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001084,
+          "clordid": "MNLD2510001084",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001085,
+          "clordid": "MNLD2510001085",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001086,
+          "clordid": "MNLD2510001086",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001087,
+          "clordid": "MNLD2510001087",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001088,
+          "clordid": "MNLD2510001088",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001089,
+          "clordid": "MNLD2510001089",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001090,
+          "clordid": "MNLD2510001090",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001091,
+          "clordid": "MNLD2510001091",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001092,
+          "clordid": "MNLD2510001092",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001093,
+          "clordid": "MNLD2510001093",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001094,
+          "clordid": "MNLD2510001094",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001095,
+          "clordid": "MNLD2510001095",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001096,
+          "clordid": "MNLD2510001096",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001097,
+          "clordid": "MNLD2510001097",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        },
+        {
+          "client_order_id": 2510001098,
+          "clordid": "MNLD2510001098",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "BUY",
+          "quantity": 1,
+          "limit_price_x10000": 999999999999,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905700
+        },
+        {
+          "client_order_id": 2510001099,
+          "clordid": "MNLD2510001099",
+          "client_role": "MANUAL",
+          "symbol": "AAPL",
+          "side": "SELL",
+          "quantity": 1,
+          "limit_price_x10000": 1,
+          "result": "ORDER_EXECUTED",
+          "filled_quantity": 1,
+          "fill_price_x10000": 2905400
+        }
+      ],
+      "replay_progress": 0.20152,
+      "remaining_source_ns": 18684428370390,
+      "estimated_remaining_wall_ns": 18684428370390,
+      "market_sequence": 5718514,
+      "replay_messages": 5718514
+    }
+  },
+  "submission_identity": {
+    "field": "client_order_id",
+    "scope": "WARMUP_AND_MEASUREMENT_SUBMISSIONS",
+    "total": 17600,
+    "unique": 17600,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4400,
+        "unique": 4400,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3904001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2102001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2104000000,
+        "max_client_order_id": 2104001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2108000000,
+        "max_client_order_id": 2108001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2110000000,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2502001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2504000000,
+        "max_client_order_id": 2504001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2508000000,
+        "max_client_order_id": 2508001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2510000000,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2904001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2904001100,
+        "max_client_order_id": 2904002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2906000000,
+        "max_client_order_id": 2906001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 2910000000,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3901001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3902000000,
+        "max_client_order_id": 3902001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3903000000,
+        "max_client_order_id": 3903001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "warmup_total": 100,
+        "measurement_total": 1000,
+        "total": 1100,
+        "unique": 1100,
+        "min_client_order_id": 3904000000,
+        "max_client_order_id": 3904001099
+      }
+    ]
+  },
+  "warmup_sample_identity": {
+    "field": "client_order_id",
+    "scope": "WARMUP_RESPONSES",
+    "total": 1600,
+    "unique": 1600,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2110000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2510000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2910000099
+      },
+      {
+        "transport": "DPDK",
+        "total": 400,
+        "unique": 400,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3904000099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2102000000,
+        "max_client_order_id": 2102000099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2104000000,
+        "max_client_order_id": 2104000099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2108000000,
+        "max_client_order_id": 2108000099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2110000000,
+        "max_client_order_id": 2110000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2502000000,
+        "max_client_order_id": 2502000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2504000000,
+        "max_client_order_id": 2504000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2508000000,
+        "max_client_order_id": 2508000099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2510000000,
+        "max_client_order_id": 2510000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2904000000,
+        "max_client_order_id": 2904000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2904001100,
+        "max_client_order_id": 2904001199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2906000000,
+        "max_client_order_id": 2906000099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 2910000000,
+        "max_client_order_id": 2910000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3901000000,
+        "max_client_order_id": 3901000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3902000000,
+        "max_client_order_id": 3902000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3903000000,
+        "max_client_order_id": 3903000099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "total": 100,
+        "unique": 100,
+        "min_client_order_id": 3904000000,
+        "max_client_order_id": 3904000099
+      }
+    ]
+  },
+  "sample_identity": {
+    "field": "client_order_id",
+    "scope": "MEASUREMENT_RESPONSES",
+    "total": 16000,
+    "unique": 16000,
+    "per_transport": [
+      {
+        "transport": "SOCKET",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2102000100,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2502000100,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 2904000100,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "total": 4000,
+        "unique": 4000,
+        "min_client_order_id": 3901000100,
+        "max_client_order_id": 3904001099
+      }
+    ],
+    "per_round_ranges": [
+      {
+        "transport": "SOCKET",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2102000100,
+        "max_client_order_id": 2102001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2104000100,
+        "max_client_order_id": 2104001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2108000100,
+        "max_client_order_id": 2108001099
+      },
+      {
+        "transport": "SOCKET",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2110000100,
+        "max_client_order_id": 2110001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2502000100,
+        "max_client_order_id": 2502001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2504000100,
+        "max_client_order_id": 2504001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2508000100,
+        "max_client_order_id": 2508001099
+      },
+      {
+        "transport": "OPENONLOAD",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2510000100,
+        "max_client_order_id": 2510001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2904000100,
+        "max_client_order_id": 2904001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2904001200,
+        "max_client_order_id": 2904002199
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2906000100,
+        "max_client_order_id": 2906001099
+      },
+      {
+        "transport": "TCPDIRECT",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 2910000100,
+        "max_client_order_id": 2910001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 1,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3901000100,
+        "max_client_order_id": 3901001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 2,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3902000100,
+        "max_client_order_id": 3902001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 3,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3903000100,
+        "max_client_order_id": 3903001099
+      },
+      {
+        "transport": "DPDK",
+        "round": 4,
+        "total": 1000,
+        "unique": 1000,
+        "min_client_order_id": 3904000100,
+        "max_client_order_id": 3904001099
+      }
+    ]
+  },
+  "summary": {
+    "SOCKET": {
+      "label": "Kernel Socket",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 34815,
+        "p95_ns": 52265,
+        "p99_ns": 60102,
+        "mean_ns": 37553,
+        "max_ns": 111585
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 8705,
+        "p95_ns": 11261,
+        "p99_ns": 15806,
+        "mean_ns": 8740,
+        "max_ns": 76580
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 43636,
+        "p95_ns": 61841,
+        "p99_ns": 72235,
+        "mean_ns": 46292,
+        "max_ns": 118534
+      }
+    },
+    "OPENONLOAD": {
+      "label": "OpenOnload",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 21674,
+        "p95_ns": 26426,
+        "p99_ns": 29357,
+        "mean_ns": 22551,
+        "max_ns": 296823
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 8709,
+        "p95_ns": 11574,
+        "p99_ns": 15918,
+        "mean_ns": 8894,
+        "max_ns": 64390
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 30626,
+        "p95_ns": 36001,
+        "p99_ns": 41697,
+        "mean_ns": 31444,
+        "max_ns": 304589
+      }
+    },
+    "TCPDIRECT": {
+      "label": "TCPDirect",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 20746,
+        "p95_ns": 25737,
+        "p99_ns": 27931,
+        "mean_ns": 21301,
+        "max_ns": 127283
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 8835,
+        "p95_ns": 11570,
+        "p99_ns": 15658,
+        "mean_ns": 8878,
+        "max_ns": 23407
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 29350,
+        "p95_ns": 34945,
+        "p99_ns": 40435,
+        "mean_ns": 30200,
+        "max_ns": 134858
+      }
+    },
+    "DPDK": {
+      "label": "DPDK + F-Stack TCP",
+      "order_rtt": {
+        "rounds": 4,
+        "p50_ns": 25161,
+        "p95_ns": 32159,
+        "p99_ns": 34773,
+        "mean_ns": 26353,
+        "max_ns": 630422
+      },
+      "queue_to_send": {
+        "rounds": 4,
+        "p50_ns": 5409,
+        "p95_ns": 16155,
+        "p99_ns": 23496,
+        "mean_ns": 6763,
+        "max_ns": 42523
+      },
+      "submit_to_final": {
+        "rounds": 4,
+        "p50_ns": 30699,
+        "p95_ns": 42608,
+        "p99_ns": 53293,
+        "mean_ns": 33116,
+        "max_ns": 635824
+      }
+    }
+  },
+  "native_receipt_gate": {
+    "cells": 16,
+    "pre_post_manifests": 32,
+    "original_files": 192
+  },
+  "execution_provenance": {
+    "capture_contract": "START_SNAPSHOT_END_BYTES_UNCHANGED",
+    "sealed_programs": [
+      {
+        "path": "provenance/analyze_four_transport_raw.py",
+        "sha256": "b105b0d00839650b4ce919038fddf76a84dbe504530e4df6ed479153a7119f99",
+        "bytes": 89331
+      },
+      {
+        "path": "provenance/measure_four_transports.py",
+        "sha256": "f9ea4e4dd3f1fcd5b46e72e40c24fe6bb34c2e62a6750080aeb75e94d3551e02",
+        "bytes": 87688
+      },
+      {
+        "path": "provenance/transport_labctl.sh",
+        "sha256": "6ed25ff96db5d1276fc7a160b444ad61b9714ec8e6f610f0756f07a9fb948b53",
+        "bytes": 143008
+      }
+    ]
+  }
+}

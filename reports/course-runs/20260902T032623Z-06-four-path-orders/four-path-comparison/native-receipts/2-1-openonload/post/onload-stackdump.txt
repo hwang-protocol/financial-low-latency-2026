@@ -1,0 +1,709 @@
+============================================================
+ci_netif_dump_to_logger: stack=2 name=
+  cplane_pid=16792
+  namespace=net:[4026531840]
+  Onload 9f330e7  uid=0 pid=6699 ns_flags=a0
+  creation_time=2026-09-02 11:30:50 (delta=12secs)
+  lock=0 UNLOCKED  nics=1 primed=0 deferred=0 rx_ports=1 tx_ports=1
+  sock_bufs: max=8192 n_allocated=2048 free=2046
+  aux_bufs: free=0
+  aux_bufs[syn-recv state]: n=0 max=4096
+  aux_bufs[syn-recv bucket]: n=0 max=8192
+  aux_bufs[epoll3 state]: n=0 max=8192
+  aux_bufs[path mtu data]: n=0 max=8192
+  pkt_sets: pkt_size=2048 set_size=1024 max=32 alloc=1
+  pkt_set[0]: free=492 current
+  pkt_bufs: max=32768 alloc=1024 free=492 async=0
+  pkt_bufs: rx=532 rx_ring=498 rx_queued=2 pressure_pool=32
+  pkt_bufs: tx=0 tx_ring=0 tx_oflow=0
+  pkt_bufs: in_loopback=0 in_sock=0
+  pkt_bufs: rx_reserved=0
+  time: netif=5b709df poll=5b709df now=5b709e3 (diff=0.007sec)
+  active cache: hit=0 avail=0 cache=EMPTY pending=EMPTY
+  passive scalable cache: cache=EMPTY pending=EMPTY
+ci_netif_dump_vi: stack=2 intf=0 dev=sfc.onload.0 hw=1C1
+  vi=248 pd_owner=1 channel=0 tcpdump=off vi_flags=3800000 oo_vi_flags=111
+  evq: cap=2046 current=6788 is_32_evs=0 is_ev=0
+  evq: sync_major=ffffffff sync_minor=0 sync_min=0
+  evq: sync_synced=0 sync_flags=0
+  rxq: cap=511 lim=511 spc=13 level=498 total_desc=2206
+  txq: cap=511 lim=511 spc=511 level=0 pkts=0 oflow_pkts=0
+  txq: pio_buf_size=4096 tot_pkts=1106 bytes=0
+  txq: ts_nsec=40000000.0000
+  clk: 
+  last_rx_stamp: 0:0.0000
+  ctpio: max_frame_len=500 frame_len_check=500 ct_thresh=65535
+ci_netif_dump_extra_to_logger: stack=2
+  in_poll=0 post_poll_list_empty=1 poll_did_wake=0
+  rx_defrag_head=-1 rx_defrag_tail=-1
+  tx_may_alloc=1 can=1 nonb_pool=0 is_spinner=0,0
+  hwport_to_intf_i=0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 intf_i_to_hwport=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+  uk_intf_ver=2c32f3748880ec6f49d43cd0535ea4bf
+  deferred count 0/32
+  numa nodes: creation=0 load=0
+  numa node masks: packet alloc=1 sock alloc=1 interrupt=1
+pids: 6699
+--------------------- sockets ------------------------------
+TCP 2:2046 lcl=20.1.1.2:52287 rmt=20.1.1.1:43120 ESTABLISHED
+  lock: 0 
+  rx_wake=00000899     tx_wake=0000044f     flags: OS_BACKED 
+  ul_poll: 230003300 spin cycles 100000 usec
+  uid=0 s_flags: TCP_NODELAY FILTER BOUND PMTU_DO 
+  rcvbuf=131400 sndbuf=131072
+  rcvtimeo_ms=0 sndtimeo_ms=0 sigown=0 cmsg=
+  bindtodev=0(0,0x0:0) ttl=-1 BOUND_ADDR 
+  rx_errno=0 tx_errno=0 so_error=0 os_sock=0,TX
+  TX timestamping queue: q_pkts=0 reap=0 tot_pkts=0
+  tcpflags: TSO WSCL SACK ESTAB TLP_TIMER  local_peer: -1
+  snd: up=d6e7f3f0 una-nxt-max=d6e7f3f0-d6e7f3f0-d6e8f270 enq=d6e7f3f0
+  snd: send=0(0) send+pre=0 inflight=0(0) wnd=65152 unused=65152
+  snd: cwnd=57945+0 used=0 ssthresh=8388480 bytes_acked=0 Open
+  snd: timed_seq d6e71ce6 timed_ts 5b70182
+  snd: sndbuf_pkts=136 Onloaded(Valid) if=126 mtu=1500 intf_i=0 vlan=0 encap=0 verinfo 103-196
+  snd: limited rwnd=0 cwnd=0 nagle=0 more=0 app=1102
+  rcv: nxt-max=a04c7176-a04e72be wnd adv=131400 cur=131400  FASTSTART FAST
+  rcv: isn=a04aa9dd up=ffffffff urg_data=0000 q=recv1
+  rcv: bytes=116633 tot_pkts=89e rob_pkts=0 q_pkts=2+0 usr=0
+  eff_mss=1448 smss=1460 amss=1460  used_bufs=2 wscl s=7 r=2
+  srtt=01 rttvar=000 rto=110 zwins=0,0
+  curr_retrans=0 total_retrans=0 dupacks=0 congrecover=0
+  rtos=0 frecs=0 seqerr=3,0 ooo_pkts=0 ooo=0
+  tx: defer=0 nomac=0 warm=0 warm_aborted=0
+  tmpl: send_fast=0 send_slow=0 active=0
+  timers: 
+
+------------------------------------------------------------
+UDP 2:2047 lcl=0.0.0.0:43138 rmt=0.0.0.0:0 UDP
+  lock: 0 
+  rx_wake=00000000     tx_wake=00000002     flags: OS_BACKED 
+  ul_poll: 230003300 spin cycles 100000 usec
+  uid=0 s_flags: FILTER CONNECT_MUST_BIND PMTU_DO 
+  rcvbuf=212992 sndbuf=212992
+  rcvtimeo_ms=0 sndtimeo_ms=0 sigown=0 cmsg=
+  bindtodev=0(0,0x0:0) ttl=-1 UDP_WILD 
+  rx_errno=0 tx_errno=0 so_error=0 os_sock=0,TX
+  udpflags: FILT MCAST_LOOP IMP_BIND 
+  rcv: q_pkts=0 reap=0 tot_pkts=0
+  rcv: oflow_drop=0(0%) mem_drop=0 eagain=0 pktinfo=0 q_max_pkts=0
+  rcv: os=0(0%) os_slow=0 os_error=0
+  snd: q=0+0 ul=0 os=2(100%)
+  snd: LOCK cp=1(0%) pkt=0(0%) snd=0(0%) poll=0(0%) defer=0(0%)
+  snd: MCAST if=0 src=0.0.0.0 ttl=1
+  snd: TO n=0 match=0(0%) lookup=1+0(0%) ViaOs(Valid)
+  snd: TO if=0 mtu=0 intf_i=-1 vlan=0 encap=0 verinfo 16f-5f
+  snd: TO 0.0.0.0:43138 => 10.1.1.101:46120
+  snd: CON n=0 lookup=0 NoRoute(Old)
+  snd: CON if=0 mtu=0 intf_i=-1 vlan=0 encap=0 verinfo ffffffff-0
+  snd: eagain=0 spin=0 block=0
+  snd: poll_avoids_full=0 fragments=0 confirm=0
+  snd: os_slow=0 os_late=0 unconnect_late=0 nomac=0(0%)
+------------------------------------------------------------
+-------------------- ci_netif_stats: 2 ---------------------
+k_polls: 144
+u_polls: 4477
+ioctl_evq_polls: 0
+rx_evs: 2206
+tx_evs: 1106
+periodic_polls: 138
+periodic_evs: 3
+periodic_lock_contends: 0
+interrupts: 2
+interrupt_polls: 2
+interrupt_evs: 3
+interrupt_wakes: 1
+interrupt_primes: 1
+interrupt_no_events: 0
+interrupt_lock_contends: 0
+interrupt_budget_limited: 0
+deferred_polls: 0
+timeout_interrupts: 11
+timeout_interrupt_when_primed: 0
+timeout_interrupt_polls: 3
+timeout_interrupt_evs: 3
+timeout_interrupt_wakes: 0
+timeout_interrupt_no_events: 8
+timeout_interrupt_lock_contends: 0
+muxer_primes: 0
+pkt_wait_primes: 0
+sock_sleeps: 1
+sock_sleep_primes: 1
+sock_wakes_rx: 1
+sock_wakes_tx: 1
+sock_wakes_rx_os: 0
+sock_wakes_tx_os: 0
+sock_wakes_signal: 0
+pkt_huge_pages: 1
+pkt_nonb: 0
+pkt_nonb_steal: 0
+pkt_wakes: 0
+pkt_scramble0: 0
+pkt_scramble1: 0
+pkt_scramble2: 0
+pkt_wait_spin: 0
+unlock_slow: 146
+unlock_slow_pkt_waiter: 0
+unlock_slow_socket_list: 0
+unlock_slow_need_prime: 0
+unlock_slow_prime_ul: 0
+unlock_slow_wake: 0
+unlock_slow_swf_update: 0
+unlock_slow_close: 1
+unlock_slow_xdp_change: 0
+unlock_slow_syscall: 1
+lock_wakes: 0
+stack_lock_buzz: 1
+deferred_work: 0
+sock_lock_sleeps: 0
+sock_lock_buzz: 0
+tcp_send_nonb_pool_empty: 0
+tcp_send_ni_lock_contends: 0
+tcp_send_fail_noroute: 0
+udp_send_ni_lock_contends: 0
+getsockopt_ni_lock_contends: 0
+setsockopt_ni_lock_contends: 0
+udp_send_mcast_loop: 0
+udp_send_mcast_loop_drop: 0
+active_opens: 1
+tcp_handover_socket: 0
+tcp_handover_bind: 0
+tcp_handover_listen: 1
+tcp_accept_os: 0
+tcp_handover_connect: 0
+tcp_handover_setsockopt: 0
+udp_handover_socket: 0
+udp_handover_bind: 0
+udp_handover_connect: 0
+udp_handover_setsockopt: 0
+udp_bind_no_filter: 0
+udp_connect_no_filter: 0
+timewait_reap: 0
+timewait_reap_filter: 0
+table_max_hops: 1
+table_mean_hops: 1
+table_n_entries: 2
+table_n_slots: 2
+tcp_rtos: 0
+tail_drop_probe_retrans: 0
+tail_drop_probe_sendq: 0
+tail_drop_probe_unnecessary: 0
+tail_drop_probe_success: 0
+rst_recv_acceptq: 0
+rst_recv_synrecv: 0
+rst_recv_synrecv_paws_rejected: 0
+rst_recv_after_fin: 0
+rst_recv_has_recvq: 0
+rst_recv_has_sendq: 0
+rst_recv_has_unack: 0
+rst_recv_unacceptable: 0
+rst_sent_unacceptable_ack: 0
+rst_sent_synrecv_bad_syn: 0
+rst_sent_synrecv_bad_ack: 0
+rst_sent_listen_got_ack: 0
+rst_sent_bad_options: 0
+rst_sent_bad_seq: 0
+rst_sent_no_match: 0
+no_match_pass_to_kernel_batches: 0
+no_match_pass_to_kernel_tcp: 0
+no_match_pass_to_kernel_udp: 0
+no_match_pass_to_kernel_ip_other: 0
+no_match_pass_to_kernel_non_ip: 0
+no_match_bad_intf_i: 0
+no_match_bad_netdev: 0
+no_match_oom: 0
+no_match_corrupted: 0
+no_match_dropped: 0
+no_match_in_active_wild: 0
+unacceptable_acks: 0
+tcp_cant_fin: 0
+tcp_cant_fin_resolved: 0
+tcp_cant_fin_dropped: 0
+synrecv_retransmits: 0
+synrecv_send_fails: 0
+synrecv_timeouts: 0
+synrecv_purge: 0
+syn_drop_busy: 0
+syn_drop_no_return_route: 0
+listen2synrecv: 0
+synrecv2established: 0
+ul_accepts: 0
+accept_eagain: 0
+aux_alloc_fails: 0
+aux_bucket_alloc_fails: 0
+accepts_deferred: 0
+acks_sent: 4
+wnd_updates_sent: 0
+rx_slow: 1105
+rx_out_of_order: 0
+rx_rob_non_empty: 0
+retransmits: 0
+invalid_ack_limited: 0
+challenge_ack_sent: 0
+challenge_ack_out_of_pkts: 0
+tx_defer_pkt: 0
+tx_defer_pkt_fast: 0
+tx_defer_pkt_sent: 0
+tx_defer_pkt_drop_failed: 0
+tx_defer_pkt_drop_arp_failed: 0
+tx_defer_pkt_drop_timeout: 0
+tx_defer_pkt_drop_limited: 0
+tx_error_events: 0
+rx_discard_csum_bad: 0
+rx_discard_inner_csum_bad: 0
+rx_discard_mcast_mismatch: 0
+rx_discard_crc_bad: 0
+rx_discard_trunc: 0
+rx_discard_rights: 0
+rx_discard_ip_options_bad: 0
+rx_discard_len_err: 0
+rx_discard_other: 0
+rx_refill_recv: 0
+rx_future: 1883
+rx_future_contend: 0
+rx_future_rollback: 0
+rx_future_rollback_pkt: 0
+rx_future_rollback_timeout: 0
+rx_future_rollback_event: 0
+reap_rx_limited: 0
+reap_buf_limited: 0
+pkts_reaped: 0
+refill_rx_limited: 0
+refill_buf_limited: 0
+defer_work_limited: 0
+defer_work_contended_unsafe: 0
+tx_dma_max: 0
+tx_dma_doorbells: 0
+bufset_alloc_fails: 0
+bufset_alloc_nospace: 0
+mss_limitations: 0
+memory_pressure_enter: 0
+memory_pressure_exit_poll: 0
+memory_pressure_exit_recv: 0
+memory_pressure_drops: 0
+udp_rx_no_match_drops: 0
+udp_free_with_tx_active: 0
+sw_filter_insert_table_full: 0
+pio_pkts: 4
+no_pio_err: 0
+ctpio_pkts: 1102
+ctpio_dma_fallbacks: 0
+tcp_sendpages: 0
+poll_no_pkt: 0
+sockcache_cached: 0
+sockcache_contention: 0
+passive_sockcache_stacklim: 0
+active_sockcache_stacklim: 0
+active_sockcache_non_ip4: 0
+active_attach_fd: 0
+active_attach_fd_reuse: 0
+active_attach_fd_fail: 0
+sockcache_socklim: 0
+sockcache_hit: 0
+sockcache_hit_reap: 0
+sockcache_miss_intmismatch: 0
+activecache_cached: 0
+activecache_stacklim: 0
+activecache_hit: 0
+activecache_hit_reap: 0
+sock_attach_fd_detach: 0
+sock_attach_fd_detach_fail_soft: 0
+sock_attach_fd_detach_fail_hard: 0
+sock_attach_fd_more: 0
+sock_attach_fd_more_fail: 0
+epoll_fd_uncache: 0
+accept_attach_fd_retry: 0
+tcp_rcvbuf_abused: 0
+tcp_rcvbuf_abused_rob_guilty: 0
+tcp_rcvbuf_abused_recv_coalesced: 0
+tcp_rcvbuf_abused_recv_guilty: 0
+tcp_rcvbuf_abused_rob_desperate: 0
+tcp_rcvbuf_abused_badly: 0
+tcp_listen_synack_retrans_no_buffer: 0
+proactive_packet_allocation: 0
+stack_locks_deferred: 0
+tcp_shared_local_ports_used: 0
+tcp_shared_local_ports_reused_tw: 0
+tcp_shared_local_ports_grow: 0
+tcp_shared_local_ports_grow_failed: 0
+tcp_shared_local_ports_exhausted: 0
+epoll_add_non_home: 0
+epoll_sb_state_alloc_failed: 0
+sock_attach_fd_alloc_fail: 0
+mac_filter_shares: 0
+tcp_shared_local_ports_skipped: 0
+tcp_shared_local_ports_skipped_in_use: 0
+tcp_syn_retrans_once: 0
+tcp_syn_retrans_twice: 0
+tcp_syn_retrans_thrice: 0
+tcp_syn_retrans: 0
+tcp_connect_timedout: 0
+tcp_connect_etimedout: 0
+tcp_connect_icmp: 0
+tcp_connect_ehostunreach: 0
+tcp_connect_enetunreach: 0
+tcp_connect_enetdown: 0
+tcp_connect_refused: 0
+tcp_connect_econnrefused: 0
+tcp_connect_eother: 0
+tcp_connect_eother_val: 0
+tcp_seq_table_hits: 0
+tcp_seq_table_insertions: 0
+tcp_seq_table_expiries: 0
+tcp_seq_table_purgations: 0
+tcp_seq_table_steps: 0
+tcp_seq_table_short_expiry: 0
+tcp_seq_table_avoided: 0
+tcp_urgent_ignore_rx: 0
+tcp_urgent_process_rx: 0
+ip_options: 0
+rx_sw_csum_pass: 0
+tcpdump_missed: 0
+lowest_free_pkts: 32228
+rx_xdp_pass: 0
+rx_xdp_drop: 0
+rx_xdp_tx: 0
+rx_xdp_redirect: 0
+rx_xdp_aborted: 0
+rx_xdp_unknown: 0
+rx_icmp: 0
+rx_icmp_dropped: 0
+rx_icmp_enomem: 0
+rx_icmp_handler_batches: 0
+rx_icmp_hooked: 0
+-------------------- more_stats: 2 -------------------------
+TCP_CLOSED: 0
+TCP_LISTEN: 0
+TCP_SYN_SENT: 0
+TCP_ESTABLISHED: 1
+TCP_CLOSE_WAIT: 0
+TCP_LAST_ACK: 0
+TCP_FIN_WAIT1: 0
+TCP_FIN_WAIT2: 0
+TCP_CLOSING: 0
+TCP_TIME_WAIT: 0
+TCP_STATE_FREE: 2046
+TCP_STATE_UDP: 1
+TCP_STATE_PIPE: 0
+TCP_STATE_AUXBUF: 0
+TCP_STATE_ACTIVE_WILD: 0
+BAD_STATE: 0
+sock_orphans: 0
+sock_wake_needed_rx: 0
+sock_wake_needed_tx: 0
+tcp_has_recvq: 0
+tcp_recvq_bytes: 0
+tcp_recvq_pkts: 2
+tcp_has_recv_reorder: 0
+tcp_recv_reorder_pkts: 0
+tcp_has_sendq: 0
+tcp_sendq_bytes: 0
+tcp_sendq_pkts: 0
+tcp_has_inflight: 0
+tcp_inflight_bytes: 0
+tcp_inflight_pkts: 0
+tcp_n_in_listenq: 0
+tcp_n_in_acceptq: 0
+udp_has_recvq: 0
+udp_recvq_pkts: 0
+udp_has_sendq: 0
+udp_sendq_bytes: 0
+udp_tot_recv_pkts_ul: 0
+udp_tot_recv_drops_ul: 0
+udp_tot_recv_pkts_os: 0
+udp_tot_send_pkts_ul: 0
+udp_tot_send_pkts_os: 2
+ef_vi_rx_ev_lost: 0
+ef_vi_rx_ev_bad_desc_i: 0
+ef_vi_rx_ev_bad_q_label: 0
+ef_vi_evq_gap: 0
+--------------------- ci_ip_stats: 2 -----------------------
+in_recvs: 2206
+in_hdr_errs: 0
+in_discards: 0
+in_delivers: 2206
+-------------------- ci_tcp_stats: 2 -----------------------
+tcp_active_opens: 1
+tcp_passive_opens: 0
+tcp_estab_resets: 0
+tcp_curr_estab: 1
+tcp_in_segs: 2206
+tcp_out_segs: 1106
+tcp_retran_segs: 0
+tcp_out_rsts: 0
+-------------------- ci_tcp_ext_stats: 2 -------------------
+syncookies_sent: 0
+syncookies_recv: 0
+syncookies_failed: 0
+embrionic_rsts: 0
+prune_called: 0
+rcv_pruned: 0
+ofo_pruned: 0
+out_of_window_icmps: 0
+lock_dropped_icmps: 0
+arp_filter: 0
+time_waited: 0
+time_wait_recycled: 0
+time_wait_killed: 0
+paws_passive_rejected: 0
+paws_active_rejected: 0
+paws_estab_rejected: 0
+tso_missing: 0
+delayed_ack: 0
+delayed_ack_locked: 0
+delayed_ack_lost: 0
+listen_overflows: 0
+listen_no_pkts: 0
+listen_drops: 0
+tcp_prequeued: 0
+tcp_direct_copy_from_backlog: 0
+tcp_direct_copy_from_prequeue: 0
+tcp_prequeue_dropped: 0
+tcp_hp_hits: 0
+tcp_hp_hits_to_user: 0
+tcp_pure_acks: 0
+tcp_hp_acks: 0
+tcp_reno_recovery: 0
+tcp_sack_recovery: 0
+tcp_sack_reneging: 0
+tcp_fack_reorder: 0
+tcp_sack_reorder: 0
+tcp_reno_reorder: 0
+tcp_ts_reorder: 0
+tcp_full_undo: 1
+tcp_partial_undo: 0
+tcp_loss_undo: 0
+tcp_sack_undo: 0
+tcp_loss: 0
+tcp_lost_retransmit: 0
+tcp_reno_failures: 0
+tcp_sack_failures: 0
+tcp_loss_failures: 0
+tcp_timeouts: 0
+tcp_reno_recovery_fail: 0
+tcp_sack_recovery_fail: 0
+tcp_fast_retrans: 0
+tcp_forward_retrans: 0
+tcp_slow_start_retrans: 0
+tcp_scheduler_failures: 0
+tcp_rcv_collapsed: 0
+tcp_dsack_old_sent: 0
+tcp_dsack_ofo_sent: 0
+tcp_dsack_recv: 0
+tcp_dsack_ofo_recv: 0
+tcp_abort_on_syn: 0
+tcp_abort_on_data: 0
+tcp_abort_on_close: 0
+tcp_abort_on_memory: 0
+tcp_abort_on_timeout: 0
+tcp_abort_on_linger: 0
+tcp_abort_on_delegated_send: 0
+tcp_abort_failed: 0
+tcp_memory_pressures: 0
+-------------------- ci_udp_stats: 2 -----------------------
+udp_in_dgrams: 0
+udp_no_ports: 0
+udp_in_errs: 0
+udp_out_dgrams: 0
+--------------------- config opts --------------------------
+                        NDEBUG: 1
+                    EF_URG_RFC: 0
+               EF_TCP_URG_MODE: 1
+                    EF_TX_PUSH: 1
+             EF_POLL_ON_DEMAND: 1
+                 EF_INT_DRIVEN: 0 (default: 1)
+             EF_POLL_IN_KERNEL: 0
+                   EF_XDP_MODE: 0
+                EF_INT_REPRIME: 0
+                 EF_MCAST_RECV: 1
+       EF_FORCE_SEND_MULTICAST: 1
+         EF_MULTICAST_LOOP_OFF: 1
+                 EF_MCAST_SEND: 0
+         EF_MCAST_RECV_HW_LOOP: 1
+        EF_TCP_LISTEN_HANDOVER: 0
+       EF_TCP_CONNECT_HANDOVER: 0
+       EF_UDP_CONNECT_HANDOVER: 1
+          EF_FORCE_TCP_NODELAY: 0
+          EF_UDP_SEND_UNLOCKED: 1
+              EF_UNCONFINE_SYN: 1
+      EF_BINDTODEVICE_HANDOVER: 0
+    EF_MCAST_JOIN_BINDTODEVICE: 0
+              EF_TCP_RX_CHECKS: 0
+                  EF_USE_DSACK: 1
+     EF_TIMESTAMPING_REPORTING: 0
+            EF_RX_TIMESTAMPING: 0
+   EF_RX_TIMESTAMPING_ORDERING: 0
+EF_RX_TIMESTAMPING_TRAILER_FORMAT: 0
+            EF_TX_TIMESTAMPING: 0
+             EF_TCP_TSOPT_MODE: 2
+             EF_CLUSTER_IGNORE: 1 (default: 0)
+               EF_VALIDATE_ENV: 1
+            EF_TAIL_DROP_PROBE: 1
+       EF_TCP_RST_DELAYED_CONN: 0
+            EF_TCP_SNDBUF_MODE: 1
+     EF_TCP_COMBINE_SENDS_MODE: 0
+   EF_TCP_SOCKBUF_MAX_FRACTION: 1
+             EF_TCP_SYNCOOKIES: 0
+EF_TCP_SEND_NONBLOCK_NO_PACKETS_MODE: 0
+          EF_TCP_RCVBUF_STRICT: 0
+EF_UDP_SEND_NONBLOCK_NO_PACKETS_MODE: 0
+            EF_TCP_RCVBUF_MODE: 0
+       EF_HIGH_THROUGHPUT_MODE: 0
+EF_TCP_TIME_WAIT_ASSASSINATION: 1
+                   EF_TPH_MODE: 0
+        EF_MCAST_JOIN_HANDOVER: 0
+         EF_PACKET_BUFFER_MODE: 0
+        EF_TCP_SERVER_LOOPBACK: 0
+        EF_TCP_CLIENT_LOOPBACK: 0
+             EF_USE_HUGE_PAGES: 1
+        EF_COMPOUND_PAGES_MODE: 0
+                        EF_PIO: 1
+                      EF_CTPIO: 1
+                 EF_CTPIO_MODE: 1
+               EF_TCP_SYN_OPTS: 7
+      EF_TCP_ADV_WIN_SCALE_MAX: 14
+             EF_TCP_TCONST_MSL: 25
+            EF_TCP_FIN_TIMEOUT: 15 (default: 60)
+           EF_TCP_RX_LOG_FLAGS: 0
+       EF_RETRANSMIT_THRESHOLD: 15
+EF_RETRANSMIT_THRESHOLD_ORPHAN: 8
+   EF_RETRANSMIT_THRESHOLD_SYN: 6 (default: 4)
+EF_RETRANSMIT_THRESHOLD_SYNACK: 5
+                 EF_SHARE_WITH: 0
+                   EF_RXQ_SIZE: 512
+                   EF_TXQ_SIZE: 512
+           EF_SEND_POLL_THRESH: 64
+          EF_SEND_POLL_MAX_EVS: 96
+     EF_UDP_SEND_UNLOCK_THRESH: 1500
+      EF_UDP_PORT_HANDOVER_MIN: 2
+      EF_UDP_PORT_HANDOVER_MAX: 1
+     EF_UDP_PORT_HANDOVER2_MIN: 2
+     EF_UDP_PORT_HANDOVER2_MAX: 1
+     EF_UDP_PORT_HANDOVER3_MIN: 2
+     EF_UDP_PORT_HANDOVER3_MAX: 1
+              EF_DELACK_THRESH: 1
+         EF_DYNAMIC_ACK_THRESH: 16
+      EF_INVALID_ACK_RATELIMIT: 500
+           EF_SOCKET_CACHE_MAX: 0
+       EF_PER_SOCKET_CACHE_MAX: 0 (default: -1)
+        EF_ACCEPTQ_MIN_BACKLOG: 1
+        EF_ACCEPTQ_MAX_BACKLOG: 4096
+       EF_NONAGLE_INFLIGHT_MAX: 50
+           EF_DEFER_WORK_LIMIT: 32
+                   EF_IRQ_CORE: -1
+                EF_IRQ_CHANNEL: -1
+                  EF_RXQ_LIMIT: 65535
+             EF_SHARED_RXQ_NUM: -1
+               EF_EVS_PER_POLL: 64
+                  EF_SPIN_USEC: 100000 (default: 0)
+                  EF_BUZZ_USEC: 100 (default: 0)
+                EF_HELPER_USEC: 500
+          EF_HELPER_PRIME_USEC: 250
+                EF_MAX_PACKETS: 32768
+             EF_MAX_RX_PACKETS: 24576
+             EF_MAX_TX_PACKETS: 24576
+                    EF_RXQ_MIN: 256
+           EF_MIN_FREE_PACKETS: 100
+           EF_PREFAULT_PACKETS: 1
+           EF_PREALLOC_PACKETS: 0
+              EF_MAX_ENDPOINTS: 8192
+    EF_ENDPOINT_PACKET_RESERVE: 0
+              EF_DEFER_ARP_MAX: 128
+          EF_DEFER_ARP_TIMEOUT: 60
+EF_TCP_SNDBUF_ESTABLISHED_DEFAULT: 131072
+EF_TCP_RCVBUF_ESTABLISHED_DEFAULT: 131072
+                 EF_TCP_SNDBUF: 0
+                 EF_TCP_RCVBUF: 0
+                 EF_UDP_SNDBUF: 0
+                 EF_UDP_RCVBUF: 0
+            EF_TCP_BACKLOG_MAX: 1024 (default: 256)
+            EF_TCP_SYNRECV_MAX: 4096 (default: 1024)
+           EF_TCP_INITIAL_CWND: 0
+          EF_TCP_LOSS_MIN_CWND: 0
+               EF_TCP_MIN_CWND: 0
+         EF_TCP_FASTSTART_INIT: 0 (default: 65536)
+         EF_TCP_FASTSTART_IDLE: 0 (default: 65536)
+         EF_TCP_FASTSTART_LOSS: 65536
+       EF_TCP_EARLY_RETRANSMIT: 1
+            EF_RFC_RTO_INITIAL: 1000
+                EF_RFC_RTO_MIN: 200
+                EF_RFC_RTO_MAX: 120000
+             EF_KEEPALIVE_TIME: 600000 (default: 7200000)
+            EF_KEEPALIVE_INTVL: 15000 (default: 75000)
+           EF_KEEPALIVE_PROBES: 3 (default: 9)
+           EF_TCP_RST_COOLDOWN: 0
+        EF_BURST_CONTROL_LIMIT: 0
+      EF_CONG_AVOID_SCALE_BACK: 0
+ EF_FREE_PACKETS_LOW_WATERMARK: 256 (default: 0)
+              EF_PIO_THRESHOLD: 1514
+        EF_CTPIO_MAX_FRAME_LEN: 500 (default: 0)
+            EF_CTPIO_CT_THRESH: 64
+        EF_CTPIO_SWITCH_BYPASS: 0
+          EF_TX_PUSH_THRESHOLD: 100
+                        EF_LOG: 27
+     EF_TCP_SHARED_LOCAL_PORTS: 0
+EF_TCP_SHARED_LOCAL_PORTS_REUSE_FAST: 0
+ EF_TCP_SHARED_LOCAL_PORTS_MAX: 100
+EF_TCP_SHARED_LOCAL_PORTS_NO_FALLBACK: 0
+EF_TCP_SHARED_LOCAL_PORTS_PER_IP: 0
+EF_TCP_SHARED_LOCAL_PORTS_PER_IP_MAX: 0
+EF_TCP_SHARED_LOCAL_PORTS_STEP: 1
+           EF_SCALABLE_FILTERS: ""
+EF_SCALABLE_FILTERS_IFINDEX_ACTIVE: 0
+EF_SCALABLE_FILTERS_IFINDEX_PASSIVE: 0
+      EF_SCALABLE_FILTERS_MODE: 0 (default: -1)
+         EF_PERIODIC_TIMER_CPU: -1
+    EF_SCALABLE_FILTERS_ENABLE: 0
+       EF_SCALABLE_LISTEN_MODE: 0
+EF_SCALABLE_ACTIVE_WILDS_NEED_FILTER: 1 (default: 0)
+        EF_INTERFACE_WHITELIST: ""
+        EF_INTERFACE_BLACKLIST: ""
+      EF_MULTIARCH_TX_DATAPATH: 0
+      EF_MULTIARCH_RX_DATAPATH: 0
+  EF_KERNEL_PACKETS_BATCH_SIZE: 1
+  EF_KERNEL_PACKETS_TIMER_USEC: 500
+               EF_TCP_ISN_MODE: 1
+    EF_TCP_ISN_INCLUDE_PASSIVE: 0
+               EF_TCP_ISN_2MSL: 240
+             EF_TCP_ISN_OFFSET: 65537
+         EF_TCP_ISN_CACHE_SIZE: 0
+            EF_AF_XDP_ZEROCOPY: 0
+                  EF_ICMP_PKTS: 64
+                      EF_NO_HW: 0
+         EF_DUMP_STACK_ON_EXIT: 0
+--------------------- stack time ---------------------------
+          sched_ticks: 5b709df
+ci_ip_time_real_ticks: 5b709df
+                  frc: 16dc277e82cec
+  ci_ip_time_frc2tick: 22
+    ci_ip_time_frc2us: 12
+   ci_ip_time_frc2isn: 10
+   ci_ip_time_tick2ms: 1.823584
+   ci_ip_time_ms2tick: 0.548371 (8c620400)
+                  khz: 2300033
+time constants for this CPU
+  rto_initial: 548ticks (1000ms)
+  rto_min: 110ticks (200ms)
+  rto_max: 65804ticks (120000ms)
+  delack: 27ticks (50ms)
+  idle: 27ticks (50ms)
+  keepalive_time: 329022ticks (600000ms)
+  keepalive_intvl: 8225ticks (15000ms)
+  keepalive_probes: 3
+  zwin_max: 65804ticks (120000ms)
+  paws_idle: 1137101275ticks (2073600000ms)
+  PMTU slow discover: 312571ticks (570000ms)
+  PMTU fast discover: 65804ticks (120000ms)
+  PMTU recover: 16451ticks (30000ms)
+  Time between ACKs sent as a response to invalid incoming TCP packets: 275ticks (500ms)
+
+  Instrumentation: 1ticks (0ms)
+--------------------- process env --------------------------
+--------------------------------------------
+PID: 6699 Thread: 6699 Cpus_allowed: c voluntary_ctxt_switches: 24 nonvoluntary_ctxt_switches: 3 priority: 0 realtime: 0
+PID: 6699 Thread: 6724 Cpus_allowed: 4 voluntary_ctxt_switches: 1689 nonvoluntary_ctxt_switches: 5 priority: 0 realtime: 0
+PID: 6699 Thread: 6725 Cpus_allowed: 8 voluntary_ctxt_switches: 3161 nonvoluntary_ctxt_switches: 10 priority: 0 realtime: 0
+cmdline: /var/tmp/flle-trading-lab-20260902T032623Z-06-four-path-orders/transport-runtime/flle-ch06-four-path/bin/flle-trader --role MANUAL --data-ip 20.1.1.2 --exchange-data-ip 20.1.1.1 --management-ip 10.1.1.2 --telemetry-host 10.1.1.101 --book-checkpoint /var/tmp/flle-trading-lab-20260902T032623Z-06-four-path-orders/opening-book.checkpoint --market-receiver 0 --order-queue DEQUE_CV --lock-order-queue 1 --order-cpu 2 --management-cpu 3 --management-port 48123 --user-ref-base 2504000000 --user-ref-span 100000 --clordid-prefix ONLD --order-transport-label OPENONLOAD  
+env: EF_TCP_FASTSTART_IDLE=0
+env: EF_POLL_USEC=100000
+env: LD_PRELOAD=libonload.so
+env: EF_TCP_FASTSTART_INIT=0
+--------------------------------------------

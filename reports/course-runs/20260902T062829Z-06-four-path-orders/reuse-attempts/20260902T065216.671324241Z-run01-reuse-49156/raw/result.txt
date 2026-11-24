@@ -1,0 +1,30 @@
+===== 查四路 =====
+[四路] 对: Controller、Gateway、SFC 三路同属当前 RUN  证: 完整复用且不覆盖首次证据
+$ transport_labctl.sh reuse-state 20260902T062829Z-06-four-path-orders
+REUSABLE; evidence attempt=20260902T065216.671324241Z-run01-reuse-49156
+DEPLOYED_INPUTS_VERIFIED runtime_sha256=163618ccbb99d272d1f4703822781984d754c690d23fba5503e503486e33c9f3
+{"mode":"SFC","transition":"READY","owner":"sfc","hugepages_2mb":128,"data_ip_present":true,"hardware_receipts":{"socket":{"launch_verified":true,"verified":true,"summary":"\u5f53\u524d PID \u7684 sfc netdev + Kernel TCP","pid":22820,"start_ticks":18557981,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"socket-22820-18557981","attested_monotonic_ns":185728557053624,"path_counter":2,"verification":"PATH_POSIX_ESTABLISHED_CURRENT_PID"},"onload":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":22877,"start_ticks":18557997,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"onload-22877-18557997","attested_monotonic_ns":185580982681046,"path_counter":0,"verification":"LAUNCH_ONLOAD_CURRENT_PID"},"tcpdirect":{"launch_verified":true,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u8eab\u4efd\u5df2\u9a8c\uff1b\u8def\u5f84\u6536\u636e\u5f85\u9996\u7b14 warmup","pid":22953,"start_ticks":18558016,"boot_id":"88520d19-9c38-4352-a01b-dc97036bfdd7","generation":"tcpdirect-22953-18558016","attested_monotonic_ns":185580982681046,"path_counter":0,"verification":"LAUNCH_ZF_CURRENT_PID"},"dpdk":{"launch_verified":false,"verified":false,"summary":"\u5f53\u524d\u8fdb\u7a0b\u4ee3\u6536\u636e\u5f85\u91c7\u96c6"},"exchange_rss":{"launch_verified":true,"verified":true,"summary":"X2522 128 \u4e2a RSS \u6876\u56fa\u5b9a\u5230\u4e0e Exchange \u540c\u6838\u7684 RX ring 1","entries":128,"queue":1,"irq":33,"requested_cpu":2,"effective_cpu":2,"irqbalance":"paused","verification":"X2522_RSS_ALL_BUCKETS_TO_EXCHANGE_CPU_QUEUE"}}}
+===== 查 SFC 模式 =====
+[控制面] 对: mode=SFC transition=READY owner=sfc  证: 出站闸还在 sfc
+$ labctl status
+started mode=SFC transition=READY owner=sfc
+===== 查三条客户端 =====
+[SFC客户端] 对: socket/onload/tcpdirect 都是 ONLINE  证: 可以 curl 下单
+$ curl /api/transport-lab
+sfc_clients socket=ONLINE onload=ONLINE tcpdirect=ONLINE
+===== 查 Socket 下单回执 =====
+[回执] 对: ok=true 且 transport=SOCKET  证: Gateway 接下了这一笔
+$ curl POST /api/order
+{"ok":true,"client_order_id":2100000002,"transport":"SOCKET"}
+===== 查数据面 =====
+[数据面] 对: mode=SFC transition=READY owner=sfc  证: 下单后出站闸没变
+$ curl /api/transport-lab
+data_plane mode=SFC transition=READY owner=sfc
+===== 查 Socket 成交 =====
+[成交] 对: orders 与 fills 比下单前各多 1  证: 收到 Executed，不是只入队
+$ curl /api/transport-lab
+kernel_final orders=3 fills=3 queue=DEQUE_CV engine=KERNEL_SOCKET
+===== 查 GUI 地址 =====
+[GUI] 对: http://10.1.1.101:8088/  证: 浏览器看同一套四路
+$ echo GUI
+GUI=http://10.1.1.101:8088/

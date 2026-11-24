@@ -1,0 +1,94 @@
+/var/tmp/20260902T092818Z-06-onload-runtime-prep.tgz: OK
+cpp-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+g++-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+gcc-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [128 kB]
+Hit:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease
+Hit:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [3,775 kB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1,282 kB]
+Fetched 5,185 kB in 6s (831 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+build-essential is already the newest version (12.9ubuntu3).
+libcap-dev is already the newest version (1:2.44-1ubuntu0.22.04.3).
+linux-headers-5.15.0-164-generic is already the newest version (5.15.0-164.174).
+python3-dev is already the newest version (3.10.6-1~22.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 119 not upgraded.
+
+vm-2522-01 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-01
+===== 查 Onload 版本 =====
+[Onload版本] 对: Onload 9f330e7 与 Kernel module: 9f330e7 两行一致  证: 用户态与模块同一棵树
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:00:12 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+===== 查字符设备 =====
+[字符设备] 对: /dev/onload 与 /dev/sfc_char 都以 c 开头  证: 栈控制和 VI 入口都在
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Aug 31 11:37 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Aug 31 16:25 /dev/sfc_char
+===== 查出站闸主人 =====
+[出站闸主人] 对: /sys/bus/pci/drivers/sfc  证: 本步仍由 sfc 管卡
+$ readlink -f .../0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+===== 查数据口地址 =====
+[数据口] 对: ens64np0 上有 20.1.1.1/24  证: reload 后课程地址还在
+$ ip -4 -o addr show dev ens64np0
+8: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+/var/tmp/20260902T092818Z-06-onload-runtime-prep.tgz: OK
+cpp-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+g++-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+gcc-11_11.4.0-1ubuntu1~22.04.3_amd64.deb: OK
+Hit:1 https://mirrors.aliyun.com/ubuntu jammy InRelease
+Get:2 https://mirrors.aliyun.com/ubuntu jammy-updates InRelease [128 kB]
+Hit:3 https://mirrors.aliyun.com/ubuntu jammy-backports InRelease
+Hit:4 https://mirrors.aliyun.com/ubuntu jammy-security InRelease
+Get:5 https://mirrors.aliyun.com/ubuntu jammy-updates/main amd64 Packages [3,775 kB]
+Get:6 https://mirrors.aliyun.com/ubuntu jammy-updates/universe amd64 Packages [1,282 kB]
+Fetched 5,185 kB in 11s (468 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+build-essential is already the newest version (12.9ubuntu3).
+libcap-dev is already the newest version (1:2.44-1ubuntu0.22.04.3).
+linux-headers-5.15.0-164-generic is already the newest version (5.15.0-164.174).
+python3-dev is already the newest version (3.10.6-1~22.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 119 not upgraded.
+
+vm-2522-02 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-02
+===== 查 Onload 版本 =====
+[Onload版本] 对: Onload 9f330e7 与 Kernel module: 9f330e7 两行一致  证: 用户态与模块同一棵树
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:03:13 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+===== 查字符设备 =====
+[字符设备] 对: /dev/onload 与 /dev/sfc_char 都以 c 开头  证: 栈控制和 VI 入口都在
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Sep  2 17:05 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Sep  2 17:07 /dev/sfc_char
+===== 查出站闸主人 =====
+[出站闸主人] 对: /sys/bus/pci/drivers/sfc  证: 本步仍由 sfc 管卡
+$ readlink -f .../0000:03:00.0/driver
+/sys/bus/pci/drivers/sfc
+===== 查数据口地址 =====
+[数据口] 对: ens64np1 上有 20.1.1.2/24  证: reload 后课程地址还在
+$ ip -4 -o addr show dev ens64np1
+144: ens64np1    inet 20.1.1.2/24 brd 20.1.1.255 scope global ens64np1\       valid_lft forever preferred_lft forever

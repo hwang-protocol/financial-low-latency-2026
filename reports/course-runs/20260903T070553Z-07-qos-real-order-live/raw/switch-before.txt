@@ -1,0 +1,148 @@
+$ show version
+show version | no-more
+Arista DCS-7150S-24-F
+Hardware version:      02.00
+Serial number:         JPE13480066
+Hardware MAC address:  001c.7368.e239
+System MAC address:    001c.7368.e239
+
+Software image version: 4.23.16M-2GB
+Architecture:           i686
+Internal build version: 4.23.16M-2GB-40226546.42316M
+Internal build ID:      bb71297b-4523-465f-a576-6c7d1cb24663
+
+Uptime:                 0 weeks, 5 days, 6 hours and 26 minutes
+Total memory:           4009040 kB
+Free memory:            3038096 kB
+
+
+$ show interfaces Ethernet1 status
+show interfaces Ethernet1 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et1               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show interfaces Ethernet2 status
+show interfaces Ethernet2 status | no-more
+Port       Name   Status       Vlan     Duplex Speed  Type         Flags Encapsulation
+Et2               connected    20       full   10G    10GBASE-CR                      
+
+
+$ show qos interfaces Ethernet1
+show qos interfaces Ethernet1 | no-more
+Ethernet1:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show qos interfaces Ethernet2
+show qos interfaces Ethernet2 | no-more
+Ethernet2:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show qos maps
+show qos maps | no-more
+   Number of Traffic Classes supported: 8
+   Number of Transmit Queues supported: 8
+   Cos Rewrite:   Disabled
+   Dscp Rewrite:  Disabled
+
+   Cos-tc map:
+     cos:  0  1  2  3  4  5  6  7
+     ----------------------------
+     tc:   1  0  2  3  4  5  6  7 
+
+   Dscp-tc map:
+     d1 :  d2 0  1  2  3  4  5  6  7  8  9
+     --------------------------------------
+      0 :     1  1  1  1  1  1  1  1  0  0
+      1 :     0  0  0  0  0  0  2  2  2  2
+      2 :     2  2  2  2  3  3  3  3  3  3
+      3 :     3  3  4  4  4  4  4  4  4  4
+      4 :     5  5  5  5  5  5  5  5  6  6
+      5 :     6  6  6  6  6  6  7  7  7  7
+      6 :     7  7  7  7
+
+   Tc-cos map:
+     tc:   0  1  2  3  4  5  6  7
+     ----------------------------
+     cos:  1  0  2  3  4  5  6  7 
+
+   Tc-dscp map:
+     tc:    0  1  2  3  4  5  6  7
+     -----------------------------
+     dscp:  8  0 16 24 32 40 48 56 
+
+   Tc - tx-queue map:
+     tc:        0  1  2  3  4  5  6  7
+     ---------------------------------
+     tx-queue:  0  1  2  3  4  5  6  7 
+
+
+$ show running-config interfaces Ethernet1
+show running-config interfaces Ethernet1 | no-more
+interface Ethernet1
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2 | no-more
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show startup-config interfaces Ethernet1
+show startup-config interfaces Ethernet1 | no-more
+interface Ethernet1
+
+$ show startup-config interfaces Ethernet2
+show startup-config interfaces Ethernet2 | no-more
+interface Ethernet2

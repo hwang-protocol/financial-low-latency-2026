@@ -1,0 +1,100 @@
+===== 查 v12 运行包 =====
+[归档] 对: SHA-256=163618cc…c9f3  证: 四路客户端和运行库没漂
+$ sha256sum -c
+artifacts/blobs/x2522/ch06-four-path/v12/flle-ch06-four-path-v12-x86_64-jammy-runtime.tgz: OK
+===== 查源码到 ELF 的对账 =====
+[构建合同] 对: source / build-inputs / provenance / runtime 四项验签通过  证: 上课运行的是当前封存代码的已编译 ELF
+$ four-path-build-contract-audit.sh
+source_binary_contract=PASS
+vm-2522-01 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-01
+===== 查 Onload 版本 =====
+[Onload版本] 对: Onload 9f330e7 与 Kernel module: 9f330e7 两行一致  证: 运行时仍在
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:00:12 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+===== 查字符设备 =====
+[字符设备] 对: /dev/onload 与 /dev/sfc_char 都以 c 开头  证: 栈控制和 VI 入口都在
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Aug 31 11:37 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Aug 31 16:25 /dev/sfc_char
+===== 查出站闸主人 =====
+[出站闸主人] 对: sfc  证: 普通三路还能用这块卡
+$ basename .../0000:03:00.0/driver
+sfc
+===== 查数据口地址 =====
+[数据口] 对: ens64np0 上有 20.1.1.1/24  证: 课程地址还在
+$ ip -4 -o addr show dev ens64np0
+8: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+===== 查当前 cmdline =====
+[当前cmdline] 对: 同一行同时有 intel_iommu=on 和 iommu=pt  证: Guest IOMMU 已生效
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[隔离组] 对: group 7 只有 0000:03:00.0  证: 钥匙串无夹带，才能单独交 VFIO
+$ readlink / ls .../iommu_group
+7 0000:03:00.0
+vm-2522-02 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-02
+===== 查 Onload 版本 =====
+[Onload版本] 对: Onload 9f330e7 与 Kernel module: 9f330e7 两行一致  证: 运行时仍在
+$ onload --version
+Onload 9f330e7 
+Copyright (c) 2002-2026 Advanced Micro Devices, Inc.
+Built: Aug 31 2026 11:03:13 (release)
+Build profile header: <ci/internal/transport_config_opt_extra.h>
+Kernel module: 9f330e7 
+===== 查字符设备 =====
+[字符设备] 对: /dev/onload 与 /dev/sfc_char 都以 c 开头  证: 栈控制和 VI 入口都在
+$ ls -l /dev/onload /dev/sfc_char
+crw-rw-rw- 1 root root 237, 0 Sep  2 15:57 /dev/onload
+crw-rw-rw- 1 root root 238, 0 Sep  2 16:44 /dev/sfc_char
+===== 查出站闸主人 =====
+[出站闸主人] 对: sfc  证: 普通三路还能用这块卡
+$ basename .../0000:03:00.0/driver
+sfc
+===== 查数据口地址 =====
+[数据口] 对: ens64np1 上有 20.1.1.2/24  证: 课程地址还在
+$ ip -4 -o addr show dev ens64np1
+139: ens64np1    inet 20.1.1.2/24 scope global ens64np1\       valid_lft forever preferred_lft forever
+===== 查当前 cmdline =====
+[当前cmdline] 对: 同一行同时有 intel_iommu=on 和 iommu=pt  证: Guest IOMMU 已生效
+$ cat /proc/cmdline
+BOOT_IMAGE=/vmlinuz-5.15.0-164-generic root=/dev/mapper/ubuntu--vg-ubuntu--lv ro intel_iommu=on iommu=pt
+===== 查隔离组 =====
+[隔离组] 对: group 7 只有 0000:03:00.0  证: 钥匙串无夹带，才能单独交 VFIO
+$ readlink / ls .../iommu_group
+7 0000:03:00.0
+===== 查行情回放资产 =====
+[control_assets] 对: PASS 且 symbols=AAPL,NVDA  证: 纸面行情文件还在
+$ labctl preflight · control_assets
+control_assets=PASS replay_bytes=561727241 symbols=AAPL,NVDA
+===== 查 Exchange 数据口 =====
+[exchange_data] 对: ens64np0 20.1.1.1/24 link=yes  证: 撮合机数据口能开工
+$ labctl preflight · exchange_data
+exchange_data=PASS interface=ens64np0 address=20.1.1.1/24 link=yes
+===== 查 Trader 数据口 =====
+[trader_data] 对: ens64np1 20.1.1.2/24 link=yes  证: 客户端数据口能开工
+$ labctl preflight · trader_data
+trader_data=PASS interface=ens64np1 address=20.1.1.2/24 link=yes
+===== 查 Builder 工具链 =====
+[builder_tools] 对: .101 上有 g++-11  证: 管理机构建链还在
+$ labctl preflight · builder_tools
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+===== 查 Exchange RSS 表 =====
+[RSS] 对: table=baseline-0-1-2-3 或 measure-all-1  证: 空闲可开工，或本课测量仍受控
+$ labctl preflight · exchange_rss
+exchange_rss_preflight=PASS iface=ens64np0 entries=128 table=baseline-0-1-2-3 queue=1 irq=33 requested_cpu=3 effective_cpu=3 irqbalance=active exchange_cpu=2
+===== 查四路开工总闸 =====
+[transport_preflight] 对: PASS queue=DEQUE_CV  证: 可以进准备 D 部署并拉起
+$ labctl preflight · transport
+transport_preflight=PASS runtime_sha256=163618ccbb99d272d1f4703822781984d754c690d23fba5503e503486e33c9f3 queue=DEQUE_CV

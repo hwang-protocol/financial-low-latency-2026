@@ -1,0 +1,26 @@
+DPDK_STOP_RECEIPT wrapper=0 trader=0 termination=SIGINT cleanup=process-exit peer_eof=1 independent_lease=disarmed restore=PASS
+DPDK_MANAGEMENT_LISTENER_CLOSED listen=0
+DPDK_EXCHANGE_ENDPOINT_CLOSED established=0
+X2522_EXCHANGE_RSS_RESTORED entries=128 pattern=0,1,2,3 sha256=a467c9b01cca8e25886393f2e5aaa416dbed339aecbff35eb4554e56b17e4d46
+{"mode":"SFC","transition":"STOPPED","owner":"sfc","hardware_receipts":{}}
+X2522_RSS_RESTORE_RECEIPT baseline=restored
+
+===== root@10.1.1.1 =====
+vm-2522-01
+driver=sfc
+8: ens64np0    inet 20.1.1.1/24 brd 20.1.1.255 scope global ens64np0\       valid_lft forever preferred_lft forever
+hugepages_2mb=0
+
+===== root@10.1.1.2 =====
+vm-2522-02
+driver=sfc
+111: ens64np1    inet 20.1.1.2/24 scope global ens64np1\       valid_lft forever preferred_lft forever
+hugepages_2mb=0
+
+===== .2 mount baseline and 3/3 link check =====
+hugetlbfs /dev/hugepages hugetlbfs rw,relatime,pagesize=2M
+PING 20.1.1.1 (20.1.1.1) from 20.1.1.2 ens64np1: 56(84) bytes of data.
+
+--- 20.1.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2055ms
+rtt min/avg/max/mdev = 0.021/0.029/0.042/0.009 ms

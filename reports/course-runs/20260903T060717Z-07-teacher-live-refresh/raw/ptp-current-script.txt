@@ -1,0 +1,21 @@
+vm-2522-02 / baseline
+===== 查TC关闭 correction =====
+[Follow_Up / Delay_Resp] 对: 全是 0/N  证: 关掉 TC 时 correction 没有被写入
+$ python3 analyze_ptp_decode.py baseline-client-decode.txt
+Follow_Up nonzero=0/36
+Delay_Resp nonzero=0/38
+vm-2522-02 / TC
+===== 查TC打开 correction =====
+[Follow_Up / Delay_Resp] 对: 全是 N/N  证: 打开 TC 后每条都带了修正
+$ python3 analyze_ptp_decode.py tc-client-decode.txt
+Follow_Up nonzero=35/35
+Delay_Resp nonzero=30/30
+===== 查锁定样本 =====
+[ptp4l] 对: 两轮都有已锁定样本  证: 客户端进入过 SLAVE
+$ python3 analyze_ptp_log.py
+locked_samples baseline=32 tc=32
+===== 查恢复 =====
+[ptp] 对: PTP Mode: Disabled 或 PTP is not configured  证: running-config 已撤，startup 未写
+$ show ptp
+PTP Mode: Disabled
+evidence=Documents/reports/course-runs/20260903T060933Z-07-ptp-tc-live-ab

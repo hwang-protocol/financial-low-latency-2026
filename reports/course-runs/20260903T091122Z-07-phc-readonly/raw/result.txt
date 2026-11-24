@@ -1,0 +1,36 @@
+vm-2522-01 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-01
+===== 查同步进程 =====
+[进程] 对: none  证: 当前没有 ptp4l / phc2sys / ts2phc / sfptpd 管理 PHC
+$ pgrep -ax ptp4l; pgrep -ax phc2sys; pgrep -ax ts2phc; pgrep -ax sfptpd
+none
+===== 查PHC节点 =====
+[/dev/ptp0] 对: 以 c 开头的字符设备  证: 这只硬件钟能打开
+$ ls -l /dev/ptp0
+crw------- 1 root root 246, 0 Aug 31 16:39 /dev/ptp0
+===== 查PHC读数 =====
+[phc_ctl] 对: 打出 clock time is 和小数秒  证: PHC 可读；两次读数不能相减
+$ phc_ctl /dev/ptp0 get
+phc_ctl[281667.532]: clock time is 1788425616.834977641 or Thu Sep  3 16:53:36 2026
+
+vm-2522-02 / verify
+===== 查主机名 =====
+[哪台] 对: vm-2522-01 或 vm-2522-02  证: 没看错机
+$ hostname
+vm-2522-02
+===== 查同步进程 =====
+[进程] 对: none  证: 当前没有 ptp4l / phc2sys / ts2phc / sfptpd 管理 PHC
+$ pgrep -ax ptp4l; pgrep -ax phc2sys; pgrep -ax ts2phc; pgrep -ax sfptpd
+none
+===== 查PHC节点 =====
+[/dev/ptp0] 对: 以 c 开头的字符设备  证: 这只硬件钟能打开
+$ ls -l /dev/ptp0
+crw------- 1 root root 246, 0 Sep  3 08:59 /dev/ptp0
+===== 查PHC读数 =====
+[phc_ctl] 对: 打出 clock time is 和小数秒  证: PHC 可读；两次读数不能相减
+$ phc_ctl /dev/ptp0 get
+phc_ctl[281666.837]: clock time is 1788425617.021438972 or Thu Sep  3 16:53:37 2026
+

@@ -1,0 +1,36 @@
+DEPLOYED_INPUTS_VERIFIED runtime_sha256=163618ccbb99d272d1f4703822781984d754c690d23fba5503e503486e33c9f3
+measure=SOCKET round=1 position=1
+measure=OPENONLOAD round=1 position=2
+measure=DPDK round=1 position=3
+measure=TCPDIRECT round=1 position=4
+measure=OPENONLOAD round=2 position=1
+measure=TCPDIRECT round=2 position=2
+measure=SOCKET round=2 position=3
+measure=DPDK round=2 position=4
+measure=TCPDIRECT round=3 position=1
+measure=DPDK round=3 position=2
+measure=OPENONLOAD round=3 position=3
+measure=SOCKET round=3 position=4
+measure=DPDK round=4 position=1
+measure=SOCKET round=4 position=2
+measure=TCPDIRECT round=4 position=3
+measure=OPENONLOAD round=4 position=4
+
+===== 描述性副表：同一订单合同的四轮统计量中位数 =====
+路径                    send→final P50    P95       P99        queue→final P50
+Kernel Socket                32723 ns     52446 ns     55829 ns         41826 ns
+OpenOnload                   21492 ns     26477 ns     29466 ns         30434 ns
+TCPDirect                    20367 ns     25798 ns     27833 ns         29305 ns
+DPDK + F-Stack TCP           24941 ns     32051 ns     34306 ns         30447 ns
+合同：1 股可成交 IOC；SoupBinTCP/OUCH；逐笔单飞；DEQUE_CV；数据 CPU 2；辅助 CPU 3
+全部提交身份：submitted total=unique=17600；result_files=16
+热身响应身份：warmup total=unique=1600；submission_to_raw=ORDER_AND_SET_EXACT；result=EXECUTED
+正式样本身份：measured total=unique=16000；submission_to_raw=ORDER_AND_SET_EXACT；result=EXECUTED
+交易所账本硬门：before=3 after=17603 delta=expected=17600
+固定簿面硬门：paused_source_ns=36894071018355 stable=1 restored=PLAYING
+顺序平衡：每条路径每位置一次；12 种行内有序前序各一次；每格 warmup 只减弱 carryover；末尾 SFC
+原生收据：16 格 pre/post 共 32 套 / 192 份原件；摘要和执行脚本均进 SHA；重型探针不进计时样本
+边界：DPDK 独占 VFIO 分阶段测；Onload latency profile、ZF/F-Stack reactor 会轮询
+evidence=/financial-low-latency/Documents/reports/course-runs/20260902T101426Z-06-four-path-orders/four-path-comparison
+EXCHANGE_REPLAY_RESTORED status=PLAYING
+DEPLOYED_INPUTS_VERIFIED runtime_sha256=163618ccbb99d272d1f4703822781984d754c690d23fba5503e503486e33c9f3

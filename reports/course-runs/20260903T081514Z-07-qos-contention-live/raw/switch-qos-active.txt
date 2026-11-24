@@ -1,0 +1,262 @@
+$ configure terminal
+configure terminal
+
+$ queue-monitor length
+queue-monitor length
+
+$ mac address-table static 0200.0007.0001 vlan 20 interface Ethernet1
+mac address-table static 0200.0007.0001 vlan 20 interface Ethernet1
+
+$ interface Ethernet2
+interface Ethernet2
+
+$ qos trust dscp
+qos trust dscp
+
+$ interface Ethernet1
+interface Ethernet1
+
+$ queue-monitor length thresholds 64 32
+queue-monitor length thresholds 64 32
+
+$ tx-queue 5
+tx-queue 5
+
+$ priority strict
+priority strict
+
+$ exit
+exit
+
+$ tx-queue 3
+tx-queue 3
+
+$ no priority
+no priority
+
+$ bandwidth percent 40
+bandwidth percent 40
+
+$ exit
+exit
+
+$ tx-queue 2
+tx-queue 2
+
+$ bandwidth percent 30
+bandwidth percent 30
+
+$ exit
+exit
+
+$ tx-queue 1
+tx-queue 1
+
+$ bandwidth percent 20
+bandwidth percent 20
+
+$ exit
+exit
+
+$ tx-queue 0
+tx-queue 0
+
+$ bandwidth percent 10
+bandwidth percent 10
+
+$ exit
+exit
+
+$ end
+end
+
+$ show qos interfaces Ethernet1
+show qos interfaces Ethernet1 | no-more
+Ethernet1:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3     40 / 40      - / -          ( - )   RR / RR  
+   2     30 / 30      - / -          ( - )   RR / SP  
+   1     20 / 20      - / -          ( - )   RR / SP  
+   0     10 / 10      - / -          ( - )   RR / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show qos interfaces Ethernet2
+show qos interfaces Ethernet2 | no-more
+Ethernet2:
+   Trust Mode: DSCP
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show qos maps
+show qos maps | no-more
+   Number of Traffic Classes supported: 8
+   Number of Transmit Queues supported: 8
+   Cos Rewrite:   Enabled
+   Dscp Rewrite:  Disabled
+
+   Cos-tc map:
+     cos:  0  1  2  3  4  5  6  7
+     ----------------------------
+     tc:   1  0  2  3  4  5  6  7 
+
+   Dscp-tc map:
+     d1 :  d2 0  1  2  3  4  5  6  7  8  9
+     --------------------------------------
+      0 :     1  1  1  1  1  1  1  1  0  0
+      1 :     0  0  0  0  0  0  2  2  2  2
+      2 :     2  2  2  2  3  3  3  3  3  3
+      3 :     3  3  4  4  4  4  4  4  4  4
+      4 :     5  5  5  5  5  5  5  5  6  6
+      5 :     6  6  6  6  6  6  7  7  7  7
+      6 :     7  7  7  7
+
+   Tc-cos map:
+     tc:   0  1  2  3  4  5  6  7
+     ----------------------------
+     cos:  1  0  2  3  4  5  6  7 
+
+   Tc-dscp map:
+     tc:    0  1  2  3  4  5  6  7
+     -----------------------------
+     dscp:  8  0 16 24 32 40 48 56 
+
+   Tc - tx-queue map:
+     tc:        0  1  2  3  4  5  6  7
+     ---------------------------------
+     tx-queue:  0  1  2  3  4  5  6  7 
+
+
+$ show queue-monitor length status
+show queue-monitor length status | no-more
+queue-monitor length enabled
+queue-monitor length packet sampling is disabled
+queue-monitor length tx-latency is disabled due to PTP not supported
+queue-monitor length update interval in micro seconds:  5000000 
+Global Buffer Monitoring
+------------------------
+Global buffer monitoring is enabled
+Segment size in bytes :   160
+Total buffers in segments : 49152
+High threshold : 20540
+Low threshold :  8216
+
+
+Per-Interface Queue Length Monitoring
+-------------------------------------
+Queue length monitoring is enabled
+Segment size in bytes :   480
+Maximum queue length in segments :  6847
+Port thresholds in segments:
+Port     High threshold  Low threshold   Mirroring Enabled       Warnings
+Cpu               15888          15888               False
+Et1                  64             32               False
+Et2                 512            256               False
+Et3                 512            256               False
+Et4                 512            256               False
+Et5                 512            256               False
+Et6                 512            256               False
+Et7                 512            256               False
+Et8                 512            256               False
+Et9                 512            256               False
+Et10                512            256               False
+Et11                512            256               False
+Et12                512            256               False
+Et13                512            256               False
+Et14                512            256               False
+Et15                512            256               False
+Et16                512            256               False
+Et17                512            256               False
+Et18                512            256               False
+Et19                512            256               False
+Et20                512            256               False
+Et21                512            256               False
+Et22                512            256               False
+Et23                512            256               False
+Et24                512            256               False
+
+$ show mac address-table static
+show mac address-table static | no-more
+          Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports      Moves   Last Move
+----    -----------       ----        -----      -----   ---------
+  20    0200.0007.0001    STATIC      Et1
+Total Mac Addresses for this criterion: 1
+
+          Multicast Mac Address Table
+------------------------------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       ----        -----
+Total Mac Addresses for this criterion: 0
+
+$ show running-config interfaces Ethernet1
+show running-config interfaces Ethernet1 | no-more
+interface Ethernet1
+   switchport access vlan 20
+   queue-monitor length thresholds 64 32
+   !
+   tx-queue 0
+      bandwidth percent 10
+   !
+   tx-queue 1
+      bandwidth percent 20
+   !
+   tx-queue 2
+      bandwidth percent 30
+   !
+   tx-queue 3
+      no priority
+      bandwidth percent 40
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2 | no-more
+interface Ethernet2
+   switchport access vlan 20
+   qos trust dscp
+   spanning-tree portfast

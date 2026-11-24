@@ -1,0 +1,134 @@
+$ configure terminal
+configure terminal
+
+$ interface Ethernet2
+interface Ethernet2
+
+$ default qos trust
+default qos trust
+
+$ interface Ethernet1
+interface Ethernet1
+
+$ tx-queue 0
+tx-queue 0
+
+$ default bandwidth percent
+default bandwidth percent
+
+$ default priority
+default priority
+
+$ exit
+exit
+
+$ tx-queue 1
+tx-queue 1
+
+$ default bandwidth percent
+default bandwidth percent
+
+$ default priority
+default priority
+
+$ exit
+exit
+
+$ tx-queue 2
+tx-queue 2
+
+$ default bandwidth percent
+default bandwidth percent
+
+$ default priority
+default priority
+
+$ exit
+exit
+
+$ tx-queue 3
+tx-queue 3
+
+$ default bandwidth percent
+default bandwidth percent
+
+$ default priority
+default priority
+
+$ exit
+exit
+
+$ end
+end
+
+$ show qos interfaces Ethernet1
+show qos interfaces Ethernet1 | no-more
+Ethernet1:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show qos interfaces Ethernet2
+show qos interfaces Ethernet2 | no-more
+Ethernet2:
+   Trust Mode: COS
+   Default COS: 0
+   Default DSCP: 0
+
+   Port shaping rate: disabled
+
+  Tx    Bandwidth         Shape Rate         Priority 
+ Queue  (percent)          (units)         
+ -----------------------------------------------------
+   7      - / -       - / -          ( - )   SP / SP  
+   6      - / -       - / -          ( - )   SP / SP  
+   5      - / -       - / -          ( - )   SP / SP  
+   4      - / -       - / -          ( - )   SP / SP  
+   3      - / -       - / -          ( - )   SP / SP  
+   2      - / -       - / -          ( - )   SP / SP  
+   1      - / -       - / -          ( - )   SP / SP  
+   0      - / -       - / -          ( - )   SP / SP  
+
+Note: Values are displayed as Operational/Configured
+
+Legend:
+RR -> Round Robin
+SP -> Strict Priority
+ - -> Not Applicable / Not Configured
+ % -> Percentage of line rate
+
+
+$ show running-config interfaces Ethernet1
+show running-config interfaces Ethernet1 | no-more
+interface Ethernet1
+   switchport access vlan 20
+   spanning-tree portfast
+
+$ show running-config interfaces Ethernet2
+show running-config interfaces Ethernet2 | no-more
+interface Ethernet2
+   switchport access vlan 20
+   spanning-tree portfast

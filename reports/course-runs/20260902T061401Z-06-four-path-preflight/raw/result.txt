@@ -1,0 +1,36 @@
+===== 查 v12 运行包 =====
+[归档] 对: SHA-256=163618cc…c9f3  证: 四路客户端和运行库没漂
+$ sha256sum -c
+artifacts/blobs/x2522/ch06-four-path/v12/flle-ch06-four-path-v12-x86_64-jammy-runtime.tgz: OK
+===== 查准备 A/B 门 =====
+[两端现场] 对: sfc、课程地址、cmdline、group 7 只有 X2522  证: A/B 没漂，本卡不再逐项扫读
+$ ssh root@10.1.1.1 验 sfc/地址/cmdline/group
+vm-2522-01 A/B门仍在
+===== 查准备 A/B 门 =====
+[两端现场] 对: sfc、课程地址、cmdline、group 7 只有 X2522  证: A/B 没漂，本卡不再逐项扫读
+$ ssh root@10.1.1.2 验 sfc/地址/cmdline/group
+vm-2522-02 A/B门仍在
+===== 查行情回放资产 =====
+[control_assets] 对: PASS 且 symbols=AAPL,NVDA  证: 纸面行情文件还在
+$ labctl preflight · control_assets
+control_assets=PASS replay_bytes=561727241 symbols=AAPL,NVDA
+===== 查 Exchange 数据口 =====
+[exchange_data] 对: ens64np0 20.1.1.1/24 link=yes  证: 撮合机数据口能开工
+$ labctl preflight · exchange_data
+exchange_data=PASS interface=ens64np0 address=20.1.1.1/24 link=yes
+===== 查 Trader 数据口 =====
+[trader_data] 对: ens64np1 20.1.1.2/24 link=yes  证: 客户端数据口能开工
+$ labctl preflight · trader_data
+trader_data=PASS interface=ens64np1 address=20.1.1.2/24 link=yes
+===== 查 Builder 工具链 =====
+[builder_tools] 对: .101 上有 g++-11  证: 管理机构建链还在
+$ labctl preflight · builder_tools
+builder_tools=PASS host=10.1.1.101 compiler=g++-11
+===== 查 Exchange RSS 表 =====
+[RSS] 对: table=baseline-0-1-2-3 或 measure-all-1  证: 空闲可开工，或本课测量仍受控
+$ labctl preflight · exchange_rss
+exchange_rss_preflight=PASS iface=ens64np0 entries=128 table=measure-all-1 queue=1 irq=33 requested_cpu=2 effective_cpu=2 irqbalance=inactive exchange_cpu=2
+===== 查四路开工总闸 =====
+[transport_preflight] 对: PASS queue=DEQUE_CV  证: 可以进运行 ①
+$ labctl preflight · transport
+transport_preflight=PASS runtime_sha256=163618ccbb99d272d1f4703822781984d754c690d23fba5503e503486e33c9f3 queue=DEQUE_CV

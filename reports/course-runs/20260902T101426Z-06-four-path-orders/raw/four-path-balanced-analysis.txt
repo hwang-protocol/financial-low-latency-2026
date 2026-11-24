@@ -1,0 +1,11 @@
+===== 平衡主表：四个 Williams 单元统计量等权平均 =====
+路径                    send→final P50    P95       P99        queue→final P50
+Kernel Socket                33241 ns     47988 ns     52093 ns         42180 ns
+OpenOnload                   21435 ns     25726 ns     28660 ns         30221 ns
+TCPDirect                    20400 ns     25845 ns     27887 ns         29380 ns
+DPDK + F-Stack TCP           24801 ns     30831 ns     33006 ns         30253 ns
+测量方法：4×4 Williams；每路每位置一次；每格 100 笔预热 + 1000 笔正式
+订单结果：warmup Executed=1600（不统计）；measured Executed=16000
+路径验证：16/16 个测试单元均命中计划 Transport
+总账闭合：submitted=expected=17600
+evidence=Documents/reports/course-runs/20260902T101426Z-06-four-path-orders/four-path-comparison/balanced-analysis
